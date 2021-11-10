@@ -6,8 +6,14 @@
 
 namespace big
 {
+	//that's stupid
 #define max(a,b) (((a) > (b)) ? (a) : (b))
 #define min(a,b) (((a) < (b)) ? (a) : (b))
+	/*
+	from https://github.com/gta-chaos-mod/ChaosModV
+	Effect by Last0xygen
+	*/
+
 	static int lastCheck = 0;
 
 	void looped::weapons_superhot()

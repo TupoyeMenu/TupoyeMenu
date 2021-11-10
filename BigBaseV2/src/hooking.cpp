@@ -12,6 +12,7 @@
 #include "pointers.hpp"
 #include "renderer.hpp"
 #include "script_mgr.hpp"
+#include "ASI Loader/ScriptManager.h"
 
 #include <MinHook.h>
 

@@ -8,6 +8,9 @@
 #include "renderer.hpp"
 #include "script_mgr.hpp"
 #include "thread_pool.hpp"
+#include "shv_runner.h"
+#include "ASI Loader/ASILoader.h"
+
 
 BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 {
@@ -46,10 +49,13 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 				g_script_mgr.add_script(std::make_unique<script>(&features::script_func));
 				g_script_mgr.add_script(std::make_unique<script>(&gui::script_func));
+				g_script_mgr.add_script(std::make_unique<script>(&shv_runner::script_func));
 				LOG(INFO) << "Scripts registered.";
 
 				g_hooking->enable();
 				LOG(INFO) << "Hooking enabled.";
+
+				ASILoader::Initialize();
 
 				auto vehicle_service_instance = std::make_unique<vehicle_service>();
 
@@ -83,6 +89,10 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 				pointers_instance.reset();
 				LOG(INFO) << "Pointers uninitialized.";
+
+				shv_runner::shutdown();
+
+				LOG(INFO) << "ASI plugins unloaded.";
 
 				vehicle_service_instance.reset();
 			}
