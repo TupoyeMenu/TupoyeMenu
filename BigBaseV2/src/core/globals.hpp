@@ -13,6 +13,7 @@ struct globals {
 	struct tunables {
 		bool disable_phone = false;
 		bool no_idle_kick = false;
+		bool no_spam_help = false;
 	};
 
 	struct player {
@@ -82,10 +83,12 @@ struct globals {
 
 		bool god_mode = false;
 		bool horn_boost = false;
+		bool flares = false;
 		speedo_meter speedo_meter{};
 	};
 
 	struct weapons {
+		bool superhot = false;
 		CustomWeapon custom_weapon = CustomWeapon::NONE;
 		char vehicle_gun_model[12] = "bus";
 	};
@@ -136,6 +139,7 @@ struct globals {
 
 		this->tunables.disable_phone = j["tunables"]["disable_phone"];
 		this->tunables.no_idle_kick = j["tunables"]["no_idle_kick"];
+		this->tunables.no_spam_help = j["tunables"]["no_spam_help"];
 
 		this->self.godmode = j["self"]["godmode"];
 		this->self.off_radar = j["self"]["off_radar"];
@@ -201,7 +205,8 @@ struct globals {
 			{
 				"tunables", {
 					{ "disable_phone", this->tunables.disable_phone },
-					{ "no_idle_kick", this->tunables.no_idle_kick }
+					{ "no_idle_kick", this->tunables.no_idle_kick },
+					{ "no_spam_help", this->tunables.no_spam_help }
 				}
 			},
 			{

@@ -45,6 +45,14 @@ namespace big
 					}
 					QUEUE_JOB_END_CLAUSE
 				}
+				if (ImGui::MenuItem("Clear Tasks"))
+				{
+					QUEUE_JOB_BEGIN_CLAUSE()
+					{
+						TASK::CLEAR_PED_TASKS_IMMEDIATELY(PLAYER::PLAYER_PED_ID());
+					}
+					QUEUE_JOB_END_CLAUSE
+				}
 
 				ImGui::EndMenu();
 			}

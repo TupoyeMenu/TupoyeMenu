@@ -36,6 +36,7 @@ namespace big
 		{
 			looped::tunables_disable_phone();
 			looped::tunables_no_idle_kick();
+			looped::tunables_no_spam_help();
 		}QUEUE_JOB_END_CLAUSE
 
 		QUEUE_JOB_BEGIN_CLAUSE()
@@ -66,12 +67,14 @@ namespace big
 			looped::weapons_steal_vehicle_gun();
 			looped::weapons_repair_gun();
 			looped::weapons_vehicle_gun();
+			looped::weapons_superhot();
 		}QUEUE_JOB_END_CLAUSE
 
 		QUEUE_JOB_BEGIN_CLAUSE()
 		{
 			looped::vehicle_god_mode();
 			looped::vehicle_horn_boost();
+			looped::vehicle_flares();
 			looped::vehicle_speedo_meter();
 		}QUEUE_JOB_END_CLAUSE
 	}

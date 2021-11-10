@@ -9,6 +9,7 @@ namespace big
 
 		static void tunables_disable_phone();
 		static void tunables_no_idle_kick();
+		static void tunables_no_spam_help();
 
 		static void player_specate();
 
@@ -32,9 +33,11 @@ namespace big
 		static void weapons_repair_gun();
 		static void weapons_steal_vehicle_gun();
 		static void weapons_vehicle_gun();
+		static void weapons_superhot();
 
 		static void vehicle_god_mode();
 		static void vehicle_horn_boost();
+		static void vehicle_flares();
 		static void vehicle_speedo_meter();
 	};
 }

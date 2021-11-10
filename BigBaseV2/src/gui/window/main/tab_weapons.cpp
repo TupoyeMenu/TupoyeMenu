@@ -49,6 +49,8 @@ namespace big
 				ImGui::TreePop();
 			}
 
+			ImGui::Checkbox("SuporHot", &g.weapons.superhot);
+
 			ImGui::EndTabItem();
 		}
 	}

@@ -46,6 +46,16 @@ namespace big::vehicle
 		return true;
 	}
 
+	inline void add_explosive(Vehicle veh)
+	{
+		VEHICLE::ADD_VEHICLE_PHONE_EXPLOSIVE_DEVICE(veh);
+	}
+
+	inline void detonate_explosive()
+	{
+		VEHICLE::DETONATE_VEHICLE_PHONE_EXPLOSIVE_DEVICE();
+	}
+
 	inline int spawn(const char* model, Vector3 location, float heading)
 	{
 		Hash hash = rage::joaat(model);

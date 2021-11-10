@@ -8,6 +8,7 @@ namespace big
 		{
 			ImGui::Checkbox("Disable Phone", &g.tunables.disable_phone);
 			ImGui::Checkbox("No Idle Kick", &g.tunables.no_idle_kick);
+			ImGui::Checkbox("No Spam Help", &g.tunables.no_spam_help);
 
 			ImGui::EndTabItem();
 		}

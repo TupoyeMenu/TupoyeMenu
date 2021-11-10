@@ -31,7 +31,7 @@ namespace big::toxic
 	// param 1 == player target
 	// param 2 == amount
 	// param 3 == unk? => always 1
-	// param 4 == if some kind of bit must be set
+	// param 4 == if some kind of bit must be set 
 	inline void bounty_player(Player target, Player origin, int amount)
 	{
 		const size_t arg_count = 22;
@@ -49,5 +49,29 @@ namespace big::toxic
 		};
 
 		g_pointers->m_trigger_script_event(1, args, arg_count, 1 << origin);
+	}
+
+	inline void ceo_kick(Player target)
+	{
+		const size_t arg_count = 4;
+		int ceo_kick[4] = { (int)eRemoteEvent::CeoBan , PLAYER::PLAYER_ID(), 1, 5 };
+
+		g_pointers->m_trigger_script_event(1, ceo_kick, arg_count, 1 << target);
+	}
+
+	inline void kick(Player target)
+	{
+		const size_t arg_count = 4;
+		int args[4] = { 2092565704 , PLAYER::PLAYER_ID(), 1, 5 };
+
+		g_pointers->m_trigger_script_event(1, args, arg_count, 1 << target);
+	}
+
+	inline void send_island(Player target)
+	{
+		const size_t arg_count = 4;
+		int args[4] = { (int)eRemoteEvent::SendToIsland , PLAYER::PLAYER_ID(), 1, 5 };
+
+		g_pointers->m_trigger_script_event(1, args, arg_count, 1 << target);
 	}
 }

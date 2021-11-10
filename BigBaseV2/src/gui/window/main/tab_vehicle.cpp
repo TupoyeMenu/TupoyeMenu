@@ -51,6 +51,21 @@ namespace big
 				if (ImGui::Button("Handling"))
 					g.window.handling = true;
 
+				if (ImGui::Button("Add Explosive"))
+				{
+					Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::PLAYER_PED_ID(), false);
+
+					vehicle::add_explosive(veh);
+				}
+
+				ImGui::SameLine();
+
+				if (ImGui::Button("Detonate Explosive"))
+				{
+					vehicle::detonate_explosive();
+				}
+
+				ImGui::Checkbox("Vehicle Flares", &g.vehicle.flares);
 				ImGui::TreePop();
 			}
 

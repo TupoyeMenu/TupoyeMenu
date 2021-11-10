@@ -25,6 +25,7 @@ namespace big
 			tab_player::tab_info();
 			tab_player::tab_teleport();
 			tab_player::tab_toxic();
+			tab_player::tab_player_weapon();
 			ImGui::EndTabBar();
 
 			ImGui::End();
