@@ -49,11 +49,8 @@ namespace rage
 		}
 
 		PVOID get_return_pointer()
-
 		{
-
 			return m_return_value;
-
 		}
 
 	protected:

@@ -37,11 +37,8 @@ namespace big
 		}
 
 		PVOID get_return_address()
-
 		{
-
 			return m_call_context.get_return_pointer();
-
 		}
 	private:
 		native_call_context m_call_context;

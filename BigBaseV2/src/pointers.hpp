@@ -35,7 +35,6 @@ namespace big
 		functions::run_script_threads_t m_run_script_threads{};
 		functions::register_file_t m_register_file{};
 		functions::get_script_handle_t m_get_script_handle{};
-
 		std::int64_t **m_script_globals{};
 
 		rage::GenericPool* m_ped_pool{};

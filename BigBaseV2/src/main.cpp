@@ -91,7 +91,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				LOG(INFO) << "Pointers uninitialized.";
 
 				shv_runner::shutdown();
-
 				LOG(INFO) << "ASI plugins unloaded.";
 
 				vehicle_service_instance.reset();
