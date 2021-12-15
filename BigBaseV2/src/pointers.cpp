@@ -210,6 +210,12 @@ namespace big
 		{
 			m_blame_explode = ptr.as<decltype(m_blame_explode)>();
 		});
+
+		// Is DLC Present
+		main_batch.add("IDP", "48 89 5C 24 ? 57 48 83 EC ? 81 F9", [this](memory::handle ptr)
+		{
+			m_is_dlc_present = ptr.as<decltype(m_is_dlc_present)>();
+		});
 		
 		main_batch.add("Register File", "40 88 7C 24 ? E8 ? ? ? ? 0F B7 44 24 ?", [this](memory::handle ptr)
 		{
