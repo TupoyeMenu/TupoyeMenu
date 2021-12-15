@@ -17,6 +17,7 @@ workspace "BigBaseV2"
   IncludeDir["MinHook"] = "vendor/MinHook/include"
   IncludeDir["ImGui"] = "vendor/ImGui"
   IncludeDir["g3log"] = "vendor/g3log/src"
+  IncludeDir["GTAV_Classes"] = "vendor/GTAV-Classes"
   
   CppVersion = "C++17"
   MsvcToolset = "v142"
@@ -190,6 +191,7 @@ workspace "BigBaseV2"
       "%{IncludeDir.ImGui}",
       "%{IncludeDir.ImGuiImpl}",
       "%{IncludeDir.g3log}",
+      "%{IncludeDir.GTAV_Classes}",
       "%{prj.name}/src"
     }
 
