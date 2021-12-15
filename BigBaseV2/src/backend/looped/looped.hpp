@@ -10,8 +10,10 @@ namespace big
 		static void tunables_disable_phone();
 		static void tunables_no_idle_kick();
 		static void tunables_no_spam_help();
+		static void tunables_BLOCK_JOIN_REQUESTS();
 
 		static void player_specate();
+		static void player_freeze();
 
 		static void protections_replay_interface();
 
@@ -20,6 +22,7 @@ namespace big
 		static void self_godmode();
 		static void self_off_radar();
 		static void self_police();
+		static void self_run_speed();
 		static void self_noclip();
 		static void self_no_ragdoll();
 

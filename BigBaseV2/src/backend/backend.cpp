@@ -37,6 +37,7 @@ namespace big
 			looped::tunables_disable_phone();
 			looped::tunables_no_idle_kick();
 			looped::tunables_no_spam_help();
+			looped::tunables_BLOCK_JOIN_REQUESTS();
 		}QUEUE_JOB_END_CLAUSE
 
 		QUEUE_JOB_BEGIN_CLAUSE()
@@ -46,12 +47,14 @@ namespace big
 			looped::self_godmode();
 			looped::self_off_radar();
 			looped::self_police();
+			looped::self_run_speed();
 			looped::self_no_ragdoll();
 		}QUEUE_JOB_END_CLAUSE
 
 		QUEUE_JOB_BEGIN_CLAUSE()
 		{
 			looped::player_specate();
+			looped::player_freeze();
 		}QUEUE_JOB_END_CLAUSE
 
 		QUEUE_JOB_BEGIN_CLAUSE()

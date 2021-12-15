@@ -6,7 +6,7 @@
 
 namespace big::toxic
 {
-	inline void blame_explode_coord(Player to_blame, Vector3 pos, eExplosionType explosion_type, float damage, bool is_audible, bool is_invisible, float camera_shake)
+	inline void blame_explode_coord(Player to_blame, Vector3 pos, int explosion_type, float damage, bool is_audible, bool is_invisible, float camera_shake)
 	{
 		system::patch_blame(true);
 		FIRE::ADD_OWNED_EXPLOSION(
@@ -21,7 +21,7 @@ namespace big::toxic
 		system::patch_blame(false);
 	}
 
-	inline void blame_explode_player(Player to_blame, Player target, eExplosionType explosion_type, float damage, bool is_audible, bool is_invisible, float camera_shake)
+	inline void blame_explode_player(Player to_blame, Player target, int explosion_type, float damage, bool is_audible, bool is_invisible, float camera_shake)
 	{
 		Vector3 coords = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(target), true);
 		blame_explode_coord(to_blame, coords, explosion_type, damage, is_audible, is_invisible, camera_shake);
@@ -59,18 +59,53 @@ namespace big::toxic
 		g_pointers->m_trigger_script_event(1, ceo_kick, arg_count, 1 << target);
 	}
 
+	inline void ForceMission(Player target)
+	{
+		int args[2] = { (int)eRemoteEvent::ForceMission, PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(target) };
+
+		g_pointers->m_trigger_script_event(true, args, 2, 1 << target);
+	}
+
 	inline void kick(Player target)
 	{
+		int args[4] = { 0, PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(target), 0, 0 };
+
+		for (int64_t kick_hash : kick_hashes)
+		{
+			args[0] = kick_hash;
+
+			g_pointers->m_trigger_script_event(true, args, 4, 1 << g.selected_player.id);
+		}
+	}
+
+	//-1813981910
+	inline void crash_event(Player target)
+	{
+		int args[4] = { -2043109205, target, 0, 0 };
+
+			g_pointers->m_trigger_script_event(true, args, 4, 1 << g.selected_player.id);
+	}
+
+	inline void SendToIsland(Player target)
+	{
 		const size_t arg_count = 4;
-		int args[4] = { 2092565704 , PLAYER::PLAYER_ID(), 1, 5 };
+		int args[4] = { (int)eRemoteEvent::SendToIsland , PLAYER::PLAYER_ID(), 1, 5 };
 
 		g_pointers->m_trigger_script_event(1, args, arg_count, 1 << target);
 	}
 
-	inline void send_island(Player target)
+	inline void SoundSpam(Player target)
 	{
 		const size_t arg_count = 4;
-		int args[4] = { (int)eRemoteEvent::SendToIsland , PLAYER::PLAYER_ID(), 1, 5 };
+		int args[4] = { (int)eRemoteEvent::SoundSpam , PLAYER::PLAYER_ID(), 1, 5 };
+
+		g_pointers->m_trigger_script_event(1, args, arg_count, 1 << target);
+	}
+
+	inline void Teleport(Player target)
+	{
+		const size_t arg_count = 4;
+		int args[4] = { (int)eRemoteEvent::Teleport , PLAYER::PLAYER_ID(), 1, 5 };
 
 		g_pointers->m_trigger_script_event(1, args, arg_count, 1 << target);
 	}

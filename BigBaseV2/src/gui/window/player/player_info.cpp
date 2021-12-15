@@ -1,4 +1,7 @@
 #include "player_tabs.hpp"
+#include "fiber_pool.hpp"
+#include "script.hpp"
+#include "natives.hpp"
 
 namespace big
 {
@@ -7,6 +10,16 @@ namespace big
 		if (ImGui::BeginTabItem("Info"))
 		{
 			ImGui::Checkbox("Spectate", &g.player.spectating);
+
+			if (ImGui::Button("Open Profile"))
+			{
+				QUEUE_JOB_BEGIN_CLAUSE()
+				{
+					int iNetworkHandle[13];
+					NETWORK::NETWORK_HANDLE_FROM_PLAYER(g.selected_player.id, iNetworkHandle, 13);
+					NETWORK::NETWORK_SHOW_PROFILE_UI(iNetworkHandle);
+				}QUEUE_JOB_END_CLAUSE
+			}
 
 			ImGui::Separator();
 

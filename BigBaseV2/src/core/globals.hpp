@@ -14,12 +14,14 @@ struct globals {
 		bool disable_phone = false;
 		bool no_idle_kick = false;
 		bool no_spam_help = false;
+		bool BLOCK_JOIN_REQUESTS = false;
 	};
 
 	struct player {
 		int character_slot = 1;
 		int set_level = 130;
 		bool spectating = false;
+		bool freezing = false;
 	};
 
 	struct protections {
@@ -67,6 +69,7 @@ struct globals {
 		bool noclip = false;
 		bool no_ragdoll = false;
 		int wanted_level = 0;
+		float run_speed = 1.f;
 
 		frame_flags frame_flags{};
 	};
@@ -88,6 +91,10 @@ struct globals {
 	};
 
 	struct weapons {
+		int expl_selected = 0;
+		bool isAudible = false;
+		bool isInvisible = false;
+		bool Enable_damage = false;
 		bool superhot = false;
 		CustomWeapon custom_weapon = CustomWeapon::NONE;
 		char vehicle_gun_model[12] = "bus";

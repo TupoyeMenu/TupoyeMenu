@@ -13,6 +13,7 @@ namespace big
 
 		bool is_friend = false;
 		bool is_online = false;
+		bool is_sky_kot = false;
 
 		CNetGamePlayer* net_player;
 

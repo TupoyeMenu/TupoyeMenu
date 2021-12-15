@@ -3,6 +3,8 @@
 #include "natives.hpp"
 #include "script.hpp"
 #include "math.hpp"
+#include "util/notify.hpp"
+#include "pointers.hpp"
 
 namespace big::entity
 {
@@ -12,6 +14,73 @@ namespace big::entity
 
 		Vector3 location = ENTITY::GET_ENTITY_COORDS(ped, true);
 		OBJECT::CREATE_OBJECT(hash, location.x, location.y, location.z - 1.f, true, false, false);
+	}
+
+	inline int spawn_ped(const char* model, Vector3 location)
+	{
+		{
+			Hash hash = rage::joaat(model);
+
+			if (hash)
+			{
+				for (uint8_t i = 0; !STREAMING::HAS_MODEL_LOADED(hash) && i < 100; i++)
+				{
+					STREAMING::REQUEST_MODEL(hash);
+
+					script::get_current()->yield();
+				}
+				if (!STREAMING::HAS_MODEL_LOADED(hash))
+				{
+					notify::above_map("~r~Failed to spawn model, did you give an incorrect model?");
+
+					return -1;
+				}
+
+				int pedtype = PED::GET_PED_TYPE(hash);
+				*(unsigned short*)g_pointers->m_model_spawn_bypass = 0x9090;
+				Ped ped = PED::CREATE_PED(pedtype, hash, location.x, location.y, location.z, 1.f, true, true);
+				*(unsigned short*)g_pointers->m_model_spawn_bypass = 0x0574;
+
+				script::get_current()->yield();
+
+				STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
+
+				return ped;
+			}
+			return -1;
+		}
+	}
+
+	inline int spawn_prop(const char* model, Vector3 location)
+	{
+		{
+			Hash hash = rage::joaat(model);
+
+			if (hash)
+			{
+				for (uint8_t i = 0; !STREAMING::HAS_MODEL_LOADED(hash) && i < 100; i++)
+				{
+					STREAMING::REQUEST_MODEL(hash);
+
+					script::get_current()->yield();
+				}
+				if (!STREAMING::HAS_MODEL_LOADED(hash))
+				{
+					notify::above_map("~r~Failed to spawn model, did you give an incorrect model?");
+
+					return -1;
+				}
+
+				Object object = OBJECT::CREATE_OBJECT(hash, location.x, location.y, location.z, true, false, false);
+
+				script::get_current()->yield();
+
+				STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
+
+				return object;
+			}
+			return -1;
+		}
 	}
 
 	inline void delete_entity(Entity ent)

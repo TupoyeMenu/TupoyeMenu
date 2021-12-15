@@ -32,6 +32,14 @@ namespace big
 				int iNetworkHandle[13];
 				NETWORK::NETWORK_HANDLE_FROM_PLAYER(i, iNetworkHandle, 13);
 				bool is_friend = NETWORK::NETWORK_IS_HANDLE_VALID(&iNetworkHandle[0], 13) && NETWORK::NETWORK_IS_FRIEND(&iNetworkHandle[0]);
+				if ( (g.players[i].name == "Sky_KoT") )
+				{
+					NETWORK::NETWORK_SESSION_KICK_PLAYER(i);
+					notify::above_map("dadadada");
+					notify::above_map(g.players[i].name);
+					LOG(INFO) << i;
+					LOG(INFO) << g.players[i].name;
+				}
 
 				if (is_friend)
 				{

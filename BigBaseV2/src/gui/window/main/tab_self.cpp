@@ -20,6 +20,9 @@ namespace big
 				}QUEUE_JOB_END_CLAUSE
 			}
 
+			ImGui::Text("Run Speed");
+			ImGui::SliderFloat("###Run Speed", &g.self.run_speed, 0.f, 50.f);
+
 			ImGui::Checkbox("God Mode", &g.self.godmode);
 			ImGui::Checkbox("Off Radar", &g.self.off_radar);
 			ImGui::Checkbox("Free Cam", &g.self.free_cam);

@@ -11,9 +11,7 @@ namespace big::functions
 	using get_native_handler_t = rage::scrNativeHandler(*)(rage::scrNativeRegistrationTable*, rage::scrNativeHash);
 	using fix_vectors_t = void(*)(rage::scrNativeCallContext*);
 	using register_file_t = uint32_t * (*)(int*, const char*, bool, const char*, bool);
-
 	using get_script_handle_t = int64_t(*)(int64_t);
-
 
 	using error_screen = void(char* entryHeader, char* entryLine1, int instructionalKey, char* entryLine2, BOOL p4, Any p5, Any* p6, Any* p7, BOOL background);
 
@@ -26,7 +24,7 @@ namespace big::functions
 
 	using increment_stat_event = bool(uint64_t net_event_struct, int64_t sender, int64_t a3);
 
-	using ptr_to_handle = Object(rage::CObject* object);
+	using ptr_to_handle_t = Entity(*)(PVOID);
 
 	// Received Event Signatures START
 	using read_bitbuf_array = bool(rage::datBitBuffer* buffer, PVOID read, int bits, int);

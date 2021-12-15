@@ -4,6 +4,8 @@
 #include "natives.hpp"
 #include "script.hpp"
 #include "util/toxic.hpp"
+#include "util/entity.hpp"
+#include "util/notify.hpp"
 
 namespace big
 {
@@ -14,57 +16,115 @@ namespace big
 
 			//ImGui::Combo("##type", &expl_selected, eExplosionType, sizeof(exlosions) / sizeof(*exlosions));
 
-			if (ImGui::Button("Explode Self"))
+			/*if (ImGui::Button("Explode Self"))
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
 					toxic::blame_explode_player(g.selected_player.id, g.selected_player.id, eExplosionType::PLANE, 1000, false, true, 0.f);
 				}QUEUE_JOB_END_CLAUSE
-			}
+			}*/
 
-			if (ImGui::Button("Kick"))
-			{
-				g_fiber_pool->queue_job([]
-				{
-					toxic::kick(g.selected_player.id);
-				});
-			}	
-
-			ImGui::SameLine();
 
 			if (ImGui::Button("Host Kick"))
 			{
-				g_fiber_pool->queue_job([]
+				QUEUE_JOB_BEGIN_CLAUSE()
 				{
 					NETWORK::NETWORK_SESSION_KICK_PLAYER(g.selected_player.id);
-				});
+				}
+				QUEUE_JOB_END_CLAUSE
 			}
 
-			if (ImGui::Button("CEO Kick"))
+			ImGui::SameLine();
+
+			if (ImGui::Button("Kick"))
 			{
-				g_fiber_pool->queue_job([]
+				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					toxic::ceo_kick(g.selected_player.id);
-				});
+					toxic::kick(g.selected_player.id);
+				}
+				QUEUE_JOB_END_CLAUSE
 			}
 
-			if (ImGui::Button("Send To Brazil"))
+			if (ImGui::Button("Crash Event"))
 			{
-				g_fiber_pool->queue_job([]
+				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					toxic::send_island(g.selected_player.id);
-				});
-			}	
+					toxic::crash_event(g.selected_player.id);
+				}
+				QUEUE_JOB_END_CLAUSE
+			}
+
+			ImGui::SameLine();
+
+			if (ImGui::Button("Crash (ped)"))
+			{
+				QUEUE_JOB_BEGIN_CLAUSE()
+				{
+					Ped player = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g.selected_player.id);
+					Vector3 location = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(player, .0, 8.0, .5);
+					Ped ped = entity::spawn_ped("slod_human", location);
+					//notify::player_crashing(g.selected_player.id);
+
+					std::this_thread::sleep_for(1000ms);
+
+					notify::above_map("removing ped");
+					PED::DELETE_PED(&ped);
+				}
+				QUEUE_JOB_END_CLAUSE
+			}
+
+			if (ImGui::Button("SoundSpam"))
+			{
+				QUEUE_JOB_BEGIN_CLAUSE()
+				{
+					toxic::SoundSpam(g.selected_player.id);
+				}
+				QUEUE_JOB_END_CLAUSE
+			}
 
 			ImGui::SameLine();
 
 			if (ImGui::Button("Send To Brazil"))
 			{
-				g_fiber_pool->queue_job([]
-					{
-						toxic::send_island(g.selected_player.id);
-					});
+				QUEUE_JOB_BEGIN_CLAUSE()
+				{
+					toxic::SendToIsland(g.selected_player.id);
+				}
+				QUEUE_JOB_END_CLAUSE
+			}	
+
+			if (ImGui::Button("10K Baunty"))
+			{
+				QUEUE_JOB_BEGIN_CLAUSE()
+				{
+					toxic::bounty_player(g.selected_player.id, PLAYER::PLAYER_ID(), 10000);
+				}
+				QUEUE_JOB_END_CLAUSE
 			}
+
+			ImGui::SameLine();
+
+			if (ImGui::Button("Interior"))
+			{
+				QUEUE_JOB_BEGIN_CLAUSE()
+				{
+					toxic::ForceMission(g.selected_player.id);
+				}
+				QUEUE_JOB_END_CLAUSE
+			}
+
+			ImGui::Checkbox("Freeze", &g.player.freezing);
+
+			/*if (ImGui::Button("Teleport To Apartment"))
+			{
+				g_fiber_pool->queue_job([]
+				{
+					toxic::Teleport(g.selected_player.id);
+				});
+			}*/
+
+
+
 
 			ImGui::EndTabItem();
 		}

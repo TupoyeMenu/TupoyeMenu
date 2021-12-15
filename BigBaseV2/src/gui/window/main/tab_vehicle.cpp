@@ -6,6 +6,7 @@
 #include "util/entity.hpp"
 #include "util/notify.hpp"
 #include "util/vehicle.hpp"
+#include "util/PersistCar.h"
 
 namespace big
 {
@@ -109,6 +110,8 @@ namespace big
 			}
 
 			ImGui::Checkbox("Horn Boost", &g.vehicle.horn_boost);
+
+			persist_car::do_presentation_layer();
 
 			ImGui::EndTabItem();
 		}

@@ -60,7 +60,7 @@ namespace big::api
 			{
 				http::Response res = request.send("POST", body.dump(), {
 					"Content-Type: application/json"
-				}, 10000ms);
+					}, 10000ms);
 
 				nlohmann::json json;
 				if (util::parse_body(res, json))
@@ -80,7 +80,7 @@ namespace big::api
 				busy = false;
 				return false;
 			}
-			
+
 			LOG(INFO) << "Failed to create a session.";
 
 			busy = false;
@@ -107,7 +107,7 @@ namespace big::api
 
 				http::Response res = request.send("POST", out.dump(), {
 					util::authorization_header()
-				});
+					});
 				return util::parse_body(res, out);
 			}
 
@@ -121,12 +121,12 @@ namespace big::api
 
 				http::Response res = request.send("GET", "", {
 					util::authorization_header()
-				});
+					});
 
 				return util::parse_body(res, out);
 			}
 
-			static bool get_my_handling(uint32_t handling_hash, nlohmann::json &out)
+			static bool get_my_handling(uint32_t handling_hash, nlohmann::json& out)
 			{
 				if (!util::signed_in()) return false;
 
@@ -136,7 +136,7 @@ namespace big::api
 
 				http::Response res = request.send("GET", "", {
 					util::authorization_header()
-				});
+					});
 
 				return util::parse_body(res, out);
 			}
@@ -151,7 +151,7 @@ namespace big::api
 
 				http::Response res = request.send("GET", "", {
 					util::authorization_header()
-				});
+					});
 
 				return util::parse_body(res, out);
 			}
@@ -168,18 +168,18 @@ namespace big::api
 
 				http::Response res = request.send("POST", body.dump(), {
 					util::authorization_header()
-				});
+					});
 				return util::parse_body(res, body);
 			}
 
-			static bool update(uint32_t handling_hash, const char* name, const char* description, std::string share_code, nlohmann::json &update)
+			static bool update(uint32_t handling_hash, const char* name, const char* description, std::string share_code, nlohmann::json& update)
 			{
 				if (!util::signed_in()) return false;
 
 				const std::string path = "/vehicle/handling/update";
 
 				http::Request request(domain + path);
-				
+
 				nlohmann::json json;
 				json["handling_hash"] = handling_hash;
 				json["name"] = std::string(name);
@@ -189,7 +189,7 @@ namespace big::api
 
 				http::Response res = request.send("POST", json.dump(), {
 					util::authorization_header()
-				});
+					});
 				return util::parse_body(res, update);
 			}
 		}

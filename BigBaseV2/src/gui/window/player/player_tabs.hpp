@@ -11,5 +11,6 @@ namespace big
 		static void tab_teleport();
 		static void tab_toxic();
 		static void tab_player_weapon();
+		static void tab_player_explosions();
 	};
 }
