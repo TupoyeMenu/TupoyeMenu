@@ -12,7 +12,7 @@ workspace "BigBaseV2"
   outputdir = "%{cfg.buildcfg}"
 
   IncludeDir = {}
-  IncludeDir["fmtlib"] = "vendor/fmtlib/include"
+  IncludeDir["fmtlib"] = ".vendor/fmtlib/include"
   IncludeDir["json"] = "vendor/json/single_include"
   IncludeDir["MinHook"] = "vendor/MinHook/include"
   IncludeDir["ImGui"] = "vendor/ImGui"

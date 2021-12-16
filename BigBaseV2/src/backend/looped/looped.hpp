@@ -34,6 +34,7 @@ namespace big
 		static void vehicle_god_mode();
 		static void vehicle_horn_boost();
 		static void vehicle_speedo_meter();
+		static void vehicle_flares();
 
 		static void weapons_cage_gun();
 		static void weapons_delete_gun();
@@ -42,10 +43,5 @@ namespace big
 		static void weapons_steal_vehicle_gun();
 		static void weapons_vehicle_gun();
 		static void weapons_superhot();
-
-		static void vehicle_god_mode();
-		static void vehicle_horn_boost();
-		static void vehicle_flares();
-		static void vehicle_speedo_meter();
 	};
 }
