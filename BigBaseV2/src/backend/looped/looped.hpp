@@ -30,6 +30,11 @@ namespace big
 		static void system_update_pointers();
 		static void system_screen_size();
 
+		static void vehicle_despawn_bypass();
+		static void vehicle_god_mode();
+		static void vehicle_horn_boost();
+		static void vehicle_speedo_meter();
+
 		static void weapons_cage_gun();
 		static void weapons_delete_gun();
 		static void weapons_gravity_gun();
