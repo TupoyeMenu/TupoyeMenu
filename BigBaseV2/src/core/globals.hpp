@@ -25,11 +25,6 @@ struct globals {
 	};
 
 	struct protections {
-		struct replay_interface {
-			bool attach = false;
-			bool cage = true;
-		};
-
 		struct script_events {
 			bool bounty = true;
 			bool ceo_ban = true;
@@ -50,7 +45,6 @@ struct globals {
 			bool vehicle_kick = true;
 		};
 
-		replay_interface replay_interface{};
 		script_events script_events{};
 	};
 
@@ -68,10 +62,23 @@ struct globals {
 		bool never_wanted = false;
 		bool noclip = false;
 		bool no_ragdoll = false;
+		bool super_run = false;
 		int wanted_level = 0;
 		float run_speed = 1.f;
 
 		frame_flags frame_flags{};
+	};
+
+	struct spoofing
+	{
+		bool spoof_username = false;
+		std::string username = "";
+
+		bool spoof_ip = true;
+		int ip_address[4] = { 42, 42, 42, 42};
+
+		bool spoof_rockstar_id = false;
+		uint64_t rockstar_id = 0;
 	};
 
 	struct vehicle {
@@ -101,6 +108,7 @@ struct globals {
 	};
 
 	struct window {
+		bool debug = false;
 		bool handling = false;
 		bool log = false;
 		bool main = true;
@@ -120,6 +128,7 @@ struct globals {
 	player player{};
 	protections protections{};
 	self self{};
+	spoofing spoofing{};
 	vehicle vehicle{};
 	weapons weapons{};
 	window window{};
@@ -152,11 +161,21 @@ struct globals {
 		this->self.off_radar = j["self"]["off_radar"];
 		this->self.never_wanted = j["self"]["never_wanted"];
 		this->self.no_ragdoll = j["self"]["no_ragdoll"];
+		this->self.super_run = j["self"]["super_run"];
 
 		this->self.frame_flags.explosive_ammo = j["self"]["frame_flags"]["explosive_ammo"];
 		this->self.frame_flags.explosive_melee = j["self"]["frame_flags"]["explosive_melee"];
 		this->self.frame_flags.fire_ammo = j["self"]["frame_flags"]["fire_ammo"];
 		this->self.frame_flags.super_jump = j["self"]["frame_flags"]["super_jump"];
+
+		this->spoofing.spoof_ip = j["spoofing"]["spoof_ip"];
+		this->spoofing.spoof_rockstar_id = j["spoofing"]["spoof_rockstar_id"];
+		this->spoofing.spoof_username = j["spoofing"]["spoof_username"];
+
+		for (int i = 0; i < 4; i++)
+			this->spoofing.ip_address[i] = j["spoofing"]["ip_address"].at(i);
+		this->spoofing.rockstar_id = j["spoofing"]["rockstar_id"];
+		this->spoofing.username = j["spoofing"]["username"];
 
 		this->vehicle.god_mode = j["vehicle"]["god_mode"];
 		this->vehicle.horn_boost = j["vehicle"]["horn_boost"];
@@ -168,6 +187,7 @@ struct globals {
 
 		this->weapons.custom_weapon = (CustomWeapon)j["weapons"]["custom_weapon"];
 
+		this->window.debug = j["window"]["debug"];
 		this->window.handling = j["window"]["handling"];
 		this->window.log = j["window"]["log"];
 		this->window.main = j["window"]["main"];
@@ -180,12 +200,6 @@ struct globals {
 			{
 				"protections",
 				{
-					{
-						"replay_interface", {
-							{ "attach", this->protections.replay_interface.attach },
-							{ "cage", this->protections.replay_interface.cage }
-						}
-					},
 					{
 						"script_events", {
 							{ "bounty", this->protections.script_events.bounty },
@@ -222,6 +236,7 @@ struct globals {
 					{ "off_radar", this->self.off_radar },
 					{ "never_wanted", this->self.never_wanted },
 					{ "no_ragdoll", this->self.no_ragdoll },
+					{ "super_run", this->self.super_run },
 
 					{
 						"frame_flags", {
@@ -231,6 +246,21 @@ struct globals {
 							{ "super_jump", this->self.frame_flags.super_jump }
 						}
 					}
+				}
+			},
+			{
+				"spoofing", {
+					{ "spoof_ip", this->spoofing.spoof_ip },
+					{ "spoof_rockstar_id", this->spoofing.spoof_rockstar_id },
+					{ "spoof_username", this->spoofing.spoof_username },
+					{ "ip_address", nlohmann::json::array({
+						this->spoofing.ip_address[0],
+						this->spoofing.ip_address[1],
+						this->spoofing.ip_address[2],
+						this->spoofing.ip_address[3] })
+					},
+					{ "rockstar_id", this->spoofing.rockstar_id },
+					{ "username", this->spoofing.username }
 				}
 			},
 			{
@@ -254,6 +284,7 @@ struct globals {
 			},
 			{
 				"window", {
+					{ "debug", this->window.debug },
 					{ "handling", this->window.handling },
 					{ "log", this->window.log },
 					{ "main", this->window.main },
@@ -290,9 +321,13 @@ struct globals {
 		try
 		{
 			file >> this->options;
+
+			file.close();
 		}
 		catch (const std::exception&)
 		{
+			file.close();
+
 			LOG(WARNING) << "Detected corrupt settings, writing default config...";
 
 			this->write_default_config();
@@ -330,12 +365,12 @@ private:
 
 				should_save = true;
 			}
-			else if (current_settings[key].is_structured() && e.value().is_structured())
+			else if (current_settings[key].is_object() && e.value().is_object())
 			{
 				if (deep_compare(current_settings[key], e.value(), compare_value))
 					should_save = true;
 			}
-			else if (!current_settings[key].is_structured() && e.value().is_structured()) {
+			else if (!current_settings[key].is_object() && e.value().is_object()) {
 				current_settings[key] = e.value();
 
 				should_save = true;

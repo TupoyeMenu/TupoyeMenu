@@ -29,11 +29,6 @@ namespace big
 
 		QUEUE_JOB_BEGIN_CLAUSE()
 		{
-			looped::protections_replay_interface();
-		}QUEUE_JOB_END_CLAUSE
-
-		QUEUE_JOB_BEGIN_CLAUSE()
-		{
 			looped::tunables_disable_phone();
 			looped::tunables_no_idle_kick();
 			looped::tunables_no_spam_help();
@@ -49,6 +44,7 @@ namespace big
 			looped::self_police();
 			looped::self_run_speed();
 			looped::self_no_ragdoll();
+			looped::self_super_run();
 		}QUEUE_JOB_END_CLAUSE
 
 		QUEUE_JOB_BEGIN_CLAUSE()

@@ -23,7 +23,18 @@ namespace big
 		static LRESULT wndproc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 		static BOOL set_cursor_pos(int x, int y);
 
-		static void disable_error_screen(char* entryHeader, char* entryLine1, int instructionalKey, char* entryLine2, BOOL p4, Any p5, Any* p6, Any* p7, BOOL background);
+		static void set_warning_message_with_header(
+			const char* entryHeader,
+			const char* entryLine1,
+			int instructionalKey,
+			const char* entryLine2,
+			bool p4,
+			Any p5,
+			Any* showBackground,
+			Any* p7,
+			bool p8,
+			Any p9
+		);
 
 		static rage::eThreadState gta_thread_tick(GtaThread* a1, unsigned int a2);
 		static rage::eThreadState gta_thread_kill(GtaThread* thread);
@@ -42,10 +53,8 @@ namespace big
 			int64_t bit_buffer
 		);
 
-		static bool report_cash_spawn_handler(__int64 creport_cash_spawn_event, CNetGamePlayer* source_player);
-		static void report_myself_event_handler(__int64 a1, unsigned int a2, unsigned int a3, unsigned int a4);
-
 		static bool scripted_game_event(CScriptedGameEvent* scripted_game_event, CNetGamePlayer* player);
+		static bool send_net_info_to_lobby(netPlayerData* player, int64_t a2, int64_t a3, DWORD* a4);
 	};
 
 	struct minhook_keepalive
@@ -87,10 +96,8 @@ namespace big
 
 		detour_hook m_received_event_hook;
 
-		detour_hook m_report_cash_spawn_event_hook;
-		detour_hook m_report_myself_event_sender_hook;
-
 		detour_hook m_scripted_game_event_hook;
+		detour_hook m_send_net_info_to_lobby;
 	};
 
 	inline hooking *g_hooking{};

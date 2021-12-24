@@ -13,14 +13,12 @@ namespace big::functions
 	using register_file_t = uint32_t * (*)(int*, const char*, bool, const char*, bool);
 	using get_script_handle_t = int64_t(*)(int64_t);
 
-	using error_screen = void(char* entryHeader, char* entryLine1, int instructionalKey, char* entryLine2, BOOL p4, Any p5, Any* p6, Any* p7, BOOL background);
-
 	using get_net_game_player = CNetGamePlayer*(Player player);
 
 	using gta_thread_tick = __int64(GtaThread* a1, unsigned int a2);
 	using gta_thread_kill = __int64(GtaThread* a1);
 
-	using trigger_script_event = int(int unk0, int* args, int argCount, int bitFlags);
+	using trigger_script_event = void(int event_group, int* args, int arg_count, int player_bits);
 
 	using increment_stat_event = bool(uint64_t net_event_struct, int64_t sender, int64_t a3);
 
@@ -43,8 +41,4 @@ namespace big::functions
 	// Received Event Signatures END
 
 	using spectate_player = bool(bool toggle, Ped player);
-
-	// Net Event Handlers
-	using report_cash_spawn = bool(__int64 creport_cash_spawn_event, CNetGamePlayer* source_player);
-	using report_myself_event_sender = void(__int64 a1, unsigned int a2, unsigned int a3, unsigned int a4);
 }

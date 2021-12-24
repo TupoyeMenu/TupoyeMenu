@@ -14,7 +14,7 @@ namespace big
 			if (ImGui::BeginMenu("Info"))
 			{
 				ImGui::MenuItem("Logged in as:", NULL, false, false);
-				ImGui::MenuItem(g_local_player == nullptr || g_local_player->m_player_info == nullptr ? "unknown" : g_local_player->m_player_info->m_name, NULL, false, false);
+				ImGui::MenuItem(g_local_player == nullptr || g_local_player->m_player_info == nullptr ? "unknown" : g_local_player->m_player_info->m_net_player_data.m_name, NULL, false, false);
 
 				ImGui::EndMenu();
 			}
@@ -62,6 +62,7 @@ namespace big
 				ImGui::MenuItem("Main", nullptr, &g.window.main);
 				ImGui::MenuItem("Players", nullptr, &g.window.users);
 				ImGui::MenuItem("Logs", nullptr, &g.window.log);
+				ImGui::MenuItem("Debug", nullptr, &g.window.debug);
 
 				ImGui::EndMenu();
 			}

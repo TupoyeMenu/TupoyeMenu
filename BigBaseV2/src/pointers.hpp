@@ -52,7 +52,7 @@ namespace big
 		PVOID m_native_return;
 		PVOID m_is_dlc_present;
 
-		functions::error_screen* m_error_screen{};
+		PVOID m_error_screen{};
 
 		functions::get_net_game_player* m_get_net_game_player{};
 
@@ -71,11 +71,9 @@ namespace big
 		functions::send_event_ack* m_send_event_ack{};
 		// Received Event Signatures END
 
-		functions::spectate_player* m_spectate_player{};
+		PVOID m_send_net_info_to_lobby{};
 
-		// Net Event Handlers
-		functions::report_cash_spawn* m_report_cash_spawn{};
-		functions::report_myself_event_sender* m_report_myself_sender{};
+		functions::spectate_player* m_spectate_player{};
 	};
 
 	inline pointers *g_pointers{};

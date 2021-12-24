@@ -12,10 +12,11 @@ workspace "BigBaseV2"
   outputdir = "%{cfg.buildcfg}"
 
   IncludeDir = {}
-  IncludeDir["fmtlib"] = ".vendor/fmtlib/include"
+  IncludeDir["fmtlib"] = "vendor/fmtlib/include"
   IncludeDir["json"] = "vendor/json/single_include"
   IncludeDir["MinHook"] = "vendor/MinHook/include"
   IncludeDir["ImGui"] = "vendor/ImGui"
+  IncludeDir["ImGuiImpl"] = "vendor/ImGui/examples"
   IncludeDir["g3log"] = "vendor/g3log/src"
   IncludeDir["GTAV_Classes"] = "vendor/GTAV-Classes"
   
@@ -73,6 +74,7 @@ workspace "BigBaseV2"
     files
     {
       "vendor/%{prj.name}/imgui.cpp",
+      "vendor/%{prj.name}/imgui_demo.cpp",
       "vendor/%{prj.name}/imgui_draw.cpp",
       "vendor/%{prj.name}/imgui_tables.cpp",
       "vendor/%{prj.name}/imgui_widgets.cpp",
@@ -99,8 +101,7 @@ workspace "BigBaseV2"
     files
     {
       "vendor/%{prj.name}/include/**.h",
-      "vendor/%{prj.name}/src/format.cc",
-	  "vendor/%{prj.name}/src/os.cc"
+      "vendor/%{prj.name}/src/**.cc"
     }
 
     includedirs

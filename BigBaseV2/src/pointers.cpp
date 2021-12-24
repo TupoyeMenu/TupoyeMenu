@@ -169,12 +169,6 @@ namespace big
 			m_spectate_player = ptr.as<decltype(m_spectate_player)>();
 		});
 
-		// Report Cash Spawn Handler
-		main_batch.add("RCSH", "40 53 48 83 EC 20 48 8B D9 48 85 D2 74 29", [this](memory::handle ptr)
-		{
-			m_report_cash_spawn = ptr.as<decltype(m_report_cash_spawn)>();
-		});
-
 		// Scripted Game Event Handler
 		main_batch.add("SGEH", "40 53 48 81 EC ? ? ? ? 44 8B 81 ? ? ? ? 4C 8B CA 41 8D 40 FF 3D ? ? ? ? 77 42", [this](memory::handle ptr)
 		{
@@ -204,12 +198,6 @@ namespace big
 				m_ptr_to_handle = ptr.as<functions::ptr_to_handle_t>();
 			});
 
-		// Report Myself Event Sender
-		main_batch.add("RMES", "E8 ? ? ? ? 41 8B 47 0C 39 43 20", [this](memory::handle ptr)
-		{
-			m_report_myself_sender = ptr.as<decltype(m_report_myself_sender)>();
-		});
-
 		// Blame Explode
 		main_batch.add("BE", "0F 85 ? ? ? ? 48 8B 05 ? ? ? ? 48 8B 48 08 E8", [this](memory::handle ptr)
 		{
@@ -220,6 +208,12 @@ namespace big
 		main_batch.add("IDP", "48 89 5C 24 ? 57 48 83 EC ? 81 F9", [this](memory::handle ptr)
 		{
 			m_is_dlc_present = ptr.as<decltype(m_is_dlc_present)>();
+		});
+
+		// Send NET Info to Lobby
+		main_batch.add("SNITL", "44 8B 6C 24 ? 45 8B C6 48 8D 4E 70 41 8B D5 45 2B C5 4C 8D 4C 24 ? 03 D5 44 2B C5 49 03 D4 E8 ? ? ? ? 84 C0 74 69", [this](memory::handle ptr)
+		{
+			m_send_net_info_to_lobby = ptr.sub(0x64).as<decltype(m_send_net_info_to_lobby)>();
 		});
 		
 		main_batch.add("Register File", "40 88 7C 24 ? E8 ? ? ? ? 0F B7 44 24 ?", [this](memory::handle ptr)
