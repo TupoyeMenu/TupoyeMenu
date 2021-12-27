@@ -46,8 +46,6 @@ namespace big::toxic
 			*script_global(1921036 + 9).as<int*>(),
 			*script_global(1921036 + 10).as<int*>()
 		};
-
-		g_pointers->m_trigger_script_event(1, args, arg_count, -1);
 	}
 
 	inline void ceo_kick(Player target)
