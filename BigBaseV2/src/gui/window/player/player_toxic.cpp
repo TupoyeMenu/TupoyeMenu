@@ -115,14 +115,15 @@ namespace big
 
 			ImGui::Checkbox("Freeze", &g.player.freezing);
 
-			/*if (ImGui::Button("Teleport To Apartment"))
+			/*
+			if (ImGui::Button("Teleport To Apartment"))
 			{
 				g_fiber_pool->queue_job([]
 				{
 					toxic::Teleport(g.selected_player.id);
 				});
-			}*/
-
+			}
+			*/
 
 
 

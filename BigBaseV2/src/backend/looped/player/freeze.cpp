@@ -7,7 +7,6 @@ namespace big
 
 	void looped::player_freeze()
 	{
-		/*
 		if (!g.selected_player.is_online || !g.player.freezing)
 		{
 			return;
@@ -16,6 +15,5 @@ namespace big
 		Ped target = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g.selected_player.id);
 
 		TASK::CLEAR_PED_TASKS_IMMEDIATELY(target);
-		*/
 	}
 }

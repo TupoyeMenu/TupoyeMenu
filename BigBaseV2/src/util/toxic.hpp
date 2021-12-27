@@ -99,11 +99,5 @@ namespace big::toxic
 		g_pointers->m_trigger_script_event(1, args, arg_count, 1 << target);
 	}
 
-	inline void Teleport(Player target)
-	{
-		const size_t arg_count = 4;
-		int args[4] = { (int)eRemoteEvent::Teleport , PLAYER::PLAYER_ID(), 1, 5 };
 
-		g_pointers->m_trigger_script_event(1, args, arg_count, 1 << target);
-	}
 }

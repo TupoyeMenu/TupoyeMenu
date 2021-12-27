@@ -175,4 +175,12 @@ namespace big::teleport
 		}
 		return true;
 	}
+
+	inline void Teleport_To_Appartment(Player target)
+	{
+		const size_t arg_count = 4;
+		int args[4] = { (int)eRemoteEvent::Teleport , target, 1, 5 };
+
+		g_pointers->m_trigger_script_event(1, args, arg_count, 1 << PLAYER::PLAYER_ID());
+	}
 }

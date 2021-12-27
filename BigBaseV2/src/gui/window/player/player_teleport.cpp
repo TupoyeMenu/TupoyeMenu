@@ -58,7 +58,13 @@ namespace big
 				}QUEUE_JOB_END_CLAUSE
 			}
 
-
+			if (ImGui::Button("Teleport To Appartment"))
+			{
+				QUEUE_JOB_BEGIN_CLAUSE()
+				{
+					teleport::Teleport_To_Appartment(g.selected_player.id);
+				}QUEUE_JOB_END_CLAUSE
+			}
 
 			ImGui::EndTabItem();
 		}
