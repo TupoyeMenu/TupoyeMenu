@@ -22,17 +22,22 @@ namespace big
 
 			if (ImGui::TreeNode("General"))
 			{
+				ImGui::BeginGroup();
+
 				ImGui::Checkbox("God Mode", &g.self.godmode);
-				ImGui::SameLine();
 				ImGui::Checkbox("Off Radar", &g.self.off_radar);
-				ImGui::SameLine();
 				ImGui::Checkbox("Free Cam", &g.self.free_cam);
-				
+
+				ImGui::EndGroup();
+				ImGui::SameLine();
+				ImGui::BeginGroup();
+
 				ImGui::Checkbox("No Clip", &g.self.noclip);
-				ImGui::SameLine();
 				ImGui::Checkbox("No Ragdoll", &g.self.no_ragdoll);
-				ImGui::SameLine();
 				ImGui::Checkbox("Super Run", &g.self.super_run);
+
+				ImGui::EndGroup();
+
 				ImGui::Text("Run Speed");
 				ImGui::SliderFloat("###Run Speed", &g.self.run_speed, 0.f, 50.f);
 				
@@ -41,13 +46,19 @@ namespace big
 
 			if (ImGui::TreeNode("Frame Flags"))
 			{
+				ImGui::BeginGroup();
+
 				ImGui::Checkbox("Explosive Ammo", &g.self.frame_flags.explosive_ammo);
-				ImGui::SameLine();
 				ImGui::Checkbox("Fire Ammo", &g.self.frame_flags.fire_ammo);
 
-				ImGui::Checkbox("Explosive Melee", &g.self.frame_flags.explosive_melee);
+				ImGui::EndGroup();
 				ImGui::SameLine();
+				ImGui::BeginGroup();
+
+				ImGui::Checkbox("Explosive Melee", &g.self.frame_flags.explosive_melee);
 				ImGui::Checkbox("Super Jump", &g.self.frame_flags.super_jump);
+				
+				ImGui::EndGroup();
 
 				ImGui::TreePop();
 			}
@@ -99,8 +110,10 @@ namespace big
 
 				if (!g.self.never_wanted)
 				{
+					ImGui::Checkbox("Force Wanted Level", &g.self.force_wanted_level);
 					ImGui::Text("Wanted Level");
-					ImGui::SliderInt("###wanted_level", &g.self.wanted_level, 0, 5);
+					if (ImGui::SliderInt("###wanted_level", &g.self.wanted_level, 0, 5) && !g.self.force_wanted_level)
+						g_local_player->m_player_info->m_wanted_level = g.self.wanted_level;
 				}
 
 				ImGui::TreePop();
