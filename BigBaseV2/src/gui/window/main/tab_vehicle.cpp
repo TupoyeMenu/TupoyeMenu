@@ -18,25 +18,13 @@ namespace big
 		{
 			if (ImGui::TreeNode("General"))
 			{
+				ImGui::BeginGroup();
 				ImGui::Checkbox("God Mode", &g.vehicle.god_mode);
+				ImGui::Checkbox("Horn Boost", &g.vehicle.horn_boost);
+
+				ImGui::EndGroup();
 				ImGui::SameLine();
-
-				if (ImGui::Button("Bring Personal Vehicle"))
-				{
-					QUEUE_JOB_BEGIN_CLAUSE()
-					{
-						Vector3 location;
-
-						if (!blip::get_blip_location(location, 225, 0) && !blip::get_blip_location(location, 226, 0)) return notify::above_map("No personal vehicle found, was it destroyed?");
-
-						Vehicle veh = vehicle::get_closest_to_location(location, 2.f);
-						if (ENTITY::IS_ENTITY_DEAD(veh, false)) return notify::above_map("Invalid vehicle handle...");
-
-						location = ENTITY::GET_ENTITY_COORDS(PLAYER::PLAYER_PED_ID(), true);
-
-						vehicle::bring(veh, location);
-					}QUEUE_JOB_END_CLAUSE
-				}
+				ImGui::BeginGroup();
 
 				if (ImGui::Button("Repair"))
 				{
@@ -47,10 +35,9 @@ namespace big
 						vehicle::repair(veh);
 					}QUEUE_JOB_END_CLAUSE
 				}
-				ImGui::SameLine();
-
 				if (ImGui::Button("Handling"))
 					g.window.handling = true;
+				ImGui::EndGroup();
 
 				if (ImGui::Button("Add Explosive"))
 				{
@@ -70,9 +57,36 @@ namespace big
 				ImGui::TreePop();
 			}
 
+			if (ImGui::TreeNode("LS Customs"))
+			{
+				if (ImGui::Button("Start LS Customs"))
+				{
+					g.vehicle.ls_customs = true;
+				}
+
+				ImGui::TreePop();
+			}
+
 			if (ImGui::TreeNode("Speedo Meter"))
 			{
 				SpeedoMeter selected = g.vehicle.speedo_meter.type;
+
+				ImGui::Text("Type:");
+				if (ImGui::BeginCombo("###speedo_type", speedo_meters[(int)selected].name))
+				{
+					for (const speedo_meter& speedo : speedo_meters)
+					{
+						if (ImGui::Selectable(speedo.name, speedo.id == selected))
+						{
+							g.vehicle.speedo_meter.type = speedo.id;
+						}
+
+						if (speedo.id == selected)
+							ImGui::SetItemDefaultFocus();
+					}
+
+					ImGui::EndCombo();
+				}
 
 				ImGui::Text("Position");
 
@@ -87,29 +101,9 @@ namespace big
 
 				ImGui::Checkbox("Left Sided", &g.vehicle.speedo_meter.left_side);
 
-				ImGui::Separator();
-
-				ImGui::Text("Type:");
-				if (ImGui::BeginCombo("###speedo_type", speedo_meters[(int)selected].name))
-				{
-					for (const speedo_meter &speedo : speedo_meters)
-					{
-						if (ImGui::Selectable(speedo.name, speedo.id == selected))
-						{
-							g.vehicle.speedo_meter.type = speedo.id;
-						}
-
-						if (speedo.id == selected)
-							ImGui::SetItemDefaultFocus();
-					}
-
-					ImGui::EndCombo();
-				}
-
 				ImGui::TreePop();
 			}
 
-			ImGui::Checkbox("Horn Boost", &g.vehicle.horn_boost);
 
 			persist_car::do_presentation_layer();
 

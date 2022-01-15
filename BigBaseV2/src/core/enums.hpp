@@ -15,13 +15,14 @@ namespace big
 
 	enum eVehicleFlags
 	{
-		ACTIVE = 1 << 0,
+		TRIGGER_SPAWN_TOGGLE = 1 << 0,
 		DESTROYED = 1 << 1,
 		HAS_INSURANCE = 1 << 2,
+		UNK0 = 1 << 3,
 		IMPOUNDED = 1 << 6,
 		UNK1 = 1 << 10,
-		UNK2 = 1 << 11,
-		UNK3 = 1 << 16
+		SPAWN_AT_MORS_MUTUAL = 1 << 11,
+		UNK2 = 1 << 16
 	};
 	
     static char* exlosions[] =
