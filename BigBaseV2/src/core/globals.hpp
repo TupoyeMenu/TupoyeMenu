@@ -74,6 +74,17 @@ struct globals {
 		frame_flags frame_flags{};
 	};
 
+	struct settings {
+		struct hotkeys
+		{
+			bool editing_menu_toggle = false;
+			int menu_toggle = VK_INSERT;
+			int teleport_waypoint = 0;
+		};
+
+		hotkeys hotkeys{};
+	};
+
 	struct spoofing
 	{
 		bool spoof_username = false;
@@ -100,6 +111,7 @@ struct globals {
 		bool horn_boost = false;
 		bool flares = false;
 		bool ls_customs = false; // don't save this to disk
+		bool pv_teleport_into = false;
 		speedo_meter speedo_meter{};
 	};
 
@@ -135,6 +147,7 @@ struct globals {
 	player player{};
 	protections protections{};
 	self self{};
+	settings settings{};
 	spoofing spoofing{};
 	vehicle vehicle{};
 	weapons weapons{};
@@ -177,6 +190,8 @@ struct globals {
 		this->self.frame_flags.fire_ammo = j["self"]["frame_flags"]["fire_ammo"];
 		this->self.frame_flags.super_jump = j["self"]["frame_flags"]["super_jump"];
 
+		this->settings.hotkeys.menu_toggle = j["settings"]["hotkeys"]["menu_toggle"];
+
 		this->spoofing.spoof_ip = j["spoofing"]["spoof_ip"];
 		this->spoofing.spoof_rockstar_id = j["spoofing"]["spoof_rockstar_id"];
 		this->spoofing.spoof_username = j["spoofing"]["spoof_username"];
@@ -188,6 +203,7 @@ struct globals {
 
 		this->vehicle.god_mode = j["vehicle"]["god_mode"];
 		this->vehicle.horn_boost = j["vehicle"]["horn_boost"];
+		this->vehicle.pv_teleport_into = j["vehicle"]["pv_teleport_into"];
 
 		this->vehicle.speedo_meter.type = (SpeedoMeter)j["vehicle"]["speedo_meter"]["type"];
 		this->vehicle.speedo_meter.left_side = j["vehicle"]["speedo_meter"]["left_side"];
@@ -264,6 +280,14 @@ struct globals {
 				}
 			},
 			{
+				"settings", {
+					{ "hotkeys", {
+							{ "menu_toggle", this->settings.hotkeys.menu_toggle }
+						}
+					}
+				}
+			},
+			{
 				"spoofing", {
 					{ "spoof_ip", this->spoofing.spoof_ip },
 					{ "spoof_rockstar_id", this->spoofing.spoof_rockstar_id },
@@ -282,6 +306,7 @@ struct globals {
 				"vehicle", {
 					{ "god_mode", this->vehicle.god_mode },
 					{ "horn_boost", this->vehicle.horn_boost },
+					{ "pv_teleport_into", this->vehicle.pv_teleport_into },
 					{
 						"speedo_meter", {
 							{ "type", (int)this->vehicle.speedo_meter.type },
