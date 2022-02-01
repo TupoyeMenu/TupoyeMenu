@@ -36,8 +36,14 @@ namespace big
 			Any p9
 		);
 
+		static GtaThread* gta_thread_start(unsigned int** a1, unsigned int a2);
 		static rage::eThreadState gta_thread_tick(GtaThread* a1, unsigned int a2);
 		static rage::eThreadState gta_thread_kill(GtaThread* thread);
+
+		static void network_player_mgr_shutdown(CNetworkPlayerMgr* _this);
+
+		static void player_join(CNetworkObjectMgr* _this, CNetGamePlayer* net_player);
+		static void player_leave(CNetworkObjectMgr* _this, CNetGamePlayer* net_player);
 
 		static bool increment_stat_event(CNetworkIncrementStatEvent* net_event_struct, CNetGamePlayer* sender, int64_t a3);
 		static bool is_dlc_present(Hash dlc_hash);
@@ -54,7 +60,7 @@ namespace big
 		);
 
 		static bool scripted_game_event(CScriptedGameEvent* scripted_game_event, CNetGamePlayer* player);
-		static bool send_net_info_to_lobby(netPlayerData* player, int64_t a2, int64_t a3, DWORD* a4);
+		static bool send_net_info_to_lobby(rage::netPlayerData* player, int64_t a2, int64_t a3, DWORD* a4);
 	};
 
 	struct minhook_keepalive
@@ -73,14 +79,13 @@ namespace big
 		void enable();
 		void disable();
 
-		std::list<script_hook*> m_native_hooks;
-		std::unordered_map<rage::scrNativeHash, rage::scrNativeHandler> m_natives;
 	private:
 		bool m_enabled{};
 		minhook_keepalive m_minhook_keepalive;
 
 		vmt_hook m_swapchain_hook;
-		WNDPROC m_og_wndproc;
+
+		WNDPROC m_og_wndproc = nullptr;
 		detour_hook m_set_cursor_pos_hook;
 
 		detour_hook m_run_script_threads_hook;
@@ -88,8 +93,14 @@ namespace big
 
 		detour_hook m_error_screen_hook;
 
+		detour_hook m_gta_thread_start_hook;
 		detour_hook m_gta_thread_tick_hook;
 		detour_hook m_gta_thread_kill_hook;
+
+		detour_hook m_network_player_mgr_shutdown_hook;
+
+		detour_hook m_player_has_joined_hook;
+		detour_hook m_player_has_left_hook;
 
 		detour_hook m_increment_stat_hook;
 		detour_hook m_is_dlc_present_hook;

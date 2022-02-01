@@ -21,7 +21,11 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					toxic::blame_explode_player(g.selected_player.id, g.selected_player.id, eExplosionType::PLANE, 1000, false, true, 0.f);
+					toxic::blame_explode_player(
+						g_player_service->m_selected_player->id(),
+						g_player_service->m_selected_player->id(),
+						eExplosionType::PLANE, 1000, false, true, 0.f
+					);
 				}QUEUE_JOB_END_CLAUSE
 			}*/
 
@@ -30,7 +34,7 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					NETWORK::NETWORK_SESSION_KICK_PLAYER(g.selected_player.id);
+					NETWORK::NETWORK_SESSION_KICK_PLAYER(g_player_service->m_selected_player->id());
 				}
 				QUEUE_JOB_END_CLAUSE
 			}
@@ -41,7 +45,7 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					toxic::kick(g.selected_player.id);
+					toxic::kick(g_player_service->m_selected_player->id());
 				}
 				QUEUE_JOB_END_CLAUSE
 			}
@@ -50,7 +54,7 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					toxic::crash_event(g.selected_player.id);
+					toxic::crash_event(g_player_service->m_selected_player->id());
 				}
 				QUEUE_JOB_END_CLAUSE
 			}
@@ -61,10 +65,10 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					Ped player = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g.selected_player.id);
+					Ped player = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g_player_service->m_selected_player->id());
 					Vector3 location = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(player, .0, 8.0, .5);
 					Ped ped = entity::spawn_ped("slod_human", location);
-					//notify::player_crashing(g.selected_player.id);
+					//notify::player_crashing(g_player_service->m_selected_player->id());
 
 					std::this_thread::sleep_for(1000ms);
 
@@ -78,7 +82,7 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					toxic::SoundSpam(g.selected_player.id);
+					toxic::SoundSpam(g_player_service->m_selected_player->id());
 				}
 				QUEUE_JOB_END_CLAUSE
 			}
@@ -89,7 +93,7 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					toxic::SendToIsland(g.selected_player.id);
+					toxic::SendToIsland(g_player_service->m_selected_player->id());
 				}
 				QUEUE_JOB_END_CLAUSE
 			}	
@@ -98,7 +102,7 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					toxic::bounty_player(g.selected_player.id, PLAYER::PLAYER_ID(), 10000);
+					toxic::bounty_player(g_player_service->m_selected_player->id(), PLAYER::PLAYER_ID(), 10000);
 				}
 				QUEUE_JOB_END_CLAUSE
 			}
@@ -109,7 +113,7 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					toxic::ForceMission(g.selected_player.id);
+					toxic::ForceMission(g_player_service->m_selected_player->id());
 				}
 				QUEUE_JOB_END_CLAUSE
 			}
@@ -121,7 +125,7 @@ namespace big
 			{
 				g_fiber_pool->queue_job([]
 				{
-					toxic::Teleport(g.selected_player.id);
+					toxic::Teleport(g_player_service->m_selected_player->id());
 				});
 			}
 			*/

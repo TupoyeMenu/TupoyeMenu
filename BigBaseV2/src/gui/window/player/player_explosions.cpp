@@ -18,7 +18,7 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					toxic::blame_explode_player(g.selected_player.id, g.selected_player.id, g.weapons.expl_selected, 0, g.weapons.isAudible, g.weapons.isInvisible, 0.f);
+					toxic::blame_explode_player(g_player_service->m_selected_player->id(), g_player_service->m_selected_player->id(), g.weapons.expl_selected, 0, g.weapons.isAudible, g.weapons.isInvisible, 0.f);
 				}QUEUE_JOB_END_CLAUSE
 			}
 			ImGui::SameLine();

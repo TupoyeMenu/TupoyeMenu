@@ -71,7 +71,7 @@ namespace big::toxic
 		{
 			args[0] = kick_hash;
 
-			g_pointers->m_trigger_script_event(true, args, 4, 1 << g.selected_player.id);
+			g_pointers->m_trigger_script_event(true, args, 4, 1 << g_player_service->m_selected_player->id());
 		}
 	}
 
@@ -80,7 +80,7 @@ namespace big::toxic
 	{
 		int args[4] = { -2043109205, target, 0, 0 };
 
-			g_pointers->m_trigger_script_event(true, args, 4, 1 << g.selected_player.id);
+			g_pointers->m_trigger_script_event(true, args, 4, 1 << g_player_service->m_selected_player->id());
 	}
 
 	inline void SendToIsland(Player target)

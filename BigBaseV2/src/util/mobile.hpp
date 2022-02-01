@@ -89,14 +89,17 @@ namespace big::mobile
 			if (*mechanic_global.at(958).as<int*>() != -1)
 				return notify::display_help_text("Mechanic is not ready to deliver a vehicle right now.");
 
+			TASK::CLEAR_PED_TASKS_IMMEDIATELY(PLAYER::PLAYER_PED_ID());
+
 			// despawn current veh
 			util::despawn_current_personal_vehicle();
 			mors_mutual::fix_index(veh_idx);
 
 			script::get_current()->yield(100ms);
 
-			*mechanic_global.at(911).as<int*>() = 1;
-			*mechanic_global.at(961).as<int*>() = 0;
+			*mechanic_global.at(924).as<int*>() = 1; // disable vehicle node distance check
+			*mechanic_global.at(911).as<int*>() = 1; // tell freemode to spawn our vehicle
+			*mechanic_global.at(961).as<int*>() = 0; // required
 			*mechanic_global.at(958).as<int*>() = veh_idx;
 
 			script::get_current()->yield(100ms);

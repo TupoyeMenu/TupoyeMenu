@@ -1,5 +1,6 @@
 #pragma once
 #include "common.hpp"
+#include "CNetworkPlayerMgr.hpp"
 #include "gta/fwddec.hpp"
 #include "gta/enums.hpp"
 #include "gta/replay.hpp"
@@ -20,8 +21,9 @@ namespace big
 		eGameState *m_game_state{};
 		bool *m_is_session_started{};
 
-		CPedFactory **m_ped_factory{};
-		CNetworkPlayerMgr **m_network_player_mgr{};
+		CPedFactory** m_ped_factory{};
+		CNetworkPlayerMgr** m_network_player_mgr{};
+		CNetworkObjectMgr** m_network_object_mgr{};
 
 		rage::CReplayInterface** m_replay_interface{};
 		functions::ptr_to_handle_t m_ptr_to_handle{};
@@ -56,8 +58,14 @@ namespace big
 
 		functions::get_net_game_player* m_get_net_game_player{};
 
-		functions::gta_thread_tick* m_gta_thread_tick{};
-		functions::gta_thread_kill* m_gta_thread_kill{};
+		PVOID m_gta_thread_start{};
+		PVOID m_gta_thread_tick{};
+		PVOID m_gta_thread_kill{};
+
+		PVOID m_network_player_mgr_shutdown;
+
+		PVOID m_player_has_joined{};
+		PVOID m_player_has_left{};
 
 		functions::increment_stat_event* m_increment_stat_event{};
 

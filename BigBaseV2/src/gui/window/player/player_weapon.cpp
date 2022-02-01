@@ -21,7 +21,7 @@ namespace big
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
 					Hash hash = MISC::GET_HASH_KEY(weapon_name);
-					WEAPON::GIVE_DELAYED_WEAPON_TO_PED(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g.selected_player.id), hash, 1000, 1);
+					WEAPON::GIVE_DELAYED_WEAPON_TO_PED(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g_player_service->m_selected_player->id()), hash, 1000, 1);
 				}QUEUE_JOB_END_CLAUSE
 			}
 
@@ -32,14 +32,14 @@ namespace big
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
 					Hash hash = MISC::GET_HASH_KEY(weapon_name);
-					WEAPON::REMOVE_WEAPON_FROM_PED(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g.selected_player.id), hash);
+					WEAPON::REMOVE_WEAPON_FROM_PED(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g_player_service->m_selected_player->id()), hash);
 				}QUEUE_JOB_END_CLAUSE
 			}
 			if (ImGui::Button("Remove Corret Weapon"))
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					Ped ped = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g.selected_player.id);
+					Ped ped = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g_player_service->m_selected_player->id());
 					Hash hash = WEAPON::GET_SELECTED_PED_WEAPON(ped);
 					WEAPON::REMOVE_WEAPON_FROM_PED(ped, hash);
 				}QUEUE_JOB_END_CLAUSE

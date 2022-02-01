@@ -12,7 +12,7 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					teleport::to_player(g.selected_player.id);
+					teleport::to_player(g_player_service->m_selected_player->id());
 				}QUEUE_JOB_END_CLAUSE
 			}
 
@@ -22,7 +22,7 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g.selected_player.id), false);
+					Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g_player_service->m_selected_player->id()), false);
 
 					teleport::into_vehicle(veh);
 				}QUEUE_JOB_END_CLAUSE
@@ -34,7 +34,7 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					Player player = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g.selected_player.id);
+					Player player = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g_player_service->m_selected_player->id());
 					teleport::parachute_to_entity(player);
 				}QUEUE_JOB_END_CLAUSE
 			}
@@ -44,7 +44,7 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					teleport::bring_player(g.selected_player.id);
+					teleport::bring_player(g_player_service->m_selected_player->id());
 				}QUEUE_JOB_END_CLAUSE
 			} //godmode_kill
 
@@ -54,7 +54,7 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					teleport::godmode_kill(g.selected_player.id);
+					teleport::godmode_kill(g_player_service->m_selected_player->id());
 				}QUEUE_JOB_END_CLAUSE
 			}
 
@@ -62,7 +62,7 @@ namespace big
 			{
 				QUEUE_JOB_BEGIN_CLAUSE()
 				{
-					teleport::Teleport_To_Appartment(g.selected_player.id);
+					teleport::Teleport_To_Appartment(g_player_service->m_selected_player->id());
 				}QUEUE_JOB_END_CLAUSE
 			}
 

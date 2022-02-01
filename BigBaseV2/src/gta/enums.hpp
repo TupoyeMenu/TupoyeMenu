@@ -1,11 +1,6 @@
 #pragma once
 #include <cstdint>
 
-enum class eGameState : std::uint32_t
-{
-	Playing = 0
-};
-
 constexpr auto MAX_PLAYERS = 32;
 
 enum class ControllerInputs : std::uint32_t

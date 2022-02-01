@@ -8,6 +8,7 @@ namespace big
 {
 	void vehicle_helper::add_clan_logo_to_vehicle(Vehicle vehicle, Ped ped)
 	{
+		/*
 		rage::vector3 x, y, z;
 		float scale;
 		Hash modelHash = ENTITY::GET_ENTITY_MODEL(vehicle);
@@ -21,6 +22,7 @@ namespace big
 			if (y.z >= 0.0f)
 				GRAPHICS::ADD_VEHICLE_CREW_EMBLEM(vehicle, ped, ENTITY::GET_ENTITY_BONE_INDEX_BY_NAME(vehicle, "chassis_dummy"), x.x * -1.0f, x.y, x.z, y.x * -1.0f, y.y, y.z, z.x * -1.0f, z.y * -1.0f, z.z, scale, 1, alpha);
 		}
+		*/
 	}
 
 	void vehicle_helper::set_mp_parameters_for_vehicle(Vehicle vehicle)

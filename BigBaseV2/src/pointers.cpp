@@ -99,16 +99,22 @@ namespace big
 			 memset(incompatible_version, 0x90, 0x165CF03 - 0x165CEE5);
 		});
 
+		// GTA Thread Start
+		main_batch.add("GTS", "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC 20 8B FA 85 D2 75 2A 8B 15", [this](memory::handle ptr)
+		{
+			m_gta_thread_start = ptr.as<PVOID>();
+		});
+
 		// Thread Thick
 		main_batch.add("TT", "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC 20 80 B9 ? ? ? ? ? 8B FA 48 8B D9 74 05", [this](memory::handle ptr)
 		{
-			m_gta_thread_tick = ptr.as<decltype(m_gta_thread_tick)>();
+			m_gta_thread_tick = ptr.as<PVOID>();
 		});
 
 		// Thread Kill
 		main_batch.add("TK", "48 89 5C 24 ? 57 48 83 EC 20 48 83 B9 ? ? ? ? ? 48 8B D9 74 14", [this](memory::handle ptr)
 		{
-			m_gta_thread_kill = ptr.as<decltype(m_gta_thread_kill)>();
+			m_gta_thread_kill = ptr.as<PVOID>();
 		});
 
 		// Increment Stat Event
@@ -214,6 +220,30 @@ namespace big
 		main_batch.add("SNITL", "44 8B 6C 24 ? 45 8B C6 48 8D 4E 70 41 8B D5 45 2B C5 4C 8D 4C 24 ? 03 D5 44 2B C5 49 03 D4 E8 ? ? ? ? 84 C0 74 69", [this](memory::handle ptr)
 		{
 			m_send_net_info_to_lobby = ptr.sub(0x64).as<decltype(m_send_net_info_to_lobby)>();
+		});
+
+		// CNetworkObjectMgr
+		main_batch.add("CNOM", "48 8B 0D ? ? ? ? 45 33 C0 E8 ? ? ? ? 33 FF 4C 8B F0", [this](memory::handle ptr)
+		{
+			m_network_object_mgr = ptr.add(3).rip().as<CNetworkObjectMgr**>();
+		});
+
+		// Player Has Joined
+		main_batch.add("PHJ", "48 8B CA 48 8B F2 FF 50 18 4C 8D 05", [this](memory::handle ptr)
+		{
+			m_player_has_joined = ptr.sub(0x26).as<PVOID>();
+		});
+
+		// Player Has Left
+		main_batch.add("PHL", "4C 8B F1 48 8B CA 48 8B EA FF 50 18 4C 8D 05", [this](memory::handle ptr)
+		{
+			m_player_has_left = ptr.sub(0x26).as<PVOID>();
+		});
+
+		// Network Player Mgr Shutdown
+		main_batch.add("NPMS", "41 57 48 81 EC ? ? ? ? 8A 81 ? ? ? ? 48", [this](memory::handle ptr)
+		{
+			m_network_player_mgr_shutdown = ptr.sub(0x17).as<PVOID>();
 		});
 		
 		main_batch.add("Register File", "40 88 7C 24 ? E8 ? ? ? ? 0F B7 44 24 ?", [this](memory::handle ptr)
