@@ -48,14 +48,15 @@ namespace big
 		static void overlay();
 		static void pie_menu();
 		static void score_controller();
-		static void chat();
+		//static void chat();
+		static void lua_editor();
 
 		static void always()
 		{
 			esp::draw();
 			context_menu();
 			notifications();
-			chat();
+			//chat();
 			if (g->window.overlay)
 				overlay();
 			if (g->pie_menu.active)

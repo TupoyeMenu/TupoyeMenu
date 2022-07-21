@@ -10,6 +10,7 @@ namespace big
 			view::navigation();
 			view::players();
 			view::active_view();
+			view::lua_editor();
 		}
 		view::debug_c();
 		view::menu_bar();

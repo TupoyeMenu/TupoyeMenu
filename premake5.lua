@@ -130,6 +130,28 @@ workspace "BigBaseV2"
 		DeclareMSVCOptions()
 		DeclareDebugOptions()
    
+   project "Pluto"
+		location "vendor/%{prj.name}"
+		kind "StaticLib"
+		language "C++"
+
+		targetdir ("bin/lib/" .. outputdir)
+		objdir ("bin/lib/int/" .. outputdir .. "/%{prj.name}")
+
+		files
+		{
+			"vendor/%{prj.name}/src/**.cpp",
+			"vendor/%{prj.name}/src/**.h"
+		}
+
+		includedirs
+		{
+			"vendor/%{prj.name}/src"
+		}
+
+		DeclareMSVCOptions()
+		DeclareDebugOptions()
+   
 	project "ImGui"
 		location "vendor/%{prj.name}"
 		kind "StaticLib"
@@ -204,7 +226,8 @@ workspace "BigBaseV2"
 		    "vendor/GTAV-Classes",
 		    "vendor/ImGui",
 		    "vendor/json/single_include",
-		    "vendor/MinHook/include"
+		    "vendor/MinHook/include",
+			"vendor/Pluto/src"
 		}
 
 		libdirs
@@ -217,7 +240,8 @@ workspace "BigBaseV2"
 		    "fmtlib",
 		    "g3log",
 		    "ImGui",
-		    "MinHook"
+		    "MinHook",
+		    "Pluto"
 		}
 
 		pchheader "common.hpp"

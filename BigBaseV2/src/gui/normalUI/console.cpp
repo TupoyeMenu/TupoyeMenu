@@ -10,7 +10,6 @@
 #include "fiber_pool.hpp"
 #include "util/scripts.hpp"
 #include "util/session.hpp"
-#include "script_global.hpp"
 #include "core/data/explosion_types.hpp"
 
 namespace big
