@@ -10,6 +10,78 @@ namespace big
 {
 	void view::vehicle_fun()
 	{
+		static std::map<int, bool> seats;
+		static bool ready = true;
+
+		if (self::veh == 0)
+		{
+			seats.clear();
+		}
+
+		if (self::veh != 0 && ready == true)
+		{
+			ready = false;
+
+			g_fiber_pool->queue_job([] {
+
+				std::map<int, bool> tmp_seats;
+
+				Hash model = ENTITY::GET_ENTITY_MODEL(self::veh);
+				int num_of_seats = VEHICLE::GET_VEHICLE_MODEL_NUMBER_OF_SEATS(model);
+
+				for (int i = -1; i < num_of_seats - 1; i++)
+				{
+					tmp_seats[i] = VEHICLE::IS_VEHICLE_SEAT_FREE(self::veh, i, true);
+				}
+
+				seats = tmp_seats;
+				ready = true;
+			});
+		}
+
+
+		components::small_text("Seat Changer");
+
+		if (seats.size() == 0)
+		{
+			ImGui::Text("Please enter a vehicle.");
+		}
+		else
+		{
+			for (auto& it : seats)
+			{
+				int idx = it.first;
+
+				if (!it.second)
+				{
+					ImGui::BeginDisabled();
+				}
+
+				std::string name = "Driver";
+
+				if (idx >= 0)
+				{
+					name = "Seat " + std::to_string(idx + 1);
+				}
+
+				if ((idx + 1) % 4 != 0) {
+					ImGui::SameLine();
+				}
+
+				components::button(name, [idx] {
+					PED::SET_PED_INTO_VEHICLE(self::ped, self::veh, idx);
+				});
+				if (!it.second)
+				{
+					ImGui::EndDisabled();
+				}
+			}
+		}
+
+		ImGui::Separator();
+
+
+
 		components::small_text("Auto Drive");
 
 		components::button("Drive To Waypoint", [] {
@@ -63,31 +135,41 @@ namespace big
 
 		components::small_text("Rainbow Paint");
 
-		ImGui::SetNextItemWidth(120);
-		if (ImGui::BeginCombo("RGB Type", vehicle::rgb_types[g->vehicle.rainbow_paint]))
-		{
-			for (int i = 0; i < 3; i++)
+		ImGui::Checkbox("Primary", &g->vehicle.rainbow_primary);
+		ImGui::SameLine();
+		ImGui::Checkbox("Secondary", &g->vehicle.rainbow_secondary);
+		ImGui::SameLine();
+		ImGui::Checkbox("Neon", &g->vehicle.rainbow_neon);
+		ImGui::SameLine();
+		ImGui::Checkbox("Smoke", &g->vehicle.rainbow_smoke);
+
+		if (g->vehicle.rainbow_primary || g->vehicle.rainbow_neon || g->vehicle.rainbow_secondary || g->vehicle.rainbow_smoke) {
+			ImGui::SetNextItemWidth(120);
+			if (ImGui::BeginCombo("RGB Type", vehicle::rgb_types[g->vehicle.rainbow_paint]))
 			{
-				bool itemSelected = g->vehicle.rainbow_paint == i;
-
-				if (ImGui::Selectable(vehicle::rgb_types[i], itemSelected))
+				for (int i = 0; i < 3; i++)
 				{
-					g->vehicle.rainbow_paint = i;
+					bool itemSelected = g->vehicle.rainbow_paint == i;
+
+					if (ImGui::Selectable(vehicle::rgb_types[i], itemSelected))
+					{
+						g->vehicle.rainbow_paint = i;
+					}
+
+					if (itemSelected)
+					{
+						ImGui::SetItemDefaultFocus();
+					}
 				}
 
-				if (itemSelected)
-				{
-					ImGui::SetItemDefaultFocus();
-				}
+				ImGui::EndCombo();
 			}
-
-			ImGui::EndCombo();
-		}
-		if (g->vehicle.rainbow_paint != 0)
-		{
-			ImGui::SameLine();
-			ImGui::SetNextItemWidth(150);
-			ImGui::SliderInt("RGB Speed", &g->rgb.speed, 1, 10);
+			if (g->vehicle.rainbow_paint != 0)
+			{
+				ImGui::SameLine();
+				ImGui::SetNextItemWidth(150);
+				ImGui::SliderInt("RGB Speed", &g->rgb.speed, 1, 10);
+			}
 		}
 
 		ImGui::Separator();

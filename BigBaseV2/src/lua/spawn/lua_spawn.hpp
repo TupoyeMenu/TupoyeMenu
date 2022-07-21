@@ -2,7 +2,7 @@
 
 namespace lua_scripts
 {
-	static int lua_spawn_vehicle(lua_State* L) // Veh spawn(Hash hash, Vector3 location, float heading, bool is_networked = true)
+	static int lua_spawn_vehicle(lua_State* L) // Veh spawn(Hash hash, Vector3 location, float heading, bool is_networked = true) // Gay studio shows an error here but compiles fine
 	{
 		Hash hash = rage::joaat(lua_tostring(L, 1));
 		float x = (float)lua_tonumber(L, 2);
@@ -11,10 +11,8 @@ namespace lua_scripts
 		float heading = (float)lua_tonumber(L, 5);
 		bool networked = lua_toboolean(L, 5);
 
-		big::g_fiber_pool->queue_job([hash, x, y, z, heading, networked, L] {
-			Vehicle veh = big::vehicle::spawn(hash, Vector3(x, y, z), heading, networked);
-			lua_pushnumber(L, veh);
-		});
+		Vehicle veh = big::vehicle::spawn(hash, Vector3(x, y, z), heading, networked);
+		lua_pushnumber(L, veh);
 
 		return 1;
 	}
@@ -27,10 +25,8 @@ namespace lua_scripts
 		float heading = (float)lua_tonumber(L, 5);
 		bool networked = lua_toboolean(L, 5);
 
-		big::g_fiber_pool->queue_job([x, y, z, heading, networked, L] {
-			Ped ped = big::ped::spawn(lua_tostring(L, 1), Vector3(x, y, z), heading, networked);
-			lua_pushnumber(L, ped);
-		});
+		Ped ped = big::ped::spawn(lua_tostring(L, 1), Vector3(x, y, z), heading, networked);
+		lua_pushnumber(L, ped);
 
 		return 1;
 	}
