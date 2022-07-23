@@ -54,14 +54,6 @@ namespace big
 		return nullptr;
 	}
 
-	player_ptr player_service::get_by_player_id(uint8_t player_id) const
-	{
-		for (const auto& [name, player] : m_players)
-			if (player->get_net_game_player()->m_player_id == player_id)
-				return player;
-		return nullptr;
-	}
-
 	player_ptr player_service::get_selected() const
 	{
 		return m_selected_player;

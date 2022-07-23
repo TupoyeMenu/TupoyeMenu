@@ -9,7 +9,7 @@ namespace lua_scripts::player
 	{
 		if (lua_isinteger(L, 1) && lua_isnumber(L, 2) && lua_isnumber(L, 3) && lua_isnumber(L, 4))
 		{
-			lua_pushboolean(L, teleport::teleport_player((int)lua_tointeger(L, 1), Vector3((float)lua_tonumber(L, 2), (float)lua_tonumber(L, 3), (float)lua_tonumber(L, 4))));
+			lua_pushboolean(L, teleport::teleport_player((uint8_t)lua_tointeger(L, 1), Vector3((float)lua_tonumber(L, 2), (float)lua_tonumber(L, 3), (float)lua_tonumber(L, 4))));
 		}
 		return 1;
 	}
@@ -18,7 +18,7 @@ namespace lua_scripts::player
 	{
 		if (lua_isinteger(L, 1))
 		{
-			toxic::taze_player((int)lua_tointeger(L, 1));
+			toxic::taze_player((uint8_t)lua_tointeger(L, 1));
 		}
 		return 0;
 	}
@@ -27,16 +27,17 @@ namespace lua_scripts::player
 	{
 		if (lua_isinteger(L, 1) && lua_isinteger(L, 2))
 		{
-			toxic::bounty_player((int)lua_tointeger(L, 1), (int)lua_tointeger(L, 2));
+			toxic::bounty_player((uint8_t)lua_tointeger(L, 1), (int)lua_tointeger(L, 2));
 		}
 		return 0;
 	}
 
+	/*
 	static int lua_desync_kick(lua_State* L)
 	{
 		if (lua_isinteger(L, 1))
 		{
-			CNetGamePlayer* target = g_player_service->get_by_player_id((int)lua_tointeger(L, 1))->get_net_game_player();
+			CNetGamePlayer* target = g_player_service->get_by_player_id((uint8_t)lua_tointeger(L, 1))->get_net_game_player();
 			toxic::desync_kick(target);
 		}
 		return 0;
@@ -46,7 +47,7 @@ namespace lua_scripts::player
 	{
 		if (lua_isinteger(L, 1))
 		{
-			bool host = g_player_service->get_by_player_id((int)lua_tointeger(L, 1))->is_host();
+			bool host = g_player_service->get_by_player_id((uint8_t)lua_tointeger(L, 1))->is_host();
 			lua_pushboolean(L, host);
 		}
 		return 1;
@@ -56,7 +57,7 @@ namespace lua_scripts::player
 	{
 		if (lua_isinteger(L, 1))
 		{
-			bool _friend = g_player_service->get_by_player_id((int)lua_tointeger(L, 1))->is_friend();
+			bool _friend = g_player_service->get_by_player_id((uint8_t)lua_tointeger(L, 1))->is_friend();
 			lua_pushboolean(L, _friend);
 		}
 		return 1;
@@ -66,7 +67,7 @@ namespace lua_scripts::player
 	{
 		if (lua_isinteger(L, 1))
 		{
-			uint64_t rid = g_player_service->get_by_player_id((int)lua_tointeger(L, 1))->get_net_data()->m_rockstar_id2;
+			uint64_t rid = g_player_service->get_by_player_id((uint8_t)lua_tointeger(L, 1))->get_net_data()->m_rockstar_id2;
 			lua_pushinteger(L, rid);
 		}
 		return 1;
@@ -76,7 +77,7 @@ namespace lua_scripts::player
 	{
 		if (lua_isinteger(L, 1))
 		{
-			rage::netPlayerData* player = g_player_service->get_by_player_id((int)lua_tointeger(L, 1))->get_net_data();
+			rage::netPlayerData* player = g_player_service->get_by_player_id((uint8_t)lua_tointeger(L, 1))->get_net_data();
 			lua_pushinteger(L, player->m_external_ip.m_field1);
 			lua_pushinteger(L, player->m_external_ip.m_field2);
 			lua_pushinteger(L, player->m_external_ip.m_field3);
@@ -84,6 +85,9 @@ namespace lua_scripts::player
 		}
 		return 4;
 	}
+	*/ 
+	// I have no idea how to fix this
+	// TODO: fix this fucking crash
 
 	int luaopen_player(lua_State* L)
 	{
@@ -92,11 +96,11 @@ namespace lua_scripts::player
 			{"teleport", lua_teleport },
 			{"taze", lua_taze },
 			{"bounty", lua_bounty },
-			{"desync_kick", lua_desync_kick },
-			{"is_host", lua_is_host },
-			{"is_friend", lua_is_friend },
-			{"get_rid", lua_get_rid },
-			{"get_ip", lua_get_ip },
+			//{"desync_kick", lua_desync_kick },
+			//{"is_host", lua_is_host },
+			//{"is_friend", lua_is_friend },
+			//{"get_rid", lua_get_rid },
+			//{"get_ip", lua_get_ip },
 			{NULL, NULL}
 		};
 

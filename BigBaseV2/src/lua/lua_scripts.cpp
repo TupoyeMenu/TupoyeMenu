@@ -73,6 +73,12 @@ namespace lua_scripts
 		const char* appdata = std::getenv("appdata");
 		setLuaPath(L, fmt::format("{}/BigBaseV2/lua/?.lua", appdata).c_str());
 
+		int r = luaL_dofile(lua_scripts::L, fmt::format("{}/BigBaseV2/lua/autoexec.lua", appdata).c_str());
+		if (!r == LUA_OK) {
+			const char* errmsg = lua_tostring(lua_scripts::L, -1);
+			LOG(WARNING) << errmsg;
+		}
+		
 		lua_pop(L, 1);
 		return L;
 	}
