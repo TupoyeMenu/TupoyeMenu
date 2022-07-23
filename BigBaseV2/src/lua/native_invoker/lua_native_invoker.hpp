@@ -108,9 +108,9 @@ namespace lua_scripts
 
 		lua_createtable(L, 0, 3);
 
-		lua_pushstring(L, "x");
+		lua_pushstring(L, "x"); // is very stupid
 		lua_pushnumber(L, out.x);
-		lua_settable(L, -3);  /* 3rd element from the stack top */
+		lua_settable(L, -3);
 
 		lua_pushstring(L, "y");
 		lua_pushnumber(L, out.y);

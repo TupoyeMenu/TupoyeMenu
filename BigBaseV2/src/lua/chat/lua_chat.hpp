@@ -16,7 +16,6 @@ namespace lua_scripts
 	{
 		static const struct luaL_Reg chat[] =
 		{
-			//{"on_message", lua_on_message}, // chat.on_message(function(packet_sender, message_sender, text, team_chat) end)
 			{"send_message", lua_send_message}, // chat.send_message(char text, bool local)
 			{NULL, NULL}
 		};

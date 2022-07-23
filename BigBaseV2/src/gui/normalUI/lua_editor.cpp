@@ -13,10 +13,9 @@ namespace big
     {
 		if (ImGui::Begin("Lua editor"))
 		{
-			const char* text = "";
 
 			//ImGui::InputTextMultiline("##code", text, IM_ARRAYSIZE(text), ImVec2(-FLT_MIN, ImGui::GetTextLineHeight() * 20));
-
+			/*
 			static TextEditor editor;
 
 			editor.SetShowWhitespaces(false);
@@ -31,20 +30,31 @@ namespace big
 					PAD::DISABLE_ALL_CONTROL_ACTIONS(0);
 				});
 
-			text = editor.GetText().c_str();
+			text = editor.GetText().c_str();*/
 
-			components::button("Start", [text]
+			components::button("test", []
 			{
-				lua_State* L = luaL_newstate();
-				lua_scripts::init(L);
-				int r = luaL_dostring(L, text);
+				lua_getglobal(lua_scripts::L, "hook");
+				lua_getfield(lua_scripts::L, -1, "Call");
+				lua_pushstring(lua_scripts::L, "on_player_left");
+				lua_pushstring(lua_scripts::L, "name");
+				lua_pushinteger(lua_scripts::L, 8);
+				lua_pushinteger(lua_scripts::L, 83);
+				if (lua_pcall(lua_scripts::L, 4, 0, 0))
+				{
+					LOG(INFO) << lua_tostring(lua_scripts::L, -1);
+					lua_pop(lua_scripts::L, 1);
+				}
+			});
+
+			components::button("Start", []
+			{
+				const char* appdata = std::getenv("appdata");
+				int r = luaL_dofile(lua_scripts::L, fmt::format("{}/BigBaseV2/lua/autoexec.lua", appdata).c_str());
 				if (!r == LUA_OK) {
-					const char* errmsg = lua_tostring(L, -1);
+					const char* errmsg = lua_tostring(lua_scripts::L, -1);
 					LOG(WARNING) << errmsg;
 				}
-
-				lua_pop(L, 1);
-				lua_close(L);
 			});
 
 		}

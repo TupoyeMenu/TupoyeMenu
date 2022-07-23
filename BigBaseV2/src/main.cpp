@@ -24,6 +24,8 @@
 #include "services/vehicle_preview/vehicle_preview_service.hpp"
 #include "services/vehicle/vehicle_service.hpp"
 
+#include "lua/lua_scripts.hpp"
+
 BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 {
 	using namespace big;
@@ -113,8 +115,22 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 					ASILoader::Initialize();
 					LOG(INFO) << "ASI Loader initialized.";
 
+					g_fiber_pool->queue_job([]
+					{
+						lua_scripts::L = lua_scripts::init();
+						/*int r = luaL_dostring(L, text);
+						if (!r == LUA_OK) {
+							const char* errmsg = lua_tostring(L, -1);
+							LOG(WARNING) << errmsg;
+						}*/
+					});
+					LOG(INFO) << "Lua initialized.";
+
 					while (g_running)
 						std::this_thread::sleep_for(500ms);
+
+					lua_close(lua_scripts::L);
+					LOG(INFO) << "Lua uninitialized.";
 
 					shv_runner::shutdown();
 					LOG(INFO) << "ASI plugins unloaded.";

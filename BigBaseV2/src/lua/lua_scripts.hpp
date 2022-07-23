@@ -5,5 +5,6 @@
 
 namespace lua_scripts
 {
-	void init(lua_State *L);
+	extern lua_State* L;
+	lua_State* init();
 }
