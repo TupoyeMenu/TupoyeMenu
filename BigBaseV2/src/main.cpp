@@ -9,7 +9,7 @@
 #include "script_mgr.hpp"
 #include "thread_pool.hpp"
 #include "shv_runner.h"
-#include "asi_loader/asi_loader.h"
+#include "asi_loader/asi_scripts.h"
 
 #include "backend/backend.hpp"
 #include "native_hooks/native_hooks.hpp"
@@ -115,7 +115,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 					ASILoader::Initialize();
 					LOG(INFO) << "ASI Loader initialized.";
 
-					g_fiber_pool->queue_job([]
+					/*g_fiber_pool->queue_job([]
 					{
 						lua_scripts::L = lua_scripts::init();
 						/*int r = luaL_dostring(L, text);
@@ -123,14 +123,14 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 							const char* errmsg = lua_tostring(L, -1);
 							LOG(WARNING) << errmsg;
 						}*/
-					});
-					LOG(INFO) << "Lua initialized.";
+					//});
+					//LOG(INFO) << "Lua initialized.";
 
 					while (g_running)
 						std::this_thread::sleep_for(500ms);
 
-					lua_close(lua_scripts::L);
-					LOG(INFO) << "Lua uninitialized.";
+					//lua_close(lua_scripts::L);
+					//LOG(INFO) << "Lua uninitialized.";
 
 					shv_runner::shutdown();
 					LOG(INFO) << "ASI plugins unloaded.";

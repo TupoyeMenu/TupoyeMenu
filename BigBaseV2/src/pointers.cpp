@@ -346,7 +346,7 @@ namespace big
 		// END SHV
 
 		// Chat Receive
-		main_batch.add("CR", "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC", [this](memory::handle ptr)
+		main_batch.add("CR", "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC 30 49 8B F8 44 8B", [this](memory::handle ptr)
 		{
 			m_chat_receive = ptr.as<__int64*>();
 		});

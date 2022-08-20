@@ -17,7 +17,7 @@ namespace big
         LOG(INFO) << PlayerID->get_net_data()->m_rockstar_id2 << ", " << PlayerID->get_net_data()->m_name << ", " << msg << ", " << IsTeam;
 
         //Lua
-        lua_getglobal(lua_scripts::L, "hook");
+        /*lua_getglobal(lua_scripts::L, "hook");
         lua_getfield(lua_scripts::L, -1, "Call");
         lua_pushstring(lua_scripts::L, "on_chat_message");
         lua_pushstring(lua_scripts::L, msg);
@@ -25,7 +25,7 @@ namespace big
         lua_pushinteger(lua_scripts::L, PlayerID->get_net_data()->m_rockstar_id2);
         lua_pushstring(lua_scripts::L, &IsTeam);
         lua_pcall(lua_scripts::L, 5, 0, 0);
-        //
+        */
 
         return g_hooking->m_chat_message_received_hook.get_original<decltype(&chat_receive)>()(chat_pointer, unk2, peerId, msg, IsTeam);
     }

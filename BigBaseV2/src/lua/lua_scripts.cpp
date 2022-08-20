@@ -64,11 +64,11 @@ namespace lua_scripts
 		lua_getglobal(L, "_G");
 		luaL_openlibs(L);
 		lua_register(L, "print", lua_print);
-		luaL_requiref(L, "spawn", luaopen_spawn, true);
-		luaL_requiref(L, "native_invoker", luaopen_native_invoker, true);
-		luaL_requiref(L, "util", luaopen_util, true);
-		luaL_requiref(L, "chat", luaopen_chat, true);
-		luaL_requiref(L, "player", player::luaopen_player, true);
+		//luaL_requiref(L, "spawn", luaopen_spawn, true);
+		//luaL_requiref(L, "native_invoker", luaopen_native_invoker, true);
+		//luaL_requiref(L, "util", luaopen_util, true);
+		//luaL_requiref(L, "chat", luaopen_chat, true);
+		//luaL_requiref(L, "player", player::luaopen_player, true);
 
 		const char* appdata = std::getenv("appdata");
 		setLuaPath(L, fmt::format("{}/BigBaseV2/lua/?.lua", appdata).c_str());
