@@ -4,6 +4,7 @@
 #include "api/api.hpp"
 #include "looped/looped.hpp"
 #include "services/context_menu/context_menu_service.hpp"
+#include "services/anti_cheat/anti_cheat_service.hpp"
 
 namespace big
 {
@@ -13,7 +14,8 @@ namespace big
 			g->attempt_save();
 			looped::system_self_globals();
 			looped::system_update_pointers();
-			looped::system_disable_sigscanner();
+			looped::system_disable_model_spawn_bypass();
+			looped::system_desync_kick_protection();
 
 			if (g_local_player != nullptr && !api::util::signed_in())
 			{
@@ -23,6 +25,16 @@ namespace big
 				});
 			}
 			script::get_current()->yield();
+		}
+	}
+
+	void backend::anti_cheat()
+	{
+		LOG(INFO) << "Starting Anti-Cheat";
+		while (g_running) {
+			looped::anti_cheat();
+
+			script::get_current()->yield(20s);
 		}
 	}
 
@@ -76,8 +88,8 @@ namespace big
 
 		while (g_running)
 		{
-			looped::vehicle_auto_drive_to_waypoint();
-			looped::vehicle_auto_drive_wander();
+			looped::vehicle_auto_drive();
+			looped::vehicle_boost_behavior();
 			looped::vehicle_despawn_bypass();
 			looped::vehicle_drive_on_water();
 			looped::vehicle_god_mode();
@@ -85,9 +97,9 @@ namespace big
 			looped::vehicle_jump();
 			looped::vehicle_instant_brake();
 			looped::vehicle_is_targetable();
-			looped::vehicle_rainbow_paint();
 			looped::vehicle_seatbelt();
 			looped::vehicle_speedo_meter();
+			looped::vehicle_remove_speed_limit();
 
 			looped::vehicle_chaff();
 			looped::vehicle_bombs();
@@ -104,19 +116,6 @@ namespace big
 		while (g_running)
 		{
 			looped::vehicle_turn_signals();
-
-			script::get_current()->yield();
-		}
-	}
-
-	void backend::rgbrandomizer_loop()
-	{
-		LOG(INFO) << "Starting script: rgbrandomizer";
-
-		while (g_running)
-		{
-			looped::rgb_synced_fade();
-			looped::rgb_synced_spasm();
 
 			script::get_current()->yield();
 		}
@@ -178,6 +177,18 @@ namespace big
 		while (g_running)
 		{
 			looped::vehicle_ls_customs();
+
+			script::get_current()->yield();
+		}
+	}
+
+	void backend::rainbowpaint_loop()
+	{
+		LOG(INFO) << "Starting script: Rainbow paint";
+
+		while (g_running)
+		{
+			looped::vehicle_rainbow_paint();
 
 			script::get_current()->yield();
 		}

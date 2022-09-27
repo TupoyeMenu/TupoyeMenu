@@ -4,6 +4,10 @@
 #include "gta/player.hpp"
 #include "gta/natives.hpp"
 #include "gta/replay.hpp"
+#include "network/stubs.hpp"
+#include "network/CNetComplaintMgr.hpp"
+#include "network/Network.hpp"
+#include "rage/rlSessionByGamerTaskResult.hpp"
 
 namespace big::functions
 {
@@ -42,9 +46,18 @@ namespace big::functions
 
 	using get_script_handle_t = int64_t(*)(int64_t);
 
-	using chat_player_id = CNetGamePlayer * (__int64 a1, __int64* a2, __int64 a3);
+	using get_net_player_from_unk = CNetGamePlayer*(__int64);
 
 	using send_chat_message = bool(__int64 ptr, __int64 peerId, const char* message, bool isTeam);
+
+	using start_get_session_by_gamer_handle = bool(*)(int metric_manager, rage::rlGamerHandle* handles, int count, rage::rlSessionByGamerTaskResult* result, int unk, bool* success, int* state);
+	using join_session_by_info = bool(*)(Network* network, rage::rlSessionInfo* info, int unk, int flags, rage::rlGamerHandle* handles, int handlecount);
+
+	using get_connection_peer = rage::netConnectionPeer* (*)(rage::netConnectionManager* manager, uint64_t peer_id);
+
+	using send_remove_gamer_cmd = void(*)(rage::netConnectionManager* net_connection_mgr, rage::netConnectionPeer* player, int connection_id, rage::snMsgRemoveGamersFromSessionCmd* cmd, int flags);
+
+	using handle_remove_gamer_cmd = void* (*)(rage::snSession* session, rage::snPlayer* origin, rage::snMsgRemoveGamersFromSessionCmd* cmd);
 
 	// Received Event Signatures START
 	using send_event_ack = void(*)(rage::netEventMgr* event_manager, CNetGamePlayer* source_player, CNetGamePlayer* target_player, int event_index, int event_handled_bitset);
@@ -56,7 +69,7 @@ namespace big::functions
 	using get_sync_tree_for_type = int64_t(*)(CNetworkObjectMgr* mgr, uint16_t sync_type);
 
 	using get_net_object = rage::netObject*(*)(CNetworkObjectMgr* mgr, int16_t id, bool unk3);
-
-	using get_net_object_for_player = rage::netObject*(*)(CNetworkObjectMgr*, int16_t, CNetGamePlayer*, bool);
 	//Sync signatures END
+
+	using reset_network_complaints = void(*)(CNetComplaintMgr* mgr);
 }

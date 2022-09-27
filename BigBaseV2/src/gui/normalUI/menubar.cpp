@@ -77,6 +77,10 @@ namespace big
                 {
                     QUEUE_JOB_BEGIN_CLAUSE()
                     {
+                        if (CAM::IS_SCREEN_FADED_OUT())
+                        {
+                            CAM::DO_SCREEN_FADE_IN(0);
+                        }
                         SCRIPT::SHUTDOWN_LOADING_SCREEN();
                     }
                     QUEUE_JOB_END_CLAUSE
@@ -87,32 +91,12 @@ namespace big
             if (ImGui::BeginMenu("Windows"))
             {
                 ImGui::MenuItem("Main", nullptr, &g->window.main);
+                ImGui::MenuItem("Player", nullptr, &g->window.player);
+                ImGui::MenuItem("Players", nullptr, &g->window.users);
                 ImGui::MenuItem("Score Controller", nullptr, &g->window.score_controller);
                 ImGui::MenuItem("Overlay", nullptr, &g->window.overlay);
-                ImGui::MenuItem("Debug", nullptr, &g->window.debug);
-
-                ImGui::EndMenu();
-            }
-
-            if (ImGui::BeginMenu("Open Hook V"))
-            {
-                if (ImGui::MenuItem("Load ASI plugins"))
-                {
-                    if (!g->debug.asi_plugins_loaded)
-                    {
-                        ASILoader::Initialize();
-                        LOG(INFO) << "ASI Loader initialized.";
-                    }
-                }
-
-                if (ImGui::MenuItem("Unload ASI plugins"))
-                {
-                    if (g->debug.asi_plugins_loaded)
-                    {
-                        shv_runner::shutdown();
-                        LOG(INFO) << "ASI plugins unloaded.";
-                    }
-                }
+                ImGui::MenuItem("Chat", nullptr, &g->window.chat);
+                ImGui::MenuItem("Demo", nullptr, &g->window.demo);
 
                 ImGui::EndMenu();
             }

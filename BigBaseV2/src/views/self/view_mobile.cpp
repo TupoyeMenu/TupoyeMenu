@@ -2,13 +2,25 @@
 #include "services/mobile/mobile_service.hpp"
 #include "util/mobile.hpp"
 #include "views/view.hpp"
+#include "core/data/phone_types.hpp"
 
 namespace big
 {
 	void view::mobile() {
-		ImGui::SetWindowSize({ 0.f, (float)*g_pointers->m_resolution_y }, ImGuiCond_Always);
+		/*components::sub_title("Phone selection");
+		if (ImGui::BeginCombo("Phones", phone_types[g->tunables.phone_type]))
+		{
+			for (int i = 0; i < phone_types.size(); i++)
+			{
+				if (ImGui::Selectable(phone_types[i], g->tunables.phone_type == i))
+				{
+					g->tunables.phone_type = i;
+				};
+			}
+			ImGui::EndCombo();
+		}*/
 
-		components::small_text("Lester");
+		components::sub_title("Lester");
 
 		ImGui::Checkbox("Off Radar", &g->self.off_radar);
 

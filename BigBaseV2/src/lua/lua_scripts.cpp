@@ -17,10 +17,10 @@
 #include "util/teleport.hpp"
 
 #include "native_invoker/lua_native_invoker.hpp"
-#include "util/lua_util.hpp"
-#include "chat/lua_chat.hpp"
-#include "spawn/lua_spawn.hpp"
-#include "player/lua_player.hpp"
+//#include "util/lua_util.hpp"
+//#include "chat/lua_chat.hpp"
+//#include "spawn/lua_spawn.hpp"
+//#include "player/lua_player.hpp"
 
 namespace lua_scripts
 {
@@ -60,26 +60,26 @@ namespace lua_scripts
 	lua_State* L;
 
 	lua_State* init() {
-		lua_State* L = luaL_newstate();
-		lua_getglobal(L, "_G");
-		luaL_openlibs(L);
-		lua_register(L, "print", lua_print);
-		//luaL_requiref(L, "spawn", luaopen_spawn, true);
-		//luaL_requiref(L, "native_invoker", luaopen_native_invoker, true);
-		//luaL_requiref(L, "util", luaopen_util, true);
-		//luaL_requiref(L, "chat", luaopen_chat, true);
-		//luaL_requiref(L, "player", player::luaopen_player, true);
+			lua_State* L = luaL_newstate();
+			lua_getglobal(L, "_G");
+			luaL_openlibs(L);
+			lua_register(L, "print", lua_print);
+			//luaL_requiref(L, "spawn", luaopen_spawn, true);
+			luaL_requiref(L, "native_invoker", luaopen_native_invoker, true);
+			//luaL_requiref(L, "util", luaopen_util, true);
+			//luaL_requiref(L, "chat", luaopen_chat, true);
+			//luaL_requiref(L, "player", player::luaopen_player, true);
 
-		const char* appdata = std::getenv("appdata");
-		setLuaPath(L, fmt::format("{}/BigBaseV2/lua/?.lua", appdata).c_str());
+			const char* appdata = std::getenv("appdata");
+			setLuaPath(L, fmt::format("{}/BigBaseV2/lua/?.lua", appdata).c_str());
 
-		int r = luaL_dofile(lua_scripts::L, fmt::format("{}/BigBaseV2/lua/autoexec.lua", appdata).c_str());
-		if (!r == LUA_OK) {
-			const char* errmsg = lua_tostring(lua_scripts::L, -1);
-			LOG(WARNING) << errmsg;
-		}
-		
-		lua_pop(L, 1);
+			/*int r = luaL_dofile(lua_scripts::L, fmt::format("{}/BigBaseV2/lua/autoexec.lua", appdata).c_str());
+			if (!r == LUA_OK) {
+				const char* errmsg = lua_tostring(lua_scripts::L, -1);
+				LOG(WARNING) << errmsg;
+			}*/
+
+			lua_pop(L, 1);
 		return L;
 	}
 }

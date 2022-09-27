@@ -15,8 +15,7 @@ namespace lua_scripts
 
 	static int _lua_yield(lua_State* L)
 	{
-		int n = lua_gettop(L);  /* number of arguments */
-		if (n && lua_isinteger(L, 1))
+		if (lua_isinteger(L, 1))
 		{
 			big::script::get_current()->yield(std::chrono::milliseconds(lua_tointeger(L, 1)));
 		}
@@ -49,10 +48,10 @@ namespace lua_scripts
 	{
 		static const struct luaL_Reg util[] =
 		{
-			{"yield", _lua_yield}, // util.yield(?int ms)
-			{"joaat", lua_joaat}, // util.joaat(char hash)
-			{"notify_top", lua_notify_top}, // util.notify_top(char text, char text2)
-			{"notify_map", lua_notify_map}, // util.notify_map(char text)
+			//{"yield", _lua_yield}, // util.yield(?int ms)
+			//{"joaat", lua_joaat}, // util.joaat(char hash)
+			//{"notify_top", lua_notify_top}, // util.notify_top(char text, char text2)
+			//{"notify_map", lua_notify_map}, // util.notify_map(char text)
 			{NULL, NULL}
 		};
 

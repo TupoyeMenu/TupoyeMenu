@@ -2,8 +2,6 @@
 #include "util/entity.hpp"
 #include "util/local_player.hpp"
 #include "views/view.hpp"
-#include "services/gta_data/gta_data_service.hpp"
-#include <imgui_internal.h>
 
 namespace big
 {
@@ -27,10 +25,14 @@ namespace big
 			STATS::STAT_SET_INT(rage::joaat(mpPrefix + "NO_BOUGHT_YUM_SNACKS"), 30, true);
 			STATS::STAT_SET_INT(rage::joaat(mpPrefix + "NO_BOUGHT_HEALTH_SNACKS"), 15, true);
 			STATS::STAT_SET_INT(rage::joaat(mpPrefix + "NO_BOUGHT_EPIC_SNACKS"), 5, true);
+			STATS::STAT_SET_INT(rage::joaat(mpPrefix + "NUMBER_OF_ORANGE_BOUGHT"), 10, true);
+			STATS::STAT_SET_INT(rage::joaat(mpPrefix + "NUMBER_OF_BOURGE_BOUGHT"), 10, true);
+			STATS::STAT_SET_INT(rage::joaat(mpPrefix + "CIGARETTES_BOUGHT"), 20, true);
 			STATS::STAT_SET_INT(rage::joaat(mpPrefix + "MP_CHAR_ARMOUR_1_COUNT"), 10, true);
 			STATS::STAT_SET_INT(rage::joaat(mpPrefix + "MP_CHAR_ARMOUR_2_COUNT"), 10, true);
 			STATS::STAT_SET_INT(rage::joaat(mpPrefix + "MP_CHAR_ARMOUR_3_COUNT"), 10, true);
 			STATS::STAT_SET_INT(rage::joaat(mpPrefix + "MP_CHAR_ARMOUR_4_COUNT"), 10, true);
+			STATS::STAT_SET_INT(rage::joaat(mpPrefix + "MP_CHAR_ARMOUR_5_COUNT"), 10, true);
 			STATS::STAT_SET_INT(rage::joaat(mpPrefix + "MP_CHAR_ARMOUR_5_COUNT"), 10, true);
 		});
 
@@ -42,127 +44,7 @@ namespace big
 
 		ImGui::Separator();
 
-		components::small_text("Player Model Changer");
-
-		static int selected_player_ped_type = -1;
-		static bool player_model_open = false;
-		static char player_model_name[64];
-
-		auto ped_type_arr = g_gta_data_service->get_ped_type_arr();
-		auto ped_arr = g_gta_data_service->get_ped_arr();
-
-		ImGui::SetNextItemWidth(300.f);
-		if (ImGui::BeginCombo("Ped Type", selected_player_ped_type == -1 ? "ALL" : ped_type_arr[selected_player_ped_type].c_str()))
-		{
-			if (ImGui::Selectable("ALL", selected_player_ped_type == -1))
-			{
-				selected_player_ped_type = -1;
-			}
-
-			for (int i = 0; i < ped_type_arr.size(); i++)
-			{
-				if (ImGui::Selectable(ped_type_arr[i].c_str(), selected_player_ped_type == i))
-				{
-					selected_player_ped_type = i;
-					player_model_name[0] = 0;
-				}
-
-				if (selected_player_ped_type == i)
-				{
-					ImGui::SetItemDefaultFocus();
-				}
-			}
-
-			ImGui::EndCombo();
-		}
-
-		ImGui::SetNextItemWidth(300.f);
-		components::input_text_with_hint("Model Name##player_model_name", "Model Name", player_model_name, sizeof(player_model_name), ImGuiInputTextFlags_EnterReturnsTrue, [] {
-			player_model_open = false;
-		});
-
-		bool player_model_focused = ImGui::IsItemActive();
-
-		if (ImGui::IsItemActivated())
-		{
-			player_model_open = true;
-		}
-
-		if (player_model_open)
-		{
-			bool is_open = true;
-
-			std::string lower_search = player_model_name;
-			std::transform(lower_search.begin(), lower_search.end(), lower_search.begin(), tolower);
-
-			ImGui::SetNextWindowPos({ ImGui::GetItemRectMin().x, ImGui::GetItemRectMax().y });
-			ImGui::SetNextWindowSize({ 300, 300 });
-			if (ImGui::Begin("##player_model_popup", &is_open, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_Tooltip))
-			{
-				ImGui::BringWindowToDisplayFront(ImGui::GetCurrentWindow());
-				player_model_focused |= ImGui::IsWindowFocused();
-
-				for (auto& item : ped_arr)
-				{
-					std::string ped_type = item.ped_type;
-					std::string name = item.name;
-
-					std::transform(name.begin(), name.end(), name.begin(), tolower);
-
-					if ((
-						selected_player_ped_type == -1 || ped_type_arr[selected_player_ped_type] == ped_type
-					) && (
-						name.find(lower_search) != std::string::npos
-					)) {
-
-						bool selectable_highlighted = lower_search == name;
-						bool selectable_clicked = ImGui::Selectable(item.name.c_str(), selectable_highlighted);
-						player_model_focused |= ImGui::IsItemFocused();
-
-						if (selectable_clicked)
-						{
-							strncpy(player_model_name, item.name.c_str(), 64);
-							player_model_open = false;
-							player_model_focused = false;
-						}
-
-						if (selectable_highlighted)
-						{
-							ImGui::SetItemDefaultFocus();
-						}
-					}
-				}
-				ImGui::End();
-			}
-
-			player_model_open = player_model_focused;
-		}
-
-		components::button("Change Player Model", [] {
-			const Hash hash = rage::joaat(player_model_name);
-
-			for (uint8_t i = 0; !STREAMING::HAS_MODEL_LOADED(hash) && i < 100; i++)
-			{
-				STREAMING::REQUEST_MODEL(hash);
-				script::get_current()->yield();
-			}
-			if (!STREAMING::HAS_MODEL_LOADED(hash))
-			{
-				g_notification_service->push_error("Self", "Failed to spawn model, did you give an incorrect model ? ");
-				return;
-			}
-			PLAYER::SET_PLAYER_MODEL(PLAYER::GET_PLAYER_INDEX(), hash);
-			PED::SET_PED_DEFAULT_COMPONENT_VARIATION(self::ped);
-			script::get_current()->yield();
-			STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
-		});
-
-
-
-
-		ImGui::Separator();
-
-		components::small_text("General");
+		components::sub_title("General");
 
 		ImGui::BeginGroup();
 
@@ -196,10 +78,17 @@ namespace big
 		});
 
 		ImGui::EndGroup();
+		ImGui::SameLine();
+		ImGui::BeginGroup();
+
+		ImGui::Checkbox("Phone Anim", &g->tunables.phone_anim);
+		ImGui::Checkbox("Jump Ragdoll", &g->self.allow_ragdoll);
+
+		ImGui::EndGroup();
 
 		ImGui::Separator();
 
-		components::small_text("Proofs");
+		components::sub_title("Proofs");
 
 		if (ImGui::Button("Check all"))
 		{
@@ -257,7 +146,7 @@ namespace big
 
 		ImGui::Separator();
 
-		components::small_text("Police");
+		components::sub_title("Police");
 
 		ImGui::Checkbox("Never Wanted", &g->self.never_wanted);
 

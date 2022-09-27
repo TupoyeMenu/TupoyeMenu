@@ -1,6 +1,7 @@
 #include "gta/enums.hpp"
 #include "gta/net_game_event.hpp"
 #include "hooking.hpp"
+#include "services/anti_cheat/anti_cheat_service.hpp"
 
 namespace big
 {
@@ -31,6 +32,21 @@ namespace big
 
 		switch (static_cast<eNetworkEvents>(event_id))
 		{
+		case eNetworkEvents::CKickVotesEvent:
+		{
+			std::uint32_t player_bitfield;
+			buffer->ReadDword(&player_bitfield, 32);
+			if (player_bitfield & 1 << target_player->m_player_id)
+			{
+				if (g->notifications.received_event.kick_vote.log)
+					LOG(INFO) << "RECEIVED_EVENT_HANDLER : " << source_player->get_name() << " is voting to kick us.";
+				if (g->notifications.received_event.kick_vote.notify)
+					g_notification_service->push_warning("Kick Vote",
+						fmt::format("{} is voting to kick us.", source_player->get_name()));
+			}
+			buffer->Seek(0);
+			break;
+		}
 		case eNetworkEvents::CNetworkIncrementStatEvent:
 		{
 			const auto increment_stat_event = std::make_unique<CNetworkIncrementStatEvent>();
@@ -61,7 +77,7 @@ namespace big
 				if (action >= 15 && action <= 18) {
 					g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 					if (g->notifications.received_event.vehicle_temp_action.log)
-						LOG(INFO) << "RECEIVED_EVENT_HANDLER : " << source_player->get_name() << "sent TASK_VEHICLE_TEMP_ACTION crash.";
+						LOG(INFO) << "RECEIVED_EVENT_HANDLER : " << source_player->get_name() << " sent TASK_VEHICLE_TEMP_ACTION crash.";
 					if (g->notifications.received_event.vehicle_temp_action.notify)
 						g_notification_service->push_warning("Protection",
 							fmt::format("{} sent TASK_VEHICLE_TEMP_ACTION crash.", source_player->get_name()));
@@ -127,6 +143,17 @@ namespace big
 					g_notification_service->push_warning("Protection",
 						fmt::format("{} is spawning cash.", source_player->get_name())
 					);
+
+				uint64_t rid = source_player->get_net_data()->m_gamer_handle_2.m_rockstar_id;
+				if (g_anti_cheat_service->is_player_in_moddb(rid))
+				{
+					if (g_anti_cheat_service->modders()[g_anti_cheat_service->get_moddb_player_from_rid(rid)].score < 10)
+						g_anti_cheat_service->add_score_to_modder(rid, 5, "Cash spawn, ");
+				}
+				else
+				{
+					g_anti_cheat_service->mark_as_modder(source_player->m_player_id, 5, "Cash spawn, ");
+				}
 			}
 
 			break;
@@ -142,6 +169,19 @@ namespace big
 				g_notification_service->push_warning("Protection",
 					fmt::format("{} sent out a modder event.", source_player->get_name())
 				);
+			uint64_t rid = source_player->get_net_data()->m_gamer_handle_2.m_rockstar_id;
+			if (g_anti_cheat_service->is_player_in_moddb(rid))
+			{
+				int moddb_player = g_anti_cheat_service->get_moddb_player_from_rid(rid);
+				if (g_anti_cheat_service->modders()[moddb_player].score < 10)
+				{
+					g_anti_cheat_service->add_score_to_modder(rid, 5, "Modder event, ");
+				}
+			}
+			else
+			{
+				g_anti_cheat_service->mark_as_modder(source_player->m_player_id, 5, "Modder event, ");
+			}
 
 			break;
 		}

@@ -11,13 +11,15 @@ namespace big
 	{
 		if (g->tunables.fast_join)
 		{
-			// run every tick
-			if (*script_global::script_global(1574988).as<eTransitionState*>() == eTransitionState::TRANSITION_STATE_IS_FM_AND_TRANSITION_READY)
+			eTransitionState state = *script_global::script_global(1574991).as<eTransitionState*>();
+
+			if (state >= eTransitionState::TRANSITION_STATE_LOOK_FOR_FRESH_JOIN_FM && state <= eTransitionState::TRANSITION_STATE_FM_FINAL_SETUP_PLAYER)
 			{
-				STREAMING::STOP_PLAYER_SWITCH();
-				*script_global::script_global(1574988).as<eTransitionState*>() = eTransitionState::TRANSITION_STATE_FM_FINAL_SETUP_PLAYER;
-				script::get_current()->yield(1500ms);
-				STREAMING::STOP_PLAYER_SWITCH();
+				if (STREAMING::IS_PLAYER_SWITCH_IN_PROGRESS())
+				{
+					STREAMING::STOP_PLAYER_SWITCH();
+					GRAPHICS::ANIMPOSTFX_STOP_ALL(); // fix Skycam effect
+				}
 			}
 		}
 	}

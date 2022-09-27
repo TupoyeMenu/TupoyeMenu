@@ -1,6 +1,8 @@
 #include "views/view.hpp"
 #include "fiber_pool.hpp"
 #include "util/teleport.hpp"
+#include "core/data/region_codes.hpp"
+#include "core/data/pool_types.hpp"
 
 namespace big
 {
@@ -8,7 +10,7 @@ namespace big
 	{ 
 		components::small_text("To spoof any of the below credentials you need to reconnect with the lobby.");
 
-		components::small_text("Username");
+		components::sub_title("Username");
 
 		g_fiber_pool->queue_job([] {
 			PAD::DISABLE_ALL_CONTROL_ACTIONS(0);
@@ -27,7 +29,7 @@ namespace big
 
 		ImGui::Separator();
 
-		components::small_text("IP Address");
+		components::sub_title("IP Address");
 
 		g_fiber_pool->queue_job([] {
 			PAD::DISABLE_ALL_CONTROL_ACTIONS(0);
@@ -40,7 +42,7 @@ namespace big
 
 		ImGui::Separator();
 
-		components::small_text("Rockstar ID");
+		components::sub_title("Rockstar ID");
 
 		g_fiber_pool->queue_job([] {
 			PAD::DISABLE_ALL_CONTROL_ACTIONS(0);
@@ -50,5 +52,38 @@ namespace big
 
 		ImGui::Text("Rockstar ID:");
 		ImGui::InputScalar("##rockstar_id_input", ImGuiDataType_U64, &g->spoofing.rockstar_id);
+
+		ImGui::Separator();
+
+		components::sub_title("Region Spoof");
+
+		if (ImGui::BeginCombo("Region", region_codes[g->spoofing.region_code]))
+		{
+			for (int i = 0; i < region_codes.size(); i++)
+			{
+				if (ImGui::Selectable(region_codes[i], g->spoofing.region_code == i))
+				{
+					g->spoofing.region_code = i;
+					*g_pointers->m_region_code = i;
+				};
+			}
+			ImGui::EndCombo();
+		}
+
+		ImGui::Separator();
+
+		components::sub_title("Session Pool Spoof");
+
+		if (ImGui::BeginCombo("Pools", pool_types[g->spoofing.pool_type]))
+		{
+			for (int i = 0; i < pool_types.size(); i++)
+			{
+				if (ImGui::Selectable(pool_types[i], g->spoofing.pool_type == i))
+				{
+					g->spoofing.pool_type = i;
+				};
+			}
+			ImGui::EndCombo();
+		}
 	}
 }

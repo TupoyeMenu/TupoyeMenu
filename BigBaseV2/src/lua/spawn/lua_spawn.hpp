@@ -17,15 +17,18 @@ namespace lua_scripts
 		return 1;
 	}
 
-	static int lua_spawn_ped(lua_State* L) // Ped spawn(Hash hash, Vector3 location, float heading, bool is_networked = true)
+	static int lua_spawn_ped(lua_State* L) // Ped spawn(ePedType pedType, Hash hash, Hash clone, Vector3 location, float heading, bool is_networked = true)
 	{
-		float x = (float)lua_tonumber(L, 2);
-		float y = (float)lua_tonumber(L, 3);
-		float z = (float)lua_tonumber(L, 4);
-		float heading = (float)lua_tonumber(L, 5);
-		bool networked = lua_toboolean(L, 5);
+		big::ePedType pedType = (big::ePedType)lua_tointeger(L, 1);
+		Hash hash = (Hash)lua_tointeger(L, 2);
+		Hash clone = (Hash)lua_tointeger(L, 3);
+		float x = (float)lua_tonumber(L, 4);
+		float y = (float)lua_tonumber(L, 5);
+		float z = (float)lua_tonumber(L, 6);
+		float heading = (float)lua_tonumber(L, 7);
+		bool networked = lua_toboolean(L, 8);
 
-		Ped ped = big::ped::spawn(lua_tostring(L, 1), Vector3(x, y, z), heading, networked);
+		Ped ped = big::ped::spawn(pedType, hash, clone, Vector3(x, y, z), heading, networked);
 		lua_pushnumber(L, ped);
 
 		return 1;

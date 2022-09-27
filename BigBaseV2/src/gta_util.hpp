@@ -1,9 +1,8 @@
 #pragma once
 #include "gta/array.hpp"
-#include "CPedFactory.hpp"
-#include "CNetworkPlayerMgr.hpp"
 #include "gta/script_thread.hpp"
 #include "gta/tls_context.hpp"
+#include "ped/CPedFactory.hpp"
 #include "pointers.hpp"
 
 namespace big::gta_util
@@ -34,6 +33,14 @@ namespace big::gta_util
 	inline CNetworkPlayerMgr* get_network_player_mgr()
 	{
 		return *g_pointers->m_network_player_mgr;
+	}
+
+	inline Network* get_network()
+	{
+		__int64 network = (__int64)(*g_pointers->m_network);
+		if (g_is_steam)
+			network += sizeof(rage::rlSessionInfo);
+		return (Network*)network;
 	}
 
 	template <typename F, typename ...Args>

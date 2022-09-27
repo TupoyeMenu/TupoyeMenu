@@ -163,11 +163,13 @@ workspace "BigBaseV2"
 		files
 		{
 			"vendor/%{prj.name}/imgui.cpp",
+			"vendor/%{prj.name}/imgui_demo.cpp",
 			"vendor/%{prj.name}/imgui_draw.cpp",
 			"vendor/%{prj.name}/imgui_tables.cpp",
 			"vendor/%{prj.name}/imgui_widgets.cpp",
 			"vendor/%{prj.name}/backends/imgui_impl_dx11.cpp",
-			"vendor/%{prj.name}/backends/imgui_impl_win32.cpp"
+			"vendor/%{prj.name}/backends/imgui_impl_win32.cpp",
+			"vendor/%{prj.name}/misc/cpp/imgui_stdlib.cpp"
 		}
 
 		includedirs
@@ -176,8 +178,6 @@ workspace "BigBaseV2"
 		}
 		
 		defines {
-			"IMGUI_DISABLE_DEMO_WINDOWS",
-			"IMGUI_DISABLE_METRICS_WINDOW",
 			"IM_ASSERT(_EXPR) ((void)(_EXPR))"
 		}
 
@@ -215,6 +215,8 @@ workspace "BigBaseV2"
 		    "%{prj.name}/src/**.hpp",
 		    "%{prj.name}/src/**.h",
 		    "%{prj.name}/src/**.cpp",
+		    "%{prj.name}/src/**.cc",
+		    "%{prj.name}/src/**.cxx",
 		    "%{prj.name}/src/**.asm"
 		}
 

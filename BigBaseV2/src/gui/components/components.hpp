@@ -1,5 +1,6 @@
 #pragma once
 #include "imgui.h"
+#include "misc/cpp/imgui_stdlib.h"
 
 namespace big
 {
@@ -12,6 +13,7 @@ namespace big
 	public:
 		static bool nav_button(const std::string_view);
 		static bool button(const std::string_view);
+		static void icon(const std::string_view);
 		static void small_text(const std::string_view);
 		static void sub_title(const std::string_view);
 		static void title(const std::string_view);
@@ -19,6 +21,7 @@ namespace big
 		static void nav_item(std::pair<tabs, navigation_struct>&, int);
 
 		static void input_text_with_hint(const std::string_view label, const std::string_view hint, char* buf, size_t buf_size, ImGuiInputTextFlags_ flag = ImGuiInputTextFlags_None, std::function<void()> cb = nullptr);
+		static void input_text_with_hint(const std::string_view label, const std::string_view hint, std::string* buf, ImGuiInputTextFlags_ flag = ImGuiInputTextFlags_None, std::function<void()> cb = nullptr);
 
 		static bool selectable(const std::string_view, bool);
 		static bool selectable(const std::string_view, bool, ImGuiSelectableFlags);

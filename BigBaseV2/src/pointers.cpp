@@ -7,7 +7,7 @@ namespace big
 {
 	pointers::pointers()
 	{
-		memory::pattern_batch main_batch;
+		memory::batch main_batch;
 
 		main_batch.add("SCREEN_RESOLUTION", "66 0F 6E 0D ? ? ? ? 0F B7 3D", [this](memory::handle ptr)
 		{
@@ -93,8 +93,14 @@ namespace big
 			m_model_spawn_bypass = ptr.add(8).as<PVOID>();
 		});
 
+		// World Model Spawn Bypass
+		main_batch.add("WMSB", "48 85 C0 0F 84 ? ? ? ? 8B 48 50", [this](memory::handle ptr)
+		{
+			m_world_model_spawn_bypass = ptr.as<PVOID>();
+		});
+
 		// New pointers
-		
+
 		// Native Return Spoofer
 		main_batch.add("NRF", "FF E3", [this](memory::handle ptr)
 		{
@@ -120,7 +126,7 @@ namespace big
 		});
 
 		// Received Event Signatures START
-		
+
 		// Received Event Hook
 		main_batch.add("REH", "66 41 83 F9 ? 0F 83", [this](memory::handle ptr)
 		{
@@ -160,7 +166,7 @@ namespace big
 		});
 
 		// Read Bitbuffer Array
-		main_batch.add("RBA", "48 89 5C 24 ? 57 48 83 EC 30 41 8B F8 4C", [this](memory::handle ptr) 
+		main_batch.add("RBA", "48 89 5C 24 ? 57 48 83 EC 30 41 8B F8 4C", [this](memory::handle ptr)
 		{
 			m_read_bitbuf_array = ptr.as<decltype(m_read_bitbuf_array)>();
 		});
@@ -234,12 +240,6 @@ namespace big
 			m_blame_explode = ptr.as<decltype(m_blame_explode)>();
 		});
 
-		// Is DLC Present
-		main_batch.add("IDP", "48 89 5C 24 ? 57 48 83 EC ? 81 F9", [this](memory::handle ptr)
-		{
-			m_is_dlc_present = ptr.as<decltype(m_is_dlc_present)>();
-		});
-
 		// Send NET Info to Lobby
 		main_batch.add("SNITL", "33 DB 48 83 C1 68 45 8B F0 ", [this](memory::handle ptr)
 		{
@@ -250,18 +250,6 @@ namespace big
 		main_batch.add("CNOM", "48 8B 0D ? ? ? ? 45 33 C0 E8 ? ? ? ? 33 FF 4C 8B F0", [this](memory::handle ptr)
 		{
 			m_network_object_mgr = ptr.add(3).rip().as<CNetworkObjectMgr**>();
-		});
-
-		// Player Has Joined
-		main_batch.add("PHJ", "48 8B CA 48 8B F2 FF 50 18 4C 8D 05", [this](memory::handle ptr)
-		{
-			m_player_has_joined = ptr.sub(0x26).as<PVOID>();
-		});
-
-		// Player Has Left
-		main_batch.add("PHL", "4C 8B F1 48 8B CA 48 8B EA FF 50 18 4C 8D 05", [this](memory::handle ptr)
-		{
-			m_player_has_left = ptr.sub(0x26).as<PVOID>();
 		});
 
 		// Network Player Mgr Init
@@ -346,14 +334,16 @@ namespace big
 		// END SHV
 
 		// Chat Receive
-		main_batch.add("CR", "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC 30 49 8B F8 44 8B", [this](memory::handle ptr)
+		main_batch.add("CR", "4D 85 C9 0F 84 ? ? ? ? 48 8B C4 48 89 58 08 48 89 70 10 48 89 78 18 4C 89 48 20", [this](memory::handle ptr) // Skidded from https://www.unknowncheats.me/forum/3486099-post13622.html
 		{
 			m_chat_receive = ptr.as<__int64*>();
+			
 		});
 
-		main_batch.add("GCPID", "48 8B D1 48 8B 0D ? ? ? ? 41 B0 01 E9", [this](memory::handle ptr)
+		// Get Chat Player Id
+		main_batch.add("GCPID", "E8 ? ? ? ? 48 8B 0D ? ? ? ? 48 8B F0 E8 ? ? ? ? 33 FF 48 89 44 24 ?", [this](memory::handle ptr) // Skidded from https://www.unknowncheats.me/forum/3486099-post13622.html
 		{
-			m_chat_player_id = ptr.as<decltype(m_chat_player_id)>();
+			m_get_net_player_from_unk = ptr.add(1).rip().as<decltype(m_get_net_player_from_unk)>();
 		});
 
 		// Send Chat Ptr
@@ -368,6 +358,42 @@ namespace big
 			m_send_chat_message = ptr.as<decltype(m_send_chat_message)>();
 		});
 
+		// Network
+		main_batch.add("N", "48 8B 0D ? ? ? ? 48 8B D7 E8 ? ? ? ? 84 C0 75 17 48 8B 0D ? ? ? ? 48 8B D7", [this](memory::handle ptr)
+		{
+			m_network = ptr.add(3).rip().as<Network**>();
+		});
+
+		// Reset Network Complaints
+		main_batch.add("RENC", "E8 ? ? ? ? 8B 8B ? ? ? ? 03 CF", [this](memory::handle ptr)
+		{
+			m_reset_network_complaints = ptr.add(1).rip().as<functions::reset_network_complaints>();
+		});
+
+		// Get Session By Gamer Handle
+		main_batch.add("SGSBGH", "E8 ? ? ? ? 84 C0 0F 84 ? ? ? ? 8B 05 ? ? ? ? 48 8D 4C 24", [this](memory::handle ptr)
+		{
+			m_start_get_session_by_gamer_handle = ptr.add(1).rip().as<functions::start_get_session_by_gamer_handle>();
+		});
+
+		// Join Session By Info
+		main_batch.add("JSBI", "E8 ? ? ? ? 0F B6 CB 84 C0 41 0F 44 CD", [this](memory::handle ptr)
+		{
+			m_join_session_by_info = ptr.add(1).rip().as<functions::join_session_by_info>();
+		});
+
+		// Region Code
+		main_batch.add("RC", "48 8D 15 ? ? ? ? 48 8D 4C 24 ? 89 05 ? ? ? ? E8", [this](memory::handle ptr)
+		{
+			m_region_code = ptr.add(3).rip().as<std::uint8_t*>();
+		});
+
+		// Get Pool Type
+		main_batch.add("GPT", "48 89 5C 24 ? 57 48 83 EC 20 48 8B 1D ? ? ? ? BA", [this](memory::handle ptr)
+		{
+			m_get_pool_type = ptr.as<PVOID>();
+		});
+
 		// Receive Net Message
 		main_batch.add("RNM", "48 83 EC 20 4C 8B 71 50 33 ED", [this](memory::handle ptr)
 		{
@@ -377,7 +403,13 @@ namespace big
 		// Get Network Event Data
 		main_batch.add("GNED", "53 43 52 49 50 54 5F 4E 45 54 57 4F 52 4B", [this](memory::handle ptr)
 		{
-			m_get_network_event_data = *ptr.sub(0x38).as<void**>();
+			m_get_network_event_data = *ptr.sub(0x38).as<PVOID*>();
+		});
+
+		// Assign Physical Index
+		main_batch.add("API", "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 54 41 55 41 56 41 57 48 83 EC 20 41 8A E8", [this](memory::handle ptr)
+		{
+			m_assign_physical_index = ptr.as<PVOID>();
 		});
 
 		// Received clone sync & Get sync tree for type & Get net object for player & Get sync type info & Get net object
@@ -385,7 +417,6 @@ namespace big
 		{
 			m_received_clone_sync = ptr.sub(0x1D).as<decltype(m_received_clone_sync)>();
 			m_get_sync_tree_for_type = ptr.add(0x14).rip().as<decltype(m_get_sync_tree_for_type)>(); // 0F B7 CA 83 F9 07 .as()
-			m_get_net_object_for_player = ptr.add(0x60).rip().as<decltype(m_get_net_object_for_player)>(); // 41 80 78 ? FF 74 2D 41 0F B6 40 .as()
 			m_get_net_object = ptr.add(0x76).rip().as<decltype(m_get_net_object)>(); // E8 ? ? ? ? 0F B7 53 7C .add(1).rip().as()
 			m_get_sync_type_info = ptr.add(0x8C).rip().as<decltype(m_get_sync_type_info)>(); // 44 0F B7 C1 4C 8D 0D .as()
 		});
@@ -396,36 +427,24 @@ namespace big
 			m_model_table = ptr.add(3).rip().as<HashTable<CBaseModelInfo*>*>();
 
 			LOG(G3LOG_DEBUG) << "HashTable => [" << HEX_TO_UPPER(m_model_table) << "]";
+		});
 
-			// sample code to iterator models
-			/*for (int i = 0; i < m_model_table->m_size; ++i)
-			{
-				for (auto node = m_model_table->m_lookup_table[i]; node; node = node->m_next)
-				{
-					if (const auto table_idx = node->m_idx; table_idx < m_model_table->m_size)
-					{
-						if (const auto model = m_model_table->m_data[table_idx]; model && model->m_model_type == eModelType::Vehicle)
-						{
+		// Get Label Text
+		main_batch.add("GLT", "75 ? E8 ? ? ? ? 8B 0D ? ? ? ? 65 48 8B 04 25 ? ? ? ? BA ? ? ? ? 48 8B 04 C8 8B 0C 02 D1 E9", [this](memory::handle ptr)
+		{
+			m_get_label_text = ptr.sub(19).as<PVOID>();
+		});
 
-						}
-					}
-				}
-			}*/
+		main_batch.add("GCP&SRGC", "8D 42 FF 83 F8 FD 77 3D", [this](memory::handle ptr)
+		{
+			m_get_connection_peer = ptr.add(23).rip().as<functions::get_connection_peer>();
+			m_send_remove_gamer_cmd = ptr.add(65).rip().as<functions::send_remove_gamer_cmd>();
+		});
 
-			// sample code to get a specific model
-			/*auto adder_hash = RAGE_JOAAT("adder");
-			for (auto i = m_model_table->m_lookup_table[adder_hash % m_model_table->m_lookup_key]; i; i = i->m_next)
-			{
-				if (i->m_hash == adder_hash)
-				{
-					if (const auto model = m_model_table->m_data[i->m_idx]; model)
-					{
-						LOG(G3LOG_DEBUG) << "Found Model: " << HEX_TO_UPPER(model->m_model_hash) << " => type: " << (int)model->m_model_type;
-
-						break;
-					}
-				}
-			}*/
+		// Handle Remove Gamer Command
+		main_batch.add("HRGC", "41 FF C6 FF C7", [this](memory::handle ptr)
+		{
+			m_handle_remove_gamer_cmd = ptr.sub(0x6E).as<functions::handle_remove_gamer_cmd>();
 		});
 
 		auto mem_region = memory::module(nullptr);

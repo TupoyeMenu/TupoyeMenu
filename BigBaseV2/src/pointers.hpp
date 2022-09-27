@@ -1,15 +1,14 @@
 #pragma once
 #include "common.hpp"
-#include "atSingleton.hpp"
-#include "asi_loader/pools.h"
-#include "CNetworkPlayerMgr.hpp"
-#include "FriendRegistry.hpp"
-#include "HashTable.hpp"
-#include "gta/fwddec.hpp"
-#include "gta/enums.hpp"
-#include "gta/replay.hpp"
-#include "gta/script_program.hpp"
+#include "base/HashTable.hpp"
 #include "function_types.hpp"
+#include "gta/fwddec.hpp"
+#include "gta/replay.hpp"
+#include "network/CNetworkPlayerMgr.hpp"
+#include "socialclub/FriendRegistry.hpp"
+#include "network/Network.hpp"
+
+#include "asi_loader/pools.h"
 
 namespace big
 {
@@ -47,9 +46,22 @@ namespace big
 		rage::GenericPool* m_camera_pool{};
 
 		__int64* m_chat_receive{};
-		functions::chat_player_id* m_chat_player_id;
+		functions::get_net_player_from_unk* m_get_net_player_from_unk{};
 		__int64* m_send_chat_ptr{};
 		functions::send_chat_message* m_send_chat_message{};
+
+		functions::start_get_session_by_gamer_handle m_start_get_session_by_gamer_handle;
+		functions::join_session_by_info m_join_session_by_info;
+		Network** m_network{};
+
+		functions::reset_network_complaints m_reset_network_complaints{};
+
+		uint8_t* m_region_code;
+		PVOID m_get_pool_type;
+
+		functions::get_connection_peer m_get_connection_peer;
+		functions::send_remove_gamer_cmd m_send_remove_gamer_cmd;
+		functions::handle_remove_gamer_cmd m_handle_remove_gamer_cmd;
 
 		CGameScriptHandlerMgr **m_script_handler_mgr{};
 
@@ -60,10 +72,11 @@ namespace big
 
 		PVOID m_blame_explode;
 		PVOID m_model_spawn_bypass;
+		PVOID m_world_model_spawn_bypass;
 		PVOID m_native_return;
-		PVOID m_is_dlc_present;
 		PVOID m_network_group_override;
 		PUSHORT m_spectator_check;
+		PVOID m_get_label_text;
 
 		FriendRegistry* m_friend_registry{};
 
@@ -79,13 +92,10 @@ namespace big
 		PVOID m_network_player_mgr_init;
 		PVOID m_network_player_mgr_shutdown;
 
-		PVOID m_player_has_joined{};
-		PVOID m_player_has_left{};
-
 		functions::get_gameplay_cam_coords m_get_gameplay_cam_coords;
 
 		functions::give_pickup_rewards m_give_pickup_rewards{};
-		
+
 		functions::trigger_script_event m_trigger_script_event{};
 
 		// Bitbuffer Read/Write START
@@ -100,7 +110,7 @@ namespace big
 		functions::write_bitbuf_bool m_write_bitbuf_bool{};
 		functions::write_bitbuf_array m_write_bitbuf_array{};
 		// Bitbuffer Read/Write END
-		
+
 		// Received Event Signatures START
 		PVOID m_received_event{};
 		functions::send_event_ack m_send_event_ack{};
@@ -111,13 +121,13 @@ namespace big
 		functions::get_sync_tree_for_type m_get_sync_tree_for_type{};
 		functions::get_sync_type_info m_get_sync_type_info{};
 		functions::get_net_object m_get_net_object{};
-		functions::get_net_object_for_player m_get_net_object_for_player{};
 		//Sync Signatures END
 
 		PVOID m_send_net_info_to_lobby{};
 
 		PVOID m_receive_net_message{};
 		PVOID m_get_network_event_data{};
+		PVOID m_assign_physical_index{};
 	};
 
 	inline pointers* g_pointers{};

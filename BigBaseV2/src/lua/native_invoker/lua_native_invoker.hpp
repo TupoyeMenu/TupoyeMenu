@@ -13,7 +13,7 @@ namespace lua_scripts
 	{
 		if (lua_isstring(L, 1))
 		{
-			const char* address_str = lua_tostring(L, 1);
+			std::string address_str = lua_tostring(L, 1);
 
 			std::uint64_t address_hash;
 
