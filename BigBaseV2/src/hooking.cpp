@@ -58,7 +58,13 @@ namespace big
 		// Get Pool Type
 		m_get_pool_type_hook("GPT", g_pointers->m_get_pool_type, &hooks::get_pool_type),
 		// Write Player Gamer Data Node
-		m_write_player_gamer_data_node_hook("WPGDN", g_pointers->m_write_player_gamer_data_node, &hooks::write_player_gamer_data_node)
+		m_write_player_gamer_data_node_hook("WPGDN", g_pointers->m_write_player_gamer_data_node, &hooks::write_player_gamer_data_node),
+
+		// Send Metrics
+		m_send_metric_a("SMA", g_pointers->m_send_metric_a, &hooks::send_metric_a),
+		m_send_metric_b1("SMB1", g_pointers->m_send_metric_b_1, &hooks::send_metric_b1),
+		m_send_metric_b2("SMB2", g_pointers->m_send_metric_b_2, &hooks::send_metric_b2),
+		m_send_metric_c("SMC", g_pointers->m_send_metric_c, &hooks::send_metric_c)
 	{
 		m_swapchain_hook.hook(hooks::swapchain_present_index, &hooks::swapchain_present);
 		m_swapchain_hook.hook(hooks::swapchain_resizebuffers_index, &hooks::swapchain_resizebuffers);
