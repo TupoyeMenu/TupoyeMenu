@@ -27,6 +27,7 @@
 #include "services/spinner/spinner_service.hpp"
 #include "services/model_preview/model_preview_service.hpp"
 #include "services/vehicle/vehicle_service.hpp"
+#include "scripting/wren/wren_manager.hpp"
 
 BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 {
@@ -118,23 +119,30 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				g_script_mgr.add_script(std::make_unique<script>(&backend::turnsignal_loop, "Turn Signals"));
 				g_script_mgr.add_script(std::make_unique<script>(&backend::disable_control_action_loop, "Disable Controls"));
 				g_script_mgr.add_script(std::make_unique<script>(&context_menu_service::context_menu, "Context Menu"));
+				g_script_mgr.add_script(std::make_unique<script>(&wren_manager::tick_all_scripts, "Wren Manager Tick All Scripts"));
 				LOG(INFO) << "Scripts registered.";
-
-				auto native_hooks_instance = std::make_unique<native_hooks>();
-				LOG(INFO) << "Dynamic native hooker initialized.";
 
 				g_hooking->enable();
 				LOG(INFO) << "Hooking enabled.";
 
-					g_running = true;
-					ASILoader::Initialize();
-					LOG(INFO) << "ASI Loader initialized.";
+				ASILoader::Initialize();
+				LOG(INFO) << "ASI Loader initialized.";
+				auto native_hooks_instance = std::make_unique<native_hooks>();
+				LOG(INFO) << "Dynamic native hooker initialized.";
+
+				auto wren_manager_instance = std::make_unique<wren_manager>();
+				LOG(INFO) << "Wren Manager initialized.";
+
+				g_running = true;
 
 				while (g_running)
 					std::this_thread::sleep_for(500ms);
 
 				shv_runner::shutdown();
 				LOG(INFO) << "ASI plugins unloaded.";
+
+				wren_manager_instance.reset();
+				LOG(INFO) << "Wren Manager uninitialized.";
 
 				g_hooking->disable();
 				LOG(INFO) << "Hooking disabled.";

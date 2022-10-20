@@ -66,6 +66,7 @@ namespace big
 		static void pie_menu();
 		static void score_controller();
 		static void chat();
+		static void wren();
 
 		// later calls will be drawn over earlier calls
 		static void always()

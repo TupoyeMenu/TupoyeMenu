@@ -29,6 +29,11 @@ namespace big
 					view::network_tabs();
 					ImGui::EndTabItem();
 				}
+				if (ImGui::BeginTabItem("Scripting"))
+				{
+					view::wren();
+					ImGui::EndTabItem();
+				}
 				if (ImGui::BeginTabItem("Settings"))
 				{
 					view::settings_tabs();
