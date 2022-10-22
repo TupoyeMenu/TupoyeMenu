@@ -72,7 +72,6 @@ namespace big
 		PVOID m_world_model_spawn_bypass;
 		PVOID m_native_return;
 		PVOID m_network_group_override;
-		PUSHORT m_spectator_check;
 		PVOID m_get_label_text;
 
 		FriendRegistry* m_friend_registry{};
@@ -128,10 +127,7 @@ namespace big
 		PVOID m_get_network_event_data{};
 		PVOID m_assign_physical_index{};
 
-		PVOID m_send_metric_a;
-		PVOID m_send_metric_b_1;
-		PVOID m_send_metric_b_2;
-		PVOID m_send_metric_c;
+		PVOID m_format_metric_for_sending;
 
 		Network** m_network;
 

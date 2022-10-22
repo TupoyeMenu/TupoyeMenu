@@ -120,6 +120,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				g_script_mgr.add_script(std::make_unique<script>(&backend::disable_control_action_loop, "Disable Controls"));
 				g_script_mgr.add_script(std::make_unique<script>(&context_menu_service::context_menu, "Context Menu"));
 				g_script_mgr.add_script(std::make_unique<script>(&wren_manager::tick_all_scripts, "Wren Manager Tick All Scripts"));
+				g_script_mgr.add_script(std::make_unique<script>(&chat_service::chat_menu, "Chat Menu"));
 				LOG(INFO) << "Scripts registered.";
 
 				g_hooking->enable();

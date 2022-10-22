@@ -1,7 +1,7 @@
 #pragma once
 #include "gui/components/components.hpp"
 #include "util/animator.hpp"
-#include "views/esp/view_esp.hpp"
+#include "esp/view_esp.hpp"
 
 
 namespace big
@@ -63,9 +63,9 @@ namespace big
 		static void gta_data();
 		static void menu_bar();
 		static void overlay();
-		static void pie_menu();
-		static void score_controller();
+		static void chat_tabs();
 		static void chat();
+		// static void chat_dm();
 		static void wren();
 
 		// later calls will be drawn over earlier calls
@@ -78,12 +78,9 @@ namespace big
 
 			notifications();
 			spinner();
-			chat();
-			if (g->window.overlay)
-				overlay();
-			if (g->pie_menu.active)
-				pie_menu();
 
+			chat_tabs();
+			overlay();
 		}
 	};
 }

@@ -99,10 +99,10 @@ namespace big
 			looped::vehicle_is_targetable();
 			looped::vehicle_seatbelt();
 			looped::vehicle_speedo_meter();
+			looped::vehicle_keep_vehicle_repaired();
 			looped::vehicle_remove_speed_limit();
 
 			looped::vehicle_chaff();
-			looped::vehicle_bombs();
 			looped::vehicle_flares();
 
 			script::get_current()->yield();
@@ -133,8 +133,6 @@ namespace big
 			looped::session_local_time();
 
 			looped::fast_join();
-			looped::pie_menu();
-			looped::hud_chat();
 			looped::phone_anim();
 			looped::disable_help_text();
 			

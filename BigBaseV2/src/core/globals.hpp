@@ -18,7 +18,12 @@ namespace big
 
 		struct debug
 		{
-			bool script_event_logging = false;
+			struct
+			{
+				bool metric_logs{};
+
+				bool script_event_logs = false;
+			} logs{};
 			bool sort_scripts = false;
 			bool with_args = false;
 			bool asi_plugins_loaded = false;
@@ -176,7 +181,6 @@ namespace big
 				bool editing_menu_toggle = false;
 				int menu_toggle = VK_INSERT;
 				int teleport_waypoint = 0;
-				int pie_menu = 0;
 			};
 
 			bool dev_dlc = false;
@@ -229,9 +233,7 @@ namespace big
 
 		struct tunables {
 			bool disable_phone = false;
-			int phone_type = 0;
 			bool phone_anim = false;
-			bool fly_thru_windscreen = false;
 			bool no_idle_kick = false;
 			bool fast_join = false;
 			bool ambiant_ufos = false;
@@ -239,10 +241,6 @@ namespace big
 			bool cable_cars = false;
 			bool always_control = false;
 			bool disable_help_text = false;
-
-			char supportingevent[30] = "BTL_IDLE";
-			char intensity[20] = "";
-			char music_event[30] = "";
 		};
 
 		struct vehicle {
@@ -297,11 +295,10 @@ namespace big
 			bool seatbelt = false;
 			bool turn_signals = false;
 			bool vehicle_jump = false;
+			bool keep_vehicle_repaired = false;
 			bool remove_speed_limit = false;
 			bool flares = false;
 			bool chaff = false;
-			bool bombs = false;
-			char bomb_type[30] = "";
 			speedo_meter speedo_meter{};
 			rainbow_paint rainbow_paint{};
 			fly fly{};
@@ -327,13 +324,10 @@ namespace big
 
 		struct window {
 			bool handling = false;
-			bool log = false;
 			bool main = true;
 			bool users = true;
 			bool player = false;
-			bool custom = false;
 			bool overlay = false;
-			bool score_controller = false;
 			bool chat = false;
 			bool demo = false;
 
@@ -366,18 +360,11 @@ namespace big
 			ImU32 bounding_box_color = 4278255360;
 		};
 
-		struct pie_menu
-		{
-			bool enabled = false;
-			bool active = false;
-			bool selected = false;
-		};
-
 		struct chat
 		{
 			std::string message;
 			bool local = false;
-			bool encription = false; // TODO
+			bool auto_scroll = true;
 		};
 
 		struct outfit_editor
@@ -442,7 +429,6 @@ namespace big
 		weapons weapons{};
 		window window{};
 		context_menu context_menu{};
-		pie_menu pie_menu{};
 		chat chat{};
 		esp esp{};
 		outfit_editor outfit_editor{};
@@ -460,8 +446,9 @@ namespace big
 
 		void from_json(const nlohmann::json& j)
 		{
-			this->debug.script_event_logging = j["debug"]["script_event_logging"];
 			this->debug.sort_scripts = j["debug"]["sort_scripts"];
+			this->debug.logs.metric_logs = j["debug"]["logs"]["metric_logs"];
+			this->debug.logs.script_event_logs = j["debug"]["logs"]["script_event_logs"];
 
 			g->notifications.gta_thread_kill.log = j["notifications"]["gta_thread_kill"]["log"];
 			g->notifications.gta_thread_kill.notify = j["notifications"]["gta_thread_kill"]["notify"];
@@ -595,7 +582,6 @@ namespace big
 
 			this->tunables.disable_phone = j["tunables"]["disable_phone"];
 			this->tunables.phone_anim = j["tunables"]["phone_anim"];
-			this->tunables.fly_thru_windscreen = j["tunables"]["fly_thru_windscreen"];
 			this->tunables.no_idle_kick = j["tunables"]["no_idle_kick"];
 			this->tunables.fast_join = j["tunables"]["fast_join"];
 			this->tunables.ambiant_ufos = j["tunables"]["ambiant_ufos"];
@@ -625,7 +611,6 @@ namespace big
 
 			this->settings.dev_dlc = j["settings"]["dev_dlc"];
 			this->settings.hotkeys.menu_toggle = j["settings"]["hotkeys"]["menu_toggle"];
-			this->settings.hotkeys.pie_menu = j["settings"]["hotkeys"]["pie_menu"];
 
 			this->spawn_vehicle.preview_vehicle = j["spawn_vehicle"]["preview_vehicle"];
 			this->spawn_vehicle.spawn_inside = j["spawn_vehicle"]["spawn_inside"];
@@ -677,13 +662,13 @@ namespace big
 			this->vehicle.horn_boost = j["vehicle"]["horn_boost"];
 			this->vehicle.vehicle_jump = j["vehicle"]["vehicle_jump"];
 			this->vehicle.remove_speed_limit = j["vehicle"]["remove_speed_limit"];
+			this->vehicle.keep_vehicle_repaired = j["vehicle"]["keep_vehicle_repaired"];
 			this->vehicle.instant_brake = j["vehicle"]["instant_brake"];
 			this->vehicle.is_targetable = j["vehicle"]["is_targetable"];
 			this->vehicle.seatbelt = j["vehicle"]["seatbelt"];
 			this->vehicle.turn_signals = j["vehicle"]["turn_signals"];
 			this->vehicle.flares = j["vehicle"]["flares"];
 			this->vehicle.chaff = j["vehicle"]["chaff"];
-			this->vehicle.bombs = j["vehicle"]["bombs"];
 
 			this->vehicle.speedo_meter.enabled = j["vehicle"]["speedo_meter"]["enabled"];
 			this->vehicle.speedo_meter.left_side = j["vehicle"]["speedo_meter"]["left_side"];
@@ -718,7 +703,6 @@ namespace big
 			this->window.gui_scale = j["window"]["gui_scale"];
 			this->window.handling = j["window"]["handling"];
 			this->window.overlay = j["window"]["overlay"];
-			this->window.log = j["window"]["log"];
 			this->window.main = j["window"]["main"];
 			this->window.users = j["window"]["users"];
 			this->window.player = j["window"]["player"];
@@ -729,6 +713,8 @@ namespace big
 			this->context_menu.selected_option_color = j["context_menu"]["selected_option_color"];
 			this->context_menu.bounding_box_enabled = j["context_menu"]["bounding_box_enabled"];
 			this->context_menu.bounding_box_color = j["context_menu"]["bounding_box_color"];
+
+			this->chat.auto_scroll = j["chat"]["auto_scroll"];
 
 			this->esp.enabled = j["esp"]["enabled"];
 			this->esp.hide_self = j["esp"]["hide_self"];
@@ -775,9 +761,15 @@ namespace big
 				{
 					"debug",
 					{
-						{ "script_event_logging", this->debug.script_event_logging },
-						{ "sort_scripts", this->debug.sort_scripts }
+						{ "sort_scripts", this->debug.sort_scripts },
 
+						{
+							"logs",
+							{
+								{ "metric_logs", this->debug.logs.metric_logs },
+								{ "script_event_logs", this->debug.logs.script_event_logs }
+							}
+						}
 					}
 				},
 				{
@@ -876,7 +868,6 @@ namespace big
 					"tunables", {
 						{ "disable_phone", this->tunables.disable_phone },
 						{ "phone_anim", this->tunables.phone_anim },
-						{ "fly_thru_windscreen", this->tunables.fly_thru_windscreen },
 						{ "no_idle_kick", this->tunables.no_idle_kick },
 						{ "fast_join", this->tunables.fast_join },
 						{ "ambiant_ufos", this->tunables.ambiant_ufos },
@@ -912,8 +903,7 @@ namespace big
 					"settings", {
 						{ "dev_dlc", this->settings.dev_dlc },
 						{ "hotkeys", {
-								{ "menu_toggle", this->settings.hotkeys.menu_toggle },
-								{ "pie_menu", this->settings.hotkeys.pie_menu }
+								{ "menu_toggle", this->settings.hotkeys.menu_toggle }
 							}
 						}
 					}
@@ -986,12 +976,12 @@ namespace big
 						{ "horn_boost", this->vehicle.horn_boost },
 						{ "vehicle_jump", this->vehicle.vehicle_jump },
 						{ "remove_speed_limit", this->vehicle.remove_speed_limit },
+						{ "keep_vehicle_repaired", this->vehicle.keep_vehicle_repaired },
 						{ "instant_brake", this->vehicle.instant_brake },
 						{ "is_targetable", this->vehicle.is_targetable },
 						{ "turn_signals", this->vehicle.turn_signals },
 						{ "flares", this->vehicle.flares },
 						{ "chaff", this->vehicle.chaff },
-						{ "bombs", this->vehicle.bombs },
 						{ "seatbelt", this->vehicle.seatbelt },
 						{
 							"speedo_meter",
@@ -1047,7 +1037,6 @@ namespace big
 						{ "gui_scale", this->window.gui_scale },
 						{ "handling", this->window.handling },
 						{ "overlay", this->window.overlay },
-						{ "log", this->window.log },
 						{ "main", this->window.main },
 						{ "users", this->window.users },
 						{ "player", this->window.player },
@@ -1056,11 +1045,16 @@ namespace big
 				},
 				{
 					"context_menu", {
-						{"enabled", this->context_menu.enabled},
+						{ "enabled", this->context_menu.enabled },
 						{ "allowed_entity_types", this->context_menu.allowed_entity_types },
 						{ "selected_option_color", this->context_menu.selected_option_color },
 						{ "bounding_box_enabled", this->context_menu.bounding_box_enabled },
 						{ "bounding_box_color", this->context_menu.bounding_box_color },
+					}
+				},
+				{
+					"chat", {
+						{ "auto_scroll", this->chat.auto_scroll }
 					}
 				},
 				{

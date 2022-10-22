@@ -1,5 +1,4 @@
 #include "fiber_pool.hpp"
-#include "gui/handling/handling_tabs.hpp"
 #include "util/vehicle.hpp"
 #include "views/view.hpp"
 #include "util/mobile.hpp"
@@ -19,6 +18,9 @@ namespace big
 		components::button("Repair", [] {
 			vehicle::repair(self::veh);
 			});
+
+		ImGui::SameLine();
+		ImGui::Checkbox("Keep Vehicle Repaired", &g->vehicle.keep_vehicle_repaired);
 
 		ImGui::Separator();
 
@@ -134,15 +136,6 @@ namespace big
 			ImGui::Checkbox("Water", &g->vehicle.proof_water);
 
 			ImGui::EndGroup();
-		}
-		ImGui::Separator();
-
-		components::sub_title("Vehicle Bombs");
-		{
-			ImGui::Text("This feature is old and incomplete, so it will break");
-			ImGui::Checkbox("Vehicle Bombs", &g->vehicle.bombs);
-
-			components::input_text_with_hint("###bomb_model", "Bomb Model", g->vehicle.bomb_type, 64); // TODO: Use ImGui Combo instead
 		}
 		ImGui::Separator();
 

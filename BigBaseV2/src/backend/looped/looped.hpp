@@ -12,8 +12,6 @@ namespace big
 
 		static void context_menu();
 		static void hud_transition_state();
-		static void pie_menu();
-		static void hud_chat();
 
 		static void tunables_disable_phone();
 		static void phone_anim();
@@ -68,7 +66,7 @@ namespace big
 		static void vehicle_turn_signals();
 		static void vehicle_flares();
 		static void vehicle_chaff();
-		static void vehicle_bombs();
+		static void vehicle_keep_vehicle_repaired();
 
 		static void weapons_ammo_special_type();
 		static void weapons_cage_gun();
