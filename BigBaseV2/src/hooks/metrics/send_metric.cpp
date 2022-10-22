@@ -50,7 +50,5 @@ namespace big
 	void hooks::format_metric_for_sending(int a1, int64_t a2, int64_t a3, rage::rlMetric* metric)
 	{
 		log_metric(metric);
-
-		return g_hooking->m_send_metric_c.get_original<send_metric_f>()(metric_mgr, metric);
 	}
 }
