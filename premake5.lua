@@ -201,6 +201,29 @@ workspace "BigBaseV2"
 
 		DeclareMSVCOptions()
 		DeclareDebugOptions()
+	
+		
+	project "lua"
+		location "vendor/%{prj.name}"
+		kind "StaticLib"
+		language "C"
+
+		targetdir ("bin/lib/" .. outputdir)
+		objdir ("bin/lib/int/" .. outputdir .. "/%{prj.name}")
+
+		files
+		{
+			"vendor/%{prj.name}/*.h",
+			"vendor/%{prj.name}/*.c"
+		}
+
+		includedirs
+		{
+			"vendor/%{prj.name}/",
+		}
+
+		DeclareMSVCOptions()
+		DeclareDebugOptions()
 
 	project "BigBaseV2"
 		location "BigBaseV2"
@@ -230,7 +253,9 @@ workspace "BigBaseV2"
 		    "vendor/ImGui",
 		    "vendor/json/single_include",
 		    "vendor/MinHook/include",
-		    "vendor/pugixml/src"
+		    "vendor/pugixml/src",
+		    "vendor/lua",
+		    "vendor/LuaBridge/Source"
 		}
 
 		libdirs
@@ -244,7 +269,8 @@ workspace "BigBaseV2"
 		    "g3log",
 		    "ImGui",
 		    "MinHook",
-			"pugixml"
+			"pugixml",
+			"lua"
 		}
 
 		pchheader "common.hpp"
@@ -268,3 +294,6 @@ workspace "BigBaseV2"
 		    flags { "FatalWarnings", "NoManifest" }
 		    defines { "RELEASE" }
 		    optimize "speed"
+		
+		linkoptions "/DEBUG"
+		buildoptions "/Zi"

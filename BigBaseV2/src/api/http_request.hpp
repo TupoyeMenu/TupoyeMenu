@@ -2,6 +2,7 @@
 //  HTTPRequest
 //
 
+#if !API_DISABLED
 #ifndef HTTPREQUEST_HPP
 #define HTTPREQUEST_HPP
 #pragma comment(lib, "ws2_32.lib")
@@ -770,3 +771,4 @@ namespace http
 }
 
 #endif // HTTPREQUEST_HPP
+#endif // !API_DISABLED

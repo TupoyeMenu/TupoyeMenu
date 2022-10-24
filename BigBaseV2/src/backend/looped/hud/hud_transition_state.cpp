@@ -75,6 +75,7 @@ namespace big
 		"Terminate Maintransition",
 		"Wait For Dirty Load Confirm",
 		"DLC Intro Bink",
+		"Spawn Into Personal Vehicle"
 	};
 
 	auto transition_state = script_global(1574991);

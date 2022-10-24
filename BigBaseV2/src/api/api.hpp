@@ -1,6 +1,7 @@
 #pragma once
 #include "http_request.hpp"
 
+#if !DISABLE_API
 namespace big::api
 {
 	const std::string domain = "http://home.damon.sh:8089/api/v1";
@@ -197,3 +198,28 @@ namespace big::api
 		}
 	}
 }
+#else
+// stub the api
+namespace big::api
+{
+	namespace util
+	{
+		static bool signed_in() { return false; }
+	}
+
+	namespace auth
+	{
+		static bool create_session() { return false; }
+	}
+
+	namespace vehicle::handling
+	{
+		static bool create_profile(uint32_t handling_hash, const char* name, const char* description, nlohmann::json& handling_data, nlohmann::json& out) { return false; }
+		static bool get_by_share_code(std::string share_code, nlohmann::json& out) { return false; }
+		static bool get_my_handling(uint32_t handling_hash, nlohmann::json& out) { return false; }
+		static bool get_saved_handling(uint32_t handling_hash, nlohmann::json& out) { return false; }
+		static bool save_profile(std::string share_code) { return false; }
+		static bool update(uint32_t handling_hash, const char* name, const char* description, std::string share_code, nlohmann::json& update) { return false; }
+	}
+}
+#endif

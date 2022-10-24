@@ -15,6 +15,7 @@ namespace big
 			looped::system_update_pointers();
 			looped::system_desync_kick_protection();
 
+#if !DISABLE_API
 			if (g_local_player != nullptr && !api::util::signed_in())
 			{
 				g_thread_pool->push([]
@@ -22,6 +23,8 @@ namespace big
 					looped::api_login_session();
 				});
 			}
+#endif
+
 			script::get_current()->yield();
 		}
 	}

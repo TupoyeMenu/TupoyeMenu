@@ -9,6 +9,8 @@
 #include "script_mgr.hpp"
 #include "thread_pool.hpp"
 
+#include "scripting/lua/lua_manager.hpp"
+
 #include "backend/backend.hpp"
 #include "native_hooks/native_hooks.hpp"
 #include "services/context_menu/context_menu_service.hpp"
@@ -109,10 +111,16 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				auto native_hooks_instance = std::make_unique<native_hooks>();
 				LOG(INFO) << "Dynamic native hooker initialized.";
 
+				auto lua_manager_instance = std::make_unique<lua_manager>();
+				LOG(INFO) << "Lua Manager initialized.";
+
 				g_running = true;
 
 				while (g_running)
 					std::this_thread::sleep_for(500ms);
+
+				lua_manager_instance.reset();
+				LOG(INFO) << "Lua Manager uninitialized.";
 
 				g_hooking->disable();
 				LOG(INFO) << "Hooking disabled.";

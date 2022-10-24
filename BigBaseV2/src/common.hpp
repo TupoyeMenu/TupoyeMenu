@@ -80,3 +80,5 @@ namespace self
 	inline Vector3 pos;
 	inline Vehicle veh;
 }
+
+#define DISABLE_API true // set this to true when uploading fork to UnknownCheats
