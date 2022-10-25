@@ -11,7 +11,7 @@ namespace big
 {
 	void looped::script_starter()
 	{
-		if (g->tunables.ambiant_ufos)
+		/*if (g->tunables.ambiant_ufos)
 		{
             Hash hash = rage::joaat("ufo");
 			if (!scripts::is_running(hash) && NETWORK::NETWORK_IS_GAME_IN_PROGRESS())
@@ -27,7 +27,7 @@ namespace big
 		}
         if (g->tunables.ambiant_blimp)
         {
-            /*Hash hash = rage::joaat("blimp");
+            Hash hash = rage::joaat("blimp");
             if (!scripts::is_running(hash))
             {
                 scripts::request_script(hash);
@@ -37,18 +37,16 @@ namespace big
 
                     scripts::wait_till_running(hash);
                 }
-            }*/
-        }
-        if (g->tunables.cable_cars) 
+            }
+        }*/
+        if (g->tunables.cable_cars && NETWORK::NETWORK_IS_SESSION_STARTED() && !MISC::GET_MISSION_FLAG() && !ENTITY::IS_ENTITY_DEAD(self::ped, false))
         {
-            //if (((self::pos.x >= -800.0f && self::pos.y >= 5300.0f) && self::pos.x <= 640.0f) && self::pos.y <= 5800.0f)
-            if(ENTITY::IS_ENTITY_IN_AREA(self::ped, -800, 5300, 0, 640, 5800, 5000, false, true, 0) && NETWORK::NETWORK_IS_GAME_IN_PROGRESS())
+            if (((self::pos.x >= -800.f && self::pos.y >= 5300.f) && self::pos.x <= 640.f) && self::pos.y <= 5800.f)
             {
-                LOG(INFO) << "trying to start cablecar1";
-                Hash hash = rage::joaat("cablecar");
-                if (!scripts::is_running(hash))
+                Hash hash = RAGE_JOAAT("cablecar");
+                if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(hash) == 0)
                 {
-                    LOG(INFO) << "trying to start cablecar2";
+                    LOG(G3LOG_DEBUG) << "trying to start cablecar2";
                     scripts::request_script(hash);
                     if (scripts::wait_till_loaded(hash))
                     {
