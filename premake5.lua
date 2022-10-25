@@ -275,6 +275,6 @@ workspace "BigBaseV2"
 			defines { "DEBUG" }
 
 		filter "configurations:Release"
-		    flags { "FatalWarnings", "NoManifest" }
-		    defines { "RELEASE" }
-		    optimize "speed"
+			flags { "FatalWarnings", "NoManifest" }
+			defines { "RELEASE" }
+			optimize "speed"
