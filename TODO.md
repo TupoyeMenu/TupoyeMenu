@@ -19,6 +19,7 @@ Max Chance is 3
 - [ ] Fix gta5 stupid auto language switch. Chance 2
 - [ ] GMOD like ctx menu. Chance 1
 - [ ] Fix ballistic armor component. Chance 2
+- [ ] Improve OpenV Hook / Better Handling. Chance 1
 
 ### In Progress
 - [x] Custom chat
