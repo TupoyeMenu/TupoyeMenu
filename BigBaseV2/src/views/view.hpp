@@ -24,9 +24,7 @@ namespace big
 		static void gui_settings();
 		static void handling_tabs();
 		static void handling_current_profile();
-		static void handling_my_profiles();
 		static void handling_saved_profiles();
-		static void handling_search();
 		static void notification_settings();
 		static void protection_settings();
 		static void heading();
@@ -49,6 +47,8 @@ namespace big
 		static void persist_car();
 		static void fun_vehicle();
 		static void spawn_ped();
+		static void world_tabs();
+		static void time_and_weather();
 		static void network_tabs();
 		static void spoofing();
 		static void teleport();
@@ -67,6 +67,7 @@ namespace big
 		static void chat();
 		static void chat_dm();
 		static void wren();
+		static void log();
 
 		// later calls will be drawn over earlier calls
 		static void always()

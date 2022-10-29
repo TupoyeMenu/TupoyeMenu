@@ -1,4 +1,5 @@
 #pragma once
+#include "rage/rlSessionInfo.hpp"
 #include "weapon/CAmmoInfo.hpp"
 #include "weapon/CWeaponInfo.hpp"
 #include "rage/rlSessionInfo.hpp"
@@ -179,8 +180,9 @@ namespace big
 			{
 				int hour{}, minute{}, second{};
 			} custom_time;
-			bool session_join_queued = false;
-			rage::rlSessionInfo session_info;
+			bool join_queued = false;
+			rage::rlSessionInfo info;
+			bool disable_chat_filter = false;
 		};
 
 		struct settings {
@@ -229,6 +231,8 @@ namespace big
 			int pool_type = 0;
 
 			bool spoof_cheater = false;
+
+			bool spoof_hide_god = false;
 
 			bool spoof_rockstar_dev = false;
 			bool spoof_rockstar_qa = false;
@@ -328,6 +332,7 @@ namespace big
 			bool no_recoil = false;
 			bool no_spread = false;
 			char vehicle_gun_model[12] = "bus";
+			bool bypass_c4_limit = false;
 		};
 
 		struct window {
@@ -338,6 +343,7 @@ namespace big
 			bool overlay = false;
 			bool chat = false;
 			bool demo = false;
+			bool log = false;
 
 			ImU32 color = 3357612055;
 			float gui_scale = 1.f;
@@ -703,6 +709,7 @@ namespace big
 			this->weapons.infinite_mag = j["weapons"]["infinite_mag"];
 			this->weapons.no_recoil = j["weapons"]["no_recoil"];
 			this->weapons.no_spread = j["weapons"]["no_spread"];
+			this->weapons.bypass_c4_limit = j["weapons"]["bypass_c4_limit"];
 
 			this->weapons.ammo_special.type = (eAmmoSpecialType)j["weapons"]["ammo_special"]["type"];
 			this->weapons.ammo_special.toggle = j["weapons"]["ammo_special"]["toggle"];
@@ -715,6 +722,7 @@ namespace big
 			this->window.users = j["window"]["users"];
 			this->window.player = j["window"]["player"];
 			this->window.demo = j["window"]["demo"];
+			this->window.log = j["window"]["log"];
 
 			this->context_menu.enabled = j["context_menu"]["enabled"];
 			this->context_menu.allowed_entity_types = j["context_menu"]["allowed_entity_types"];
@@ -1036,7 +1044,8 @@ namespace big
 						{ "infinite_ammo", this->weapons.infinite_ammo },
 						{ "infinite_mag", this->weapons.infinite_mag },
 						{ "no_recoil", this->weapons.no_recoil },
-						{ "no_spread", this->weapons.no_spread }
+						{ "no_spread", this->weapons.no_spread },
+						{ "bypass_c4_limit", this->weapons.bypass_c4_limit }
 					}
 				},
 				{
@@ -1048,7 +1057,8 @@ namespace big
 						{ "main", this->window.main },
 						{ "users", this->window.users },
 						{ "player", this->window.player },
-						{ "demo", this->window.demo }
+						{ "demo", this->window.demo },
+						{ "log", this->window.log }
 					}
 				},
 				{

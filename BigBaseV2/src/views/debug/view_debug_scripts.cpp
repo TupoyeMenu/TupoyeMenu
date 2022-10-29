@@ -16,7 +16,7 @@ namespace big
 	void view::debug_scripts()
     {
         static GtaThread* selected_thread{};
-        if (ImGui::ListBoxHeader("##scripts", ImVec2(250, 500)))
+        if (ImGui::ListBoxHeader("##scripts", ImVec2(250, 0)))
         {
             if (g->debug.sort_scripts)
             {
