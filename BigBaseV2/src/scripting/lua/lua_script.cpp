@@ -41,9 +41,6 @@ namespace big
 		void add_callback(luabridge::LuaRef func, lua_State* state)
 		{
 			g_fiber_pool->queue_job([state, func]{
-				lua_script* script = luabridge::getGlobal(state, "!script").cast<lua_script*>();
-				script->m_scripts.push_back(big::script::get_current());
-
 				try
 				{
 					func();
