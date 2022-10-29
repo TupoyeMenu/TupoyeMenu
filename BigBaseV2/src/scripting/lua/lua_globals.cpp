@@ -11,7 +11,6 @@ namespace big::lua::globals
 
 	void set_int(int index, int value)
 	{
-		LOG(INFO) << index;
 		*reinterpret_cast<int*>(g_pointers->m_script_globals[index >> 0x12 & 0x3F] + (index & 0x3FFFF)) = value;
 	}
 

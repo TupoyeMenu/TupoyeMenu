@@ -1,6 +1,8 @@
 #include "lua_script.hpp"
 #include "lua_logger.hpp"
 #include "lua_globals.hpp"
+#include "lua_vector.hpp"
+#include "lua_natives.hpp"
 #include "script_mgr.hpp"
 #include "lua_bindings.hpp"
 
@@ -20,7 +22,16 @@ namespace big
 
 				while (g_running)
 				{
-					func();
+					try
+					{
+						func();
+					}
+					catch (luabridge::LuaException& ex)
+					{
+						LOG(INFO) << ex.what();
+						return;
+					}
+
 					big::script::get_current()->yield();
 				}
 			}, name));
@@ -54,6 +65,8 @@ namespace big
 		lua::script::load(m_state);
 		lua::logger::load(m_state);
 		lua::globals::load(m_state);
+		lua::vector::load(m_state);
+		lua::natives::load(m_state);
 
 		luabridge::setGlobal(m_state, this, "!script");
 
