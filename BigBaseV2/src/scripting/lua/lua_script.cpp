@@ -5,6 +5,7 @@
 #include "lua_natives.hpp"
 #include "script_mgr.hpp"
 #include "lua_bindings.hpp"
+#include "fiber_pool.hpp"
 
 namespace big
 {
@@ -37,6 +38,24 @@ namespace big
 			}, name));
 		}
 
+		void add_callback(luabridge::LuaRef func, lua_State* state)
+		{
+			g_fiber_pool->queue_job([state, func]{
+				lua_script* script = luabridge::getGlobal(state, "!script").cast<lua_script*>();
+				script->m_scripts.push_back(big::script::get_current());
+
+				try
+				{
+					func();
+				}
+				catch (luabridge::LuaException& ex)
+				{
+					LOG(INFO) << ex.what();
+					return;
+				}
+			});
+		}
+
 		void yield()
 		{
 			big::script::get_current()->yield();
@@ -52,6 +71,7 @@ namespace big
 			luabridge::getGlobalNamespace(state)
 				.beginNamespace("script")
 					.addFunction("add_script", add_script)
+					.addFunction("add_callback", add_callback)
 					.addFunction("yield", yield)
 					.addFunction("wait", wait)
 				.endNamespace();

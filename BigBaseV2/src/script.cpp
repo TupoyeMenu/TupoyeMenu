@@ -2,6 +2,7 @@
 #include "common.hpp"
 #include "logger.hpp"
 #include "script.hpp"
+#include "script_mgr.hpp"
 
 namespace big
 {
@@ -118,8 +119,6 @@ namespace big
 		}();
 
 		while (true)
-		{
-			yield();
-		}
+			yield(1000000s);
 	}
 }
