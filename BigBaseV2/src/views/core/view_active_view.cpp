@@ -1,6 +1,7 @@
 #include "views/view.hpp"
 #include "pointers.hpp"
 #include "services/gui/gui_service.hpp"
+#include "scripting/lua/lua_manager.hpp"
 
 namespace big
 {
@@ -18,6 +19,7 @@ namespace big
 			components::title(g_gui_service->get_selected()->name);
 			ImGui::Separator();
 			g_gui_service->get_selected()->func();
+			g_lua_manager->draw_script_gui(g_gui_service->get_selected()->hash);
 			ImGui::PopStyleVar();
 		}
 	}

@@ -23,14 +23,12 @@ namespace big::lua::logger
 		LOG(FATAL) << str;
 	}
 
-	void load(lua_State* state)
+	void load(sol::state& state)
 	{
-		luabridge::getGlobalNamespace(state)
-			.beginNamespace("logger")
-				.addFunction("info", info)
-				.addFunction("debug", debug)
-				.addFunction("warning", warning)
-				.addFunction("fatal", fatal)
-			.endNamespace();
+		auto ns = state["logger"].get_or_create<sol::table>();
+		ns["info"] = info;
+		ns["debug"] = debug;
+		ns["warning"] = warning;
+		ns["fatal"] = fatal;
 	}
 }

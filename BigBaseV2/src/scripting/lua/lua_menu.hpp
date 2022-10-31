@@ -1,7 +1,7 @@
 #pragma once
 #include "lua_bindings.hpp"
 
-namespace big::lua::vector
+namespace big::lua::menu
 {
 	void load(sol::state& state);
 }

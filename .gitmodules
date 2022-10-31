@@ -22,9 +22,6 @@
 	path = vendor/pugixml
 	url = https://github.com/zeux/pugixml.git
 	ignore = dirty
-[submodule "vendor/LuaBridge"]
-	path = vendor/LuaBridge
-	url = https://github.com/vinniefalco/LuaBridge
 [submodule "vendor/lua"]
 	path = vendor/lua
 	url = https://github.com/lua/lua

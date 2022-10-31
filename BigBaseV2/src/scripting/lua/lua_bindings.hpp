@@ -11,4 +11,4 @@ extern "C"
 }
 
 #undef cast
-#include <Luabridge/LuaBridge.h>
+#include "sol.hpp"

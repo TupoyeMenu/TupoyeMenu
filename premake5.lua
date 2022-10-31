@@ -233,8 +233,7 @@ workspace "BigBaseV2"
 		    "vendor/json/single_include",
 		    "vendor/MinHook/include",
 		    "vendor/pugixml/src",
-		    "vendor/lua",
-		    "vendor/LuaBridge/Source"
+		    "vendor/lua"
 		}
 
 		libdirs

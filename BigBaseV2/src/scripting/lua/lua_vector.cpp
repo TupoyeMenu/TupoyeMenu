@@ -3,13 +3,11 @@
 
 namespace big::lua::vector
 {
-	void load(lua_State* state)
+	void load(sol::state& state)
 	{
-		luabridge::getGlobalNamespace(state)
-			.beginClass<Vector3>("vector")
-				.addConstructor <void (*) (float, float, float)>()
-				.addProperty("x", &Vector3::x)
-				.addProperty("y", &Vector3::y)
-				.addProperty("z", &Vector3::z);
+		auto vector_type = state.new_usertype<Vector3>("vector", sol::constructors<Vector3(float, float, float)>());
+		vector_type["x"] = &Vector3::x;
+		vector_type["y"] = &Vector3::y;
+		vector_type["z"] = &Vector3::z;
 	}
 }

@@ -47,6 +47,7 @@ namespace big
 		const char name[32] = "";
 		std::function<void()> func = nullptr;
 		std::map<tabs, navigation_struct> sub_nav{};
+		std::uint32_t hash = rage::joaat(name);
 	};
 
 	class gui_service final

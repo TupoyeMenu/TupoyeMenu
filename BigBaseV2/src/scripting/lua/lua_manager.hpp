@@ -11,6 +11,8 @@ namespace big
 	public:
 		lua_manager();
 		~lua_manager();
+
+		void draw_script_gui(std::uint32_t menu);
 	};
 
 	inline lua_manager* g_lua_manager{};

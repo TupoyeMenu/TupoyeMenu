@@ -29,15 +29,13 @@ namespace big::lua::globals
 		return reinterpret_cast<const char*>(g_pointers->m_script_globals[index >> 0x12 & 0x3F] + (index & 0x3FFFF));
 	}
 
-	void load(lua_State* state)
+	void load(sol::state& state)
 	{
-		luabridge::getGlobalNamespace(state)
-			.beginNamespace("globals")
-				.addFunction("get_int", get_int)
-				.addFunction("set_int", set_int)
-				.addFunction("get_float", get_float)
-				.addFunction("set_float", set_float)
-				.addFunction("get_string", get_string)
-			.endNamespace();
+		auto ns = state["globals"].get_or_create<sol::table>();
+		ns["get_int"] = get_int;
+		ns["set_int"] = set_int;
+		ns["get_float"] = get_float;
+		ns["set_float"] = set_float;
+		ns["get_string"] = get_string;
 	}
 }

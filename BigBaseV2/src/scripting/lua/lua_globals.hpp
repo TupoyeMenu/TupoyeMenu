@@ -3,5 +3,5 @@
 
 namespace big::lua::globals
 {
-	void load(lua_State* state);
+	void load(sol::state& state);
 }

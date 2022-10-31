@@ -3,22 +3,25 @@
 #include "lua_globals.hpp"
 #include "lua_vector.hpp"
 #include "lua_natives.hpp"
-#include "script_mgr.hpp"
+#include "lua_memory.hpp"
 #include "lua_bindings.hpp"
+#include "lua_manager.hpp"
+#include "lua_imgui.hpp"
+#include "lua_menu.hpp"
+
 #include "fiber_pool.hpp"
+#include "script_mgr.hpp"
 
 namespace big
 {
 	namespace lua::script
 	{
-		void add_script(luabridge::LuaRef func, const char* name, lua_State* state)
+		void add_script(sol::function func, const char* name, sol::this_state state)
 		{
-			if (!func.isFunction())
-				LOG(FATAL) << "ref not a function";
-
 			g_script_mgr.add_script(std::make_unique<big::script>([state, func]
 			{
-				lua_script* script = luabridge::getGlobal(state, "!script").cast<lua_script*>();
+				sol::state_view view(state);
+				lua_script* script = view["!script"];
 				script->m_scripts.push_back(big::script::get_current());
 
 				while (g_running)
@@ -27,9 +30,8 @@ namespace big
 					{
 						func();
 					}
-					catch (luabridge::LuaException& ex)
+					catch (const std::exception&)
 					{
-						LOG(INFO) << ex.what();
 						return;
 					}
 
@@ -38,16 +40,15 @@ namespace big
 			}, name));
 		}
 
-		void add_callback(luabridge::LuaRef func, lua_State* state)
+		void add_callback(sol::function func)
 		{
-			g_fiber_pool->queue_job([state, func]{
+			g_fiber_pool->queue_job([func]{
 				try
 				{
 					func();
 				}
-				catch (luabridge::LuaException& ex)
+				catch (const std::exception&)
 				{
-					LOG(INFO) << ex.what();
 					return;
 				}
 			});
@@ -63,34 +64,46 @@ namespace big
 			big::script::get_current()->yield(std::chrono::milliseconds(millis));
 		}
 
-		void load(lua_State* state)
+		void load(sol::state& state)
 		{
-			luabridge::getGlobalNamespace(state)
-				.beginNamespace("script")
-					.addFunction("add_script", add_script)
-					.addFunction("add_callback", add_callback)
-					.addFunction("yield", yield)
-					.addFunction("wait", wait)
-				.endNamespace();
+			auto ns = state["script"].get_or_create<sol::table>();
+			ns["add_script"] = add_script;
+			ns["add_callback"] = add_callback;
+			ns["yield"] = yield;
+			ns["wait"] = wait;
 		}
+	}
+
+	int lua_error_handler(lua_State* state)
+	{
+		size_t messagesize;
+		const char* message = lua_tolstring(state, -1, &messagesize);
+		if (message)
+		{
+			std::string err(message, messagesize);
+			LOG(WARNING) << "Error executing script: " << err;
+		}
+
+		throw std::exception();
 	}
 
 	lua_script::lua_script(std::filesystem::path path)
 	{
-		m_state = luaL_newstate();
+		m_state = sol::state(lua_error_handler);
 		luaL_openlibs(m_state);
 		lua::script::load(m_state);
 		lua::logger::load(m_state);
 		lua::globals::load(m_state);
 		lua::vector::load(m_state);
 		lua::natives::load(m_state);
+		lua::memory::load(m_state);
+		lua::imgui::load(m_state);
+		lua::menu::load(m_state);
 
-		luabridge::setGlobal(m_state, this, "!script");
+		m_state["joaat"] = rage::joaat;
+		m_state["!script"] = this;
 
-		if (luaL_dofile(m_state, path.string().c_str()))
-			LOG(WARNING) << "Failed to load script " << path.filename().string();
-		else
-			LOG(INFO) << "Loaded script " << path.filename().string();
+		m_state.load_file(path.string().c_str())();
 	}
 
 	lua_script::~lua_script()
@@ -99,7 +112,8 @@ namespace big
 		for (auto& script : m_scripts)
 			g_script_mgr.remove_script(script);
 
-		lua_close(m_state);
+		m_scripts.clear();
+		m_script_gui.clear();
 	}
 }
 
