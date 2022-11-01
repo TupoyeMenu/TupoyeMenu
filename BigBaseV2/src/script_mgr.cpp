@@ -9,10 +9,23 @@
 
 namespace big
 {
-	void script_mgr::add_script(std::unique_ptr<script> script)
+	void script_mgr::add_script(std::unique_ptr<script>&& script)
 	{
 		std::lock_guard lock(m_mutex);
 		m_scripts.push_back(std::move(script));
+	}
+
+	void script_mgr::remove_script(script* script)
+	{
+		std::lock_guard lock(m_mutex);
+		for (auto it = m_scripts.begin(); *it; it++)
+		{
+			if (it->get() == script)
+			{
+				m_scripts.erase(it);
+				break;
+			}
+		}
 	}
 
 	void script_mgr::remove_all_scripts()

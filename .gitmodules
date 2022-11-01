@@ -22,3 +22,6 @@
 	path = vendor/pugixml
 	url = https://github.com/zeux/pugixml.git
 	ignore = dirty
+[submodule "vendor/lua"]
+	path = vendor/lua
+	url = https://github.com/lua/lua

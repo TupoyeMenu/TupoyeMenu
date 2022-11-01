@@ -29,6 +29,11 @@ namespace big
 			NETWORK::NETWORK_BAIL(16, 0, 0);
 		});
 
+		components::button("Network Session Host", []
+			{
+				NETWORK::NETWORK_SESSION_HOST(1, 32, TRUE);
+			});
+
 		ImGui::Checkbox("Log Metrics", &g->debug.logs.metric_logs);
 
 		ImGui::Checkbox("Log Native Script Hooks", &g->debug.logs.script_hook_logs);
@@ -54,6 +59,7 @@ namespace big
 			}
 
 			ImGui::TreePop();
+
 		}
 
 	}

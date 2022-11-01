@@ -2,6 +2,7 @@
 #include "common.hpp"
 #include "logger.hpp"
 #include "script.hpp"
+#include "script_mgr.hpp"
 
 namespace big
 {
@@ -19,13 +20,20 @@ namespace big
 	}
 
 	script::script(const func_t func, const std::string_view name, const bool toggleable, const std::optional<std::size_t> stack_size) :
+		script(std::function(func), stack_size)
+	{
+		m_name = name;
+		m_toggleable = toggleable;
+	}
+
+	script::script(const std::function<void(void)> func, const std::string_view name, const bool toggleable, const std::optional<std::size_t> stack_size) :
 		script(func, stack_size)
 	{
 		m_name = name;
 		m_toggleable = toggleable;
 	}
 
-	script::script(const func_t func, const std::optional<std::size_t> stack_size) :
+	script::script(const std::function<void(void)> func, const std::optional<std::size_t> stack_size) :
 		m_enabled(true),
 		m_toggleable(false),
 		m_script_fiber(nullptr),
@@ -111,8 +119,6 @@ namespace big
 		}();
 
 		while (true)
-		{
-			yield();
-		}
+			yield(1000000s);
 	}
 }

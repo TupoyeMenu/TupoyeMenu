@@ -17,12 +17,11 @@ namespace memory
 		static const std::unique_ptr<byte_patch>& make(TAddr address, std::remove_pointer_t<std::remove_reference_t<TAddr>> value)
 		{
 			return m_patches.emplace_back(
-				std::unique_ptr<byte_patch>(new byte_patch(address, value)));
+				std::make_unique<byte_patch>(address, value));
 		}
 
 		static void restore_all();
 
-	private:
 		template <typename TAddr>
 		byte_patch(TAddr address, std::remove_pointer_t<std::remove_reference_t<TAddr>> value)
 			: m_address(address)

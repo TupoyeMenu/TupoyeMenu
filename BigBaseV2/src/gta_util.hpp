@@ -41,7 +41,7 @@ namespace big::gta_util
 
 		return nullptr;
 	}
-
+	 
 	inline CNetworkPlayerMgr* get_network_player_mgr()
 	{
 		return *g_pointers->m_network_player_mgr;

@@ -11,6 +11,8 @@
 #include "shv_runner.h"
 #include "asi_loader/asi_scripts.h"
 
+#include "scripting/lua/lua_manager.hpp"
+
 #include "backend/backend.hpp"
 #include "native_hooks/native_hooks.hpp"
 #include "services/anti_cheat/anti_cheat_service.hpp"
@@ -128,15 +130,22 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				g_hooking->enable();
 				LOG(INFO) << "Hooking enabled.";
 
-					g_running = true;
-					ASILoader::Initialize();
-					LOG(INFO) << "ASI Loader initialized.";
+				auto lua_manager_instance = std::make_unique<lua_manager>();
+				LOG(INFO) << "Lua Manager initialized.";
+
+				ASILoader::Initialize();
+				LOG(INFO) << "ASI Loader initialized.";
+
+				g_running = true;
 
 				while (g_running)
 					std::this_thread::sleep_for(500ms);
 
 				shv_runner::shutdown();
 				LOG(INFO) << "ASI plugins unloaded.";
+
+				lua_manager_instance.reset();
+				LOG(INFO) << "Lua Manager uninitialized.";
 
 				g_hooking->disable();
 				LOG(INFO) << "Hooking disabled.";

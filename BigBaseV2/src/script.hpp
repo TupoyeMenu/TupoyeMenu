@@ -14,7 +14,8 @@ namespace big
 
 	public:
 		explicit script(const func_t func, const std::string_view name, const bool toggleable = true, const std::optional<std::size_t> stack_size = std::nullopt);
-		explicit script(const func_t func, const std::optional<std::size_t> stack_size = std::nullopt);
+		explicit script(const std::function<void(void)> func, const std::string_view name, const bool toggleable = true, const std::optional<std::size_t> stack_size = std::nullopt);
+		explicit script(const std::function<void(void)> func, const std::optional<std::size_t> stack_size = std::nullopt);
 		~script();
 
 		[[nodiscard]] const char* name() const;
@@ -35,7 +36,7 @@ namespace big
 	private:
 		void* m_script_fiber;
 		void* m_main_fiber;
-		func_t m_func;
+		std::function<void(void)> m_func;
 		std::optional<std::chrono::high_resolution_clock::time_point> m_wake_time;
 	};
 

@@ -1,5 +1,4 @@
 #pragma once
-#include "common.hpp"
 #include "gta/natives.hpp"
 #include "gta/vector.hpp"
 #include "invoker.hpp"
@@ -49,7 +48,7 @@ namespace SYSTEM
 	static int CEIL(float value) { return invoke<int>(0x11E019C8F43ACC8A, value); } // 0x11E019C8F43ACC8A 0xD536A1DF b323
 	static int ROUND(float value) { return invoke<int>(0xF2DB717A73826179, value); } // 0xF2DB717A73826179 0x323B0E24 b323
 	static float TO_FLOAT(int value) { return invoke<float>(0xBBDA792448DB5A89, value); } // 0xBBDA792448DB5A89 0x67116627 b323
-	static void SET_THREAD_PRIORITY(int priority) { invoke<void>(0x42B65DEEF2EDF2A1, priority); } // 0x42B65DEEF2EDF2A1  b877
+	static void SET_THIS_THREAD_PRIORITY(int priority) { invoke<void>(0x42B65DEEF2EDF2A1, priority); } // 0x42B65DEEF2EDF2A1  b877
 }
 
 namespace APP
