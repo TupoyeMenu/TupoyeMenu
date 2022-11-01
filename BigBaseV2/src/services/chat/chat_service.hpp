@@ -8,7 +8,8 @@ namespace big
 	struct chat_msg {
 		CNetGamePlayer* player;
 		bool is_team;
-		std::string msg;
+		bool is_spam;
+		std::string_view msg;
 	};
 	using msgs = std::vector<chat_msg>;
 
@@ -27,7 +28,9 @@ namespace big
 		chat_service& operator=(chat_service&&) noexcept = delete;
 
 		bool did_player_use_chat(Player player_id);
-		void add_msg(CNetGamePlayer* player, std::string msg, bool is_team);
+		void add_msg(CNetGamePlayer* player, std::string_view msg, bool is_team, bool is_spam);
+
+		bool is_spam(std::string_view text);
 
 		static void chat_menu();
 
