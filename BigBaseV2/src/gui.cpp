@@ -3,7 +3,6 @@
 #include "gui.hpp"
 #include "natives.hpp"
 #include "script.hpp"
-#include "util/notify.hpp"
 
 #include <imgui.h>
 #include "widgets/imgui_hotkey.hpp"
