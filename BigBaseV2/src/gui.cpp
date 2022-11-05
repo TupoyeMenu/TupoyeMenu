@@ -152,7 +152,7 @@ namespace big
 	}
 	void gui::script_func()
 	{	
-		above_map("Loaded TupoyeMenu."
+		above_map; std::format("Loaded TupoyeMenu."
 		"Press {} to open", ImGui::key_names[g->settings.hotkeys.menu_toggle]);
 		while (true)
 		{
