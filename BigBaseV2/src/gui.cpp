@@ -153,7 +153,7 @@ namespace big
 	void gui::script_func()
 	{	
 		above_map("Loaded TupoyeMenu."
-			"Press {} to open", ImGui::key_names[g->settings.hotkeys.menu_toggle]);
+		"Press {} to open", ImGui::key_names[170][g->settings.hotkeys.menu_toggle] );
 		while (true)
 		{
 			g_gui.script_on_tick();

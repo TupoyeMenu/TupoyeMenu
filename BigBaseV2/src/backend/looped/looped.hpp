@@ -8,15 +8,13 @@ namespace big
 {
 	class looped {
 	public:
-		static void api_login_session();
-
 		static void context_menu();
 		static void hud_transition_state();
 
 		static void tunables_disable_phone();
 		static void phone_anim();
 		static void tunables_no_idle_kick();
-		static void always_controll();
+		static void always_control();
 		static void disable_help_text();
 
 		static void player_never_wanted(const player_ptr &player);

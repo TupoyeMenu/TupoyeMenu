@@ -214,7 +214,7 @@ namespace big
 
 			context_menu_service::disable_control_action_loop();
 
-			looped::always_controll();
+			looped::always_control();
 
 			script::get_current()->yield();
 		}

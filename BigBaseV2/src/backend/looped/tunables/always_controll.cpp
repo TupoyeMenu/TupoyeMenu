@@ -3,7 +3,7 @@
 
 namespace big
 {
-	void looped::always_controll()
+	void looped::always_control()
 	{
 		if (g->tunables.always_control)
 		{
