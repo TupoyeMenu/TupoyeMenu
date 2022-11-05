@@ -16,7 +16,7 @@ namespace big
 				view::time_and_weather();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Embient Population"))
+			if (ImGui::BeginTabItem("Ambient Population"))
 			{
 				view::ambient();
 				ImGui::EndTabItem();
