@@ -50,7 +50,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				std::this_thread::sleep_for(20s);
 
 			std::filesystem::path base_dir = std::getenv("appdata");
-			base_dir /= "BigBaseV2";
+			base_dir /= "TupoyeMenu";
 			auto file_manager_instance = std::make_unique<file_manager>(base_dir);
 
 			auto globals_instance = std::make_unique<menu_settings>(
@@ -58,7 +58,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			);
 
 			auto logger_instance = std::make_unique<logger>(
-				"YimMenu",
+				"TupoyeMenu",
 				file_manager_instance->get_project_file("./cout.log")
 			);
 
@@ -66,7 +66,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 			try
 			{
-				LOG(INFO) << "Yim's Menu Initializing";
+				LOG(INFO) << "TupoyeMenu Initializing";
 
 				g->load();
 				LOG(INFO) << "Settings Loaded.";

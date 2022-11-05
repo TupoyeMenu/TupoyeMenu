@@ -3,6 +3,7 @@
 #include "gui.hpp"
 #include "natives.hpp"
 #include "script.hpp"
+#include "util/notify.hpp"
 
 #include <imgui.h>
 #include "widgets/imgui_hotkey.hpp"
@@ -143,10 +144,17 @@ namespace big
 		}
 		EXCEPT_CLAUSE
 	}
-
-	void gui::script_func()
+	inline void above_map(std::string_view text)
 	{
-		g_notification_service->push("Welcome", std::format("Loaded YimMenu. Press {} to open", ImGui::key_names[g->settings.hotkeys.menu_toggle]));
+		HUD::SET_TEXT_OUTLINE();
+		HUD::BEGIN_TEXT_COMMAND_THEFEED_POST("STRING");
+		HUD::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text.data());
+		HUD::END_TEXT_COMMAND_THEFEED_POST_TICKER(false, false);
+	}
+	void gui::script_func()
+	{	
+		above_map("Loaded TupoyeMenu."
+			"Press {} to open", ImGui::key_names[g->settings.hotkeys.menu_toggle]);
 		while (true)
 		{
 			g_gui.script_on_tick();

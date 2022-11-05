@@ -17,12 +17,12 @@ Strictly for educational purposes.
 ## How to build
 
 ```bash
-git clone https://github.com/tupoy-ya/YimMenu.git --recursive
+git clone https://github.com/tupoy-ya/TupoyeMenu.git --recursive
 ```
 
 Go into the directory you just cloned:
 ```bash
-cd YimMenu
+cd TupoyeMenu
 ```
 
 Run the magical script:
