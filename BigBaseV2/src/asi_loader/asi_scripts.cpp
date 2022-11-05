@@ -11,7 +11,7 @@ void ASILoader::Initialize() {
 
 	std::string currentFolder = std::getenv("appdata");
 	currentFolder += "\\BigBaseV2";
-	const std::string asiFolder = currentFolder + "\\OpenHookV";
+	const std::string asiFolder = currentFolder + "\\Asi Mods";
 
 	const std::string asiSearchQuery = asiFolder + "\\*.asi";
 
