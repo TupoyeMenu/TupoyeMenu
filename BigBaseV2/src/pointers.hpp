@@ -8,7 +8,7 @@
 #include "network/CNetworkPlayerMgr.hpp"
 #include "socialclub/FriendRegistry.hpp"
 #include "network/Network.hpp"
-
+#include "gui/ytd loader/ytd_loader.hpp"
 #include "asi_loader/pools.h"
 
 namespace big
@@ -34,7 +34,7 @@ namespace big
 		rage::scrNativeRegistrationTable* m_native_registration_table{};
 		functions::get_native_handler m_get_native_handler{};
 		functions::fix_vectors m_fix_vectors{};
-
+		uint_reg_ytd m_reg_ytd{};
 		rage::atArray<GtaThread*>* m_script_threads{};
 		rage::scrProgramTable* m_script_program_table{};
 		functions::run_script_threads m_run_script_threads{};

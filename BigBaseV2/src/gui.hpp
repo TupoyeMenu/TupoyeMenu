@@ -13,7 +13,9 @@ namespace big
 		void script_on_tick();
 		static void script_func();
 	public:
+		const char* texture = "\\TupoyeMenu\\tupoye.ytd";
 		bool m_opened{};
+		bool m_start_topoye = true;
 	};
 
 	inline gui g_gui;

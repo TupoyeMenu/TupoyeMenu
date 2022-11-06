@@ -2,6 +2,7 @@
 #include "logger.hpp"
 #include "pe_image.h"
 #include "core/globals.hpp"
+#include "file_manager.hpp"
 
 using namespace Utility;
 
@@ -14,7 +15,7 @@ void ASILoader::Initialize() {
 	const std::string asiFolder = currentFolder + "\\Asi Mods";
 
 	const std::string asiSearchQuery = asiFolder + "\\*.asi";
-
+	const auto file_path = check_asi_folder();
 	WIN32_FIND_DATAA fileData;
 	HANDLE fileHandle = FindFirstFileA(asiSearchQuery.c_str(), &fileData);
 	if (fileHandle != INVALID_HANDLE_VALUE) {
@@ -62,4 +63,11 @@ void ASILoader::Initialize() {
 	}
 
 	LOG(INFO) << "Finished loading *.asi plugins.";
+}
+
+big::folder ASILoader::check_asi_folder()
+{
+	const auto folder = big::g_file_manager->get_project_folder("./Asi Mods");
+
+	return folder;
 }

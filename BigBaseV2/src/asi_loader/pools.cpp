@@ -3,6 +3,7 @@
 
 namespace rage
 {
+	// is this ur code?
 	struct EntityPoolTask
 	{
 		inline bool TypeHasFlag(uint16_t flag)

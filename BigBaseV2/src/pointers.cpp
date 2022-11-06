@@ -517,6 +517,12 @@ namespace big
 			m_join_session_by_info = ptr.add(1).rip().as<functions::join_session_by_info>();
 		});
 
+		main_batch.add("YTD", "48 89 5C 24 ? 48 89 6C 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 83 EC 50 48 8B EA 4C 8B FA 48 8B D9 4D 85 C9", [this](memory::handle ptr)
+			{
+				m_reg_ytd = ptr.as<decltype(m_reg_ytd)>();
+				
+
+			});
 		auto mem_region = memory::module(nullptr);
 		main_batch.run(mem_region);
 

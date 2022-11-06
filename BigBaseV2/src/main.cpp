@@ -27,7 +27,7 @@
 #include "services/spinner/spinner_service.hpp"
 #include "services/model_preview/model_preview_service.hpp"
 #include "services/vehicle/handling_service.hpp"
-
+#include "gui/ytd loader/ytd_loader.hpp"
 BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 {
 	using namespace big;
@@ -82,6 +82,10 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 				auto hooking_instance = std::make_unique<hooking>();
 				LOG(INFO) << "Hooking initialized.";
+
+				//auto ytd_loader = std::make_unique<YTDLoader>();
+				//g_YtdLoader = std::make_unique<YTDLoader>();
+				LOG(INFO) << "YTD initialized.";
 
 				auto thread_pool_instance = std::make_unique<thread_pool>();
 				LOG(INFO) << "Thread pool initialized.";
@@ -182,6 +186,8 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				context_menu_service_instance.reset();
 				LOG(INFO) << "Context Service reset.";
 				LOG(INFO) << "Services uninitialized.";
+
+			//	ytd_loader.reset();
 
 				hooking_instance.reset();
 				LOG(INFO) << "Hooking uninitialized.";
