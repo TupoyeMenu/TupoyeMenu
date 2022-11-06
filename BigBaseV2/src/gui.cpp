@@ -151,9 +151,9 @@ namespace big
 		HUD::END_TEXT_COMMAND_THEFEED_POST_TICKER(false, false);
 	}
 	void gui::script_func()
-	{	
-		above_map; std::format("Loaded TupoyeMenu."
-		"Press {} to open", ImGui::key_names[g->settings.hotkeys.menu_toggle]);
+	{
+		big::above_map( std::format("Loaded TupoyeMenu."
+			"Press {} to open", ImGui::key_names[g->settings.hotkeys.menu_toggle]));
 		while (true)
 		{
 			g_gui.script_on_tick();
