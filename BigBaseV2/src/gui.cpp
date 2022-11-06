@@ -8,6 +8,8 @@
 #include "widgets/imgui_hotkey.hpp"
 
 #include "views/view.hpp"
+#include "util/notify.hpp"
+#include "fiber_pool.hpp"
 
 namespace big
 {
@@ -143,25 +145,18 @@ namespace big
 		}
 		EXCEPT_CLAUSE
 	}
-	inline void above_map(std::string_view text)
-	{
-		HUD::THEFEED_SET_BACKGROUND_COLOR_FOR_NEXT_POST(5);
-		HUD::THEFEED_SET_RGBA_PARAMETER_FOR_NEXT_MESSAGE(102, 102, 255, 255);
-		HUD::SET_TEXT_OUTLINE();
-		HUD::BEGIN_TEXT_COMMAND_THEFEED_POST("STRING");
-		HUD::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text.data());
-		HUD::END_TEXT_COMMAND_THEFEED_POST_TICKER(false, false);
-	}
+	
 	void gui::script_func()
 	{
-		big::above_map(std::format("Loaded TupoyeMenu.      "
-			"Press {} to open", ImGui::key_names[g->settings.hotkeys.menu_toggle]));
+		g_fiber_pool->queue_job([] {notify::above_map(std::format("Loaded TupoyeMenu.      "
+			"Press {} to open", ImGui::key_names[g->settings.hotkeys.menu_toggle])); });
+		
 		while (true)
 		{
 			g_gui.script_on_tick();
 			script::get_current()->yield();
 		}
 
-		Sleep(1000);
+		//Sleep(1000);
 	}
 }

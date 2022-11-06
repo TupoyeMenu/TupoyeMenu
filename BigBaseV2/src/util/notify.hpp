@@ -8,9 +8,11 @@ namespace big::notify
 	inline void above_map(std::string_view text)
 	{
 		HUD::SET_TEXT_OUTLINE();
+		HUD::THEFEED_SET_BACKGROUND_COLOR_FOR_NEXT_POST(5);
+		HUD::THEFEED_SET_RGBA_PARAMETER_FOR_NEXT_MESSAGE(0, 0, 153, 255); // now will load cuz we are calling in script :)
 		HUD::BEGIN_TEXT_COMMAND_THEFEED_POST("STRING");
 		HUD::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text.data());
-		HUD::END_TEXT_COMMAND_THEFEED_POST_TICKER(false, false);
+		HUD::END_TEXT_COMMAND_THEFEED_POST_TICKER(1, false); // blink for load colors
 	}
 
 	// deprecated/unused
