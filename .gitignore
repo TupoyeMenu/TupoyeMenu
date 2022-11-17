@@ -1,0 +1,22 @@
+# IDE
+.vs/
+.vscode/
+.cache/
+
+# output directory
+build/
+
+# precompiled headers
+*.ipch
+*.gch
+*.pch
+
+# project files
+*.sln
+*.vcxproj*
+compile_flags.txt
+*.workspace
+*.project
+.codelite/
+.ctagsd/
+.stignore
