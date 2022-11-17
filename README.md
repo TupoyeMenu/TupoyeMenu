@@ -1,8 +1,14 @@
-# YimMenu made possible by [BigBaseV2](https://github.com/Pocakking/BigBaseV2)
-A mod menu base for Grand Theft Auto V.
+# TupoyeMenu
+
+![](https://img.shields.io/badge/dynamic/json?color=ffab00&label=Online%20Version&query=%24.game.online&url=https%3A%2F%2Fraw.githubusercontent.com%2FYimMenu%2FYimMenu%2Fmaster%2Fmetadata.json&style=flat-square&labelColor=000000) ![](https://img.shields.io/badge/dynamic/json?color=ffab00&label=Game%20Build&query=%24.game.build&url=https%3A%2F%2Fraw.githubusercontent.com%2FYimMenu%2FYimMenu%2Fmaster%2Fmetadata.json&style=flat-square&labelColor=000000)
+
+A garbage fork of YimMenu made by an idiot
+
+This fork aims to make the game more enjoyable by adding untested broken features that crash your game.
 Strictly for educational purposes.
 
-## For the list of features of this shitty fork go to [TODO.md](TODO.md) file
+YimMenu is originally based of off [BigBaseV2](https://github.com/Pocakking/BigBaseV2) which was an amazing base at the time but nowadays is a bit dated.
+So here I am with an up-to-date menu focusses on protecting the user from toxic modders.
 
 ## Table of contents
 
@@ -14,30 +20,64 @@ Strictly for educational purposes.
 
 ## How to build
 
-```bash
-git clone https://github.com/tupoy-ya/YimMenu.git --recursive
-premake5 vs2019
+Requirements:
 
+ * [Git](#Git)
+ * [CMake](#CMake)
+
+If you have both of the above requirements you can skip to [cloning the git repo and generating the project files](#cloning-and-generating-project-files).
+
+### Git
+
+If you haven't installed git on your system go and do so it is **REQUIRED** for setting up a working build environment.
+
+[Download Link](https://git-scm.com/download/win)
+
+### CMake
+
+CMake is used to generate our project files, if you haven't used it before we will need to download and install it.
+
+[Download Link](https://cmake.org/download/)
+
+### Cloning and generating project files
+
+Clone the repository:
+```bash
+git clone https://github.com/tupoy-ya/TupoyeMenu.git || echo "You don't have git installed, install it from https://git-scm.com/download/win"
 ```
+
+Go into the directory you just cloned:
+```bash
+cd TupoyeMenu
+```
+
+#### Generate project files:
+
+```bash
+mkdir build && cd build
+cmake ..
+```
+
+Now you have `YimMenu.sln`? you can open it in "Gay Studio" or run "BSbuild.exe" in your GS Dev Cmd.
+You can also use other ide's like VC Code and CodeLite if you want to.
 
 ## Staying Up To Date
-
-Pull the latest changes from Github:
 ```bash
-git pull && git submodule update
-premake5 vs2019
+git pull https://github.com/tupoy-ya/TupoyeMenu.git
+cd build
+cmake ..
 ```
 
-## Project Structure
 
-- `api/` contains some basic example of how I'd make REST api calls
+## Project Structure
+- `native_hooks/` hooks to natives
 - `backend/` all features that should be ran in a loop are in here sorted by category
 - `gui/` includes everything related to UI elements
 - `hooks/` function hooks
 - `native_hooks/` hooks to natives
 - `services/` service files to interact and maintain stuff
 - `util/` general utility functions to keep code as compact and as much in one place as possible
-- `views/` shitty ui that i'm to lazy to get rid of
+- `views/` all gui windows are, except handling windows for some reason
 
 ## Features
 
@@ -53,6 +93,6 @@ Below is an incomplete list of feature that I believe are notable to this "base"
 
 ## Contributing
 
-You're free to contribute to YimMenu as long as the features are useful, non-toxic and do not contain anything money related that might get the menu targetted by Take2.
+You're free to contribute to TupoyeMenu as long as the features are useful, "non-toxic" and do not contain anything money related that might get the menu targetted by Take2.
 
 Make sure to read the [CONTRIBUTING.md](CONTRIBUTING.md) file.
