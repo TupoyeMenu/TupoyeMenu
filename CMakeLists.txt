@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(TupoyeMenu CXX ASM_MASM)
+project(TupoyeMenu C CXX ASM_MASM)
 
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 
@@ -17,6 +17,7 @@ include(scripts/json.cmake)
 message("\nFetching custom modules")
 include(scripts/imgui.cmake)
 include(scripts/gtav-classes.cmake)
+include(scripts/wren.cmake)
 
 
 # TupoyeMenu
@@ -42,10 +43,13 @@ target_include_directories(TupoyeMenu PRIVATE
     "${json_SOURCE_DIR}/single_include"
     "${gtav_classes_SOURCE_DIR}"
     "${imgui_SOURCE_DIR}"
+    "${wren_SOURCE_DIR}/src/include"
+    "${wren_SOURCE_DIR}/src/optional"
+    "${wren_SOURCE_DIR}/src/vm"
 )
 
 target_precompile_headers(TupoyeMenu PRIVATE "${SRC_DIR}/common.hpp")
-target_link_libraries(TupoyeMenu PRIVATE pugixml minhook g3log imgui)
+target_link_libraries(TupoyeMenu PRIVATE pugixml minhook g3log imgui wren)
 
 option(GEN_PDB "Generate PDB. Can cause some AC problems Default: OFF")
 if(GEN_PDB)
