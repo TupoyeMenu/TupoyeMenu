@@ -14,42 +14,33 @@ jobs:
       full_sha: ${{ steps.var.outputs.full_sha }}
       short_sha: ${{ steps.var.outputs.short_sha }}
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
 
-      - name: Setup premake
-        uses: abel0b/setup-premake@v2
-        with:
-          version: "5.0.0-beta1"
+      - name: Check CMake version
+        run: cmake --version
 
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v1
 
-      - name: Generate premake5 project
-        run: premake5 vs2019
-        shell: bash
+      - name: Generate CMake project
+        run: cmake -S. -Bbuild -G "Visual Studio 17 2022" -DCMAKE_CONFIGURATION_TYPES=Release 
 
       - name: Build 64bit release DLL
-        run: |
-          msbuild /p:Configuration=Release /p:Platform=x64 BigBaseV2.sln /warnaserror
-
-      - name: Rename DLL to YimMenu.dll
-        run: ren BigBaseV2.dll YimMenu.dll
-        working-directory: bin/Release/
+        run: cmake --build build --config Release --target ALL_BUILD
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: binary
-          path: |
-            bin/Release/YimMenu.dll
+          path: build/Release/TupoyeMenu.dll
 
       - name: Generate Build Info
         id: var
         run: |
-          echo "::set-output name=full_sha::$(git rev-parse HEAD)"
-          echo "::set-output name=short_sha::$(git rev-parse --short HEAD)"
+          echo "full_sha=$(git rev-parse HEAD)" >> $env:GITHUB_OUTPUT
+          echo "short_sha=$(git rev-parse --short HEAD)" >> $env:GITHUB_OUTPUT
 
   check_detections:
     runs-on: ubuntu-latest
@@ -57,7 +48,7 @@ jobs:
     needs: build_nightly
     steps:
       - name: Download Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: binary
 
@@ -65,14 +56,14 @@ jobs:
         id: detections
         uses: yimura/gtav-sigscan-action@v0.0.3
         with:
-          file: ./YimMenu.dll
+          file: ./TupoyeMenu.dll
 
       - name: Notify on Discord
         if: ${{ steps.detections.outputs.is_detected == 'true' }}
-        uses: tsickert/discord-webhook@v4.0.0
+        uses: tsickert/discord-webhook@v5.3.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          embed-title: YimMenu has been detected by the sigscanner!
+          embed-title: TupoyeMenu has been detected by the sigscanner!
           embed-description: |
             The following bits have been detected:
             ```yml
@@ -85,13 +76,13 @@ jobs:
     outputs:
       should_run: ${{ steps.should_run.outputs.should_run }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - id: should_run
         continue-on-error: true
         name: Check if latest commit date is within the previous 24 hours
         if: ${{ github.event_name == 'schedule' }}
-        run: test -z $(git rev-list  --after="24 hours"  ${{ github.sha }}) && echo "::set-output name=should_run::false"
+        run: test -z $(git rev-list  --after="24 hours"  ${{ github.sha }}) && echo "should_run=false" >> $GITHUB_OUTPUT
 
   create_release:
     runs-on: ubuntu-latest
@@ -100,15 +91,15 @@ jobs:
     if: ${{ needs.check_date.outputs.should_run != 'false' }}
     steps:
       - name: Download Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: binary
 
       - name: Echo build sha256
         id: build_sha
         run: |
-          sha256sum YimMenu.dll > sha256.checksum
-          echo "::set-output name=build_sha::$(cat sha256.checksum)"
+          sha256sum TupoyeMenu.dll > sha256.checksum
+          echo "build_sha=$(cat sha256.checksum)" >> $GITHUB_OUTPUT
           cat sha256.checksum
 
       - name: Remove previous Nightly
@@ -138,8 +129,8 @@ jobs:
             Alternatively you can download the build artifacts, generate a SHA256 checksum and compare it with the below binary.
             Build artifacts ARE NOT automatically the same as release assets since release assets can be modified afterwards.
 
-            These are nightly builds of YimMenu, they are provided for testing purposes only:
-            - Test if your build environment produces a broken BigBaseV2.dll
+            These are nightly builds of TupoyeMenu, they are provided for testing purposes only:
+            - Test if your build environment produces a broken TupoyeMenu.dll
             - Test if source code is out of date and no longer compatible with the current version of GTA V
 
             If you wish to use this menu as-is you are on your own, no warranty is provided.
@@ -149,4 +140,4 @@ jobs:
             ${{ needs.build_nightly.outputs.full_sha }}
             ```
           files: |
-            YimMenu.dll
+            TupoyeMenu.dll

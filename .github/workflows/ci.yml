@@ -7,36 +7,46 @@ jobs:
     runs-on: windows-latest
     name: CI
     steps:
-      - uses: actions/checkout@v2.4.0
-        with:
-          submodules: recursive
+      - uses: actions/checkout@v3
 
-      - name: Setup premake
-        uses: abel0b/setup-premake@v2
-        with:
-          version: "5.0.0-beta1"
+      - name: Check CMake version
+        run: cmake --version
 
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v1
 
-      - name: Generate premake5 project
-        run: premake5 vs2019
-        shell: bash
+      - name: Cache build/
+        id: cache-build
+        uses: actions/cache@v3
+        with:
+          path: build
+          key: ${{ runner.os }}-build
+
+      - name: Generate CMake project
+        run: cmake -S. -Bbuild -G "Visual Studio 17 2022" -DCMAKE_CONFIGURATION_TYPES=Release -DGEN_PDB=ON
 
       - name: Build 64bit release DLL
-        run: |
-          msbuild /p:Configuration=Release /p:Platform=x64 BigBaseV2.sln -m /warnaserror
+        run: cmake --build build --config Release --target ALL_BUILD
 
       - name: Check if DLL got built
-        run: if (-Not (Test-Path -path "bin/Release/BigBaseV2.dll")) {throw 1}
+        run: if (-Not (Test-Path -path "build/Release/TupoyeMenu.dll")) {throw 1}
 
-      - name: Rename DLL to YimMenu-dev-{GITHUB_SHA}.dll
-        run: ren BigBaseV2.dll YimMenu-dev-${{github.sha}}.dll
-        working-directory: bin/Release/
+      - name: Rename DLL to TupoyeMenu-dev-{GITHUB_SHA}.dll
+        run: |
+          del TupoyeMenu-dev-*.dll
+          ren TupoyeMenu.dll TupoyeMenu-dev-${{github.sha}}.dll
+          del TupoyeMenu-dev-*.pdb
+          ren TupoyeMenu.pdb TupoyeMenu-dev-${{github.sha}}.pdb
+        working-directory: build/Release/
 
-      - name: Upload Artifact
+      - name: Upload DLL
         uses: actions/upload-artifact@v3
         with:
           name: binary
-          path: |
-            bin/Release/YimMenu-dev-*.dll
+          path: build/Release/TupoyeMenu-dev-*.dll
+      
+      - name: Upload PDB
+        uses: actions/upload-artifact@v3
+        with:
+          name: binary
+          path: build/Release/TupoyeMenu-dev-*.pdb

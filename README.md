@@ -1,20 +1,21 @@
-# TupoyeMenu made possible by [YimMenu](https://github.com/YimMenu/YimMenu)
+# TupoyeMenu
+
 ![](https://img.shields.io/badge/dynamic/json?color=ffab00&label=Online%20Version&query=%24.game.online&url=https%3A%2F%2Fraw.githubusercontent.com%2FYimMenu%2FYimMenu%2Fmaster%2Fmetadata.json&style=flat-square&labelColor=000000) ![](https://img.shields.io/badge/dynamic/json?color=ffab00&label=Game%20Build&query=%24.game.build&url=https%3A%2F%2Fraw.githubusercontent.com%2FYimMenu%2FYimMenu%2Fmaster%2Fmetadata.json&style=flat-square&labelColor=000000)
 
 A garbage fork of YimMenu made by an idiot
 
 This fork aims to make the game more enjoyable by adding untested broken features that crash your game.
-
-
-# YimMenu readme:
-
-## YimMenu made possible by [BigBaseV2](https://github.com/Pocakking/BigBaseV2)
-A mod menu base for Grand Theft Auto V.
 Strictly for educational purposes.
+
+YimMenu is originally based of off [BigBaseV2](https://github.com/Pocakking/BigBaseV2) which was an amazing base at the time but nowadays is a bit dated.
+So here I am with an up-to-date menu focusing on protecting the user from toxic modders.
 
 ## Table of contents
 
  * [How to build](#how-to-build)
+    * [Git](#git)
+    * [CMake](#CMake)
+    * [Cloning and generating project files](#cloning-and-generating-project-files)
  * [Staying Up To Date](#staying-up-to-date)
  * [Project Structure](#project-structure)
  * [Features](#features)
@@ -22,37 +23,95 @@ Strictly for educational purposes.
 
 ## How to build
 
-```bash
-git clone https://github.com/tupoy-ya/YimMenu.git --recursive
-premake5 vs2019
+Requirements:
 
+ * [Git](#Git)
+ * [CMake](#CMake)
+
+If you have both of the above requirements you can skip to [cloning the git repo and generating the project files](#cloning-and-generating-project-files).
+
+### Git
+
+If you haven't installed git on your system go and do so it is **REQUIRED** for setting up a working build environment.
+
+[Download Link](https://git-scm.com/download/win)
+
+### CMake
+
+CMake is used to generate our project files, if you haven't used it before we will need to download and install it.
+
+[Download Link](https://cmake.org/download/)
+
+### Cloning and generating project files
+
+Clone the repository:
+```bash
+git clone https://github.com/tupoy-ya/TupoyeMenu.git
 ```
+
+Go into the directory you just cloned:
+```bash
+cd TupoyeMenu
+```
+
+#### Generate project files
+
+- On Windows
+
+  - Visual Studio
+
+    If you only use Visual Studio and don't want to mess with command lines, Visual Studio has a CMake extension that does all the work.
+
+    Make sure it is [installed](https://learn.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio?view=msvc-170#installation).
+
+    Then, just open Visual Studio, open a local folder, and select the `YimMenu` folder that the `git clone` command just created.
+
+    Let the CMake extension generate the needed files for building, you can follow the progress in the Output tab of Visual Studio.
+
+    Then, you can just build by using the Build menu at the top and clicking Build All.
+
+- Other OSs / IDEs
+
+  If you use something else, just follow this:
+
+  ```bash
+  mkdir build
+  cd build
+  cmake ..
+  ```
+
+  Now, you will be able to open the solution, and build it.
+
+Now you have `YimMenu.sln`? you can open it in "Gay Studio" or run "BSbuild.exe" in your GS Dev Cmd.
+You can also use other ide's like VC Code and CodeLite if you want to.
 
 ## Staying Up To Date
-
-Pull the latest changes from Github:
 ```bash
-git pull && git submodule update
-premake5 vs2019
+git pull https://github.com/tupoy-ya/TupoyeMenu.git
 ```
 
-## Project Structure
+CMake should be handling removed / added files automatically without any user input.
 
-- `api/` contains some basic example of how I'd make REST api calls
+If this is not the case for some reason you'll have to redo the steps in the [Generate project files](#Generate-project-files) section above.
+
+If you are doing custom modifications to the codebase and have a fork you are on your own for staying up to date with upstream (this repository), google stuff like "merge from upstream" and learn how to use Git.
+
+## Project Structure
+- `native_hooks/` hooks to natives
 - `backend/` all features that should be ran in a loop are in here sorted by category
 - `gui/` includes everything related to UI elements
 - `hooks/` function hooks
 - `native_hooks/` hooks to natives
 - `services/` service files to interact and maintain stuff
 - `util/` general utility functions to keep code as compact and as much in one place as possible
-- `views/` shitty ui that i'm to lazy to get rid of
+- `views/` all gui windows are, except handling windows for some reason
 
 ## Features
 
 Below is an incomplete list of feature that I believe are notable to this "base" or menu.
 
  - Return Native spoofing
- - Custom [settings](BigBaseV2/src/core/globals.hpp) with deep compare if changes were made include auto saving
+ - Custom [settings](src/core/globals.hpp) with deep compare if changes were made include auto saving
  - Clear and well structured source code
  - Includes a thread pool to queue tasks that shouldn't block the game thread, very similar to fiber pool
  - Updated natives.hpp from https://nativedb.spyral.dev/natives
@@ -61,6 +120,6 @@ Below is an incomplete list of feature that I believe are notable to this "base"
 
 ## Contributing
 
-You're free to contribute to YimMenu as long as the features are useful, non-toxic and do not contain anything money related that might get the menu targetted by Take2.
+You're free to contribute to TupoyeMenu as long as the features are useful, "non-toxic" and do not contain anything money related that might get the menu targetted by Take2.
 
 Make sure to read the [CONTRIBUTING.md](CONTRIBUTING.md) file.
