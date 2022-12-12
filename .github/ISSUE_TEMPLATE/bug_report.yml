@@ -61,5 +61,5 @@ body:
     label: Build
     description: This last section is to make sure the bug exists on the latest version of TupoyeMenu. If you have your own version of TupoyeMenu and haven't confirmed the bug exists on the latest version of TupoyeMenu this makes the bug report invalid.
     options:
-      - label: I've confirmed the issue exists on the latest version of TupoyeMenu and does not exist the latest version of YimMenu
+      - label: I've confirmed the issue exists on the latest version of TupoyeMenu and does not exist on the latest version of YimMenu
         required: true
