@@ -103,7 +103,7 @@ namespace big::session
 	
 	inline void add_infraction(player_ptr player, Infraction infraction)
 	{
-		g_notification_service->push_warning("Anti-Cheat", std::format("{}: {}", player->get_name(), infraction_desc[infraction]));
+		LOG(INFO) << std::format("Anti-Cheat: {} - {}", player->get_name(), infraction_desc[infraction]);
 		auto plyr = g_player_database_service->get_or_create_player(player);
 		if (!plyr->infractions.contains((int)infraction))
 		{
