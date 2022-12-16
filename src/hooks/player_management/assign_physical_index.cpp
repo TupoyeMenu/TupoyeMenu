@@ -57,13 +57,12 @@ namespace big
 					{
 						//session::add_infraction(plyr, Infraction::ROCKSTAR_ADMIN_FLAG);
 
-						LOG(WARNING) << std::format("Name: {}, m_crew_rank_title: {}, m_is_rockstar_dev: {}, m_is_rockstar_qa: {}, m_is_cheater: {}, ptr: {}",
+						LOG(WARNING) << std::format("Name: {}, m_crew_rank_title: {}, m_is_rockstar_dev: {}, m_is_rockstar_qa: {}, m_is_cheater: {}",
 							plyr->get_name(),
 							plyr->get_net_game_player()->m_crew_rank_title,
 							plyr->get_net_game_player()->m_is_rockstar_dev,
 							plyr->get_net_game_player()->m_is_rockstar_qa,
-							plyr->get_net_game_player()->m_is_cheater,
-							plyr
+							plyr->get_net_game_player()->m_is_cheater
 						);
 					}
 
