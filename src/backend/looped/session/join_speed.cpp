@@ -11,7 +11,7 @@ namespace big
 	{
 		if (g->tunables.fast_join)
 		{
-			eTransitionState state = *script_global::script_global(1574991).as<eTransitionState*>();
+			eTransitionState state = *script_global::script_global(1574993).as<eTransitionState*>();
 
 			if (state <= eTransitionState::TRANSITION_STATE_FM_FINAL_SETUP_PLAYER)
 			{

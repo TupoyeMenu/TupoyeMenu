@@ -99,6 +99,9 @@ namespace big
 			ImGui::SameLine();
 			components::button("TP To Custom Auto Shop", [] { toxic::send_player_to_interior(g_player_service->get_selected(), 149); });
 			components::button("TP To Agency", [] { toxic::send_player_to_interior(g_player_service->get_selected(), 155); });
+			components::button("TP To Freakshop", [] { toxic::send_player_to_interior(g_player_service->get_selected(), 160); });
+			ImGui::SameLine();
+			components::button("TP To Multi-Floor Garage", [] { toxic::send_player_to_interior(g_player_service->get_selected(), 161); });
 			ImGui::TreePop();
 		}
 
