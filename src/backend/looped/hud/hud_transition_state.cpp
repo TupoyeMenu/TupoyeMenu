@@ -1,6 +1,7 @@
 #include "backend/looped/looped.hpp"
 #include "natives.hpp"
 #include "script_global.hpp"
+#include "core/scr_globals.hpp"
 #include "services/spinner/spinner_service.hpp"
 #include "gta/joaat.hpp"
 
@@ -81,11 +82,10 @@ namespace big
 		"Spawn Into Personal Vehicle"
 	};
 
-	auto transition_state = script_global(1574993);
 	eTransitionState last_state = eTransitionState::TRANSITION_STATE_EMPTY;
 	void looped::hud_transition_state()
 	{
-		const auto state = *transition_state.as<eTransitionState*>();
+		const auto state = *scr_globals::transition_state.as<eTransitionState*>();
 
 		// When freemode script loaded remove loading screen.
 		if (state == eTransitionState::TRANSITION_STATE_WAIT_JOIN_FM_SESSION

@@ -8,6 +8,7 @@
 #include "util/toxic.hpp"
 #include "core/data/apartment_names.hpp"
 #include "core/data/warehouse_names.hpp"
+#include <network/Network.hpp>
 
 namespace big
 {
@@ -18,6 +19,22 @@ namespace big
 		components::button("Join RID", []
 		{
 			session::join_by_rockstar_id(rid);
+		});
+
+		static char base64[500]{};
+		ImGui::InputText("Session Info", base64, sizeof(base64));
+		components::button("Join Session Info", []
+		{
+			rage::rlSessionInfo info;
+			g_pointers->m_decode_session_info(&info, base64, nullptr);
+			session::join_session(info);
+		});
+		ImGui::SameLine();
+		components::button("Copy Current Session Info", []
+		{
+			char buf[0x100];
+			g_pointers->m_encode_session_info(&gta_util::get_network()->m_game_session.m_rline_session.m_session_info, buf, 0x7D, nullptr);
+			ImGui::SetClipboardText(buf);
 		});
 
 		components::sub_title("Session Switcher");
@@ -169,14 +186,6 @@ namespace big
 			}); 
 		});
 
-		components::button("CEO Ban", [] { 
-			g_player_service->iterate([](auto& plyr) 
-			{ 
-				if (*scr_globals::gpbd_fm_3.at(plyr.second->id(), scr_globals::size::gpbd_fm_3).at(10).as<int*>() != -1)
-					toxic::ceo_ban(plyr.second); 
-			}); 
-		});
-
 		components::small_text("Teleports");
 
 		if (ImGui::BeginCombo("##apartment", apartment_names[g->session.send_to_apartment_idx]))
@@ -276,10 +285,10 @@ namespace big
 		ImGui::SameLine();
 
 		ImGui::BeginGroup();
-		components::button("One-On-One Deathmatch", [] { scripts::start_launcher_script(187); });
+		components::button("One-On-One Deathmatch", [] { scripts::start_launcher_script(197); });
 		components::button("Impromptu Race", [] { scripts::start_launcher_script(16); });
-		components::button("Flight School", [] { scripts::start_launcher_script(186); });
-		components::button("Golf", [] { scripts::start_launcher_script(183); });
+		components::button("Flight School", [] { scripts::start_launcher_script(196); });
+		components::button("Golf", [] { scripts::start_launcher_script(193); });
 		components::button("Tutorial", [] { scripts::start_launcher_script(20); });
 		ImGui::SameLine(); components::help_marker("Only works on joining players");
 		ImGui::EndGroup();
@@ -287,11 +296,11 @@ namespace big
 		ImGui::SameLine();
 
 		ImGui::BeginGroup();
-		components::button("Gunslinger", [] { scripts::start_launcher_script(201); });
-		components::button("Space Monkey", [] { scripts::start_launcher_script(206); });
-		components::button("Wizard", [] { scripts::start_launcher_script(202); });
-		components::button("QUB3D", [] { scripts::start_launcher_script(207); });
-		components::button("Camhedz", [] { scripts::start_launcher_script(208); });
+		components::button("Gunslinger", [] { scripts::start_launcher_script(211); });
+		components::button("Space Monkey", [] { scripts::start_launcher_script(216); });
+		components::button("Wizard", [] { scripts::start_launcher_script(212); });
+		components::button("QUB3D", [] { scripts::start_launcher_script(217); });
+		components::button("Camhedz", [] { scripts::start_launcher_script(218); });
 		ImGui::EndGroup();
 
 		ImGui::Checkbox("Disable Pedestrians", &g->session.disable_peds);

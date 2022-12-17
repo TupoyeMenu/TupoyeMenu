@@ -72,19 +72,6 @@ namespace big
 		static void view_player_toxic();
 		static void view_player_troll();
 		
-
-		// later calls will be drawn over earlier calls
-		static void always()
-		{
-			esp::draw();
-			context_menu();
-
-			gta_data();
-
-			notifications();
-			spinner();
-
-			overlay();
-		}
+		static void creator();
 	};
 }

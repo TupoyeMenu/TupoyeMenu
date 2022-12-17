@@ -42,16 +42,7 @@ namespace big::toxic
 			g_notification_service->push_warning("CEO Kick", "Player is not in a CEO/MC");
 		else if (leader == target->id())
 		{
-			// use "normal" method to remove from CEO
-			const size_t arg_count = 4;
-			int64_t args[arg_count] = {
-				(int64_t)eRemoteEvent::CeoKick,
-				(int64_t)self::id,
-				FALSE,
-				5
-			};
-
-			g_pointers->m_trigger_script_event(1, args, arg_count, 1 << target->id());
+			g_notification_service->push_error("CEO Kick", "Cannot kick leader of CEO/MC anymore");
 		}
 		else
 		{
@@ -65,18 +56,6 @@ namespace big::toxic
 
 			g_pointers->m_trigger_script_event(1, args, arg_count, 1 << target->id());
 		}
-	}
-
-	inline void ceo_ban(player_ptr target)
-	{
-		const size_t arg_count = 3;
-		int64_t args[arg_count] = {
-			(int64_t)eRemoteEvent::CeoBan,
-			(int64_t)self::id,
-			TRUE
-		};
-
-		g_pointers->m_trigger_script_event(1, args, arg_count, 1 << target->id());
 	}
 
 	inline void send_player_to_island(player_ptr target)
@@ -229,34 +208,6 @@ namespace big::toxic
 		g_pointers->m_trigger_script_event(1, args, arg_count, 1 << target->id());
 	}
 
-	inline void turn_player_into_animal(player_ptr target)
-	{
-		bool bOldPlayerControl = PLAYER::IS_PLAYER_CONTROL_ON(target->id());
-
-		for (int i = 0; i < 30; i++)
-		{
-			session::give_collectible(target->id(), eCollectibleType::Treat, 0, false);
-			session::give_collectible(target->id(), eCollectibleType::Treat, 0, true);
-			g_pointers->m_give_pickup_rewards(1 << target->id(), REWARD_HEALTH); // try to keep them alive
-			g_pointers->m_give_pickup_rewards(1 << target->id(), REWARD_ARMOUR);
-			script::get_current()->yield(400ms);
-
-			Ped playerPed = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(target->id());
-			Hash model = ENTITY::GET_ENTITY_MODEL(playerPed);
-
-			if (bOldPlayerControl && !PLAYER::IS_PLAYER_CONTROL_ON(target->id()))
-				return;
-
-			if (model != RAGE_JOAAT("mp_m_freemode_01") && model != RAGE_JOAAT("mp_f_freemode_01"))
-				return;
-
-			if (ENTITY::IS_ENTITY_DEAD(playerPed, FALSE))
-				script::get_current()->yield(7s);
-		}
-
-		g_notification_service->push_warning("Turn to Animal", "Failed to turn player into an animal");
-	}
-
 	inline void set_wanted_level(player_ptr target, int wanted_level)
 	{
 		int id = target->id();
@@ -272,14 +223,14 @@ namespace big::toxic
 
 		if (wanted_level > 0)
 		{
-			*scr_globals::globalplayer_bd.at(self::id, scr_globals::size::globalplayer_bd).at(212).as<Player*>() = id;
-			*scr_globals::globalplayer_bd.at(self::id, scr_globals::size::globalplayer_bd).at(213).as<int*>() = wanted_level;
+			*scr_globals::globalplayer_bd.at(self::id, scr_globals::size::globalplayer_bd).at(214).as<Player*>() = id;
+			*scr_globals::globalplayer_bd.at(self::id, scr_globals::size::globalplayer_bd).at(215).as<int*>() = wanted_level;
 
 			for (int i = 0; PLAYER::GET_PLAYER_WANTED_LEVEL(id) < wanted_level && i < 3600; i++)
 				script::get_current()->yield(1ms);
 
-			*scr_globals::globalplayer_bd.at(self::id, scr_globals::size::globalplayer_bd).at(212).as<Player*>() = -1; // reset to prevent wanted from being constantly set
-			*scr_globals::globalplayer_bd.at(self::id, scr_globals::size::globalplayer_bd).at(213).as<int*>() = -1;
+			*scr_globals::globalplayer_bd.at(self::id, scr_globals::size::globalplayer_bd).at(214).as<Player*>() = -1; // reset to prevent wanted from being constantly set
+			*scr_globals::globalplayer_bd.at(self::id, scr_globals::size::globalplayer_bd).at(215).as<int*>() = -1;
 		}
 	}
 

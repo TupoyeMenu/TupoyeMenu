@@ -19,8 +19,6 @@ namespace big
 			toxic::kill_player(g_player_service->get_selected(), g_player_service->get_self());
 		});
 		components::button("CEO Kick", [] { toxic::ceo_kick(g_player_service->get_selected()); });
-		ImGui::SameLine();
-		components::button("CEO Ban", [] { toxic::ceo_ban(g_player_service->get_selected()); });
 		
 		components::button("Ragdoll Player", [] { toxic::ragdoll_player(g_player_service->get_selected()); });
 		ImGui::SameLine();
@@ -28,9 +26,6 @@ namespace big
 		ImGui::SameLine(); components::help_marker("Spawns an invisible fire hydrant below player. \nBlocked by using 'no ragdoll' or 'godmode'.");
 
 		components::button("Kick From Interior", [] { toxic::kick_player_from_interior(g_player_service->get_selected()); });
-		components::button("Turn Into Animal", [] { toxic::turn_player_into_animal(g_player_service->get_selected()); });
-		ImGui::SameLine(); components::help_marker("Gives player a lot of jack o lanterns and eventually turns them into a random animal. \nBlocked by most internal menus.");
-		ImGui::SameLine();
 		components::button("Turn Into Beast", [] { toxic::turn_player_into_beast(g_player_service->get_selected()); });
 		components::button("Clear Tasks", [] 
 		{
