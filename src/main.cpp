@@ -32,6 +32,7 @@
 #include "services/hotkey/hotkey_service.hpp"
 #include "services/matchmaking/matchmaking_service.hpp"
 #include "scripting/wren/wren_manager.hpp"
+#include "services/api/api_service.hpp"
 
 BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 {
@@ -44,7 +45,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 		g_main_thread = CreateThread(nullptr, 0, [](PVOID) -> DWORD
 		{
 			bool cant_find_window;
-			while (!FindWindow("grcWindow", "Grand Theft Auto V"))
+			while (!FindWindow("grcWindow", nullptr))
 			{
 				cant_find_window = true;
 				std::this_thread::sleep_for(100ms);
@@ -81,6 +82,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 				auto renderer_instance = std::make_unique<renderer>();
 				LOG(INFO) << "Renderer initialized.";
+				auto gui_instance = std::make_unique<gui>();
 
 				auto fiber_pool_instance = std::make_unique<fiber_pool>(11);
 				LOG(INFO) << "Fiber pool initialized.";
@@ -107,6 +109,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				auto player_database_service_instance = std::make_unique<player_database_service>();
 				auto hotkey_service_instance = std::make_unique<hotkey_service>();
 				auto matchmaking_service_instance = std::make_unique<matchmaking_service>();
+				auto api_service_instance = std::make_unique<api_service>();
 				LOG(INFO) << "Registered service instances...";
 
 				g_script_mgr.add_script(std::make_unique<script>(&gui::script_func, "GUI", false));
@@ -172,6 +175,8 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				matchmaking_service_instance.reset();
 				LOG(INFO) << "Matchmaking Service reset.";
 				player_database_service_instance.reset();
+				LOG(INFO) << "API Service reset.";
+				api_service_instance.reset();
 				LOG(INFO) << "Player Database Service reset.";
 				script_patcher_service_instance.reset();
 				LOG(INFO) << "Script Patcher Service reset.";

@@ -13,6 +13,7 @@ include(scripts/minhook.cmake)
 include(scripts/g3log.cmake)
 include(scripts/pugixml.cmake)
 include(scripts/json.cmake)
+include(scripts/cpr.cmake)
 
 message("\nFetching custom modules")
 include(scripts/imgui.cmake)
@@ -49,7 +50,7 @@ target_include_directories(TupoyeMenu PRIVATE
 )
 
 target_precompile_headers(TupoyeMenu PRIVATE "${SRC_DIR}/common.hpp")
-target_link_libraries(TupoyeMenu PRIVATE pugixml minhook g3log imgui wren)
+target_link_libraries(TupoyeMenu PRIVATE pugixml minhook g3log imgui wren cpr)
 
 option(GEN_PDB "Generate PDB. Can cause some AC problems Default: OFF")
 if(GEN_PDB)

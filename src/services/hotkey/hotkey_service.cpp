@@ -3,6 +3,7 @@
 #include "util/teleport.hpp"
 #include "util/local_player.hpp"
 #include "hotkey_functions.hpp"
+#include "renderer.hpp"
 
 #include "network/ChatData.hpp"
 #include "pointers.hpp"
@@ -18,6 +19,11 @@ namespace big
         register_hotkey("fill_inventory", g->settings.hotkeys.fill_inventory, local_player::fill_inventory);
         register_hotkey("skip_cutscene", g->settings.hotkeys.skip_cutscene, CUTSCENE::STOP_CUTSCENE_IMMEDIATELY);
         register_hotkey("off_radar", g->settings.hotkeys.skip_cutscene, hotkey_funcs::toggle_off_radar);
+
+        g_renderer->add_wndproc_callback([this](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+        {
+            wndproc(static_cast<eKeyState>(msg), wparam);
+        });
 
         g_hotkey_service = this;
     }

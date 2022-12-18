@@ -21,6 +21,11 @@ namespace big
 				view::ambient();
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("Creator"))
+			{
+				view::creator();
+				ImGui::EndTabItem();
+			}
 			ImGui::EndTabBar();
 		}
 	}

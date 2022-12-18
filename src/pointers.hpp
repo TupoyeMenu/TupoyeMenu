@@ -1,6 +1,7 @@
 #pragma once
 #include "common.hpp"
 #include "base/HashTable.hpp"
+#include "socialclub/ScInfo.hpp"
 #include "function_types.hpp"
 #include "gta/fwddec.hpp"
 #include "gta/replay.hpp"
@@ -82,6 +83,7 @@ namespace big
 		functions::write_player_game_state_data_node m_write_player_game_state_data_node{};
 
 		ChatData** m_chat_data;
+		ScInfo* m_sc_info;
 		FriendRegistry* m_friend_registry{};
 
 		functions::get_screen_coords_for_world_coords m_get_screen_coords_for_world_coords{};
@@ -211,6 +213,9 @@ namespace big
 		memory::byte_patch* m_broadcast_patch;
 
 		rage::atSingleton<rage::RageSecurity>* m_security;
+		
+		PVOID m_queue_dependency;
+		PVOID m_interval_check_func;
 
 		PVOID m_send_session_matchmaking_attributes;
 
@@ -220,6 +225,14 @@ namespace big
 
 		PVOID m_write_bitbuffer_gamer_handle;
 		PVOID m_read_bitbuffer_gamer_handle;
+
+		functions::encode_session_info m_encode_session_info;
+		functions::decode_session_info m_decode_session_info;
+
+		datafile_commands::SveFileObject* m_main_file_object;
+		functions::load_cloud_file m_load_cloud_file;
+		functions::set_as_active_cloud_file m_set_as_active_cloud_file;
+		functions::save_json_data m_save_json_data;
 	};
 
 	inline pointers* g_pointers{};
