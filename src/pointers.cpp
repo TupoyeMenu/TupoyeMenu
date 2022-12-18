@@ -689,6 +689,12 @@ namespace big
 			m_chat_data = ptr.add(3).rip().as<ChatData**>();
 		});
 
+		// Social Club Info
+		main_batch.add("SCI", "48 8B D3 48 8D 4C 24 ? 48 69 D2", [this](memory::handle ptr)
+		{
+			m_sc_info = ptr.sub(4).rip().as<ScInfo*>();
+		});
+
 		// Create Script Handler
 		main_batch.add("CSH", "48 8D 05 ? ? ? ? 4C 8D 0D ? ? ? ? 41 83 C8 FF 48 89 03 89 53 70 88 53 74 4C 89 4B 68 48 89 93", [this](memory::handle ptr)
 		{
@@ -777,6 +783,18 @@ namespace big
 		main_batch.add("SJD", "48 89 5C 24 08 57 48 83 EC 30 33 DB 48 8B FA 48", [this](memory::handle ptr)
 		{
 			m_save_json_data = ptr.as<functions::save_json_data>();
+		});
+
+		// Queue Dependency
+		main_batch.add("QD", "48 89 5C 24 ? 57 48 83 EC ? 0F B6 99", [this](memory::handle ptr)
+		{
+			m_queue_dependency = ptr.as<PVOID>();
+		});
+
+		// Interval Check Function
+		main_batch.add("ICF", "48 8D 0D ? ? ? ? 88 05 ? ? ? ? 48 8D 05", [this](memory::handle ptr)
+		{
+			m_interval_check_func = ptr.add(3).rip().as<PVOID>();
 		});
 
 		auto mem_region = memory::module("GTA5.exe");
