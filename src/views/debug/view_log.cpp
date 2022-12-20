@@ -9,7 +9,7 @@ namespace big
 		switch (level.value)
 		{
 		case g3::kDebugValue:
-			return ImVec4(0.0f, 0.0f, 1.0f, 1.0f);
+			return ImVec4(0.0f, 0.44f, 0.85f, 1.0f);
 		case g3::kInfoValue:
 			return ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 		case g3::kWarningValue:
@@ -21,22 +21,36 @@ namespace big
 	static size_t iLastLogCount = 0;
 	void view::log()
 	{
-		if (ImGui::Begin("Log"))
+		if (ImGui::Begin("Log", &g.window.log))
 		{
 			auto msgs = g_log->get_messages();
 
-			for (size_t i = 0; i < msgs.size(); i++)
+			ImGuiListClipper clipper;
+			clipper.Begin((int)msgs.size());
+			const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing();
+			ImGui::BeginChild("##scrolling_region_log", ImVec2(0, -footer_height_to_reserve), true, ImGuiWindowFlags_HorizontalScrollbar);
+
+			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1)); // Tighten spacing
+
+			while (clipper.Step())
 			{
-				ImGui::PushStyleColor(ImGuiCol_Text, get_color(msgs[i].level));
-				ImGui::TextUnformatted(msgs[i].m_message.c_str());
-				ImGui::PopStyleColor();
+				for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
+				{
+					ImGui::PushStyleColor(ImGuiCol_Text, get_color(msgs[i].level));
+					ImGui::TextUnformatted(msgs[i].m_message.c_str());
+					ImGui::PopStyleColor();
+				}
 			}
 
-			if (iLastLogCount != msgs.size())
-			{
-				iLastLogCount = msgs.size();
-				ImGui::SetScrollHereY(1.f);
-			}
+			ImGui::PopStyleVar();
+			ImGui::EndChild();
+
+			ImGui::Separator();
+
+			ImGui::InputTextMultiline("###console_command_input", &g.chat.message, ImVec2(-80, ImGui::GetTextLineHeightWithSpacing()));
+			ImGui::SameLine();
+			ImGui::Button("Submit");
+
 			ImGui::End();
 		}
 	}
