@@ -25,7 +25,7 @@ namespace big
 		CPed* cped = g_player_service->get_selected()->get_ped();
 
 		ImGui::Text(title.c_str());
-		ImGui::Checkbox("Spectate", &g->player.spectating);
+		ImGui::Checkbox("Spectate", &g.player.spectating);
 
 		ImGui::Text("Player ID: %d", g_player_service->get_selected()->id());
 

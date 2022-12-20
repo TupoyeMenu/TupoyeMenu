@@ -9,6 +9,11 @@
 #include "services/gta_data/gta_data_service.hpp"
 #include "util/system.hpp"
 #include "util/entity.hpp"
+#include <network/Network.hpp>
+#include <network/netTime.hpp>
+
+#include <timeapi.h>
+#pragma comment(lib, "winmm.lib")
 
 namespace big::toxic
 {
@@ -329,7 +334,7 @@ namespace big::toxic
 
 		thread->m_net_component->block_host_migration(true);
 		thread->m_context.m_state = rage::eThreadState::unk_3;
-		g->m_hunt_the_beast_thread = thread;
+		g.m_hunt_the_beast_thread = thread;
 
 		for (int i = 0; i < 15; i++)
 		{
@@ -376,6 +381,7 @@ namespace big::toxic
 		WEAPON::REMOVE_ALL_PED_WEAPONS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(target->id()), FALSE);
 	}
 
+
 	//
 	// SechsMenu Code START
 	//
@@ -386,6 +392,7 @@ namespace big::toxic
 		893081016, 886128956, 526822748, -637352381, -1991423686, -1013989798, -803535423, 1037001637, -397256754, 1111927333, -1388926377, -1908874529, -283041276, -768108950, -547323955
 	};
 
+	// !FIXME: Update hashes for 1.64
 	inline void tse_crash(player_ptr target) //thanks to cl1xa
 	{
 		//Wave I
@@ -464,4 +471,100 @@ namespace big::toxic
 	// SechsMenu Code END
 	//
 
+	inline bool set_time(player_ptr target, uint32_t millis)
+	{
+		if (!g_player_service->get_self()->is_host())
+		{
+			g_notification_service->push_error("Modify Time", "Modifying time requires session host");
+			return false;
+		}
+
+		if (!target->player_time_value.has_value())
+		{
+			g_notification_service->push_error("Modify Time", "We do not have the player's timestamp yet");
+			return false;
+		}
+
+		target->num_time_syncs_sent++;
+
+		rage::netTimeSyncMsg msg{};
+		msg.action = 1;
+		msg.counter = target->num_time_syncs_sent;
+		msg.token = (*g_pointers->m_network_time)->m_time_token;
+		msg.timestamp = target->player_time_value.value() + (uint32_t)(std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()) - target->player_time_value_received_time.value()).count();
+		msg.increment = millis;
+
+		auto peer = g_pointers->m_get_connection_peer(gta_util::get_network()->m_game_session_ptr->m_net_connection_mgr, (int)target->get_session_player()->m_player_data.m_peer_id_2);
+
+		for (int j = 0; j < 100; j++)
+		{
+			g_pointers->m_sync_network_time(gta_util::get_network()->m_game_session_ptr->m_net_connection_mgr,
+				peer, (*g_pointers->m_network_time)->m_connection_identifier, &msg, 0x1000000); // repeatedly spamming the event will eventually cause certain bounds checks to disable for some reason
+		}
+
+		return true;
+	}
+
+	inline void warp_time_forward(player_ptr target, uint32_t millis)
+	{
+		if (!target->player_time_value.has_value())
+		{
+			g_notification_service->push_error("Warp Time", "We do not have the player's timestamp yet");
+			return;
+		}
+
+		if (set_time(target, target->time_difference.value() + millis + (uint32_t)(std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()) - target->player_time_value_received_time.value()).count()))
+			target->time_difference.value() += millis;
+	}
+
+	inline void set_time_all(uint32_t millis)
+	{
+		if (!g_player_service->get_self()->is_host())
+		{
+			g_notification_service->push_error("Modify Time", "Modifying time requires session host");
+			return;
+		}
+
+		std::uint32_t largest_counter = 9999;
+		g_player_service->iterate([&largest_counter](const player_entry& plyr)
+		{
+			if (plyr.second->num_time_syncs_sent > largest_counter)
+				largest_counter = plyr.second->num_time_syncs_sent;
+		});
+
+		(*g_pointers->m_network_time)->m_time_offset = millis - timeGetTime();
+
+		rage::netTimeSyncMsg msg{};
+		g_player_service->iterate([&largest_counter, &msg, millis](const player_entry& plyr)
+		{
+			if (!plyr.second->player_time_value.has_value())
+			{
+				LOG(WARNING) << "Skipping " << plyr.second->get_name() << " in time warp";
+				return;
+			}
+
+			largest_counter++;
+
+			msg.action = 1;
+			msg.counter = largest_counter;
+			msg.token = (*g_pointers->m_network_time)->m_time_token;
+			msg.timestamp = plyr.second->player_time_value.value() + (uint32_t)(std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()) - plyr.second->player_time_value_received_time.value()).count();
+			msg.increment = millis;
+
+			auto peer = g_pointers->m_get_connection_peer(gta_util::get_network()->m_game_session_ptr->m_net_connection_mgr, (int)plyr.second->get_session_player()->m_player_data.m_peer_id_2);
+
+			for (int j = 0; j < 25; j++)
+			{
+				g_pointers->m_sync_network_time(gta_util::get_network()->m_game_session_ptr->m_net_connection_mgr,
+					peer, (*g_pointers->m_network_time)->m_connection_identifier, &msg, 0x1000000);
+			}
+
+			plyr.second->num_time_syncs_sent = largest_counter + 32;
+		});
+	}
+
+	inline void warp_time_forward_all(uint32_t millis)
+	{
+		set_time_all((*g_pointers->m_network_time)->m_time + millis);
+	}
 }

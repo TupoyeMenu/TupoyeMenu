@@ -5,7 +5,7 @@ namespace big
 {
 	void looped::weapons_infinite_ammo_loop()
 	{
-		if (g->weapons.infinite_ammo_loop)
+		if (g.weapons.infinite_ammo_loop)
 		{
             if (
 		    	g_local_player == nullptr ||

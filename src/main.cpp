@@ -57,10 +57,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			base_dir /= "TupoyeMenu";
 			auto file_manager_instance = std::make_unique<file_manager>(base_dir);
 
-			auto globals_instance = std::make_unique<menu_settings>(
-				file_manager_instance->get_project_file("./settings.json")
-			);
-
 			auto logger_instance = std::make_unique<logger>(
 				"SkidMenu",
 				file_manager_instance->get_project_file("./cout.log")
@@ -73,7 +69,11 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				LOG(INFO) << "Yim's Menu Initializing";
 				LOGF(INFO, "Git Info\n\tBranch:\t%s\n\tHash:\t%s\n\tDate:\t%s", version::GIT_BRANCH, version::GIT_SHA1, version::GIT_DATE);
 
-				g->load();
+				auto thread_pool_instance = std::make_unique<thread_pool>();
+				LOG(INFO) << "Thread pool initialized.";
+
+				g.init(
+					file_manager_instance->get_project_file("./settings.json"));
 				LOG(INFO) << "Settings Loaded.";
 
 				auto pointers_instance = std::make_unique<pointers>();
@@ -88,9 +88,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 				auto hooking_instance = std::make_unique<hooking>();
 				LOG(INFO) << "Hooking initialized.";
-
-				auto thread_pool_instance = std::make_unique<thread_pool>();
-				LOG(INFO) << "Thread pool initialized.";
 
 				auto chat_service_instance = std::make_unique<chat_service>();
 				auto context_menu_service_instance = std::make_unique<context_menu_service>();
@@ -154,13 +151,14 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				g_script_mgr.remove_all_scripts();
 				LOG(INFO) << "Scripts unregistered.";
 
+				// cleans up the thread responsible for saving settings
+				g.destroy();
+
 				// Make sure that all threads created don't have any blocking loops
 				// otherwise make sure that they have stopped executing
 				thread_pool_instance->destroy();
 				LOG(INFO) << "Destroyed thread pool.";
 
-				thread_pool_instance.reset();
-				LOG(INFO) << "Thread pool uninitialized.";
 
 				hotkey_service_instance.reset();
 				LOG(INFO) << "Hotkey Service reset.";
@@ -207,6 +205,9 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 				pointers_instance.reset();
 				LOG(INFO) << "Pointers uninitialized.";
+				
+				thread_pool_instance.reset();
+				LOG(INFO) << "Thread pool uninitialized.";
 			}
 			catch (std::exception const& ex)
 			{
@@ -216,8 +217,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			LOG(INFO) << "Farewell!";
 			logger_instance->destroy();
 			logger_instance.reset();
-
-			globals_instance.reset();
 
 			file_manager_instance.reset();
 

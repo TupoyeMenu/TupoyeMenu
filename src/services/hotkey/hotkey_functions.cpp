@@ -6,17 +6,17 @@ namespace big::hotkey_funcs
 {
     void toggle_noclip()
     {
-        const auto state = !g->self.noclip;
+        const auto state = !g.self.noclip;
         g_notification_service->push("Noclip", std::format("Noclip has been {}.", state ? "enabled" : "disabled"));
 
-        g->self.noclip = state;
+        g.self.noclip = state;
     }
 
     void toggle_off_radar()
     {
-        const auto state = !g->self.off_radar;
+        const auto state = !g.self.off_radar;
         g_notification_service->push("Off Radar", std::format("Off Radar has been {}.", state ? "enabled" : "disabled"));
 
-        g->self.off_radar = state;
+        g.self.off_radar = state;
     }
 }

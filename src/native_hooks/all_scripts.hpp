@@ -8,15 +8,15 @@
 
 namespace big
 {
-	namespace all_scripts
-	{
-		void IS_DLC_PRESENT(rage::scrNativeCallContext* src)
-		{
-			const auto hash = src->get_arg<rage::joaat_t>(0);
-			
-			bool return_value = DLC::IS_DLC_PRESENT(hash);
-			if (hash == 0x96F02EE6)
-				return_value = return_value || g->settings.dev_dlc;
+    namespace all_scripts
+    {
+        void IS_DLC_PRESENT(rage::scrNativeCallContext* src)
+        {
+            const auto hash = src->get_arg<rage::joaat_t>(0);
+            
+            bool return_value = DLC::IS_DLC_PRESENT(hash);
+            if (hash == 0x96F02EE6)
+                return_value = return_value || g.settings.dev_dlc;
 
 			src->set_return_value(return_value);
 		}
@@ -32,7 +32,7 @@ namespace big
 
 		inline void SC_TRANSITION_NEWS_SHOW(rage::scrNativeCallContext* src)
 		{
-			if (g->tunables.fast_join)
+			if (g.tunables.fast_join)
 			{
 				src->set_return_value<BOOL>(false);
 			}
@@ -44,7 +44,7 @@ namespace big
 
 		inline void SC_TRANSITION_NEWS_SHOW_TIMED(rage::scrNativeCallContext* src)
 		{
-			if (g->tunables.fast_join)
+			if (g.tunables.fast_join)
 			{
 				src->set_return_value<BOOL>(false);
 			}

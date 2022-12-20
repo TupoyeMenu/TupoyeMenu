@@ -69,13 +69,13 @@ namespace big
 
             if (ImGui::BeginMenu("Windows"))
             {
-                ImGui::MenuItem("Main", nullptr, &g->window.main);
-                ImGui::MenuItem("Player", nullptr, &g->window.player);
-                ImGui::MenuItem("Players", nullptr, &g->window.users);
-                ImGui::MenuItem("Overlay", nullptr, &g->window.overlay);
-                ImGui::MenuItem("Log", nullptr, &g->window.log);
-                ImGui::MenuItem("Chat", nullptr, &g->window.chat);
-                ImGui::MenuItem("Demo", nullptr, &g->window.demo);
+                ImGui::MenuItem("Main", nullptr, &g.window.main);
+                ImGui::MenuItem("Player", nullptr, &g.window.player);
+                ImGui::MenuItem("Players", nullptr, &g.window.users);
+                ImGui::MenuItem("Overlay", nullptr, &g.window.overlay);
+                ImGui::MenuItem("Log", nullptr, &g.window.log);
+                ImGui::MenuItem("Chat", nullptr, &g.window.chat);
+                ImGui::MenuItem("Demo", nullptr, &g.window.demo);
 
                 ImGui::EndMenu();
             }

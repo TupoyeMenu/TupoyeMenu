@@ -27,39 +27,39 @@ namespace big
 	void view::settings()
 	{
 		components::sub_title("Misc");
-		ImGui::Checkbox("Enable Dev DLC", &g->settings.dev_dlc);
-		ImGui::Checkbox("Enable Cable Cars", &g->tunables.cable_cars);
+		ImGui::Checkbox("Enable Dev DLC", &g.settings.dev_dlc);
+		ImGui::Checkbox("Enable Cable Cars", &g.tunables.cable_cars);
 
 		ImGui::Separator();
 		components::sub_title("Hotkeys");
 
 		ImGui::PushItemWidth(350.f);
 
-		if (ImGui::Hotkey("Menu Toggle", &g->settings.hotkeys.menu_toggle))
-			g->settings.hotkeys.editing_menu_toggle = true; // make our menu reappear
+		if (ImGui::Hotkey("Menu Toggle", &g.settings.hotkeys.menu_toggle))
+			g.settings.hotkeys.editing_menu_toggle = true; // make our menu reappear
 
-		if (ImGui::Hotkey("Teleport to waypoint", &g->settings.hotkeys.teleport_waypoint))
-			g_hotkey_service->update_hotkey("waypoint", g->settings.hotkeys.teleport_waypoint);
-		if (ImGui::Hotkey("Teleport to objective", &g->settings.hotkeys.teleport_objective))
-			g_hotkey_service->update_hotkey("objective", g->settings.hotkeys.teleport_objective);
+		if (ImGui::Hotkey("Teleport to waypoint", &g.settings.hotkeys.teleport_waypoint))
+			g_hotkey_service->update_hotkey("waypoint", g.settings.hotkeys.teleport_waypoint);
+		if (ImGui::Hotkey("Teleport to objective", &g.settings.hotkeys.teleport_objective))
+			g_hotkey_service->update_hotkey("objective", g.settings.hotkeys.teleport_objective);
 
-		if (ImGui::Hotkey("Toggle Noclip", &g->settings.hotkeys.noclip))
-			g_hotkey_service->update_hotkey("noclip", g->settings.hotkeys.noclip);
+		if (ImGui::Hotkey("Toggle Noclip", &g.settings.hotkeys.noclip))
+			g_hotkey_service->update_hotkey("noclip", g.settings.hotkeys.noclip);
 
-		if (ImGui::Hotkey("Heal", &g->settings.hotkeys.heal))
-			g_hotkey_service->update_hotkey("heal", g->settings.hotkeys.heal);
+		if (ImGui::Hotkey("Heal", &g.settings.hotkeys.heal))
+			g_hotkey_service->update_hotkey("heal", g.settings.hotkeys.heal);
 
-		if (ImGui::Hotkey("Fill Inventory", &g->settings.hotkeys.fill_inventory))
-			g_hotkey_service->update_hotkey("fill_inventory", g->settings.hotkeys.fill_inventory);
+		if (ImGui::Hotkey("Fill Inventory", &g.settings.hotkeys.fill_inventory))
+			g_hotkey_service->update_hotkey("fill_inventory", g.settings.hotkeys.fill_inventory);
 
-		if (ImGui::Hotkey("Skip Cutscene", &g->settings.hotkeys.skip_cutscene))
-			g_hotkey_service->update_hotkey("skip_cutscene", g->settings.hotkeys.skip_cutscene);
+		if (ImGui::Hotkey("Skip Cutscene", &g.settings.hotkeys.skip_cutscene))
+			g_hotkey_service->update_hotkey("skip_cutscene", g.settings.hotkeys.skip_cutscene);
 
-		if (ImGui::Hotkey("Off Radar", &g->settings.hotkeys.off_radar))
-			g_hotkey_service->update_hotkey("off_radar", g->settings.hotkeys.off_radar);
+		if (ImGui::Hotkey("Off Radar", &g.settings.hotkeys.off_radar))
+			g_hotkey_service->update_hotkey("off_radar", g.settings.hotkeys.off_radar);
 
-		if (ImGui::Hotkey("Mors Mutual Fix All Vehicles", &g->settings.hotkeys.mmi_fix_all))
-			g_hotkey_service->update_hotkey("mmi_fix_all", g->settings.hotkeys.mmi_fix_all);
+		if (ImGui::Hotkey("Mors Mutual Fix All Vehicles", &g.settings.hotkeys.mmi_fix_all))
+			g_hotkey_service->update_hotkey("mmi_fix_all", g.settings.hotkeys.mmi_fix_all);
 
 
 		ImGui::PopItemWidth();

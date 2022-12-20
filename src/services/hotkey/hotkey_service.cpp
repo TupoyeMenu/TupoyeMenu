@@ -12,13 +12,13 @@ namespace big
 {
     hotkey_service::hotkey_service()
     {
-        register_hotkey("waypoint", g->settings.hotkeys.teleport_waypoint, teleport::to_waypoint);
-        register_hotkey("objective", g->settings.hotkeys.teleport_objective, teleport::to_objective);
-        register_hotkey("noclip", g->settings.hotkeys.noclip, hotkey_funcs::toggle_noclip);
-        register_hotkey("heal", g->settings.hotkeys.heal, local_player::heal_player);
-        register_hotkey("fill_inventory", g->settings.hotkeys.fill_inventory, local_player::fill_inventory);
-        register_hotkey("skip_cutscene", g->settings.hotkeys.skip_cutscene, CUTSCENE::STOP_CUTSCENE_IMMEDIATELY);
-        register_hotkey("off_radar", g->settings.hotkeys.skip_cutscene, hotkey_funcs::toggle_off_radar);
+        register_hotkey("waypoint", g.settings.hotkeys.teleport_waypoint, teleport::to_waypoint);
+        register_hotkey("objective", g.settings.hotkeys.teleport_objective, teleport::to_objective);
+        register_hotkey("noclip", g.settings.hotkeys.noclip, hotkey_funcs::toggle_noclip);
+        register_hotkey("heal", g.settings.hotkeys.heal, local_player::heal_player);
+        register_hotkey("fill_inventory", g.settings.hotkeys.fill_inventory, local_player::fill_inventory);
+        register_hotkey("skip_cutscene", g.settings.hotkeys.skip_cutscene, CUTSCENE::STOP_CUTSCENE_IMMEDIATELY);
+        register_hotkey("off_radar", g.settings.hotkeys.skip_cutscene, hotkey_funcs::toggle_off_radar);
 
         g_renderer->add_wndproc_callback([this](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
         {

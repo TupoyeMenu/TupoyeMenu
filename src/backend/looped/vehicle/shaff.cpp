@@ -8,7 +8,7 @@ namespace big
 {
 	void looped::vehicle_chaff()
 	{
-		if (!g->vehicle.chaff) return;
+		if (!g.vehicle.chaff) return;
 
 		if (PAD::IS_CONTROL_PRESSED(0, (int)ControllerInputs::INPUT_SCRIPTED_FLY_ZDOWN) && self::veh)
 		{

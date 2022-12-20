@@ -39,15 +39,15 @@ namespace big
 		
 		if (ImGui::TreeNode("Teleports"))
 		{
-			if (ImGui::BeginCombo("##apartment", apartment_names[g->session.send_to_apartment_idx]))
+			if (ImGui::BeginCombo("##apartment", apartment_names[g.session.send_to_apartment_idx]))
 			{
 				for (int i = 1; i < apartment_names.size(); i++)
 				{
-					if (ImGui::Selectable(apartment_names[i], i == g->session.send_to_apartment_idx))
+					if (ImGui::Selectable(apartment_names[i], i == g.session.send_to_apartment_idx))
 					{
-						g->session.send_to_apartment_idx = i;
+						g.session.send_to_apartment_idx = i;
 					}
-					if (i == g->session.send_to_apartment_idx)
+					if (i == g.session.send_to_apartment_idx)
 					{
 						ImGui::SetItemDefaultFocus();
 					}
@@ -55,16 +55,16 @@ namespace big
 				ImGui::EndCombo();
 			}
 			ImGui::SameLine();
-			components::button("TP To Apartment", [] { toxic::send_player_to_apartment(g_player_service->get_selected(), g->session.send_to_apartment_idx); });
-			if (ImGui::BeginCombo("##warehouse", warehouse_names[g->session.send_to_warehouse_idx]))
+			components::button("TP To Apartment", [] { toxic::send_player_to_apartment(g_player_service->get_selected(), g.session.send_to_apartment_idx); });
+			if (ImGui::BeginCombo("##warehouse", warehouse_names[g.session.send_to_warehouse_idx]))
 			{
 				for (int i = 1; i < warehouse_names.size(); i++)
 				{
-					if (ImGui::Selectable(warehouse_names[i], i == g->session.send_to_warehouse_idx))
+					if (ImGui::Selectable(warehouse_names[i], i == g.session.send_to_warehouse_idx))
 					{
-						g->session.send_to_warehouse_idx = i;
+						g.session.send_to_warehouse_idx = i;
 					}
-					if (i == g->session.send_to_warehouse_idx)
+					if (i == g.session.send_to_warehouse_idx)
 					{
 						ImGui::SetItemDefaultFocus();
 					}
@@ -72,7 +72,7 @@ namespace big
 				ImGui::EndCombo();
 			}
 			ImGui::SameLine();
-			components::button("TP To Warehouse", [] { toxic::send_player_to_warehouse(g_player_service->get_selected(), g->session.send_to_warehouse_idx); });
+			components::button("TP To Warehouse", [] { toxic::send_player_to_warehouse(g_player_service->get_selected(), g.session.send_to_warehouse_idx); });
 			components::button("TP To Darts", [] { toxic::start_activity(g_player_service->get_selected(), eActivityType::Darts); });
 			ImGui::SameLine();
 			components::button("TP To Flight School", [] { toxic::start_activity(g_player_service->get_selected(), eActivityType::PilotSchool); });
@@ -143,6 +143,24 @@ namespace big
 				ped::spawn_griefer_jet(pos, player_ped, jet_hash);
 			});
 			ImGui::SameLine(); components::help_marker("Spawns a lazer with Griefer Jesus in it.");
+
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("Warp Time (requires session host)"))
+		{
+			components::button("+1 Minute", [] { toxic::warp_time_forward(g_player_service->get_selected(), 60 * 1000); });
+			ImGui::SameLine();
+			components::button("+5 Minutes", [] { toxic::warp_time_forward(g_player_service->get_selected(), 5 * 60 * 1000); });
+			ImGui::SameLine();
+			components::button("+48 Minutes", [] { toxic::warp_time_forward(g_player_service->get_selected(), 48 * 60 * 1000); });
+			ImGui::SameLine();
+			components::button("+96 Minutes", [] { toxic::warp_time_forward(g_player_service->get_selected(), 96 * 60 * 1000); });
+			ImGui::SameLine();
+			components::button("+200 Minutes", [] { toxic::warp_time_forward(g_player_service->get_selected(), 200 * 60 * 1000); });
+			ImGui::SameLine();
+			components::button("Stop Time", [] { toxic::set_time(g_player_service->get_selected(), INT_MAX - 3000); });
+			ImGui::SameLine(); components::help_marker("This cannot be reversed. Use with caution");
 
 			ImGui::TreePop();
 		}

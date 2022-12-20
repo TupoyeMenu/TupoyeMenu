@@ -18,7 +18,7 @@ namespace big
         static GtaThread* selected_thread{};
         if (ImGui::ListBoxHeader("##scripts", ImVec2(250, -ImGui::GetFrameHeight())))
         {
-            if (g->debug.sort_scripts)
+            if (g.debug.sort_scripts)
             {
                 std::map<std::string, GtaThread*> sorted_threads;
                 for (auto thread : *g_pointers->m_script_threads)
@@ -39,7 +39,7 @@ namespace big
         }
         ImGui::SameLine();
         ImGui::BeginGroup();
-        ImGui::Checkbox("Sorted?", &g->debug.sort_scripts);
+        ImGui::Checkbox("Sorted?", &g.debug.sort_scripts);
         ImGui::TextColored(ImVec4(0.5f, 0.5f, 0.5f, 1.0f), "Script Info:");
         if (selected_thread)
         {
@@ -79,7 +79,7 @@ namespace big
 		static int arg_count = 3;
 		static int previous_arg_count;
 
-        ImGui::Checkbox("With args", &g->debug.with_args);
+        ImGui::Checkbox("With args", &g.debug.with_args);
         components::input_text_with_hint("###scipt_name", "Script Name", script_name, sizeof(script_name), ImGuiInputTextFlags_EnterReturnsTrue, []
             {
                 if (const Hash hash = rage::joaat(script_name); hash)
@@ -87,7 +87,7 @@ namespace big
                     scripts::request_script(hash);
                     if (scripts::wait_till_loaded(hash))
                     {
-                        if (g->debug.with_args)
+                        if (g.debug.with_args)
                         {
                             scripts::start_script_with_args(hash, args, arg_count, buffer_size);
                         }
@@ -101,7 +101,7 @@ namespace big
             });
         ImGui::InputInt("Buffer Size", &buffer_size);
 
-        if(g->debug.with_args)
+        if(g.debug.with_args)
         {
 		    ImGui::Text("Script Argument Count:");
 		    ImGui::InputInt("###script_arg_count", &arg_count);

@@ -8,13 +8,13 @@ namespace big
 {
 	void view::mobile() {
 		/*components::sub_title("Phone selection");
-		if (ImGui::BeginCombo("Phones", phone_types[g->tunables.phone_type]))
+		if (ImGui::BeginCombo("Phones", phone_types[g.tunables.phone_type]))
 		{
 			for (int i = 0; i < phone_types.size(); i++)
 			{
-				if (ImGui::Selectable(phone_types[i], g->tunables.phone_type == i))
+				if (ImGui::Selectable(phone_types[i], g.tunables.phone_type == i))
 				{
-					g->tunables.phone_type = i;
+					g.tunables.phone_type = i;
 				};
 			}
 			ImGui::EndCombo();
@@ -22,7 +22,7 @@ namespace big
 
 		components::sub_title("Lester");
 
-		ImGui::Checkbox("Off Radar", &g->self.off_radar);
+		ImGui::Checkbox("Off Radar", &g.self.off_radar);
 
 		ImGui::Separator();	
 		

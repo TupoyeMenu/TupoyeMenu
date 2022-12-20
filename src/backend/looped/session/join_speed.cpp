@@ -9,7 +9,7 @@ namespace big
 {
 	void looped::fast_join()
 	{
-		if (g->tunables.fast_join)
+		if (g.tunables.fast_join)
 		{
 			eTransitionState state = *script_global::script_global(1574993).as<eTransitionState*>();
 

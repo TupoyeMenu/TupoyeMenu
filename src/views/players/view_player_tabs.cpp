@@ -8,7 +8,7 @@ namespace big
 
 		if (!*g_pointers->m_is_session_started && !g_player_service->get_selected()->is_valid()) return;
 
-		if (ImGui::Begin("Player", &g->window.player))
+		if (ImGui::Begin("Player", &g.window.player))
 		{
 			if (ImGui::BeginTabBar("player_tabbar"))
 			{
