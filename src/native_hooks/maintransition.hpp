@@ -150,6 +150,40 @@ namespace big
 		// PLAYER_SWITCH END
 		//
 
+		inline void SET_WARNING_MESSAGE_WITH_HEADER(rage::scrNativeCallContext* src)
+		{
+			if(src->get_arg<int>(2) = 134217728)
+			{
+				HUD::SET_WARNING_MESSAGE_WITH_HEADER(
+					src->get_arg<char*>(0),
+					src->get_arg<char*>(1),
+					16384, // Continue = 16384, -- (RETURN)
+					src->get_arg<char*>(3),
+					src->get_arg<BOOL>(4),
+					src->get_arg<Any>(5),
+					src->get_arg<Any*>(6),
+					src->get_arg<Any*>(7),
+					src->get_arg<BOOL>(8),
+					src->get_arg<Any>(9)
+				);
+			}
+			else
+			{
+				HUD::SET_WARNING_MESSAGE_WITH_HEADER(
+					src->get_arg<char*>(0),
+					src->get_arg<char*>(1),
+					src->get_arg<int>(2),
+					src->get_arg<char*>(3),
+					src->get_arg<BOOL>(4),
+					src->get_arg<Any>(5),
+					src->get_arg<Any*>(6),
+					src->get_arg<Any*>(7),
+					src->get_arg<BOOL>(8),
+					src->get_arg<Any>(9)
+				);
+			}
+		}
+
 		inline void GET_EVER_HAD_BAD_PACK_ORDER(rage::scrNativeCallContext* src)
 		{
 			// LOG(G3LOG_DEBUG) << "DLC::GET_EVER_HAD_BAD_PACK_ORDER(); // Returns: " << DLC::GET_EVER_HAD_BAD_PACK_ORDER();

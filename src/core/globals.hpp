@@ -575,7 +575,7 @@ namespace big
 			bool handling = false;
 			bool main = true;
 			bool users = true;
-			bool player = false;
+			bool player = true;
 			bool overlay = false;
 			bool chat = false;
 			bool demo = false;
@@ -593,7 +593,7 @@ namespace big
 
 			bool switched_view = true;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, color, gui_scale, switched_view)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, main, users, player, overlay, chat, demo, log, color, gui_scale, switched_view)
 		} window{};
 
 		struct context_menu
@@ -622,8 +622,8 @@ namespace big
 			bool local = false;
 			bool auto_scroll = true;
 			bool show_spam = false;
-			std::int8_t dm_player_id = 0;
-			std::uint64_t dm_player_rid = 0;
+			int8_t dm_player_id = 0;
+			uint64_t dm_player_rid = 0;
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(chat,
 				local, show_spam)

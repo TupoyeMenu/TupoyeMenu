@@ -56,7 +56,7 @@ namespace big
 
 		inline void CLEAR_PED_TASKS_IMMEDIATELY(rage::scrNativeCallContext* src)
 		{
-			if(!(SCRIPT::GET_HASH_OF_THIS_SCRIPT_NAME() == RAGE_JOAAT("maintransition")))
+			if(SCRIPT::GET_HASH_OF_THIS_SCRIPT_NAME() != RAGE_JOAAT("maintransition") || !g.tunables.fast_join)
 				TASK::CLEAR_PED_TASKS_IMMEDIATELY(src->get_arg<Ped>(0));
 
 			if(src->get_arg<Ped>(0) == self::ped)
