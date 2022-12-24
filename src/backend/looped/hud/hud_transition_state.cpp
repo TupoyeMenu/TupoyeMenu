@@ -4,6 +4,7 @@
 #include "core/scr_globals.hpp"
 #include "services/spinner/spinner_service.hpp"
 #include "gta/joaat.hpp"
+#include "services/players/player_service.hpp"
 
 // Credits: QuickNET
 namespace big

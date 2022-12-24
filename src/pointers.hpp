@@ -25,6 +25,7 @@ namespace rage
 	class atSingleton;
 	class RageSecurity;
 	class netTime;
+	class rlGamerInfo;
 }
 
 namespace big
@@ -237,6 +238,8 @@ namespace big
 
 		rage::netTime** m_network_time;
 		functions::sync_network_time m_sync_network_time;
+
+		rage::rlGamerInfo* m_chat_gamer_info;
 	};
 
 	inline pointers* g_pointers{};

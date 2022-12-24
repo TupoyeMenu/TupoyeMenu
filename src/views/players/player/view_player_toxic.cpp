@@ -14,29 +14,17 @@ namespace big
 
 		ImGui::Text(title.c_str());
 
-		components::button("Kill Player", []
-		{
-			toxic::kill_player(g_player_service->get_selected(), g_player_service->get_self());
-		});
-		components::button("CEO Kick", [] { toxic::ceo_kick(g_player_service->get_selected()); });
-		
-		components::button("Ragdoll Player", [] { toxic::ragdoll_player(g_player_service->get_selected()); });
-		ImGui::SameLine();
-		components::button("Ragdoll Player Old", [] { toxic::ragdoll_player_old(g_player_service->get_selected()); });
-		ImGui::SameLine(); components::help_marker("Spawns an invisible fire hydrant below player. \nBlocked by using 'no ragdoll' or 'godmode'.");
+		components::player_command_button<"kill">(g_player_service->get_selected(), {});
+		components::player_command_button<"ceokick">(g_player_service->get_selected(), {});		
+		components::player_command_button<"ragdoll">(g_player_service->get_selected(), {});
+		components::player_command_button<"intkick">(g_player_service->get_selected(), {});
+		components::player_command_button<"beast">(g_player_service->get_selected(), {});
 
-		components::button("Kick From Interior", [] { toxic::kick_player_from_interior(g_player_service->get_selected()); });
-		components::button("Turn Into Beast", [] { toxic::turn_player_into_beast(g_player_service->get_selected()); });
-		components::button("Clear Tasks", [] 
-		{
-			TASK::CLEAR_PED_TASKS_IMMEDIATELY(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g_player_service->get_selected()->id()));
-		});
-		ImGui::SameLine(); components::help_marker("Stops any task player ped is doing. \nBlocked by most internal menus.");
 		static int wanted_level;
 		ImGui::SliderInt("Wanted Level", &wanted_level, 0, 5);
 		ImGui::SameLine();
-		components::button("Set", [] { toxic::set_wanted_level(g_player_service->get_selected(), wanted_level); });
-		
+		components::player_command_button<"wanted">(g_player_service->get_selected(), { (uint64_t)wanted_level }, "Set");
+
 		if (ImGui::TreeNode("Teleports"))
 		{
 			if (ImGui::BeginCombo("##apartment", apartment_names[g.session.send_to_apartment_idx]))
@@ -55,7 +43,9 @@ namespace big
 				ImGui::EndCombo();
 			}
 			ImGui::SameLine();
-			components::button("TP To Apartment", [] { toxic::send_player_to_apartment(g_player_service->get_selected(), g.session.send_to_apartment_idx); });
+
+			components::player_command_button<"apartmenttp">(g_player_service->get_selected(), { (uint64_t)g.session.send_to_apartment_idx });
+
 			if (ImGui::BeginCombo("##warehouse", warehouse_names[g.session.send_to_warehouse_idx]))
 			{
 				for (int i = 1; i < warehouse_names.size(); i++)
@@ -72,7 +62,9 @@ namespace big
 				ImGui::EndCombo();
 			}
 			ImGui::SameLine();
-			components::button("TP To Warehouse", [] { toxic::send_player_to_warehouse(g_player_service->get_selected(), g.session.send_to_warehouse_idx); });
+
+			components::player_command_button<"warehousetp">(g_player_service->get_selected(), { (uint64_t)g.session.send_to_warehouse_idx });
+
 			components::button("TP To Darts", [] { toxic::start_activity(g_player_service->get_selected(), eActivityType::Darts); });
 			ImGui::SameLine();
 			components::button("TP To Flight School", [] { toxic::start_activity(g_player_service->get_selected(), eActivityType::PilotSchool); });
@@ -80,35 +72,34 @@ namespace big
 			components::button("TP To Map Center", [] { toxic::start_activity(g_player_service->get_selected(), eActivityType::ArmWresling); });
 			components::button("TP To Skydive", [] { toxic::start_activity(g_player_service->get_selected(), eActivityType::Skydive); });
 			ImGui::SameLine();
-			components::button("TP To Cayo Perico", [] { toxic::send_player_to_island(g_player_service->get_selected()); });
+			components::player_command_button<"cayotp">(g_player_service->get_selected(), { });
 			ImGui::SameLine();
-			components::button("TP To MOC", [] { toxic::send_player_to_interior(g_player_service->get_selected(), 81); });
-			components::button("TP To Casino", [] { toxic::send_player_to_interior(g_player_service->get_selected(), 123); });
+			components::player_command_button<"interiortp">(g_player_service->get_selected(), { 81 }, "TP To MOC");
+
+			components::player_command_button<"interiortp">(g_player_service->get_selected(), { 123 }, "TP To Casino");
 			ImGui::SameLine();
-			components::button("TP To Penthouse", [] { toxic::send_player_to_interior(g_player_service->get_selected(), 124); });
+			components::player_command_button<"interiortp">(g_player_service->get_selected(), { 124 }, "TP To Penthouse");
 			ImGui::SameLine();
-			components::button("TP To Arcade", [] { toxic::send_player_to_interior(g_player_service->get_selected(), 128); });
-			components::button("TP To Music Locker", [] { toxic::send_player_to_interior(g_player_service->get_selected(), 146); });
+			components::player_command_button<"interiortp">(g_player_service->get_selected(), { 128 }, "TP To Arcade");
+
+			components::player_command_button<"interiortp">(g_player_service->get_selected(), { 146 }, "TP To Music Locker");
 			ImGui::SameLine();
-			components::button("TP To Record A Studios", [] { toxic::send_player_to_interior(g_player_service->get_selected(), 148); });
+			components::player_command_button<"interiortp">(g_player_service->get_selected(), { 148 }, "TP To Record A Studios");
 			ImGui::SameLine();
-			components::button("TP To Custom Auto Shop", [] { toxic::send_player_to_interior(g_player_service->get_selected(), 149); });
-			components::button("TP To Agency", [] { toxic::send_player_to_interior(g_player_service->get_selected(), 155); });
-			components::button("TP To Freakshop", [] { toxic::send_player_to_interior(g_player_service->get_selected(), 160); });
+			components::player_command_button<"interiortp">(g_player_service->get_selected(), { 149 }, "TP To Custom Auto Shop");
+
+			components::player_command_button<"interiortp">(g_player_service->get_selected(), { 155 }, "TP To Agency");
 			ImGui::SameLine();
-			components::button("TP To Multi-Floor Garage", [] { toxic::send_player_to_interior(g_player_service->get_selected(), 161); });
+			components::player_command_button<"interiortp">(g_player_service->get_selected(), { 160 }, "TP To Freakshop");
+			ImGui::SameLine();
+			components::player_command_button<"interiortp">(g_player_service->get_selected(), { 161 }, "TP To Multi Floor Garage");
+
 			ImGui::TreePop();
 		}
 
 		if (ImGui::TreeNode("Vehicle")) 
 		{
-			components::button("Kick From Vehicle", [] { toxic::kick_player_from_vehicle(g_player_service->get_selected()); });
-
-			components::button("Full Acceleration", [] { toxic::full_acceleration(g_player_service->get_selected()); });
-			ImGui::SameLine(); components::help_marker("Accelerates players vehicle to max speed. \nRequires entity control. \nBlacked by most internal menus.");
-
-			components::button("Launch Vehicle Up", [] { toxic::flying_vehicle(g_player_service->get_selected()); });
-			ImGui::SameLine(); components::help_marker("Launches players vehicle up. \nRequires entity control. \nBlacked by most internal menus.\nUses max sync speed on other players, uses INT32_MAX on local player.");
+			components::player_command_button<"vehkick">(g_player_service->get_selected(), {});
 
 			components::button("Repair Vehicle", [] {
 				Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(g_player_service->get_selected()->id(), false);
@@ -165,8 +156,8 @@ namespace big
 			ImGui::TreePop();
 		}
 
-		components::button("Give All Weapons", [] { toxic::give_all_weapons(g_player_service->get_selected()); });
+		components::player_command_button<"giveweaps">(g_player_service->get_selected(), { });
 		ImGui::SameLine();
-		components::button("Remove All Weapons", [] { toxic::remove_all_weapons(g_player_service->get_selected()); });
+		components::player_command_button<"remweaps">(g_player_service->get_selected(), { });
 	}
 }

@@ -888,4 +888,19 @@ namespace big
 		FavoriteRadio = 53,
 		MoneyAll = 56,
 	};
+	enum class CommandAccessLevel
+	{
+		NONE,
+		FRIENDLY, // heal, semi godmode...
+		AGGRESSIVE, // kick from vehicle, send to apartment...
+		TOXIC, // kicks
+		ADMIN // full access
+	};
+	NLOHMANN_JSON_SERIALIZE_ENUM(CommandAccessLevel, {
+		{ CommandAccessLevel::NONE, "none" },
+		{ CommandAccessLevel::FRIENDLY, "friendly" },
+		{ CommandAccessLevel::AGGRESSIVE, "aggressive" },
+		{ CommandAccessLevel::TOXIC, "toxic" },
+		{ CommandAccessLevel::ADMIN, "admin" }
+	})
 }

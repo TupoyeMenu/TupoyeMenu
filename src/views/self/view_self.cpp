@@ -9,21 +9,12 @@ namespace big
 {
 	void view::self()
 	{
-		components::button("Suicide", [] {
-			ENTITY::SET_ENTITY_HEALTH(self::ped, 0, 0);
-		});
-
+		components::command_button<"suicide">();
 		ImGui::SameLine();
 
-		components::button("Heal", [] {
-			local_player::heal_player();
-		});
-
+		components::command_button<"heal">();
 		ImGui::SameLine();
-
-		components::button("Fill Inventory", [] {
-			local_player::fill_inventory();
-		});
+		components::command_button<"fillsnacks">();
 
 		ImGui::SameLine();
 
@@ -33,16 +24,9 @@ namespace big
 		});
 
 		ImGui::SameLine();
-
-		components::button("Skip Cutscene", [] {
-			CUTSCENE::STOP_CUTSCENE_IMMEDIATELY();
-		});
-
+		components::command_button<"skipcutscene">();
 		ImGui::SameLine();
-
-		components::button("Clean Player", [] {
-			entity::clean_ped(self::ped);
-		});
+		components::command_button<"clean">();
 
 		ImGui::Separator();
 
@@ -51,33 +35,32 @@ namespace big
 		ImGui::BeginGroup();
 
 		ImGui::Checkbox("God Mode", &g.self.god_mode);
-		ImGui::Checkbox("Off Radar", &g.self.off_radar);
-		ImGui::Checkbox("Free Cam", &g.self.free_cam);
-		ImGui::Checkbox("Disable Phone", &g.tunables.disable_phone);
-		ImGui::Checkbox("Unlimited Oxygen", &g.self.unlimited_oxygen);
-		ImGui::Checkbox("Fast Respawn", &g.self.fast_respawn);
+		components::command_checkbox<"otr">();
+		components::command_checkbox<"freecam">();
+		components::command_checkbox<"nophone">();
+		components::command_checkbox<"infoxy">();
+		components::command_checkbox<"fastrespawn">();
 
 		ImGui::EndGroup();
 		ImGui::SameLine();
 		ImGui::BeginGroup();
 
-		ImGui::Checkbox("No Clip", &g.self.noclip);
-		ImGui::Checkbox("No Ragdoll", &g.self.no_ragdoll);
-		ImGui::Checkbox("Super Run", &g.self.super_run);
+		components::command_checkbox<"noclip">();
+		components::command_checkbox<"noragdoll">();
+		components::command_checkbox<"fastrun">();
 		ImGui::Checkbox("No Idle Kick", &g.tunables.no_idle_kick);
-		ImGui::Checkbox("No Water Collision", &g.self.no_water_collision);
+		components::command_checkbox<"walkunder">();
 
 		ImGui::EndGroup();
 		ImGui::SameLine();
 		ImGui::BeginGroup();
 
-		ImGui::Checkbox("Invisibility", &g.self.invisibility);
-		if (g.self.invisibility) {
-			ImGui::Checkbox("Locally Visible", &g.self.local_visibility);
-		}
-		ImGui::Checkbox("Keep Player Clean", &g.self.clean_player);
-		ImGui::Checkbox("No Collision", &g.self.no_collision);
-		ImGui::Checkbox("Mobile Radio", &g.self.mobile_radio);
+		components::command_checkbox<"invis">();
+		if (g.self.invisibility)
+			components::command_checkbox<"localvis">();
+		components::command_checkbox<"cleanloop">();
+		components::command_checkbox<"nocollision">();
+		components::command_checkbox<"mobileradio">();
 
 		ImGui::Checkbox("Dance Mode", &g.self.dance_mode);
 		ImGui::SameLine(); components::help_marker("Hold Right DPAD or E to enter dance mode");

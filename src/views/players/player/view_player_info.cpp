@@ -14,6 +14,7 @@
 #include "gta/joaat.hpp"
 #include "core/enums.hpp"
 #include "core/data/game_states.hpp"
+#include "core/data/command_access_levels.hpp"
 #include "gta_util.hpp"
 
 namespace big
@@ -162,6 +163,24 @@ namespace big
 				});
 				ImGui::TreePop();
 			}
+		}
+
+		if (ImGui::BeginCombo("Chat Command Permissions", COMMAND_ACCESS_LEVELS[g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level)]))
+		{
+			for (const auto& [type, name] : COMMAND_ACCESS_LEVELS)
+			{
+				if (ImGui::Selectable(name, type == g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level)))
+				{
+					g.session.chat_command_default_access_level = type;
+					g_player_database_service->get_or_create_player(g_player_service->get_selected())->command_access_level = type;
+					g_player_database_service->save();
+				}
+				if (type == g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level))
+				{
+					ImGui::SetItemDefaultFocus();
+				}
+			}
+			ImGui::EndCombo();
 		}
 
 		if (persistent_player* current_player = g_player_database_service->get_player_by_rockstar_id(g_player_service->get_selected()->real_rid); current_player != nullptr)
