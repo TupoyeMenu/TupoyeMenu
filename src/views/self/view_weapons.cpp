@@ -16,7 +16,7 @@ namespace big
 		ImGui::BeginGroup();
 
 		components::command_checkbox<"infammo">();
-		ImGui::Checkbox("Infinite Ammo Looped", &g.weapons.infinite_ammo_loop);
+		components::command_checkbox<"infammoloop">();
 		components::command_checkbox<"infclip">();
 
 		ImGui::EndGroup();

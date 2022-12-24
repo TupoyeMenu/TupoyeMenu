@@ -59,7 +59,6 @@ namespace big
 			looped::weapons_delete_gun();
 			looped::weapons_gravity_gun();
 			looped::weapons_increased_damage();
-			looped::weapons_infinite_ammo_loop();
 			looped::weapons_repair_gun();
 			looped::weapons_steal_vehicle_gun();
 			looped::weapons_vehicle_gun();
@@ -78,7 +77,6 @@ namespace big
 			looped::vehicle_boost_behavior();
 			looped::vehicle_god_mode();
 			looped::vehicle_speedo_meter();
-			looped::vehicle_remove_speed_limit();
 
 			looped::vehicle_chaff();
 			looped::vehicle_flares();

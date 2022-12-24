@@ -53,6 +53,7 @@ namespace big
 			static command* command = command::get(rage::consteval_joaat(cmd_str.value));
 			if (ImGui::Button(label_override.value_or(command->get_label()).data()))
 				command->call(args);
+			ImGui::SameLine(); help_marker(command->get_description());
 		}
 
 		template<template_str cmd_str>
@@ -61,6 +62,7 @@ namespace big
 			static player_command* command = (player_command*)command::get(rage::consteval_joaat(cmd_str.value));
 			if (ImGui::Button(label_override.value_or(command->get_label()).data()))
 				command->call(player, args);
+			ImGui::SameLine(); help_marker(command->get_description());
 		}
 
 		template<template_str cmd_str>
@@ -69,6 +71,7 @@ namespace big
 			static bool_command* command = (bool_command*)command::get(rage::consteval_joaat(cmd_str.value));
 			if (ImGui::Checkbox(label_override.value_or(command->get_label()).data(), &command->is_enabled()))
 				command->refresh();
+			ImGui::SameLine(); help_marker(command->get_description());
 		}
 	};
 }

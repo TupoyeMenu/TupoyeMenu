@@ -216,12 +216,6 @@ namespace big
 			memory::byte_patch::make(ptr.add(0x13).as<std::uint16_t*>(), 0x9090)->apply();
 		});
 
-		// GET CNetGamePlayer
-		main_batch.add("GCNGP", "48 83 EC ? 33 C0 38 05 ? ? ? ? 74 ? 83 F9", [this](memory::handle ptr)
-		{
-			m_get_net_game_player = ptr.as<decltype(m_get_net_game_player)>();
-		});
-
 		// Replay Interface
 		main_batch.add("RI", "0F B7 44 24 ? 66 89 44 4E", [this](memory::handle ptr)
 		{

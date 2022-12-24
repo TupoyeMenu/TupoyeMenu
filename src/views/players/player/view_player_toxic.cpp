@@ -100,6 +100,8 @@ namespace big
 		if (ImGui::TreeNode("Vehicle")) 
 		{
 			components::player_command_button<"vehkick">(g_player_service->get_selected(), {});
+			components::player_command_button<"fullacceleration">(g_player_service->get_selected(), {});
+			components::player_command_button<"launchvehicleup">(g_player_service->get_selected(), {});
 
 			components::button("Repair Vehicle", [] {
 				Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(g_player_service->get_selected()->id(), false);

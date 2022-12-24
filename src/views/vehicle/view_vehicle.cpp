@@ -102,7 +102,7 @@ namespace big
 			ImGui::SameLine();
 			ImGui::BeginGroup();
 
-			ImGui::Checkbox("Remove Speed Limit", &g.vehicle.remove_speed_limit);
+			components::command_checkbox<"remove_speed_limit">();
 
 			ImGui::EndGroup();
 		}

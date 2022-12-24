@@ -1,6 +1,10 @@
 #include "views/view.hpp"
 #include "fiber_pool.hpp"
+#include "natives.hpp"
 #include "logger.hpp"
+
+#include "backend/command.hpp"
+#include "backend/context/console_command_context.hpp"
 
 namespace big
 {
@@ -21,9 +25,9 @@ namespace big
 	static size_t iLastLogCount = 0;
 	void view::log()
 	{
-		if (ImGui::Begin("Log", &g.window.log))
+		if (ImGui::Begin("Console", &g.window.log))
 		{
-			auto msgs = g_log->get_messages();
+			const auto msgs = g_log->get_messages();
 
 			ImGuiListClipper clipper;
 			clipper.Begin((int)msgs.size());
@@ -50,9 +54,27 @@ namespace big
 
 			ImGui::Separator();
 
-			ImGui::InputTextMultiline("###console_command_input", &g.chat.message, ImVec2(-80, ImGui::GetTextLineHeightWithSpacing()));
+			static std::string command_input;
+			// TODO: Move this to components
+			static ImGuiInputTextFlags flags = ImGuiInputTextFlags_CtrlEnterForNewLine | ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_EscapeClearsAll | ImGuiInputTextFlags_CallbackCompletion | ImGuiInputTextFlags_CallbackHistory;
+			if(ImGui::InputTextMultiline("###console_command_input", &command_input, ImVec2(-80, ImGui::GetTextLineHeightWithSpacing()), flags))
+			{
+				LOG(INFO) << command_input;
+				command::process(command_input, std::make_shared<console_command_context>());
+			}
+
+			if (ImGui::IsItemActive())
+			{
+				g_fiber_pool->queue_job([] {
+					PAD::DISABLE_ALL_CONTROL_ACTIONS(0);
+				});
+			}
 			ImGui::SameLine();
-			ImGui::Button("Submit");
+			components::button("Submit", []
+			{
+				LOG(INFO) << command_input;
+				command::process(command_input, std::make_shared<console_command_context>());
+			});
 
 			ImGui::End();
 		}

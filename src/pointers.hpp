@@ -92,8 +92,6 @@ namespace big
 
 		HashTable<CBaseModelInfo*>* m_model_table;
 
-		functions::get_net_game_player* m_get_net_game_player{};
-
 		PVOID m_gta_thread_start{};
 		PVOID m_gta_thread_kill{};
 

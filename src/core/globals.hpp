@@ -96,9 +96,11 @@ namespace big
 			bool cable_cars = false;
 			bool always_control = false;
 			bool disable_help_text = false;
+			bool remove_speed_limit = false;
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(tunables,
-			disable_phone, phone_anim, no_idle_kick, fast_join, ambiant_ufos, ambiant_blimp, cable_cars, always_control, disable_help_text)
+			disable_phone, phone_anim, no_idle_kick, fast_join, ambiant_ufos, ambiant_blimp, cable_cars, always_control, disable_help_text,
+			remove_speed_limit)
 		} tunables{};
 		
 		struct notifications
@@ -288,7 +290,7 @@ namespace big
 				noclip, off_radar, super_run, no_collision, unlimited_oxygen, no_water_collision, wanted_level, god_mode,
 				proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_drown, proof_water,
 				proof_mask, hide_radar, hide_ammo, selected_hud_component, hud_components_states, force_show_hud_element,
-				force_show_hud, mobile_radio, fast_respawn, auto_tp)
+				force_show_hud, mobile_radio, fast_respawn, auto_tp, allow_ragdoll)
 		} self{};
 
 		struct session
@@ -527,7 +529,6 @@ namespace big
 			bool turn_signals = false;
 			bool vehicle_jump = false;
 			bool keep_vehicle_repaired = false;
-			bool remove_speed_limit = false;
 			bool flares = false;
 			bool chaff = false;
 			bool no_water_collision = false;
@@ -539,7 +540,7 @@ namespace big
 				proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_water, proof_mask,
 				auto_drive_destination, auto_drive_style, auto_drive_speed, auto_turn_signals, boost_behavior,
 				drive_on_water, horn_boost, instant_brake, block_homing, seatbelt, turn_signals, vehicle_jump,
-				keep_vehicle_repaired, remove_speed_limit, flares, chaff, no_water_collision,
+				keep_vehicle_repaired, flares, chaff, no_water_collision,
 				disable_engine_auto_start, change_engine_state_immediately)
 		} vehicle{};
 
@@ -576,7 +577,7 @@ namespace big
 			bool rapid_fire = false;
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(weapons,
-				ammo_special, custom_weapon, force_crosshairs, infinite_ammo, infinite_mag, increased_damage, no_recoil,
+				ammo_special, custom_weapon, force_crosshairs, infinite_ammo, infinite_ammo_loop, infinite_mag, increased_damage, no_recoil,
 				no_spread, vehicle_gun_model, bypass_c4_limit, rapid_fire)
 		} weapons{};
 
@@ -600,9 +601,7 @@ namespace big
 			ImFont* font_small = nullptr;
 			ImFont* font_icon = nullptr;
 
-			bool switched_view = true;
-
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, main, users, player, overlay, chat, demo, log, color, gui_scale, switched_view)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, main, users, player, overlay, chat, demo, log, color, gui_scale)
 		} window{};
 
 		struct context_menu

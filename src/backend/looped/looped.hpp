@@ -51,7 +51,6 @@ namespace big
 		static void vehicle_ls_customs();
 		static void vehicle_rainbow_paint();
 		static void vehicle_speedo_meter();
-		static void vehicle_remove_speed_limit();
 		static void vehicle_turn_signals();
 		static void vehicle_flares();
 		static void vehicle_chaff();
@@ -62,7 +61,6 @@ namespace big
 		static void weapons_delete_gun();
 		static void weapons_gravity_gun();
 		static void weapons_increased_damage();
-		static void weapons_infinite_ammo_loop();
 		static void weapons_repair_gun();
 		static void weapons_steal_vehicle_gun();
 		static void weapons_vehicle_gun();
