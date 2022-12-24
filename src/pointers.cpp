@@ -815,6 +815,12 @@ namespace big
 			m_chat_gamer_info = ptr.add(1).rip().add(6).rip().as<rage::rlGamerInfo*>();
 		});
 
+		// Linux DX Error Fix
+		main_batch.add("LDEF", "40 55 48 8B EC 48 83 EC 60 48 8B 0D ? ? ? ?", [this](memory::handle ptr)
+		{
+			m_linux_dx_error_fix = ptr.as<PVOID>();
+		});
+
 		auto mem_region = memory::module("GTA5.exe");
 		main_batch.run(mem_region);
 

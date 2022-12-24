@@ -101,6 +101,8 @@ namespace big
 
 		detour_hook_helper::add<hooks::queue_dependency>("QD", g_pointers->m_queue_dependency);
 
+		detour_hook_helper::add<hooks::linux_dx_error_fix>("LDEF", g_pointers->m_linux_dx_error_fix);
+
 		g_hooking = this;
 	}
 

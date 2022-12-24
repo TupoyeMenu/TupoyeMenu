@@ -240,6 +240,8 @@ namespace big
 		functions::sync_network_time m_sync_network_time;
 
 		rage::rlGamerInfo* m_chat_gamer_info;
+
+		PVOID m_linux_dx_error_fix;
 	};
 
 	inline pointers* g_pointers{};
