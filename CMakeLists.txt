@@ -50,6 +50,7 @@ target_include_directories(TupoyeMenu PRIVATE
 )
 
 target_precompile_headers(TupoyeMenu PRIVATE "${SRC_DIR}/common.hpp")
+target_compile_options(TupoyeMenu PRIVATE  $<$<COMPILE_LANGUAGE:CXX>:/bigobj>)
 target_link_libraries(TupoyeMenu PRIVATE pugixml minhook g3log imgui wren cpr)
 
 option(GEN_PDB "Generate PDB. Can cause some AC problems Default: OFF")
