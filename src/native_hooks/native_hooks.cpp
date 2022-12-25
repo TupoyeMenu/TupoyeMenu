@@ -103,6 +103,7 @@ namespace big
 
 	native_hooks::native_hooks()
 	{
+		add_native_detour(0x6D0DE6A7B5DA71F8, all_scripts::GET_PLAYER_NAME);
 		add_native_detour(0x812595A0644CE1DE, all_scripts::IS_DLC_PRESENT);
 		add_native_detour(0x95914459A87EBA28, all_scripts::NETWORK_BAIL);
 		add_native_detour(0x6BFB12CE158E3DD4, all_scripts::SC_TRANSITION_NEWS_SHOW); // Stops news.
@@ -117,7 +118,7 @@ namespace big
 		add_native_detour(RAGE_JOAAT("carmod_shop"), 0x34E710FF01247C5A, carmod_shop::SET_VEHICLE_LIGHTS);
 		add_native_detour(RAGE_JOAAT("carmod_shop"), 0x767FBC2AC802EF3D, carmod_shop::STAT_GET_INT);
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x6F3D4ED9BEE4E61D, maintransition::NETWORK_SESSION_HOST); // RID Joiner from https://github.com/YimMenu/YimMenu/issues/172
-		add_native_detour(RAGE_JOAAT("maintransition"), 0xC300BDA902B50E3D, maintransition::IS_SWITCH_TO_MULTI_FIRSTPART_FINISHED); // This hook lets you stop player-switch in "Pre-HUD Checks"
+		add_native_detour(RAGE_JOAAT("maintransition"), 0x933BBEEB8C61B5F4, maintransition::IS_SWITCH_TO_MULTI_FIRSTPART_FINISHED); // This hook lets you stop player-switch in "Pre-HUD Checks"
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x06843DA7060A026B, maintransition::SET_ENTITY_COORDS);  // Prevents the game from teleporting you
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x1A9205C1B9EE827F, maintransition::SET_ENTITY_COLLISION); // Prevents you from falling
 		add_native_detour(RAGE_JOAAT("maintransition"), 0xEA1C610A04DB6BBB, maintransition::SET_ENTITY_VISIBLE);  // Makes you visible
@@ -129,6 +130,7 @@ namespace big
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x10706DC6AD2D49C0, maintransition::RESTART_FRONTEND_MENU); // Let's you controll your ped when going sp to mp.
 		add_native_detour(RAGE_JOAAT("maintransition"), 0xDFC252D8A3E15AB7, maintransition::TOGGLE_PAUSED_RENDERPHASES); // Prevents the game from freezing your screen.
 		add_native_detour(RAGE_JOAAT("maintransition"), 0xEA23C49EAA83ACFB, maintransition::NETWORK_RESURRECT_LOCAL_PLAYER); // Prevents player from teleporting after switch.
+		add_native_detour(RAGE_JOAAT("maintransition"), 0xDC38CC1E35B6A5D7, maintransition::SET_WARNING_MESSAGE_WITH_HEADER); // Prevents infinite loading screen.
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x8D30F648014A92B5, maintransition::GET_EVER_HAD_BAD_PACK_ORDER); // Prevent weird reloading when using custom dlcs.
 		add_native_detour(RAGE_JOAAT("freemode"), 0x5E9564D8246B909A, freemode::IS_PLAYER_PLAYING);
 		add_native_detour(RAGE_JOAAT("freemode"), 0xEA1C610A04DB6BBB, freemode::SET_ENTITY_VISIBLE);

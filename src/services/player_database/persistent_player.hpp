@@ -15,6 +15,7 @@ namespace big
 		bool is_modder = false;
 		bool is_rockstar_admin = false;
 		std::unordered_set<int> infractions;
+		std::optional<CommandAccessLevel> command_access_level = std::nullopt;
 	};
 
 	static void to_json(nlohmann::json& j, const persistent_player& player)
@@ -27,8 +28,11 @@ namespace big
 			{ "force_allow_join", player.force_allow_join },
 			{ "is_modder", player.is_modder },
 			{ "is_rockstar_admin", player.is_rockstar_admin },
-			{ "infractions", player.infractions },
+			{ "infractions", player.infractions }
 		};
+
+		if (player.command_access_level.has_value())
+			j["command_access_level"] = player.command_access_level.value();
 	};
 
 	static void from_json(const nlohmann::json& j, persistent_player& player)
@@ -41,5 +45,8 @@ namespace big
 		set_from_key_or_default(j, "is_modder", player.is_modder);
 		set_from_key_or_default(j, "is_rockstar_admin", player.is_rockstar_admin);
 		set_from_key_or_default(j, "infractions", player.infractions);
+		
+		if (j.contains("command_access_level") && j["command_access_level"].is_string())
+			player.command_access_level = j["command_access_level"].get<CommandAccessLevel>();
 	}
 };

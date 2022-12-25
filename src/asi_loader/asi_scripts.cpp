@@ -49,7 +49,7 @@ void ASILoader::Initialize() {
 			// Image compatible (now), load it
 			HMODULE module = LoadLibraryA(pluginPath.c_str());
 			if (module) {
-				big::g->debug.asi_plugins_loaded = true;
+				big::g.debug.asi_plugins_loaded = true;
 				LOG(INFO) << "Loaded " << fileData.cFileName << " -> " HEX_TO_UPPER(module);
 			}
 			else {

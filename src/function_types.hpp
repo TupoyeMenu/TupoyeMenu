@@ -18,6 +18,7 @@ namespace rage
 	class snSession;
 	class snPlayer;
 	class CDynamicEntity;
+	class netTimeSyncMsg;
 }
 
 namespace datafile_commands
@@ -30,8 +31,6 @@ namespace big::functions
 	using run_script_threads = bool(*)(std::uint32_t ops_to_execute);
 	using get_native_handler = rage::scrNativeHandler(*)(rage::scrNativeRegistrationTable* registration_table, rage::scrNativeHash hash);
 	using fix_vectors = void(*)(rage::scrNativeCallContext* call_ctx);
-
-	using get_net_game_player = CNetGamePlayer*(*)(Player player);
 
 	using trigger_script_event = void(*)(int event_group, int64_t* args, int arg_count, int player_bits);
 
@@ -105,7 +104,7 @@ namespace big::functions
 
 	using generate_uuid = bool(*)(std::uint64_t* uuid);
 
-	using send_chat_message = bool(*)(int64_t* send_chat_ptr, rage::rlGamerInfo* game_info, char* message, bool is_team);
+	using send_chat_message = bool(*)(int64_t* send_chat_ptr, rage::rlGamerInfo* gamer_info, char* message, bool is_team);
 
 	using send_network_damage = void(*)(CEntity* source, CEntity* target, rage::fvector3* position, int hit_component, bool override_default_damage, int weapon_type, float override_damage, int tire_index, int suspension_index, int flags,
 		std::uint32_t action_result_hash, std::int16_t action_result_id, int action_unk, bool hit_weapon, bool hit_weapon_ammo_attachment, bool silenced, bool unk, rage::fvector3* impact_direction);
@@ -123,4 +122,6 @@ namespace big::functions
 	using load_cloud_file = void(*)(sCloudFile** out_cloud_file, char* buffer, int size, const char* reason);
 	using set_as_active_cloud_file = void(*)(datafile_commands::SveFileObject* object, sCloudFile** file);
 	using save_json_data = char*(*)(datafile_commands::SveFileObject* object, int* out_length, const char* reason);
+
+	using sync_network_time = bool(*)(rage::netConnectionManager* mgr, rage::netConnectionPeer* peer, int connection_id, rage::netTimeSyncMsg* msg, int flags);
 }

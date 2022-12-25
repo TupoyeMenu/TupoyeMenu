@@ -88,7 +88,7 @@ namespace big
 		auto& colors = style.Colors;
 		colors[ImGuiCol_Text] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
 		colors[ImGuiCol_TextDisabled] = ImVec4(1.00f, 0.90f, 0.19f, 1.00f);
-		colors[ImGuiCol_WindowBg] = ImGui::ColorConvertU32ToFloat4(g->window.color);
+		colors[ImGuiCol_WindowBg] = ImGui::ColorConvertU32ToFloat4(g.window.color);
 		colors[ImGuiCol_ChildBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
 		colors[ImGuiCol_PopupBg] = ImVec4(0.08f, 0.08f, 0.08f, 0.94f);
 		colors[ImGuiCol_Border] = ImVec4(0.30f, 0.30f, 0.30f, 0.50f);
@@ -140,7 +140,7 @@ namespace big
 	{
 		if (m_is_open)
 		{
-			ImGui::PushStyleColor(ImGuiCol_WindowBg, ImGui::ColorConvertU32ToFloat4(g->window.color));
+			ImGui::PushStyleColor(ImGuiCol_WindowBg, ImGui::ColorConvertU32ToFloat4(g.window.color));
 			view::root();
 			ImGui::PopStyleColor();
 		}
@@ -191,7 +191,7 @@ namespace big
 
 	void gui::wndproc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	{
-		if (msg == WM_KEYUP && wparam == g->settings.hotkeys.menu_toggle)
+		if (msg == WM_KEYUP && wparam == g.settings.hotkeys.menu_toggle)
 		{
 			//Persist and restore the cursor position between menu instances.
 			static POINT cursor_coords{};
@@ -204,9 +204,9 @@ namespace big
 				SetCursorPos(cursor_coords.x, cursor_coords.y);
 			}
 
-			toggle(g->settings.hotkeys.editing_menu_toggle || !m_is_open);
-			if (g->settings.hotkeys.editing_menu_toggle)
-				g->settings.hotkeys.editing_menu_toggle = false;
+			toggle(g.settings.hotkeys.editing_menu_toggle || !m_is_open);
+			if (g.settings.hotkeys.editing_menu_toggle)
+				g.settings.hotkeys.editing_menu_toggle = false;
 		}
 	}
 

@@ -216,12 +216,6 @@ namespace big
 			memory::byte_patch::make(ptr.add(0x13).as<std::uint16_t*>(), 0x9090)->apply();
 		});
 
-		// GET CNetGamePlayer
-		main_batch.add("GCNGP", "48 83 EC ? 33 C0 38 05 ? ? ? ? 74 ? 83 F9", [this](memory::handle ptr)
-		{
-			m_get_net_game_player = ptr.as<decltype(m_get_net_game_player)>();
-		});
-
 		// Replay Interface
 		main_batch.add("RI", "0F B7 44 24 ? 66 89 44 4E", [this](memory::handle ptr)
 		{
@@ -785,6 +779,18 @@ namespace big
 			m_save_json_data = ptr.as<functions::save_json_data>();
 		});
 
+		// Network Time
+		main_batch.add("NT", "48 8B 0D ? ? ? ? E8 ? ? ? ? 33 DB 84 C0 74 41", [this](memory::handle ptr)
+		{
+			m_network_time = ptr.add(3).rip().as<rage::netTime**>();
+		});
+
+		// Sync Network Time
+		main_batch.add("SNT", "E8 ? ? ? ? 8B 43 5C", [this](memory::handle ptr)
+		{
+			m_sync_network_time = ptr.add(1).rip().as<functions::sync_network_time>();
+		});
+
 		// Queue Dependency
 		main_batch.add("QD", "48 89 5C 24 ? 57 48 83 EC ? 0F B6 99", [this](memory::handle ptr)
 		{
@@ -795,6 +801,18 @@ namespace big
 		main_batch.add("ICF", "48 8D 0D ? ? ? ? 88 05 ? ? ? ? 48 8D 05", [this](memory::handle ptr)
 		{
 			m_interval_check_func = ptr.add(3).rip().as<PVOID>();
+		});
+
+		// Chat Gamer Info
+		main_batch.add("CGI", "E8 ? ? ? ? 48 8B CF E8 ? ? ? ? 8B E8", [this](memory::handle ptr)
+		{
+			m_chat_gamer_info = ptr.add(1).rip().add(6).rip().as<rage::rlGamerInfo*>();
+		});
+
+		// Linux DX Error Fix
+		main_batch.add("LDEF", "40 55 48 8B EC 48 83 EC 60 48 8B 0D ? ? ? ?", [this](memory::handle ptr)
+		{
+			m_linux_dx_error_fix = ptr.as<PVOID>();
 		});
 
 		auto mem_region = memory::module("GTA5.exe");
@@ -821,7 +839,7 @@ namespace big
 		{
 			m_bypass_max_count_of_active_sticky_bombs = memory::byte_patch::make(pat.add(4).as<uint8_t*>(), { 99 }).get();
 
-			if (g->weapons.bypass_c4_limit)
+			if (g.weapons.bypass_c4_limit)
 				m_bypass_max_count_of_active_sticky_bombs->apply();
 		}
 

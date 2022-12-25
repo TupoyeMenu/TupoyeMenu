@@ -40,9 +40,9 @@ namespace big::session
 	{
 		MISC::CLEAR_OVERRIDE_WEATHER();
 
-		MISC::SET_OVERRIDE_WEATHER(weathers[g->session.local_weather]);
+		MISC::SET_OVERRIDE_WEATHER(weathers[g.session.local_weather]);
 
-		*script_global(262145).at(4752).as<bool*>() = g->session.local_weather == 13;
+		*script_global(262145).at(4752).as<bool*>() = g.session.local_weather == 13;
 	}
 
 	inline void set_fm_event_index(int index)
@@ -65,12 +65,12 @@ namespace big::session
 
 	inline void join_session(const rage::rlSessionInfo& info)
 	{
-		g->session.join_queued = true;
-		g->session.info = info;
+		g.session.join_queued = true;
+		g.session.info = info;
 		session::join_type({ eSessionType::NEW_PUBLIC });
 		if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(RAGE_JOAAT("maintransition")) == 0)
 		{
-			g->session.join_queued = false;
+			g.session.join_queued = false;
 			g_notification_service->push_error("RID Joiner", "Unable to launch maintransition");
 		}
 		return;
@@ -153,28 +153,6 @@ namespace big::session
 	// TODO this is really broken
 	inline void enter_player_interior(player_ptr player)
 	{
-		if (*scr_globals::globalplayer_bd.at(player->id(), scr_globals::size::globalplayer_bd).at(318).at(6).as<int*>() == -1)
-		{
-			g_notification_service->push_error("Enter Interior", "Player does not seem to be in an interior");
-			return;
-		}
 
-		int owner = *scr_globals::globalplayer_bd.at(player->id(), scr_globals::size::globalplayer_bd).at(318).at(9).as<int*>();
-		if (owner == -1)
-			owner = player->id();
-
-		*script_global(1950108).at(3684).as<int*>() = 0;
-		*script_global(1950108).at(3682).as<int*>() = 1;
-		*script_global(1950108).at(4780).as<int*>() = 1;
-		*script_global(1950108).at(3218).as<int*>() = 1; // this doesnt exists at all?
-		*script_global(1950108).at(3214).as<int*>() = 1; // ^
-		*script_global(1950108).at(3689).as<int*>() = 1;
-
-		// misc::set_bit(script_global(1950108).at(1).as<int*>(), 22);
-		misc::set_bit(script_global(1950108).as<int*>(), 6);
-		misc::clear_bit(script_global(1950108).at(1).as<int*>(), 9);
-
-		*script_global(1950108).at(3346).as<int*>() = owner;
-		*script_global(1950108).at(3683).as<int*>() = *scr_globals::globalplayer_bd.at(player->id(), scr_globals::size::globalplayer_bd).at(318).at(6).as<int*>();
 	}
 }

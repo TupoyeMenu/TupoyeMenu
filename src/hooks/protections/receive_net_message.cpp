@@ -5,8 +5,14 @@
 #include "gta_util.hpp"
 #include "util/session.hpp"
 #include "util/spam.hpp"
-#include "util/kick.hpp"
+#include "backend/command.hpp"
+#include "backend/context/chat_command_context.hpp"
+#include "gta/net_game_event.hpp"
+#include "gta/script_id.hpp"
+#include "backend/player_command.hpp"
+
 #include <network/Network.hpp>
+#include <network/netTime.hpp>
 
 namespace big
 {
@@ -80,7 +86,7 @@ namespace big
 
 					if (spam::is_text_spam(message))
 					{
-						if (g->session.log_chat_messages)
+						if (g.session.log_chat_messages)
 							spam::log_chat(message, player, true);
 						
 						g_chat_service->add_msg(player->get_net_game_player(), message, false, true);
@@ -89,10 +95,13 @@ namespace big
 					}
 					else
 					{
-						if (g->session.log_chat_messages)
+						if (g.session.log_chat_messages)
 							spam::log_chat(message, player, false);
 
 						g_chat_service->add_msg(player->get_net_game_player(), message, false, false);
+						
+						if (g.session.chat_commands && message[0] == g.session.chat_command_prefix)
+							command::process(std::string(message + 1), std::make_shared<chat_command_context>(player));
 					}
 					break;
 				}
@@ -106,21 +115,26 @@ namespace big
 
 					if (spam::is_text_spam(message))
 					{
-						if (g->session.log_chat_messages)
+						if (g.session.log_chat_messages)
 							spam::log_chat(message, player, true);
 						
 						g_chat_service->add_direct_msg(player->get_net_game_player(), g_player_service->get_self()->get_net_game_player(), message, true);
 						player->is_spammer = true;
-						if (g->session.kick_chat_spammers)
-							kick::breakup_kick(player);
+						if (g.session.kick_chat_spammers)
+						{
+							((player_command*)command::get(RAGE_JOAAT("breakup")))->call(player, {});
+						}
 						return true;
 					}
 					else
 					{
-						if (g->session.log_chat_messages)
+						if (g.session.log_chat_messages)
 							spam::log_chat(message, player, false);
 
 						g_chat_service->add_direct_msg(player->get_net_game_player(), g_player_service->get_self()->get_net_game_player(), message, false);
+
+						if (g.session.chat_commands && message[0] == g.session.chat_command_prefix)
+							command::process(std::string(message + 1), std::make_shared<chat_command_context>(player));
 					}
 					break;
 				}
@@ -161,8 +175,17 @@ namespace big
 
 					if (player && pl && player->id() != pl->id() && count == 1 && frame->m_msg_id == -1)
 					{
-						g_notification_service->push_error("Warning!", std::format("{} breakup kicked {}!", player->get_name(), pl->get_name()));
-						session::add_infraction(player, Infraction::BREAKUP_KICK_DETECTED);
+						if (g_player_service->get_self()->is_host())
+						{
+							g_notification_service->push_error("Warning!", std::format("{} tried to breakup kick {}!", player->get_name(), pl->get_name()));
+							session::add_infraction(player, Infraction::BREAKUP_KICK_DETECTED);
+							return true;
+						}
+						else
+						{
+							g_notification_service->push_error("Warning!", std::format("{} breakup kicked {}!", player->get_name(), pl->get_name()));
+							session::add_infraction(player, Infraction::BREAKUP_KICK_DETECTED);
+						}
 					}
 
 					break;
@@ -245,9 +268,29 @@ namespace big
 					CGameScriptId script;
 					script_id_deserialize(script, buffer);
 
-					if (script.m_hash == RAGE_JOAAT("freemode") && g->session.force_script_host)
+					if (script.m_hash == RAGE_JOAAT("freemode") && g.session.force_script_host)
 						return true;
 					
+					break;
+				}
+				case rage::eNetMessage::MsgNetTimeSync:
+				{
+					if (player)
+					{
+						int action = buffer.Read<int>(2);
+						uint32_t counter = buffer.Read<uint32_t>(32);
+						uint32_t token = buffer.Read<uint32_t>(32);
+						uint32_t timestamp = buffer.Read<uint32_t>(32);
+						uint32_t time_diff = (*g_pointers->m_network_time)->m_time_offset + frame->m_timestamp;
+
+						if (action == 0)
+						{
+							player->player_time_value = timestamp;
+							player->player_time_value_received_time = std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now());
+							if (!player->time_difference || time_diff > player->time_difference.value())
+								player->time_difference = time_diff;
+						}
+					}
 					break;
 				}
 				}

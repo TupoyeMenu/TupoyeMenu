@@ -7,7 +7,7 @@ namespace big
 {
 	void looped::vehicle_flares()
 	{
-		if (!g->vehicle.flares) return;
+		if (!g.vehicle.flares) return;
 
 		if (PAD::IS_CONTROL_PRESSED(0, (int)ControllerInputs::INPUT_SCRIPTED_FLY_ZUP) && self::veh)
 		{

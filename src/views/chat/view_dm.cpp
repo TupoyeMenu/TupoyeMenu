@@ -14,10 +14,10 @@ namespace big
 			ImGui::BeginChild("##dm_player_selector", ImVec2(150, 0), true);
 			g_player_service->iterate([](const player_entry& entry)
 			{
-				if (components::selectable(entry.first, g->chat.dm_player_id == entry.second->id()))
+				if (components::selectable(entry.first, g.chat.dm_player_id == entry.second->id()))
 				{
-					g->chat.dm_player_id = entry.second->id();
-					g->chat.dm_player_rid = entry.second->get_net_data()->m_gamer_handle_2.m_rockstar_id; // TODO: Use real rid.
+					g.chat.dm_player_id = entry.second->id();
+					g.chat.dm_player_rid = entry.second->get_net_data()->m_gamer_handle_2.m_rockstar_id; // TODO: Use real rid.
 				}
 			});
 			ImGui::EndChild();
@@ -42,8 +42,8 @@ namespace big
 					uint64_t rid_sender = current_msg.rid_sender;
 					uint64_t rid_receiver = current_msg.rid_receiver;
 					if(
-						(g->chat.dm_player_rid == rid_sender) || 
-						(rid_sender == g_player_service->get_self()->get_net_data()->m_gamer_handle_2.m_rockstar_id && rid_receiver == g->chat.dm_player_rid)
+						(g.chat.dm_player_rid == rid_sender) || 
+						(rid_sender == g_player_service->get_self()->get_net_data()->m_gamer_handle_2.m_rockstar_id && rid_receiver == g.chat.dm_player_rid)
 					)
 					{
 						ImGui::Text(
@@ -55,7 +55,7 @@ namespace big
 				}
 			}
 
-			if (g->chat.auto_scroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+			if (g.chat.auto_scroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
 				ImGui::SetScrollHereY(1.0f);
 
 			ImGui::PopStyleVar();
@@ -66,19 +66,19 @@ namespace big
 			
 
 			ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCompletion | ImGuiInputTextFlags_CallbackHistory;
-			components::input_text_with_hint("###Message", "Message", &g->chat.dm_message, input_text_flags, [&]
+			components::input_text_with_hint("###Message", "Message", &g.chat.dm_message, input_text_flags, [&]
 			{
 				int handle;
-				NETWORK::NETWORK_HANDLE_FROM_PLAYER(g->chat.dm_player_id, &handle, 13);
+				NETWORK::NETWORK_HANDLE_FROM_PLAYER(g.chat.dm_player_id, &handle, 13);
 				if (NETWORK::NETWORK_IS_HANDLE_VALID(&handle, 13))
-					NETWORK::NETWORK_SEND_TEXT_MESSAGE(g->chat.dm_message.c_str(), &handle);
+					NETWORK::NETWORK_SEND_TEXT_MESSAGE(g.chat.dm_message.c_str(), &handle);
 				g_chat_service->add_direct_msg(
 					g_player_service->get_self()->get_net_game_player(),
-					g_player_service->get_by_id(g->chat.dm_player_id)->get_net_game_player(),
-					g->chat.dm_message,
+					g_player_service->get_by_id(g.chat.dm_player_id)->get_net_game_player(),
+					g.chat.dm_message,
 					false
 				);
-				g->chat.dm_message = "";
+				g.chat.dm_message = "";
 			});
 
 			ImGui::EndGroup();

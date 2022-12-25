@@ -8,7 +8,7 @@ namespace big
 {
 	void looped::ragdoll_mp()
 	{
-		if (g->self.allow_ragdoll)
+		if (g.self.allow_ragdoll)
 		{
 			if (PAD::IS_CONTROL_JUST_PRESSED(0, 45) && PED::IS_PED_JUMPING(self::ped) && !PED::IS_PED_RAGDOLL(self::ped) && NETWORK::NETWORK_IS_SESSION_STARTED())
 			{

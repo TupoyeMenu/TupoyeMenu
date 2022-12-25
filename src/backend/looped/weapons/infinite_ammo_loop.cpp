@@ -1,14 +1,15 @@
-#include "backend/looped/looped.hpp"
 #include "natives.hpp"
+#include "backend/looped_command.hpp"
 
 namespace big
 {
-	void looped::weapons_infinite_ammo_loop()
+	class infinite_ammo_looped : looped_command
 	{
-		if (g->weapons.infinite_ammo_loop)
+		using looped_command::looped_command;
+
+		virtual void on_tick() override
 		{
-            if (
-		    	g_local_player == nullptr ||
+			if (g_local_player == nullptr ||
 		    	g_local_player->m_weapon_manager == nullptr ||
 		    	g_local_player->m_weapon_manager->m_weapon_info == nullptr ||
 		    	g_local_player->m_weapon_manager->m_weapon_info->m_ammo_info == nullptr
@@ -22,5 +23,12 @@ namespace big
 
             WEAPON::SET_PED_AMMO(self::ped, current_weapon, max_ammo, false);
 		}
-	}
+
+		virtual void on_disable() override
+		{
+			WEAPON::SET_PED_INFINITE_AMMO(self::ped, FALSE, NULL);
+		}
+	};
+
+	infinite_ammo_looped g_infinite_ammo_looped("infammoloop", "Infinite Ammo Looped", "Never run out of ammo again looped", g.weapons.infinite_ammo_loop);
 }

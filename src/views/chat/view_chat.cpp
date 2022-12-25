@@ -12,9 +12,9 @@ namespace big
 	static size_t iLastLogCount = 0;
     void view::chat()
     {
-		ImGui::Checkbox("Auto Scroll", &g->chat.auto_scroll);
+		ImGui::Checkbox("Auto Scroll", &g.chat.auto_scroll);
 		ImGui::SameLine();
-		ImGui::Checkbox("Show spam", &g->chat.show_spam);
+		ImGui::Checkbox("Show spam", &g.chat.show_spam);
 
 		const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing();
 		ImGui::BeginChild("##scrolling_region_chat", ImVec2(0, -footer_height_to_reserve), false, ImGuiWindowFlags_HorizontalScrollbar);
@@ -37,7 +37,7 @@ namespace big
 			}
 		}
 
-		if (g->chat.auto_scroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+		if (g.chat.auto_scroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
 			ImGui::SetScrollHereY(1.0f);
 
 		ImGui::PopStyleVar();
@@ -45,19 +45,19 @@ namespace big
 
 		ImGui::Separator();
 
-		components::input_text_with_hint("###Message", "Message", &g->chat.message, ImGuiInputTextFlags_EnterReturnsTrue, []
+		components::input_text_with_hint("###Message", "Message", &g.chat.message, ImGuiInputTextFlags_EnterReturnsTrue, []
 		{
 			const auto net_game_player = g_player_service->get_self()->get_net_game_player();
-			if(g_pointers->m_send_chat_message(*g_pointers->m_send_chat_ptr, net_game_player->get_net_data(), (char*)g->chat.message.c_str(), g->chat.local))
-				notify::draw_chat((char*)g->chat.message.c_str(), net_game_player->get_name(), g->chat.local);
+			if(g_pointers->m_send_chat_message(*g_pointers->m_send_chat_ptr, net_game_player->get_net_data(), (char*)g.chat.message.c_str(), g.chat.local))
+				notify::draw_chat((char*)g.chat.message.c_str(), net_game_player->get_name(), g.chat.local);
 
-			g_chat_service->add_msg(net_game_player, g->chat.message, g->chat.local);
-			spam::log_chat((char*)g->chat.message.c_str(), g_player_service->get_self(), false);
+			g_chat_service->add_msg(net_game_player, g.chat.message, g.chat.local);
+			spam::log_chat((char*)g.chat.message.c_str(), g_player_service->get_self(), false);
 			
-			g->chat.message = "";
+			g.chat.message = "";
 		});
 
 		ImGui::SameLine();
-		ImGui::Checkbox("Local", &g->chat.local);
+		ImGui::Checkbox("Local", &g.chat.local);
     }
 }

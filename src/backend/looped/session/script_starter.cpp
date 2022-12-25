@@ -11,7 +11,7 @@ namespace big
 {
 	void looped::script_starter()
 	{
-		/*if (g->tunables.ambiant_ufos)
+		/*if (g.tunables.ambiant_ufos)
 		{
             Hash hash = rage::joaat("ufo");
 			if (!scripts::is_running(hash) && NETWORK::NETWORK_IS_GAME_IN_PROGRESS())
@@ -25,7 +25,7 @@ namespace big
                 }
             }
 		}
-        if (g->tunables.ambiant_blimp)
+        if (g.tunables.ambiant_blimp)
         {
             Hash hash = rage::joaat("blimp");
             if (!scripts::is_running(hash))
@@ -39,7 +39,7 @@ namespace big
                 }
             }
         }*/
-        if (g->tunables.cable_cars && NETWORK::NETWORK_IS_SESSION_STARTED() && !MISC::GET_MISSION_FLAG() && !ENTITY::IS_ENTITY_DEAD(self::ped, false))
+        if (g.tunables.cable_cars && NETWORK::NETWORK_IS_SESSION_STARTED() && !MISC::GET_MISSION_FLAG() && !ENTITY::IS_ENTITY_DEAD(self::ped, false))
         {
             if (((self::pos.x >= -800.f && self::pos.y >= 5300.f) && self::pos.x <= 640.f) && self::pos.y <= 5800.f)
             {

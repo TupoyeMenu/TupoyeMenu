@@ -24,6 +24,8 @@ namespace rage
 	template<typename T>
 	class atSingleton;
 	class RageSecurity;
+	class netTime;
+	class rlGamerInfo;
 }
 
 namespace big
@@ -89,8 +91,6 @@ namespace big
 		functions::get_screen_coords_for_world_coords m_get_screen_coords_for_world_coords{};
 
 		HashTable<CBaseModelInfo*>* m_model_table;
-
-		functions::get_net_game_player* m_get_net_game_player{};
 
 		PVOID m_gta_thread_start{};
 		PVOID m_gta_thread_kill{};
@@ -233,6 +233,13 @@ namespace big
 		functions::load_cloud_file m_load_cloud_file;
 		functions::set_as_active_cloud_file m_set_as_active_cloud_file;
 		functions::save_json_data m_save_json_data;
+
+		rage::netTime** m_network_time;
+		functions::sync_network_time m_sync_network_time;
+
+		rage::rlGamerInfo* m_chat_gamer_info;
+
+		PVOID m_linux_dx_error_fix;
 	};
 
 	inline pointers* g_pointers{};

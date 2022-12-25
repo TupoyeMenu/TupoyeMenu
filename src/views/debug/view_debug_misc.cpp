@@ -44,25 +44,23 @@ namespace big
 			ImGui::InputScalar("Rockstar ID", ImGuiDataType_S64, &g_local_player->m_player_info->m_net_player_data.m_gamer_handle_2.m_rockstar_id, nullptr, nullptr, nullptr, ImGuiInputTextFlags_ReadOnly);
 		}
 
-		ImGui::Checkbox("Log Metrics", &g->debug.logs.metric_logs);
-
-		ImGui::Checkbox("Log Native Script Hooks", &g->debug.logs.script_hook_logs);
+		ImGui::Checkbox("Log Native Script Hooks", &g.debug.logs.script_hook_logs);
 
 		if (ImGui::TreeNode("Script Event Logging"))
 		{
-			ImGui::Checkbox("Enable Script Event Logging", &g->debug.logs.script_event.logs);
+			ImGui::Checkbox("Enable Script Event Logging", &g.debug.logs.script_event.logs);
 			ImGui::Separator();
 
-			ImGui::Checkbox("Filter by Player", &g->debug.logs.script_event.filter_player);
+			ImGui::Checkbox("Filter by Player", &g.debug.logs.script_event.filter_player);
 
-			if (g->debug.logs.script_event.filter_player)
+			if (g.debug.logs.script_event.filter_player)
 			{
 				ImGui::ListBoxHeader("##filter_player");
 				for (const auto& [_, player] : g_player_service->players())
 				{
-					if (components::selectable(player->get_name(), g->debug.logs.script_event.player_id == player->id()))
+					if (components::selectable(player->get_name(), g.debug.logs.script_event.player_id == player->id()))
 					{
-						g->debug.logs.script_event.player_id = player->id();
+						g.debug.logs.script_event.player_id = player->id();
 					}
 				}
 				ImGui::EndListBox();

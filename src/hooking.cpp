@@ -78,6 +78,7 @@ namespace big
 		detour_hook_helper::add<hooks::sort_session_details>("SSD", g_pointers->m_sort_session_details);
 
 		detour_hook_helper::add<hooks::add_player_to_session>("APTS", g_pointers->m_add_player_to_session);
+		detour_hook_helper::add<hooks::send_chat_message>("SCM", g_pointers->m_send_chat_message);
 		detour_hook_helper::add<hooks::send_chat_net_message>("SCNM", g_pointers->m_send_chat_net_message);
 
 		detour_hook_helper::add<hooks::process_matchmaking_find_response>("PMFR", g_pointers->m_process_matchmaking_find_response);
@@ -99,6 +100,8 @@ namespace big
 		detour_hook_helper::add<hooks::read_bitbuffer_gamer_handle>("RBGH", g_pointers->m_read_bitbuffer_gamer_handle);
 
 		detour_hook_helper::add<hooks::queue_dependency>("QD", g_pointers->m_queue_dependency);
+
+		detour_hook_helper::add<hooks::linux_dx_error_fix>("LDEF", g_pointers->m_linux_dx_error_fix);
 
 		g_hooking = this;
 	}

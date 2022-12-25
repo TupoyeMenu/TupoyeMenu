@@ -34,7 +34,7 @@ namespace big
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 		// io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-		// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows / Will just hide windows doesn't actualy work
+		// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 
 		ImGui_ImplDX11_Init(m_d3d_device, m_d3d_device_context);
 		ImGui_ImplWin32_Init(g_pointers->m_hwnd);
@@ -71,7 +71,7 @@ namespace big
 			fnt_cfg.FontDataOwnedByAtlas = false;
 			strcpy(fnt_cfg.Name, "Fnt28px");
 
-			g->window.font_title = io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(font_storopia), sizeof(font_storopia), 28.f, &fnt_cfg);
+			g.window.font_title = io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(font_storopia), sizeof(font_storopia), 28.f, &fnt_cfg);
 			fnt_cfg.MergeMode = true;
 			io.Fonts->AddFontFromMemoryTTF(font_data.get(), font_data_size, 28.f, &fnt_cfg, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
 			io.Fonts->AddFontFromMemoryTTF(font_data.get(), font_data_size, 28.f, &fnt_cfg, io.Fonts->GetGlyphRangesCyrillic());
@@ -83,7 +83,7 @@ namespace big
 			fnt_cfg.FontDataOwnedByAtlas = false;
 			strcpy(fnt_cfg.Name, "Fnt24px");
 
-			g->window.font_sub_title = io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(font_storopia), sizeof(font_storopia), 24.f, &fnt_cfg);
+			g.window.font_sub_title = io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(font_storopia), sizeof(font_storopia), 24.f, &fnt_cfg);
 			fnt_cfg.MergeMode = true;
 			io.Fonts->AddFontFromMemoryTTF(font_data.get(), font_data_size, 24.f, &fnt_cfg, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
 			io.Fonts->AddFontFromMemoryTTF(font_data.get(), font_data_size, 24.f, &fnt_cfg, io.Fonts->GetGlyphRangesCyrillic());
@@ -95,7 +95,7 @@ namespace big
 			fnt_cfg.FontDataOwnedByAtlas = false;
 			strcpy(fnt_cfg.Name, "Fnt18px");
 
-			g->window.font_small = io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(font_storopia), sizeof(font_storopia), 18.f, &fnt_cfg);
+			g.window.font_small = io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(font_storopia), sizeof(font_storopia), 18.f, &fnt_cfg);
 			fnt_cfg.MergeMode = true;
 			io.Fonts->AddFontFromMemoryTTF(font_data.get(), font_data_size, 18.f, &fnt_cfg, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
 			io.Fonts->AddFontFromMemoryTTF(font_data.get(), font_data_size, 18.f, &fnt_cfg, io.Fonts->GetGlyphRangesCyrillic());
@@ -106,10 +106,10 @@ namespace big
 			ImFontConfig font_icons_cfg{};
 			font_icons_cfg.FontDataOwnedByAtlas = false;
 			std::strcpy(font_icons_cfg.Name, "Icons");
-			g->window.font_icon = io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(font_icons), sizeof(font_icons), 24.f, &font_icons_cfg);
+			g.window.font_icon = io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(font_icons), sizeof(font_icons), 24.f, &font_icons_cfg);
 		}
 
-		rescale(g->window.gui_scale);
+		rescale(g.window.gui_scale);
 
 		g_renderer = this;
 	}
@@ -196,6 +196,13 @@ namespace big
 	{
 		ImGui::Render();
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+		 // Update and Render additional Platform Windows
+        if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+        }
 	}
 }
 

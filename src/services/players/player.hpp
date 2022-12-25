@@ -47,6 +47,8 @@ namespace big
 		[[nodiscard]] bool is_host() const;
 		[[nodiscard]] bool is_valid() const;
 
+		std::optional<CommandAccessLevel> command_access_level = std::nullopt;
+
 		bool off_radar = false;
 		bool never_wanted = false;
 		bool semi_godmode = false;
@@ -61,6 +63,11 @@ namespace big
 		uint64_t real_rid = 0;
 		int block_join_reason = 0;
 		bool is_spammer = false;
+
+		std::optional<std::uint32_t> player_time_value;
+		std::optional<std::chrono::time_point<std::chrono::system_clock, std::chrono::milliseconds>> player_time_value_received_time;
+		std::optional<std::uint32_t> time_difference;
+		std::uint32_t num_time_syncs_sent = 9999;
 
 	protected:
 		bool equals(const CNetGamePlayer* net_game_player) const;

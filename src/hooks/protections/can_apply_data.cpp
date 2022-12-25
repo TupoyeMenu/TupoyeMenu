@@ -232,7 +232,7 @@ namespace big
 				}
 				case "?AVCPlayerGameStateDataNode@@"_fnv1a:
 				{
-					if(g->notifications.script_event_handler.spectate.notify)
+					if(g.notifications.script_event_handler.spectate.notify)
 					{
 						const auto player_game_state_node = dynamic_cast<CPlayerGameStateDataNode*>(node);
 						if (player_game_state_node->m_is_spectating &&
@@ -276,7 +276,7 @@ namespace big
 
 	bool hooks::can_apply_data(rage::netSyncTree* tree, rage::netObject* object)
 	{
-		if (tree->m_child_node_count && check_node(tree->m_sync_node, g->m_syncing_player, object))
+		if (tree->m_child_node_count && check_node(tree->m_sync_node, g.m_syncing_player, object))
 		{
 			return false;
 		}

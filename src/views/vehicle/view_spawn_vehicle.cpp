@@ -9,24 +9,24 @@ namespace big
 {
 	void view::spawn_vehicle()
 	{
-		if (ImGui::Checkbox("Preview", &g->spawn_vehicle.preview_vehicle))
+		if (ImGui::Checkbox("Preview", &g.spawn_vehicle.preview_vehicle))
 		{
-			if (!g->spawn_vehicle.preview_vehicle)
+			if (!g.spawn_vehicle.preview_vehicle)
 			{
 				g_model_preview_service->stop_preview();
 			}
 		}
 		ImGui::SameLine();
-		ImGui::Checkbox("Spawn In", &g->spawn_vehicle.spawn_inside);
+		components::command_checkbox<"spawnin">();
 		ImGui::SameLine();
-		ImGui::Checkbox("Spawn Maxed", &g->spawn_vehicle.spawn_maxed);
+		components::command_checkbox<"spawnmaxed">();
 
 		static char plate_buf[9] = { 0 };
-		strncpy(plate_buf, g->spawn_vehicle.plate.c_str(), 9);
+		strncpy(plate_buf, g.spawn_vehicle.plate.c_str(), 9);
 
 		ImGui::SetNextItemWidth(300.f);
 		components::input_text_with_hint("Plate", "Plate Number", plate_buf, sizeof(plate_buf), ImGuiInputTextFlags_None, [] {
-			g->spawn_vehicle.plate = plate_buf;
+			g.spawn_vehicle.plate = plate_buf;
 		});
 
 
@@ -62,7 +62,7 @@ namespace big
 
 		ImGui::SetNextItemWidth(300.f);
 		components::input_text_with_hint("Model Name", "Search", search, sizeof(search), ImGuiInputTextFlags_EnterReturnsTrue, [] {
-			Vector3 spawn_location = vehicle::get_spawn_location(g->spawn_vehicle.spawn_inside);
+			Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside);
 			float spawn_heading = ENTITY::GET_ENTITY_HEADING(self::ped);
 
 			const Vehicle veh = vehicle::spawn(rage::joaat(search), spawn_location, spawn_heading);
@@ -73,14 +73,14 @@ namespace big
 			}
 			else
 			{
-				if (g->spawn_vehicle.spawn_maxed)
+				if (g.spawn_vehicle.spawn_maxed)
 				{
 					vehicle::max_vehicle(veh);
 				}
 
 				vehicle::set_plate(veh, plate_buf);
 
-				if (g->spawn_vehicle.spawn_inside)
+				if (g.spawn_vehicle.spawn_inside)
 				{
 					vehicle::teleport_into_vehicle(veh);
 				}
@@ -105,7 +105,7 @@ namespace big
 					components::selectable(std::format("Current Vehicle [{}]", item.m_display_name), false, [] {
 						if (self::veh)
 						{
-							Vector3 spawn_location = vehicle::get_spawn_location(g->spawn_vehicle.spawn_inside);
+							Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside);
 							float spawn_heading = ENTITY::GET_ENTITY_HEADING(self::ped);
 
 							auto owned_mods = vehicle::get_owned_mods_from_vehicle(self::veh);
@@ -118,14 +118,14 @@ namespace big
 							}
 							else
 							{
-								if (g->spawn_vehicle.spawn_maxed)
+								if (g.spawn_vehicle.spawn_maxed)
 								{
 									vehicle::max_vehicle(veh);
 								}
 
 								vehicle::set_plate(veh, plate_buf);
 
-								if (g->spawn_vehicle.spawn_inside)
+								if (g.spawn_vehicle.spawn_inside)
 								{
 									vehicle::teleport_into_vehicle(veh);
 								}
@@ -135,7 +135,7 @@ namespace big
 						g_model_preview_service->stop_preview();
 					});
 
-					if (!g->spawn_vehicle.preview_vehicle || (g->spawn_vehicle.preview_vehicle && !ImGui::IsAnyItemHovered()))
+					if (!g.spawn_vehicle.preview_vehicle || (g.spawn_vehicle.preview_vehicle && !ImGui::IsAnyItemHovered()))
 					{
 						g_model_preview_service->stop_preview();
 					}
@@ -144,7 +144,7 @@ namespace big
 						g_fiber_pool->queue_job([] {
 							g_model_preview_service->show_vehicle(
 								vehicle::get_owned_mods_from_vehicle(self::veh),
-								g->spawn_vehicle.spawn_maxed
+								g.spawn_vehicle.spawn_maxed
 							);
 						});
 					}
@@ -177,7 +177,7 @@ namespace big
 						ImGui::PushID(vehicle.m_hash);
 						components::selectable(vehicle.m_display_name, false, [&vehicle]
 						{
-							const auto spawn_location = vehicle::get_spawn_location(g->spawn_vehicle.spawn_inside);
+							const auto spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside);
 							const auto spawn_heading = ENTITY::GET_ENTITY_HEADING(self::ped);
 
 							const auto veh = vehicle::spawn(vehicle.m_hash, spawn_location, spawn_heading);
@@ -188,14 +188,14 @@ namespace big
 							}
 							else
 							{
-								if (g->spawn_vehicle.spawn_maxed)
+								if (g.spawn_vehicle.spawn_maxed)
 								{
 									vehicle::max_vehicle(veh);
 								}
 
 								vehicle::set_plate(veh, plate_buf);
 
-								if (g->spawn_vehicle.spawn_inside)
+								if (g.spawn_vehicle.spawn_inside)
 								{
 									vehicle::teleport_into_vehicle(veh);
 								}
@@ -205,13 +205,13 @@ namespace big
 						});
 						ImGui::PopID();
 
-						if (!g->spawn_vehicle.preview_vehicle || (g->spawn_vehicle.preview_vehicle && !ImGui::IsAnyItemHovered()))
+						if (!g.spawn_vehicle.preview_vehicle || (g.spawn_vehicle.preview_vehicle && !ImGui::IsAnyItemHovered()))
 						{
 							g_model_preview_service->stop_preview();
 						}
 						else if (ImGui::IsItemHovered())
 						{
-							g_model_preview_service->show_vehicle(vehicle.m_hash, g->spawn_vehicle.spawn_maxed);
+							g_model_preview_service->show_vehicle(vehicle.m_hash, g.spawn_vehicle.spawn_maxed);
 						}
 					}
 				}
