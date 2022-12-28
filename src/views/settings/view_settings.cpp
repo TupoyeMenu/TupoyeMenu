@@ -55,12 +55,6 @@ namespace big
 		if (ImGui::Hotkey("Skip Cutscene", &g.settings.hotkeys.skip_cutscene))
 			g_hotkey_service->update_hotkey("skip_cutscene", g.settings.hotkeys.skip_cutscene);
 
-		if (ImGui::Hotkey("Off Radar", &g.settings.hotkeys.off_radar))
-			g_hotkey_service->update_hotkey("off_radar", g.settings.hotkeys.off_radar);
-
-		if (ImGui::Hotkey("Mors Mutual Fix All Vehicles", &g.settings.hotkeys.mmi_fix_all))
-			g_hotkey_service->update_hotkey("mmi_fix_all", g.settings.hotkeys.mmi_fix_all);
-
 
 		ImGui::PopItemWidth();
 

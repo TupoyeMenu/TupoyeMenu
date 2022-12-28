@@ -91,7 +91,6 @@ namespace big
 			bool phone_anim = false;
 			bool no_idle_kick = false;
 			bool fast_join = true;
-			bool ambiant_ufos = false;
 			bool ambiant_blimp = false;
 			bool cable_cars = false;
 			bool always_control = false;
@@ -99,7 +98,7 @@ namespace big
 			bool remove_speed_limit = false;
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(tunables,
-			disable_phone, phone_anim, no_idle_kick, fast_join, ambiant_ufos, ambiant_blimp, cable_cars, always_control, disable_help_text,
+			disable_phone, phone_anim, no_idle_kick, fast_join,  ambiant_blimp, cable_cars, always_control, disable_help_text,
 			remove_speed_limit)
 		} tunables{};
 		
@@ -194,11 +193,9 @@ namespace big
 		
 		struct player
 		{
-			int character_slot = 1;
-			int set_level = 130;
 			bool spectating = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(player, character_slot, set_level, spectating)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(player, spectating)
 		} player{};
 
 		struct protections 
@@ -379,12 +376,10 @@ namespace big
 				int heal = 0;
 				int fill_inventory = 0;
 				int skip_cutscene = 0;
-				int off_radar = 0;
-				int mmi_fix_all = 0;
 
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys,
 				 editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, noclip,
-				 heal, fill_inventory, skip_cutscene, off_radar, mmi_fix_all)
+				 heal, fill_inventory, skip_cutscene)
 			} hotkeys{};
 
 			bool dev_dlc = false;
@@ -523,7 +518,7 @@ namespace big
 			bool drive_on_water = false;
 			bool horn_boost = false;
 			bool instant_brake = false;
-			bool block_homing = true;
+			bool block_homing = false;
 			bool ls_customs = false; // don't save this to disk
 			bool seatbelt = false;
 			bool turn_signals = false;
@@ -601,7 +596,7 @@ namespace big
 			ImFont* font_small = nullptr;
 			ImFont* font_icon = nullptr;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, main, users, player, overlay, chat, demo, log, color, gui_scale)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, main, users, player, overlay, overlay_corner, chat, demo, log, color, gui_scale)
 		} window{};
 
 		struct context_menu
@@ -625,16 +620,12 @@ namespace big
 
 		struct chat
 		{
-			std::string message;
-			std::string dm_message;
 			bool local = false;
 			bool auto_scroll = true;
 			bool show_spam = false;
-			int8_t dm_player_id = 0;
-			uint64_t dm_player_rid = 0;
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(chat,
-				local, show_spam)
+				local, auto_scroll, show_spam)
 		} chat{};
 
 		struct outfit_editor

@@ -13,6 +13,9 @@ namespace big
         register_hotkey("waypoint", g.settings.hotkeys.teleport_waypoint, RAGE_JOAAT("waypointtp"));
         register_hotkey("objective", g.settings.hotkeys.teleport_objective, RAGE_JOAAT("objectivetp"));
         register_hotkey("noclip", g.settings.hotkeys.noclip, RAGE_JOAAT("noclip"));
+        register_hotkey("heal", g.settings.hotkeys.heal, RAGE_JOAAT("heal"));
+        register_hotkey("fillsnacks", g.settings.hotkeys.fill_inventory, RAGE_JOAAT("fillsnacks"));
+        register_hotkey("skipcutscene", g.settings.hotkeys.skip_cutscene, RAGE_JOAAT("skipcutscene"));
 
 
         g_renderer->add_wndproc_callback([this](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)

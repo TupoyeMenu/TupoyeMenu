@@ -13,8 +13,9 @@ namespace big::local_player
 
 	inline std::string get_mp_prefix()
 	{
-		get_active_character_slot(&g.player.character_slot);
-		return "MP" + std::to_string(g.player.character_slot) + "_";
+		int character_slot;
+		get_active_character_slot(&character_slot);
+		return "MP" + std::to_string(character_slot) + "_";
 	}
 
 	inline void set_player_level(int level)
