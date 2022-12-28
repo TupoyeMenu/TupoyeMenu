@@ -44,6 +44,7 @@ namespace big
 
 		ImGui::Checkbox("Teleport To Warehouse", &g.protections.script_events.teleport_to_warehouse);
 		ImGui::Checkbox("Start Activity", &g.protections.script_events.start_activity);
+		ImGui::Checkbox("Send SMS", &g.protections.script_events.send_sms);
 		components::script_patch_checkbox("Script Host Kick", &g.protections.script_host_kick);
 		ImGui::Checkbox("RID Join", &g.protections.rid_join);
 		ImGui::SameLine(); components::help_marker("This will block anyone trying to join you through Rockstar ID, including your friends");
