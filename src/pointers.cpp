@@ -810,7 +810,7 @@ namespace big
 		});
 
 		// Linux DX Error Fix
-		main_batch.add("LDEF", "40 55 48 8B EC 48 83 EC 60 48 8B 0D ? ? ? ?", [this](memory::handle ptr)
+		main_batch.add("LDEF", "40 55 48 8B EC 48 83 EC 60 48 8B 0D", [this](memory::handle ptr)
 		{
 			m_linux_dx_error_fix = ptr.as<PVOID>();
 		});

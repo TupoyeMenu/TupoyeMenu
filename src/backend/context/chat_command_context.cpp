@@ -36,7 +36,7 @@ namespace big
 			if (g_hooking->get_original<hooks::send_chat_message>()(*g_pointers->m_send_chat_ptr, g_player_service->get_self()->get_net_data(), msg, false))
 				notify::draw_chat(msg, g_player_service->get_self()->get_name(), false);
 
-			g_chat_service->add_msg(g_player_service->get_self()->get_net_game_player(), g.chat.message, g.chat.local);
+			g_chat_service->add_msg(g_player_service->get_self()->get_net_game_player(), msg, false);
 			spam::log_chat(msg, g_player_service->get_self(), false);
 		});
 	}
