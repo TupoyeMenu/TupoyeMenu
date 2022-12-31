@@ -13,22 +13,25 @@ namespace big
 
 		if (ImGui::TreeNode("Kicks")) 
 		{
-			components::player_command_button<"breakup">(g_player_service->get_selected());
-			ImGui::SameLine(); components::help_marker("Removes this player from everyones player manager. \nCan be detected by anyone in session. \nUnblockable.");
+			auto const is_session_host = [] { return gta_util::get_network()->m_game_session_ptr->is_host(); };
 
-			components::player_command_button<"lckick">(g_player_service->get_selected());;
+			components::player_command_button<"breakup">(g_player_service->get_selected());
+			ImGui::SameLine();
+			components::command_checkbox<"breakupcheating">();
+			components::disable_unless(std::not_fn(is_session_host), []
+			{
+				components::player_command_button<"lckick">(g_player_service->get_selected());
+			});
 			components::player_command_button<"bailkick">(g_player_service->get_selected());
 			components::player_command_button<"nfkick">(g_player_service->get_selected());
 			components::player_command_button<"oomkick">(g_player_service->get_selected());
 			components::player_command_button<"shkick">(g_player_service->get_selected());
 			components::player_command_button<"endkick">(g_player_service->get_selected());
-			ImGui::SameLine(); components::help_marker("The kick can take around 10 seconds to work");
-
-			components::player_command_button<"hostkick">(g_player_service->get_selected());
-			//ImGui::SameLine(); components::help_marker("Removes this player hosts player manager and adds them to session blacklist. \nBlacklist can be bypassed by RID spoofing. \nBlockable by some menus.");
-
+			components::disable_unless(std::function(is_session_host), []
+			{
+				components::player_command_button<"hostkick">(g_player_service->get_selected());
+			});
 			components::player_command_button<"desync">(g_player_service->get_selected());
-			ImGui::SameLine(); components::help_marker("The kick can take around 10 seconds to work");
 		}
 
 		if (ImGui::TreeNode("Crashes (shit)")) 

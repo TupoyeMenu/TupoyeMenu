@@ -33,6 +33,7 @@ namespace rage
 	class rlGamerHandle;
 	class netConnectionManager;
 	class datBitBuffer;
+	class rlMetric;
 
 	namespace netConnection
 	{
@@ -138,7 +139,10 @@ namespace big
 
 		static int nt_query_virtual_memory(void* _this, HANDLE handle, PVOID base_addr, int info_class, MEMORY_BASIC_INFORMATION* info, int size, size_t* return_len);
 		static void queue_dependency(void* dependency);
+
 		static int linux_dx_error_fix();
+		
+		static void prepare_metric_for_sending(rage::datBitBuffer* bit_buffer, int unk, int time, rage::rlMetric* metric);
 	};
 
 	class minhook_keepalive

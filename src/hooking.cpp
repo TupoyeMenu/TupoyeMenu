@@ -100,6 +100,7 @@ namespace big
 		detour_hook_helper::add<hooks::read_bitbuffer_gamer_handle>("RBGH", g_pointers->m_read_bitbuffer_gamer_handle);
 
 		detour_hook_helper::add<hooks::queue_dependency>("QD", g_pointers->m_queue_dependency);
+		detour_hook_helper::add<hooks::prepare_metric_for_sending>("PMFS", g_pointers->m_prepare_metric_for_sending);
 
 		detour_hook_helper::add<hooks::linux_dx_error_fix>("LDEF", g_pointers->m_linux_dx_error_fix);
 

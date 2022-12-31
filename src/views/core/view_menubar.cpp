@@ -16,7 +16,8 @@ namespace big
                     g_fiber_pool->queue_job([]
     				{
     					for (auto& command : g_looped_commands)
-    						command->on_disable();
+                            if (command->is_enabled())
+    					    	command->on_disable();
     
     					g_running = false;
     				});
@@ -65,9 +66,7 @@ namespace big
                 components::menu_item("Stop Loading", []
                 {
                     if (CAM::IS_SCREEN_FADED_OUT())
-                    {
                         CAM::DO_SCREEN_FADE_IN(0);
-                    }
                     SCRIPT::SHUTDOWN_LOADING_SCREEN();
                 });
                 ImGui::EndMenu();
