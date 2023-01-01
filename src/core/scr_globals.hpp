@@ -38,6 +38,7 @@ namespace big::scr_globals
 	static inline script_global mechanic_global = script_global(2793044);
 
 	static inline script_global spawn_global = script_global(2694560);
+	static inline script_global player_stats_global = script_global(1853910);
 }
 
 namespace big::scr_locals
