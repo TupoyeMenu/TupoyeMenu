@@ -14,6 +14,7 @@ namespace big
         static constexpr auto set_global_int_method_name = "set_global_int(_,_)";
         static constexpr auto trigger_script_event_method_name = "tse(_,_)";
         static constexpr auto joaat_method_name = "joaat(_)";
+        static constexpr auto command_method_name = "command(_)";
 
         WrenVM* m_vm = nullptr;
 
@@ -42,5 +43,7 @@ namespace big
         static void trigger_script_event(WrenVM* vm);
 
         static void joaat(WrenVM* vm);
+
+        static void command(WrenVM* vm);
     };
 }

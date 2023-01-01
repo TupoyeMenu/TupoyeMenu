@@ -45,6 +45,10 @@ namespace big
             {
                 return joaat;
             }
+            else if (strcmp(signature, command_method_name) == 0)
+            {
+                return command;
+            }
         }
 
         return nullptr;
