@@ -27,10 +27,6 @@ namespace big
 			components::player_command_button<"oomkick">(g_player_service->get_selected());
 			components::player_command_button<"shkick">(g_player_service->get_selected());
 			components::player_command_button<"endkick">(g_player_service->get_selected());
-			components::disable_unless(std::function(is_session_host), []
-			{
-				components::player_command_button<"hostkick">(g_player_service->get_selected());
-			});
 			components::player_command_button<"desync">(g_player_service->get_selected());
 		}
 

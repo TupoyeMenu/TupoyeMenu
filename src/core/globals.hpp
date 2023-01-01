@@ -63,6 +63,8 @@ namespace big
 		{
 			struct logs
 			{
+				bool metric_logs{};
+				
 				bool script_hook_logs{};
 
 				struct script_event
@@ -75,7 +77,7 @@ namespace big
 					NLOHMANN_DEFINE_TYPE_INTRUSIVE(script_event, logs, filter_player, player_id)
 				} script_event{};
 
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(logs, script_hook_logs, script_event)
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(logs, metric_logs, script_hook_logs, script_event)
 			} logs{};
 
 			bool sort_scripts = false;
