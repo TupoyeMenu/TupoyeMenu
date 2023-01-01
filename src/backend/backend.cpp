@@ -113,7 +113,7 @@ namespace big
 			looped::world_population_control();
 			
 			looped::script_starter();
-			looped::fast_join();
+			looped::seamless_join();
 			looped::phone_anim();
 			looped::disable_help_text();
 			

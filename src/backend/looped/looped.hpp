@@ -29,7 +29,7 @@ namespace big
 
 		static void script_starter();
 		static void session_local_time();
-		static void fast_join();
+		static void seamless_join();
 		
 		static void world_population_control();
 		static void session_pop_multiplier_areas();

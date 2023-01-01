@@ -92,15 +92,15 @@ namespace big
 			bool disable_phone = false;
 			bool phone_anim = false;
 			bool no_idle_kick = false;
-			bool fast_join = true;
-			bool ambiant_blimp = false;
+			bool seamless_join = true;
+			bool dont_unload_online_maps = true;
 			bool cable_cars = false;
 			bool always_control = false;
 			bool disable_help_text = false;
 			bool remove_speed_limit = false;
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(tunables,
-			disable_phone, phone_anim, no_idle_kick, fast_join,  ambiant_blimp, cable_cars, always_control, disable_help_text,
+			disable_phone, phone_anim, no_idle_kick, seamless_join, dont_unload_online_maps, cable_cars, always_control, disable_help_text,
 			remove_speed_limit)
 		} tunables{};
 		

@@ -4,14 +4,15 @@
 #include "script_global.hpp"
 #include "script.hpp"
 #include "core/enums.hpp"
+#include "core/scr_globals.hpp"
 
 namespace big
 {
-	void looped::fast_join()
+	void looped::seamless_join()
 	{
-		if (g.tunables.fast_join)
+		if (g.tunables.seamless_join)
 		{
-			eTransitionState state = *script_global::script_global(1574993).as<eTransitionState*>();
+			const auto state = *scr_globals::transition_state.as<eTransitionState*>();
 
 			if (state <= eTransitionState::TRANSITION_STATE_FM_FINAL_SETUP_PLAYER)
 			{

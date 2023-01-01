@@ -72,7 +72,11 @@ namespace big
 			ImGui::EndListBox();
 		}
 
-		ImGui::Checkbox("Fast Join", &g.tunables.fast_join);
+		ImGui::Checkbox("Seamless Join", &g.tunables.seamless_join);
+		ImGui::SameLine(); components::help_marker("Allows you move freely while in session transition.");
+
+		ImGui::Checkbox("Don't unload online maps", &g.tunables.dont_unload_online_maps);
+		ImGui::SameLine(); components::help_marker("Prevents ON_ENTER_SP from being called.\nSpeeds up joining online after going into single player.");
 
 		ImGui::Checkbox("Join in SCTV slots", &g.session.join_in_sctv_slots);
 		ImGui::SameLine(); components::help_marker("Allows you to join full and solo sessions but can be detected by other modders");
