@@ -104,6 +104,9 @@ namespace big
 
 		detour_hook_helper::add<hooks::linux_dx_error_fix>("LDEF", g_pointers->m_linux_dx_error_fix);
 
+		detour_hook_helper::add<hooks::fragment_physics_crash>("FPC", g_pointers->m_fragment_physics_crash);
+		detour_hook_helper::add<hooks::fragment_physics_crash_2>("FPC2", g_pointers->m_fragment_physics_crash_2);
+
 		g_hooking = this;
 	}
 

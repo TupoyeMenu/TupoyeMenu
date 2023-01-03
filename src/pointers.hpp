@@ -243,6 +243,9 @@ namespace big
 		rage::rlGamerInfo* m_chat_gamer_info;
 
 		PVOID m_linux_dx_error_fix;
+
+		PVOID m_fragment_physics_crash;
+		PVOID m_fragment_physics_crash_2;
 	};
 
 	inline pointers* g_pointers{};
