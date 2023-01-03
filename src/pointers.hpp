@@ -5,10 +5,7 @@
 #include "function_types.hpp"
 #include "gta/fwddec.hpp"
 #include "gta/replay.hpp"
-#include "gta/array.hpp"
-#include "network/CNetworkPlayerMgr.hpp"
-#include "socialclub/FriendRegistry.hpp"
-#include <network/Network.hpp>
+#include "memory/byte_patch.hpp"
 
 #include "asi_loader/pools.h"
 #include "memory/byte_patch.hpp"
@@ -147,6 +144,7 @@ namespace big
 
 		functions::start_get_session_by_gamer_handle m_start_get_session_by_gamer_handle;
 		functions::start_matchmaking_find_sessions m_start_matchmaking_find_sessions;
+		functions::start_get_presence_attributes m_start_get_presence_attributes;
 		functions::join_session_by_info m_join_session_by_info;
 
 		memory::byte_patch* m_bypass_max_count_of_active_sticky_bombs;
@@ -231,6 +229,7 @@ namespace big
 
 		functions::encode_session_info m_encode_session_info;
 		functions::decode_session_info m_decode_session_info;
+		functions::decode_peer_info m_decode_peer_info;
 
 		datafile_commands::SveFileObject* m_main_file_object;
 		functions::load_cloud_file m_load_cloud_file;
@@ -243,6 +242,9 @@ namespace big
 		rage::rlGamerInfo* m_chat_gamer_info;
 
 		PVOID m_linux_dx_error_fix;
+
+		functions::send_packet m_send_packet;
+		functions::connect_to_peer m_connect_to_peer;
 
 		PVOID m_fragment_physics_crash;
 		PVOID m_fragment_physics_crash_2;

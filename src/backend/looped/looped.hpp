@@ -17,6 +17,7 @@ namespace big
 		static void disable_help_text();
 
 		static void player_good_options();
+		static void player_toxic_options();
 		static void player_spectate();
 		static void player_remote_control_vehicle();
 

@@ -15,6 +15,8 @@ namespace big
 		ImGui::Text(title.c_str());
 
 		components::player_command_button<"kill">(g_player_service->get_selected(), {});
+		ImGui::SameLine();
+		components::player_command_button<"explode">(g_player_service->get_selected(), {});
 		components::player_command_button<"ceokick">(g_player_service->get_selected(), {});		
 		components::player_command_button<"ragdoll">(g_player_service->get_selected(), {});
 		components::player_command_button<"intkick">(g_player_service->get_selected(), {});
@@ -154,6 +156,18 @@ namespace big
 			ImGui::SameLine();
 			components::button("Stop Time", [] { toxic::set_time(g_player_service->get_selected(), INT_MAX - 3000); });
 			ImGui::SameLine(); components::help_marker("This cannot be reversed. Use with caution");
+
+			ImGui::Checkbox("Kill Loop", &g_player_service->get_selected()->kill_loop);
+			ImGui::SameLine();
+			ImGui::Checkbox("Explosion Loop", &g_player_service->get_selected()->explosion_loop);
+			ImGui::SameLine();
+			ImGui::Checkbox("Freeze Loop", &g_player_service->get_selected()->freeze_loop);
+
+			ImGui::Checkbox("Ragdoll Loop", &g_player_service->get_selected()->ragdoll_loop);
+			ImGui::SameLine();
+			ImGui::Checkbox("Rotate Cam Loop", &g_player_service->get_selected()->rotate_cam_loop);
+			if (ImGui::IsItemHovered())
+				ImGui::SetTooltip("Also brings the player out of godmode if the event isn't blocked");
 
 			ImGui::TreePop();
 		}

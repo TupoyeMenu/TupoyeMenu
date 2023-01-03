@@ -1,21 +1,16 @@
 #include "views/view.hpp"
-#include "fiber_pool.hpp"
-#include "services/pickups/pickup_service.hpp"
-#include "services/players/player_service.hpp"
+#include "natives.hpp"
+#include "util/misc.hpp"
+#include "util/math.hpp"
 #include "services/player_database/player_database_service.hpp"
 #include "services/gta_data/gta_data_service.hpp"
-#include "util/globals.hpp"
-#include "util/misc.hpp"
-#include "util/ped.hpp"
-#include "util/vehicle.hpp"
-#include "util/teleport.hpp"
-#include "util/toxic.hpp"
-#include "util/player.hpp"
-#include "gta/joaat.hpp"
-#include "core/enums.hpp"
-#include "core/data/game_states.hpp"
 #include "core/data/command_access_levels.hpp"
-#include "gta_util.hpp"
+#include "core/data/game_states.hpp"
+#include "core/scr_globals.hpp"
+#include "core/data/language_codes.hpp"
+#include <script/globals/GlobalPlayerBD.hpp>
+#include <script/globals/GPBD_FM_3.hpp>
+#include <script/globals/GPBD_FM.hpp>
 
 namespace big
 {
@@ -258,22 +253,31 @@ namespace big
 
 		if (ImGui::TreeNode("Global Stats"))
 		{
-			ImGui::Text("RP: %d", util::player::get_player_stat<int64_t*>(g_player_service->get_selected()->id(), ePlayerStatType::RP));
-			ImGui::SameLine();
-			ImGui::Text("Rank: %d", util::player::get_player_stat<int64_t*>(g_player_service->get_selected()->id(), ePlayerStatType::Rank));
-			ImGui::Text("Global RP: %d", util::player::get_player_stat<int64_t*>(g_player_service->get_selected()->id(), ePlayerStatType::GlobalRP));
+			auto id = g_player_service->get_selected()->id();
 
-			ImGui::Text("Money Cash: %u", util::player::get_player_stat<uint64_t*>(g_player_service->get_selected()->id(), ePlayerStatType::MoneyCash));
-			ImGui::SameLine();
-			ImGui::Text("Money Bank: %u", util::player::get_player_stat<uint64_t*>(g_player_service->get_selected()->id(), ePlayerStatType::MoneyAll));
+			if (id != -1)
+			{
+				auto& stats = scr_globals::gpbd_fm_1.as<GPBD_FM*>()->Entries[id].PlayerStats;
+				auto& boss_goon = scr_globals::gpbd_fm_3.as<GPBD_FM_3*>()->Entries[id].BossGoon;
 
-			int64_t *kills = util::player::get_player_stat<int64_t*>(g_player_service->get_selected()->id(), ePlayerStatType::Kills);
-			int64_t *deaths = util::player::get_player_stat<int64_t*>(g_player_service->get_selected()->id(), ePlayerStatType::Deaths);
-			ImGui::Text("Kills: %d", kills);
-			ImGui::SameLine();
-			ImGui::Text("Deaths: %d", deaths);
+				if (boss_goon.Language >= 0 && boss_goon.Language < 13)
+					ImGui::Text("Language: %s", languages[boss_goon.Language].name);
 
-			ImGui::Text("Allows Spectating: %s", util::player::get_player_stat<BOOL*>(g_player_service->get_selected()->id(), ePlayerStatType::CanSpectate) ? "Yes" : "No");
+				ImGui::Text("CEO Name: %s", boss_goon.GangName);
+				ImGui::Text("MC Name: %s", boss_goon.MCName);
+				ImGui::Text("Money In Wallet: %d", stats.WalletBalance);
+				ImGui::Text("Money In Bank: %d", stats.Money - stats.WalletBalance);
+				ImGui::Text("Total Money: %d", stats.Money);
+				ImGui::Text("Rank: %d (RP %d)", stats.Rank, stats.RP);
+				ImGui::Text("K/D Ratio: %f", stats.KdRatio);
+				ImGui::Text("Kills On Players: %d", stats.KillsOnPlayers);
+				ImGui::Text("Deaths By Players: %d", stats.DeathsByPlayers);
+				ImGui::Text("Prostitutes Frequented: %d", stats.ProstitutesFrequented);
+				ImGui::Text("Lap Dances Bought: %d", stats.LapDancesBought);
+				ImGui::Text("Missions Created: %d", stats.MissionsCreated);
+				ImGui::Text("Meltdown Complete: %s", scr_globals::gpbd_fm_1.as<GPBD_FM*>()->Entries[id].MeltdownComplete ? "Yes" : "No"); // curious to see if anyone has actually played singleplayer
+				ImGui::Text("Allows Spectating: %s", stats.CanSpectate ? "Yes" : "No");
+			}
 
 			ImGui::TreePop();
 		}
