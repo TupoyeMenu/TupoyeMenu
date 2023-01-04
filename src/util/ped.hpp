@@ -131,9 +131,9 @@ namespace big::ped
 
 	inline Hash create_bad_ped_relationship_group(std::string group_name)
 	{
-		static const Hash playerGroup = rage::joaat("PLAYER");
-		static const Hash civGroup = rage::joaat("CIVMALE");
-		static const Hash femCivGroup = rage::joaat("CIVFEMALE");
+		static const Hash playerGroup = RAGE_JOAAT("PLAYER");
+		static const Hash civGroup = RAGE_JOAAT("CIVMALE");
+		static const Hash femCivGroup = RAGE_JOAAT("CIVFEMALE");
 
 		Hash relationshipGroup;
 		PED::ADD_RELATIONSHIP_GROUP(group_name.c_str(), &relationshipGroup);
@@ -144,15 +144,15 @@ namespace big::ped
 		return relationshipGroup;
 	}
 
-	inline Ped spawn_griefer_jesus(Vector3 pos, Ped player_ped)
+	inline Ped spawn_griefer_jesus(Vector3 pos, Ped target)
 	{
 		Hash relationshipGroup = create_bad_ped_relationship_group("_HOSTILE_JESUS");
 
-		Ped ped = ped::spawn(ePedType::PED_TYPE_CRIMINAL, rage::joaat("u_m_m_jesus_01"), 0, pos, 0);
+		Ped ped = ped::spawn(ePedType::PED_TYPE_CRIMINAL, RAGE_JOAAT("u_m_m_jesus_01"), 0, pos, 0);
 
-		if (PED::IS_PED_IN_ANY_VEHICLE(player_ped, false))
+		if (PED::IS_PED_IN_ANY_VEHICLE(target, false))
 		{
-			PED::SET_PED_INTO_VEHICLE(ped, PED::GET_VEHICLE_PED_IS_IN(player_ped, false), -2);
+			PED::SET_PED_INTO_VEHICLE(ped, PED::GET_VEHICLE_PED_IS_IN(target, false), -2);
 		}
 
 		PED::SET_PED_RELATIONSHIP_GROUP_HASH(ped, relationshipGroup);
@@ -168,19 +168,21 @@ namespace big::ped
 		PED::SET_RAGDOLL_BLOCKING_FLAGS(ped, 5);
 		PED::SET_PED_SUFFERS_CRITICAL_HITS(ped, false);
 
-		WEAPON::GIVE_WEAPON_TO_PED(ped, rage::joaat("WEAPON_RAILGUN"), 9999, true, true);
-		TASK::TASK_COMBAT_PED(ped, player_ped, 0, 16);
+		WEAPON::GIVE_WEAPON_TO_PED(ped, RAGE_JOAAT("WEAPON_RAILGUN"), 9999, true, true);
+		TASK::TASK_COMBAT_PED(ped, target, 0, 16);
 
-		PED::SET_PED_FIRING_PATTERN(ped, 0xC6EE6B4C);
+		PED::SET_PED_FIRING_PATTERN(ped, RAGE_JOAAT("FIRING_PATTERN_FULL_AUTO"));
+
+		ENTITY::SET_PED_AS_NO_LONGER_NEEDED(&ped);
 
 		return ped;
 	}
 
-	inline Ped spawn_extrime_griefer_jesus(Vector3 pos, Ped player_ped)
+	inline Ped spawn_extrime_griefer_jesus(Vector3 pos, Ped target)
 	{
-		float heading = ENTITY::GET_ENTITY_HEADING(PED::IS_PED_IN_ANY_VEHICLE(player_ped, false) ? PED::GET_VEHICLE_PED_IS_IN(player_ped, false) : player_ped);
+		float heading = ENTITY::GET_ENTITY_HEADING(PED::IS_PED_IN_ANY_VEHICLE(target, false) ? PED::GET_VEHICLE_PED_IS_IN(target, false) : target);
 
-		Vehicle veh = vehicle::spawn(rage::joaat("oppressor2"), pos, heading, true);
+		Vehicle veh = vehicle::spawn(RAGE_JOAAT("oppressor2"), pos, heading, true, false, true);
 		VEHICLE::SET_VEHICLE_ENGINE_ON(veh, true, true, false);
 		vehicle::max_vehicle(veh);
 		ENTITY::SET_ENTITY_PROOFS(veh, false, true, true, false, false, false, false, false);
@@ -199,27 +201,27 @@ namespace big::ped
 
 		ENTITY::SET_ENTITY_PROOFS(ped, false, true, true, false, false, false, false, false);
 
-		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 5, true);
-		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 46, true);
-
 		PED::SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE(ped, 1);
 		PED::SET_PED_CAN_RAGDOLL_FROM_PLAYER_IMPACT(ped, false);
 		PED::SET_RAGDOLL_BLOCKING_FLAGS(ped, 5);
 		PED::SET_PED_SUFFERS_CRITICAL_HITS(ped, false);
 
-		WEAPON::GIVE_WEAPON_TO_PED(ped, rage::joaat("WEAPON_RAILGUN"), 9999, true, true);
-		TASK::TASK_COMBAT_PED(ped, player_ped, 0, 16);
+		WEAPON::GIVE_WEAPON_TO_PED(ped, RAGE_JOAAT("WEAPON_RAILGUN"), 9999, true, true);
+		TASK::TASK_COMBAT_PED(ped, target, 0, 16);
 
-		PED::SET_PED_FIRING_PATTERN(ped, 0xC6EE6B4C);
+		PED::SET_PED_FIRING_PATTERN(ped, RAGE_JOAAT("FIRING_PATTERN_FULL_AUTO"));
+
+		ENTITY::SET_VEHICLE_AS_NO_LONGER_NEEDED(&veh);
+		ENTITY::SET_PED_AS_NO_LONGER_NEEDED(&ped);
 
 		return ped;
 	}
 
-	inline Ped spawn_griefer_jet(Vector3 pos, Ped player_ped, Hash jet)
+	inline Ped spawn_griefer_jet(Vector3 pos, Ped target, Hash vehicle)
 	{
-		float heading = ENTITY::GET_ENTITY_HEADING(PED::IS_PED_IN_ANY_VEHICLE(player_ped, false) ? PED::GET_VEHICLE_PED_IS_IN(player_ped, false) : player_ped);
+		float heading = ENTITY::GET_ENTITY_HEADING(PED::IS_PED_IN_ANY_VEHICLE(target, false) ? PED::GET_VEHICLE_PED_IS_IN(target, false) : target);
 
-		Vehicle veh = vehicle::spawn(jet, pos, heading, true);
+		Vehicle veh = vehicle::spawn(vehicle, pos, heading, true);
 		VEHICLE::SET_VEHICLE_ENGINE_ON(veh, true, true, false);
 		VEHICLE::CONTROL_LANDING_GEAR(veh, 3);
 
@@ -231,12 +233,19 @@ namespace big::ped
 		PED::SET_PED_HEARING_RANGE(ped, 9999.f);
 		PED::SET_PED_CONFIG_FLAG(ped, 281, true);
 
-		TASK::TASK_PLANE_MISSION(ped, veh, 0, player_ped, 0, 0, 0, 6, 0.0, 0.0, 0.0, 2500.0, -1500.0, 0);
+		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 3, false);
+		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 5, true);
+		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 46, true);
 
-		WEAPON::GIVE_WEAPON_TO_PED(ped, rage::joaat("WEAPON_RAILGUN"), 9999, true, true);
-		TASK::TASK_COMBAT_PED(ped, player_ped, 0, 16);
+		TASK::TASK_PLANE_MISSION(ped, veh, 0, target, 0, 0, 0, 6, 0.0, 0.0, 0.0, 2500.0, -1500.0, 0);
 
-		PED::SET_PED_FIRING_PATTERN(ped, 0xC6EE6B4C);
+		WEAPON::GIVE_WEAPON_TO_PED(ped, RAGE_JOAAT("WEAPON_RAILGUN"), 9999, true, true);
+		TASK::TASK_COMBAT_PED(ped, target, 0, 16);
+
+		PED::SET_PED_FIRING_PATTERN(ped, RAGE_JOAAT("FIRING_PATTERN_FULL_AUTO"));
+
+		ENTITY::SET_VEHICLE_AS_NO_LONGER_NEEDED(&veh);
+		ENTITY::SET_PED_AS_NO_LONGER_NEEDED(&ped);
 
 		return ped;
 	}

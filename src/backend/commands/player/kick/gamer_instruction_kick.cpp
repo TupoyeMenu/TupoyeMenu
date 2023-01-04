@@ -32,14 +32,14 @@ namespace big
 		{
 			packet msg;
 			msg.write_message(rage::eNetMessage::MsgTransitionGamerInstruction);
-			gamer_handle_serialize(g_player_service->get_selected()->get_net_data()->m_gamer_handle_2, msg.m_buffer); // src
-			gamer_handle_serialize(g_player_service->get_selected()->get_net_data()->m_gamer_handle_2, msg.m_buffer); // target
+			gamer_handle_serialize(player->get_net_data()->m_gamer_handle_2, msg.m_buffer); // src
+			gamer_handle_serialize(player->get_net_data()->m_gamer_handle_2, msg.m_buffer); // target
 			msg.write<bool>(false, 1); // string extend
 			msg.write<int>(0, 7); // string length
 			msg.write<int>(8, 32); // instruction type
 			msg.write<int>(0, 32);
 			msg.write<int>(0, 32);
-			msg.send(g_player_service->get_selected(), gta_util::get_network()->m_transition_session.m_connection_identifier);
+			msg.send(player, gta_util::get_network()->m_transition_session.m_connection_identifier);
 		}
 	};
 

@@ -1,6 +1,5 @@
 ## tupoy_ya's skidded menu TODO list
-Why don't just use github projects.
-This TODO file will be soon replaced with issues.
+# USE ISSUES INSTEAD THIS FILE IS OUTDATED.
 
 Max Chance is 3
 
@@ -12,7 +11,6 @@ Max Chance is 3
 - [ ] Better esp. Chance 1
 - [ ] Port to C++. Chance 0.5
 - [ ] Native UI to ImGui translator. Chance 1
-- [ ] Session browser. Chance 0.5
 - [ ] Integrate https://github.com/Rimmuru/List. Chance 2
 - [ ] Animation list. Chance 0.5
 - [ ] Hud color selector. Chance 2

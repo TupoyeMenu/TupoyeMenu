@@ -14,18 +14,16 @@ namespace big
 
 		ImGui::Text(title.c_str());
 
-		components::player_command_button<"kill">(g_player_service->get_selected(), {});
-		ImGui::SameLine();
-		components::player_command_button<"explode">(g_player_service->get_selected(), {});
-		components::player_command_button<"ceokick">(g_player_service->get_selected(), {});		
-		components::player_command_button<"ragdoll">(g_player_service->get_selected(), {});
-		components::player_command_button<"intkick">(g_player_service->get_selected(), {});
-		components::player_command_button<"beast">(g_player_service->get_selected(), {});
+		if (ImGui::TreeNode("Ped"))
+		{
+			components::player_command_button<"kill">(g_player_service->get_selected(), {});
+			ImGui::SameLine();
+			components::player_command_button<"explode">(g_player_service->get_selected(), {});
+			components::player_command_button<"ragdoll">(g_player_service->get_selected(), {});
+			components::player_command_button<"beast">(g_player_service->get_selected(), {});
 
-		static int wanted_level;
-		ImGui::SliderInt("Wanted Level", &wanted_level, 0, 5);
-		ImGui::SameLine();
-		components::player_command_button<"wanted">(g_player_service->get_selected(), { (uint64_t)wanted_level }, "Set");
+			ImGui::TreePop();
+		}
 
 		if (ImGui::TreeNode("Teleports"))
 		{
@@ -104,40 +102,15 @@ namespace big
 			components::player_command_button<"vehkick">(g_player_service->get_selected(), {});
 			components::player_command_button<"fullacceleration">(g_player_service->get_selected(), {});
 			components::player_command_button<"launchvehicleup">(g_player_service->get_selected(), {});
-
-			components::button("Repair Vehicle", [] {
-				Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(g_player_service->get_selected()->id(), false);
-				vehicle::repair(veh);
-			});
-			ImGui::SameLine(); components::help_marker("Repairs players vehicle. \nRequires entity control. \nBlacked by most internal menus.");
+			
 			ImGui::TreePop();
 		}
 
-		if (ImGui::TreeNode("Spawns")) // TODO: Clean this up.
+		if (ImGui::TreeNode("Spawns"))
 		{
-			components::button("Spawn Griefer Jesus", [] {
-				Ped player_ped = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g_player_service->get_selected()->id());
-				Vector3 pos = ENTITY::GET_ENTITY_COORDS(player_ped, true) + Vector3(0, 0, 10);
-				ped::spawn_griefer_jesus(pos, player_ped);
-			});
-			ImGui::SameLine(); components::help_marker("Spawns 'Griefer Jesus' just like in ChaosMod.");
-			ImGui::SameLine();
-
-			components::button("Spawn Extreme Griefer Jesus", [] {
-				Ped player_ped = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g_player_service->get_selected()->id());
-				Vector3 pos = ENTITY::GET_ENTITY_COORDS(player_ped, true) + Vector3(0, 0, 10);
-
-				ped::spawn_extrime_griefer_jesus(pos, player_ped);
-			});
-			ImGui::SameLine(); components::help_marker("Spawns 'Extreme Griefer Jesus' just like in ChaosMod.");
-
-			components::button("Spawn Griefer Lazer", [] {
-				Ped player_ped = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(g_player_service->get_selected()->id());
-				Vector3 pos = ENTITY::GET_ENTITY_COORDS(player_ped, true) + Vector3(0, 0, 500);
-				Hash jet_hash RAGE_JOAAT("lazer");
-				ped::spawn_griefer_jet(pos, player_ped, jet_hash);
-			});
-			ImGui::SameLine(); components::help_marker("Spawns a lazer with Griefer Jesus in it.");
+			components::player_command_button<"spawn_grief_jesus">(g_player_service->get_selected(), {});
+			components::player_command_button<"spawn_extr_grief_jesus">(g_player_service->get_selected(), {});
+			components::player_command_button<"spawn_grief_lazer">(g_player_service->get_selected(), {});
 
 			ImGui::TreePop();
 		}
@@ -166,14 +139,33 @@ namespace big
 			ImGui::Checkbox("Ragdoll Loop", &g_player_service->get_selected()->ragdoll_loop);
 			ImGui::SameLine();
 			ImGui::Checkbox("Rotate Cam Loop", &g_player_service->get_selected()->rotate_cam_loop);
-			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Also brings the player out of godmode if the event isn't blocked");
+			ImGui::SameLine(); components::help_marker("Also brings the player out of godmode if the event isn't blocked");
 
 			ImGui::TreePop();
 		}
 
-		components::player_command_button<"giveweaps">(g_player_service->get_selected(), { });
-		ImGui::SameLine();
-		components::player_command_button<"remweaps">(g_player_service->get_selected(), { });
+		if (ImGui::TreeNode("Weapons"))
+		{
+			components::player_command_button<"giveweaps">(g_player_service->get_selected(), { });
+			ImGui::SameLine();
+			components::player_command_button<"remweaps">(g_player_service->get_selected(), { });
+
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("Misc"))
+		{
+			components::player_command_button<"ceokick">(g_player_service->get_selected(), {});		
+			components::player_command_button<"intkick">(g_player_service->get_selected(), {});
+
+			static int wanted_level;
+			ImGui::SliderInt("Wanted Level", &wanted_level, 0, 5);
+			ImGui::SameLine();
+			components::player_command_button<"wanted">(g_player_service->get_selected(), { (uint64_t)wanted_level }, "Set");
+
+			ImGui::TreePop();
+		}
+
+		
 	}
 }

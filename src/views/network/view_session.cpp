@@ -144,8 +144,7 @@ namespace big
 
 		components::sub_title("Decloak");
 
-		components::script_patch_checkbox("Reveal OTR Players", &g.session.decloak_players);
-		ImGui::SameLine(); components::help_marker("Shows Off radar players on the map.");
+		components::script_patch_checkbox("Reveal OTR Players", &g.session.decloak_players, "Shows Off radar players on the map.");
 
 		components::sub_title("Force Host");
 		ImGui::Checkbox("Force Session Host", &g.session.force_session_host);
@@ -358,7 +357,7 @@ namespace big
 		ImGui::SameLine();
 		ImGui::Checkbox("Force Thunder", &g.session.force_thunder);
 
-		components::small_text("Warp Time (requires session host)");
+		components::small_text("Warp Script Time (requires session host)");
 
 		components::button("+1 Minute", [] { toxic::warp_time_forward_all(60 * 1000); });
 		ImGui::SameLine();
@@ -371,8 +370,7 @@ namespace big
 		components::button("+200 Minutes", [] { toxic::warp_time_forward_all(200 * 60 * 1000); });
 		ImGui::SameLine();
 		components::button("Stop Time", [] { toxic::set_time_all(INT_MAX - 3000); });
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("This cannot be reversed. Use with caution");
+		ImGui::SameLine(); components::help_marker("This cannot be reversed. Use with caution");
 
 		components::sub_title("Script Host Features");
 		ImGui::Checkbox("Disable CEO Money", &g.session.block_ceo_money);

@@ -17,8 +17,7 @@ namespace big
 
 		if (!tooltip.empty())
 		{
-			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip(tooltip.data());
+			ImGui::SameLine(); components::help_marker(tooltip);
 		}
 
 		return ret;

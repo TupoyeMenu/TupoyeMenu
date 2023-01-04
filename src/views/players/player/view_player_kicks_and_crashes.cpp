@@ -29,23 +29,15 @@ namespace big
 			components::player_command_button<"shkick">(g_player_service->get_selected());
 			components::player_command_button<"endkick">(g_player_service->get_selected());
 			components::player_command_button<"desync">(g_player_service->get_selected());
+
+			ImGui::TreePop();
 		}
 
 		if (ImGui::TreeNode("Crashes (shit)")) 
 		{
-			components::button("Ped Crash", [] {
-				Ped ped = ped::spawn(ePedType::PED_TYPE_PROSTITUTE, rage::joaat("slod_human"), 0, misc::fvector3_to_Vector3(*g_player_service->get_selected()->get_ped()->get_position()), 0);
-				script::get_current()->yield(3s);
-				entity::delete_entity_notp(ped);
-			});
-			ImGui::SameLine(); components::help_marker("Spawns 'slod_human' ped near player wich crashes them. \nBlocked by most internal menus.\nUntested.");
+			components::player_command_button<"slodpedcrash">(g_player_service->get_selected());
+			components::player_command_button<"tlcrash">(g_player_service->get_selected());
 
-			components::button("Vehicle Crash", [] {
-				Vehicle veh = vehicle::spawn(rage::joaat("arbitergt"), misc::fvector3_to_Vector3(*g_player_service->get_selected()->get_ped()->get_position()), 0.f);
-				script::get_current()->yield(3s);
-				entity::delete_entity_notp(veh);
-			});
-			ImGui::SameLine(); components::help_marker("Spawns next_gen vehicle: 'arbitergt' near player wich crashes them. \nBlocked by most internal menus.\nUntested.");
 			ImGui::TreePop();
 		}
 	}

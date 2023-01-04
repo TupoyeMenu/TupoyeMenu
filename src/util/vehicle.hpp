@@ -59,13 +59,13 @@ namespace big::vehicle
 		return ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0.f, y_offset, 0.f);
 	}
 
-	inline void set_mp_bitset(Vehicle veh)
+	inline void set_mp_bitset(Vehicle veh, bool is_stolen = false)
 	{
 		DECORATOR::DECOR_SET_INT(veh, "MPBitset", 0);
 		auto networkId = NETWORK::VEH_TO_NET(veh);
 		if (NETWORK::NETWORK_GET_ENTITY_IS_NETWORKED(veh))
 			NETWORK::SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(networkId, true);
-		VEHICLE::SET_VEHICLE_IS_STOLEN(veh, FALSE);
+		VEHICLE::SET_VEHICLE_IS_STOLEN(veh, is_stolen);
 	}
 
 	inline void bring(Vehicle veh, Vector3 location, bool put_in = true, int seatIdx = -1)
@@ -179,7 +179,7 @@ namespace big::vehicle
 		return true;
 	}
 
-	inline Vehicle spawn(Hash hash, Vector3 location, float heading, bool is_networked = true, bool script_veh = false)
+	inline Vehicle spawn(Hash hash, Vector3 location, float heading, bool is_networked = true, bool script_veh = false, bool is_stolen = false)
 	{
 		for (uint8_t i = 0; !STREAMING::HAS_MODEL_LOADED(hash) && i < 100; i++)
 		{
@@ -198,7 +198,7 @@ namespace big::vehicle
 
 		if (*g_pointers->m_is_session_started)
 		{
-			set_mp_bitset(veh);
+			set_mp_bitset(veh, is_stolen);
 		}
 
 		return veh;

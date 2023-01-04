@@ -121,10 +121,30 @@ namespace big
 					}
 				}
 
-				components::button("Kick", []
-				{
-					session::kick_by_rockstar_id(current_player.rockstar_id);
-				});
+				
+				if(ImGui::Button("Kick"))
+					ImGui::OpenPopup("kick_popup");
+
+				if (ImGui::BeginPopup("kick_popup"))
+        		{
+        		    ImGui::Text("Are you sure you want to Kick %s?", current_player.name);
+        		    ImGui::Separator();
+        		    components::button("Yes Kick", [] { session::kick_by_rockstar_id(current_player.rockstar_id); });
+        		    ImGui::EndPopup();
+        		}
+
+				ImGui::SameLine();
+
+				if(ImGui::Button("Crash"))
+					ImGui::OpenPopup("crash_popup");
+
+				if (ImGui::BeginPopup("crash_popup"))
+        		{
+        		    ImGui::Text("Are you sure you want to crash %s?", current_player.name);
+        		    ImGui::Separator();
+        		    components::button("Yes Crash", [] { session::crash_by_rockstar_id(current_player.rockstar_id); });
+        		    ImGui::EndPopup();
+        		}
 
 				components::button("Join Session", []
 				{

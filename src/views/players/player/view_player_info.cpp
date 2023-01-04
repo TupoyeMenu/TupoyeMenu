@@ -153,41 +153,45 @@ namespace big
 
 				components::button("Open SC Overlay", [] {
 					int gamerHandle;
-					NETWORK::NETWORK_HANDLE_FROM_PLAYER(g_player_service->get_selected()->id(), &gamerHandle, 13);
+					if(g_player_service->get_selected()->real_rid != 0)
+						NETWORK::NETWORK_HANDLE_FROM_MEMBER_ID(std::to_string(g_player_service->get_selected()->real_rid).c_str(), &gamerHandle, 13);
+					else
+						NETWORK::NETWORK_HANDLE_FROM_PLAYER(g_player_service->get_selected()->id(), &gamerHandle, 13);
 					NETWORK::NETWORK_SHOW_PROFILE_UI(&gamerHandle);
 				});
 				ImGui::TreePop();
 			}
 		}
 
-		if (ImGui::BeginCombo("Chat Command Permissions", COMMAND_ACCESS_LEVELS[g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level)]))
-		{
-			for (const auto& [type, name] : COMMAND_ACCESS_LEVELS)
-			{
-				if (ImGui::Selectable(name, type == g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level)))
-				{
-					g.session.chat_command_default_access_level = type;
-					g_player_database_service->get_or_create_player(g_player_service->get_selected())->command_access_level = type;
-					g_player_database_service->save();
-				}
-				if (type == g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level))
-				{
-					ImGui::SetItemDefaultFocus();
-				}
-			}
-			ImGui::EndCombo();
-		}
-
 		if (persistent_player* current_player = g_player_database_service->get_player_by_rockstar_id(g_player_service->get_selected()->real_rid); current_player != nullptr)
 		{
-			if (ImGui::TreeNode("Infractions"))
+			if (ImGui::TreeNode("Player DB Info"))
 			{
 				if (!current_player->infractions.empty())
 				{
+					ImGui::Text("Infractions");
 					for (auto& infraction : current_player->infractions)
 					{
 						ImGui::BulletText(infraction_desc[(Infraction)infraction]);
 					}
+				}
+
+				if (ImGui::BeginCombo("Chat Command Permissions", COMMAND_ACCESS_LEVELS[g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level)]))
+				{
+					for (const auto& [type, name] : COMMAND_ACCESS_LEVELS)
+					{
+						if (ImGui::Selectable(name, type == g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level)))
+						{
+							g.session.chat_command_default_access_level = type;
+							g_player_database_service->get_or_create_player(g_player_service->get_selected())->command_access_level = type;
+							g_player_database_service->save();
+						}
+						if (type == g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level))
+						{
+							ImGui::SetItemDefaultFocus();
+						}
+					}
+					ImGui::EndCombo();
 				}
 				ImGui::TreePop();
 			}
