@@ -11,6 +11,7 @@
 #include "util/entity.hpp"
 #include <network/Network.hpp>
 #include <network/netTime.hpp>
+#include <script/globals/GPBD_FM_3.hpp>
 
 #include <timeapi.h>
 #pragma comment(lib, "winmm.lib")
@@ -179,7 +180,7 @@ namespace big::toxic
 			ent = PED::GET_VEHICLE_PED_IS_IN(ent, false);
 
 			if (entity::take_control_of(ent))
-				ENTITY::APPLY_FORCE_TO_ENTITY(ent, 1, 0.f, 0.f, INT32_MAX, 0.f, 0.f, 0.f, 0, 0, 1, 1, 0, 1);
+				ENTITY::APPLY_FORCE_TO_ENTITY(ent, 1, 0.f, 0.f, 3000, 0.f, 0.f, 0.f, 0, 0, 1, 1, 0, 1);
 			else
 				g_notification_service->push_warning("Toxic", "Failed to take control of player vehicle.");
 		}

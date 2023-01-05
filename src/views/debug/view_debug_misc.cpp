@@ -45,6 +45,8 @@ namespace big
 		}
 
 		ImGui::Checkbox("Log Native Script Hooks", &g.debug.logs.script_hook_logs);
+		
+		ImGui::Checkbox("Log Metrics", &g.debug.logs.metric_logs);
 
 		if (ImGui::TreeNode("Script Event Logging"))
 		{

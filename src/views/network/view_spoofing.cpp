@@ -40,8 +40,7 @@ namespace big
 		components::sub_title("IP Address");
 
 		ImGui::Checkbox("Spoof IP", &g.spoofing.spoof_ip);
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("Disable this feature if you're having trouble joining sessions.");
+		ImGui::SameLine(); components::help_marker("Disable this feature if you're having trouble joining sessions.");
 
 		ImGui::Text("IP Address:");
 		ImGui::DragInt4("##ip_fields", g.spoofing.ip_address.data(), 0, 255);

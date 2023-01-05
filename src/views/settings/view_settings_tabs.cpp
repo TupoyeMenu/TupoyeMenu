@@ -26,9 +26,9 @@ namespace big
 				view::gui_settings();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Notifications"))
+			if (ImGui::BeginTabItem("Reactions"))
 			{
-				view::notification_settings();
+				view::reaction_settings();
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Protection"))

@@ -113,7 +113,7 @@ namespace big
 			looped::world_population_control();
 			
 			looped::script_starter();
-			looped::fast_join();
+			looped::seamless_join();
 			looped::phone_anim();
 			looped::disable_help_text();
 			
@@ -128,6 +128,7 @@ namespace big
 		while (g_running)
 		{
 			looped::player_good_options();
+			looped::player_toxic_options();
 			looped::player_spectate();
 			looped::player_remote_control_vehicle();
 

@@ -330,35 +330,6 @@ namespace big
 					}
 					break;
 				}
-				case "CPlayerGameStateDataNode"_j:
-				{
-					if(g.notifications.script_event_handler.spectate.notify)
-					{
-						const auto player_game_state_node = dynamic_cast<CPlayerGameStateDataNode*>(node);
-						if (player_game_state_node->m_is_spectating &&
-						 sender->m_player_info &&
-						 sender->m_player_info->m_ped &&
-						 sender->m_player_info->m_ped->m_net_object &&
-						 sender->m_player_info->m_ped->m_net_object->m_object_id == object->m_object_id)
-						{
-							if (g_local_player && g_local_player->m_net_object && g_local_player->m_net_object->m_object_id == player_game_state_node->m_spectating_net_id)
-							{
-								g_notification_service->push("Spectating", std::format("{} is spectating you", sender->get_name()));
-							}
-							else
-							{
-								g_player_service->iterate([&](auto& player) 
-								{ 
-									if (player.second->get_ped() && player.second->get_ped()->m_net_object && player.second->get_ped()->m_net_object->m_object_id == player_game_state_node->m_spectating_net_id)
-									{
-										g_notification_service->push("Spectating", std::format("{} is spectating: {}", sender->get_name(), player.first));
-									}
-								});
-							}
-						}
-					}
-					break;
-				}
 				case "CSectorDataNode"_j:
 				{
 					const auto sector_node = dynamic_cast<CSectorDataNode*>(node);

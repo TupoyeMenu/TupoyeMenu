@@ -47,31 +47,23 @@ namespace big
 
 		inline void SC_TRANSITION_NEWS_SHOW(rage::scrNativeCallContext* src)
 		{
-			if (g.tunables.fast_join)
-			{
+			if (g.tunables.seamless_join)
 				src->set_return_value<BOOL>(false);
-			}
 			else
-			{
 				src->set_return_value<BOOL>(SOCIALCLUB::SC_TRANSITION_NEWS_SHOW(src->get_arg<Any>(0)));
-			}
 		}
 
 		inline void SC_TRANSITION_NEWS_SHOW_TIMED(rage::scrNativeCallContext* src)
 		{
-			if (g.tunables.fast_join)
-			{
+			if (g.tunables.seamless_join)
 				src->set_return_value<BOOL>(false);
-			}
 			else
-			{
 				src->set_return_value<BOOL>(SOCIALCLUB::SC_TRANSITION_NEWS_SHOW_TIMED(src->get_arg<Any>(0), src->get_arg<Any>(0)));
-			}
 		}
 
 		inline void CLEAR_PED_TASKS_IMMEDIATELY(rage::scrNativeCallContext* src)
 		{
-			if(SCRIPT::GET_HASH_OF_THIS_SCRIPT_NAME() != RAGE_JOAAT("maintransition") || !g.tunables.fast_join)
+			if(SCRIPT::GET_HASH_OF_THIS_SCRIPT_NAME() != RAGE_JOAAT("maintransition") || !g.tunables.seamless_join)
 				TASK::CLEAR_PED_TASKS_IMMEDIATELY(src->get_arg<Ped>(0));
 
 			if(src->get_arg<Ped>(0) == self::ped)

@@ -9,8 +9,10 @@
 #include "core/data/apartment_names.hpp"
 #include "core/data/warehouse_names.hpp"
 #include "core/data/command_access_levels.hpp"
-#include <network/Network.hpp>
 #include "hooking.hpp"
+
+#include <network/Network.hpp>
+#include <script/globals/GPBD_FM_3.hpp>
 
 namespace big
 {
@@ -22,6 +24,11 @@ namespace big
 		{
 			session::join_by_rockstar_id(rid);
 		});
+		ImGui::SameLine();
+		components::button("Kick by RID", []
+		{
+			session::kick_by_rockstar_id(rid);
+		});
 
 		static char username[20];
 		ImGui::InputText("Input Username", username, sizeof(username));
@@ -29,7 +36,12 @@ namespace big
 		{
 			session::join_by_username(username);
 		};
-    
+		ImGui::SameLine();
+		if (components::button("Kick by Username"))
+		{
+			session::kick_by_username(username);
+		};
+
 		static char base64[500]{};
 		ImGui::InputText("Session Info", base64, sizeof(base64));
 		components::button("Join Session Info", []
@@ -72,7 +84,11 @@ namespace big
 			ImGui::EndListBox();
 		}
 
-		ImGui::Checkbox("Fast Join", &g.tunables.fast_join);
+		ImGui::Checkbox("Seamless Join", &g.tunables.seamless_join);
+		ImGui::SameLine(); components::help_marker("Allows you move freely while in session transition.");
+
+		ImGui::Checkbox("Don't unload online maps", &g.tunables.dont_unload_online_maps);
+		ImGui::SameLine(); components::help_marker("Prevents ON_ENTER_SP from being called.\nSpeeds up joining online after going into single player.");
 
 		ImGui::Checkbox("Join in SCTV slots", &g.session.join_in_sctv_slots);
 		ImGui::SameLine(); components::help_marker("Allows you to join full and solo sessions but can be detected by other modders");
@@ -128,8 +144,7 @@ namespace big
 
 		components::sub_title("Decloak");
 
-		components::script_patch_checkbox("Reveal OTR Players", &g.session.decloak_players);
-		ImGui::SameLine(); components::help_marker("Shows Off radar players on the map.");
+		components::script_patch_checkbox("Reveal OTR Players", &g.session.decloak_players, "Shows Off radar players on the map.");
 
 		components::sub_title("Force Host");
 		ImGui::Checkbox("Force Session Host", &g.session.force_session_host);
@@ -202,6 +217,8 @@ namespace big
 		}
 
 		components::command_button<"killall">({ }, "Kill Everyone");
+		ImGui::SameLine();
+		components::command_button<"explodeall">({ }, "Explode Everyone");
 
 		ImGui::SameLine();
 
@@ -340,7 +357,7 @@ namespace big
 		ImGui::SameLine();
 		ImGui::Checkbox("Force Thunder", &g.session.force_thunder);
 
-		components::small_text("Warp Time (requires session host)");
+		components::small_text("Warp Script Time (requires session host)");
 
 		components::button("+1 Minute", [] { toxic::warp_time_forward_all(60 * 1000); });
 		ImGui::SameLine();
@@ -353,8 +370,7 @@ namespace big
 		components::button("+200 Minutes", [] { toxic::warp_time_forward_all(200 * 60 * 1000); });
 		ImGui::SameLine();
 		components::button("Stop Time", [] { toxic::set_time_all(INT_MAX - 3000); });
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("This cannot be reversed. Use with caution");
+		ImGui::SameLine(); components::help_marker("This cannot be reversed. Use with caution");
 
 		components::sub_title("Script Host Features");
 		ImGui::Checkbox("Disable CEO Money", &g.session.block_ceo_money);

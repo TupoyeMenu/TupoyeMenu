@@ -71,6 +71,7 @@ namespace big
 			ImGui::Checkbox("God Mode", &g.vehicle.god_mode);
 			components::command_checkbox<"hornboost">();
 			components::command_checkbox<"vehjump">();
+			ImGui::Checkbox("Vehicle Flares", &g.vehicle.flares);
 
 			ImGui::EndGroup();
 			ImGui::SameLine();
@@ -79,6 +80,7 @@ namespace big
 			components::command_checkbox<"instantbrake">();
 			components::command_checkbox<"blockhoming">();
 			components::command_checkbox<"driveonwater">();
+			ImGui::Checkbox("Vehicle Chaff", &g.vehicle.chaff);
 
 			ImGui::EndGroup();
 			ImGui::SameLine();
@@ -91,17 +93,6 @@ namespace big
 				ImGui::Checkbox("Fully Automatic Signal", &g.vehicle.auto_turn_signals);
 			}
 			components::command_checkbox<"driveunder">();
-
-			ImGui::EndGroup();
-			ImGui::BeginGroup();
-
-			ImGui::Checkbox("Vehicle Flares", &g.vehicle.flares);
-			ImGui::Checkbox("Vehicle Chaff", &g.vehicle.chaff);
-
-			ImGui::EndGroup();
-			ImGui::SameLine();
-			ImGui::BeginGroup();
-
 			components::command_checkbox<"remove_speed_limit">();
 
 			ImGui::EndGroup();

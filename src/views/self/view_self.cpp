@@ -40,6 +40,7 @@ namespace big
 		components::command_checkbox<"nophone">();
 		components::command_checkbox<"infoxy">();
 		components::command_checkbox<"fastrespawn">();
+		ImGui::Checkbox("Phone Anim", &g.tunables.phone_anim);
 
 		ImGui::EndGroup();
 		ImGui::SameLine();
@@ -50,6 +51,8 @@ namespace big
 		components::command_checkbox<"fastrun">();
 		ImGui::Checkbox("No Idle Kick", &g.tunables.no_idle_kick);
 		components::command_checkbox<"walkunder">();
+		ImGui::Checkbox("Jump Ragdoll", &g.self.allow_ragdoll);
+		ImGui::Checkbox("Always Control", &g.tunables.always_control);
 
 		ImGui::EndGroup();
 		ImGui::SameLine();
@@ -65,14 +68,7 @@ namespace big
 		ImGui::Checkbox("Dance Mode", &g.self.dance_mode);
 		ImGui::SameLine(); components::help_marker("Hold Right DPAD or E to enter dance mode");
 
-		ImGui::EndGroup();
-		ImGui::SameLine();
-		ImGui::BeginGroup();
-
-		ImGui::Checkbox("Phone Anim", &g.tunables.phone_anim);
-		ImGui::Checkbox("Jump Ragdoll", &g.self.allow_ragdoll);
 		ImGui::Checkbox("Disable Help Text", &g.tunables.disable_help_text);
-		ImGui::Checkbox("Always Control", &g.tunables.always_control);
 
 		ImGui::EndGroup();
 

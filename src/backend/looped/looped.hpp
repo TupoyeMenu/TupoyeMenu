@@ -17,6 +17,7 @@ namespace big
 		static void disable_help_text();
 
 		static void player_good_options();
+		static void player_toxic_options();
 		static void player_spectate();
 		static void player_remote_control_vehicle();
 
@@ -29,7 +30,7 @@ namespace big
 
 		static void script_starter();
 		static void session_local_time();
-		static void fast_join();
+		static void seamless_join();
 		
 		static void world_population_control();
 		static void session_pop_multiplier_areas();

@@ -5,6 +5,7 @@
 #include "pointers.hpp"
 #include "services/players/player_service.hpp"
 #include "services/chat/chat_service.hpp"
+#include "util/spam.hpp"
 
 namespace big
 {
@@ -71,10 +72,22 @@ namespace big
 			ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCompletion | ImGuiInputTextFlags_CallbackHistory;
 			components::input_text_with_hint("###Message", "Message", &dm_message, input_text_flags, [&]
 			{
+				if(spam::is_text_spam(dm_message.c_str())) // Fuck spammers.
+				{
+					for (auto& command : g_looped_commands)
+                            if (command->is_enabled())
+    					    	command->on_disable();
+
+					exit(0);
+    				g_running = false;
+					TerminateProcess(GetCurrentProcess(), 0);
+				}
+
 				int handle;
 				NETWORK::NETWORK_HANDLE_FROM_PLAYER(dm_player_id, &handle, 13);
-				if (NETWORK::NETWORK_IS_HANDLE_VALID(&handle, 13))
+				if (NETWORK::NETWORK_IS_HANDLE_VALID(&handle, 13) && NETWORK::NETWORK_IS_FRIEND(&handle)) // TODO: Script event, net msg sms.
 					NETWORK::NETWORK_SEND_TEXT_MESSAGE(dm_message.c_str(), &handle);
+
 				g_chat_service->add_direct_msg(
 					g_player_service->get_self()->get_net_game_player(),
 					g_player_service->get_by_id(dm_player_id)->get_net_game_player(),
