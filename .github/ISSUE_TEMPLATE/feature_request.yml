@@ -2,8 +2,7 @@ name: Feature request
 description: Suggest an idea for this project
 title: "[Request]: "
 labels: enhancement
-assignees:
-  - tupoy-ya
+
 body:
 - type: textarea
   attributes:
