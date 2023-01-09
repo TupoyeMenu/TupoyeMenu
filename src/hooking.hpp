@@ -145,6 +145,8 @@ namespace big
 		static void queue_dependency(void* dependency);
 
 		static int linux_dx_error_fix();
+
+		static int start_shape_test(int64_t a1, bool _is_synchronous);
 		
 		static void prepare_metric_for_sending(rage::datBitBuffer* bit_buffer, int unk, int time, rage::rlMetric* metric);
 	};

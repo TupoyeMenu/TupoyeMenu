@@ -14,7 +14,9 @@ namespace big
 		gui& operator=(gui&&) noexcept  = delete;
 
 		bool is_open();
-		void toggle(bool toggle);
+		bool is_mouse_active();
+		void toggle(bool toggle, bool should_toggle_mouse = true);
+		void toggle_mouse(bool toggle);
 
 		void dx_init();
 		void dx_on_tick();
@@ -25,10 +27,8 @@ namespace big
 		void wndproc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
 	private:
-		void toggle_mouse();
-
-	private:
 		bool m_is_open;
+		bool m_is_mouse_active = false;
 
 	};
 

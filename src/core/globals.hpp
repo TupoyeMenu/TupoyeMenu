@@ -368,6 +368,8 @@ namespace big
 			{
 				bool editing_menu_toggle = false;
 				int menu_toggle = VK_INSERT;
+				int object_spooner = VK_F9;
+				int object_spooner_ctx = 0x43 /*VK_C*/;
 				int teleport_waypoint = 0;
 				int teleport_objective = 0;
 				int noclip = 0;
@@ -376,8 +378,8 @@ namespace big
 				int skip_cutscene = 0;
 
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys,
-				 editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, noclip,
-				 heal, fill_inventory, skip_cutscene)
+				 editing_menu_toggle, menu_toggle, object_spooner, teleport_waypoint, teleport_objective, noclip,
+				 heal, fill_inventory, skip_cutscene, object_spooner_ctx)
 			} hotkeys{};
 
 			bool dev_dlc = false;
@@ -585,6 +587,7 @@ namespace big
 			bool log = false;
 
 			int overlay_corner = 0;
+			bool overlay_pools = false;
 
 			ImU32 color = 3357612055;
 			float gui_scale = 1.f;
@@ -594,7 +597,7 @@ namespace big
 			ImFont* font_small = nullptr;
 			ImFont* font_icon = nullptr;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, main, users, player, overlay, overlay_corner, chat, demo, log, color, gui_scale)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, main, users, player, overlay, overlay_corner, overlay_pools, chat, demo, log, color, gui_scale)
 		} window{};
 
 		struct context_menu
@@ -615,6 +618,11 @@ namespace big
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(context_menu,
 				enabled, allowed_entity_types, selected_option_color, bounding_box_enabled, bounding_box_color)
 		} context_menu{};
+
+		struct object_spooner
+		{
+			bool enabled = false;
+		} object_spooner{};
 
 		struct chat
 		{
@@ -699,7 +707,6 @@ namespace big
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(ugc, infinite_model_memory)
 		} ugc{};
-
 
 		NLOHMANN_DEFINE_TYPE_INTRUSIVE(menu_settings,
 			debug, tunables, notifications, player, protections, self, session, settings, spawn_vehicle, clone_pv,

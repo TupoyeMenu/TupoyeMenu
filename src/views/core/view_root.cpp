@@ -8,6 +8,9 @@ namespace big
 		if (g.window.main) 
 			view::main_view();
 
+		if(g.object_spooner.enabled)
+			view::spooner_tabs();
+
 		if (g.window.player)
 			view::view_player_tabs();
 

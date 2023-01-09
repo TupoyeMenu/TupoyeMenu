@@ -1,5 +1,6 @@
 #pragma once
 #include "pointers.hpp"
+#include "imgui.h"
 
 namespace big::math
 {
@@ -35,5 +36,11 @@ namespace big::math
 		const Vector3 cam_coords = g_pointers->m_get_gameplay_cam_coords();
 
 		return (float)distance_between_vectors(plyr_coords, cam_coords);
+	}
+
+	inline void screen_coords_to_game_coords(ImVec2 screen_input, ImVec2* screen_result)
+	{
+		screen_result->x = screen_input.x / static_cast<float>(*g_pointers->m_resolution_x);
+		screen_result->y = screen_input.y / static_cast<float>(*g_pointers->m_resolution_y);
 	}
 }

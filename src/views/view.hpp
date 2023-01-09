@@ -65,6 +65,9 @@ namespace big
 		static void chat_dm();
 		static void log();
 
+		static void spooner_tabs();
+		static void spooner_info();
+
 		static void view_player_tabs();
 		static void view_player_info();
 		static void view_player_kicks_and_crashes();

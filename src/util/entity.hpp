@@ -3,6 +3,7 @@
 #include "gta/replay.hpp"
 #include "natives.hpp"
 #include "script.hpp"
+#include "services/object_spooner/object_spooner_service.hpp"
 #include "math.hpp"
 
 namespace big::entity
@@ -35,14 +36,6 @@ namespace big::entity
 		ENTITY::DELETE_ENTITY(&ent);
 	}
 
-	inline void delete_entity_notp(Entity ent)
-	{
-		ENTITY::DETACH_ENTITY(ent, 1, 1);
-		ENTITY::SET_ENTITY_AS_MISSION_ENTITY(ent, 1, 1);
-		ENTITY::SET_ENTITY_AS_NO_LONGER_NEEDED(&ent);
-		ENTITY::DELETE_ENTITY(&ent);
-	}
-
 	inline bool raycast(Entity* ent)
 	{
 		BOOL hit;
@@ -60,6 +53,31 @@ namespace big::entity
 
 		int ray = SHAPETEST::START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE(camCoords.x, camCoords.y, camCoords.z, farCoords.x, farCoords.y, farCoords.z, -1, 0, 7);
 		SHAPETEST::GET_SHAPE_TEST_RESULT(ray, &hit, &endCoords, &surfaceNormal, ent);
+
+		return (bool)hit;
+	}
+
+	inline bool raycast(Entity* ent, Vector3* endCoords, Vector3* surfaceNormal, Vector3 camCoords, Vector3 direction, Entity ignore_ent = 0)
+	{
+		BOOL hit;
+		Vector3 farCoords;
+
+		farCoords.x = camCoords.x + direction.x * 1000;
+		farCoords.y = camCoords.y + direction.y * 1000;
+		farCoords.z = camCoords.z + direction.z * 1000;
+
+		int ray = SHAPETEST::START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE(camCoords.x, camCoords.y, camCoords.z, farCoords.x, farCoords.y, farCoords.z, 511, ignore_ent, 0);
+		SHAPETEST::GET_SHAPE_TEST_RESULT(ray, &hit, endCoords, surfaceNormal, ent);
+
+		return (bool)hit;
+	}
+
+	inline bool raycast_mouse(Entity* ent, Vector3* startCoords, Vector3* endCoords, Vector3* surfaceNormal, Entity ignore_ent = 0)
+	{
+		BOOL hit;
+
+		int ray = SHAPETEST::START_SHAPE_TEST_MOUSE_CURSOR_LOS_PROBE(startCoords, endCoords, 511, ignore_ent, 0);
+		SHAPETEST::GET_SHAPE_TEST_RESULT(ray, &hit, endCoords, surfaceNormal, ent);
 
 		return (bool)hit;
 	}

@@ -16,6 +16,7 @@ namespace big
         register_hotkey("heal", g.settings.hotkeys.heal, RAGE_JOAAT("heal"));
         register_hotkey("fillsnacks", g.settings.hotkeys.fill_inventory, RAGE_JOAAT("fillsnacks"));
         register_hotkey("skipcutscene", g.settings.hotkeys.skip_cutscene, RAGE_JOAAT("skipcutscene"));
+        register_hotkey("object_spooner", g.settings.hotkeys.object_spooner, RAGE_JOAAT("object_spooner"));
 
 
         g_renderer->add_wndproc_callback([this](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)

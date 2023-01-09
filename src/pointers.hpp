@@ -248,6 +248,8 @@ namespace big
 
 		PVOID m_fragment_physics_crash;
 		PVOID m_fragment_physics_crash_2;
+
+		PVOID m_start_shape_test;
 	};
 
 	inline pointers* g_pointers{};

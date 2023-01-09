@@ -18,7 +18,7 @@ namespace big
 		{
 			Ped ped = ped::spawn(ePedType::PED_TYPE_PROSTITUTE, RAGE_JOAAT("slod_human"), 0, misc::fvector3_to_Vector3(*player->get_ped()->get_position()), 0);
 			script::get_current()->yield(3s);
-			entity::delete_entity_notp(ped);
+			entity::delete_entity(ped);
 		}
 	};
 

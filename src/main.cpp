@@ -14,6 +14,7 @@
 
 #include "backend/backend.hpp"
 #include "native_hooks/native_hooks.hpp"
+#include "services/object_spooner/object_spooner_service.hpp"
 #include "services/chat/chat_service.hpp"
 #include "services/context_menu/context_menu_service.hpp"
 #include "services/custom_text/custom_text_service.hpp"
@@ -90,6 +91,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				LOG(INFO) << "Hooking initialized.";
 
 				auto chat_service_instance = std::make_unique<chat_service>();
+				auto object_spooner_service_instance = std::make_unique<object_spooner_service>();
 				auto context_menu_service_instance = std::make_unique<context_menu_service>();
 				auto custom_text_service_instance = std::make_unique<custom_text_service>();
 				auto globals_service_instace = std::make_unique<globals_service>();
@@ -123,6 +125,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				g_script_mgr.add_script(std::make_unique<script>(&backend::turnsignal_loop, "Turn Signals"));
 				g_script_mgr.add_script(std::make_unique<script>(&backend::disable_control_action_loop, "Disable Controls"));
 				g_script_mgr.add_script(std::make_unique<script>(&context_menu_service::context_menu, "Context Menu"));
+				g_script_mgr.add_script(std::make_unique<script>(&object_spooner_service::object_spooner, "Object Spooner"));
 				LOG(INFO) << "Scripts registered.";
 
 				auto native_hooks_instance = std::make_unique<native_hooks>();
@@ -192,6 +195,8 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				LOG(INFO) << "Custom Text Service reset.";
 				context_menu_service_instance.reset();
 				LOG(INFO) << "Context Service reset.";
+				object_spooner_service_instance.reset();
+				LOG(INFO) << "Spooner Service reset.";
 				LOG(INFO) << "Services uninitialized.";
 
 				hooking_instance.reset();

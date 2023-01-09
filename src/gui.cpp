@@ -7,6 +7,7 @@
 #include <imgui.h>
 
 #include "views/view.hpp"
+#include "services/object_spooner/object_spooner_service.hpp"
 
 namespace big
 {
@@ -17,11 +18,12 @@ namespace big
 		g_renderer->add_dx_callback(view::notifications, -2); // second highest priority
 		g_renderer->add_dx_callback(view::overlay,-3);
 		g_renderer->add_dx_callback(view::spinner, -4); // TODO: move to Spinner service
+		g_renderer->add_dx_callback(g_object_spooner_service->draw_imgui, -5);
 		g_renderer->add_dx_callback([this]
 		{
 			ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 			dx_on_tick();
-		}, -5);
+		}, -6);
 
 		g_renderer->add_wndproc_callback([this](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		{
@@ -46,11 +48,12 @@ namespace big
 		return m_is_open;
 	}
 
-	void gui::toggle(bool toggle)
+	void gui::toggle(bool toggle, bool should_toggle_mouse)
 	{
 		m_is_open = toggle;
-
-		toggle_mouse();
+		
+		if(should_toggle_mouse)
+			toggle_mouse(m_is_open);
 	}
 
 	void gui::dx_init()
@@ -209,15 +212,22 @@ namespace big
 		}
 	}
 
-	void gui::toggle_mouse()
+	bool gui::is_mouse_active()
 	{
-		if (m_is_open)
+		return m_is_mouse_active;
+	}
+
+	void gui::toggle_mouse(bool toggle)
+	{
+		if (toggle)
 		{
+			m_is_mouse_active = true;
 			ImGui::GetIO().MouseDrawCursor = true;
 			ImGui::GetIO().ConfigFlags &= ~ImGuiConfigFlags_NoMouse;
 		}
 		else
 		{
+			m_is_mouse_active = false;
 			ImGui::GetIO().MouseDrawCursor = false;
 			ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NoMouse;
 		}

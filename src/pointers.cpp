@@ -863,6 +863,12 @@ namespace big
 			m_fragment_physics_crash_2 = ptr.add(1).rip().as<PVOID>();
 		});
 
+		// Start Shape Test
+		main_batch.add("SST", "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 56 41 57 48 83 EC 20 48 8B F9 48 8B 0D", [this](memory::handle ptr)
+		{
+			m_start_shape_test = ptr.as<PVOID>();
+		});
+
 		auto mem_region = memory::module("GTA5.exe");
 		main_batch.run(mem_region);
 
