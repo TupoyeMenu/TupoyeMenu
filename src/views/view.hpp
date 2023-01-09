@@ -64,6 +64,8 @@ namespace big
 		static void chat();
 		static void chat_dm();
 		static void log();
+		static void creator();
+		static void train();
 
 		static void view_player_tabs();
 		static void view_player_info();
@@ -71,7 +73,5 @@ namespace big
 		static void view_player_misc();
 		static void view_player_toxic();
 		static void view_player_troll();
-		
-		static void creator();
 	};
 }

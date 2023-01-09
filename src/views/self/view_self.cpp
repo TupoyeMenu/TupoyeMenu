@@ -40,7 +40,10 @@ namespace big
 		components::command_checkbox<"nophone">();
 		components::command_checkbox<"infoxy">();
 		components::command_checkbox<"fastrespawn">();
-		ImGui::Checkbox("Phone Anim", &g.tunables.phone_anim);
+		if(!g.self.super_jump)
+			components::command_checkbox<"beastjump">();
+		if(!g.self.beast_jump)
+			components::command_checkbox<"superjump">();
 
 		ImGui::EndGroup();
 		ImGui::SameLine();
@@ -69,6 +72,7 @@ namespace big
 		ImGui::SameLine(); components::help_marker("Hold Right DPAD or E to enter dance mode");
 
 		ImGui::Checkbox("Disable Help Text", &g.tunables.disable_help_text);
+		ImGui::Checkbox("Phone Anim", &g.tunables.phone_anim);
 
 		ImGui::EndGroup();
 

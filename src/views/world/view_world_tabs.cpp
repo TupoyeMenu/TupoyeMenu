@@ -26,6 +26,11 @@ namespace big
 				view::creator();
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("Train"))
+			{
+				view::train();
+				ImGui::EndTabItem();
+			}
 			ImGui::EndTabBar();
 		}
 	}

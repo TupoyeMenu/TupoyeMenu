@@ -274,6 +274,8 @@ namespace big
 			bool mobile_radio = false;
 			bool fast_respawn = false;
 			bool auto_tp = false;
+			bool super_jump = false;
+			bool beast_jump = false;
 
 			// do not save below entries
 			bool dance_mode = false;
@@ -283,7 +285,7 @@ namespace big
 				noclip, off_radar, super_run, no_collision, unlimited_oxygen, no_water_collision, wanted_level, god_mode,
 				proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_drown, proof_water,
 				proof_mask, hide_radar, hide_ammo, selected_hud_component, hud_components_states, force_show_hud_element,
-				force_show_hud, mobile_radio, fast_respawn, auto_tp, allow_ragdoll)
+				force_show_hud, mobile_radio, fast_respawn, auto_tp, super_jump, beast_jump, allow_ragdoll)
 		} self{};
 
 		struct session
@@ -352,6 +354,7 @@ namespace big
 			bool wanted_level_all = false;
 
 			bool show_cheating_message = false;
+			bool anonymous_bounty = true;
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session,
 				local_weather, override_time, override_weather, custom_time, population_control, disable_chat_filter, log_chat_messages,
@@ -359,7 +362,7 @@ namespace big
 				player_magnet_count, name_spoof_enabled, advertise_menu, spoofed_name, join_in_sctv_slots,
 				kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic,
 				disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, send_to_apartment_idx, send_to_warehouse_idx,
-				chat_commands, chat_command_default_access_level, show_cheating_message)
+				chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty)
 		} session{};
 
 		struct settings
@@ -371,13 +374,21 @@ namespace big
 				int teleport_waypoint = 0;
 				int teleport_objective = 0;
 				int noclip = 0;
+				int bringvehicle = 0;
+				int invis = 0;
 				int heal = 0;
 				int fill_inventory = 0;
 				int skip_cutscene = 0;
+				int freecam = 0;
+				int superrun = 0;
+				int superjump = 0;
+				int beastjump = 0;
+				int invisveh = 0;
+				int localinvisveh = 0;
 
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys,
-				 editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, noclip,
-				 heal, fill_inventory, skip_cutscene)
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys, editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, 
+					noclip, bringvehicle, invis, heal, fill_inventory, skip_cutscene, freecam, superrun, superjump, beastjump,
+					invisveh, localinvisveh)
 			} hotkeys{};
 
 			bool dev_dlc = false;
@@ -413,6 +424,12 @@ namespace big
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(spawn_ped, preview_ped)
 		} spawn_ped{};
+
+		struct train
+		{
+			bool derail_train = false;
+			bool drive_train = false;
+		} train{};
 
 		struct spoofing
 		{
@@ -527,14 +544,17 @@ namespace big
 			bool no_water_collision = false;
 			bool disable_engine_auto_start = false;
 			bool change_engine_state_immediately = false;
+			bool vehinvisibility = false;
+			bool localveh_visibility = false;
+			bool localped_visibility = true;
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(vehicle,
 				speedo_meter, fly, rainbow_paint, speed_unit, god_mode,
 				proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_water, proof_mask,
 				auto_drive_destination, auto_drive_style, auto_drive_speed, auto_turn_signals, boost_behavior,
 				drive_on_water, horn_boost, instant_brake, block_homing, seatbelt, turn_signals, vehicle_jump,
-				keep_vehicle_repaired, flares, chaff, no_water_collision,
-				disable_engine_auto_start, change_engine_state_immediately)
+				keep_vehicle_repaired, flares, chaff, no_water_collision, disable_engine_auto_start, change_engine_state_immediately,
+				vehinvisibility, localveh_visibility, localped_visibility)
 		} vehicle{};
 
 		struct weapons
