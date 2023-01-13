@@ -31,6 +31,11 @@ namespace big
 				view::reaction_settings();
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("Reactions"))
+			{
+				view::hotkey_settings();
+				ImGui::EndTabItem();
+			}
 			if (ImGui::BeginTabItem("Protection"))
 			{
 				view::protection_settings();
