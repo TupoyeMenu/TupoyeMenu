@@ -37,6 +37,7 @@ namespace big
 		{
 			components::player_command_button<"slodpedcrash">(g_player_service->get_selected());
 			components::player_command_button<"tlcrash">(g_player_service->get_selected());
+			components::player_command_button<"tsecrash">(g_player_service->get_selected());
 
 			ImGui::TreePop();
 		}
