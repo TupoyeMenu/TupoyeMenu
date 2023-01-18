@@ -337,18 +337,6 @@ namespace big
 
 		//END SHV
 
-		// Network
-		main_batch.add("N", "48 8B 0D ? ? ? ? 48 8B D7 E8 ? ? ? ? 84 C0 75 17 48 8B 0D ? ? ? ? 48 8B D7", [this](memory::handle ptr)
-		{
-			m_network = ptr.add(3).rip().as<Network**>();
-		});
-
-		// Reset Network Complaints
-		main_batch.add("RENC", "E8 ? ? ? ? 8B 8B ? ? ? ? 03 CF", [this](memory::handle ptr)
-		{
-			m_reset_network_complaints = ptr.add(1).rip().as<functions::reset_network_complaints>();
-		});
-
 		// Get Pool Type
 		main_batch.add("GPT", "48 89 5C 24 ? 57 48 83 EC 20 48 8B 1D ? ? ? ? BA", [this](memory::handle ptr)
 		{
@@ -416,6 +404,18 @@ namespace big
 		main_batch.add("MCF", "E8 ? ? ? ? 83 F8 FF 75 B9", [this](memory::handle ptr)
 		{
 			m_check_chat_profanity = ptr.add(1).rip().as<decltype(m_check_chat_profanity)>();
+		});
+
+		// Network
+		main_batch.add("N", "48 8B 0D ? ? ? ? 48 8B D7 E8 ? ? ? ? 84 C0 75 17 48 8B 0D ? ? ? ? 48 8B D7", [this](memory::handle ptr)
+		{
+			m_network = ptr.add(3).rip().as<Network**>();
+		});
+
+		// Reset Network Complaints
+		main_batch.add("RENC", "E8 ? ? ? ? 8B 8B ? ? ? ? 03 CF", [this](memory::handle ptr)
+		{
+			m_reset_network_complaints = ptr.add(1).rip().as<functions::reset_network_complaints>();
 		});
 
 		// fiDevice Get Device
