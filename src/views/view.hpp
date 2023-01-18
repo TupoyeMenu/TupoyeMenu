@@ -67,6 +67,7 @@ namespace big
 		static void log();
 		static void creator();
 		static void train();
+		static void water();
 
 		static void view_player_tabs();
 		static void view_player_info();

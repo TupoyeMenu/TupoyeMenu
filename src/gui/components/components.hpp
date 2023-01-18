@@ -28,6 +28,7 @@ namespace big
 
 		static void input_text_with_hint(const std::string_view label, const std::string_view hint, char* buf, size_t buf_size, ImGuiInputTextFlags flag = ImGuiInputTextFlags_None, std::function<void()> cb = nullptr);
 		static void input_text_with_hint(const std::string_view label, const std::string_view hint, std::string* buf, ImGuiInputTextFlags flag = ImGuiInputTextFlags_None, std::function<void()> cb = nullptr);
+		static void input_text(const std::string_view label, char* buf, size_t buf_size, ImGuiInputTextFlags_ flag = ImGuiInputTextFlags_None, std::function<void()> cb = nullptr);
 
 		static bool selectable(const std::string_view, bool);
 		static bool selectable(const std::string_view, bool, ImGuiSelectableFlags);

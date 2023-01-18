@@ -31,6 +31,11 @@ namespace big
 				view::train();
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("Water"))
+			{
+				view::water();
+				ImGui::EndTabItem();
+			}
 			ImGui::EndTabBar();
 		}
 	}
