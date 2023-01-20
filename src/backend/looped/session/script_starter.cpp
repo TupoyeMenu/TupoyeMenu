@@ -18,7 +18,6 @@ namespace big
                 Hash hash = RAGE_JOAAT("cablecar");
                 if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(hash) == 0)
                 {
-                    LOG(G3LOG_DEBUG) << "trying to start cablecar2";
                     scripts::request_script(hash);
                     if (scripts::wait_till_loaded(hash))
                     {

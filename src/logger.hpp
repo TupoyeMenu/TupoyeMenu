@@ -34,8 +34,8 @@ namespace big
 
 	struct log_entry
 	{
-		LogColor color;
-		LEVELS level;
+		LogColor m_color;
+		LEVELS m_level;
 		std::string m_message;
 	};
 
@@ -175,7 +175,7 @@ namespace big
 				({
 					log_sink::get_color(log.get()._level),
 					log.get()._level,
-					log.get().toString(log_sink::format_file)
+					log.get().toString(log_sink::format_imgui_console)
 				});
 			}
 
@@ -216,6 +216,18 @@ namespace big
 				out
 					<< msg.timestamp("%H:%M:%S") << ","
 					<< msg.level() << ","
+					<< msg.file() << ":" << msg.line()
+					<< ",";
+
+				return out.str();
+			}
+
+			static std::string format_imgui_console(const g3::LogMessage& msg)
+			{
+				LogColor color = log_sink::get_color(msg._level);
+				std::stringstream out;
+
+				out
 					<< msg.file() << ":" << msg.line()
 					<< ",";
 

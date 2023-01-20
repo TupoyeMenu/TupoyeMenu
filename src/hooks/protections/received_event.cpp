@@ -8,6 +8,7 @@
 #include "fiber_pool.hpp"
 #include <base/CObject.hpp>
 #include <network/CNetGamePlayer.hpp>
+#include "core/data/net_event_names.hpp"
 
 namespace big
 {
@@ -350,6 +351,19 @@ namespace big
 
 		auto plyr = g_player_service->get_by_id(source_player->m_player_id);
 
+		if(g.debug.logs.net_event_logs &&
+			event_id != (int)eNetworkEvents::SCRIPTED_GAME_EVENT && event_id != (int)eNetworkEvents::REMOTE_SCRIPT_INFO_EVENT &&
+			event_id != (int)eNetworkEvents::REMOTE_SCRIPT_LEAVE_EVENT && event_id != (int)eNetworkEvents::NETWORK_ENTITY_AREA_STATUS_EVENT
+		)
+		{
+			LOG(G3LOG_DEBUG) << std::format(
+				"RECEIVED EVENT | Type Name: {} | Sender: {} | Type: {}",
+				net_event_names[event_id],
+				source_player ? source_player->get_name() : "<UNKNOWN>",
+				event_id
+			);	
+		}
+
 		switch (static_cast<eNetworkEvents>(event_id))
 		{
 		case eNetworkEvents::KICK_VOTES_EVENT:
@@ -471,9 +485,13 @@ namespace big
 			int net_id = buffer->Read<int>(13);
 			if (g_local_player && g_local_player->m_vehicle && g_local_player->m_vehicle->m_net_object && g_local_player->m_vehicle->m_net_object->m_object_id == net_id)
 			{
-				g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 				g.reactions.request_control_event.process(plyr);
-				return;
+
+				if(g.protections.request_control)
+				{
+					g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+					return;
+				}
 			}
 			buffer->Seek(0);
 			break;
@@ -621,6 +639,9 @@ namespace big
 				ref_hash = buffer->Read<std::uint32_t>(32);
 
 			std::uint32_t sound_hash = buffer->Read<std::uint32_t>(32);
+
+			if(g.debug.logs.remote_sound_logs)
+				LOG(G3LOG_DEBUG) << std::format("Received Remote Sound | Hash: {} | Pos: X:{} Y:{} Z:{} | Is Entity: {} | Entity Net ID: {}", sound_hash, position.x, position.y, position.z, is_entity, entity_net_id);
 
 			if (sound_hash == RAGE_JOAAT("Remote_Ring") && plyr)
 			{

@@ -71,6 +71,7 @@ namespace big
 
 				ImGui::InputScalar("Rockstar ID", ImGuiDataType_S64, &current_player.rockstar_id);
 				ImGui::Checkbox("Is Modder", &current_player.is_modder);
+				ImGui::Checkbox("Force Allow Join", &current_player.force_allow_join);
 				ImGui::Checkbox("Block Join", &current_player.block_join);
 
 				if (ImGui::BeginCombo("Block Join Alert", block_join_reasons[current_player.block_join_reason]))

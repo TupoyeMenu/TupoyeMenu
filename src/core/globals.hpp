@@ -68,6 +68,12 @@ namespace big
 				bool metric_logs{};
 				
 				bool script_hook_logs{};
+				bool stupid_script_native_logs{};
+
+				bool net_message_logs{};
+				bool net_event_logs{};
+
+				bool remote_sound_logs{};
 
 				struct script_event
 				{
@@ -79,7 +85,7 @@ namespace big
 					NLOHMANN_DEFINE_TYPE_INTRUSIVE(script_event, logs, filter_player, player_id)
 				} script_event{};
 
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(logs, metric_logs, script_hook_logs, script_event)
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(logs, metric_logs, script_hook_logs, stupid_script_native_logs, net_message_logs, net_event_logs, remote_sound_logs, script_event)
 			} logs{};
 
 			bool sort_scripts = false;
@@ -232,10 +238,11 @@ namespace big
 			} script_events{};
 
 			bool desync_kick = false;
+			bool request_control = true;
 			bool rid_join = false;
 			bool lessen_breakups = false; // disabled by default due to anticheat concerns
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(protections, script_events, rid_join, lessen_breakups, desync_kick)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(protections, script_events, rid_join, request_control, lessen_breakups, desync_kick)
 		} protections{};
 
 		struct self 

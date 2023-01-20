@@ -43,6 +43,5 @@ namespace big
 		components::button("Bullshark Testosterone", [] {
 			mobile::ceo_abilities::request_bullshark_testosterone();
 		});
-
 	}
 }

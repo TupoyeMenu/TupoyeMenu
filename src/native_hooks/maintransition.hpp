@@ -20,7 +20,8 @@ namespace big
 			}
 			else
 			{
-				LOG(G3LOG_DEBUG) << std::format("NETWORK::NETWORK_SESSION_HOST({}, {}, {});", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<BOOL>(2));
+				if(g.debug.logs.stupid_script_native_logs)
+					LOG(G3LOG_DEBUG) << std::format("NETWORK::NETWORK_SESSION_HOST({}, {}, {});", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<BOOL>(2));
 				src->set_return_value<BOOL>(NETWORK::NETWORK_SESSION_HOST(src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<BOOL>(2)));
 			}
 		};
@@ -54,7 +55,8 @@ namespace big
 		inline void ACTIVATE_FRONTEND_MENU(rage::scrNativeCallContext* src)
 		{
 			Hash menuhash = src->get_arg<Hash>(0);
-			LOG(G3LOG_DEBUG) << std::format("HUD::ACTIVATE_FRONTEND_MENU({}, {}, {});", menuhash, src->get_arg<BOOL>(1), src->get_arg<int>(2));
+			if(g.debug.logs.stupid_script_native_logs)
+				LOG(G3LOG_DEBUG) << std::format("HUD::ACTIVATE_FRONTEND_MENU({}, {}, {});", menuhash, src->get_arg<BOOL>(1), src->get_arg<int>(2));
 
 			if (g.tunables.seamless_join)
 			{
@@ -73,7 +75,8 @@ namespace big
 		{
 			Hash menuhash = src->get_arg<Hash>(0);
 
-			LOG(G3LOG_DEBUG) << std::format("HUD::RESTART_FRONTEND_MENU({}, {});", menuhash, src->get_arg<int>(1));
+			if(g.debug.logs.stupid_script_native_logs)
+				LOG(G3LOG_DEBUG) << std::format("HUD::RESTART_FRONTEND_MENU({}, {});", menuhash, src->get_arg<int>(1));
 
 			if (g.tunables.seamless_join)
 			{
@@ -120,9 +123,10 @@ namespace big
 
 		inline void SET_PLAYER_CONTROL(rage::scrNativeCallContext* src)
 		{
-			if (g.tunables.seamless_join)
+			if(g.debug.logs.stupid_script_native_logs)
 				LOG(G3LOG_DEBUG) << std::format("PLAYER::SET_PLAYER_CONTROL({}, {}, {});", src->get_arg<Player>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2));
-			else
+
+			if (!g.tunables.seamless_join)
 				PLAYER::SET_PLAYER_CONTROL(src->get_arg<Player>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2));
 		}
 
@@ -151,7 +155,8 @@ namespace big
 
 		inline void ON_ENTER_SP(rage::scrNativeCallContext* src)
 		{
-			LOG(G3LOG_DEBUG) << "DLC::ON_ENTER_SP();";
+			if(g.debug.logs.stupid_script_native_logs)
+				LOG(G3LOG_DEBUG) << "DLC::ON_ENTER_SP();";
 		}
 	}
 }

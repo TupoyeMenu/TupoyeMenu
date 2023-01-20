@@ -69,8 +69,6 @@ namespace big::functions
 
 	using register_file_t = uint32_t * (*)(int*, const char*, bool, const char*, bool);
 
-	using get_net_player_from_unk = CNetGamePlayer*(__int64);
-
 	// Received Event Signatures START
 	using send_event_ack = void(*)(rage::netEventMgr* event_manager, CNetGamePlayer* source_player, CNetGamePlayer* target_player, int event_index, int event_handled_bitset);
 	// Received Event Signatures END
