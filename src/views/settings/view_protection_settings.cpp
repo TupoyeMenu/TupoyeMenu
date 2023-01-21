@@ -12,6 +12,9 @@ namespace big
 		ImGui::Checkbox("Force Teleport", &g.protections.script_events.force_teleport);
 		ImGui::Checkbox("GTA Banner", &g.protections.script_events.gta_banner);
 		ImGui::Checkbox("MC Teleport", &g.protections.script_events.mc_teleport);
+
+		ImGui::Checkbox("RID Join", &g.protections.rid_join);
+		ImGui::SameLine(); components::help_marker("This will block anyone trying to join, kick or crash you with your Rockstar ID, including your friends");
 		ImGui::EndGroup();
 
 		ImGui::SameLine();
@@ -24,6 +27,10 @@ namespace big
 		ImGui::Checkbox("Remote Off Radar", &g.protections.script_events.remote_off_radar);
 		ImGui::Checkbox("Rotate Cam", &g.protections.script_events.rotate_cam);
 		ImGui::Checkbox("Teleport To Warehouse", &g.protections.script_events.teleport_to_warehouse);
+
+		ImGui::Checkbox("Lessen Breakup Kicks As Host", &g.protections.lessen_breakups);
+		ImGui::SameLine(); components::help_marker("Attacker must join after you have become host for this to work. There are anti-cheat concerns with this feature");
+
 		ImGui::EndGroup();
 
 		ImGui::SameLine();
@@ -38,17 +45,9 @@ namespace big
 		ImGui::Checkbox("Vehicle Kick", &g.protections.script_events.vehicle_kick);
 		ImGui::Checkbox("Wanted Level", &g.protections.script_events.clear_wanted_level);
 		ImGui::Checkbox("Desync Kick", &g.protections.desync_kick);
+		ImGui::Checkbox("Request Controll", &g.protections.request_control);
 		ImGui::EndGroup();
 		ImGui::SameLine();
-
-		ImGui::BeginGroup();
-		ImGui::Checkbox("RID Join", &g.protections.rid_join);
-		ImGui::SameLine(); components::help_marker("This will block anyone trying to join, kick or crash you with your Rockstar ID, including your friends");
-		
-		ImGui::Checkbox("Lessen Breakup Kicks As Host", &g.protections.lessen_breakups);
-		ImGui::SameLine(); components::help_marker("Attacker must join after you have become host for this to work. There are anti-cheat concerns with this feature");
-
-		ImGui::EndGroup();
 	}
 
 }

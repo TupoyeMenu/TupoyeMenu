@@ -5,6 +5,8 @@
 
 # output directory
 build/
+build_mingw/
+build_msvc/
 
 # precompiled headers
 *.ipch

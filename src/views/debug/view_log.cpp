@@ -40,7 +40,7 @@ namespace big
 			{
 				for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
 				{
-					ImGui::PushStyleColor(ImGuiCol_Text, get_color(msgs[i].level));
+					ImGui::PushStyleColor(ImGuiCol_Text, get_color(msgs[i].m_level));
 					ImGui::TextUnformatted(msgs[i].m_message.c_str());
 					ImGui::PopStyleColor();
 				}

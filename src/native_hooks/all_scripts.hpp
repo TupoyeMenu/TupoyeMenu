@@ -42,7 +42,8 @@ namespace big
 			{
 				NETWORK::NETWORK_BAIL(src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2));
 			}
-			LOG(G3LOG_DEBUG) << std::format("NETWORK::NETWORK_BAIL({}, {}, {}); // In: {}", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2), SCRIPT::GET_THIS_SCRIPT_NAME());;
+            if(g.debug.logs.stupid_script_native_logs)
+			    LOG(G3LOG_DEBUG) << std::format("NETWORK::NETWORK_BAIL({}, {}, {}); // In: {}", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2), SCRIPT::GET_THIS_SCRIPT_NAME());;
 		}
 
 		inline void SC_TRANSITION_NEWS_SHOW(rage::scrNativeCallContext* src)
@@ -66,7 +67,7 @@ namespace big
 			if(SCRIPT::GET_HASH_OF_THIS_SCRIPT_NAME() != RAGE_JOAAT("maintransition") || !g.tunables.seamless_join)
 				TASK::CLEAR_PED_TASKS_IMMEDIATELY(src->get_arg<Ped>(0));
 
-			if(src->get_arg<Ped>(0) == self::ped)
+			if(src->get_arg<Ped>(0) == self::ped && g.debug.logs.stupid_script_native_logs)
 				LOG(G3LOG_DEBUG) << std::format("TASK::CLEAR_PED_TASKS_IMMEDIATELY({}); // In: {}",  src->get_arg<Ped>(0), SCRIPT::GET_THIS_SCRIPT_NAME());
 		}
 

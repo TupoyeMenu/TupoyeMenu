@@ -11,6 +11,11 @@ namespace big
 				view::settings();
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("Hotkey Settings"))
+			{
+				view::hotkey_settings();
+				ImGui::EndTabItem();
+			}
 			if (ImGui::BeginTabItem("Context Menu"))
 			{
 				view::context_menu_settings();

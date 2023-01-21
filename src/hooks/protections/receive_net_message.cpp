@@ -10,6 +10,7 @@
 #include "gta/net_game_event.hpp"
 #include "gta/script_id.hpp"
 #include "backend/player_command.hpp"
+#include "core/data/net_message_names.hpp"
 
 #include <network/Network.hpp>
 #include <network/netTime.hpp>
@@ -105,6 +106,48 @@ namespace big
 			return true;
 		}
 
+		if (msgType == rage::eNetMessage::MsgBlacklist && frame->m_connection_identifier != gta_util::get_network()->m_game_session.m_connection_identifier)
+		{
+			if (player)
+			{
+				g_notification_service->push_error("Protections", std::format("Blocked invalid blacklist crash from {}", player->get_name()));
+			}
+			else
+			{
+				g_notification_service->push_error("Protections", "Blocked invalid blacklist remote crash");
+			}
+			return true;
+		}
+
+		// Skidded from maybegreat48.
+		if(g.debug.logs.net_message_logs)
+		{
+			if (msgType != rage::eNetMessage::MsgCloneSync && msgType != rage::eNetMessage::MsgPackedCloneSyncACKs && msgType != rage::eNetMessage::MsgPackedEvents
+						&& msgType != rage::eNetMessage::MsgPackedReliables && msgType != rage::eNetMessage::MsgPackedEventReliablesMsgs && msgType != rage::eNetMessage::MsgNetArrayMgrUpdate
+						&& msgType != rage::eNetMessage::MsgNetArrayMgrSplitUpdateAck && msgType != rage::eNetMessage::MsgNetArrayMgrUpdateAck && msgType != rage::eNetMessage::MsgScriptHandshakeAck
+						&& msgType != rage::eNetMessage::MsgScriptHandshake && msgType != rage::eNetMessage::MsgScriptJoin && msgType != rage::eNetMessage::MsgScriptJoinAck
+						&& msgType != rage::eNetMessage::MsgScriptJoinHostAck && msgType != rage::eNetMessage::MsgRequestObjectIds && msgType != rage::eNetMessage::MsgInformObjectIds && msgType != rage::eNetMessage::MsgNetTimeSync)
+			{
+				const char* message_name = "<UNKNOWN>";
+				for (const auto& p : net_message_names)
+				{
+					if (p.id == (int)msgType)
+					{
+						message_name = p.name;
+						break;
+					}
+				}
+
+				LOG(G3LOG_DEBUG) << std::format(
+					"RECEIVED PACKET | Type Name: {} | Length: {} | Sender: {} | Type: {}",
+					message_name,
+					frame->m_length,
+					player ? player->get_name() : std::format("<M:{}>, <C:{:X}>, <P:{}>", (int)frame->m_msg_id, frame->m_connection_identifier, frame->m_peer_id),
+					(int)msgType
+				);
+			}
+		}
+
 		if (player)
 		{
 			switch (msgType)
@@ -115,7 +158,10 @@ namespace big
 					buffer.ReadString(message, 256);
 
 					if (player->is_spammer)
+					{
+						g_chat_service->add_msg(player->get_net_game_player(), message, false, true);
 						return true;
+					}
 
 					if (spam::is_text_spam(message))
 					{
@@ -144,7 +190,10 @@ namespace big
 					buffer.ReadString(message, 256);
 
 					if (player->is_spammer)
+					{
+						g_chat_service->add_msg(player->get_net_game_player(), message, false, true);
 						return true;
+					}
 
 					if (spam::is_text_spam(message))
 					{

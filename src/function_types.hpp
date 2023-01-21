@@ -44,7 +44,7 @@ namespace big::functions
 	using ptr_to_handle = Entity(*)(void*);
 	using handle_to_ptr = rage::CDynamicEntity*(*)(Entity);
 	
-	using multiplayer_chat_filter = int(__int64 chat_type, const char* input, const char** output);
+	using check_chat_profanity = int(__int64 chat_type, const char* input, const char** output);
 	using write_player_game_state_data_node = bool(*)(rage::netObject* plr, CPlayerGameStateDataNode* node);
 
 	using get_gameplay_cam_coords = Vector3(*)();
@@ -68,8 +68,6 @@ namespace big::functions
 	// Bitbuffer read/write END
 
 	using register_file_t = uint32_t * (*)(int*, const char*, bool, const char*, bool);
-
-	using get_net_player_from_unk = CNetGamePlayer*(__int64);
 
 	// Received Event Signatures START
 	using send_event_ack = void(*)(rage::netEventMgr* event_manager, CNetGamePlayer* source_player, CNetGamePlayer* target_player, int event_index, int event_handled_bitset);

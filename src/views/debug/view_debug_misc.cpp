@@ -45,6 +45,12 @@ namespace big
 		}
 
 		ImGui::Checkbox("Log Native Script Hooks", &g.debug.logs.script_hook_logs);
+		ImGui::Checkbox("Enable Stupid Script Native Logs", &g.debug.logs.stupid_script_native_logs);
+
+		ImGui::Checkbox("Log Net Messages", &g.debug.logs.net_message_logs);
+		ImGui::Checkbox("Log Net Events", &g.debug.logs.net_event_logs);
+
+		ImGui::Checkbox("Log Remote Sounds", &g.debug.logs.remote_sound_logs);
 		
 		ImGui::Checkbox("Log Metrics", &g.debug.logs.metric_logs);
 

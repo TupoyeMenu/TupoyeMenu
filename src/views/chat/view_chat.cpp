@@ -10,8 +10,8 @@
 namespace big
 {
 	static size_t iLastLogCount = 0;
-    void view::chat()
-    {
+	void view::chat()
+	{
 		ImGui::Checkbox("Auto Scroll", &g.chat.auto_scroll);
 		ImGui::SameLine();
 		ImGui::Checkbox("Show spam", &g.chat.show_spam);
@@ -28,12 +28,15 @@ namespace big
 			for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
 			{
 				chat_msg current_msg = g_chat_service->get_chat_msgs()[i];
-				ImGui::Text(
-					"%s [%s]  %s",
-					current_msg.name.c_str(),
-					current_msg.is_team ? "local" : "all",
-					current_msg.msg.c_str()
-				);
+				if(!current_msg.is_spam || g.chat.show_spam)
+				{
+					ImGui::Text(
+						"%s [%s]  %s",
+						current_msg.name.c_str(),
+						current_msg.is_team ? "local" : "all",
+						current_msg.msg.c_str()
+					);
+				}
 			}
 		}
 
@@ -60,5 +63,5 @@ namespace big
 
 		ImGui::SameLine();
 		ImGui::Checkbox("Local", &g.chat.local);
-    }
+	}
 }

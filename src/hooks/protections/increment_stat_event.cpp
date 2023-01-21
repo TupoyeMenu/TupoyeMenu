@@ -23,6 +23,9 @@ namespace big
 			return true;
 		}
 
+		if(g.reactions.report.log)
+			LOG(G3LOG_DEBUG) << std::format("Recieved Remote Stat: {} | Sender: {}", net_event->m_stat, sender->get_name());
+
 		return false;
 	}
 }

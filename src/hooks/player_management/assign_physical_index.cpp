@@ -53,19 +53,6 @@ namespace big
 			{
 				if (auto plyr = g_player_service->get_by_id(id))
 				{
-					if(plyr->get_net_game_player()->m_is_rockstar_dev || plyr->get_net_game_player()->m_is_rockstar_qa)
-					{
-						//session::add_infraction(plyr, Infraction::ROCKSTAR_ADMIN_FLAG);
-
-						LOG(WARNING) << std::format("Name: {}, m_crew_rank_title: {}, m_is_rockstar_dev: {}, m_is_rockstar_qa: {}, m_is_cheater: {}",
-							plyr->get_name(),
-							plyr->get_net_game_player()->m_crew_rank_title,
-							plyr->get_net_game_player()->m_is_rockstar_dev,
-							plyr->get_net_game_player()->m_is_rockstar_qa,
-							plyr->get_net_game_player()->m_is_cheater
-						);
-					}
-
 					if (auto entry = g_player_database_service->get_player_by_rockstar_id(plyr->get_net_data()->m_gamer_handle_2.m_rockstar_id))
 					{
 						plyr->is_modder = entry->is_modder;

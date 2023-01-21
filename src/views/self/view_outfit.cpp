@@ -3,21 +3,22 @@
 #include "util/mobile.hpp"
 #include "views/view.hpp"
 #include "core/data/clothes.hpp"
+#include <script/types.hpp>
 
 namespace big
 {
 	struct PedComponent
 	{
-		int64_t m_lockHash;
-    	int64_t m_nameHash;
-    	int64_t m_locate; // <locate value="..." /> in clothing data
-    	int64_t m_drawableIndex;
-    	int64_t m_textureIndex;
-    	int64_t m_cost;
-    	int64_t m_eComponentType;
-    	int64_t m_eShopEnum;
-    	int64_t m_eCharacter;
-    	char m_textLabel[64];
+		SCR_INT m_lockHash;
+    	SCR_INT m_nameHash;
+    	SCR_INT m_locate; // <locate value="..." /> in clothing data
+    	SCR_INT m_drawableIndex;
+    	SCR_INT m_textureIndex;
+    	SCR_INT m_cost;
+    	SCR_INT m_eComponentType;
+    	SCR_INT m_eShopEnum;
+    	SCR_INT m_eCharacter;
+    	TEXT_LABEL_31 m_textLabel;
 	};
 
 	void view::outfit_editor(Ped ped_to_edit) 
@@ -61,7 +62,11 @@ namespace big
 			PedComponent component;
 			Hash hash = FILES::GET_HASH_NAME_FOR_COMPONENT(ped_to_edit, g.outfit_editor.componentId, g.outfit_editor.drawableId, g.outfit_editor.textureId);
 			FILES::GET_SHOP_PED_COMPONENT(hash, (Any*)&component);
-			LOG(G3LOG_DEBUG) << HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION(component.m_textLabel);
+			LOG(G3LOG_DEBUG) << std::format("Name: {} | Cost: {} | Character: {}",
+				HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION(component.m_textLabel),
+				component.m_cost,
+				component.m_eCharacter
+			);
 		});
 
 		components::sub_title("Props");

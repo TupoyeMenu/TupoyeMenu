@@ -20,7 +20,7 @@ namespace big
 
 		components::button("MAX BEER", [] {
 			std::string mpPrefix = local_player::get_mp_prefix();
-			STATS::STAT_SET_INT(rage::joaat(mpPrefix + "NUMBER_OF_BOURGE_BOUGHT"), INT32_MAX, true);
+			STATS::STAT_SET_INT(rage::joaat(mpPrefix + "NUMBER_OF_BOURGE_BOUGHT"), INT32_MAX, false);
 		});
 
 		ImGui::SameLine();
