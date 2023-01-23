@@ -18,7 +18,7 @@ namespace big
 			}
 			if (ImGui::BeginTabItem("LS Customs"))
 			{
-				view::lsc();
+				view::lsc(self::veh);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Spawn Vehicle"))
@@ -38,7 +38,7 @@ namespace big
 			}
 			if (ImGui::BeginTabItem("Fun Features"))
 			{
-				view::fun_vehicle();
+				view::fun_vehicle(self::veh);
 				ImGui::EndTabItem();
 			}
 

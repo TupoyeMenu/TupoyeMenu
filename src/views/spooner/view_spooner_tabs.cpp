@@ -25,6 +25,19 @@ namespace big
 							ImGui::EndTabItem();
 						}
 					}
+					if(g_object_spooner_service->selected_entity.m_is_entity_a_vehicle)
+					{
+						if (ImGui::BeginTabItem("LS Customs"))
+						{
+							view::lsc(g_object_spooner_service->selected_entity.m_entity_handle);
+							ImGui::EndTabItem();
+						}
+						if (ImGui::BeginTabItem("Set Selector"))
+						{
+							view::fun_vehicle(g_object_spooner_service->selected_entity.m_entity_handle);
+							ImGui::EndTabItem();
+						}
+					}
 					ImGui::EndTabBar();
 				}
 				ImGui::End();

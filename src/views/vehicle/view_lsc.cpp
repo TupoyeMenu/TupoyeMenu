@@ -9,7 +9,7 @@
 
 namespace big
 {
-	void view::lsc()
+	void view::lsc(Vehicle vehicle_to_edit)
 	{
 		static Vehicle player_vehicle = 0;
 		static bool ready = true;
@@ -25,9 +25,9 @@ namespace big
 		static int front_wheel_stock_mod = -1;
 		static int rear_wheel_stock_mod = -1;
 
-		if (self::veh == 0 || player_vehicle != self::veh)
+		if (vehicle_to_edit == 0 || player_vehicle != vehicle_to_edit)
 		{
-			if (self::veh == 0 )
+			if (vehicle_to_edit == 0 )
 			{
 				owned_mods.clear();
 				slot_display_names.clear();
@@ -42,10 +42,10 @@ namespace big
 			}
 		}
 
-		if (player_vehicle != self::veh && ready == true)
+		if (player_vehicle != vehicle_to_edit && ready == true)
 		{
 			ready = false;
-			player_vehicle = self::veh;
+			player_vehicle = vehicle_to_edit;
 
 			g_fiber_pool->queue_job([] {
 				if (!HUD::HAS_THIS_ADDITIONAL_TEXT_LOADED("MOD_MNU", 10))
@@ -198,15 +198,13 @@ namespace big
 			g.vehicle.ls_customs = true;
 		});
 		ImGui::SameLine();
-		if (components::button("Max Vehicle"))
+		components::button("Max Vehicle", [vehicle_to_edit]
 		{
-			g_fiber_pool->queue_job([] {
-				vehicle::max_vehicle(self::veh);
+			vehicle::max_vehicle(vehicle_to_edit);
 
-				// refresh mod names
-				player_vehicle = 0;
-			});
-		}
+			// refresh mod names
+			player_vehicle = 0;
+		});
 
 		ImGui::Separator();
 
@@ -215,12 +213,10 @@ namespace big
 		ImGui::SetNextItemWidth(200.f);
 		components::input_text_with_hint("##plate", "Plate Number", plate, sizeof(plate), ImGuiInputTextFlags_None);
 		ImGui::SameLine();
-		if (components::button("Change Plate Number"))
+		components::button("Change Plate Number", [vehicle_to_edit]
 		{
-			g_fiber_pool->queue_job([] {
-				vehicle::set_plate(self::veh, plate);
-			});
-		}
+			vehicle::set_plate(vehicle_to_edit, plate);
+		});
 
 		ImGui::Separator();
 		components::sub_title("Mod Options");
@@ -317,8 +313,8 @@ namespace big
 
 					if (ImGui::Selectable(name.c_str(), item_selected))
 					{
-						g_fiber_pool->queue_job([&mod, is_wheel_mod, wheel_stock_mod, wheel_custom] {
-							NETWORK::NETWORK_REQUEST_CONTROL_OF_ENTITY(self::veh);
+						g_fiber_pool->queue_job([&mod, is_wheel_mod, wheel_stock_mod, wheel_custom, vehicle_to_edit] {
+							NETWORK::NETWORK_REQUEST_CONTROL_OF_ENTITY(vehicle_to_edit);
 
 							if (selected_slot >= 0)
 							{

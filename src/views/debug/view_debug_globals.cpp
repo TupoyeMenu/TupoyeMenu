@@ -39,8 +39,8 @@ namespace big
 			static int offset_count = 0;
 			static int previous_offset_count = 0;
 
-		g_fiber_pool->queue_job([] {
-			PAD::DISABLE_ALL_CONTROL_ACTIONS(0);
+			g_fiber_pool->queue_job([] {
+				PAD::DISABLE_ALL_CONTROL_ACTIONS(0);
 			});
 
 			ImGui::Text("Name:");

@@ -43,11 +43,11 @@ namespace big
 		static void settings();
 		static void vehicle_tabs();
 		static void vehicle();
-		static void lsc();
+		static void lsc(Vehicle vehicle_to_edit);
 		static void spawn_vehicle();
 		static void pv();
 		static void persist_car();
-		static void fun_vehicle();
+		static void fun_vehicle(Vehicle vehicle_to_edit);
 		static void spawn_ped();
 		static void world_tabs();
 		static void ambient();
