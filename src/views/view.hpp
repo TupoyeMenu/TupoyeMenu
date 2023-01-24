@@ -21,6 +21,7 @@ namespace big
 		static void debug_tabs();
 		static void esp_settings();
 		static void context_menu_settings();
+		static void stat_editor();
 		static void gui_settings();
 		static void handling_tabs();
 		static void hotkey_settings();
@@ -38,6 +39,7 @@ namespace big
 		static void outfit_editor(Ped ped_to_edit);
 		static void session();
 		static void settings_tabs();
+		static void missions();
 		static void player_database();
 		static void session_browser();
 		static void settings();

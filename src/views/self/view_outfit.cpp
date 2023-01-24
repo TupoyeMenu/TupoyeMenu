@@ -77,7 +77,7 @@ namespace big
 			{
 				components::selectable(clothes_props_strings[i], g.outfit_editor.propId == i, [i, ped_to_edit] {
 					g.outfit_editor.propId = i;
-					g.outfit_editor.propDrawableId = PED::GET_PED_PROP_INDEX(ped_to_edit, i);
+					g.outfit_editor.propDrawableId = PED::GET_PED_PROP_INDEX(ped_to_edit, i, 0);
 					g.outfit_editor.propTextureId = PED::GET_PED_PROP_TEXTURE_INDEX(ped_to_edit, i);
 				});
 			}
@@ -86,13 +86,13 @@ namespace big
 
 		if (ImGui::InputInt("Drawable Id ###prop_drawable_id", &g.outfit_editor.propDrawableId)) {
 			g_fiber_pool->queue_job([ped_to_edit] {
-				PED::SET_PED_PROP_INDEX(ped_to_edit, g.outfit_editor.propId, g.outfit_editor.propDrawableId, g.outfit_editor.propTextureId, true);
+				PED::SET_PED_PROP_INDEX(ped_to_edit, g.outfit_editor.propId, g.outfit_editor.propDrawableId, g.outfit_editor.propTextureId, true, 0);
 			});
 		}
 
 		if (ImGui::InputInt("Texture Id ###prop_texture_id", &g.outfit_editor.propTextureId)) {
 			g_fiber_pool->queue_job([ped_to_edit] {
-				PED::SET_PED_PROP_INDEX(ped_to_edit, g.outfit_editor.propId, g.outfit_editor.propDrawableId, g.outfit_editor.propTextureId, true);
+				PED::SET_PED_PROP_INDEX(ped_to_edit, g.outfit_editor.propId, g.outfit_editor.propDrawableId, g.outfit_editor.propTextureId, true, 0);
 			});
 		}
 

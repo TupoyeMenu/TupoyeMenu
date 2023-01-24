@@ -41,7 +41,11 @@ namespace big
 				view::protection_settings();
 				ImGui::EndTabItem();
 			}
-
+			if (ImGui::BeginTabItem("Stat Editor"))
+			{
+				view::stat_editor();
+				ImGui::EndTabItem();
+			}
 			ImGui::EndTabBar();
 		}
 	}

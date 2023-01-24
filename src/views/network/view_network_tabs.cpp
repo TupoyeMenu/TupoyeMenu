@@ -16,19 +16,21 @@ namespace big
 				view::session();
 				ImGui::EndTabItem();
 			}
-
+			if (ImGui::BeginTabItem("Missions"))
+			{
+				view::missions();
+				ImGui::EndTabItem();
+			}
 			if (ImGui::BeginTabItem("Player DB"))
 			{
 				view::player_database();
 				ImGui::EndTabItem();
 			}
-
 			if(ImGui::BeginTabItem("Session Browser"))
 			{
 				view::session_browser();
 				ImGui::EndTabItem();
 			}
-
 			ImGui::EndTabBar();
 		}
 	}

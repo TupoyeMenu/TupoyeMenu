@@ -47,7 +47,7 @@ namespace big
 		ImGui::Checkbox("Log Native Script Hooks", &g.debug.logs.script_hook_logs);
 		ImGui::Checkbox("Enable Stupid Script Native Logs", &g.debug.logs.stupid_script_native_logs);
 
-		ImGui::Checkbox("Log Net Messages", &g.debug.logs.net_message_logs);
+		ImGui::Checkbox("Log Packets", &g.debug.logs.packet_logs);
 		ImGui::Checkbox("Log Net Events", &g.debug.logs.net_event_logs);
 
 		ImGui::Checkbox("Log Remote Sounds", &g.debug.logs.remote_sound_logs);
@@ -75,6 +75,25 @@ namespace big
 			}
 
 			ImGui::TreePop();
+
+			if (components::button("Load MP Map"))
+				DLC::ON_ENTER_MP();
+
+			ImGui::SameLine();
+			if (components::button("Load SP Map"))
+
+				DLC::ON_ENTER_SP();
+
+			if (components::button("Skip Cutscene"))
+				CUTSCENE::STOP_CUTSCENE_IMMEDIATELY();
+
+			if (components::button("Refresh Interior"))
+			{
+				Interior interior = INTERIOR::GET_INTERIOR_AT_COORDS(self::pos.x, self::pos.y, self::pos.z);
+				INTERIOR::REFRESH_INTERIOR(interior);
+			}
+			if (ImGui::IsItemHovered())
+				ImGui::SetTooltip("You Will Have To Refresh Again When Exiting Interior.\n SPAMMING WILL CRASH GAME");
 
 			ImGui::EndTabItem();
 		}
