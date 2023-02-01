@@ -1,3 +1,4 @@
+#ifdef ENABLE_ASI_LOADER
 #include "script.hpp"
 #include "invoker.hpp"
 #include "pointers.hpp"
@@ -155,3 +156,4 @@ DLL_EXPORT void drawTexture(int id, int index, int level, int time, float sizeX,
 {
 	// Implement later if we can get the DirectXTK working.
 }
+#endif // ENABLE_ASI_LOADER

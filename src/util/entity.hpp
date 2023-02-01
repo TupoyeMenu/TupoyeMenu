@@ -7,6 +7,28 @@
 
 namespace big::entity
 {
+	inline bool take_control_of(Entity ent, int timeout = 300)
+	{
+		if (NETWORK::NETWORK_HAS_CONTROL_OF_ENTITY(ent) || !*g_pointers->m_is_session_started) 
+			return true;
+
+		for (int i = 0; !NETWORK::NETWORK_HAS_CONTROL_OF_ENTITY(ent) && i < timeout; i++)
+		{
+			NETWORK::NETWORK_REQUEST_CONTROL_OF_ENTITY(ent);
+
+			if (timeout != 0)
+				script::get_current()->yield();
+		}
+
+		if (!NETWORK::NETWORK_HAS_CONTROL_OF_ENTITY(ent)) 
+			return false;
+
+		int netHandle = NETWORK::NETWORK_GET_NETWORK_ID_FROM_ENTITY(ent);
+		NETWORK::SET_NETWORK_ID_CAN_MIGRATE(netHandle, true);
+
+		return true;
+	}
+
 	inline void cage_ped(Ped ped)
 	{
 		Hash hash = RAGE_JOAAT("prop_gold_cont_01");
@@ -27,12 +49,19 @@ namespace big::entity
 
 	inline void delete_entity(Entity ent)
 	{
-		ENTITY::DETACH_ENTITY(ent, 1, 1);
-		ENTITY::SET_ENTITY_VISIBLE(ent, false, false);
-		NETWORK::NETWORK_SET_ENTITY_ONLY_EXISTS_FOR_PARTICIPANTS(ent, true);
-		ENTITY::SET_ENTITY_COORDS_NO_OFFSET(ent, 50'000, 50'000, 100'000, 0, 0, 0);
-		ENTITY::SET_ENTITY_AS_MISSION_ENTITY(ent, 1, 1);
-		ENTITY::DELETE_ENTITY(&ent);
+		if(take_control_of(ent, 1000))
+		{
+			ENTITY::DETACH_ENTITY(ent, 1, 1);
+			ENTITY::SET_ENTITY_VISIBLE(ent, false, false);
+			NETWORK::NETWORK_SET_ENTITY_ONLY_EXISTS_FOR_PARTICIPANTS(ent, true);
+			ENTITY::SET_ENTITY_COORDS_NO_OFFSET(ent, 50'000, 50'000, 100'000, 0, 0, 0);
+			ENTITY::SET_ENTITY_AS_MISSION_ENTITY(ent, 1, 1);
+			ENTITY::DELETE_ENTITY(&ent);
+		}
+		else
+		{
+			g_notification_service->push_warning("Delete Crash Ped", "Delete entity failed.");
+		}
 	}
 
 	inline bool raycast(Entity* ent)
@@ -54,27 +83,5 @@ namespace big::entity
 		SHAPETEST::GET_SHAPE_TEST_RESULT(ray, &hit, &endCoords, &surfaceNormal, ent);
 
 		return (bool)hit;
-	}
-
-	inline bool take_control_of(Entity ent, int timeout = 300)
-	{
-		if (NETWORK::NETWORK_HAS_CONTROL_OF_ENTITY(ent) || !*g_pointers->m_is_session_started) 
-			return true;
-
-		for (int i = 0; !NETWORK::NETWORK_HAS_CONTROL_OF_ENTITY(ent) && i < timeout; i++)
-		{
-			NETWORK::NETWORK_REQUEST_CONTROL_OF_ENTITY(ent);
-
-			if (timeout != 0)
-				script::get_current()->yield();
-		}
-
-		if (!NETWORK::NETWORK_HAS_CONTROL_OF_ENTITY(ent)) 
-			return false;
-
-		int netHandle = NETWORK::NETWORK_GET_NETWORK_ID_FROM_ENTITY(ent);
-		NETWORK::SET_NETWORK_ID_CAN_MIGRATE(netHandle, true);
-
-		return true;
 	}
 }

@@ -1,7 +1,6 @@
+#ifdef ENABLE_CRASHES
 #include "backend/player_command.hpp"
-#include "natives.hpp"
 #include "pointers.hpp"
-#include "core/scr_globals.hpp"
 #include "packet.hpp"
 #include "gta_util.hpp"
 
@@ -28,3 +27,4 @@ namespace big
 
 	transition_launch_crash g_transition_launch_crash("tlcrash", "Transition Launch Crash", "This is the same as remote crash", 0);
 }
+#endif // ENABLE_CRASHES

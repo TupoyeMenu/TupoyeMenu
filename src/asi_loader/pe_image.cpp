@@ -1,3 +1,4 @@
+#ifdef ENABLE_ASI_LOADER
 #include "pe_image.h"
 
 namespace Utility {
@@ -108,4 +109,4 @@ namespace Utility {
 	}
 
 }
-
+#endif // ENABLE_ASI_LOADER

@@ -36,6 +36,7 @@ namespace big
 			ImGui::TreePop();
 		}
 
+#ifdef ENABLE_CRASHES
 		if (ImGui::TreeNode("Crashes (shit)")) 
 		{
 			components::player_command_button<"slodpedcrash">(g_player_service->get_selected());
@@ -44,5 +45,6 @@ namespace big
 
 			ImGui::TreePop();
 		}
+#endif // ENABLE_CRASHES
 	}
 }

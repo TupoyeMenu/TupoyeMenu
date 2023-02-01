@@ -1,3 +1,4 @@
+#ifdef ENABLE_ASI_LOADER
 #include "common.hpp"
 #include "shv_runner.h"
 #include "logger.hpp"
@@ -37,3 +38,4 @@ namespace big
 		big::g.debug.asi_plugins_loaded = false;
 	}
 }
+#endif // ENABLE_ASI_LOADER

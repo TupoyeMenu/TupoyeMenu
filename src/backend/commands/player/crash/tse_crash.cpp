@@ -1,3 +1,4 @@
+#ifdef ENABLE_CRASHES
 #include "backend/player_command.hpp"
 #include "pointers.hpp"
 #include "core/enums.hpp"
@@ -28,3 +29,4 @@ namespace big
 
 	tsecrash g_tsecrash("tsecrash", "TSE Crash", "Sends crash script events.", 0);
 }
+#endif // ENABLE_CRASHES

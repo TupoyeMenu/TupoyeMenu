@@ -1,10 +1,12 @@
-#include "asi_loader/pools.h"
 #include "common.hpp"
 #include "pointers.hpp"
 #include "memory/all.hpp"
 #include "rage/atSingleton.hpp"
 #include "security/RageSecurity.hpp"
 #include "hooking.hpp"
+#ifdef ENABLE_ASI_LOADER
+#include "asi_loader/pools.h"
+#endif // ENABLE_ASI_LOADER
 
 extern "C" void	sound_overload_detour();
 std::uint64_t g_sound_overload_ret_addr;
@@ -298,7 +300,7 @@ namespace big
 		});
 		
 		//Begin SHV
-
+#ifdef ENABLE_ASI_LOADER
 		//Register File
 		main_batch.add("RF", "40 88 7C 24 ? E8 ? ? ? ? 0F B7 44 24", [this](memory::handle ptr)
 		{
@@ -334,7 +336,7 @@ namespace big
 		{
 			m_camera_pool = ptr.sub(9).rip().as<rage::GenericPool*>();
 		});
-
+#endif // ENABLE_ASI_LOADER
 		//END SHV
 
 		// Get Pool Type
@@ -894,6 +896,7 @@ namespace big
 			throw std::runtime_error("Failed to find some patterns.");
 		}
 
+#ifdef ENABLE_SOCIALCLUB
 		memory::batch socialclub_batch;
 
 		// Presence Data
@@ -916,6 +919,7 @@ namespace big
 			socialclub_batch.run(sc_module);
 		}
 		else LOG(WARNING) << "socialclub.dll module was not loaded within the time limit.";
+#endif // ENABLE_SOCIALCLUB
 
 		if (auto pat = mem_region.scan("41 80 78 28 ? 0F 85 ? ? ? ? 49 8B 80"))
 		{

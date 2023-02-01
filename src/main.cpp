@@ -8,8 +8,10 @@
 #include "renderer.hpp"
 #include "script_mgr.hpp"
 #include "thread_pool.hpp"
+#ifdef ENABLE_ASI_LOADER
 #include "shv_runner.h"
 #include "asi_loader/asi_scripts.h"
+#endif // ENABLE_ASI_LOADER
 #include "version.hpp"
 
 #include "backend/backend.hpp"
@@ -49,9 +51,10 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				cant_find_window = true;
 				std::this_thread::sleep_for(100ms);
 			}
-
+#ifdef ENABLE_ASI_LOADER
 			if(cant_find_window)
 				std::this_thread::sleep_for(20s);
+#endif // ENABLE_ASI_LOADER
 
 			std::filesystem::path base_dir = std::getenv("appdata");
 			base_dir /= "TupoyeMenu";
@@ -109,7 +112,9 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				LOG(INFO) << "Registered service instances...";
 
 				g_script_mgr.add_script(std::make_unique<script>(&gui::script_func, "GUI", false));
+#ifdef ENABLE_ASI_LOADER
 				g_script_mgr.add_script(std::make_unique<script>(&shv_runner::script_func));
+#endif // ENABLE_ASI_LOADER
 				
 				g_script_mgr.add_script(std::make_unique<script>(&backend::loop, "Backend Loop", false));
 				g_script_mgr.add_script(std::make_unique<script>(&backend::self_loop, "Self"));
@@ -132,16 +137,20 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				g_hooking->enable();
 				LOG(INFO) << "Hooking enabled.";
 
+#ifdef ENABLE_ASI_LOADER
 				ASILoader::Initialize();
 				LOG(INFO) << "ASI Loader initialized.";
+#endif // ENABLE_ASI_LOADER
 
 				g_running = true;
 
 				while (g_running)
 					std::this_thread::sleep_for(500ms);
 
+#ifdef ENABLE_ASI_LOADER
 				shv_runner::shutdown();
 				LOG(INFO) << "ASI plugins unloaded.";
+#endif // ENABLE_ASI_LOADER
 
 				g_hooking->disable();
 				LOG(INFO) << "Hooking disabled.";

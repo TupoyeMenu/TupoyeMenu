@@ -124,6 +124,7 @@ namespace big::session
 
 	inline void kick_by_rockstar_id(uint64_t rid)
 	{
+#ifdef ENABLE_SOCIALCLUB
 		rage::rlGamerHandle player_handle(rid);
 		rage::rlScHandle socialclub_handle(rid);
 		rage::rlSessionByGamerTaskResult get_session_result;
@@ -234,10 +235,14 @@ namespace big::session
 		gamer_handle_serialize(player_handle, msg);
 		msg.send(connect_to_peer_result.m_peer_id, gta_util::get_network()->m_game_session_ptr->m_connection_identifier);
 		g_notification_service->push("RID Kick", "Sent lost connection kick");
+#else
+		g_notification_service->push_error("RID Kick", "RID Kick requires social club.");
+#endif // ENABLE_SOCIALCLUB
 	}
 
 	inline void crash_by_rockstar_id(uint64_t rid)
 	{
+#ifdef ENABLE_SOCIALCLUB
 		rage::rlGamerHandle player_handle(rid);
 		rage::rlScHandle socialclub_handle(rid);
 
@@ -294,6 +299,9 @@ namespace big::session
 		msg.write_message(rage::eNetMessage::MsgTransitionLaunch);
 		msg.send(connect_to_peer_result.m_peer_id, 7);
 		g_notification_service->push("RID Crash", "Sent transition launch crash");
+#else
+		g_notification_service->push_error("RID Crash", "RID Crash requires social club.");
+#endif // ENABLE_SOCIALCLUB
 	}
 
 	inline void join_by_username(std::string username)

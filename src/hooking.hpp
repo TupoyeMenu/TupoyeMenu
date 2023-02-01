@@ -105,8 +105,10 @@ namespace big
 		static std::int64_t constraint_attachment_crash(std::uintptr_t a1);
 		static uint64_t invalid_decal(uintptr_t a1, int a2);
 
+#ifdef ENABLE_SOCIALCLUB
 		static bool update_presence_attribute_int(void* presence_data, int profile_index, char* attr, std::uint64_t value);
 		static bool update_presence_attribute_string(void* presence_data, int profile_index, char* attr, char* value);
+#endif // ENABLE_SOCIALCLUB
 
 		static void serialize_ped_inventory_data_node(CPedInventoryDataNode* node, rage::CSyncDataBase* data);
 		static void serialize_dynamic_entity_game_state_data_node(CDynamicEntityGameStateDataNode* node, rage::CSyncDataBase* data);

@@ -65,8 +65,10 @@ namespace big
 		detour_hook_helper::add<hooks::constraint_attachment_crash>("CAC", g_pointers->m_constraint_attachment_crash);
 		detour_hook_helper::add<hooks::invalid_decal>("IDC", g_pointers->m_invalid_decal_crash);
 
+#ifdef ENABLE_SOCIALCLUB
 		detour_hook_helper::add<hooks::update_presence_attribute_int>("UPAI", g_pointers->m_update_presence_attribute_int);
 		detour_hook_helper::add<hooks::update_presence_attribute_string>("UPAS", g_pointers->m_update_presence_attribute_string);
+#endif // ENABLE_SOCIALCLUB
 
 		detour_hook_helper::add<hooks::serialize_dynamic_entity_game_state_data_node>("SDEGSDN", g_pointers->m_serialize_dynamic_entity_game_state_data_node);
 		detour_hook_helper::add<hooks::serialize_ped_inventory_data_node>("SPIDN", g_pointers->m_serialize_ped_inventory_data_node);

@@ -7,8 +7,9 @@
 #include "gta/replay.hpp"
 #include "memory/byte_patch.hpp"
 
+#ifdef ENABLE_ASI_LOADER
 #include "asi_loader/pools.h"
-#include "memory/byte_patch.hpp"
+#endif // ENABLE_ASI_LOADER
 
 class CCommunications;
 class FriendRegistry;
@@ -56,11 +57,13 @@ namespace big
 		functions::run_script_threads m_run_script_threads{};
 		functions::register_file_t m_register_file{};
 		std::int64_t** m_script_globals{};
+#ifdef ENABLE_ASI_LOADER
 		rage::GenericPool* m_ped_pool{};
 		rage::VehiclePool* m_vehicle_pool{};
 		rage::GenericPool* m_prop_pool{};
 		rage::GenericPool* m_pickup_pool{};
 		rage::GenericPool* m_camera_pool{};
+#endif // ENABLE_ASI_LOADER
 
 		PVOID m_get_pool_type;
 		
@@ -144,7 +147,9 @@ namespace big
 
 		functions::start_get_session_by_gamer_handle m_start_get_session_by_gamer_handle;
 		functions::start_matchmaking_find_sessions m_start_matchmaking_find_sessions;
+#ifdef ENABLE_SOCIALCLUB
 		functions::start_get_presence_attributes m_start_get_presence_attributes;
+#endif // ENABLE_SOCIALCLUB
 		functions::join_session_by_info m_join_session_by_info;
 
 		memory::byte_patch* m_bypass_max_count_of_active_sticky_bombs;
@@ -178,9 +183,10 @@ namespace big
 		rage::rlGamerInfo* m_profile_gamer_info{}; // per profile gamer info
 		rage::rlGamerInfo* m_player_info_gamer_info{}; // the gamer info that is applied to CPlayerInfo
 		CCommunications** m_communications{};
-
+#ifdef ENABLE_SOCIALCLUB
 		PVOID m_update_presence_attribute_int;
 		PVOID m_update_presence_attribute_string;
+#endif // ENABLE_SOCIALCLUB
 
 		PVOID m_serialize_dynamic_entity_game_state_data_node;
 		PVOID m_serialize_ped_inventory_data_node;
