@@ -647,12 +647,9 @@ namespace big
 			bool main = true;
 			bool users = true;
 			bool player = true;
-			bool overlay = false;
 			bool chat = false;
 			bool demo = false;
 			bool log = false;
-
-			int overlay_corner = 0;
 
 			ImU32 color = 3357612055;
 			float gui_scale = 1.f;
@@ -662,7 +659,25 @@ namespace big
 			ImFont* font_small = nullptr;
 			ImFont* font_icon = nullptr;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, main, users, player, overlay, overlay_corner, chat, demo, log, color, gui_scale)
+			bool switched_view = true;
+
+			struct ingame_overlay
+			{
+				bool opened = true;
+				bool show_with_menu_opened = true;
+				int corner = 0;
+
+				bool show_watermark = false;
+				bool show_fps = true;
+				bool show_coords = true;
+				bool show_players = true;
+				bool show_replay_interface = true;
+				bool show_game_versions = false;
+
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(ingame_overlay, opened, corner, show_coords, show_watermark, show_with_menu_opened, show_fps, show_players, show_replay_interface, show_game_versions)
+			} ingame_overlay{};
+
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, main, users, player, ingame_overlay, switched_view, chat, demo, log, color, gui_scale)
 		} window{};
 
 		struct context_menu
