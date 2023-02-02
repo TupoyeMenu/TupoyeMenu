@@ -48,13 +48,8 @@ target_include_directories(TupoyeMenu PRIVATE
 target_precompile_headers(TupoyeMenu PRIVATE "${SRC_DIR}/common.hpp")
 target_link_libraries(TupoyeMenu PRIVATE pugixml minhook g3log imgui cpr)
 
-option(GEN_PDB "Generate PDB. Can cause some AC problems Default: OFF")
-if(GEN_PDB)
-    target_compile_options(TupoyeMenu PRIVATE "$<$<CONFIG:Release>:/Z7>")
-    target_link_options(TupoyeMenu PRIVATE "$<$<CONFIG:Release>:/DEBUG>")
-    target_link_options(TupoyeMenu PRIVATE "$<$<CONFIG:Release>:/OPT:REF>")
-    target_link_options(TupoyeMenu PRIVATE "$<$<CONFIG:Release>:/OPT:ICF>")
-endif()
+# Build Options
+include(scripts/build_options.cmake)
 
 # Warnings as errors
 set_property(TARGET TupoyeMenu PROPERTY COMPILE_WARNING_AS_ERROR ON)

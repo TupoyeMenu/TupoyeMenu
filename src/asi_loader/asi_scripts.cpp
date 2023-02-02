@@ -1,3 +1,4 @@
+#ifdef ENABLE_ASI_LOADER
 #include "asi_scripts.h"
 #include "logger.hpp"
 #include "pe_image.h"
@@ -63,3 +64,4 @@ void ASILoader::Initialize() {
 
 	LOG(INFO) << "Finished loading *.asi plugins.";
 }
+#endif // ENABLE_ASI_LOADER

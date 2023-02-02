@@ -1,10 +1,12 @@
-#include "asi_loader/pools.h"
 #include "common.hpp"
 #include "pointers.hpp"
 #include "memory/all.hpp"
 #include "rage/atSingleton.hpp"
 #include "security/RageSecurity.hpp"
 #include "hooking.hpp"
+#ifdef ENABLE_ASI_LOADER
+#include "asi_loader/pools.h"
+#endif // ENABLE_ASI_LOADER
 
 extern "C" void	sound_overload_detour();
 std::uint64_t g_sound_overload_ret_addr;
@@ -298,7 +300,7 @@ namespace big
 		});
 		
 		//Begin SHV
-
+#ifdef ENABLE_ASI_LOADER
 		//Register File
 		main_batch.add("RF", "40 88 7C 24 ? E8 ? ? ? ? 0F B7 44 24", [this](memory::handle ptr)
 		{
@@ -334,7 +336,7 @@ namespace big
 		{
 			m_camera_pool = ptr.sub(9).rip().as<rage::GenericPool*>();
 		});
-
+#endif // ENABLE_ASI_LOADER
 		//END SHV
 
 		// Get Pool Type
@@ -869,12 +871,38 @@ namespace big
 			m_start_shape_test = ptr.as<PVOID>();
 		});
 
+		// Clear Ped Tasks Network
+		main_batch.add("CPTN", "E8 ? ? ? ? EB 28 48 8B 8F A0 10 00 00", [this](memory::handle ptr)
+		{
+			m_clear_ped_tasks_network = ptr.add(1).rip().as<functions::clear_ped_tasks_network>();
+		});
+
+		// Infinite Train Crash
+		main_batch.add("ITC", "E8 ? ? ? ? F3 44 0F 10 93 90 03 00 00", [this](memory::handle ptr)
+		{
+			m_infinite_train_crash = ptr.add(1).rip().as<PVOID>();
+			m_get_next_carriage = ptr.add(1).rip().add(0xF).rip().as<functions::get_next_carriage>();
+		});
+
+		// Get Entity Attached To
+		main_batch.add("GEAT", "48 83 EC 28 48 8B 51 50 48 85 D2 74 04", [this](memory::handle ptr)
+		{
+			m_get_entity_attached_to = ptr.as<functions::get_entity_attached_to>();
+		});
+
+		// Received Array Update
+		main_batch.add("RAU", "48 89 5C 24 10 55 56 57 41 54 41 55 41 56 41 57 48 8B EC 48 83 EC 30 48 8B 05", [this](memory::handle ptr)
+		{
+			m_received_array_update = ptr.as<PVOID>();
+		});
+
 		auto mem_region = memory::module("GTA5.exe");
 		if (!main_batch.run(mem_region))
 		{
 			throw std::runtime_error("Failed to find some patterns.");
 		}
 
+#ifdef ENABLE_SOCIALCLUB
 		memory::batch socialclub_batch;
 
 		// Presence Data
@@ -897,6 +925,7 @@ namespace big
 			socialclub_batch.run(sc_module);
 		}
 		else LOG(WARNING) << "socialclub.dll module was not loaded within the time limit.";
+#endif // ENABLE_SOCIALCLUB
 
 		if (auto pat = mem_region.scan("41 80 78 28 ? 0F 85 ? ? ? ? 49 8B 80"))
 		{

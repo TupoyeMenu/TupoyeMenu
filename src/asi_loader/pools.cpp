@@ -1,3 +1,4 @@
+#ifdef ENABLE_ASI_LOADER
 #include "pools.h"
 #include "pointers.hpp"
 
@@ -116,3 +117,4 @@ namespace rage
 		return (int)entities.size();
 	}
 }
+#endif // ENABLE_ASI_LOADER

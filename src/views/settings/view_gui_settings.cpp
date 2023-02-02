@@ -18,6 +18,40 @@ namespace big
 		{
 			g.window.color = ImGui::ColorConvertFloat4ToU32(col_gui);
 		}
+
+		components::sub_title("Ingame Overlay");
+		ImGui::Checkbox("Show Overlay", &g.window.ingame_overlay.opened);
+		ImGui::SameLine();
+		ImGui::Checkbox("Show when Menu opened", &g.window.ingame_overlay.show_with_menu_opened);
+
+		ImGui::BeginGroup();
+
+		ImGui::Text("Position");
+		if (ImGui::Button("Custom")) g.window.ingame_overlay.corner = -1;
+        if (ImGui::Button("Top-left")) g.window.ingame_overlay.corner = 0;
+		ImGui::SameLine();
+        if (ImGui::Button("Top-right")) g.window.ingame_overlay.corner = 1;
+        if (ImGui::Button("Bottom-left")) g.window.ingame_overlay.corner = 2;
+		ImGui::SameLine();
+        if (ImGui::Button("Bottom-right")) g.window.ingame_overlay.corner = 3;
+
+		ImGui::EndGroup();
+
+		ImGui::BeginGroup();
+
+		ImGui::Checkbox("Show Watermark", &g.window.ingame_overlay.show_watermark);
+		ImGui::Checkbox("Show Players", &g.window.ingame_overlay.show_players);
+		ImGui::Checkbox("Show Coords", &g.window.ingame_overlay.show_coords);
+
+		ImGui::EndGroup();
+		ImGui::SameLine();
+		ImGui::BeginGroup();
+
+		ImGui::Checkbox("Show Coords", &g.window.ingame_overlay.show_coords);
+		ImGui::Checkbox("Show Replay Interface", &g.window.ingame_overlay.show_replay_interface);
+		ImGui::Checkbox("Show Game Version", &g.window.ingame_overlay.show_game_versions);
+
+		ImGui::EndGroup();
 	}
 
 }

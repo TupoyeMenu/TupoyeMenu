@@ -136,6 +136,7 @@ namespace big
 
 				ImGui::SameLine();
 
+#ifdef ENABLE_CRASHES
 				if(ImGui::Button("Crash"))
 					ImGui::OpenPopup("crash_popup");
 
@@ -146,6 +147,7 @@ namespace big
         		    components::button("Yes Crash", [] { session::crash_by_rockstar_id(current_player.rockstar_id); });
         		    ImGui::EndPopup();
         		}
+#endif // ENABLE_CRASHES
 
 				components::button("Join Session", []
 				{

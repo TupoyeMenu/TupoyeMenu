@@ -1,3 +1,4 @@
+#ifdef ENABLE_SOCIALCLUB
 #include "hooking.hpp"
 
 namespace big
@@ -31,3 +32,4 @@ namespace big
 		return g_hooking->get_original<hooks::update_presence_attribute_string>()(presence_data, profile_index, attr, value);
 	}
 }
+#endif // ENABLE_SOCIALCLUB
