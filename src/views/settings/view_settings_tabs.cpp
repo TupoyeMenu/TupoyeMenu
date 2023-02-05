@@ -31,6 +31,11 @@ namespace big
 				view::gui_settings();
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("Translation"))
+			{
+				view::translation_settings();
+				ImGui::EndTabItem();
+			}
 			if (ImGui::BeginTabItem("Reactions"))
 			{
 				view::reaction_settings();

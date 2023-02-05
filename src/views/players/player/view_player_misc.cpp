@@ -11,10 +11,8 @@ namespace big
 		components::player_command_button<"joinceo">(g_player_service->get_selected());
 		components::player_command_button<"enterint">(g_player_service->get_selected());
 		components::player_command_button<"copyoutfit">(g_player_service->get_selected());
-		ImGui::SameLine(); components::help_marker("Will crash you after death... I think.");
 		ImGui::SameLine();
 		components::player_command_button<"copymodel">(g_player_service->get_selected());
-		ImGui::SameLine(); components::help_marker("Will crash you after death... I think.");
 
 		components::player_command_button<"clearwanted">(g_player_service->get_selected());
 		ImGui::SameLine();
@@ -24,9 +22,9 @@ namespace big
 		ImGui::SameLine();
 		components::player_command_button<"giveammo">(g_player_service->get_selected());
 
-		ImGui::Checkbox("Off The Radar", &g_player_service->get_selected()->off_radar);
-		ImGui::Checkbox("Never Wanted", &g_player_service->get_selected()->never_wanted);
-		ImGui::Checkbox("Semi Godmode", &g_player_service->get_selected()->semi_godmode);
+		ImGui::Checkbox("OFF_THE_RADAR"_T.data(), &g_player_service->get_selected()->off_radar);
+		ImGui::Checkbox("NEVER_WANTED"_T.data(), &g_player_service->get_selected()->never_wanted);
+		ImGui::Checkbox("SEMI_GODMODE"_T.data(), &g_player_service->get_selected()->semi_godmode);
 
 		components::button("Gooch Test", []
 		{

@@ -6,17 +6,17 @@ namespace big
 	void view::debug_tabs() {
 		if (ImGui::BeginTabBar("debug_tabbar"))
 		{
-			if (ImGui::BeginTabItem("Scripts"))
+			if (ImGui::BeginTabItem("DEBUG_TAB_SCRIPTS"_T.data()))
 			{
 				view::debug_scripts();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Script Events"))
+			if (ImGui::BeginTabItem("DEBUG_TAB_SCRIPT_EVENTS"_T.data()))
 			{
 				view::debug_script_events();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Globals"))
+			if (ImGui::BeginTabItem("DEBUG_TAB_GLOBALS"_T.data()))
 			{
 				view::debug_globals();
 				ImGui::EndTabItem();
@@ -27,7 +27,7 @@ namespace big
 				ImGui::EndTabItem();
 			}
 
-			if (ImGui::BeginTabItem("Misc"))
+			if (ImGui::BeginTabItem("DEBUG_TAB_MISC"_T.data()))
 			{
 				view::debug_misc();
 				ImGui::EndTabItem();

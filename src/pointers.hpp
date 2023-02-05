@@ -137,8 +137,6 @@ namespace big
 		functions::read_bitbuffer_into_sync_tree m_read_bitbuffer_into_sync_tree{};
 		//Sync Signatures END
 
-		PVOID m_send_net_info_to_lobby{};
-
 		PVOID m_receive_net_message{};
 		PVOID m_get_network_event_data{};
 		PVOID m_assign_physical_index{};
@@ -230,9 +228,6 @@ namespace big
 
 		PVOID m_create_script_handler;
 
-		PVOID m_write_bitbuffer_gamer_handle;
-		PVOID m_read_bitbuffer_gamer_handle;
-
 		functions::encode_session_info m_encode_session_info;
 		functions::decode_session_info m_decode_session_info;
 		functions::decode_peer_info m_decode_peer_info;
@@ -244,8 +239,6 @@ namespace big
 
 		rage::netTime** m_network_time;
 		functions::sync_network_time m_sync_network_time;
-
-		rage::rlGamerInfo* m_chat_gamer_info;
 
 		PVOID m_linux_dx_error_fix;
 

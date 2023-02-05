@@ -8,10 +8,10 @@ namespace big
 {
 	void view::view_player_kicks_and_crashes()
 	{
-		std::string title = std::format("Player Kick and Crash Options: {}", g_player_service->get_selected()->get_name());
+		std::string title = std::format("Player Kick Options: {}", g_player_service->get_selected()->get_name());
 		ImGui::Text(title.c_str());
 
-		if (ImGui::TreeNode("Kicks")) 
+		if (ImGui::TreeNode("KICK"_T.data()))
 		{
 			auto const is_session_host = [] { return gta_util::get_network()->m_game_session_ptr->is_host(); };
 
@@ -40,7 +40,6 @@ namespace big
 		if (ImGui::TreeNode("Crashes (shit)")) 
 		{
 			components::player_command_button<"slodpedcrash">(g_player_service->get_selected());
-			components::player_command_button<"tlcrash">(g_player_service->get_selected());
 			components::player_command_button<"tsecrash">(g_player_service->get_selected());
 
 			ImGui::TreePop();

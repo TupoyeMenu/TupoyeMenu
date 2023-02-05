@@ -75,28 +75,16 @@ namespace big
 			}
 
 			ImGui::TreePop();
-
-			if (components::button("Load MP Map"))
-				DLC::ON_ENTER_MP();
-
-			ImGui::SameLine();
-			if (components::button("Load SP Map"))
-
-				DLC::ON_ENTER_SP();
-
-			if (components::button("Skip Cutscene"))
-				CUTSCENE::STOP_CUTSCENE_IMMEDIATELY();
-
-			if (components::button("Refresh Interior"))
-			{
-				Interior interior = INTERIOR::GET_INTERIOR_AT_COORDS(self::pos.x, self::pos.y, self::pos.z);
-				INTERIOR::REFRESH_INTERIOR(interior);
-			}
-			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("You Will Have To Refresh Again When Exiting Interior.\n SPAMMING WILL CRASH GAME");
-
-			ImGui::EndTabItem();
 		}
 
+		if (components::button("Refresh Interior"))
+		{
+			Interior interior = INTERIOR::GET_INTERIOR_AT_COORDS(self::pos.x, self::pos.y, self::pos.z);
+			INTERIOR::REFRESH_INTERIOR(interior);
+		}
+
+		ImGui::SameLine(); components::help_marker("You Will Have To Refresh Again When Exiting Interior.\n SPAMMING WILL CRASH GAME");
+
+		components::command_button<"fastquit">();
 	}
 }

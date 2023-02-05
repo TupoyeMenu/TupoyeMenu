@@ -12,22 +12,22 @@ namespace big
 		{
 			if (ImGui::BeginTabBar("player_tabbar"))
 			{
-				if (ImGui::BeginTabItem("Info"))
+				if (ImGui::BeginTabItem("INFO"_T.data()))
 				{
 					view::view_player_info();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("Troll"))
+				if (ImGui::BeginTabItem("TROLL"_T.data()))
 				{
 					view::view_player_troll();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("Misc"))
+				if (ImGui::BeginTabItem("MISC"_T.data()))
 				{
 					view::view_player_misc();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("Toxic"))
+				if (ImGui::BeginTabItem("TOXIC"_T.data()))
 				{
 					view::view_player_toxic();
 					ImGui::EndTabItem();

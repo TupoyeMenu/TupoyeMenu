@@ -52,8 +52,7 @@ namespace big
 		components::button("Flight School", [] { scripts::start_launcher_script(196); });
 		components::button("Golf", [] { scripts::start_launcher_script(193); });
 		components::button("Tutorial", [] { scripts::start_launcher_script(20); });
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("Only works on joining players");
+		ImGui::SameLine(); components::help_marker("Only works on joining players");
 		ImGui::EndGroup();
 
 		ImGui::SameLine();

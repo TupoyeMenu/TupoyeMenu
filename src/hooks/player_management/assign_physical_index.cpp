@@ -27,7 +27,10 @@ namespace big
 						<< " with Rockstar ID: " << net_player_data->m_gamer_handle_2.m_rockstar_id;
 
 				if (g.notifications.player_leave.notify)
-					g_notification_service->push("Player Left", std::format("{} freeing slot #{} with Rockstar ID: {}", net_player_data->m_name, player->m_player_id, net_player_data->m_gamer_handle_2.m_rockstar_id));
+				{
+					g_notification_service->push("PLAYER_LEFT"_T.data(),
+						std::vformat("PLAYER_LEFT_INFO"_T, std::make_format_args(net_player_data->m_name, player->m_player_id, net_player_data->m_gamer_handle_2.m_rockstar_id)));
+				}
 			}
 
 			return g_hooking->get_original<hooks::assign_physical_index>()(netPlayerMgr, player, new_index);
@@ -46,32 +49,39 @@ namespace big
 					<< " with Rockstar ID: " << net_player_data->m_gamer_handle_2.m_rockstar_id;
 
 			if (g.notifications.player_join.notify)
-				g_notification_service->push("Player Joined", std::format("{} taking slot #{} with Rockstar ID: {}", net_player_data->m_name, player->m_player_id, net_player_data->m_gamer_handle_2.m_rockstar_id));
+			{
+				g_notification_service->push("PLAYER_JOINED"_T.data(),
+					std::vformat("PLAYER_JOINED_INFO"_T, std::make_format_args(net_player_data->m_name, player->m_player_id, net_player_data->m_gamer_handle_2.m_rockstar_id)));
+			}
 
 			auto id = player->m_player_id;
 			g_fiber_pool->queue_job([id]
 			{
 				if (auto plyr = g_player_service->get_by_id(id))
 				{
-					if (auto entry = g_player_database_service->get_player_by_rockstar_id(plyr->get_net_data()->m_gamer_handle_2.m_rockstar_id))
+					if (plyr->get_net_data()->m_gamer_handle_2.m_rockstar_id != 0)
 					{
-						plyr->is_modder = entry->is_modder;
-						plyr->is_rockstar_admin = entry->is_rockstar_admin;
-						plyr->block_join = entry->block_join;
-						plyr->block_join_reason = plyr->block_join_reason;
-
-						if(entry->is_rockstar_admin)
+						if (auto entry = g_player_database_service->get_player_by_rockstar_id(plyr->get_net_data()->m_gamer_handle_2.m_rockstar_id))
 						{
-							std::string text = std::format("R* Admin: {} #{} joined", entry->name, entry->rockstar_id);
-							g_notification_service->push_error("R* Admin Joined", text);
-							LOG(WARNING) << text;
-						}
+							plyr->is_modder = entry->is_modder;
+							plyr->is_rockstar_admin = entry->is_rockstar_admin;
+							plyr->block_join = entry->block_join;
+							plyr->block_join_reason = plyr->block_join_reason;
 
-						if (strcmp(plyr->get_name(), entry->name.data()))
-						{
-							g_notification_service->push("Players", std::format("{} changed their name to {}", entry->name, plyr->get_name()));
-							entry->name = plyr->get_name();
-							g_player_database_service->save();
+							if(entry->is_rockstar_admin)
+							{
+								std::string text = std::format("R* Admin: {} #{} joined", entry->name, entry->rockstar_id);
+								g_notification_service->push_error("R* Admin Joined", text);
+								LOG(WARNING) << text;
+							}
+
+							if (strcmp(plyr->get_name(), entry->name.data()))
+							{
+								g_notification_service->push("PLAYERS"_T.data(),
+									std::vformat("PLAYER_CHANGED_NAME"_T, std::make_format_args(entry->name, plyr->get_name())));
+								entry->name = plyr->get_name();
+								g_player_database_service->save();
+							}
 						}
 					}
 

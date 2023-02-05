@@ -9,7 +9,7 @@ namespace big
 {
 	void view::spawn_vehicle()
 	{
-		if (ImGui::Checkbox("Preview", &g.spawn_vehicle.preview_vehicle))
+		if (ImGui::Checkbox("PREVIEW"_T.data(), &g.spawn_vehicle.preview_vehicle))
 		{
 			if (!g.spawn_vehicle.preview_vehicle)
 			{
@@ -25,7 +25,7 @@ namespace big
 		strncpy(plate_buf, g.spawn_vehicle.plate.c_str(), 9);
 
 		ImGui::SetNextItemWidth(300.f);
-		components::input_text_with_hint("Plate", "Plate Number", plate_buf, sizeof(plate_buf), ImGuiInputTextFlags_None, [] {
+		components::input_text_with_hint("PLATE"_T, "PLATE_NUMBER"_T, plate_buf, sizeof(plate_buf), ImGuiInputTextFlags_None, [] {
 			g.spawn_vehicle.plate = plate_buf;
 		});
 
@@ -34,9 +34,9 @@ namespace big
 		const auto& class_arr = g_gta_data_service->vehicle_classes();
 
 		ImGui::SetNextItemWidth(300.f);
-		if (ImGui::BeginCombo("Vehicle Class", selected_class == -1 ? "ALL" : class_arr[selected_class].c_str()))
+		if (ImGui::BeginCombo("VEHICLE_CLASS"_T.data(), selected_class == -1 ? "ALL"_T.data() : class_arr[selected_class].c_str()))
 		{
-			if (ImGui::Selectable("ALL", selected_class == -1))
+			if (ImGui::Selectable("ALL"_T.data(), selected_class == -1))
 			{
 				selected_class = -1;
 			}
@@ -61,7 +61,7 @@ namespace big
 		static char search[64];
 
 		ImGui::SetNextItemWidth(300.f);
-		components::input_text_with_hint("Model Name", "Search", search, sizeof(search), ImGuiInputTextFlags_EnterReturnsTrue, [] {
+		components::input_text_with_hint("MODEL_NAME"_T, "SEARCH"_T, search, sizeof(search), ImGuiInputTextFlags_EnterReturnsTrue, [] {
 			Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside);
 			float spawn_heading = ENTITY::GET_ENTITY_HEADING(self::ped);
 
@@ -102,7 +102,7 @@ namespace big
 				{
 					const auto& item = g_gta_data_service->vehicle_by_hash(veh_hash);
 
-					components::selectable(std::format("Current Vehicle [{}]", item.m_display_name), false, [] {
+					components::selectable(std::vformat("SPAWN_VEHICLE_CURRENT_VEHICLE"_T, std::make_format_args(item.m_display_name)), false, [] {
 						if (self::veh)
 						{
 							Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside);
@@ -114,7 +114,7 @@ namespace big
 
 							if (veh == 0)
 							{
-								g_notification_service->push_error("Vehicle", "Unable to spawn vehicle");
+								g_notification_service->push_error("VEHICLE"_T.data(), "UNABLE_TO_SPAWN_VEHICLE"_T.data());
 							}
 							else
 							{
@@ -184,7 +184,7 @@ namespace big
 
 							if (veh == 0)
 							{
-								g_notification_service->push_error("Vehicle", "Unable to spawn vehicle");
+								g_notification_service->push_error("VEHICLE"_T.data(), "UNABLE_TO_SPAWN_VEHICLE"_T.data());
 							}
 							else
 							{
@@ -218,7 +218,7 @@ namespace big
 			}
 			else
 			{
-				ImGui::Text("No vehicles in registry.");
+				ImGui::Text("NO_VEHICLE_IN_REGISTRY"_T.data());
 			}
 			ImGui::ListBoxFooter();
 		}
