@@ -28,7 +28,7 @@ jobs:
         run: cmake -D CMAKE_BUILD_TYPE=Release -S. -Bbuild -G Ninja -DGEN_PDB=ON
 
       - name: Build 64bit release DLL
-        run: cmake --build ./build --config Release --target YimMenu --
+        run: cmake --build ./build --config Release --target TupoyeMenu --
 
       - name: Check if DLL got built
         run: if (-Not (Test-Path -path "build/TupoyeMenu.dll")) {throw 1}
