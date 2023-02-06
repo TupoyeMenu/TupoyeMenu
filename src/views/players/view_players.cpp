@@ -49,6 +49,7 @@ namespace big
 		if (ImGui::Button(plyr->get_name(), { 300.0f - ImGui::GetStyle().ScrollbarSize, 0.f }))
 		{
 			g_player_service->set_selected(plyr);
+			g.window.player = true;
 		}
 		ImGui::PopID();
 		ImGui::PopStyleVar();

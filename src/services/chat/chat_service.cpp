@@ -30,7 +30,7 @@ namespace big
 	void chat_service::add_msg(CNetGamePlayer* player, std::string msg, bool is_team, bool is_spam)
 	{
 		m_chat_msgs.push_back({
-			player->get_net_data()->m_gamer_handle_2.m_rockstar_id,
+			player->get_net_data()->m_gamer_handle.m_rockstar_id,
 			is_team,
 			is_spam,
 			player->get_name(),
@@ -52,8 +52,8 @@ namespace big
 	void chat_service::add_direct_msg(CNetGamePlayer* player_sender, CNetGamePlayer* player_receiver, std::string msg, bool is_spam)
 	{
 		m_direct_msgs.push_back({
-			player_sender->get_net_data()->m_gamer_handle_2.m_rockstar_id,
-			player_receiver->get_net_data()->m_gamer_handle_2.m_rockstar_id, // TODO: Use real rid.
+			player_sender->get_net_data()->m_gamer_handle.m_rockstar_id,
+			player_receiver->get_net_data()->m_gamer_handle.m_rockstar_id, // TODO: Use real rid.
 			is_spam,
 			player_sender->get_name(),
 			player_receiver->get_name(),

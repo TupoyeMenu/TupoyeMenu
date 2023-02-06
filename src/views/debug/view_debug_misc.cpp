@@ -1,23 +1,18 @@
-#include "fiber_pool.hpp"
 #include "natives.hpp"
 #include "pointers.hpp"
 #include "thread_pool.hpp"
 #include "util/system.hpp"
+#include "network/Network.hpp"
+#include "gta_util.hpp"
 #include "views/view.hpp"
 
 namespace big
 {
 	void view::debug_misc() 
 	{
-		components::button("Load MP Map", []
-		{
-				DLC::ON_ENTER_MP();
-		});
+		components::button("Load MP Map", [] { DLC::ON_ENTER_MP(); });
 		ImGui::SameLine();
-		components::button("Load SP Map", []
-		{
-			DLC::ON_ENTER_SP();
-		});
+		components::button("Load SP Map", [] { DLC::ON_ENTER_SP(); });
 
 		if (components::button("Dump entrypoints"))
 		{
@@ -38,10 +33,16 @@ namespace big
 		{
 			NETWORK::NETWORK_SESSION_HOST(1, 32, false);
 		});
+		components::button("Refresh Interior", []
+		{
+			Interior interior = INTERIOR::GET_INTERIOR_AT_COORDS(self::pos.x, self::pos.y, self::pos.z);
+			INTERIOR::REFRESH_INTERIOR(interior);
+		});
+		ImGui::SameLine(); components::help_marker("You Will Have To Refresh Again When Exiting Interior.\n SPAMMING WILL CRASH GAME");
 
 		if (g_local_player && g_local_player->m_player_info)
 		{
-			ImGui::InputScalar("Rockstar ID", ImGuiDataType_S64, &g_local_player->m_player_info->m_net_player_data.m_gamer_handle_2.m_rockstar_id, nullptr, nullptr, nullptr, ImGuiInputTextFlags_ReadOnly);
+			ImGui::InputScalar("Rockstar ID", ImGuiDataType_S64, &g_local_player->m_player_info->m_net_player_data.m_gamer_handle.m_rockstar_id, nullptr, nullptr, nullptr, ImGuiInputTextFlags_ReadOnly);
 		}
 
 		ImGui::Checkbox("Log Native Script Hooks", &g.debug.logs.script_hook_logs);
@@ -77,13 +78,46 @@ namespace big
 			ImGui::TreePop();
 		}
 
-		if (components::button("Refresh Interior"))
+		if (ImGui::TreeNode("Addresses"))
 		{
-			Interior interior = INTERIOR::GET_INTERIOR_AT_COORDS(self::pos.x, self::pos.y, self::pos.z);
-			INTERIOR::REFRESH_INTERIOR(interior);
-		}
+			uint64_t local_cped = (uint64_t)g_local_player;
+			ImGui::InputScalar("Local CPed", ImGuiDataType_U64, &local_cped, NULL, NULL, "%p", ImGuiInputTextFlags_CharsHexadecimal);
 
-		ImGui::SameLine(); components::help_marker("You Will Have To Refresh Again When Exiting Interior.\n SPAMMING WILL CRASH GAME");
+			if (g_local_player)
+			{
+				uint64_t local_playerinfo = (uint64_t)g_local_player->m_player_info;
+				ImGui::InputScalar("Local CPlayerInfo", ImGuiDataType_U64, &local_playerinfo, NULL, NULL, "%p", ImGuiInputTextFlags_CharsHexadecimal);
+
+				uint64_t local_vehicle = (uint64_t)g_local_player->m_vehicle;
+				ImGui::InputScalar("Local CAutomobile", ImGuiDataType_U64, &local_vehicle, NULL, NULL, "%p", ImGuiInputTextFlags_CharsHexadecimal);
+			}
+
+			if (auto mgr = *g_pointers->m_network_player_mgr)
+			{
+				uint64_t local_netplayer = (uint64_t)mgr->m_local_net_player;
+				ImGui::InputScalar("Local CNetGamePlayer", ImGuiDataType_U64, &local_netplayer, NULL, NULL, "%p", ImGuiInputTextFlags_CharsHexadecimal);
+
+				if (mgr->m_local_net_player)
+				{
+					uint64_t local_netplayer = (uint64_t)mgr->m_local_net_player->get_net_data();
+					ImGui::InputScalar("Local netPlayerData", ImGuiDataType_U64, &local_netplayer, NULL, NULL, "%p", ImGuiInputTextFlags_CharsHexadecimal);
+				}
+			}
+
+			if (auto network = *g_pointers->m_network)
+			{
+				uint64_t nw = (uint64_t)network;
+				ImGui::InputScalar("Network", ImGuiDataType_U64, &nw, NULL, NULL, "%p", ImGuiInputTextFlags_CharsHexadecimal);
+			}
+
+			if (auto omgr = *g_pointers->m_network_object_mgr)
+			{
+				uint64_t nw = (uint64_t)omgr;
+				ImGui::InputScalar("Network Object Mgr", ImGuiDataType_U64, &nw, NULL, NULL, "%p", ImGuiInputTextFlags_CharsHexadecimal);
+			}
+
+			ImGui::TreePop();
+		}
 
 		components::command_button<"fastquit">();
 	}

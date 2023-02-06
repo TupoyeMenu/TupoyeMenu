@@ -21,7 +21,7 @@ namespace big
 				if (components::selectable(entry.first, dm_player_id == entry.second->id()))
 				{
 					dm_player_id = entry.second->id();
-					dm_player_rid = entry.second->get_net_data()->m_gamer_handle_2.m_rockstar_id; // TODO: Use real rid.
+					dm_player_rid = entry.second->get_net_data()->m_gamer_handle.m_rockstar_id;
 				}
 			});
 			ImGui::EndChild();
@@ -47,7 +47,7 @@ namespace big
 					uint64_t rid_receiver = current_msg.rid_receiver;
 					if(
 						(dm_player_rid == rid_sender) || 
-						(rid_sender == g_player_service->get_self()->get_net_data()->m_gamer_handle_2.m_rockstar_id && rid_receiver == dm_player_rid)
+						(rid_sender == g_player_service->get_self()->get_net_data()->m_gamer_handle.m_rockstar_id && rid_receiver == dm_player_rid)
 					)
 					{
 						ImGui::Text(

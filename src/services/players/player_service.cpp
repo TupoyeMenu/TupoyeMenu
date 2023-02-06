@@ -54,7 +54,7 @@ namespace big
 	player_ptr player_service::get_by_rid(uint64_t rid) const
 	{
 		for (const auto& [name, player] : m_players)
-			if (player->get_net_data()->m_gamer_handle_2.m_rockstar_id == rid)
+			if (player->get_net_data()->m_gamer_handle.m_rockstar_id == rid)
 				return player;
 		return nullptr;
 	}

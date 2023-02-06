@@ -115,37 +115,33 @@ namespace big
 		{
 			if (ImGui::TreeNode("Net Info"))
 			{
-				ImGui::Text("PLAYER_INFO_RID"_T.data(), net_player_data->m_gamer_handle_2.m_rockstar_id);
+				ImGui::Text("PLAYER_INFO_RID"_T.data(), net_player_data->m_gamer_handle.m_rockstar_id);
 
 				ImGui::SameLine();
 
-				if (ImGui::Button("Copy##RID")) ImGui::SetClipboardText(std::to_string(net_player_data->m_gamer_handle_2.m_rockstar_id).data());
+				if (ImGui::Button("Copy##RID")) ImGui::SetClipboardText(std::to_string(net_player_data->m_gamer_handle.m_rockstar_id).data());
 
-				if(g_player_service->get_selected()->real_rid != net_player_data->m_gamer_handle_2.m_rockstar_id)
-				{
-					ImGui::Text("Real Rockstar ID: %d", g_player_service->get_selected()->real_rid);
-					ImGui::SameLine();
-					if (ImGui::Button("Copy##IP")) ImGui::SetClipboardText(std::to_string(g_player_service->get_selected()->real_rid).data());
-				}
-				
+				auto ip = g_player_service->get_selected()->get_ip_address();
+				auto port = g_player_service->get_selected()->get_port();
+
 				ImGui::Text(
 					"PLAYER_INFO_IP"_T.data(),
-					net_player_data->m_external_ip.m_field1,
-					net_player_data->m_external_ip.m_field2,
-					net_player_data->m_external_ip.m_field3,
-					net_player_data->m_external_ip.m_field4,
-					net_player_data->m_external_port
+					ip.m_field1,
+					ip.m_field2,
+					ip.m_field3,
+					ip.m_field4,
+					port
 				);
 
 				ImGui::SameLine();
 
 				if (ImGui::Button("Copy"))
 				{
-					ImGui::SetClipboardText(std::format("{}.{}.{}.{}:{}", net_player_data->m_external_ip.m_field1,
-						net_player_data->m_external_ip.m_field2,
-						net_player_data->m_external_ip.m_field3,
-						net_player_data->m_external_ip.m_field4,
-						net_player_data->m_external_port).data()
+					ImGui::SetClipboardText(std::format("{}.{}.{}.{}:{}", ip.m_field1,
+						ip.m_field2,
+						ip.m_field3,
+						ip.m_field4,
+						port).data()
 					);
 				}
 
@@ -153,47 +149,44 @@ namespace big
 
 				components::button("Open SC Overlay", [] {
 					int gamerHandle;
-					if(g_player_service->get_selected()->real_rid != 0)
-						NETWORK::NETWORK_HANDLE_FROM_MEMBER_ID(std::to_string(g_player_service->get_selected()->real_rid).c_str(), &gamerHandle, 13);
-					else
-						NETWORK::NETWORK_HANDLE_FROM_PLAYER(g_player_service->get_selected()->id(), &gamerHandle, 13);
+					NETWORK::NETWORK_HANDLE_FROM_PLAYER(g_player_service->get_selected()->id(), &gamerHandle, 13);
 					NETWORK::NETWORK_SHOW_PROFILE_UI(&gamerHandle);
 				});
 				ImGui::TreePop();
 			}
-		}
 
-		if (persistent_player* current_player = g_player_database_service->get_player_by_rockstar_id(g_player_service->get_selected()->real_rid); current_player != nullptr)
-		{
-			if (ImGui::TreeNode("Player DB Info"))
+			if (persistent_player* current_player = g_player_database_service->get_player_by_rockstar_id(g_player_service->get_selected()->get_net_data()->m_gamer_handle.m_rockstar_id); current_player != nullptr)
 			{
-				if (!current_player->infractions.empty())
+				if (ImGui::TreeNode("Player DB Info"))
 				{
-					ImGui::Text("INFRACTIONS"_T.data());
-					for (auto& infraction : current_player->infractions)
+					if (!current_player->infractions.empty())
 					{
-						ImGui::BulletText(infraction_desc[(Infraction)infraction]);
+						ImGui::Text("INFRACTIONS"_T.data());
+						for (auto& infraction : current_player->infractions)
+						{
+							ImGui::BulletText(infraction_desc[(Infraction)infraction]);
+						}
 					}
-				}
 
-				if (ImGui::BeginCombo("CHAT_COMMAND_PERMISSIONS"_T.data(), COMMAND_ACCESS_LEVELS[g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level)]))
-				{
-					for (const auto& [type, name] : COMMAND_ACCESS_LEVELS)
+					if (ImGui::BeginCombo("CHAT_COMMAND_PERMISSIONS"_T.data(), COMMAND_ACCESS_LEVELS[g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level)]))
 					{
-						if (ImGui::Selectable(name, type == g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level)))
+						for (const auto& [type, name] : COMMAND_ACCESS_LEVELS)
 						{
-							g.session.chat_command_default_access_level = type;
-							g_player_database_service->get_or_create_player(g_player_service->get_selected())->command_access_level = type;
-							g_player_database_service->save();
+							if (ImGui::Selectable(name, type == g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level)))
+							{
+								g.session.chat_command_default_access_level = type;
+								g_player_database_service->get_or_create_player(g_player_service->get_selected())->command_access_level = type;
+								g_player_database_service->save();
+							}
+							if (type == g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level))
+							{
+								ImGui::SetItemDefaultFocus();
+							}
 						}
-						if (type == g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level))
-						{
-							ImGui::SetItemDefaultFocus();
-						}
+						ImGui::EndCombo();
 					}
-					ImGui::EndCombo();
+					ImGui::TreePop();
 				}
-				ImGui::TreePop();
 			}
 		}
 		

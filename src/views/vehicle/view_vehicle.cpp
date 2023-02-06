@@ -100,6 +100,7 @@ namespace big
 			}
 			components::command_checkbox<"driveunder">();
 			components::command_checkbox<"remove_speed_limit">();
+			components::command_checkbox<"keeponground">();
 
 			ImGui::EndGroup();
 		}

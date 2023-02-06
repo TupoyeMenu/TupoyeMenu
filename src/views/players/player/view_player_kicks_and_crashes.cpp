@@ -10,6 +10,7 @@ namespace big
 	{
 		std::string title = std::format("Player Kick Options: {}", g_player_service->get_selected()->get_name());
 		ImGui::Text(title.c_str());
+		ImGui::Text("PLAYER_INFO_ID"_T.data(), g_player_service->get_selected()->id());
 
 		if (ImGui::TreeNode("KICK"_T.data()))
 		{
@@ -22,15 +23,17 @@ namespace big
 			{
 				components::player_command_button<"lckick">(g_player_service->get_selected());
 			});
+
 			components::player_command_button<"bailkick">(g_player_service->get_selected());
 			ImGui::SameLine();
 			components::player_command_button<"nfkick">(g_player_service->get_selected());
+
 			components::player_command_button<"oomkick">(g_player_service->get_selected());
 			ImGui::SameLine();
-			components::player_command_button<"gikick">(g_player_service->get_selected());
 			components::player_command_button<"shkick">(g_player_service->get_selected());
-			ImGui::SameLine();
+
 			components::player_command_button<"endkick">(g_player_service->get_selected());
+			ImGui::SameLine();
 			components::player_command_button<"desync">(g_player_service->get_selected());
 
 			ImGui::TreePop();
