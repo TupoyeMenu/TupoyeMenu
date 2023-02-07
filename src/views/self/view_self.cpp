@@ -184,6 +184,7 @@ namespace big
 		if (!g.self.never_wanted)
 		{
 			ImGui::Checkbox("FORCE_WANTED_LVL"_T.data(), &g.self.force_wanted_level);
+			ImGui::SameLine(); components::help_marker("FORCE_WANTED_LVL_INFO"_T);
 			ImGui::Text("WANTED_LVL"_T.data());
 			if (
 				ImGui::SliderInt("###wanted_level", &g.self.wanted_level, 0, 5) &&
