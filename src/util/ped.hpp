@@ -183,8 +183,6 @@ namespace big::ped
 
 		PED::SET_PED_FIRING_PATTERN(ped, RAGE_JOAAT("FIRING_PATTERN_FULL_AUTO"));
 
-		ENTITY::SET_PED_AS_NO_LONGER_NEEDED(&ped);
-
 		return ped;
 	}
 
@@ -221,9 +219,6 @@ namespace big::ped
 
 		PED::SET_PED_FIRING_PATTERN(ped, RAGE_JOAAT("FIRING_PATTERN_FULL_AUTO"));
 
-		ENTITY::SET_VEHICLE_AS_NO_LONGER_NEEDED(&veh);
-		ENTITY::SET_PED_AS_NO_LONGER_NEEDED(&ped);
-
 		return ped;
 	}
 
@@ -253,9 +248,6 @@ namespace big::ped
 		TASK::TASK_COMBAT_PED(ped, target, 0, 16);
 
 		PED::SET_PED_FIRING_PATTERN(ped, RAGE_JOAAT("FIRING_PATTERN_FULL_AUTO"));
-
-		ENTITY::SET_VEHICLE_AS_NO_LONGER_NEEDED(&veh);
-		ENTITY::SET_PED_AS_NO_LONGER_NEEDED(&ped);
 
 		return ped;
 	}
