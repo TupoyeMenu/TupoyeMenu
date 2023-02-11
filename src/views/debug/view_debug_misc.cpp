@@ -40,6 +40,17 @@ namespace big
 		});
 		ImGui::SameLine(); components::help_marker("You Will Have To Refresh Again When Exiting Interior.\n SPAMMING WILL CRASH GAME");
 
+		if (components::button("MOV QWORD"))
+		{
+			*static_cast<uint64_t*>(nullptr) = 0;
+			uint64_t i = *static_cast<uint64_t*>(nullptr);
+		}
+		ImGui::SameLine();
+		if (components::button("MOV 0xdead"))
+		{
+			*((unsigned int*)0) = 0xDEAD;
+		}
+
 		if (g_local_player && g_local_player->m_player_info)
 		{
 			ImGui::InputScalar("Rockstar ID", ImGuiDataType_S64, &g_local_player->m_player_info->m_net_player_data.m_gamer_handle.m_rockstar_id, nullptr, nullptr, nullptr, ImGuiInputTextFlags_ReadOnly);

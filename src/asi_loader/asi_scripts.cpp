@@ -1,6 +1,5 @@
 #ifdef ENABLE_ASI_LOADER
 #include "asi_scripts.h"
-#include "logger.hpp"
 #include "pe_image.h"
 #include "core/globals.hpp"
 

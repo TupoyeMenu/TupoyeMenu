@@ -62,7 +62,7 @@ namespace big
 			PedComponent component;
 			Hash hash = FILES::GET_HASH_NAME_FOR_COMPONENT(ped_to_edit, g.outfit_editor.componentId, g.outfit_editor.drawableId, g.outfit_editor.textureId);
 			FILES::GET_SHOP_PED_COMPONENT(hash, (Any*)&component);
-			LOG(G3LOG_DEBUG) << std::format("Name: {} | Cost: {} | Character: {}",
+			LOG(VERBOSE) << std::format("Name: {} | Cost: {} | Character: {}",
 				HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION(component.m_textLabel),
 				component.m_cost,
 				component.m_eCharacter

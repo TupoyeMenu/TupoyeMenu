@@ -1,7 +1,6 @@
 #ifdef ENABLE_ASI_LOADER
 #include "common.hpp"
 #include "shv_runner.h"
-#include "logger.hpp"
 #include "natives.hpp"
 #include "script.hpp"
 

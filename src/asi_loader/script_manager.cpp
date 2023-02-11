@@ -127,7 +127,7 @@ int DLL_EXPORT registerRawStreamingFile(const std::string& fileName, const std::
 	int textureID = -1;
 	if (big::g_pointers->m_register_file(&textureID, fileName.c_str(), true, fileName.c_str(), false))
 	{
-		LOG(G3LOG_DEBUG) << "Registered File " << fileName.c_str() << " with ID:" << textureID;
+		LOG(VERBOSE) << "Registered File " << fileName.c_str() << " with ID:" << textureID;
 		return textureID;
 	}
 

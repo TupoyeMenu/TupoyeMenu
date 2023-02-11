@@ -67,10 +67,10 @@ namespace big
 		static void chat_tabs();
 		static void chat();
 		static void chat_dm();
-		static void log();
 		static void creator();
 		static void train();
 		static void water();
+		static void blackhole();
 
 		static void view_player_tabs();
 		static void view_player_info();

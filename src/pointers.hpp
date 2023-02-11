@@ -150,8 +150,6 @@ namespace big
 #endif // ENABLE_SOCIALCLUB
 		functions::join_session_by_info m_join_session_by_info;
 
-		memory::byte_patch* m_bypass_max_count_of_active_sticky_bombs;
-
 		functions::reset_network_complaints m_reset_network_complaints{};
 
 		functions::fidevice_get_device m_fidevice_get_device{};
@@ -208,6 +206,8 @@ namespace big
 
 		functions::send_network_damage m_send_network_damage;
 		functions::request_ragdoll m_request_ragdoll;
+		functions::request_control m_request_control;
+
 
 		functions::get_connection_peer m_get_connection_peer{};
 		functions::send_remove_gamer_cmd m_send_remove_gamer_cmd{};

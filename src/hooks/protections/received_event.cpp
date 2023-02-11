@@ -357,7 +357,7 @@ namespace big
 			event_id != (int)eNetworkEvents::REMOTE_SCRIPT_LEAVE_EVENT && event_id != (int)eNetworkEvents::NETWORK_ENTITY_AREA_STATUS_EVENT
 		)
 		{
-			LOG(G3LOG_DEBUG) << std::format(
+			LOG(VERBOSE) << std::format(
 				"RECEIVED EVENT | Type Name: {} | Sender: {} | Type: {}",
 				net_event_names[event_id],
 				source_player ? source_player->get_name() : "<UNKNOWN>",
@@ -644,7 +644,7 @@ namespace big
 			std::uint32_t sound_hash = buffer->Read<std::uint32_t>(32);
 
 			if(g.debug.logs.remote_sound_logs)
-				LOG(G3LOG_DEBUG) << std::format("Received Remote Sound | Hash: {} | Pos: X:{} Y:{} Z:{} | Is Entity: {} | Entity Net ID: {}", sound_hash, position.x, position.y, position.z, is_entity, entity_net_id);
+				LOG(VERBOSE) << std::format("Received Remote Sound | Hash: {} | Pos: X:{} Y:{} Z:{} | Is Entity: {} | Entity Net ID: {}", sound_hash, position.x, position.y, position.z, is_entity, entity_net_id);
 
 			if (sound_hash == RAGE_JOAAT("Remote_Ring") && plyr)
 			{

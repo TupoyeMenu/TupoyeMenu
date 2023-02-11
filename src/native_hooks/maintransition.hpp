@@ -21,7 +21,7 @@ namespace big
 			else
 			{
 				if(g.debug.logs.stupid_script_native_logs)
-					LOG(G3LOG_DEBUG) << std::format("NETWORK::NETWORK_SESSION_HOST({}, {}, {});", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<BOOL>(2));
+					LOG(VERBOSE) << std::format("NETWORK::NETWORK_SESSION_HOST({}, {}, {});", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<BOOL>(2));
 				src->set_return_value<BOOL>(NETWORK::NETWORK_SESSION_HOST(src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<BOOL>(2)));
 			}
 		};
@@ -56,7 +56,7 @@ namespace big
 		{
 			Hash menuhash = src->get_arg<Hash>(0);
 			if(g.debug.logs.stupid_script_native_logs)
-				LOG(G3LOG_DEBUG) << std::format("HUD::ACTIVATE_FRONTEND_MENU({}, {}, {});", menuhash, src->get_arg<BOOL>(1), src->get_arg<int>(2));
+				LOG(VERBOSE) << std::format("HUD::ACTIVATE_FRONTEND_MENU({}, {}, {});", menuhash, src->get_arg<BOOL>(1), src->get_arg<int>(2));
 
 			if (g.tunables.seamless_join)
 			{
@@ -76,7 +76,7 @@ namespace big
 			Hash menuhash = src->get_arg<Hash>(0);
 
 			if(g.debug.logs.stupid_script_native_logs)
-				LOG(G3LOG_DEBUG) << std::format("HUD::RESTART_FRONTEND_MENU({}, {});", menuhash, src->get_arg<int>(1));
+				LOG(VERBOSE) << std::format("HUD::RESTART_FRONTEND_MENU({}, {});", menuhash, src->get_arg<int>(1));
 
 			if (g.tunables.seamless_join)
 			{
@@ -124,7 +124,7 @@ namespace big
 		inline void SET_PLAYER_CONTROL(rage::scrNativeCallContext* src)
 		{
 			if(g.debug.logs.stupid_script_native_logs)
-				LOG(G3LOG_DEBUG) << std::format("PLAYER::SET_PLAYER_CONTROL({}, {}, {});", src->get_arg<Player>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2));
+				LOG(VERBOSE) << std::format("PLAYER::SET_PLAYER_CONTROL({}, {}, {});", src->get_arg<Player>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2));
 
 			if (!g.tunables.seamless_join)
 				PLAYER::SET_PLAYER_CONTROL(src->get_arg<Player>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2));
@@ -138,7 +138,7 @@ namespace big
 
 		inline void NETWORK_RESURRECT_LOCAL_PLAYER(rage::scrNativeCallContext* src)
 		{
-			// LOG(G3LOG_DEBUG) << std::format("NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER({}, {}, {}, {}, {}, {}, {}, {}, {});", src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
+			// LOG(VERBOSE) << std::format("NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER({}, {}, {}, {}, {}, {}, {}, {}, {});", src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
 			if (!g.tunables.seamless_join)
 				NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER(src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
 		}
@@ -149,14 +149,14 @@ namespace big
 
 		inline void GET_EVER_HAD_BAD_PACK_ORDER(rage::scrNativeCallContext* src)
 		{
-			// LOG(G3LOG_DEBUG) << "DLC::GET_EVER_HAD_BAD_PACK_ORDER(); // Returns: " << DLC::GET_EVER_HAD_BAD_PACK_ORDER();
+			// LOG(VERBOSE) << "DLC::GET_EVER_HAD_BAD_PACK_ORDER(); // Returns: " << DLC::GET_EVER_HAD_BAD_PACK_ORDER();
 			src->set_return_value<BOOL>(false);
 		}
 
 		inline void ON_ENTER_SP(rage::scrNativeCallContext* src)
 		{
 			if(g.debug.logs.stupid_script_native_logs)
-				LOG(G3LOG_DEBUG) << "DLC::ON_ENTER_SP();";
+				LOG(VERBOSE) << "DLC::ON_ENTER_SP();";
 		}
 	}
 }
