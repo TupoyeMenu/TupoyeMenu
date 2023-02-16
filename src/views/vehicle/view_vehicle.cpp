@@ -76,7 +76,6 @@ namespace big
 			if (g.vehicle.vehinvisibility)
 			{
 				components::command_checkbox<"localinvisveh">();
-				components::command_checkbox<"localinvisped">();
 			}
 
 			ImGui::EndGroup();

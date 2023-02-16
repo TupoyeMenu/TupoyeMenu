@@ -37,7 +37,6 @@ namespace big
 
 		while (g_running)
 		{
-			looped::self_godmode();
 			looped::self_police();
 			looped::ragdoll_mp();
 			looped::self_hud();

@@ -6,9 +6,9 @@ namespace big
 	void view::debug_tabs() {
 		if (ImGui::BeginTabBar("debug_tabbar"))
 		{
-			if (ImGui::BeginTabItem("DEBUG_TAB_SCRIPTS"_T.data()))
+			if (ImGui::BeginTabItem("Threads"))
 			{
-				view::debug_scripts();
+				view::debug_threads();
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("DEBUG_TAB_SCRIPT_EVENTS"_T.data()))

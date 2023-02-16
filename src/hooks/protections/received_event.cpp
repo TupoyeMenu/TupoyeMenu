@@ -484,7 +484,7 @@ namespace big
 		case eNetworkEvents::REQUEST_CONTROL_EVENT:
 		{
 			int net_id = buffer->Read<int>(13);
-			if (g_local_player && g_local_player->m_vehicle && g_local_player->m_vehicle->m_net_object && g_local_player->m_vehicle->m_net_object->m_object_id == net_id)
+			if (g_local_player && g_local_player->m_vehicle && g_local_player->m_vehicle->m_net_object && g_local_player->m_vehicle->m_net_object->m_object_id == net_id && g_local_player->m_vehicle->m_driver == g_local_player)
 			{
 				g.reactions.request_control_event.process(plyr);
 

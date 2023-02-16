@@ -45,7 +45,7 @@ namespace big
 		uint32_t veh_damage_bits = 0;
 		std::string mode_str = "";
 
-		if (CPed* ped = g_player_service->get_selected()->get_ped(); ped != nullptr)
+		if (CPed* ped = g_player_service->get_selected()->get_ped())
 		{
 			ped_damage_bits = ped->m_damage_bits;
 			ped_task_flag = ped->m_ped_task_flag;
@@ -111,7 +111,7 @@ namespace big
 
 		ImGui::Text("PLAYER_INFO_VEHICLE_PROOFS"_T.data(), mode_str.c_str());
 
-		if (rage::rlGamerInfo* net_player_data = g_player_service->get_selected()->get_net_data(); net_player_data != nullptr)
+		if (auto net_player_data = g_player_service->get_selected()->get_net_data())
 		{
 			if (ImGui::TreeNode("Net Info"))
 			{
@@ -155,7 +155,7 @@ namespace big
 				ImGui::TreePop();
 			}
 
-			if (persistent_player* current_player = g_player_database_service->get_player_by_rockstar_id(g_player_service->get_selected()->get_net_data()->m_gamer_handle.m_rockstar_id); current_player != nullptr)
+			if (persistent_player* current_player = g_player_database_service->get_player_by_rockstar_id(g_player_service->get_selected()->get_net_data()->m_gamer_handle.m_rockstar_id))
 			{
 				if (ImGui::TreeNode("Player DB Info"))
 				{
