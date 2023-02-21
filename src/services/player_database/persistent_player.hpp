@@ -5,6 +5,13 @@
 
 namespace big
 {
+	enum class PlayerOnlineStatus
+	{
+		UNKNOWN,
+		OFFLINE,
+		ONLINE
+	};
+
 	struct persistent_player
 	{
 		std::string name;
@@ -16,6 +23,7 @@ namespace big
 		bool is_rockstar_admin = false;
 		std::unordered_set<int> infractions;
 		std::optional<CommandAccessLevel> command_access_level = std::nullopt;
+		PlayerOnlineStatus online_state = PlayerOnlineStatus::UNKNOWN;
 	};
 
 	static void to_json(nlohmann::json& j, const persistent_player& player)
