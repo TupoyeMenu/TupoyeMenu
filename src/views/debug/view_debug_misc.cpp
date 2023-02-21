@@ -40,6 +40,16 @@ namespace big
 		});
 		ImGui::SameLine(); components::help_marker("You Will Have To Refresh Again When Exiting Interior.\n SPAMMING WILL CRASH GAME");
 
+		components::button("Network Shutdown And Launch Single Player Game", []
+		{
+			NETWORK::SHUTDOWN_AND_LAUNCH_SINGLE_PLAYER_GAME();
+		});
+
+		components::button("Network Shutdown And Load Most Recent Save", []\
+		{
+			NETWORK::SHUTDOWN_AND_LOAD_MOST_RECENT_SAVE();
+		});
+
 		if (components::button("MOV QWORD"))
 		{
 			*static_cast<uint64_t*>(nullptr) = 0;
@@ -85,6 +95,7 @@ namespace big
 				}
 				ImGui::EndListBox();
 			}
+			ImGui::Checkbox("Block All", &g.debug.logs.script_event.block_all);
 
 			ImGui::TreePop();
 		}

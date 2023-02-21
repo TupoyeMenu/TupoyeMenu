@@ -93,6 +93,7 @@ namespace big
 		functions::get_screen_coords_for_world_coords m_get_screen_coords_for_world_coords{};
 
 		HashTable<CBaseModelInfo*>* m_model_table;
+		PVOID m_get_model_info;
 
 		PVOID m_gta_thread_start{};
 		PVOID m_gta_thread_kill{};
@@ -101,8 +102,6 @@ namespace big
 		PVOID m_network_player_mgr_shutdown;
 
 		functions::get_gameplay_cam_coords m_get_gameplay_cam_coords;
-
-		functions::give_pickup_rewards m_give_pickup_rewards{};
 
 		PVOID m_write_player_gamer_data_node{};
 
@@ -204,6 +203,7 @@ namespace big
 
 		PVOID m_serialize_join_request_message;
 
+		functions::give_pickup_rewards m_give_pickup_rewards{};
 		functions::send_network_damage m_send_network_damage;
 		functions::request_ragdoll m_request_ragdoll;
 		functions::request_control m_request_control;

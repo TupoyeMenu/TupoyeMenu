@@ -55,7 +55,6 @@ namespace big
 			if(g_pointers->m_send_chat_message(*g_pointers->m_send_chat_ptr, net_game_player->get_net_data(), (char*)message.c_str(), g.chat.local))
 				notify::draw_chat((char*)message.c_str(), net_game_player->get_name(), g.chat.local);
 
-			g_chat_service->add_msg(net_game_player, message, g.chat.local);
 			spam::log_chat((char*)message.c_str(), g_player_service->get_self(), false);
 			
 			message = "";

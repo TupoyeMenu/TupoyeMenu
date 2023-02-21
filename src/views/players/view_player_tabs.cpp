@@ -33,7 +33,11 @@ namespace big
 					ImGui::EndTabItem();
 				}
 
+#ifdef ENABLE_CRASHES
 				if (ImGui::BeginTabItem("Kicks and Crashes"))
+#else
+				if (ImGui::BeginTabItem("Kicks"))
+#endif // ENABLE_CRASHES
 				{
 					view::view_player_kicks_and_crashes();
 					ImGui::EndTabItem();

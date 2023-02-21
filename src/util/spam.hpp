@@ -71,9 +71,10 @@ namespace big::spam
 		std::ofstream spam_log(g_file_manager->get_project_file(is_spam ? "./spam.log" : "./chat.log").get_path(), std::ios::app);
 
 		auto& plData = *player->get_net_data();
+		auto ip = g_player_service->get_selected()->get_ip_address();
 
 		spam_log << player->get_name() << " (" << plData.m_gamer_handle.m_rockstar_id << ") <"
-			<< (int)plData.m_external_ip.m_field1 << "." << (int)plData.m_external_ip.m_field2 << "." << (int)plData.m_external_ip.m_field3 << "." << (int)plData.m_external_ip.m_field4 <<
+			<< ip.m_field1 << "." << ip.m_field2 << "." << ip.m_field3 << "." << ip.m_field4 <<
 			">: " << msg <<
 			std::endl;
 
