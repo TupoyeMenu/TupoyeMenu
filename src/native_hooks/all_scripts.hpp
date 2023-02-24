@@ -9,18 +9,18 @@
 
 namespace big
 {
-    namespace all_scripts
-    {
-        void IS_DLC_PRESENT(rage::scrNativeCallContext* src)
-        {
-            const auto hash = src->get_arg<rage::joaat_t>(0);
+	namespace all_scripts
+	{
+		void IS_DLC_PRESENT(rage::scrNativeCallContext* src)
+		{
+			const auto hash = src->get_arg<rage::joaat_t>(0);
 
-            bool return_value = DLC::IS_DLC_PRESENT(hash);
+			bool return_value = DLC::IS_DLC_PRESENT(hash);
 
-            if (hash == 0x96F02EE6)
-                return_value = return_value || g.settings.dev_dlc;
+			if (hash == 0x96F02EE6)
+				return_value = return_value || g.settings.dev_dlc;
 
-            src->set_return_value<BOOL>((BOOL)return_value);
+			src->set_return_value<BOOL>((BOOL)return_value);
 		}
 
 		inline void NETWORK_BAIL(rage::scrNativeCallContext* src)
@@ -29,8 +29,8 @@ namespace big
 			{
 				NETWORK::NETWORK_BAIL(src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2));
 			}
-            if(g.debug.logs.stupid_script_native_logs)
-			    LOG(VERBOSE) << std::format("NETWORK::NETWORK_BAIL({}, {}, {}); // In: {}", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2), SCRIPT::GET_THIS_SCRIPT_NAME());;
+			if(g.debug.logs.stupid_script_native_logs)
+				LOG(VERBOSE) << std::format("NETWORK::NETWORK_BAIL({}, {}, {}); // In: {}", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2), SCRIPT::GET_THIS_SCRIPT_NAME());;
 		}
 
 		inline void SC_TRANSITION_NEWS_SHOW(rage::scrNativeCallContext* src)
@@ -51,95 +51,98 @@ namespace big
 
 		inline void CLEAR_PED_TASKS_IMMEDIATELY(rage::scrNativeCallContext* src)
 		{
-			if(SCRIPT::GET_HASH_OF_THIS_SCRIPT_NAME() != RAGE_JOAAT("maintransition") || !g.tunables.seamless_join)
+			if(
+				SCRIPT::GET_HASH_OF_THIS_SCRIPT_NAME() != RAGE_JOAAT("maintransition") ||
+				!g.tunables.seamless_join
+			)
 				TASK::CLEAR_PED_TASKS_IMMEDIATELY(src->get_arg<Ped>(0));
 
 			if(src->get_arg<Ped>(0) == self::ped && g.debug.logs.stupid_script_native_logs)
 				LOG(VERBOSE) << std::format("TASK::CLEAR_PED_TASKS_IMMEDIATELY({}); // In: {}",  src->get_arg<Ped>(0), SCRIPT::GET_THIS_SCRIPT_NAME());
 		}
 
-        void NETWORK_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(rage::scrNativeCallContext* src)
-        {
-            if (rage::scrThread::get() && rage::scrThread::get()->m_handler)
-            {
-                if (auto hook = g_hooking->m_handler_hooks[(CGameScriptHandler*)rage::scrThread::get()->m_handler].get())
-                {
-                    hook->disable();
-                    g_hooking->m_handler_hooks.erase((CGameScriptHandler*)rage::scrThread::get()->m_handler);
-                }
-            }
+		void NETWORK_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(rage::scrNativeCallContext* src)
+		{
+			if (rage::scrThread::get() && rage::scrThread::get()->m_handler)
+			{
+				if (auto hook = g_hooking->m_handler_hooks[(CGameScriptHandler*)rage::scrThread::get()->m_handler].get())
+				{
+					hook->disable();
+					g_hooking->m_handler_hooks.erase((CGameScriptHandler*)rage::scrThread::get()->m_handler);
+				}
+			}
 
-            NETWORK::NETWORK_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(src->get_arg<int>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2));
-        }
+			NETWORK::NETWORK_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(src->get_arg<int>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2));
+		}
 
-        void NETWORK_TRY_TO_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(rage::scrNativeCallContext* src)
-        {
-            if (rage::scrThread::get() && rage::scrThread::get()->m_handler)
-            {
-                if (auto hook = g_hooking->m_handler_hooks[(CGameScriptHandler*)rage::scrThread::get()->m_handler].get())
-                {
-                    hook->disable();
-                    g_hooking->m_handler_hooks.erase((CGameScriptHandler*)rage::scrThread::get()->m_handler);
-                }
-            }
+		void NETWORK_TRY_TO_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(rage::scrNativeCallContext* src)
+		{
+			if (rage::scrThread::get() && rage::scrThread::get()->m_handler)
+			{
+				if (auto hook = g_hooking->m_handler_hooks[(CGameScriptHandler*)rage::scrThread::get()->m_handler].get())
+				{
+					hook->disable();
+					g_hooking->m_handler_hooks.erase((CGameScriptHandler*)rage::scrThread::get()->m_handler);
+				}
+			}
 
-            src->set_return_value<BOOL>(NETWORK::NETWORK_TRY_TO_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(src->get_arg<int>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2)));
-        }
+			src->set_return_value<BOOL>(NETWORK::NETWORK_TRY_TO_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(src->get_arg<int>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2)));
+		}
 
-        void SET_CURRENT_PED_WEAPON(rage::scrNativeCallContext* src)
-        {
-            const auto ped = src->get_arg<Ped>(0);
-            const auto hash = src->get_arg<rage::joaat_t>(1);
+		void SET_CURRENT_PED_WEAPON(rage::scrNativeCallContext* src)
+		{
+			const auto ped = src->get_arg<Ped>(0);
+			const auto hash = src->get_arg<rage::joaat_t>(1);
 
-            if (g.weapons.interior_weapon && ped == self::ped && hash == RAGE_JOAAT("WEAPON_UNARMED"))
-                return;   
+			if (g.weapons.interior_weapon && ped == self::ped && hash == RAGE_JOAAT("WEAPON_UNARMED"))
+				return;   
 
-            WEAPON::SET_CURRENT_PED_WEAPON(ped, hash, src->get_arg<int>(2));
-        }
+			WEAPON::SET_CURRENT_PED_WEAPON(ped, hash, src->get_arg<int>(2));
+		}
 
-        void DISABLE_CONTROL_ACTION(rage::scrNativeCallContext* src)
-        {
-            const auto action = src->get_arg<ControllerInputs>(1);
+		void DISABLE_CONTROL_ACTION(rage::scrNativeCallContext* src)
+		{
+			const auto action = src->get_arg<ControllerInputs>(1);
 
-            if (g.weapons.interior_weapon)
-            {
-                switch (action)
-                {
-                case ControllerInputs::INPUT_SELECT_WEAPON:
-                case ControllerInputs::INPUT_VEH_SELECT_NEXT_WEAPON:
-                case ControllerInputs::INPUT_VEH_SELECT_PREV_WEAPON:
-                case ControllerInputs::INPUT_DETONATE:
-                case ControllerInputs::INPUT_PICKUP:
-                // case ControllerInputs::INPUT_JUMP: TODO: add as separate feature
-                case ControllerInputs::INPUT_TALK:
-                case ControllerInputs::INPUT_AIM:
-                case ControllerInputs::INPUT_MELEE_ATTACK_LIGHT:
-                case ControllerInputs::INPUT_MELEE_ATTACK_HEAVY:
-                case ControllerInputs::INPUT_MELEE_ATTACK_ALTERNATE:
-                case ControllerInputs::INPUT_MELEE_BLOCK:
-                case ControllerInputs::INPUT_VEH_ATTACK:
-                case ControllerInputs::INPUT_VEH_ATTACK2:
-                case ControllerInputs::INPUT_VEH_AIM:
-                case ControllerInputs::INPUT_VEH_PASSENGER_ATTACK:
-                case ControllerInputs::INPUT_VEH_FLY_SELECT_NEXT_WEAPON:
-                case ControllerInputs::INPUT_ATTACK:
-                case ControllerInputs::INPUT_NEXT_WEAPON:
-                case ControllerInputs::INPUT_PREV_WEAPON:
-                case ControllerInputs::INPUT_SELECT_NEXT_WEAPON:
-                case ControllerInputs::INPUT_SELECT_PREV_WEAPON:
-                    return;
-                }
-            }
+			if (g.weapons.interior_weapon)
+			{
+				switch (action)
+				{
+				case ControllerInputs::INPUT_SELECT_WEAPON:
+				case ControllerInputs::INPUT_VEH_SELECT_NEXT_WEAPON:
+				case ControllerInputs::INPUT_VEH_SELECT_PREV_WEAPON:
+				case ControllerInputs::INPUT_DETONATE:
+				case ControllerInputs::INPUT_PICKUP:
+				// case ControllerInputs::INPUT_JUMP: TODO: add as separate feature
+				case ControllerInputs::INPUT_TALK:
+				case ControllerInputs::INPUT_AIM:
+				case ControllerInputs::INPUT_MELEE_ATTACK_LIGHT:
+				case ControllerInputs::INPUT_MELEE_ATTACK_HEAVY:
+				case ControllerInputs::INPUT_MELEE_ATTACK_ALTERNATE:
+				case ControllerInputs::INPUT_MELEE_BLOCK:
+				case ControllerInputs::INPUT_VEH_ATTACK:
+				case ControllerInputs::INPUT_VEH_ATTACK2:
+				case ControllerInputs::INPUT_VEH_AIM:
+				case ControllerInputs::INPUT_VEH_PASSENGER_ATTACK:
+				case ControllerInputs::INPUT_VEH_FLY_SELECT_NEXT_WEAPON:
+				case ControllerInputs::INPUT_ATTACK:
+				case ControllerInputs::INPUT_NEXT_WEAPON:
+				case ControllerInputs::INPUT_PREV_WEAPON:
+				case ControllerInputs::INPUT_SELECT_NEXT_WEAPON:
+				case ControllerInputs::INPUT_SELECT_PREV_WEAPON:
+					return;
+				}
+			}
 
-            PAD::DISABLE_CONTROL_ACTION(src->get_arg<int>(0), (int)action, src->get_arg<int>(2));
-        }
+			PAD::DISABLE_CONTROL_ACTION(src->get_arg<int>(0), (int)action, src->get_arg<int>(2));
+		}
 
-        void HUD_FORCE_WEAPON_WHEEL(rage::scrNativeCallContext* src)
-        {
-            if (g.weapons.interior_weapon && src->get_arg<BOOL>(0) == false)
-                return;
+		void HUD_FORCE_WEAPON_WHEEL(rage::scrNativeCallContext* src)
+		{
+			if (g.weapons.interior_weapon && src->get_arg<BOOL>(0) == false)
+				return;
 
-            HUD::HUD_FORCE_WEAPON_WHEEL(src->get_arg<BOOL>(0));
-        }
-    }
+			HUD::HUD_FORCE_WEAPON_WHEEL(src->get_arg<BOOL>(0));
+		}
+	}
 }

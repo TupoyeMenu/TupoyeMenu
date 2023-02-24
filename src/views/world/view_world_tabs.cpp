@@ -31,14 +31,19 @@ namespace big
 				view::train();
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("Water"))
+			{
+				view::water();
+				ImGui::EndTabItem();
+			}
 			if (ImGui::BeginTabItem("Blackhole"))
 			{
 				view::blackhole();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Water"))
+			if (ImGui::BeginTabItem("Model Swapper"))
 			{
-				view::water();
+				view::model_swapper();
 				ImGui::EndTabItem();
 			}
 			ImGui::EndTabBar();

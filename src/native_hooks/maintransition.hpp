@@ -58,17 +58,11 @@ namespace big
 			if(g.debug.logs.stupid_script_native_logs)
 				LOG(VERBOSE) << std::format("HUD::ACTIVATE_FRONTEND_MENU({}, {}, {});", menuhash, src->get_arg<BOOL>(1), src->get_arg<int>(2));
 
-			if (g.tunables.seamless_join)
-			{
-				if(menuhash != RAGE_JOAAT("FE_MENU_VERSION_EMPTY_NO_BACKGROUND"))
-				{
+			if (g.tunables.seamless_join && menuhash != RAGE_JOAAT("FE_MENU_VERSION_EMPTY_NO_BACKGROUND"))
 					HUD::ACTIVATE_FRONTEND_MENU(menuhash, src->get_arg<BOOL>(1), src->get_arg<int>(2));
-				}
-			}
-			else
-			{
+			
+			if(!g.tunables.seamless_join)
 				HUD::ACTIVATE_FRONTEND_MENU(menuhash, src->get_arg<BOOL>(1), src->get_arg<int>(2));
-			}
 		}
 
 		inline void RESTART_FRONTEND_MENU(rage::scrNativeCallContext* src)
@@ -101,7 +95,7 @@ namespace big
 		
 		inline void SET_ENTITY_VISIBLE(rage::scrNativeCallContext* src)
 		{
-			if (g.tunables.seamless_join)
+			if (g.tunables.seamless_join && src->get_arg<Entity>(0) == self::ped)
 				ENTITY::SET_ENTITY_VISIBLE(self::ped, true, false);
 			else
 				ENTITY::SET_ENTITY_VISIBLE(src->get_arg<Entity>(0), src->get_arg<BOOL>(1), src->get_arg<BOOL>(2));
@@ -110,14 +104,15 @@ namespace big
 		inline void SET_ENTITY_COORDS(rage::scrNativeCallContext* src)
 		{
 			if (!g.tunables.seamless_join ||
-			*scr_globals::transition_state.as<eTransitionState*>() == eTransitionState::TRANSITION_STATE_CONFIRM_FM_SESSION_JOINING ||
-			src->get_arg<Entity>(0) != self::ped)
+				*scr_globals::transition_state.as<eTransitionState*>() == eTransitionState::TRANSITION_STATE_CONFIRM_FM_SESSION_JOINING ||
+				src->get_arg<Entity>(0) != self::ped
+			)
 				ENTITY::SET_ENTITY_COORDS(src->get_arg<Entity>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<BOOL>(7));
 		}
 
 		inline void SET_ENTITY_COLLISION(rage::scrNativeCallContext* src)
 		{
-			if (!g.tunables.seamless_join)
+			if (!g.tunables.seamless_join || src->get_arg<Entity>(0) != self::ped)
 				ENTITY::SET_ENTITY_COLLISION(src->get_arg<Entity>(0), src->get_arg<BOOL>(1), src->get_arg<BOOL>(2));
 		}
 
@@ -132,13 +127,15 @@ namespace big
 
 		inline void FREEZE_ENTITY_POSITION(rage::scrNativeCallContext* src)
 		{
-			if (!g.tunables.seamless_join)
+			if (!g.tunables.seamless_join || src->get_arg<Entity>(0) != self::ped)
 				ENTITY::FREEZE_ENTITY_POSITION(src->get_arg<Entity>(0), src->get_arg<BOOL>(1));
 		}
 
 		inline void NETWORK_RESURRECT_LOCAL_PLAYER(rage::scrNativeCallContext* src)
 		{
-			// LOG(VERBOSE) << std::format("NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER({}, {}, {}, {}, {}, {}, {}, {}, {});", src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
+			if(g.debug.logs.stupid_script_native_logs)
+				LOG(VERBOSE) << std::format("NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER({}, {}, {}, {}, {}, {}, {}, {}, {});", src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
+
 			if (!g.tunables.seamless_join)
 				NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER(src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
 		}
