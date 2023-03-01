@@ -259,6 +259,9 @@ namespace big
 		PVOID m_receive_pickup{};
 
 		PVOID m_write_player_camera_data_node{};
+
+		memory::byte_patch* m_disable_collision{};
+		memory::byte_patch* m_allow_weapons_in_vehicle{};
 	};
 
 	inline pointers* g_pointers{};

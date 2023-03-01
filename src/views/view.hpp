@@ -73,6 +73,7 @@ namespace big
 		static void water();
 		static void blackhole();
 		static void model_swapper();
+		static void nearby();
 
 		static void view_player_tabs();
 		static void view_player_info();
