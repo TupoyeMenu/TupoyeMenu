@@ -1,5 +1,5 @@
-#include "natives.hpp"
 #include "backend/looped_command.hpp"
+#include "natives.hpp"
 
 namespace big
 {
@@ -9,19 +9,17 @@ namespace big
 
 		virtual void on_tick() override
 		{
-			if (g_local_player == nullptr ||
-		    	g_local_player->m_weapon_manager == nullptr ||
-		    	g_local_player->m_weapon_manager->m_weapon_info == nullptr ||
-		    	g_local_player->m_weapon_manager->m_weapon_info->m_ammo_info == nullptr
-		    ) 
-            {
-                return;
-            }
+			if (g_local_player == nullptr || g_local_player->m_weapon_manager == nullptr
+			    || g_local_player->m_weapon_manager->m_weapon_info == nullptr
+			    || g_local_player->m_weapon_manager->m_weapon_info->m_ammo_info == nullptr)
+			{
+				return;
+			}
 
 			Hash current_weapon = g_local_player->m_weapon_manager->m_selected_weapon_hash;
-            int max_ammo = g_local_player->m_weapon_manager->m_weapon_info->m_ammo_info->m_ammo_max_100;
+			int max_ammo        = g_local_player->m_weapon_manager->m_weapon_info->m_ammo_info->m_ammo_max_100;
 
-            WEAPON::SET_PED_AMMO(self::ped, current_weapon, max_ammo, false);
+			WEAPON::SET_PED_AMMO(self::ped, current_weapon, max_ammo, false);
 		}
 
 		virtual void on_disable() override
@@ -30,5 +28,6 @@ namespace big
 		}
 	};
 
-	infinite_ammo_looped g_infinite_ammo_looped("infammoloop", "Infinite Ammo Looped", "Never run out of ammo again looped", g.weapons.infinite_ammo_loop);
+	infinite_ammo_looped
+	    g_infinite_ammo_looped("infammoloop", "Infinite Ammo Looped", "Never run out of ammo again looped", g.weapons.infinite_ammo_loop);
 }

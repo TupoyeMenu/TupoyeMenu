@@ -8,7 +8,8 @@ namespace big
 {
 	void looped::vehicle_chaff()
 	{
-		if (!g.vehicle.chaff) return;
+		if (!g.vehicle.chaff)
+			return;
 
 		if (PAD::IS_CONTROL_PRESSED(0, (int)ControllerInputs::INPUT_SCRIPTED_FLY_ZDOWN) && self::veh)
 		{
@@ -17,14 +18,25 @@ namespace big
 			{
 				AUDIO::PLAY_SOUND_FROM_ENTITY(-1, "chaff_released", self::veh, "DLC_SM_Countermeasures_Sounds", true, 0);
 				GRAPHICS::USE_PARTICLE_FX_ASSET("scr_sm_counter");
-				GRAPHICS::START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD("scr_sm_counter_chaff", self::pos.x, self::pos.y, self::pos.z, 0, 0, 0, 2, false, false, false, false);
+				GRAPHICS::START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD("scr_sm_counter_chaff",
+				    self::pos.x,
+				    self::pos.y,
+				    self::pos.z,
+				    0,
+				    0,
+				    0,
+				    2,
+				    false,
+				    false,
+				    false,
+				    false);
 				if (NETWORK::NETWORK_HAS_CONTROL_OF_ENTITY(self::veh))
 				{
 					CVehicle* vehicle;
 					if (g_local_player && g_local_player->m_vehicle)
 						vehicle = g_local_player->m_vehicle;
 
-					if(vehicle)
+					if (vehicle)
 						vehicle->m_is_targetable = false;
 
 					script::get_current()->yield(10s);

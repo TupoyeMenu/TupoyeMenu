@@ -1,28 +1,26 @@
-#include "gui/components/components.hpp"
-#include "natives.hpp"
-#include "util/system.hpp"
-#include "util/misc.hpp"
-#include "network/Network.hpp"
-#include "script.hpp"
-#include "gta/joaat.hpp"
-#include "script_global.hpp"
-#include "gta_util.hpp"
-#include "views/view.hpp"
-#include "gta/script_thread.hpp"
-#include "gta/script_handler.hpp"
-#include "gta/tls_context.hpp"
-
 #include "core/data/all_script_names.hpp"
 #include "core/data/stack_sizes.hpp"
-
 #include "fiber_pool.hpp"
+#include "gta/joaat.hpp"
+#include "gta/script_handler.hpp"
+#include "gta/script_thread.hpp"
+#include "gta/tls_context.hpp"
+#include "gta_util.hpp"
+#include "gui/components/components.hpp"
+#include "natives.hpp"
+#include "network/Network.hpp"
+#include "script.hpp"
+#include "script_global.hpp"
+#include "util/misc.hpp"
+#include "util/system.hpp"
+#include "views/view.hpp"
 
 static GtaThread* selected_thread;
 
-static int selected_stack_size = 128;
-static int free_stacks = -1;
+static int selected_stack_size             = 128;
+static int free_stacks                     = -1;
 static const char* selected_stack_size_str = "MULTIPLAYER_MISSION";
-static const char* selected_script = "<SELECT>";
+static const char* selected_script         = "<SELECT>";
 
 static std::chrono::high_resolution_clock::time_point last_stack_update_time{};
 
@@ -45,7 +43,7 @@ namespace big
 		}
 
 		if (ImGui::ListBoxHeader("##threads", ImVec2(250, -ImGui::GetFrameHeight())))
-        {
+		{
 			for (auto script : *g_pointers->m_script_threads)
 			{
 				if (script)
@@ -76,20 +74,22 @@ namespace big
 		}
 
 		ImGui::SameLine();
-       	ImGui::BeginGroup();
+		ImGui::BeginGroup();
 
 		if (selected_thread)
 		{
 			ImGui::Combo("State", (int*)&selected_thread->m_context.m_state, "RUNNING\0WAITING\0KILLED\0PAUSED\0STATE_4");
 
 			if (auto net_component = selected_thread->m_net_component)
-               	if (auto host = net_component->m_host)
-               	    if (auto host_net_player = host->m_net_game_player)
-               	        ImGui::Text("Host: %s", host_net_player->get_name());
+				if (auto host = net_component->m_host)
+					if (auto host_net_player = host->m_net_game_player)
+						ImGui::Text("Host: %s", host_net_player->get_name());
 
 			ImGui::Text("m_safe_for_network_game: %s", selected_thread->m_safe_for_network_game ? "Yes" : "No");
 			ImGui::Text("m_can_be_paused: %s", selected_thread->m_can_be_paused ? "Yes" : "No");
-			ImGui::Text("Stack Pointer / Stack Size %d/%d", selected_thread->m_context.m_stack_pointer, selected_thread->m_context.m_stack_size);
+			ImGui::Text("Stack Pointer / Stack Size %d/%d",
+			    selected_thread->m_context.m_stack_pointer,
+			    selected_thread->m_context.m_stack_size);
 			ImGui::Text("IP: %X", selected_thread->m_context.m_instruction_pointer);
 			if (selected_thread->m_context.m_state == rage::eThreadState::killed)
 				ImGui::Text("Exit Reason: %s", selected_thread->m_exit_message);
@@ -127,10 +127,9 @@ namespace big
 				if (ImGui::Selectable(std::format("{} ({})", p.first, p.second).data(), selected_stack_size == p.second))
 				{
 					selected_stack_size_str = std::format("{} ({})", p.first, p.second).data();
-					selected_stack_size = p.second;
+					selected_stack_size     = p.second;
 
-					g_fiber_pool->queue_job([]
-					{
+					g_fiber_pool->queue_job([] {
 						update_free_stacks_count();
 					});
 				}
@@ -143,8 +142,7 @@ namespace big
 
 		ImGui::Text("Free Stacks: %d", free_stacks);
 
-		components::button("Start", []
-		{
+		components::button("Start", [] {
 			auto hash = rage::joaat(selected_script);
 
 			if (!SCRIPT::DOES_SCRIPT_WITH_NAME_HASH_EXIST(hash))
@@ -175,8 +173,7 @@ namespace big
 		if (*g_pointers->m_game_state != eGameState::Invalid && std::chrono::high_resolution_clock::now() - last_stack_update_time > 100ms)
 		{
 			last_stack_update_time = std::chrono::high_resolution_clock::now();
-			g_fiber_pool->queue_job([]
-			{
+			g_fiber_pool->queue_job([] {
 				update_free_stacks_count();
 			});
 		}

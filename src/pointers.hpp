@@ -1,14 +1,14 @@
 #pragma once
-#include "common.hpp"
 #include "base/HashTable.hpp"
-#include "socialclub/ScInfo.hpp"
+#include "common.hpp"
 #include "function_types.hpp"
 #include "gta/fwddec.hpp"
 #include "gta/replay.hpp"
 #include "memory/byte_patch.hpp"
+#include "socialclub/ScInfo.hpp"
 
 #ifdef ENABLE_ASI_LOADER
-#include "asi_loader/pools.h"
+	#include "asi_loader/pools.h"
 #endif // ENABLE_ASI_LOADER
 
 class CCommunications;
@@ -35,6 +35,7 @@ namespace big
 	public:
 		explicit pointers();
 		~pointers();
+
 	public:
 		HWND m_hwnd{};
 
@@ -66,8 +67,8 @@ namespace big
 #endif // ENABLE_ASI_LOADER
 
 		PVOID m_get_pool_type;
-		
-		CGameScriptHandlerMgr **m_script_handler_mgr{};
+
+		CGameScriptHandlerMgr** m_script_handler_mgr{};
 
 		IDXGISwapChain** m_swapchain{};
 
@@ -176,7 +177,7 @@ namespace big
 
 		functions::generate_uuid m_generate_uuid{};
 		std::uint64_t* m_host_token{};
-		rage::rlGamerInfo* m_profile_gamer_info{}; // per profile gamer info
+		rage::rlGamerInfo* m_profile_gamer_info{};     // per profile gamer info
 		rage::rlGamerInfo* m_player_info_gamer_info{}; // the gamer info that is applied to CPlayerInfo
 		CCommunications** m_communications{};
 #ifdef ENABLE_SOCIALCLUB
@@ -184,7 +185,6 @@ namespace big
 		PVOID m_update_presence_attribute_string;
 #endif // ENABLE_SOCIALCLUB
 
-		PVOID m_serialize_dynamic_entity_game_state_data_node;
 		PVOID m_serialize_ped_inventory_data_node;
 		PVOID m_serialize_vehicle_gadget_data_node;
 		functions::get_vehicle_gadget_array_size m_get_vehicle_gadget_array_size;
@@ -219,7 +219,7 @@ namespace big
 
 		rage::atSingleton<rage::RageSecurity>* m_security;
 		PVOID m_prepare_metric_for_sending;
-		
+
 		PVOID m_queue_dependency;
 		PVOID m_interval_check_func;
 
@@ -259,6 +259,14 @@ namespace big
 		PVOID m_receive_pickup{};
 
 		PVOID m_write_player_camera_data_node{};
+
+		PVOID m_send_player_card_stats{};
+		bool* m_force_player_card_refresh{};
+
+		PVOID m_serialize_stats{};
+
+		PVOID m_write_player_creation_data_node{};
+		PVOID m_write_player_appearance_data_node{};
 
 		memory::byte_patch* m_disable_collision{};
 		memory::byte_patch* m_allow_weapons_in_vehicle{};

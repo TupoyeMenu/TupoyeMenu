@@ -1,10 +1,10 @@
 #pragma once
-#include "imgui.h"
-#include "misc/cpp/imgui_stdlib.h"
 #include "backend/command.hpp"
 #include "backend/looped_command.hpp"
 #include "backend/player_command.hpp"
 #include "fiber_pool.hpp"
+#include <imgui.h>
+#include <misc/cpp/imgui_stdlib.h>
 
 namespace big
 {
@@ -14,6 +14,7 @@ namespace big
 	class components
 	{
 		static void custom_text(const std::string_view, ImFont*);
+
 	public:
 		static bool nav_button(const std::string_view);
 		static bool menu_item(const std::string_view);
@@ -36,24 +37,26 @@ namespace big
 
 		static bool script_patch_checkbox(const std::string_view text, bool* option, const std::string_view tooltip = "");
 
-		template<template_str cmd_str, ImVec2 size = ImVec2(0, 0), ImVec4 color = ImVec4(0.24f, 0.23f, 0.29f, 1.00f)>
+		template<template_str cmd_str, ImVec2 size = ImVec2(0, 0), ImVec4 color = ImVec4(0.172f, 0.380f, 0.909f, 1.f)> // TODO: Use GUI Color.
 		static void command_button(const std::vector<std::uint64_t> args = {}, std::optional<const std::string_view> label_override = std::nullopt)
 		{
 			static command* command = command::get(rage::consteval_joaat(cmd_str.value));
 			if (ImGui::Button(label_override.value_or(command->get_label()).data()))
 				command->call(args);
 
-			ImGui::SameLine(); help_marker(command->get_description());
+			ImGui::SameLine();
+			help_marker(command->get_description());
 		}
 
-		template<template_str cmd_str, ImVec2 size = ImVec2(0, 0), ImVec4 color = ImVec4(0.24f, 0.23f, 0.29f, 1.00f)>
+		template<template_str cmd_str, ImVec2 size = ImVec2(0, 0), ImVec4 color = ImVec4(0.172f, 0.380f, 0.909f, 1.f)> // TODO: Use GUI Color.
 		static void player_command_button(player_ptr player = g_player_service->get_selected(), const std::vector<std::uint64_t> args = {}, std::optional<const std::string_view> label_override = std::nullopt)
 		{
 			static player_command* command = (player_command*)command::get(rage::consteval_joaat(cmd_str.value));
 			if (ImGui::Button(label_override.value_or(command->get_label()).data()))
 				command->call(player, args);
 
-			ImGui::SameLine(); help_marker(command->get_description());
+			ImGui::SameLine();
+			help_marker(command->get_description());
 		}
 
 		template<template_str cmd_str>
@@ -63,11 +66,13 @@ namespace big
 			if (ImGui::Checkbox(label_override.value_or(command->get_label()).data(), &command->is_enabled()))
 				command->refresh();
 
-			ImGui::SameLine(); help_marker(command->get_description());
+			ImGui::SameLine();
+			help_marker(command->get_description());
 		}
 
-		template<ImVec2 size = ImVec2(0, 0), ImVec4 color = ImVec4(0.24f, 0.23f, 0.29f, 1.00f)>
-		static bool button(const std::string_view text) {
+		template<ImVec2 size = ImVec2(0, 0), ImVec4 color = ImVec4(0.172f, 0.380f, 0.909f, 1.f)> // TODO: Use GUI Color.
+		static bool button(const std::string_view text)
+		{
 			bool status = false;
 			ImGui::PushStyleColor(ImGuiCol_Button, color);
 			status = ImGui::Button(text.data(), size);
@@ -75,15 +80,17 @@ namespace big
 			return status;
 		}
 
-		template<ImVec2 size = ImVec2(0, 0), ImVec4 color = ImVec4(0.24f, 0.23f, 0.29f, 1.00f)>
-		static void button(const std::string_view text, std::function<void()> cb) {
-			if (button<size, color>(text)) {
+		template<ImVec2 size = ImVec2(0, 0), ImVec4 color = ImVec4(0.172f, 0.380f, 0.909f, 1.f)> // TODO: Use GUI Color.
+		static void button(const std::string_view text, std::function<void()> cb)
+		{
+			if (button<size, color>(text))
+			{
 				g_fiber_pool->queue_job(cb);
 			}
 		}
 
 		template<typename PredicateFn, typename ComponentsFn>
-		static void disable_unless(PredicateFn predicate_fn, ComponentsFn components_fn) 
+		static void disable_unless(PredicateFn predicate_fn, ComponentsFn components_fn)
 		{
 			auto const result = predicate_fn();
 			if (!result)

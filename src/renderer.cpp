@@ -1,20 +1,23 @@
+#include "renderer.hpp"
+
 #include "common.hpp"
 #include "file_manager.hpp"
 #include "fonts/fonts.hpp"
 #include "gui.hpp"
 #include "pointers.hpp"
-#include "renderer.hpp"
-#include <imgui.h>
+
 #include <backends/imgui_impl_dx11.h>
 #include <backends/imgui_impl_win32.h>
+#include <imgui.h>
 #include <imgui_internal.h>
+
 
 IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 namespace big
 {
 	renderer::renderer() :
-		m_dxgi_swapchain(*g_pointers->m_swapchain)
+	    m_dxgi_swapchain(*g_pointers->m_swapchain)
 	{
 		if (m_dxgi_swapchain->GetDevice(__uuidof(ID3D11Device), reinterpret_cast<void**>(&m_d3d_device)) < 0)
 		{
@@ -27,29 +30,27 @@ namespace big
 		ImGuiContext* ctx = ImGui::CreateContext();
 
 		static std::string path = file_path.make_preferred().string();
-		ctx->IO.IniFilename = path.c_str();
+		ctx->IO.IniFilename     = path.c_str();
 
 		auto& io = ImGui::GetIO();
 
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
 		// io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable Docking
 		// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 
 		ImGui_ImplDX11_Init(m_d3d_device, m_d3d_device_context);
 		ImGui_ImplWin32_Init(g_pointers->m_hwnd);
 
-		folder windows_fonts(
-			std::filesystem::path(std::getenv("SYSTEMROOT")) / "Fonts"
-		);
+		folder windows_fonts(std::filesystem::path(std::getenv("SYSTEMROOT")) / "Fonts");
 
 		file font_file_path = windows_fonts.get_file("./msyh.ttc");
 		if (!font_file_path.exists())
 			font_file_path = windows_fonts.get_file("./msyh.ttf");
-		auto font_file = std::ifstream(font_file_path.get_path(), std::ios::binary | std::ios::ate);
+		auto font_file            = std::ifstream(font_file_path.get_path(), std::ios::binary | std::ios::ate);
 		const auto font_data_size = static_cast<int>(font_file.tellg());
-		const auto font_data = std::make_unique<std::uint8_t[]>(font_data_size);
-		
+		const auto font_data      = std::make_unique<std::uint8_t[]>(font_data_size);
+
 		font_file.seekg(0);
 		font_file.read(reinterpret_cast<char*>(font_data.get()), font_data_size);
 		font_file.close();
@@ -59,7 +60,11 @@ namespace big
 			fnt_cfg.FontDataOwnedByAtlas = false;
 			strcpy(fnt_cfg.Name, "Fnt20px");
 
-			io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(font_storopia), sizeof(font_storopia), 20.f, &fnt_cfg, io.Fonts->GetGlyphRangesDefault());
+			io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(font_storopia),
+			    sizeof(font_storopia),
+			    20.f,
+			    &fnt_cfg,
+			    io.Fonts->GetGlyphRangesDefault());
 			fnt_cfg.MergeMode = true;
 			io.Fonts->AddFontFromMemoryTTF(font_data.get(), font_data_size, 20.f, &fnt_cfg, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
 			io.Fonts->AddFontFromMemoryTTF(font_data.get(), font_data_size, 20.f, &fnt_cfg, io.Fonts->GetGlyphRangesCyrillic());
@@ -101,7 +106,7 @@ namespace big
 			io.Fonts->AddFontFromMemoryTTF(font_data.get(), font_data_size, 18.f, &fnt_cfg, io.Fonts->GetGlyphRangesCyrillic());
 			io.Fonts->Build();
 		}
-		
+
 		{
 			ImFontConfig font_icons_cfg{};
 			font_icons_cfg.FontDataOwnedByAtlas = false;
@@ -125,7 +130,7 @@ namespace big
 
 	bool renderer::add_dx_callback(dx_callback callback, std::uint32_t priority)
 	{
-		if (!m_dx_callbacks.insert({ priority, callback }).second)
+		if (!m_dx_callbacks.insert({priority, callback}).second)
 		{
 			LOG(WARNING) << "Duplicate priority given on DX Callback!";
 
@@ -197,12 +202,12 @@ namespace big
 		ImGui::Render();
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-		 // Update and Render additional Platform Windows
-        if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        {
-            ImGui::UpdatePlatformWindows();
-            ImGui::RenderPlatformWindowsDefault();
-        }
+		// Update and Render additional Platform Windows
+		if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+		}
 	}
 }
 
@@ -211,37 +216,37 @@ namespace big
 
 // Construct
 state_saver::state_saver() :
-	m_savedState(false),
-	m_featureLevel(D3D_FEATURE_LEVEL_11_0),
-	m_pContext(NULL),
-	m_primitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_UNDEFINED),
-	m_pInputLayout(NULL),
-	m_pBlendState(NULL),
-	m_sampleMask(0xffffffff),
-	m_pDepthStencilState(NULL),
-	m_stencilRef(0),
-	m_pRasterizerState(NULL),
-	m_pPSSRV(NULL),
-	m_pSamplerState(NULL),
-	m_pVS(NULL),
-	m_numVSClassInstances(0),
-	m_pVSConstantBuffer(NULL),
-	m_pGS(NULL),
-	m_numGSClassInstances(0),
-	m_pGSConstantBuffer(NULL),
-	m_pGSSRV(NULL),
-	m_pPS(NULL),
-	m_numPSClassInstances(0),
-	m_pHS(NULL),
-	m_numHSClassInstances(0),
-	m_pDS(NULL),
-	m_numDSClassInstances(0),
-	m_pVB(NULL),
-	m_vertexStride(0),
-	m_vertexOffset(0),
-	m_pIndexBuffer(NULL),
-	m_indexFormat(DXGI_FORMAT_UNKNOWN),
-	m_indexOffset(0)
+    m_savedState(false),
+    m_featureLevel(D3D_FEATURE_LEVEL_11_0),
+    m_pContext(NULL),
+    m_primitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_UNDEFINED),
+    m_pInputLayout(NULL),
+    m_pBlendState(NULL),
+    m_sampleMask(0xffffffff),
+    m_pDepthStencilState(NULL),
+    m_stencilRef(0),
+    m_pRasterizerState(NULL),
+    m_pPSSRV(NULL),
+    m_pSamplerState(NULL),
+    m_pVS(NULL),
+    m_numVSClassInstances(0),
+    m_pVSConstantBuffer(NULL),
+    m_pGS(NULL),
+    m_numGSClassInstances(0),
+    m_pGSConstantBuffer(NULL),
+    m_pGSSRV(NULL),
+    m_pPS(NULL),
+    m_numPSClassInstances(0),
+    m_pHS(NULL),
+    m_numHSClassInstances(0),
+    m_pDS(NULL),
+    m_numDSClassInstances(0),
+    m_pVB(NULL),
+    m_vertexStride(0),
+    m_vertexOffset(0),
+    m_pIndexBuffer(NULL),
+    m_indexFormat(DXGI_FORMAT_UNKNOWN),
+    m_indexOffset(0)
 {
 	for (int i = 0; i < 4; ++i)
 	{
@@ -266,8 +271,10 @@ state_saver::~state_saver()
 // Save all states that are changed by the font-wrapper when drawing a string
 bool state_saver::save_current_state(ID3D11DeviceContext* pContext)
 {
-	if (m_savedState) release_saved_state();
-	if (pContext == NULL) return false;
+	if (m_savedState)
+		release_saved_state();
+	if (pContext == NULL)
+		return false;
 
 	ID3D11Device* pDevice;
 	pContext->GetDevice(&pDevice);
@@ -328,7 +335,8 @@ bool state_saver::save_current_state(ID3D11DeviceContext* pContext)
 // Restore state
 bool state_saver::restore_saved_state()
 {
-	if (!m_savedState) return false;
+	if (!m_savedState)
+		return false;
 
 	m_pContext->IASetPrimitiveTopology(m_primitiveTopology);
 	m_pContext->IASetInputLayout(m_pInputLayout);
@@ -368,7 +376,7 @@ bool state_saver::restore_saved_state()
 }
 
 /* General Misc */
-template <typename T>
+template<typename T>
 inline void SafeRelease(T*& p)
 {
 	if (nullptr != p)

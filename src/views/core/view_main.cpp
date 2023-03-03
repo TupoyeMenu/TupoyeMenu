@@ -1,9 +1,9 @@
-#include "views/view.hpp"
 #include "pointers.hpp"
+#include "views/view.hpp"
 
 namespace big
 {
-	void view::main_view() 
+	void view::main_view()
 	{
 		if (ImGui::Begin("Main", &g.window.main))
 		{

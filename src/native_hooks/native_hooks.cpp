@@ -1,13 +1,14 @@
 #include "native_hooks.hpp"
+
 #include "all_scripts.hpp"
-#include "carmod_shop.hpp"
-#include "freemode.hpp"
-#include "maintransition.hpp"
-#include "gta_util.hpp"
-#include "shop_controller.hpp"
 #include "am_launcher.hpp"
+#include "carmod_shop.hpp"
 #include "creator.hpp"
 #include "crossmap.hpp"
+#include "freemode.hpp"
+#include "gta_util.hpp"
+#include "maintransition.hpp"
+#include "shop_controller.hpp"
 
 #include <script/scrProgram.hpp>
 #include <script/scrProgramTable.hpp>
@@ -50,7 +51,7 @@ namespace big
 
 	void native_hook::hook_instance(rage::scrProgram* program, const std::unordered_map<rage::scrNativeHash, rage::scrNativeHandler>& native_replacements)
 	{
-		m_program = program;
+		m_program  = program;
 		m_vmt_hook = std::make_unique<vmt_hook>(m_program, 9);
 		m_vmt_hook->hook(6, &scrprogram_dtor);
 		m_vmt_hook->enable();
@@ -74,7 +75,8 @@ namespace big
 
 		for (int i = 0; i < m_program->m_native_count; i++)
 		{
-			if (auto it = handler_replacements.find((rage::scrNativeHandler)program->m_native_entrypoints[i]); it != handler_replacements.end())
+			if (auto it = handler_replacements.find((rage::scrNativeHandler)program->m_native_entrypoints[i]);
+			    it != handler_replacements.end())
 			{
 				m_handler_hook->hook(i, it->second);
 			}
@@ -105,9 +107,9 @@ namespace big
 	{
 		add_native_detour(0x812595A0644CE1DE, all_scripts::IS_DLC_PRESENT);
 		add_native_detour(0x95914459A87EBA28, all_scripts::NETWORK_BAIL);
-		add_native_detour(0x6BFB12CE158E3DD4, all_scripts::SC_TRANSITION_NEWS_SHOW); // Stops news.
+		add_native_detour(0x6BFB12CE158E3DD4, all_scripts::SC_TRANSITION_NEWS_SHOW);       // Stops news.
 		add_native_detour(0xFE4C1D0D3B9CC17E, all_scripts::SC_TRANSITION_NEWS_SHOW_TIMED); // Stops news.
-		add_native_detour(0xAAA34F8A7CB32098, all_scripts::CLEAR_PED_TASKS_IMMEDIATELY); // Clear tasks log.
+		add_native_detour(0xAAA34F8A7CB32098, all_scripts::CLEAR_PED_TASKS_IMMEDIATELY);   // Clear tasks log.
 
 		add_native_detour(0x1CA59E306ECB80A5, all_scripts::NETWORK_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT);
 		add_native_detour(0xD1110739EEADB592, all_scripts::NETWORK_TRY_TO_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT);
@@ -122,9 +124,9 @@ namespace big
 		add_native_detour(RAGE_JOAAT("carmod_shop"), 0x767FBC2AC802EF3D, carmod_shop::STAT_GET_INT);
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x6F3D4ED9BEE4E61D, maintransition::NETWORK_SESSION_HOST); // RID Joiner from https://github.com/YimMenu/YimMenu/issues/172
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x933BBEEB8C61B5F4, maintransition::IS_SWITCH_TO_MULTI_FIRSTPART_FINISHED); // This hook lets you stop player-switch in "Pre-HUD Checks"
-		add_native_detour(RAGE_JOAAT("maintransition"), 0x06843DA7060A026B, maintransition::SET_ENTITY_COORDS);  // Prevents the game from teleporting you
+		add_native_detour(RAGE_JOAAT("maintransition"), 0x06843DA7060A026B, maintransition::SET_ENTITY_COORDS); // Prevents the game from teleporting you
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x1A9205C1B9EE827F, maintransition::SET_ENTITY_COLLISION); // Prevents you from falling
-		add_native_detour(RAGE_JOAAT("maintransition"), 0xEA1C610A04DB6BBB, maintransition::SET_ENTITY_VISIBLE);  // Makes you visible
+		add_native_detour(RAGE_JOAAT("maintransition"), 0xEA1C610A04DB6BBB, maintransition::SET_ENTITY_VISIBLE); // Makes you visible
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x8D32347D6D4C40A2, maintransition::SET_PLAYER_CONTROL); // Allows controll in session switch
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x428CA6DBD1094446, maintransition::FREEZE_ENTITY_POSITION); // Allows controll in session switch
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x198F77705FA0931D, maintransition::SET_FOCUS_ENTITY); // Prevets map from unloading.
@@ -155,7 +157,7 @@ namespace big
 		add_native_detour(RAGE_JOAAT("fm_capture_creator"), 0x9F47B058362C84B5, creator::GET_ENTITY_MODEL);
 		add_native_detour(RAGE_JOAAT("fm_deathmatch_creator"), 0x9F47B058362C84B5, creator::GET_ENTITY_MODEL);
 		add_native_detour(RAGE_JOAAT("fm_lts_creator"), 0x9F47B058362C84B5, creator::GET_ENTITY_MODEL);
-		
+
 		// Infinite Model Memory
 		add_native_detour(RAGE_JOAAT("fm_race_creator"), 0x3D3D8B3BE5A83D35, creator::GET_USED_CREATOR_BUDGET);
 		add_native_detour(RAGE_JOAAT("fm_capture_creator"), 0x3D3D8B3BE5A83D35, creator::GET_USED_CREATOR_BUDGET);
@@ -189,7 +191,7 @@ namespace big
 			return;
 		}
 
-		m_native_registrations.emplace(script_hash, std::vector<native_detour>({ { hash, detour } }));
+		m_native_registrations.emplace(script_hash, std::vector<native_detour>({{hash, detour}}));
 	}
 
 	void native_hooks::hook_program(rage::scrProgram* program)
@@ -209,10 +211,7 @@ namespace big
 
 		if (!native_replacements.empty())
 		{
-			m_native_hooks.emplace(
-				program,
-				std::make_unique<native_hook>(program, native_replacements)
-			);
+			m_native_hooks.emplace(program, std::make_unique<native_hook>(program, native_replacements));
 		}
 	}
 }

@@ -1,6 +1,7 @@
 #ifdef ENABLE_ASI_LOADER
-#include "pools.h"
-#include "pointers.hpp"
+	#include "pools.h"
+
+	#include "pointers.hpp"
 
 namespace rage
 {
@@ -13,7 +14,10 @@ namespace rage
 			return (_type & flag) != 0;
 		}
 
-		EntityPoolTask(uint16_t type) : _type(type) {}
+		EntityPoolTask(uint16_t type) :
+		    _type(type)
+		{
+		}
 
 		void Run(std::vector<uintptr_t>& _pointers)
 		{
@@ -75,6 +79,7 @@ namespace rage
 				}
 			}
 		}
+
 	private:
 		uint16_t _type;
 	};
@@ -93,7 +98,8 @@ namespace rage
 
 		for (const auto& cEntity : pointers)
 		{
-			if (count == max) break;
+			if (count == max)
+				break;
 			auto entity = big::g_pointers->m_handle_to_ptr(cEntity);
 			if (entity)
 			{

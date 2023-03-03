@@ -3,10 +3,10 @@
 enum EntityPoolType : uint16_t
 {
 	PoolTypeVehicle = 1,
-	PoolTypePed = 2,
-	PoolTypeObject = 4,
-	PoolTypePickup = 8,
-	PoolTypeCamera = 16
+	PoolTypePed     = 2,
+	PoolTypeObject  = 4,
+	PoolTypePickup  = 8,
+	PoolTypeCamera  = 16
 };
 
 namespace rage
@@ -16,8 +16,8 @@ namespace rage
 	public:
 		uint64_t poolStartAddress;
 		uint8_t* byteArray;
-		int  size;
-		int  itemSize;
+		int size;
+		int itemSize;
 
 		inline bool isValid(int i)
 		{
@@ -30,6 +30,7 @@ namespace rage
 			assert(i >= 0);
 			return mask(i) & (poolStartAddress + i * itemSize);
 		}
+
 	private:
 		inline long long mask(int i)
 		{
@@ -43,11 +44,11 @@ namespace rage
 	{
 	public:
 		uint64_t* listAddress;
-		int  size;
+		int size;
 		char _padding2[36];
 		uint32_t* bitArray;
 		char _padding3[40];
-		int  itemCount;
+		int itemCount;
 
 		inline bool isValid(int i)
 		{

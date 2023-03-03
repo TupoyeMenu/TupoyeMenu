@@ -1,12 +1,12 @@
 #include "backend/looped/looped.hpp"
-#include "script_global.hpp"
 #include "natives.hpp"
+#include "script_global.hpp"
 
 namespace big
 {
 	void looped::phone_anim()
 	{
-		if(g.tunables.phone_anim)
+		if (g.tunables.phone_anim)
 		{
 			if (!PED::GET_PED_CONFIG_FLAG(self::ped, 244, false) && !ENTITY::IS_ENTITY_DEAD(self::ped, false))
 			{

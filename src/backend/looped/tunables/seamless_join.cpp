@@ -1,10 +1,10 @@
 #include "backend/looped/looped.hpp"
-#include "natives.hpp"
-#include "pointers.hpp"
-#include "script_global.hpp"
-#include "script.hpp"
 #include "core/enums.hpp"
 #include "core/scr_globals.hpp"
+#include "natives.hpp"
+#include "pointers.hpp"
+#include "script.hpp"
+#include "script_global.hpp"
 
 namespace big
 {

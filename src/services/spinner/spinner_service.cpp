@@ -19,11 +19,11 @@ namespace big
 
 	void spinner_service::push(bool active, std::string text, bool progress_bar, float progress)
 	{
-		this->push({ active, eBusySpinnerType::BUSY_SPINNER_LEFT, text, progress_bar, progress });
+		this->push({active, eBusySpinnerType::BUSY_SPINNER_LEFT, text, progress_bar, progress});
 	}
 
 	void spinner_service::push_online(bool active, std::string text, bool progress_bar, float progress)
 	{
-		this->push({ active, eBusySpinnerType::BUSY_SPINNER_SAVE, text, progress_bar, progress });
+		this->push({active, eBusySpinnerType::BUSY_SPINNER_SAVE, text, progress_bar, progress});
 	}
 }

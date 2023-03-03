@@ -1,12 +1,13 @@
-#include "views/view.hpp"
 #include "pointers.hpp"
 #include "services/players/player_service.hpp"
+#include "views/view.hpp"
 
 namespace big
 {
-	void view::view_player_tabs() {
-
-		if (!*g_pointers->m_is_session_started && !g_player_service->get_selected()->is_valid()) return;
+	void view::view_player_tabs()
+	{
+		if (!*g_pointers->m_is_session_started && !g_player_service->get_selected()->is_valid())
+			return;
 
 		if (ImGui::Begin("Player", &g.window.player))
 		{

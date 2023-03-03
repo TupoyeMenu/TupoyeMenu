@@ -1,8 +1,9 @@
 #ifdef ENABLE_ASI_LOADER
-#include "common.hpp"
-#include "shv_runner.h"
-#include "natives.hpp"
-#include "script.hpp"
+	#include "shv_runner.h"
+
+	#include "common.hpp"
+	#include "natives.hpp"
+	#include "script.hpp"
 
 namespace big
 {
@@ -21,14 +22,15 @@ namespace big
 			TRY_CLAUSE
 			{
 				run_tick();
-			}EXCEPT_CLAUSE
+			}
+			EXCEPT_CLAUSE
 			script::get_current()->yield();
 		}
 	}
 
 	void shv_runner::shutdown()
 	{
-		for (auto & iter : big::shv_runner::scripts)
+		for (auto& iter : big::shv_runner::scripts)
 		{
 			big::shv_runner::scripts.erase(iter.first);
 			FreeLibrary(iter.first);

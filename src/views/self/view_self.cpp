@@ -1,10 +1,10 @@
+#include "core/data/hud_component_names.hpp"
+#include "core/data/ptfx_effects.hpp"
 #include "fiber_pool.hpp"
 #include "util/entity.hpp"
 #include "util/local_player.hpp"
-#include "views/view.hpp"
-#include "core/data/hud_component_names.hpp"
 #include "util/scripts.hpp"
-#include "core/data/ptfx_effects.hpp"
+#include "views/view.hpp"
 
 namespace big
 {
@@ -64,7 +64,7 @@ namespace big
 
 		components::command_checkbox<"invis">();
 		if (g.self.invisibility)
-			components::command_checkbox<"localvis">(); // TODO: does nothing in SP
+			components::command_checkbox<"localvis">();// TODO: does nothing in SP
 		components::command_checkbox<"cleanloop">();
 		components::command_checkbox<"nocollision">();
 		components::command_checkbox<"mobileradio">();
@@ -88,9 +88,9 @@ namespace big
 				{
 					if (ImGui::Selectable(ptfx_named[i].friendly_name, ptfx_named[i].asset_name == g.self.ptfx_effects.asset))
 					{
-						g.self.ptfx_effects.asset = ptfx_named[i].asset_name; // Update our asset name to be used
+						g.self.ptfx_effects.asset  = ptfx_named[i].asset_name;// Update our asset name to be used
 						g.self.ptfx_effects.select = i;
-						g.self.ptfx_effects.effect = ptfx_named[i].effect_names.at(0); // set the effect to the first instance in the vector
+						g.self.ptfx_effects.effect = ptfx_named[i].effect_names.at(0);// set the effect to the first instance in the vector
 					}
 
 					if (ptfx_named[i].asset_name == g.self.ptfx_effects.asset)
@@ -105,7 +105,7 @@ namespace big
 				for (const auto& ptfx_type : ptfx_named[g.self.ptfx_effects.select].effect_names)
 				{
 					if (ImGui::Selectable(ptfx_type, ptfx_type == g.self.ptfx_effects.effect))
-						g.self.ptfx_effects.effect = ptfx_type; // Update our ptfx effect
+						g.self.ptfx_effects.effect = ptfx_type;// Update our ptfx effect
 
 					if (ptfx_type == g.self.ptfx_effects.effect)
 						ImGui::SetItemDefaultFocus();
@@ -113,38 +113,37 @@ namespace big
 
 				ImGui::EndCombo();
 			}
-				
 		}
 
-	
+
 		ImGui::Separator();
 
 		components::sub_title("PROOFS"_T);
 
 		if (ImGui::Button("CHECK_ALL"_T.data()))
 		{
-			g.self.proof_bullet = true;
-			g.self.proof_fire = true;
+			g.self.proof_bullet    = true;
+			g.self.proof_fire      = true;
 			g.self.proof_collision = true;
-			g.self.proof_melee = true;
+			g.self.proof_melee     = true;
 			g.self.proof_explosion = true;
-			g.self.proof_steam = true;
-			g.self.proof_drown = true;
-			g.self.proof_water = true;
+			g.self.proof_steam     = true;
+			g.self.proof_drown     = true;
+			g.self.proof_water     = true;
 		}
 
 		ImGui::SameLine();
 
 		if (ImGui::Button("UNCHECK_ALL"_T.data()))
 		{
-			g.self.proof_bullet = false;
-			g.self.proof_fire = false;
+			g.self.proof_bullet    = false;
+			g.self.proof_fire      = false;
 			g.self.proof_collision = false;
-			g.self.proof_melee = false;
+			g.self.proof_melee     = false;
 			g.self.proof_explosion = false;
-			g.self.proof_steam = false;
-			g.self.proof_drown = false;
-			g.self.proof_water = false;
+			g.self.proof_steam     = false;
+			g.self.proof_drown     = false;
+			g.self.proof_water     = false;
 		}
 
 		ImGui::BeginGroup();
@@ -186,11 +185,8 @@ namespace big
 			ImGui::Checkbox("FORCE_WANTED_LVL"_T.data(), &g.self.force_wanted_level);
 			ImGui::SameLine(); components::help_marker("FORCE_WANTED_LVL_INFO"_T);
 			ImGui::Text("WANTED_LVL"_T.data());
-			if (
-				ImGui::SliderInt("###wanted_level", &g.self.wanted_level, 0, 5) &&
-				!g.self.force_wanted_level &&
-				g_local_player != nullptr
-				) {
+			if (ImGui::SliderInt("###wanted_level", &g.self.wanted_level, 0, 5) && !g.self.force_wanted_level && g_local_player != nullptr)
+			{
 				g_local_player->m_player_info->m_wanted_level = g.self.wanted_level;
 			}
 		}
@@ -223,7 +219,7 @@ namespace big
 
 		components::button("HIDE_ALL"_T, [] {
 			g.self.hide_radar = true;
-			g.self.hide_ammo = true;
+			g.self.hide_ammo  = true;
 			for (int i = 0; i < (int)HudComponents::HUD_WEAPONS; i++)
 			{
 				g.self.hud_components_states[i] = true;
@@ -232,7 +228,7 @@ namespace big
 		ImGui::SameLine();
 		components::button("SHOW_ALL"_T, [] {
 			g.self.hide_radar = false;
-			g.self.hide_ammo = false;
+			g.self.hide_ammo  = false;
 			for (int i = 0; i < (int)HudComponents::HUD_WEAPONS; i++)
 			{
 				g.self.hud_components_states[i] = false;

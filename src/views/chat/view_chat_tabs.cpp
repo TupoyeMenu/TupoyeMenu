@@ -1,14 +1,15 @@
-#include "views/view.hpp"
 #include "pointers.hpp"
+#include "views/view.hpp"
 
 namespace big
 {
-	void view::chat_tabs() 
+	void view::chat_tabs()
 	{
-		if (!*g_pointers->m_is_session_started) return;
+		if (!*g_pointers->m_is_session_started)
+			return;
 
-		ImGui::SetNextWindowSize({ 450, 525 }, ImGuiCond_FirstUseEver);
-		ImGui::SetNextWindowPos({ 1470, 250 }, ImGuiCond_FirstUseEver);
+		ImGui::SetNextWindowSize({450, 525}, ImGuiCond_FirstUseEver);
+		ImGui::SetNextWindowPos({1470, 250}, ImGuiCond_FirstUseEver);
 
 		if (ImGui::Begin("Chat", &g.window.chat, ImGuiWindowFlags_NoTitleBar))
 		{

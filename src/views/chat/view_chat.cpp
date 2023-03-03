@@ -1,11 +1,11 @@
-#include "views/view.hpp"
-#include "natives.hpp"
 #include "fiber_pool.hpp"
+#include "natives.hpp"
 #include "pointers.hpp"
-#include "services/players/player_service.hpp"
 #include "services/chat/chat_service.hpp"
+#include "services/players/player_service.hpp"
 #include "util/notify.hpp"
 #include "util/spam.hpp"
+#include "views/view.hpp"
 
 namespace big
 {
@@ -28,14 +28,12 @@ namespace big
 			for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
 			{
 				chat_msg current_msg = g_chat_service->get_chat_msgs()[i];
-				if(!current_msg.is_spam || g.chat.show_spam)
+				if (!current_msg.is_spam || g.chat.show_spam)
 				{
-					ImGui::Text(
-						"%s [%s]  %s",
-						current_msg.name.c_str(),
-						current_msg.is_team ? "local" : "all",
-						current_msg.msg.c_str()
-					);
+					ImGui::Text("%s [%s]  %s",
+					    current_msg.name.c_str(),
+					    current_msg.is_team ? "local" : "all",
+					    current_msg.msg.c_str());
 				}
 			}
 		}
@@ -49,14 +47,16 @@ namespace big
 		ImGui::Separator();
 
 		static std::string message = "";
-		components::input_text_with_hint("###Message", "Message", &message, ImGuiInputTextFlags_EnterReturnsTrue, []
-		{
+		components::input_text_with_hint("###Message", "Message", &message, ImGuiInputTextFlags_EnterReturnsTrue, [] {
 			const auto net_game_player = g_player_service->get_self()->get_net_game_player();
-			if(g_pointers->m_send_chat_message(*g_pointers->m_send_chat_ptr, net_game_player->get_net_data(), (char*)message.c_str(), g.chat.local))
+			if (g_pointers->m_send_chat_message(*g_pointers->m_send_chat_ptr,
+			        net_game_player->get_net_data(),
+			        (char*)message.c_str(),
+			        g.chat.local))
 				notify::draw_chat((char*)message.c_str(), net_game_player->get_name(), g.chat.local);
 
 			spam::log_chat((char*)message.c_str(), g_player_service->get_self(), false);
-			
+
 			message = "";
 		});
 

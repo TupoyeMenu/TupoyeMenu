@@ -8,6 +8,7 @@ namespace big
 	{
 	public:
 		native_call_context();
+
 	private:
 		std::uint64_t m_return_stack[10];
 		std::uint64_t m_arg_stack[100];
@@ -17,25 +18,25 @@ namespace big
 	{
 	public:
 		explicit native_invoker() = default;
-		~native_invoker() = default;
+		~native_invoker()         = default;
 
 		void cache_handlers();
 
 		void begin_call();
 		void end_call(rage::scrNativeHash hash);
 
-		template <typename T>
-		void push_arg(T &&value)
+		template<typename T>
+		void push_arg(T&& value)
 		{
 			m_call_context.push_arg(std::forward<T>(value));
 		}
 
-		template <typename T>
-		T &get_return_value()
+		template<typename T>
+		T& get_return_value()
 		{
 			return *m_call_context.get_return_value<T>();
 		}
-		
+
 		PVOID get_return_address()
 		{
 			return m_call_context.get_return_pointer();

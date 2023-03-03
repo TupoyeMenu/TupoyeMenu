@@ -7,5 +7,5 @@ namespace big::shv_runner
 	void script_func();
 	void shutdown();
 
-	inline std::map<HMODULE, void(*)()> scripts;
+	inline std::map<HMODULE, void (*)()> scripts;
 }

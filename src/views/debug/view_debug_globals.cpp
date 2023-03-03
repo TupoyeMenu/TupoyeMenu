@@ -1,7 +1,7 @@
 #include "fiber_pool.hpp"
+#include "gui/components/components.hpp"
 #include "natives.hpp"
 #include "pointers.hpp"
-#include "gui/components/components.hpp"
 #include "services/globals/globals_service.hpp"
 #include "thread_pool.hpp"
 #include "views/view.hpp"
@@ -10,8 +10,11 @@ namespace big
 {
 	void view::debug_globals()
 	{
-		if (ImGui::Checkbox("DEBUG_GLOBALS_ENABLE_FREEZING"_T.data(), &g_globals_service->m_running) && g_globals_service->m_running)
-			g_thread_pool->push([&]() { g_globals_service->loop(); });
+		if (ImGui::Checkbox("DEBUG_GLOBALS_ENABLE_FREEZING"_T.data(), &g_globals_service->m_running)
+		    && g_globals_service->m_running)
+			g_thread_pool->push([&]() {
+				g_globals_service->loop();
+			});
 
 		if (components::button("LOAD"_T))
 			g_globals_service->load();
@@ -28,11 +31,11 @@ namespace big
 
 		if (ImGui::BeginPopupModal("DEBUG_GLOBALS_NEW"_T.data()))
 		{
-			static int base_address = 0;
-			static bool freeze = false;
-			static char name[32] = "";
-			static int(*offsets)[2] = nullptr;
-			static int offset_count = 0;
+			static int base_address          = 0;
+			static bool freeze               = false;
+			static char name[32]             = "";
+			static int(*offsets)[2]          = nullptr;
+			static int offset_count          = 0;
 			static int previous_offset_count = 0;
 
 			ImGui::Text("DEBUG_GLOBALS_NAME"_T.data());
@@ -44,12 +47,14 @@ namespace big
 			ImGui::Text("DEBUG_GLOBAL_OFFSET_COUNT"_T.data());
 			ImGui::InputInt("##modal_offset_count", &offset_count);
 
-			if (offset_count < 0) offset_count = 0;
-			else if (offset_count > 10) offset_count = 10;
+			if (offset_count < 0)
+				offset_count = 0;
+			else if (offset_count > 10)
+				offset_count = 10;
 
 			if (offset_count != previous_offset_count)
 			{
-				int(*new_offsets)[2] = new int[offset_count][2]{ 0 };
+				int(*new_offsets)[2] = new int[offset_count][2]{0};
 				memcpy(new_offsets, offsets, sizeof(int) * std::min(offset_count, previous_offset_count) * 2);
 
 				delete[] offsets;
@@ -81,8 +86,8 @@ namespace big
 				strcpy(name, "");
 				freeze = false;
 				delete[] offsets;
-				offsets = nullptr;
-				offset_count = 0;
+				offsets               = nullptr;
+				offset_count          = 0;
 				previous_offset_count = 0;
 
 				ImGui::CloseCurrentPopup();
@@ -98,8 +103,8 @@ namespace big
 				strcpy(name, "");
 				freeze = false;
 				delete[] offsets;
-				offsets = nullptr;
-				offset_count = 0;
+				offsets               = nullptr;
+				offset_count          = 0;
 				previous_offset_count = 0;
 
 				ImGui::CloseCurrentPopup();

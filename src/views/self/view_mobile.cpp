@@ -1,13 +1,13 @@
+#include "core/data/phone_types.hpp"
 #include "fiber_pool.hpp"
 #include "services/mobile/mobile_service.hpp"
 #include "util/mobile.hpp"
 #include "views/view.hpp"
-#include "core/data/phone_types.hpp"
 
 namespace big
 {
 	void view::mobile()
-	{   
+	{
 		components::sub_title("MERRYWEATHER"_T);
 		ImGui::Separator();
 
@@ -35,8 +35,9 @@ namespace big
 		components::button("MORS_FIX_ALL"_T, [] {
 			int amount_fixed = mobile::mors_mutual::fix_all();
 			g_notification_service->push("MOBILE"_T.data(),
-				std::vformat("VEHICLE_FIX_AMOUNT"_T, std::make_format_args(amount_fixed, amount_fixed == 1 ? "VEHICLE_FIX_HAS"_T.data() : "VEHICLE_FIX_HAVE"_T.data()))
-			);
+			    std::vformat("VEHICLE_FIX_AMOUNT"_T,
+			        std::make_format_args(amount_fixed,
+			            amount_fixed == 1 ? "VEHICLE_FIX_HAS"_T.data() : "VEHICLE_FIX_HAVE"_T.data())));
 		});
 
 		components::sub_title("CEO_ABILITIES"_T);

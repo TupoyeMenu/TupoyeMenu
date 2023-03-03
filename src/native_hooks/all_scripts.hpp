@@ -1,11 +1,11 @@
 #pragma once
-#include "native_hooks.hpp"
-#include "natives.hpp"
 #include "core/scr_globals.hpp"
 #include "fiber_pool.hpp"
-#include "util/scripts.hpp"
-#include "hooking.hpp"
 #include "gta/enums.hpp"
+#include "hooking.hpp"
+#include "native_hooks.hpp"
+#include "natives.hpp"
+#include "util/scripts.hpp"
 
 namespace big
 {
@@ -29,8 +29,9 @@ namespace big
 			{
 				NETWORK::NETWORK_BAIL(src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2));
 			}
-			if(g.debug.logs.stupid_script_native_logs)
-				LOG(VERBOSE) << std::format("NETWORK::NETWORK_BAIL({}, {}, {}); // In: {}", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2), SCRIPT::GET_THIS_SCRIPT_NAME());;
+			if (g.debug.logs.stupid_script_native_logs)
+				LOG(VERBOSE) << std::format("NETWORK::NETWORK_BAIL({}, {}, {}); // In: {}", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2), SCRIPT::GET_THIS_SCRIPT_NAME());
+			;
 		}
 
 		inline void SC_TRANSITION_NEWS_SHOW(rage::scrNativeCallContext* src)
@@ -51,14 +52,11 @@ namespace big
 
 		inline void CLEAR_PED_TASKS_IMMEDIATELY(rage::scrNativeCallContext* src)
 		{
-			if(
-				SCRIPT::GET_HASH_OF_THIS_SCRIPT_NAME() != RAGE_JOAAT("maintransition") ||
-				!g.tunables.seamless_join
-			)
+			if (SCRIPT::GET_HASH_OF_THIS_SCRIPT_NAME() != RAGE_JOAAT("maintransition") || !g.tunables.seamless_join)
 				TASK::CLEAR_PED_TASKS_IMMEDIATELY(src->get_arg<Ped>(0));
 
-			if(src->get_arg<Ped>(0) == self::ped && g.debug.logs.stupid_script_native_logs)
-				LOG(VERBOSE) << std::format("TASK::CLEAR_PED_TASKS_IMMEDIATELY({}); // In: {}",  src->get_arg<Ped>(0), SCRIPT::GET_THIS_SCRIPT_NAME());
+			if (src->get_arg<Ped>(0) == self::ped && g.debug.logs.stupid_script_native_logs)
+				LOG(VERBOSE) << std::format("TASK::CLEAR_PED_TASKS_IMMEDIATELY({}); // In: {}", src->get_arg<Ped>(0), SCRIPT::GET_THIS_SCRIPT_NAME());
 		}
 
 		void NETWORK_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(rage::scrNativeCallContext* src)
@@ -91,11 +89,11 @@ namespace big
 
 		void SET_CURRENT_PED_WEAPON(rage::scrNativeCallContext* src)
 		{
-			const auto ped = src->get_arg<Ped>(0);
+			const auto ped  = src->get_arg<Ped>(0);
 			const auto hash = src->get_arg<rage::joaat_t>(1);
 
 			if (g.weapons.interior_weapon && ped == self::ped && hash == RAGE_JOAAT("WEAPON_UNARMED"))
-				return;   
+				return;
 
 			WEAPON::SET_CURRENT_PED_WEAPON(ped, hash, src->get_arg<int>(2));
 		}
@@ -163,8 +161,7 @@ namespace big
 				case ControllerInputs::INPUT_VEH_FLY_BOOST:
 				case ControllerInputs::INPUT_VEH_PARACHUTE:
 				case ControllerInputs::INPUT_VEH_BIKE_WINGS:
-				case ControllerInputs::INPUT_VEH_TRANSFORM:
-					return;
+				case ControllerInputs::INPUT_VEH_TRANSFORM: return;
 				}
 			}
 

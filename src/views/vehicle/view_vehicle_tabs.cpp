@@ -1,12 +1,13 @@
-#include "views/view.hpp"
 #include "pointers.hpp"
+#include "views/view.hpp"
 
 namespace big
 {
-	void view::vehicle_tabs() {
+	void view::vehicle_tabs()
+	{
 		if (ImGui::BeginTabBar("vehicle_tabbar"))
 		{
-			if (ImGui::BeginTabItem("Vehicle")) 
+			if (ImGui::BeginTabItem("Vehicle"))
 			{
 				view::vehicle();
 				ImGui::EndTabItem();

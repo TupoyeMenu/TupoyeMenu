@@ -7,10 +7,11 @@
 
 namespace big
 {
-	void view::debug_ped_flags() {
-		static bool value = false;
+	void view::debug_ped_flags()
+	{
+		static bool value       = false;
 		static int current_flag = 0;
-		
+
 		ImGui::InputInt("Ped Flag", &current_flag);
 		g_fiber_pool->queue_job([] {
 			value = PED::GET_PED_CONFIG_FLAG(self::ped, current_flag, false);

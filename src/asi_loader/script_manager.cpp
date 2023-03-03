@@ -1,14 +1,16 @@
 #ifdef ENABLE_ASI_LOADER
-#include "script.hpp"
-#include "invoker.hpp"
-#include "pointers.hpp"
-#include "shv_runner.h"
-#include "script_manager.h"
-#include <set>
-#include "pools.h"
-#include "renderer.hpp"
+	#include "script_manager.h"
 
-#define DLL_EXPORT __declspec( dllexport )
+	#include "invoker.hpp"
+	#include "pointers.hpp"
+	#include "pools.h"
+	#include "renderer.hpp"
+	#include "script.hpp"
+	#include "shv_runner.h"
+
+	#include <set>
+
+	#define DLL_EXPORT __declspec(dllexport)
 
 void DLL_EXPORT scriptWait(unsigned long waitTime)
 {
@@ -16,15 +18,15 @@ void DLL_EXPORT scriptWait(unsigned long waitTime)
 	big::script::get_current()->yield(std::chrono::duration_cast<my_duran_duran_duration>(std::chrono::milliseconds(waitTime)));
 }
 
-void DLL_EXPORT scriptRegister(HMODULE module, void(*function)())
+void DLL_EXPORT scriptRegister(HMODULE module, void (*function)())
 {
 	big::shv_runner::scripts.emplace(module, function);
 }
 
-void DLL_EXPORT scriptUnregister(void(*function)())
+void DLL_EXPORT scriptUnregister(void (*function)())
 {
-	for(auto iter : big::shv_runner::scripts)
-		if(function == iter.second)
+	for (auto iter : big::shv_runner::scripts)
+		if (function == iter.second)
 			big::shv_runner::scripts.erase(iter.first);
 }
 
@@ -38,7 +40,7 @@ eGameVersion DLL_EXPORT getGameVersion()
 	return VER_1_0_2699_16;
 }
 
-void DLL_EXPORT scriptRegisterAdditionalThread(HMODULE module, void(*function)())
+void DLL_EXPORT scriptRegisterAdditionalThread(HMODULE module, void (*function)())
 {
 	big::shv_runner::scripts.emplace(module, function);
 }
@@ -66,12 +68,12 @@ PUINT64 DLL_EXPORT nativeCall()
 	return reinterpret_cast<uint64_t*>(big::g_native_invoker.get_return_address());
 }
 
-typedef void(*TKeyboardFn)(DWORD key, WORD repeats, BYTE scanCode, BOOL isExtended, BOOL isWithAlt, BOOL wasDownBefore, BOOL isUpNow);
+typedef void (*TKeyboardFn)(DWORD key, WORD repeats, BYTE scanCode, BOOL isExtended, BOOL isWithAlt, BOOL wasDownBefore, BOOL isUpNow);
 
 static std::set<TKeyboardFn> g_keyboardFunctions;
 
-void DLL_EXPORT keyboardHandlerRegister(TKeyboardFn function) {
-
+void DLL_EXPORT keyboardHandlerRegister(TKeyboardFn function)
+{
 	g_keyboardFunctions.insert(function);
 }
 
@@ -80,13 +82,14 @@ void DLL_EXPORT keyboardHandlerUnregister(TKeyboardFn function)
 	g_keyboardFunctions.erase(function);
 }
 
-void ScriptManager::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-
-	if (uMsg == WM_KEYDOWN || uMsg == WM_KEYUP || uMsg == WM_SYSKEYDOWN || uMsg == WM_SYSKEYUP) {
-
+void ScriptManager::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	if (uMsg == WM_KEYDOWN || uMsg == WM_KEYUP || uMsg == WM_SYSKEYDOWN || uMsg == WM_SYSKEYUP)
+	{
 		auto functions = g_keyboardFunctions;
 
-		for (auto& function : functions) {
+		for (auto& function : functions)
+		{
 			function((DWORD)wParam, lParam & 0xFFFF, (lParam >> 16) & 0xFF, (lParam >> 24) & 1, (uMsg == WM_SYSKEYDOWN || uMsg == WM_SYSKEYUP), (lParam >> 30) & 1, (uMsg == WM_SYSKEYUP || uMsg == WM_KEYUP));
 		}
 	}

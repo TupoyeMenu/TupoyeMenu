@@ -1,9 +1,10 @@
-#include "views/view.hpp"
 #include "pointers.hpp"
+#include "views/view.hpp"
 
 namespace big
 {
-	void view::debug_tabs() {
+	void view::debug_tabs()
+	{
 		if (ImGui::BeginTabBar("debug_tabbar"))
 		{
 			if (ImGui::BeginTabItem("Threads"))
@@ -32,7 +33,7 @@ namespace big
 				view::debug_misc();
 				ImGui::EndTabItem();
 			}
-			
+
 			ImGui::EndTabBar();
 		}
 	}

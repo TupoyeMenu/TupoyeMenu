@@ -1,8 +1,8 @@
 #pragma once
-#include "native_hooks.hpp"
-#include "core/globals.hpp"
 #include "core/enums.hpp"
+#include "core/globals.hpp"
 #include "gta_util.hpp"
+#include "native_hooks.hpp"
 #include "natives.hpp"
 #include "pointers.hpp"
 
@@ -20,7 +20,7 @@ namespace big
 			}
 			else
 			{
-				if(g.debug.logs.stupid_script_native_logs)
+				if (g.debug.logs.stupid_script_native_logs)
 					LOG(VERBOSE) << std::format("NETWORK::NETWORK_SESSION_HOST({}, {}, {});", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<BOOL>(2));
 				src->set_return_value<BOOL>(NETWORK::NETWORK_SESSION_HOST(src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<BOOL>(2)));
 			}
@@ -55,13 +55,13 @@ namespace big
 		inline void ACTIVATE_FRONTEND_MENU(rage::scrNativeCallContext* src)
 		{
 			Hash menuhash = src->get_arg<Hash>(0);
-			if(g.debug.logs.stupid_script_native_logs)
+			if (g.debug.logs.stupid_script_native_logs)
 				LOG(VERBOSE) << std::format("HUD::ACTIVATE_FRONTEND_MENU({}, {}, {});", menuhash, src->get_arg<BOOL>(1), src->get_arg<int>(2));
 
 			if (g.tunables.seamless_join && menuhash != RAGE_JOAAT("FE_MENU_VERSION_EMPTY_NO_BACKGROUND"))
-					HUD::ACTIVATE_FRONTEND_MENU(menuhash, src->get_arg<BOOL>(1), src->get_arg<int>(2));
-			
-			if(!g.tunables.seamless_join)
+				HUD::ACTIVATE_FRONTEND_MENU(menuhash, src->get_arg<BOOL>(1), src->get_arg<int>(2));
+
+			if (!g.tunables.seamless_join)
 				HUD::ACTIVATE_FRONTEND_MENU(menuhash, src->get_arg<BOOL>(1), src->get_arg<int>(2));
 		}
 
@@ -69,12 +69,12 @@ namespace big
 		{
 			Hash menuhash = src->get_arg<Hash>(0);
 
-			if(g.debug.logs.stupid_script_native_logs)
+			if (g.debug.logs.stupid_script_native_logs)
 				LOG(VERBOSE) << std::format("HUD::RESTART_FRONTEND_MENU({}, {});", menuhash, src->get_arg<int>(1));
 
 			if (g.tunables.seamless_join)
 			{
-				if(menuhash != RAGE_JOAAT("FE_MENU_VERSION_EMPTY_NO_BACKGROUND"))
+				if (menuhash != RAGE_JOAAT("FE_MENU_VERSION_EMPTY_NO_BACKGROUND"))
 				{
 					HUD::RESTART_FRONTEND_MENU(menuhash, src->get_arg<int>(1));
 				}
@@ -92,7 +92,7 @@ namespace big
 			else
 				GRAPHICS::TOGGLE_PAUSED_RENDERPHASES(src->get_arg<int>(0));
 		}
-		
+
 		inline void SET_ENTITY_VISIBLE(rage::scrNativeCallContext* src)
 		{
 			if (g.tunables.seamless_join && src->get_arg<Entity>(0) == self::ped)
@@ -103,10 +103,7 @@ namespace big
 
 		inline void SET_ENTITY_COORDS(rage::scrNativeCallContext* src)
 		{
-			if (!g.tunables.seamless_join ||
-				*scr_globals::transition_state.as<eTransitionState*>() == eTransitionState::TRANSITION_STATE_CONFIRM_FM_SESSION_JOINING ||
-				src->get_arg<Entity>(0) != self::ped
-			)
+			if (!g.tunables.seamless_join || *scr_globals::transition_state.as<eTransitionState*>() == eTransitionState::TRANSITION_STATE_CONFIRM_FM_SESSION_JOINING || src->get_arg<Entity>(0) != self::ped)
 				ENTITY::SET_ENTITY_COORDS(src->get_arg<Entity>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<BOOL>(7));
 		}
 
@@ -118,7 +115,7 @@ namespace big
 
 		inline void SET_PLAYER_CONTROL(rage::scrNativeCallContext* src)
 		{
-			if(g.debug.logs.stupid_script_native_logs)
+			if (g.debug.logs.stupid_script_native_logs)
 				LOG(VERBOSE) << std::format("PLAYER::SET_PLAYER_CONTROL({}, {}, {});", src->get_arg<Player>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2));
 
 			if (!g.tunables.seamless_join)
@@ -133,13 +130,13 @@ namespace big
 
 		inline void NETWORK_RESURRECT_LOCAL_PLAYER(rage::scrNativeCallContext* src)
 		{
-			if(g.debug.logs.stupid_script_native_logs)
+			if (g.debug.logs.stupid_script_native_logs)
 				LOG(VERBOSE) << std::format("NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER({}, {}, {}, {}, {}, {}, {}, {}, {});", src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
 
 			if (!g.tunables.seamless_join)
 				NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER(src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
 		}
-		
+
 		//
 		// PLAYER_SWITCH END
 		//
@@ -152,7 +149,7 @@ namespace big
 
 		inline void ON_ENTER_SP(rage::scrNativeCallContext* src)
 		{
-			if(g.debug.logs.stupid_script_native_logs)
+			if (g.debug.logs.stupid_script_native_logs)
 				LOG(VERBOSE) << "DLC::ON_ENTER_SP();";
 		}
 	}

@@ -1,9 +1,9 @@
 #pragma once
-#include "natives.hpp"
-#include "script.hpp"
-#include "pointers.hpp"
-#include "vehicle.hpp"
 #include "entity.hpp"
+#include "natives.hpp"
+#include "pointers.hpp"
+#include "script.hpp"
+#include "vehicle.hpp"
 
 namespace big::ped
 {
@@ -22,15 +22,9 @@ namespace big::ped
 		self::ped = PLAYER::PLAYER_PED_ID();
 		script::get_current()->yield();
 		STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
-		for (int i = 0; i < 12; i++) {
-			PED::SET_PED_COMPONENT_VARIATION
-			(
-				self::ped,
-				i,
-				PED::GET_PED_DRAWABLE_VARIATION(self::ped, i),
-				PED::GET_PED_TEXTURE_VARIATION(self::ped, i),
-				PED::GET_PED_PALETTE_VARIATION(self::ped, i)
-			);
+		for (int i = 0; i < 12; i++)
+		{
+			PED::SET_PED_COMPONENT_VARIATION(self::ped, i, PED::GET_PED_DRAWABLE_VARIATION(self::ped, i), PED::GET_PED_TEXTURE_VARIATION(self::ped, i), PED::GET_PED_PALETTE_VARIATION(self::ped, i));
 		}
 		return true;
 	}
@@ -39,18 +33,13 @@ namespace big::ped
 	{
 		Ped ped = self::ped;
 
-		if (ENTITY::GET_ENTITY_MODEL(ped) != ENTITY::GET_ENTITY_MODEL(target)) {
+		if (ENTITY::GET_ENTITY_MODEL(ped) != ENTITY::GET_ENTITY_MODEL(target))
+		{
 			return false;
 		}
-		for (int i = 0; i < 12; i++) {
-			PED::SET_PED_COMPONENT_VARIATION
-			(
-				ped,
-				i,
-				PED::GET_PED_DRAWABLE_VARIATION(target, i),
-				PED::GET_PED_TEXTURE_VARIATION(target, i),
-				PED::GET_PED_PALETTE_VARIATION(target, i)
-			);
+		for (int i = 0; i < 12; i++)
+		{
+			PED::SET_PED_COMPONENT_VARIATION(ped, i, PED::GET_PED_DRAWABLE_VARIATION(target, i), PED::GET_PED_TEXTURE_VARIATION(target, i), PED::GET_PED_PALETTE_VARIATION(target, i));
 		}
 
 		return true;
@@ -93,9 +82,9 @@ namespace big::ped
 
 	inline void steal_identity(const Ped target)
 	{
-		const int max_health = ENTITY::GET_ENTITY_MAX_HEALTH(self::ped);
+		const int max_health     = ENTITY::GET_ENTITY_MAX_HEALTH(self::ped);
 		const int current_health = ENTITY::GET_ENTITY_HEALTH(self::ped);
-		const int current_armor = PED::GET_PED_ARMOUR(self::ped);
+		const int current_armor  = PED::GET_PED_ARMOUR(self::ped);
 
 		PLAYER::SET_PLAYER_MODEL(self::id, ENTITY::GET_ENTITY_MODEL(target));
 		script::get_current()->yield();
@@ -144,15 +133,15 @@ namespace big::ped
 		return ped;
 	}
 
-	/// 
+	///
 	/// GPL-3 CODE STARTS HERE
 	/// SKIDDED FROM https://github.com/gta-chaos-mod/ChaosModV
-	/// 
+	///
 
 	inline Hash create_bad_ped_relationship_group(std::string group_name)
 	{
 		static const Hash playerGroup = RAGE_JOAAT("PLAYER");
-		static const Hash civGroup = RAGE_JOAAT("CIVMALE");
+		static const Hash civGroup    = RAGE_JOAAT("CIVMALE");
 		static const Hash femCivGroup = RAGE_JOAAT("CIVFEMALE");
 
 		Hash relationshipGroup;
@@ -262,25 +251,25 @@ namespace big::ped
 		return ped;
 	}
 
-	/// 
+	///
 	/// GPL-3 CODE ENDS HERE
-	/// 
+	///
 
 	inline void play_anim(Ped ped, std::string_view name, std::string_view dict, int flag)
 	{
-			if (STREAMING::DOES_ANIM_DICT_EXIST(dict.data()) && STREAMING::HAS_ANIM_DICT_LOADED(dict.data()))
-			{
-				STREAMING::REQUEST_ANIM_DICT(dict.data());
+		if (STREAMING::DOES_ANIM_DICT_EXIST(dict.data()) && STREAMING::HAS_ANIM_DICT_LOADED(dict.data()))
+		{
+			STREAMING::REQUEST_ANIM_DICT(dict.data());
 
-				script::get_current()->yield();
-			}
-			if (!STREAMING::HAS_ANIM_DICT_LOADED(dict.data()))
-			{
-				g_notification_service->push_warning("Animation", "Failed to load dict, did you give an incorrect dict?");
-				return;
-			}
-			TASK::TASK_PLAY_ANIM(ped, name.data(), dict.data(), 4.0f, -4.0f, -1, flag, 1, 0, 0, 0);
+			script::get_current()->yield();
+		}
+		if (!STREAMING::HAS_ANIM_DICT_LOADED(dict.data()))
+		{
+			g_notification_service->push_warning("Animation", "Failed to load dict, did you give an incorrect dict?");
+			return;
+		}
+		TASK::TASK_PLAY_ANIM(ped, name.data(), dict.data(), 4.0f, -4.0f, -1, flag, 1, 0, 0, 0);
 
-			STREAMING::HAS_ANIM_DICT_LOADED(dict.data());
+		STREAMING::HAS_ANIM_DICT_LOADED(dict.data());
 	}
 }

@@ -1,24 +1,25 @@
-#include "views/view.hpp"
-#include "natives.hpp"
-#include "util/misc.hpp"
-#include "util/math.hpp"
-#include "services/player_database/player_database_service.hpp"
-#include "services/gta_data/gta_data_service.hpp"
 #include "core/data/command_access_levels.hpp"
 #include "core/data/game_states.hpp"
-#include "core/scr_globals.hpp"
 #include "core/data/language_codes.hpp"
-#include <script/globals/GlobalPlayerBD.hpp>
-#include <script/globals/GPBD_FM_3.hpp>
+#include "core/scr_globals.hpp"
+#include "natives.hpp"
+#include "services/gta_data/gta_data_service.hpp"
+#include "services/player_database/player_database_service.hpp"
+#include "util/math.hpp"
+#include "util/misc.hpp"
+#include "views/view.hpp"
+
 #include <script/globals/GPBD_FM.hpp>
+#include <script/globals/GPBD_FM_3.hpp>
+#include <script/globals/GlobalPlayerBD.hpp>
 
 namespace big
 {
 	void view::view_player_info()
 	{
-		std::string title = std::format("Player Info: {}", g_player_service->get_selected()->get_name());
+		std::string title        = std::format("Player Info: {}", g_player_service->get_selected()->get_name());
 		CPlayerInfo* player_info = g_player_service->get_selected()->get_player_info();
-		CPed* cped = g_player_service->get_selected()->get_ped();
+		CPed* cped               = g_player_service->get_selected()->get_ped();
 
 		ImGui::Text(title.c_str());
 		ImGui::Checkbox("Spectate", &g.player.spectating);
@@ -41,14 +42,14 @@ namespace big
 		}
 
 		uint32_t ped_damage_bits = 0;
-		uint32_t ped_task_flag = 0;
+		uint32_t ped_task_flag   = 0;
 		uint32_t veh_damage_bits = 0;
-		std::string mode_str = "";
+		std::string mode_str     = "";
 
 		if (CPed* ped = g_player_service->get_selected()->get_ped())
 		{
 			ped_damage_bits = ped->m_damage_bits;
-			ped_task_flag = ped->m_ped_task_flag;
+			ped_task_flag   = ped->m_ped_task_flag;
 		}
 
 		if (ped_damage_bits & (uint32_t)eEntityProofs::GOD)
@@ -119,30 +120,20 @@ namespace big
 
 				ImGui::SameLine();
 
-				if (ImGui::Button("Copy##RID")) ImGui::SetClipboardText(std::to_string(net_player_data->m_gamer_handle.m_rockstar_id).data());
+				if (ImGui::Button("Copy##RID"))
+					ImGui::SetClipboardText(std::to_string(net_player_data->m_gamer_handle.m_rockstar_id).data());
 
-				auto ip = g_player_service->get_selected()->get_ip_address();
+				auto ip   = g_player_service->get_selected()->get_ip_address();
 				auto port = g_player_service->get_selected()->get_port();
 
-				ImGui::Text(
-					"PLAYER_INFO_IP"_T.data(),
-					ip.m_field1,
-					ip.m_field2,
-					ip.m_field3,
-					ip.m_field4,
-					port
-				);
+				ImGui::Text("PLAYER_INFO_IP"_T.data(), ip.m_field1, ip.m_field2, ip.m_field3, ip.m_field4, port);
 
 				ImGui::SameLine();
 
 				if (ImGui::Button("Copy"))
 				{
-					ImGui::SetClipboardText(std::format("{}.{}.{}.{}:{}", ip.m_field1,
-						ip.m_field2,
-						ip.m_field3,
-						ip.m_field4,
-						port).data()
-					);
+					ImGui::SetClipboardText(
+					    std::format("{}.{}.{}.{}:{}", ip.m_field1, ip.m_field2, ip.m_field3, ip.m_field4, port).data());
 				}
 
 				ImGui::Text("Game State: %s", game_states[(int32_t)player_info->m_game_state]);
@@ -155,7 +146,8 @@ namespace big
 				ImGui::TreePop();
 			}
 
-			if (persistent_player* current_player = g_player_database_service->get_player_by_rockstar_id(g_player_service->get_selected()->get_net_data()->m_gamer_handle.m_rockstar_id))
+			if (persistent_player* current_player = g_player_database_service->get_player_by_rockstar_id(
+			        g_player_service->get_selected()->get_net_data()->m_gamer_handle.m_rockstar_id))
 			{
 				if (ImGui::TreeNode("Player DB Info"))
 				{
@@ -168,11 +160,14 @@ namespace big
 						}
 					}
 
-					if (ImGui::BeginCombo("CHAT_COMMAND_PERMISSIONS"_T.data(), COMMAND_ACCESS_LEVELS[g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level)]))
+					if (ImGui::BeginCombo("CHAT_COMMAND_PERMISSIONS"_T.data(),
+					        COMMAND_ACCESS_LEVELS[g_player_service->get_selected()->command_access_level.value_or(
+					            g.session.chat_command_default_access_level)]))
 					{
 						for (const auto& [type, name] : COMMAND_ACCESS_LEVELS)
 						{
-							if (ImGui::Selectable(name, type == g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level)))
+							if (ImGui::Selectable(name,
+							        type == g_player_service->get_selected()->command_access_level.value_or(g.session.chat_command_default_access_level)))
 							{
 								g.session.chat_command_default_access_level = type;
 								g_player_database_service->get_or_create_player(g_player_service->get_selected())->command_access_level = type;
@@ -189,7 +184,7 @@ namespace big
 				}
 			}
 		}
-		
+
 		if (cped != nullptr)
 		{
 			if (ImGui::TreeNode("Ped Info"))
@@ -198,10 +193,9 @@ namespace big
 				ImGui::SameLine();
 				ImGui::Text("Armor: %f", cped->m_armor);
 				ImGui::Text("Pos X: %f, Y: %f, Z: %f",
-					cped->m_navigation->get_position()->x,
-					cped->m_navigation->get_position()->y,
-					cped->m_navigation->get_position()->z
-					);
+				    cped->m_navigation->get_position()->x,
+				    cped->m_navigation->get_position()->y,
+				    cped->m_navigation->get_position()->z);
 
 				ImGui::Text("Distance: %f", math::distance_between_vectors(misc::fvector3_to_Vector3(*g_local_player->get_position()), misc::fvector3_to_Vector3(*cped->get_position())));
 				ImGui::Text("Speed: %f", cped->get_speed());
@@ -213,9 +207,11 @@ namespace big
 			{
 				if (ImGui::TreeNode("Weapon Info"))
 				{
-					ImGui::Text("Weapon Name: %s", g_gta_data_service->weapon_by_hash(cped->m_weapon_manager->m_selected_weapon_hash).m_name);
-					ImGui::Text("Weapon Display Name: %s", g_gta_data_service->weapon_by_hash(cped->m_weapon_manager->m_selected_weapon_hash).m_display_name);
-					if(cped->m_weapon_manager->m_weapon_info != nullptr)
+					ImGui::Text("Weapon Name: %s",
+					    g_gta_data_service->weapon_by_hash(cped->m_weapon_manager->m_selected_weapon_hash).m_name);
+					ImGui::Text("Weapon Display Name: %s",
+					    g_gta_data_service->weapon_by_hash(cped->m_weapon_manager->m_selected_weapon_hash).m_display_name);
+					if (cped->m_weapon_manager->m_weapon_info != nullptr)
 					{
 						ImGui::Text("Weapon Damage: %f", cped->m_weapon_manager->m_weapon_info->m_damage);
 						ImGui::Text("Weapon Damage Mult: %f", cped->m_weapon_manager->m_weapon_info->m_network_player_damage_modifier);
@@ -254,7 +250,7 @@ namespace big
 
 			if (id != -1)
 			{
-				auto& stats = scr_globals::gpbd_fm_1.as<GPBD_FM*>()->Entries[id].PlayerStats;
+				auto& stats     = scr_globals::gpbd_fm_1.as<GPBD_FM*>()->Entries[id].PlayerStats;
 				auto& boss_goon = scr_globals::gpbd_fm_3.as<GPBD_FM_3*>()->Entries[id].BossGoon;
 
 				if (boss_goon.Language >= 0 && boss_goon.Language < 13)
@@ -272,7 +268,8 @@ namespace big
 				ImGui::Text("PLAYER_INFO_PROSTITUTES"_T.data(), stats.ProstitutesFrequented);
 				ImGui::Text("PLAYER_INFO_LAP_DANCES"_T.data(), stats.LapDancesBought);
 				ImGui::Text("PLAYER_INFO_MISSIONS_CREATED"_T.data(), stats.MissionsCreated);
-				ImGui::Text("PLAYER_INFO_METLDOWN_COMPLETE"_T.data(), scr_globals::gpbd_fm_1.as<GPBD_FM*>()->Entries[id].MeltdownComplete ? "YES"_T.data() : "NO"_T.data()); // curious to see if anyone has actually played singleplayer
+				ImGui::Text("PLAYER_INFO_METLDOWN_COMPLETE"_T.data(),
+				    scr_globals::gpbd_fm_1.as<GPBD_FM*>()->Entries[id].MeltdownComplete ? "YES"_T.data() : "NO"_T.data()); // curious to see if anyone has actually played singleplayer
 				ImGui::Text("Allows Spectating: %s", stats.CanSpectate ? "YES"_T.data() : "NO"_T.data());
 			}
 

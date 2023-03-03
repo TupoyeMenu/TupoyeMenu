@@ -1,9 +1,10 @@
-#include "views/view.hpp"
 #include "pointers.hpp"
+#include "views/view.hpp"
 
 namespace big
 {
-	void view::world_tabs() {
+	void view::world_tabs()
+	{
 		if (ImGui::BeginTabBar("world_tabbar"))
 		{
 			if (ImGui::BeginTabItem("Spawn Ped"))
@@ -44,6 +45,11 @@ namespace big
 			if (ImGui::BeginTabItem("Model Swapper"))
 			{
 				view::model_swapper();
+				ImGui::EndTabItem();
+			}
+			if (ImGui::BeginTabItem("Nearby"))
+			{
+				view::nearby();
 				ImGui::EndTabItem();
 			}
 			ImGui::EndTabBar();

@@ -6,8 +6,8 @@ namespace big::scr_globals
 	namespace size
 	{
 		constexpr int globalplayer_bd = 466;
-		constexpr int gpbd_fm_3 = 608;
-		constexpr int gpbd_fm_1 = 862;
+		constexpr int gpbd_fm_3       = 608;
+		constexpr int gpbd_fm_1       = 862;
 	}
 
 	static inline script_global gsbd(2648605);
@@ -35,7 +35,7 @@ namespace big::scr_globals
 	static inline script_global in_multiplayer(78558); // g_bInMultiplayer
 	static inline script_global transition_state(1574993);
 
-	static inline script_global vehicle_global = script_global(1586468);
+	static inline script_global vehicle_global  = script_global(1586468);
 	static inline script_global mechanic_global = script_global(2793046);
 
 	static inline script_global spawn_global = script_global(2694562);
@@ -45,19 +45,19 @@ namespace big::scr_locals
 {
 	namespace am_hunt_the_beast
 	{
-		constexpr static auto broadcast_idx = 599;
+		constexpr static auto broadcast_idx        = 599;
 		constexpr static auto player_broadcast_idx = 2583;
 	}
 
 	namespace am_criminal_damage
 	{
 		constexpr static auto broadcast_idx = 110;
-		constexpr static auto score_idx = 105;
+		constexpr static auto score_idx     = 105;
 	}
 
 	namespace am_cp_collection
 	{
-		constexpr static auto broadcast_idx = 815;
+		constexpr static auto broadcast_idx        = 815;
 		constexpr static auto player_broadcast_idx = 3456;
 	}
 

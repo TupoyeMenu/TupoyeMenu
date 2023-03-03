@@ -1,59 +1,63 @@
-#include "natives.hpp"
-#include "pointers.hpp"
-#include "thread_pool.hpp"
-#include "util/system.hpp"
-#include "network/Network.hpp"
+#include "gta/joaat.hpp"
 #include "gta_util.hpp"
+#include "gui/components/components.hpp"
+#include "natives.hpp"
+#include "network/Network.hpp"
+#include "pointers.hpp"
+#include "script.hpp"
+#include "script_global.hpp"
+#include "thread_pool.hpp"
+#include "util/misc.hpp"
+#include "util/system.hpp"
 #include "views/view.hpp"
 
 namespace big
 {
-	void view::debug_misc() 
+	void view::debug_misc()
 	{
-		components::button("Load MP Map", [] { DLC::ON_ENTER_MP(); });
+		components::button("Load MP Map", [] {
+			DLC::ON_ENTER_MP();
+		});
 		ImGui::SameLine();
-		components::button("Load SP Map", [] { DLC::ON_ENTER_SP(); });
+		components::button("Load SP Map", [] {
+			DLC::ON_ENTER_SP();
+		});
 
 		if (components::button("Dump entrypoints"))
 		{
 			system::dump_entry_points();
 		}
 		ImGui::SameLine();
-		components::button("Network Bail", []
-		{
+		components::button("Network Bail", [] {
 			NETWORK::NETWORK_BAIL(16, 0, 0);
 		});
 
-		components::button("Hide news", []
-		{
+		components::button("Hide news", [] {
 			SOCIALCLUB::SC_TRANSITION_NEWS_END();
 		});
 		ImGui::SameLine();
-		components::button("Network Session Host", []
-		{
+		components::button("Network Session Host", [] {
 			NETWORK::NETWORK_SESSION_HOST(1, 32, false);
 		});
-		components::button("Refresh Interior", []
-		{
+		components::button("Refresh Interior", [] {
 			Interior interior = INTERIOR::GET_INTERIOR_AT_COORDS(self::pos.x, self::pos.y, self::pos.z);
 			INTERIOR::REFRESH_INTERIOR(interior);
 		});
-		ImGui::SameLine(); components::help_marker("You Will Have To Refresh Again When Exiting Interior.\n SPAMMING WILL CRASH GAME");
+		ImGui::SameLine();
+		components::help_marker("You Will Have To Refresh Again When Exiting Interior.\n SPAMMING WILL CRASH GAME");
 
-		components::button("Network Shutdown And Launch Single Player Game", []
-		{
+		components::button("Network Shutdown And Launch Single Player Game", [] {
 			NETWORK::SHUTDOWN_AND_LAUNCH_SINGLE_PLAYER_GAME();
 		});
 
-		components::button("Network Shutdown And Load Most Recent Save", []\
-		{
+		components::button("Network Shutdown And Load Most Recent Save", [] {
 			NETWORK::SHUTDOWN_AND_LOAD_MOST_RECENT_SAVE();
 		});
 
 		if (components::button("MOV QWORD"))
 		{
 			*static_cast<uint64_t*>(nullptr) = 0;
-			uint64_t i = *static_cast<uint64_t*>(nullptr);
+			uint64_t i                       = *static_cast<uint64_t*>(nullptr);
 		}
 		ImGui::SameLine();
 		if (components::button("MOV 0xdead"))
@@ -63,7 +67,13 @@ namespace big
 
 		if (g_local_player && g_local_player->m_player_info)
 		{
-			ImGui::InputScalar("Rockstar ID", ImGuiDataType_S64, &g_local_player->m_player_info->m_net_player_data.m_gamer_handle.m_rockstar_id, nullptr, nullptr, nullptr, ImGuiInputTextFlags_ReadOnly);
+			ImGui::InputScalar("Rockstar ID",
+			    ImGuiDataType_S64,
+			    &g_local_player->m_player_info->m_net_player_data.m_gamer_handle.m_rockstar_id,
+			    nullptr,
+			    nullptr,
+			    nullptr,
+			    ImGuiInputTextFlags_ReadOnly);
 		}
 
 		ImGui::Checkbox("Log Native Script Hooks", &g.debug.logs.script_hook_logs);
@@ -73,7 +83,7 @@ namespace big
 		ImGui::Checkbox("Log Net Events", &g.debug.logs.net_event_logs);
 
 		ImGui::Checkbox("Log Remote Sounds", &g.debug.logs.remote_sound_logs);
-		
+
 		ImGui::Checkbox("Log Metrics", &g.debug.logs.metric_logs);
 
 		if (ImGui::TreeNode("Script Event Logging"))

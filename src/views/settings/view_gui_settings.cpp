@@ -1,16 +1,15 @@
-#include "views/view.hpp"
 #include "renderer.hpp"
+#include "views/view.hpp"
 
 namespace big
 {
 	void view::gui_settings()
 	{
 		components::sub_title("SETTINGS_UI_SCALE"_T);
-		ImGui::SliderFloat("##gui-scale", &g.window.gui_scale, 1.f, 1.5f, "%.2f");
-		ImGui::SameLine();
-		if (ImGui::Button("APPLY"_T.data()))
+		if (ImGui::SliderFloat("##gui-scale", &g.window.gui_scale, 1.f, 1.5f, "%.2f"))
 			g_renderer->rescale(g.window.gui_scale);
-		ImGui::SameLine(); components::help_marker("SETTINGS_UI_SCALE_DESCRIPTION"_T);
+		ImGui::SameLine();
+		components::help_marker("SETTINGS_UI_SCALE_DESCRIPTION"_T);
 
 		components::sub_title("SETTINGS_UI_COLOR"_T);
 		static ImVec4 col_gui = ImGui::ColorConvertU32ToFloat4(g.window.color);
@@ -27,13 +26,18 @@ namespace big
 		ImGui::BeginGroup();
 
 		ImGui::Text("Position");
-		if (ImGui::Button("Custom")) g.window.ingame_overlay.corner = -1;
-        if (ImGui::Button("Top-left")) g.window.ingame_overlay.corner = 0;
+		if (ImGui::Button("Custom"))
+			g.window.ingame_overlay.corner = -1;
+		if (ImGui::Button("Top-left"))
+			g.window.ingame_overlay.corner = 0;
 		ImGui::SameLine();
-        if (ImGui::Button("Top-right")) g.window.ingame_overlay.corner = 1;
-        if (ImGui::Button("Bottom-left")) g.window.ingame_overlay.corner = 2;
+		if (ImGui::Button("Top-right"))
+			g.window.ingame_overlay.corner = 1;
+		if (ImGui::Button("Bottom-left"))
+			g.window.ingame_overlay.corner = 2;
 		ImGui::SameLine();
-        if (ImGui::Button("Bottom-right")) g.window.ingame_overlay.corner = 3;
+		if (ImGui::Button("Bottom-right"))
+			g.window.ingame_overlay.corner = 3;
 
 		ImGui::EndGroup();
 

@@ -1,9 +1,10 @@
-#include "views/view.hpp"
 #include "pointers.hpp"
+#include "views/view.hpp"
 
 namespace big
 {
-	void view::settings_tabs() {
+	void view::settings_tabs()
+	{
 		if (ImGui::BeginTabBar("settings_tabbar"))
 		{
 			if (ImGui::BeginTabItem("Settings"))

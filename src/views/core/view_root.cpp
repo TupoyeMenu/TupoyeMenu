@@ -1,11 +1,11 @@
-#include "views/view.hpp"
 #include "gui.hpp"
+#include "views/view.hpp"
 
 namespace big
 {
 	void view::root()
 	{
-		if (g.window.main) 
+		if (g.window.main)
 			view::main_view();
 
 		if (g.window.player)
@@ -17,7 +17,7 @@ namespace big
 		if (g.window.demo)
 			ImGui::ShowDemoWindow(&g.window.demo);
 
-		if(g.window.chat)
+		if (g.window.chat)
 			view::chat_tabs();
 
 		view::menu_bar();

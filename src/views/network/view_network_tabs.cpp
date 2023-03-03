@@ -1,9 +1,10 @@
-#include "views/view.hpp"
 #include "pointers.hpp"
+#include "views/view.hpp"
 
 namespace big
 {
-	void view::network_tabs() {
+	void view::network_tabs()
+	{
 		if (ImGui::BeginTabBar("network_tabbar"))
 		{
 			if (ImGui::BeginTabItem("Spoofing"))
@@ -26,7 +27,7 @@ namespace big
 				view::player_database();
 				ImGui::EndTabItem();
 			}
-			if(ImGui::BeginTabItem("Session Browser"))
+			if (ImGui::BeginTabItem("Session Browser"))
 			{
 				view::session_browser();
 				ImGui::EndTabItem();
