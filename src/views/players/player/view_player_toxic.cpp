@@ -105,15 +105,6 @@ namespace big
 			ImGui::TreePop();
 		}
 
-		if (ImGui::TreeNode("VEHICLE"_T.data()))
-		{
-			components::player_command_button<"vehkick">(g_player_service->get_selected(), {});
-			components::player_command_button<"fullacceleration">(g_player_service->get_selected(), {});
-			components::player_command_button<"launchvehicleup">(g_player_service->get_selected(), {});
-
-			ImGui::TreePop();
-		}
-
 		if (ImGui::TreeNode("Spawns"))
 		{
 			components::player_command_button<"spawn_grief_jesus">(g_player_service->get_selected(), {});

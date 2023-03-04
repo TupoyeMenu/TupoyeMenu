@@ -7,22 +7,22 @@ namespace big
 	{
 		if (ImGui::BeginTabBar("self_tabbar"))
 		{
-			if (ImGui::BeginTabItem("Self"))
+			if (ImGui::BeginTabItem("GUI_TAB_SELF"_T.data()))
 			{
 				view::self();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Weapons"))
+			if (ImGui::BeginTabItem("GUI_TAB_WEAPONS"_T.data()))
 			{
 				view::weapons();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Mobile"))
+			if (ImGui::BeginTabItem("GUI_TAB_MOBILE"_T.data()))
 			{
 				view::mobile();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Teleport"))
+			if (ImGui::BeginTabItem("GUI_TAB_TELEPORT"_T.data()))
 			{
 				view::teleport();
 				ImGui::EndTabItem();

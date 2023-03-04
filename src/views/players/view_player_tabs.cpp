@@ -23,6 +23,11 @@ namespace big
 					view::view_player_troll();
 					ImGui::EndTabItem();
 				}
+				if (ImGui::BeginTabItem("Vehicle"))
+				{
+					view::view_player_vehicle();
+					ImGui::EndTabItem();
+				}
 				if (ImGui::BeginTabItem("MISC"_T.data()))
 				{
 					view::view_player_misc();

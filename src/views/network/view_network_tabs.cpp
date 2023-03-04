@@ -7,27 +7,27 @@ namespace big
 	{
 		if (ImGui::BeginTabBar("network_tabbar"))
 		{
-			if (ImGui::BeginTabItem("Spoofing"))
+			if (ImGui::BeginTabItem("GUI_TAB_SPOOFING"_T.data()))
 			{
 				view::spoofing();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Session"))
+			if (ImGui::BeginTabItem("GUI_TAB_SESSION"_T.data()))
 			{
 				view::session();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Missions"))
+			if (ImGui::BeginTabItem("GUI_TAB_MISSIONS"_T.data()))
 			{
 				view::missions();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Player DB"))
+			if (ImGui::BeginTabItem("GUI_TAB_PLAYER_DB"_T.data()))
 			{
 				view::player_database();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Session Browser"))
+			if (ImGui::BeginTabItem("GUI_TAB_SESSION_BROWSER"_T.data()))
 			{
 				view::session_browser();
 				ImGui::EndTabItem();

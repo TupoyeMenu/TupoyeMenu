@@ -80,5 +80,6 @@ namespace big
 		static void view_player_misc();
 		static void view_player_toxic();
 		static void view_player_troll();
+		static void view_player_vehicle();
 	};
 }
