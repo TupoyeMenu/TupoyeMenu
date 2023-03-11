@@ -12,11 +12,9 @@ namespace big
 {
 	void view::spoofing()
 	{
-		// requires translation
+		ImGui::Checkbox("HIDE_FROM_PLAYER_LIST"_T.data(), &g.spoofing.hide_from_player_list);
 
-		ImGui::Checkbox("Hide From Player List", &g.spoofing.hide_from_player_list);
-
-		components::script_patch_checkbox("Spoof Blip Type", &g.spoofing.spoof_blip);
+		components::script_patch_checkbox("SPOOF_BLIP_TYPE"_T, &g.spoofing.spoof_blip);
 		if (g.spoofing.spoof_blip)
 		{
 			ImGui::SameLine();
@@ -33,7 +31,7 @@ namespace big
 			}
 		}
 
-		ImGui::Checkbox("Spoof Rank", &g.spoofing.spoof_rank);
+		ImGui::Checkbox("SPOOF_RANK"_T.data(), &g.spoofing.spoof_rank);
 		if (g.spoofing.spoof_rank)
 		{
 			ImGui::SameLine();
@@ -43,7 +41,7 @@ namespace big
 			}
 		}
 
-		ImGui::Checkbox("Spoof K/D Ratio", &g.spoofing.spoof_kd_ratio);
+		ImGui::Checkbox("SPOOF_KD"_T.data(), &g.spoofing.spoof_kd_ratio);
 		if (g.spoofing.spoof_kd_ratio)
 		{
 			ImGui::SameLine();
@@ -53,7 +51,7 @@ namespace big
 			}
 		}
 
-		ImGui::Checkbox("Spoof Badsport State", &g.spoofing.spoof_bad_sport);
+		ImGui::Checkbox("SPOOF_BADSPORT"_T.data(), &g.spoofing.spoof_bad_sport);
 		if (g.spoofing.spoof_bad_sport)
 		{
 			ImGui::SameLine();
@@ -63,14 +61,14 @@ namespace big
 			}
 		}
 
-		ImGui::Checkbox("Spoof Job Points", &g.spoofing.spoof_job_points);
+		ImGui::Checkbox("SPOOF_JOB_POINTS"_T.data(), &g.spoofing.spoof_job_points);
 		if (g.spoofing.spoof_job_points)
 		{
 			ImGui::SameLine();
 			ImGui::InputInt("###jp", &g.spoofing.job_points);
 		}
 
-		ImGui::Checkbox("Spoof Player Model", &g.spoofing.spoof_player_model);
+		ImGui::Checkbox("SPOOF_PLAYER_MODEL"_T.data(), &g.spoofing.spoof_player_model);
 		if (g.spoofing.spoof_player_model)
 		{
 			static char model[32];
@@ -83,6 +81,7 @@ namespace big
 				g.spoofing.player_model = std::string(model);
 		}
 
+		components::command_checkbox<"vcaudio">();
 
 		components::sub_title("SPOOFING_HIDE_FEATURES"_T);
 		ImGui::Checkbox("SPOOFING_HIDE_GOD_MODE"_T.data(), &g.spoofing.spoof_hide_god);

@@ -366,4 +366,10 @@ namespace big
 	        {CommandAccessLevel::TOXIC, "toxic"},
 	        {CommandAccessLevel::ADMIN, "admin"},
 	    })
+
+	enum eKeyState : unsigned int
+	{
+		RELEASE = WM_KEYUP,
+		DOWN    = WM_KEYDOWN
+	};
 }

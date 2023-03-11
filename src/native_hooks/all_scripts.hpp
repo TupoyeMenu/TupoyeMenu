@@ -176,7 +176,7 @@ namespace big
 			HUD::HUD_FORCE_WEAPON_WHEEL(src->get_arg<BOOL>(0));
 		}
 
-		void NETWORK_CASINO_CAN_BET(rage::scrNativeCallContext* src)
+		void RETURN_TRUE(rage::scrNativeCallContext* src)
 		{
 			src->set_return_value<BOOL>(TRUE);
 		}

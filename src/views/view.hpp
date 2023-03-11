@@ -74,6 +74,8 @@ namespace big
 		static void model_swapper();
 		static void nearby();
 
+		static void cmd_executor();
+
 		static void view_player_tabs();
 		static void view_player_info();
 		static void view_player_kicks_and_crashes();
