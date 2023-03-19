@@ -68,10 +68,10 @@ namespace big
 		{
 			bool enabled = false;
 		} cmd_executor{};
-    
+
 		rage::scrThread* m_modshop_thread = nullptr;
-		bool in_script_vm = false;
-    
+		bool in_script_vm                 = false;
+
 		struct debug
 		{
 			struct logs
@@ -223,8 +223,8 @@ namespace big
 		{
 			struct script_events
 			{
-				bool bounty                     = true;
-				bool ceo_money                  = true;
+				bool bounty                     = false;
+				bool ceo_money                  = false;
 				bool clear_wanted_level         = true;
 				bool fake_deposit               = true;
 				bool force_mission              = true;
@@ -232,14 +232,14 @@ namespace big
 				bool gta_banner                 = false;
 				bool mc_teleport                = true;
 				bool personal_vehicle_destroyed = true;
-				bool remote_off_radar           = true;
+				bool remote_off_radar           = false;
 				bool rotate_cam                 = true;
 				bool send_to_cutscene           = true;
 				bool send_to_location           = true;
-				bool sound_spam                 = true;
-				bool spectate                   = true;
+				bool sound_spam                 = false;
+				bool spectate                   = false;
 				bool give_collectible           = true;
-				bool vehicle_kick               = true;
+				bool vehicle_kick               = false;
 				bool teleport_to_warehouse      = true;
 				bool start_activity             = true;
 				bool send_sms                   = true;
@@ -342,9 +342,6 @@ namespace big
 			bool force_script_host     = false;
 			bool player_magnet_enabled = false;
 			int player_magnet_count    = 32;
-			bool name_spoof_enabled    = false;
-			bool advertise_menu        = false;
-			std::string spoofed_name   = "";
 			bool join_in_sctv_slots    = false;
 
 			const char chat_command_prefix = '/';
@@ -383,7 +380,7 @@ namespace big
 			bool show_cheating_message = false;
 			bool anonymous_bounty      = true;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, local_weather, override_time, override_weather, custom_time, population_control, chat_force_clean, log_chat_messages, log_text_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, name_spoof_enabled, advertise_menu, spoofed_name, join_in_sctv_slots, kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, local_weather, override_time, override_weather, custom_time, population_control, chat_force_clean, log_chat_messages, log_text_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, join_in_sctv_slots, kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty)
 		} session{};
 
 		struct settings
@@ -534,7 +531,7 @@ namespace big
 
 			bool spoof_cheater = false;
 
-			bool spoof_hide_god      = true;
+			bool spoof_hide_god      = false;
 			bool spoof_hide_spectate = true;
 
 			bool spoof_crew_data = false;
