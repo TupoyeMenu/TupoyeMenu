@@ -793,6 +793,11 @@ namespace big
 			m_migrate_object = ptr.as<functions::migrate_object>();
 		});
 
+		//Task Jump Constructor
+		main_batch.add("TJC", "48 89 5C 24 ? 89 54 24 10 57 48 83 EC 30 0F 29 74 24", [this](memory::handle ptr) {
+			m_taskjump_constructor = ptr.as<PVOID>();
+		});
+
 		auto mem_region = memory::module("GTA5.exe");
 		if (!main_batch.run(mem_region))
 		{

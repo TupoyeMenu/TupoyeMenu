@@ -52,6 +52,16 @@ namespace big
 				view::stat_editor();
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("GUI_TAB_OUTFIT_EDITOR"_T.data()))
+			{
+				view::outfit_editor();
+				ImGui::EndTabItem();
+			}
+			if (ImGui::BeginTabItem("GUI_TAB_OUTFIT_SLOTS"_T.data()))
+			{
+				view::outfit_slots();
+				ImGui::EndTabItem();
+			}
 			ImGui::EndTabBar();
 		}
 	}

@@ -180,5 +180,10 @@ namespace big
 		{
 			src->set_return_value<BOOL>(TRUE);
 		}
+
+		void RETURN_FALSE(rage::scrNativeCallContext* src)
+		{
+			src->set_return_value<BOOL>(FALSE);
+		}
 	}
 }
