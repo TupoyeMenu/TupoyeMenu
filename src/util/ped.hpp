@@ -4,6 +4,7 @@
 #include "pointers.hpp"
 #include "script.hpp"
 #include "vehicle.hpp"
+#include "outfit.hpp"
 
 namespace big::ped
 {
@@ -255,21 +256,17 @@ namespace big::ped
 	/// GPL-3 CODE ENDS HERE
 	///
 
-	inline void play_anim(Ped ped, std::string_view name, std::string_view dict, int flag)
+	inline void set_ped_random_component_variation(Ped ped)
 	{
-		if (STREAMING::DOES_ANIM_DICT_EXIST(dict.data()) && STREAMING::HAS_ANIM_DICT_LOADED(dict.data()))
+		auto range = [](int lower_bound, int upper_bound) -> int {
+			return std::rand() % (upper_bound - lower_bound + 1) + lower_bound;
+		};
+		outfit::components_t components;
+		for (auto& item : components.items)
 		{
-			STREAMING::REQUEST_ANIM_DICT(dict.data());
-
-			script::get_current()->yield();
+			int drawable_id = range(0, PED::GET_NUMBER_OF_PED_DRAWABLE_VARIATIONS(ped, item.id) - 1);
+			int texture_id  = range(0, PED::GET_NUMBER_OF_PED_TEXTURE_VARIATIONS(ped, item.id, drawable_id) - 1);
+			PED::SET_PED_COMPONENT_VARIATION(ped, item.id, drawable_id, texture_id, PED::GET_PED_PALETTE_VARIATION(ped, item.id));
 		}
-		if (!STREAMING::HAS_ANIM_DICT_LOADED(dict.data()))
-		{
-			g_notification_service->push_warning("Animation", "Failed to load dict, did you give an incorrect dict?");
-			return;
-		}
-		TASK::TASK_PLAY_ANIM(ped, name.data(), dict.data(), 4.0f, -4.0f, -1, flag, 1, 0, 0, 0);
-
-		STREAMING::HAS_ANIM_DICT_LOADED(dict.data());
 	}
 }
