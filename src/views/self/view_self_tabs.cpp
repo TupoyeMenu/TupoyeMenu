@@ -7,24 +7,34 @@ namespace big
 	{
 		if (ImGui::BeginTabBar("self_tabbar"))
 		{
-			if (ImGui::BeginTabItem("GUI_TAB_SELF"_T.data()))
+			if (ImGui::BeginTabItem("Self"))
 			{
 				view::self();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_WEAPONS"_T.data()))
+			if (ImGui::BeginTabItem("Weapons"))
 			{
 				view::weapons();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_MOBILE"_T.data()))
+			if (ImGui::BeginTabItem("Mobile"))
 			{
 				view::mobile();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_TELEPORT"_T.data()))
+			if (ImGui::BeginTabItem("Teleport"))
 			{
 				view::teleport();
+				ImGui::EndTabItem();
+			}
+			if (ImGui::BeginTabItem("Outfit Editor"))
+			{
+				view::outfit_editor();
+				ImGui::EndTabItem();
+			}
+			if (ImGui::BeginTabItem("Outfit Slots"))
+			{
+				view::outfit_slots();
 				ImGui::EndTabItem();
 			}
 

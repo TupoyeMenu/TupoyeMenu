@@ -4,7 +4,6 @@
 #include "natives.hpp"
 #include "script_global.hpp"
 #include "services/players/player_service.hpp"
-#include "services/spinner/spinner_service.hpp"
 
 // Credits: QuickNET
 namespace big
@@ -16,15 +15,13 @@ namespace big
 	{
 		const auto state = *scr_globals::transition_state.as<eTransitionState*>();
 
+		if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(RAGE_JOAAT("maintransition")) == 0)
+			return;
+
 		// When freemode script loaded remove loading screen.
 		if (state == eTransitionState::TRANSITION_STATE_WAIT_JOIN_FM_SESSION && DLC::GET_IS_LOADING_SCREEN_ACTIVE())
 		{
 			SCRIPT::SHUTDOWN_LOADING_SCREEN();
-		}
-
-		if (HUD::BUSYSPINNER_IS_ON())
-		{
-			HUD::BUSYSPINNER_OFF();
 		}
 
 		if (last_state == state || state == eTransitionState::TRANSITION_STATE_EMPTY || state > eTransitionState::TRANSITION_STATE_SPAWN_INTO_PERSONAL_VEHICLE)
@@ -32,32 +29,18 @@ namespace big
 			return;
 		}
 
-		if (g_spinner_service->spinner.active)
+		if (HUD::BUSYSPINNER_IS_ON())
 		{
-			g_spinner_service->spinner.active = false;
-		}
-
-		// sometimes when going into a single player mission or transition this one remains on screen permanently
-		if (state == eTransitionState::TRANSITION_STATE_TERMINATE_MAINTRANSITION)
-		{
-			return;
+			HUD::BUSYSPINNER_OFF();
 		}
 
 		if ((int)state > 0 && (int)state < std::size(transition_states))
 		{
-			if (state > eTransitionState::TRANSITION_STATE_SP_SWOOP_UP || state < eTransitionState::TRANSITION_STATE_IS_FM_AND_TRANSITION_READY)
-			{
-				float load_persent = (float)state / 27.f;
-				auto const spinner_text = std::format("{} | {}", transition_states[(int)state], static_cast<int>(state));
-				g_spinner_service->push_online(true, spinner_text, true, load_persent);
-			}
-			else
-			{
-				auto const spinner_text = std::format("{} | {}", transition_states[(int)state], static_cast<int>(state));
-				g_spinner_service->push_online(true, spinner_text, false);
-			}
+			HUD::BEGIN_TEXT_COMMAND_BUSYSPINNER_ON("STRING");
+			auto const spinner_text = std::format("{} | {}", transition_states[(int)state], static_cast<int>(state));
+			HUD::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(spinner_text.c_str());
+			HUD::END_TEXT_COMMAND_BUSYSPINNER_ON(5);
 		}
-		return;
 
 		last_state = state;
 	}

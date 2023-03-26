@@ -24,8 +24,8 @@ namespace big
 
 	void view::settings()
 	{
-		components::sub_title("SETTINGS_MISC"_T);
-		ImGui::Checkbox("SETTINGS_MISC_DEV_DLC"_T.data(), &g.settings.dev_dlc);
+		components::sub_title("Misc");
+		ImGui::Checkbox("Enable Dev DLC", &g.settings.dev_dlc);
 		ImGui::Checkbox("Enable Cable Cars", &g.tunables.cable_cars);
 
 		ImGui::Separator();

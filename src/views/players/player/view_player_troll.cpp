@@ -25,11 +25,11 @@ namespace big
 
 		static int bounty_value = 0;
 
-		ImGui::SliderInt("BOUNTY"_T.data(), &bounty_value, 0, 10000);
+		ImGui::SliderInt("Bounty", &bounty_value, 0, 10000);
 		ImGui::SameLine();
 		components::command_checkbox<"anonbounty">();
 		ImGui::SameLine();
-		components::button("SET"_T, [] {
+		components::button("Set", [] {
 			troll::set_bounty_on_player(g_player_service->get_selected(), bounty_value, g.session.anonymous_bounty);
 		});
 	}

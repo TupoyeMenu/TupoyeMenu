@@ -12,23 +12,17 @@ namespace big
 				view::debug_threads();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("DEBUG_TAB_SCRIPT_EVENTS"_T.data()))
+			if (ImGui::BeginTabItem("Script Events"))
 			{
 				view::debug_script_events();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("DEBUG_TAB_GLOBALS"_T.data()))
+			if (ImGui::BeginTabItem("Globals"))
 			{
 				view::debug_globals();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Ped Flags"))
-			{
-				view::debug_ped_flags();
-				ImGui::EndTabItem();
-			}
-
-			if (ImGui::BeginTabItem("DEBUG_TAB_MISC"_T.data()))
+			if (ImGui::BeginTabItem("Misc"))
 			{
 				view::debug_misc();
 				ImGui::EndTabItem();

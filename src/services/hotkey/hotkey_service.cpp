@@ -18,8 +18,6 @@ namespace big
 		register_hotkey("heal", g.settings.hotkeys.heal, RAGE_JOAAT("heal"));
 		register_hotkey("fillsnacks", g.settings.hotkeys.fill_inventory, RAGE_JOAAT("fillsnacks"));
 		register_hotkey("skipcutscene", g.settings.hotkeys.skip_cutscene, RAGE_JOAAT("skipcutscene"));
-		register_hotkey("superjump", g.settings.hotkeys.superjump, RAGE_JOAAT("superjump"));
-		register_hotkey("beastjump", g.settings.hotkeys.beastjump, RAGE_JOAAT("beastjump"));
 		register_hotkey("invisveh", g.settings.hotkeys.invisveh, RAGE_JOAAT("invisveh"));
 		register_hotkey("localinvisveh", g.settings.hotkeys.localinvisveh, RAGE_JOAAT("localinvisveh"));
 		register_hotkey("fastquit", g.settings.hotkeys.fast_quit, RAGE_JOAAT("fastquit"));

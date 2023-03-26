@@ -9,32 +9,32 @@ namespace big
 		{
 			if (ImGui::BeginTabBar("tabbar"))
 			{
-				if (ImGui::BeginTabItem("GUI_TAB_SELF"_T.data()))
+				if (ImGui::BeginTabItem("Self"))
 				{
 					view::self_tabs();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("GUI_TAB_VEHICLE"_T.data()))
+				if (ImGui::BeginTabItem("Vehicle"))
 				{
 					view::vehicle_tabs();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("GUI_TAB_WORLD"_T.data()))
+				if (ImGui::BeginTabItem("World"))
 				{
 					view::world_tabs();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("GUI_TAB_NETWORK"_T.data()))
+				if (ImGui::BeginTabItem("Network"))
 				{
 					view::network_tabs();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("GUI_TAB_SETTINGS"_T.data()))
+				if (ImGui::BeginTabItem("Settings"))
 				{
 					view::settings_tabs();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("GUI_TAB_DEBUG"_T.data()))
+				if (ImGui::BeginTabItem("Debug"))
 				{
 					view::debug_tabs();
 					ImGui::EndTabItem();

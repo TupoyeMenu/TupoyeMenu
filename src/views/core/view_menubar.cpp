@@ -73,7 +73,6 @@ namespace big
 				ImGui::MenuItem("Player", nullptr, &g.window.player);
 				ImGui::MenuItem("Players", nullptr, &g.window.users);
 				ImGui::MenuItem("Overlay", nullptr, &g.window.ingame_overlay.opened);
-				ImGui::MenuItem("Chat", nullptr, &g.window.chat);
 				ImGui::MenuItem("Demo", nullptr, &g.window.demo);
 
 				ImGui::EndMenu();

@@ -17,14 +17,13 @@ namespace big
 		g_renderer->add_dx_callback(view::gta_data, -1);
 		g_renderer->add_dx_callback(view::notifications, -2);
 		g_renderer->add_dx_callback(view::overlay, -3);
-		g_renderer->add_dx_callback(view::spinner, -4); // TODO: move to Spinner service
-		g_renderer->add_dx_callback(view::cmd_executor, -5);
+		g_renderer->add_dx_callback(view::cmd_executor, -4);
 		g_renderer->add_dx_callback(
 		    [this] {
 			    ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 			    dx_on_tick();
 		    },
-		    -6);
+		    -5);
 
 		g_renderer->add_wndproc_callback([this](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 			wndproc(hwnd, msg, wparam, lparam);

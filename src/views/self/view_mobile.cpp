@@ -8,42 +8,39 @@ namespace big
 {
 	void view::mobile()
 	{
-		components::sub_title("MERRYWEATHER"_T);
+		components::sub_title("Merryweather");
 		ImGui::Separator();
 
-		components::button("MW_AMMO_DROP"_T, [] {
+		components::button("Request Ammo Drop", [] {
 			mobile::merry_weather::request_ammo_drop();
 		});
 
-		components::button("MW_HELI_PICKUP"_T, [] {
+		components::button("Helicopter Pickup", [] {
 			mobile::merry_weather::request_helicopter_pickup();
 		});
 
 		components::command_button<"boatpickup">();
 
-		components::button("MW_BACKUP_HELI"_T, [] {
+		components::button("Request Backup Helicopter", [] {
 			mobile::merry_weather::request_backup_helicopter();
 		});
 
-		components::button("MW_AIRSTRIKE"_T, [] {
+		components::button("Request Airstrike", [] {
 			mobile::merry_weather::request_airstrike();
 		});
 
-		components::sub_title("MORS_MUTUAL"_T);
+		components::sub_title("Mors Mutual");
 		ImGui::Separator();
 
-		components::button("MORS_FIX_ALL"_T, [] {
+		components::button("Mors Mutual Fix All Vehicles", [] {
 			int amount_fixed = mobile::mors_mutual::fix_all();
-			g_notification_service->push("MOBILE"_T.data(),
-			    std::vformat("VEHICLE_FIX_AMOUNT"_T,
-			        std::make_format_args(amount_fixed,
-			            amount_fixed == 1 ? "VEHICLE_FIX_HAS"_T.data() : "VEHICLE_FIX_HAVE"_T.data())));
+			g_notification_service->push("Mobile", std::format("{} vehicle{} been fixed.", amount_fixed, amount_fixed == 1 ? " has" : "s have"));
 		});
 
-		components::sub_title("CEO_ABILITIES"_T);
+		components::sub_title("CEO Abilities");
 		ImGui::Separator();
 
-		components::button("CEO_BULLSHARK"_T, [] {
+		components::button("Bullshark Testosterone", [] {
 			mobile::ceo_abilities::request_bullshark_testosterone();
 		});
 

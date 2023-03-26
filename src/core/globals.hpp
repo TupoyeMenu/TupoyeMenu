@@ -297,11 +297,6 @@ namespace big
 			bool mobile_radio       = false;
 			bool fast_respawn       = false;
 			bool auto_tp            = false;
-			bool super_jump         = false;
-			bool beast_jump         = false;
-			bool healthregen        = false;
-			float healthregenrate   = 1.0f;
-			bool superman           = false;
 			struct hud
 			{
 				bool hudcolor = false;
@@ -323,7 +318,7 @@ namespace big
 			// do not save below entries
 			bool dance_mode = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(self, ptfx_effects, allow_ragdoll, clean_player, force_wanted_level, free_cam, invisibility, local_visibility, never_wanted, no_ragdoll, noclip, off_radar, super_run, no_collision, unlimited_oxygen, no_water_collision, wanted_level, god_mode, part_water, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_drown, proof_water, proof_mask, mobile_radio, fast_respawn, auto_tp, super_jump, beast_jump, healthregen, healthregenrate, hud, superman)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(self, ptfx_effects, allow_ragdoll, clean_player, force_wanted_level, free_cam, invisibility, local_visibility, never_wanted, no_ragdoll, noclip, off_radar, super_run, no_collision, unlimited_oxygen, no_water_collision, wanted_level, god_mode, part_water, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_drown, proof_water, proof_mask, mobile_radio, fast_respawn, auto_tp, hud)
 		} self{};
 
 		struct session
@@ -412,15 +407,13 @@ namespace big
 				int skip_cutscene        = 0;
 				int freecam              = 0;
 				int superrun             = 0;
-				int superjump            = 0;
-				int beastjump            = 0;
 				int invisveh             = 0;
 				int localinvisveh        = 0;
 				int fill_ammo            = 0;
 				int fast_quit            = 0;
 				int cmd_excecutor        = 0x55;
         
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys, editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, noclip, bringvehicle, invis, heal, fill_inventory, skip_cutscene, freecam, superrun, superjump, beastjump, invisveh, localinvisveh, fill_ammo, fast_quit, cmd_excecutor)
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys, editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, noclip, bringvehicle, invis, heal, fill_inventory, skip_cutscene, freecam, superrun, invisveh, localinvisveh, fill_ammo, fast_quit, cmd_excecutor)
 			} hotkeys{};
 
 			bool dev_dlc = false;
@@ -707,13 +700,10 @@ namespace big
 
 		struct window
 		{
-			bool handling = false;
 			bool main     = true;
 			bool users    = true;
 			bool player   = true;
-			bool chat     = false;
 			bool demo     = false;
-			bool log      = false;
 
 			ImU32 color     = 3357612055;
 			float gui_scale = 1.f;
@@ -741,7 +731,7 @@ namespace big
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(ingame_overlay, opened, corner, show_coords, show_watermark, show_with_menu_opened, show_fps, show_players, show_replay_interface, show_game_versions)
 			} ingame_overlay{};
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, main, users, player, ingame_overlay, switched_view, chat, demo, log, color, gui_scale)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, main, users, player, ingame_overlay, switched_view, demo, color, gui_scale)
 		} window{};
 
 		struct context_menu

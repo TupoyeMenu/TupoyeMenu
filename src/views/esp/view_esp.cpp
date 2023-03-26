@@ -89,17 +89,17 @@ namespace big
 
 				if (ped_damage_bits & (uint32_t)eEntityProofs::GOD)
 				{
-					mode_str = "ESP_GOD"_T.data();
+					mode_str = "GOD";
 				}
 				else
 				{
 					if (ped_damage_bits & (uint32_t)eEntityProofs::BULLET)
 					{
-						mode_str += "ESP_BULLET"_T.data();
+						mode_str += " BULLET";
 					}
 					if (ped_damage_bits & (uint32_t)eEntityProofs::EXPLOSION)
 					{
-						mode_str += "ESP_EXPLOSION"_T.data();
+						mode_str += " EXPLOSION";
 					}
 				}
 

@@ -1,7 +1,6 @@
 #include "chat_command_context.hpp"
 
 #include "hooking.hpp"
-#include "services/chat/chat_service.hpp"
 #include "util/notify.hpp"
 #include "util/spam.hpp"
 
@@ -39,7 +38,6 @@ namespace big
 			        false))
 				notify::draw_chat(msg, g_player_service->get_self()->get_name(), false);
 
-			g_chat_service->add_msg(g_player_service->get_self()->get_net_game_player(), msg, false);
 			spam::log_chat(msg, g_player_service->get_self(), false);
 		});
 	}

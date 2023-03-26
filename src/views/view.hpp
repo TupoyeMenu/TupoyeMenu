@@ -14,7 +14,6 @@ namespace big
 		static void main_view();
 		static void debug_script_events();
 		static void debug_globals();
-		static void debug_ped_flags();
 		static void debug_misc();
 		static void debug_threads();
 		static void debug_tabs();
@@ -25,13 +24,9 @@ namespace big
 		static void outfit_slots();
 		static void stat_editor();
 		static void gui_settings();
-		static void handling_tabs();
 		static void hotkey_settings();
-		static void handling_current_profile();
-		static void handling_saved_profiles();
 		static void reaction_settings();
 		static void protection_settings();
-		static void translation_settings();
 		static void heading();
 		static void mobile();
 		static void notifications();
@@ -51,7 +46,6 @@ namespace big
 		static void lsc();
 		static void spawn_vehicle();
 		static void pv();
-		static void persist_car();
 		static void fun_vehicle();
 		static void spawn_ped();
 		static void world_tabs();
@@ -70,8 +64,6 @@ namespace big
 		static void chat();
 		static void chat_dm();
 		static void creator();
-		static void train();
-		static void water();
 		static void blackhole();
 		static void model_swapper();
 		static void nearby();

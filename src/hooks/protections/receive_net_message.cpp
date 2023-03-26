@@ -7,7 +7,6 @@
 #include "gta_util.hpp"
 #include "hooking.hpp"
 #include "natives.hpp"
-#include "services/chat/chat_service.hpp"
 #include "services/players/player_service.hpp"
 #include "util/session.hpp"
 #include "util/spam.hpp"
@@ -108,7 +107,6 @@ namespace big
 
 				if (player->is_spammer)
 				{
-					g_chat_service->add_msg(player->get_net_game_player(), message, false, true);
 					return true;
 				}
 
@@ -117,7 +115,6 @@ namespace big
 					if (g.session.log_chat_messages)
 						spam::log_chat(message, player, true);
 
-					g_chat_service->add_msg(player->get_net_game_player(), message, false, true);
 					player->is_spammer = true;
 					return true;
 				}
@@ -125,8 +122,6 @@ namespace big
 				{
 					if (g.session.log_chat_messages)
 						spam::log_chat(message, player, false);
-
-					g_chat_service->add_msg(player->get_net_game_player(), message, false, false);
 
 					if (g.session.chat_commands && message[0] == g.session.chat_command_prefix)
 						command::process(std::string(message + 1), std::make_shared<chat_command_context>(player));
@@ -140,7 +135,6 @@ namespace big
 
 				if (player->is_spammer)
 				{
-					g_chat_service->add_msg(player->get_net_game_player(), message, false, true);
 					return true;
 				}
 
@@ -149,7 +143,6 @@ namespace big
 					if (g.session.log_chat_messages)
 						spam::log_chat(message, player, true);
 
-					g_chat_service->add_direct_msg(player->get_net_game_player(), g_player_service->get_self()->get_net_game_player(), message, true);
 					player->is_spammer = true;
 					if (g.session.kick_chat_spammers)
 					{
@@ -161,8 +154,6 @@ namespace big
 				{
 					if (g.session.log_chat_messages)
 						spam::log_chat(message, player, false);
-
-					g_chat_service->add_direct_msg(player->get_net_game_player(), g_player_service->get_self()->get_net_game_player(), message, false);
 
 					if (g.session.chat_commands && message[0] == g.session.chat_command_prefix)
 						command::process(std::string(message + 1), std::make_shared<chat_command_context>(player));
@@ -176,8 +167,8 @@ namespace big
 					if (player->m_host_migration_rate_limit.exceeded_last_process())
 					{
 						session::add_infraction(player, Infraction::TRIED_KICK_PLAYER);
-						g_notification_service->push_error("PROTECTIONS"_T.data(),
-							std::vformat("OOM_KICK"_T, std::make_format_args(player->get_name())));
+						g_notification_service->push_error("Protections",
+						    std::format("{} tried to OOM kick you!", player->get_name()));
 					}
 					return true;
 				}
@@ -199,7 +190,7 @@ namespace big
 						if (gta_util::get_network()->m_game_session_ptr->m_peers[i]->m_peer_data.m_peer_id_2 == peer_id)
 						{
 							pl = g_player_service->get_by_host_token(
-								gta_util::get_network()->m_game_session_ptr->m_peers[i]->m_peer_data.m_host_token);
+							    gta_util::get_network()->m_game_session_ptr->m_peers[i]->m_peer_data.m_host_token);
 							break;
 						}
 					}
@@ -248,7 +239,7 @@ namespace big
 				for (auto& [_, plyr] : g_player_service->players())
 				{
 					if (plyr->get_net_data() && plyr != player
-						&& plyr->get_net_data()->m_gamer_handle.m_rockstar_id == handle.m_rockstar_id)
+					    && plyr->get_net_data()->m_gamer_handle.m_rockstar_id == handle.m_rockstar_id)
 					{
 						session::add_infraction(player, Infraction::LOST_CONNECTION_KICK_DETECTED);
 						g.reactions.lost_connection_kick_others.process(player, plyr);
@@ -287,8 +278,8 @@ namespace big
 			{
 				if (player->block_join)
 				{
-					g_notification_service->push("BLOCK_JOIN"_T.data(),
-						std::vformat("BLOCK_JOIN_PREVENT_PLAYER_JOIN"_T, std::make_format_args(player->get_name())));
+					g_notification_service->push("Block Join",
+					    std::format("Trying to prevent {} from joining...", player->get_name()));
 					return true;
 				}
 				break;
@@ -345,7 +336,7 @@ namespace big
 				auto self = g_player_service->get_self();
 				if (self->get_net_data() && self->get_net_data()->m_gamer_handle.m_rockstar_id == handle.m_rockstar_id)
 				{
-					g_notification_service->push_error("KICK"_T.data(), "REMOTE_KICK_LOST_CONNECTION"_T.data());
+					g_notification_service->push_error("Kick", "Someone tried to lost connection kick you remotely!");
 					return true;
 				}
 
@@ -353,7 +344,7 @@ namespace big
 				{
 					if (plyr->get_net_data() && plyr->get_net_data()->m_gamer_handle.m_rockstar_id == handle.m_rockstar_id)
 					{
-						g_notification_service->push_error("KICK"_T.data(), std::vformat("REMOTE_KICK_LOST_CONNECTION_PLAYER"_T, std::make_format_args(plyr->get_name())));
+						g_notification_service->push_error("Kick", std::format("Someone tried to lost connection kick {} remotely!", plyr->get_name()));
 						return true;
 					}
 				}
@@ -386,7 +377,7 @@ namespace big
 							if (gta_util::get_network()->m_game_session_ptr->m_peers[i]->m_peer_data.m_peer_id_2 == peer_id)
 							{
 								target = g_player_service->get_by_host_token(
-									gta_util::get_network()->m_game_session_ptr->m_peers[i]->m_peer_data.m_host_token);
+								    gta_util::get_network()->m_game_session_ptr->m_peers[i]->m_peer_data.m_host_token);
 								break;
 							}
 						}
@@ -396,10 +387,10 @@ namespace big
 				if (target && count == 1 && frame->m_msg_id == -1)
 				{
 					if (target->id() == g_player_service->get_self()->id())
-						g_notification_service->push_error("KICK"_T.data(), "REMOTE_KICK_BREAKUP"_T.data());
+						g_notification_service->push_error("Kick", "Someone tried to breakup kick you remotely!");
 					else
-						g_notification_service->push_error("KICK"_T.data(),
-							std::vformat("REMOTE_KICK_BREAKUP_PLAYER"_T, std::make_format_args(target->get_name())));
+						g_notification_service->push_error("Kick",
+						    std::format("Someone tried to breakup kick {} remotely!", target->get_name()));
 				}
 
 				return true;
@@ -408,7 +399,7 @@ namespace big
 			{
 				if (is_kick_instruction(buffer))
 				{
-					g_notification_service->push_error("KICK"_T.data(), "REMOTE_KICK_GAMER_INSTRUCTION"_T.data());
+					g_notification_service->push_error("Kick", "Someone tried to gamer instruction kick you remotely!");
 					return true;
 				}
 				break;
@@ -429,13 +420,13 @@ namespace big
 			}
 
 			LOG(VERBOSE) << "RECEIVED PACKET | Type: " << packet_type << " | Length: " << frame->m_length << " | Sender: "
-						<< (player ? player->get_name() :
-									std::format("<M:{}>, <C:{:X}>, <P:{}>",
-										(int)frame->m_msg_id,
-										frame->m_connection_identifier,
-										frame->m_peer_id)
-										.c_str())
-						<< " | " << HEX_TO_UPPER((int)msgType);
+			             << (player ? player->get_name() :
+			                          std::format("<M:{}>, <C:{:X}>, <P:{}>",
+			                              (int)frame->m_msg_id,
+			                              frame->m_connection_identifier,
+			                              frame->m_peer_id)
+			                              .c_str())
+			             << " | " << HEX_TO_UPPER((int)msgType);
 		}
 
 		return g_hooking->get_original<hooks::receive_net_message>()(netConnectionManager, a2, frame);

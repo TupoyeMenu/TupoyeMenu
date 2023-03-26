@@ -7,61 +7,47 @@ namespace big
 	{
 		if (ImGui::BeginTabBar("settings_tabbar"))
 		{
-			if (ImGui::BeginTabItem("GUI_TAB_SETTINGS"_T.data()))
+			if (ImGui::BeginTabItem("Settings"))
 			{
 				view::settings();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_HOTKEYS"_T.data()))
+			if (ImGui::BeginTabItem("Hotkeys"))
 			{
 				view::hotkey_settings();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_CONTEXT_MENU"_T.data()))
+			if (ImGui::BeginTabItem("Context Menu"))
 			{
 				view::context_menu_settings();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_ESP"_T.data()))
+			if (ImGui::BeginTabItem("ESP"))
 			{
 				view::esp_settings();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_GUI"_T.data()))
+			if (ImGui::BeginTabItem("GUI"))
 			{
 				view::gui_settings();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_TRANSLATION"_T.data()))
-			{
-				view::translation_settings();
-				ImGui::EndTabItem();
-			}
-			if (ImGui::BeginTabItem("GUI_TAB_REACTIONS"_T.data()))
+			if (ImGui::BeginTabItem("Reactions"))
 			{
 				view::reaction_settings();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_PROTECTION"_T.data()))
+			if (ImGui::BeginTabItem("Protection"))
 			{
 				view::protection_settings();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_STAT_EDITOR"_T.data()))
+			if (ImGui::BeginTabItem("Stat Editor"))
 			{
 				view::stat_editor();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_OUTFIT_EDITOR"_T.data()))
-			{
-				view::outfit_editor();
-				ImGui::EndTabItem();
-			}
-			if (ImGui::BeginTabItem("GUI_TAB_OUTFIT_SLOTS"_T.data()))
-			{
-				view::outfit_slots();
-				ImGui::EndTabItem();
-			}
+
 			ImGui::EndTabBar();
 		}
 	}

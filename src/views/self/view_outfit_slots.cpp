@@ -11,7 +11,7 @@ namespace big
 		{
 			static int slot = 0;
 			ImGui::SetNextItemWidth(160);
-			if (ImGui::InputInt("OUTFIT_SLOT"_T.data(), &slot))
+			if (ImGui::InputInt("Slot", &slot))
 			{
 				if (slot < 0)
 					slot = 19;
@@ -20,7 +20,7 @@ namespace big
 			}
 
 			ImGui::SetNextItemWidth(300);
-			ImGui::InputText("OUTFIT_NAME"_T.data(), outfit::get_slot_name_address(slot), 16);
+			ImGui::InputText("Name", outfit::get_slot_name_address(slot), 16);
 
 			static outfit::components_t components;
 			static outfit::props_t props;
@@ -45,18 +45,18 @@ namespace big
 				}
 			});
 
-			components::button("EXPORT_TO_CLIPBOARD"_T, [] {
+			components::button("Export To Clipboard", [] {
 				std::stringstream ss;
 				for (auto& item : components.items)
 					ss << item.id << " " << item.drawable_id << " " << item.texture_id << " ";
 				for (auto& item : props.items)
 					ss << item.id << " " << item.drawable_id << " " << item.texture_id << " ";
 				ImGui::SetClipboardText(ss.str().c_str());
-				g_notification_service->push("OUTFIT"_T.data(), "EXPORT_TO_CLIPBOARD"_T.data());
+				g_notification_service->push("Outfit", "Export To Clipboard");
 			});
 			ImGui::SameLine();
 
-			components::button("IMPORT_FROM_CLIPBOARD"_T, [] {
+			components::button("Import From Clipboard", [] {
 				std::stringstream ss(ImGui::GetClipboardText());
 				for (auto& item : components.items)
 				{
@@ -96,7 +96,7 @@ namespace big
 			for (auto& item : components.items)
 			{
 				ImGui::SetNextItemWidth(60);
-				ImGui::InputInt(std::format("{} {} [0,{}]", item.label, "OUTFIT_TEX"_T, item.texture_id_max).c_str(), outfit::get_component_texture_id_address(slot, item.id), 0);
+				ImGui::InputInt(std::format("{} {} [0,{}]", item.label, "TEX", item.texture_id_max).c_str(), outfit::get_component_texture_id_address(slot, item.id), 0);
 			}
 			ImGui::EndGroup();
 
@@ -116,7 +116,7 @@ namespace big
 			for (auto& item : props.items)
 			{
 				ImGui::SetNextItemWidth(60);
-				ImGui::InputInt(std::format("{} {} [0,{}]", item.label, "OUTFIT_TEX"_T, item.texture_id_max).c_str(), outfit::get_prop_texture_id_address(slot, item.id), 0);
+				ImGui::InputInt(std::format("{} {} [0,{}]", item.label, "TEX", item.texture_id_max).c_str(), outfit::get_prop_texture_id_address(slot, item.id), 0);
 			}
 			ImGui::EndGroup();
 		}

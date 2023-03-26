@@ -14,8 +14,6 @@
 	#include "shv_runner.h"
 #endif // ENABLE_ASI_LOADER
 
-#include "services/api/api_service.hpp"
-#include "services/chat/chat_service.hpp"
 #include "services/context_menu/context_menu_service.hpp"
 #include "services/custom_text/custom_text_service.hpp"
 #include "services/globals/globals_service.hpp"
@@ -29,8 +27,6 @@
 #include "services/player_database/player_database_service.hpp"
 #include "services/players/player_service.hpp"
 #include "services/script_patcher/script_patcher_service.hpp"
-#include "services/spinner/spinner_service.hpp"
-#include "services/vehicle/handling_service.hpp"
 #include "thread_pool.hpp"
 #include "version.hpp"
 
@@ -73,9 +69,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				    LOG(INFO) << "Yim's Menu Initializing";
 				    LOGF(INFO, "Git Info\n\tBranch:\t{}\n\tHash:\t{}\n\tSubject:\t{}\n\tDate:\t{}", version::GIT_BRANCH, version::GIT_SHA1, version::GIT_COMMIT_SUBJECT, version::GIT_DATE);
 
-				    g_translation_service.init();
-				    LOG(INFO) << "Translation Service initialized.";
-
 				    auto thread_pool_instance = std::make_unique<thread_pool>();
 				    LOG(INFO) << "Thread pool initialized.";
 
@@ -95,23 +88,19 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				    auto hooking_instance = std::make_unique<hooking>();
 				    LOG(INFO) << "Hooking initialized.";
 
-				    auto chat_service_instance            = std::make_unique<chat_service>();
 				    auto context_menu_service_instance    = std::make_unique<context_menu_service>();
 				    auto custom_text_service_instance     = std::make_unique<custom_text_service>();
 				    auto globals_service_instace          = std::make_unique<globals_service>();
 				    auto mobile_service_instance          = std::make_unique<mobile_service>();
 				    auto notification_service_instance    = std::make_unique<notification_service>();
-				    auto spinner_service_instance         = std::make_unique<spinner_service>();
 				    auto pickup_service_instance          = std::make_unique<pickup_service>();
 				    auto player_service_instance          = std::make_unique<player_service>();
 				    auto gta_data_service_instance        = std::make_unique<gta_data_service>();
 				    auto model_preview_service_instance   = std::make_unique<model_preview_service>();
-				    auto handling_service_instance        = std::make_unique<handling_service>();
 				    auto script_patcher_service_instance  = std::make_unique<script_patcher_service>();
 				    auto player_database_service_instance = std::make_unique<player_database_service>();
 				    auto hotkey_service_instance          = std::make_unique<hotkey_service>();
 				    auto matchmaking_service_instance     = std::make_unique<matchmaking_service>();
-				    auto api_service_instance             = std::make_unique<api_service>();
 				    LOG(INFO) << "Registered service instances...";
 
 				    g_script_mgr.add_script(std::make_unique<script>(&gui::script_func, "GUI", false));
@@ -179,20 +168,14 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				    LOG(INFO) << "Matchmaking Service reset.";
 				    player_database_service_instance.reset();
 				    LOG(INFO) << "Player Database Service reset.";
-				    api_service_instance.reset();
-				    LOG(INFO) << "API Service reset.";
 				    script_patcher_service_instance.reset();
 				    LOG(INFO) << "Script Patcher Service reset.";
 				    gta_data_service_instance.reset();
 				    LOG(INFO) << "GTA Data Service reset.";
-				    handling_service_instance.reset();
-				    LOG(INFO) << "Vehicle Service reset.";
 				    model_preview_service_instance.reset();
 				    LOG(INFO) << "Model Preview Service reset.";
 				    mobile_service_instance.reset();
 				    LOG(INFO) << "Mobile Service reset.";
-				    spinner_service_instance.reset();
-				    LOG(INFO) << "Spinner Service reset.";
 				    player_service_instance.reset();
 				    LOG(INFO) << "Player Service reset.";
 				    player_database_service_instance.reset();

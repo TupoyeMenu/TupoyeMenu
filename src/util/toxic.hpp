@@ -44,13 +44,13 @@ namespace big::toxic
 	{
 		if (!g_player_service->get_self()->is_host())
 		{
-			g_notification_service->push_error("MODIFY_TIME"_T.data(), "MODIFY_TIME_HOST_REQUIRED"_T.data());
+			g_notification_service->push_error("Modify Time", "Modifying time requires session host");
 			return false;
 		}
 
 		if (!target->player_time_value.has_value())
 		{
-			g_notification_service->push_error("MODIFY_TIME"_T.data(), "MODIFY_TIME_NO_PLAYER_TIMESTAMP"_T.data());
+			g_notification_service->push_error("Modify Time", "We do not have the player's timestamp yet");
 			return false;
 		}
 
@@ -85,7 +85,7 @@ namespace big::toxic
 	{
 		if (!target->player_time_value.has_value())
 		{
-			g_notification_service->push_error("WARP_TIME_TITLE"_T.data(), "MODIFY_TIME_NO_PLAYER_TIMESTAMP"_T.data());
+			g_notification_service->push_error("Warp Time", "We do not have the player's timestamp yet");
 			return;
 		}
 
@@ -101,7 +101,7 @@ namespace big::toxic
 	{
 		if (!g_player_service->get_self()->is_host())
 		{
-			g_notification_service->push_error("MODIFY_TIME"_T.data(), "MODIFY_TIME_HOST_REQUIRED"_T.data());
+			g_notification_service->push_error("Modify Time", "Modifying time requires session host");
 			return;
 		}
 

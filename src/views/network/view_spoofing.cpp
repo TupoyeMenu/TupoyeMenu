@@ -12,9 +12,9 @@ namespace big
 {
 	void view::spoofing()
 	{
-		ImGui::Checkbox("HIDE_FROM_PLAYER_LIST"_T.data(), &g.spoofing.hide_from_player_list);
+		ImGui::Checkbox("Hide From Player List", &g.spoofing.hide_from_player_list);
 
-		components::script_patch_checkbox("SPOOF_BLIP_TYPE"_T, &g.spoofing.spoof_blip);
+		components::script_patch_checkbox("Spoof Blip Type", &g.spoofing.spoof_blip);
 		if (g.spoofing.spoof_blip)
 		{
 			ImGui::SameLine();
@@ -31,7 +31,7 @@ namespace big
 			}
 		}
 
-		ImGui::Checkbox("SPOOF_RANK"_T.data(), &g.spoofing.spoof_rank);
+		ImGui::Checkbox("Spoof Rank", &g.spoofing.spoof_rank);
 		if (g.spoofing.spoof_rank)
 		{
 			ImGui::SameLine();
@@ -41,7 +41,7 @@ namespace big
 			}
 		}
 
-		ImGui::Checkbox("SPOOF_KD"_T.data(), &g.spoofing.spoof_kd_ratio);
+		ImGui::Checkbox("Spoof K/D Ratio", &g.spoofing.spoof_kd_ratio);
 		if (g.spoofing.spoof_kd_ratio)
 		{
 			ImGui::SameLine();
@@ -51,7 +51,7 @@ namespace big
 			}
 		}
 
-		ImGui::Checkbox("SPOOF_BADSPORT"_T.data(), &g.spoofing.spoof_bad_sport);
+		ImGui::Checkbox("Spoof Badsport State", &g.spoofing.spoof_bad_sport);
 		if (g.spoofing.spoof_bad_sport)
 		{
 			ImGui::SameLine();
@@ -61,14 +61,14 @@ namespace big
 			}
 		}
 
-		ImGui::Checkbox("SPOOF_JOB_POINTS"_T.data(), &g.spoofing.spoof_job_points);
+		ImGui::Checkbox("Spoof Job Points", &g.spoofing.spoof_job_points);
 		if (g.spoofing.spoof_job_points)
 		{
 			ImGui::SameLine();
 			ImGui::InputInt("###jp", &g.spoofing.job_points);
 		}
 
-		ImGui::Checkbox("SPOOF_PLAYER_MODEL"_T.data(), &g.spoofing.spoof_player_model);
+		ImGui::Checkbox("Spoof Player Model", &g.spoofing.spoof_player_model);
 		if (g.spoofing.spoof_player_model)
 		{
 			static char model[32];
@@ -83,9 +83,9 @@ namespace big
 
 		components::command_checkbox<"vcaudio">();
 
-		components::sub_title("SPOOFING_HIDE_FEATURES"_T);
-		ImGui::Checkbox("SPOOFING_HIDE_GOD_MODE"_T.data(), &g.spoofing.spoof_hide_god);
-		ImGui::Checkbox("SPOOFING_HIDE_SPECTATE"_T.data(), &g.spoofing.spoof_hide_spectate);
+		components::sub_title("Hide Features");
+		ImGui::Checkbox("Hide God Mode", &g.spoofing.spoof_hide_god);
+		ImGui::Checkbox("Hide Spectate", &g.spoofing.spoof_hide_spectate);
 
 		components::sub_title("Session Pool Spoof");
 		if (ImGui::BeginCombo("Pools", pool_types[g.spoofing.pool_type]))
@@ -100,28 +100,28 @@ namespace big
 			ImGui::EndCombo();
 		}
 
-		components::sub_title("CREW"_T);
+		components::sub_title("Crew");
 
-		ImGui::Checkbox("SPOOFING_CREW"_T.data(), &g.spoofing.spoof_crew_data);
+		ImGui::Checkbox("Spoof Crew", &g.spoofing.spoof_crew_data);
 
 		constexpr size_t crew_tag_size = RTL_FIELD_SIZE(ClanData, m_clan_tag);
 		static char crew_tag[crew_tag_size];
 		strcpy_s(crew_tag, sizeof(crew_tag), g.spoofing.crew_tag.c_str());
 
-		ImGui::Text("SPOOFING_CREW_TAG"_T.data());
+		ImGui::Text("Crew Tag:");
 		components::input_text("##crew_tag_input", crew_tag, sizeof(crew_tag));
 
 		if (crew_tag != g.spoofing.crew_tag)
 			g.spoofing.crew_tag = std::string(crew_tag);
 
-		ImGui::Checkbox("SPOOFING_CREW_ROCKSTAR"_T.data(), &g.spoofing.rockstar_crew);
+		ImGui::Checkbox("Is Rockstar Crew", &g.spoofing.rockstar_crew);
 
-		ImGui::Checkbox("SPOOFING_CREW_SQUARE_TAG"_T.data(), &g.spoofing.square_crew_tag);
+		ImGui::Checkbox("Square Crew Tag", &g.spoofing.square_crew_tag);
 
-		components::sub_title("SPOOFING_SESSION_ATTRIBUTES"_T);
-		components::small_text("SPOOFING_ONLY_WORKS_AS_HOST"_T);
+		components::sub_title("Session Attributes");
+		components::small_text("Only works when session host");
 
-		ImGui::Checkbox("SPOOFING_ATTRIBUTE_REGION"_T.data(), &g.spoofing.spoof_session_region_type);
+		ImGui::Checkbox("Region", &g.spoofing.spoof_session_region_type);
 		if (g.spoofing.spoof_session_region_type)
 		{
 			ImGui::SameLine();
@@ -137,7 +137,7 @@ namespace big
 				ImGui::EndCombo();
 			}
 		}
-		ImGui::Checkbox("SPOOFING_ATTRIBUTE_LANGUAGE"_T.data(), &g.spoofing.spoof_session_language);
+		ImGui::Checkbox("Language", &g.spoofing.spoof_session_language);
 		if (g.spoofing.spoof_session_language)
 		{
 			ImGui::SameLine();
@@ -155,7 +155,7 @@ namespace big
 			}
 		}
 
-		ImGui::Checkbox("SPOOFING_ATTRIBUTE_PLAYER_COUNT"_T.data(), &g.spoofing.spoof_session_player_count);
+		ImGui::Checkbox("Player Count", &g.spoofing.spoof_session_player_count);
 		if (g.spoofing.spoof_session_player_count)
 		{
 			ImGui::SameLine();

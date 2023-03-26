@@ -31,38 +31,38 @@ namespace big
 			}
 		});
 
-		components::button("OUTFIT_RANDOM_COMPONENT"_T, [] {
+		components::button("Random Component", [] {
 			ped::set_ped_random_component_variation(self::ped);
 		});
 		ImGui::SameLine();
 
-		components::button("OUTFIT_DEFAULT_COMPONENT"_T, [] {
+		components::button("Default Component", [] {
 			PED::SET_PED_DEFAULT_COMPONENT_VARIATION(self::ped);
 		});
 		ImGui::SameLine();
 
-		components::button("OUTFIT_RANDOM_PROPS"_T, [] {
+		components::button("Random Props", [] {
 			PED::SET_PED_RANDOM_PROPS(self::ped);
 		});
 		ImGui::SameLine();
 
-		components::button("OUTFIT_CLEAR_PROPS"_T, [] {
+		components::button("Clear Props", [] {
 			PED::CLEAR_ALL_PED_PROPS(self::ped, 1);
 		});
 		ImGui::SameLine();
 
-		components::button("EXPORT_TO_CLIPBOARD"_T, [] {
+		components::button("Export To Clipboard", [] {
 			std::stringstream ss;
 			for (auto& item : components.items)
 				ss << item.id << " " << item.drawable_id << " " << item.texture_id << " ";
 			for (auto& item : props.items)
 				ss << item.id << " " << item.drawable_id << " " << item.texture_id << " ";
 			ImGui::SetClipboardText(ss.str().c_str());
-			g_notification_service->push("OUTFIT"_T.data(), "EXPORT_TO_CLIPBOARD"_T.data());
+			g_notification_service->push("Outfit", "Export To Clipboard");
 		});
 		ImGui::SameLine();
 
-		components::button("IMPORT_FROM_CLIPBOARD"_T, [] {
+		components::button("Import From Clipboard", [] {
 			std::stringstream ss(ImGui::GetClipboardText());
 			for (auto& item : components.items)
 			{
@@ -108,7 +108,7 @@ namespace big
 		for (auto& item : components.items)
 		{
 			ImGui::SetNextItemWidth(60);
-			if (ImGui::InputInt(std::format("{} {} [0,{}]", item.label, "OUTFIT_TEX"_T, item.texture_id_max).c_str(), &item.texture_id, 0))
+			if (ImGui::InputInt(std::format("{} {} [0,{}]", item.label, "TEX", item.texture_id_max).c_str(), &item.texture_id, 0))
 			{
 				g_fiber_pool->queue_job([item] {
 					PED::SET_PED_COMPONENT_VARIATION(self::ped, item.id, item.drawable_id, item.texture_id, PED::GET_PED_PALETTE_VARIATION(self::ped, item.id));
@@ -141,7 +141,7 @@ namespace big
 		for (auto& item : props.items)
 		{
 			ImGui::SetNextItemWidth(60);
-			if (ImGui::InputInt(std::format("{} {} [0,{}]", item.label, "OUTFIT_TEX"_T, item.texture_id_max).c_str(), &item.texture_id, 0))
+			if (ImGui::InputInt(std::format("{} {} [0,{}]", item.label, "TEX", item.texture_id_max).c_str(), &item.texture_id, 0))
 			{
 				g_fiber_pool->queue_job([item] {
 					PED::SET_PED_PROP_INDEX(self::ped, item.id, item.drawable_id, item.texture_id, TRUE, 1);
@@ -164,7 +164,7 @@ namespace big
 		ImGui::InputText("##outfit_name", outfit_name, sizeof(outfit_name));
 		ImGui::SameLine();
 
-		components::button("OUTFIT_SAVE_CURRENT"_T, [] {
+		components::button("Save Current", [] {
 			nlohmann::json j;
 			nlohmann::json j_components;
 			nlohmann::json j_props;
@@ -198,7 +198,7 @@ namespace big
 		});
 		ImGui::SameLine();
 
-		components::button("OUTFIT_APPLY_SELECTED"_T, [saved_outfits] {
+		components::button("Apply Selected", [saved_outfits] {
 			if (selected_index >= 0 && selected_index < saved_outfits.size())
 			{
 				std::ifstream i(saved_outfit_path.get_file(saved_outfits[selected_index]).get_path());
@@ -231,7 +231,7 @@ namespace big
 		});
 		ImGui::SameLine();
 
-		components::button("OUTFIT_DELETE_SELECTED"_T, [saved_outfits] {
+		components::button("Delete Selected", [saved_outfits] {
 			if (selected_index >= 0 && selected_index < saved_outfits.size())
 			{
 				std::filesystem::remove(saved_outfit_path.get_file(saved_outfits[selected_index]).get_path());

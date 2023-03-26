@@ -13,12 +13,12 @@ namespace big
 		{
 			if (ImGui::BeginTabBar("player_tabbar"))
 			{
-				if (ImGui::BeginTabItem("INFO"_T.data()))
+				if (ImGui::BeginTabItem("Info"))
 				{
 					view::view_player_info();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("TROLL"_T.data()))
+				if (ImGui::BeginTabItem("Troll"))
 				{
 					view::view_player_troll();
 					ImGui::EndTabItem();
@@ -28,12 +28,12 @@ namespace big
 					view::view_player_vehicle();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("MISC"_T.data()))
+				if (ImGui::BeginTabItem("Misc"))
 				{
 					view::view_player_misc();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("TOXIC"_T.data()))
+				if (ImGui::BeginTabItem("Toxic"))
 				{
 					view::view_player_toxic();
 					ImGui::EndTabItem();

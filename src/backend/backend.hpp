@@ -7,7 +7,6 @@ namespace big
 	{
 	public:
 		static void loop();
-		static void anti_cheat();
 		static void self_loop();
 		static void weapons_loop();
 		static void vehicles_loop();

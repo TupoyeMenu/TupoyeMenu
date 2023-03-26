@@ -7,12 +7,12 @@ namespace big
 	{
 		if (ImGui::BeginTabBar("world_tabbar"))
 		{
-			if (ImGui::BeginTabItem("GUI_TAB_SPAWN_PED"_T.data()))
+			if (ImGui::BeginTabItem("Spawn Ped"))
 			{
 				view::spawn_ped();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_TIME_N_WEATHER"_T.data()))
+			if (ImGui::BeginTabItem("Time And Weather"))
 			{
 				view::time_and_weather();
 				ImGui::EndTabItem();
@@ -22,32 +22,22 @@ namespace big
 				view::ambient();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_CREATOR"_T.data()))
+			if (ImGui::BeginTabItem("Creator"))
 			{
 				view::creator();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_TRAIN"_T.data()))
-			{
-				view::train();
-				ImGui::EndTabItem();
-			}
-			if (ImGui::BeginTabItem("GUI_TAB_WATER"_T.data()))
-			{
-				view::water();
-				ImGui::EndTabItem();
-			}
-			if (ImGui::BeginTabItem("GUI_TAB_BLACKHOLE"_T.data()))
+			if (ImGui::BeginTabItem("Blackhole"))
 			{
 				view::blackhole();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_MODEL_SWAPPER"_T.data()))
+			if (ImGui::BeginTabItem("Model Swapper"))
 			{
 				view::model_swapper();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_NEARBY"_T.data()))
+			if (ImGui::BeginTabItem("Nearby"))
 			{
 				view::nearby();
 				ImGui::EndTabItem();

@@ -671,8 +671,8 @@ namespace big
 
 		// Sound Overload Detour
 		main_batch.add("SOD", "66 45 3B C1 74 38", [this](memory::handle ptr) {
-			g_sound_overload_ret_addr   = ptr.add(13 + 15).as<decltype(g_sound_overload_ret_addr)>();
-			std::vector<byte> bytes     = {0xFF, 0x25, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x90}; // far jump opcode + a nop opcode
+			g_sound_overload_ret_addr = ptr.add(13 + 15).as<decltype(g_sound_overload_ret_addr)>();
+			std::vector<byte> bytes = {0xFF, 0x25, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x90}; // far jump opcode + a nop opcode
 			*(void**)(bytes.data() + 6) = sound_overload_detour;
 			memory::byte_patch::make(ptr.add(13).as<void*>(), bytes)->apply();
 		});
@@ -796,11 +796,6 @@ namespace big
 		// Migrate Object
 		main_batch.add("MO", "48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 41 54 41 55 41 56 41 57 48 83 EC 20 41 8B F8 48", [this](memory::handle ptr) {
 			m_migrate_object = ptr.as<functions::migrate_object>();
-		});
-
-		//Task Jump Constructor
-		main_batch.add("TJC", "48 89 5C 24 ? 89 54 24 10 57 48 83 EC 30 0F 29 74 24", [this](memory::handle ptr) {
-			m_taskjump_constructor = ptr.as<PVOID>();
 		});
 
 		auto mem_region = memory::module("GTA5.exe");

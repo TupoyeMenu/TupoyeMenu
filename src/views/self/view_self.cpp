@@ -33,7 +33,7 @@ namespace big
 
 		ImGui::Separator();
 
-		components::sub_title("GENERAL"_T);
+		components::sub_title("General");
 
 		ImGui::BeginGroup();
 
@@ -43,10 +43,6 @@ namespace big
 		components::command_checkbox<"nophone">();
 		components::command_checkbox<"infoxy">();
 		components::command_checkbox<"fastrespawn">();
-		if(!g.self.super_jump)
-			components::command_checkbox<"beastjump">();
-		if(!g.self.beast_jump)
-			components::command_checkbox<"superjump">();
 
 		ImGui::EndGroup();
 		ImGui::SameLine();
@@ -55,7 +51,7 @@ namespace big
 		components::command_checkbox<"noclip">();
 		components::command_checkbox<"noragdoll">();
 		components::command_checkbox<"fastrun">();
-		ImGui::Checkbox("NO_IDLE_KICK"_T.data(), &g.tunables.no_idle_kick);
+		ImGui::Checkbox("No Idle Kick", &g.tunables.no_idle_kick);
 		components::command_checkbox<"walkunder">();
 		ImGui::Checkbox("Jump Ragdoll", &g.self.allow_ragdoll);
 		ImGui::Checkbox("Always Control", &g.tunables.always_control);
@@ -72,7 +68,7 @@ namespace big
 		components::command_checkbox<"mobileradio">();
 		components::command_checkbox<"superman">();
 
-		ImGui::Checkbox("DANCE_MODE"_T.data(), &g.self.dance_mode);
+		ImGui::Checkbox("Dance Mode", &g.self.dance_mode);
 		ImGui::Checkbox("Disable Help Text", &g.tunables.disable_help_text);
 		ImGui::Checkbox("Phone Anim", &g.tunables.phone_anim);
 
@@ -120,9 +116,9 @@ namespace big
 
 		ImGui::Separator();
 
-		components::sub_title("PROOFS"_T);
+		components::sub_title("Proofs");
 
-		if (ImGui::Button("CHECK_ALL"_T.data()))
+		if (ImGui::Button("Check all"))
 		{
 			g.self.proof_bullet    = true;
 			g.self.proof_fire      = true;
@@ -136,7 +132,7 @@ namespace big
 
 		ImGui::SameLine();
 
-		if (ImGui::Button("UNCHECK_ALL"_T.data()))
+		if (ImGui::Button("Uncheck all"))
 		{
 			g.self.proof_bullet    = false;
 			g.self.proof_fire      = false;
@@ -150,45 +146,45 @@ namespace big
 
 		ImGui::BeginGroup();
 
-		ImGui::Checkbox("BULLET"_T.data(), &g.self.proof_bullet);
-		ImGui::Checkbox("FIRE"_T.data(), &g.self.proof_fire);
+		ImGui::Checkbox("Bullet", &g.self.proof_bullet);
+		ImGui::Checkbox("Fire", &g.self.proof_fire);
 
 		ImGui::EndGroup();
 		ImGui::SameLine();
 		ImGui::BeginGroup();
 
-		ImGui::Checkbox("COLLISION"_T.data(), &g.self.proof_collision);
-		ImGui::Checkbox("MELEE"_T.data(), &g.self.proof_melee);
+		ImGui::Checkbox("Collision", &g.self.proof_collision);
+		ImGui::Checkbox("Melee", &g.self.proof_melee);
 
 		ImGui::EndGroup();
 		ImGui::SameLine();
 		ImGui::BeginGroup();
 
-		ImGui::Checkbox("EXPLOSION"_T.data(), &g.self.proof_explosion);
-		ImGui::Checkbox("STEAM"_T.data(), &g.self.proof_steam);
+		ImGui::Checkbox("Explosion", &g.self.proof_explosion);
+		ImGui::Checkbox("Steam", &g.self.proof_steam);
 
 		ImGui::EndGroup();
 		ImGui::SameLine();
 		ImGui::BeginGroup();
 
-		ImGui::Checkbox("DROWN"_T.data(), &g.self.proof_drown);
-		ImGui::Checkbox("WATER"_T.data(), &g.self.proof_water);
+		ImGui::Checkbox("Drown", &g.self.proof_drown);
+		ImGui::Checkbox("Water", &g.self.proof_water);
 
 		ImGui::EndGroup();
 
 		ImGui::Separator();
 
-		components::sub_title("POLICE"_T);
+		components::sub_title("Police");
 
 		components::command_button<"clearwantedlvl">();
 
-		ImGui::Checkbox("NEVER_WANTED"_T.data(), &g.self.never_wanted);
+		ImGui::Checkbox("Never Wanted", &g.self.never_wanted);
 
 		if (!g.self.never_wanted)
 		{
-			ImGui::Checkbox("FORCE_WANTED_LVL"_T.data(), &g.self.force_wanted_level);
-			ImGui::SameLine(); components::help_marker("FORCE_WANTED_LVL_INFO"_T);
-			ImGui::Text("WANTED_LVL"_T.data());
+			ImGui::Checkbox("Force Wanted Level", &g.self.force_wanted_level);
+			ImGui::SameLine(); components::help_marker("Keep a specific wanted level active on yourself");
+			ImGui::Text("Wanted Level");
 			if (ImGui::SliderInt("###wanted_level", &g.self.wanted_level, 0, 5) && !g.self.force_wanted_level && g_local_player != nullptr)
 			{
 				g_local_player->m_player_info->m_wanted_level = g.self.wanted_level;
@@ -197,31 +193,31 @@ namespace big
 
 		ImGui::Separator();
 
-		components::sub_title("HUD"_T);
+		components::sub_title("HUD");
 
 		ImGui::BeginGroup();
 
-		ImGui::Checkbox("HIDE_RADAR"_T.data(), &g.self.hud.hide_radar);
+		ImGui::Checkbox("Hide Radar", &g.self.hud.hide_radar);
 
 		ImGui::SameLine();
 
-		ImGui::Checkbox("HIDE_AMMO"_T.data(), &g.self.hud.hide_ammo);
+		ImGui::Checkbox("Hide Ammo", &g.self.hud.hide_ammo);
 
 		ImGui::SameLine();
 
-		ImGui::Checkbox("FORCE_SHOW_HUD"_T.data(), &g.self.hud.force_show_hud);
+		ImGui::Checkbox("Force show HUD", &g.self.hud.force_show_hud);
 
 		ImGui::Combo("##hud_comp_combo", &g.self.hud.selected_hud_component, hud_component_names, (int)HudComponents::HUD_WEAPONS);
 		ImGui::SameLine();
-		components::button("HIDE"_T, [] {
+		components::button("Hide", [] {
 			g.self.hud.hud_components_states[g.self.hud.selected_hud_component] = true;
 		});
 		ImGui::SameLine();
-		components::button("SHOW"_T, [] {
+		components::button("Show", [] {
 			g.self.hud.hud_components_states[g.self.hud.selected_hud_component] = false;
 		});
 
-		components::button("HIDE_ALL"_T, [] {
+		components::button("Hide all", [] {
 
 			g.self.hud.hide_radar = true;
 			g.self.hud.hide_ammo = true;
@@ -232,7 +228,7 @@ namespace big
 			}
 		});
 		ImGui::SameLine();
-		components::button("SHOW_ALL"_T, [] {
+		components::button("Show all", [] {
 
 			g.self.hud.hide_radar = false;
 			g.self.hud.hide_ammo = false;
@@ -243,25 +239,10 @@ namespace big
 			}
 		});
 		ImGui::SameLine();
-		ImGui::Checkbox("FORCE_SHOW_HUD_ELEMENT"_T.data(), &g.self.hud.force_show_hud_element);
-		ImGui::SameLine(); components::help_marker("FORCE_SHOW_HUD_ELEMENT_DESC"_T);
+		ImGui::Checkbox("Force show HUD element", &g.self.hud.force_show_hud_element);
+		ImGui::SameLine(); components::help_marker("To force show a HUD specific element, click Hide all then click Show on the desired element.");
 
 		ImGui::EndGroup();
-
-		components::command_checkbox<"hudcolor">();
-
-		ImGui::Checkbox("Override Hud Color Specify", &g.self.hud.shcolor);
-		ImGui::InputInt("Hud Index", &g.self.hud.index);//need to display current val if not displayed
-		ImGui::InputInt("Hud Red", &g.self.hud.r);
-		ImGui::InputInt("Hud Green", &g.self.hud.g);
-		ImGui::InputInt("Hud Blue", &g.self.hud.b);
-		ImGui::InputInt("Hud Alpha", &g.self.hud.a);
-
-		ImGui::Checkbox("Override Multiplayer Hud Color", &g.self.hud.mhcolor);
-		ImGui::InputInt("Hud Color", &g.self.hud.hcolor);
-
-		ImGui::Checkbox("Override Multiplayer Text Off Index", &g.self.hud.mtcolor);
-		ImGui::InputInt("Hud Text Color", &g.self.hud.tcolor);
 
 		g.self.proof_mask = 0;
 		if (g.self.god_mode)

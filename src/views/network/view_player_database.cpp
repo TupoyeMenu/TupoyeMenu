@@ -3,7 +3,6 @@
 #include "core/data/infractions.hpp"
 #include "fiber_pool.hpp"
 #include "pointers.hpp"
-#include "services/api/api_service.hpp"
 #include "services/player_database/player_database_service.hpp"
 #include "services/players/player_service.hpp"
 #include "util/session.hpp"
@@ -19,7 +18,7 @@ namespace big
 		static char search[64];
 
 		ImGui::SetNextItemWidth(300.f);
-		components::input_text_with_hint("PLAYER"_T, "SEARCH"_T, search, sizeof(search), ImGuiInputTextFlags_None);
+		components::input_text_with_hint("Player", "Search", search, sizeof(search), ImGuiInputTextFlags_None);
 
 		if (ImGui::ListBoxHeader("###players", {180, static_cast<float>(*g_pointers->m_resolution_y - 400 - 38 * 4)}))
 		{
@@ -69,7 +68,7 @@ namespace big
 			}
 			else
 			{
-				ImGui::Text("NO_STORED_PLAYERS"_T.data());
+				ImGui::Text("No stored players");
 			}
 
 			ImGui::ListBoxFooter();
@@ -80,17 +79,17 @@ namespace big
 			ImGui::SameLine();
 			if (ImGui::BeginChild("###selected_player", {500, static_cast<float>(*g_pointers->m_resolution_y - 388 - 38 * 4)}, false, ImGuiWindowFlags_NoBackground))
 			{
-				if (ImGui::InputText("NAME"_T.data(), name_buf, sizeof(name_buf)))
+				if (ImGui::InputText("Name", name_buf, sizeof(name_buf)))
 				{
 					current_player.name = name_buf;
 				}
 
-				ImGui::InputScalar("RID"_T.data(), ImGuiDataType_S64, &current_player.rockstar_id);
-				ImGui::Checkbox("IS_MODDER"_T.data(), &current_player.is_modder);
+				ImGui::InputScalar("Rockstar ID", ImGuiDataType_S64, &current_player.rockstar_id);
+				ImGui::Checkbox("Is Modder", &current_player.is_modder);
 				ImGui::Checkbox("Force Allow Join", &current_player.force_allow_join);
-				ImGui::Checkbox("BLOCK_JOIN"_T.data(), &current_player.block_join);
+				ImGui::Checkbox("Block Join", &current_player.block_join);
 
-				if (ImGui::BeginCombo("BLOCK_JOIN_ALERT"_T.data(), block_join_reasons[current_player.block_join_reason]))
+				if (ImGui::BeginCombo("Block Join Alert", block_join_reasons[current_player.block_join_reason]))
 				{
 					for (const auto& reason : block_join_reasons)
 					{
@@ -109,9 +108,9 @@ namespace big
 				}
 
 				ImGui::SameLine();
-				components::help_marker("ONLY_AS_HOST"_T);
+				components::help_marker("Only works as host");
 
-				if (ImGui::BeginCombo("CHAT_COMMAND_PERMISSIONS"_T.data(),
+				if (ImGui::BeginCombo("Chat Command Permissions",
 				        COMMAND_ACCESS_LEVELS[current_player.command_access_level.value_or(g.session.chat_command_default_access_level)]))
 				{
 					for (const auto& [type, name] : COMMAND_ACCESS_LEVELS)
@@ -132,7 +131,7 @@ namespace big
 
 				if (!current_player.infractions.empty())
 				{
-					ImGui::Text("INFRACTIONS"_T.data());
+					ImGui::Text("Infractions:");
 
 					for (auto& infraction : current_player.infractions)
 					{
@@ -140,25 +139,11 @@ namespace big
 					}
 				}
 
-				components::button("JOIN_SESSION"_T, [] {
+				components::button("Join Session", [] {
 					session::join_by_rockstar_id(current_player.rockstar_id);
 				});
 
-				static char message[256];
-				components::input_text("INPUT_MSG"_T, message, sizeof(message));
-				if (components::button("SEND_MSG"_T))
-				{
-					g_thread_pool->push([selected] {
-						if (g_api_service->send_socialclub_message(selected->rockstar_id, message))
-						{
-							g_notification_service->push("SCAPI"_T.data(), "MSG_SENT_SUCCESS"_T.data());
-							return;
-						}
-						g_notification_service->push_error("SCAPI"_T.data(), "MSG_SENT_FAIL"_T.data());
-					});
-				};
-
-				if (ImGui::Button("SAVE"_T.data()))
+				if (ImGui::Button("Save"))
 				{
 					if (current_player.rockstar_id != selected->rockstar_id)
 						g_player_database_service->update_rockstar_id(selected->rockstar_id, current_player.rockstar_id);
@@ -169,7 +154,7 @@ namespace big
 
 				ImGui::SameLine();
 
-				if (ImGui::Button("REMOVE"_T.data()))
+				if (ImGui::Button("Remove"))
 				{
 					g_player_database_service->remove_rockstar_id(selected->rockstar_id);
 				}
@@ -177,7 +162,7 @@ namespace big
 			ImGui::EndChild();
 		}
 
-		if (ImGui::Button("REMOVE_ALL"_T.data()))
+		if (ImGui::Button("Remove All"))
 		{
 			g_player_database_service->set_selected(nullptr);
 			g_player_database_service->get_players().clear();
@@ -186,20 +171,20 @@ namespace big
 
 		ImGui::SameLine();
 
-		components::button("RELOAD_PLYR_ONLINE_STATES"_T, [] {
+		components::button("Reload Player Online States", [] {
 			g_player_database_service->update_player_states();
 		});
 
 		ImGui::Separator();
-		components::sub_title("NEW_ENTRY"_T);
+		components::sub_title("New Entry");
 
 		static char new_name[64];
 		static int64_t new_rockstar_id;
 
-		components::input_text("NAME"_T, new_name, sizeof(new_name));
-		ImGui::InputScalar("RID"_T.data(), ImGuiDataType_S64, &new_rockstar_id);
+		components::input_text("Name", new_name, sizeof(new_name));
+		ImGui::InputScalar("Rockstar ID", ImGuiDataType_S64, &new_rockstar_id);
 
-		if (ImGui::Button("ADD"_T.data()))
+		if (ImGui::Button("Add"))
 		{
 			g_player_database_service->get_players()[new_rockstar_id] = persistent_player(new_name, new_rockstar_id);
 			g_player_database_service->save();
