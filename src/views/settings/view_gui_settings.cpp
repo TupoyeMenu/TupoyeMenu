@@ -1,3 +1,4 @@
+#include "imgui.h"
 #include "renderer.hpp"
 #include "views/view.hpp"
 
@@ -5,20 +6,20 @@ namespace big
 {
 	void view::gui_settings()
 	{
-		components::sub_title("UI Scale");
+		ImGui::Text("UI Scale");
 		if (ImGui::SliderFloat("##gui-scale", &g.window.gui_scale, 1.f, 1.5f, "%.2f"))
 			g_renderer->rescale(g.window.gui_scale);
 		ImGui::SameLine();
-		components::help_marker("Changing the UI scale may break rendering and require you to unload and inject YimMenu again.");
+		components::help_marker("Changing the UI scale will crash you, don't touch this!.");
 
-		components::sub_title("Colors");
+		ImGui::SeparatorText("Colors");
 		static ImVec4 col_gui = ImGui::ColorConvertU32ToFloat4(g.window.color);
 		if (ImGui::ColorEdit4("Gui Color", (float*)&col_gui, ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_NoSidePreview))
 		{
 			g.window.color = ImGui::ColorConvertFloat4ToU32(col_gui);
 		}
 
-		components::sub_title("Ingame Overlay");
+		ImGui::SeparatorText("Overlay");
 		ImGui::Checkbox("Show Overlay", &g.window.ingame_overlay.opened);
 		ImGui::SameLine();
 		ImGui::Checkbox("Show when Menu opened", &g.window.ingame_overlay.show_with_menu_opened);

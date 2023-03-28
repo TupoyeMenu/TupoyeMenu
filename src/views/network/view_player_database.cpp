@@ -175,8 +175,7 @@ namespace big
 			g_player_database_service->update_player_states();
 		});
 
-		ImGui::Separator();
-		components::sub_title("New Entry");
+		ImGui::SeparatorText("New Entry");
 
 		static char new_name[64];
 		static int64_t new_rockstar_id;

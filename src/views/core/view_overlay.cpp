@@ -32,8 +32,7 @@ namespace big
 		{
 			if (g.window.ingame_overlay.show_watermark)
 			{
-				ImGui::Text("TupoyeMenu");
-				ImGui::Separator();
+				ImGui::SeparatorText("TupoyeMenu");
 			}
 
 			if (CNetworkPlayerMgr* network_player_mgr = gta_util::get_network_player_mgr();

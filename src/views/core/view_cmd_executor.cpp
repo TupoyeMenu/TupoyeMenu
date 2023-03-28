@@ -22,7 +22,7 @@ namespace big
 		{
 			static char command_buffer[255];
 			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {10.f, 15.f});
-			components::sub_title("YimMenu Command Executor");
+			components::sub_title("TupoyeMenu Command Executor");
 
 			// set focus by default on input box
 			ImGui::SetKeyboardFocusHere(0);

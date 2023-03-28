@@ -3,6 +3,7 @@
 #include "core/data/pool_types.hpp"
 #include "core/data/region_codes.hpp"
 #include "fiber_pool.hpp"
+#include "imgui.h"
 #include "util/teleport.hpp"
 #include "views/view.hpp"
 
@@ -12,24 +13,13 @@ namespace big
 {
 	void view::spoofing()
 	{
-		ImGui::Checkbox("Hide From Player List", &g.spoofing.hide_from_player_list);
+		ImGui::Text("Detection Avoidance");
+		ImGui::Checkbox("Hide God Mode", &g.spoofing.spoof_hide_god);
+		ImGui::Checkbox("Hide Spectate", &g.spoofing.spoof_hide_spectate);
 
-		components::script_patch_checkbox("Spoof Blip Type", &g.spoofing.spoof_blip);
-		if (g.spoofing.spoof_blip)
-		{
-			ImGui::SameLine();
-			if (ImGui::BeginCombo("###blip_type_select", blip_types[g.spoofing.blip_type]))
-			{
-				for (int i = 0; i < blip_types.size(); i++)
-				{
-					if (ImGui::Selectable(blip_types[i], g.spoofing.blip_type == i))
-					{
-						g.spoofing.blip_type = i;
-					}
-				}
-				ImGui::EndCombo();
-			}
-		}
+		ImGui::SeparatorText("Player List Spoof");
+
+		ImGui::Checkbox("Hide From Player List", &g.spoofing.hide_from_player_list);
 
 		ImGui::Checkbox("Spoof Rank", &g.spoofing.spoof_rank);
 		if (g.spoofing.spoof_rank)
@@ -68,6 +58,25 @@ namespace big
 			ImGui::InputInt("###jp", &g.spoofing.job_points);
 		}
 
+		ImGui::SeparatorText("Misc");
+
+		components::script_patch_checkbox("Spoof Blip Type", &g.spoofing.spoof_blip);
+		if (g.spoofing.spoof_blip)
+		{
+			ImGui::SameLine();
+			if (ImGui::BeginCombo("###blip_type_select", blip_types[g.spoofing.blip_type]))
+			{
+				for (int i = 0; i < blip_types.size(); i++)
+				{
+					if (ImGui::Selectable(blip_types[i], g.spoofing.blip_type == i))
+					{
+						g.spoofing.blip_type = i;
+					}
+				}
+				ImGui::EndCombo();
+			}
+		}
+
 		ImGui::Checkbox("Spoof Player Model", &g.spoofing.spoof_player_model);
 		if (g.spoofing.spoof_player_model)
 		{
@@ -81,13 +90,7 @@ namespace big
 				g.spoofing.player_model = std::string(model);
 		}
 
-		components::command_checkbox<"vcaudio">();
-
-		components::sub_title("Hide Features");
-		ImGui::Checkbox("Hide God Mode", &g.spoofing.spoof_hide_god);
-		ImGui::Checkbox("Hide Spectate", &g.spoofing.spoof_hide_spectate);
-
-		components::sub_title("Session Pool Spoof");
+		ImGui::SeparatorText("Session Pool Spoof");
 		if (ImGui::BeginCombo("Pools", pool_types[g.spoofing.pool_type]))
 		{
 			for (int i = 0; i < pool_types.size(); i++)
@@ -100,7 +103,7 @@ namespace big
 			ImGui::EndCombo();
 		}
 
-		components::sub_title("Crew");
+		ImGui::SeparatorText("Crew Spoof");
 
 		ImGui::Checkbox("Spoof Crew", &g.spoofing.spoof_crew_data);
 
@@ -118,7 +121,7 @@ namespace big
 
 		ImGui::Checkbox("Square Crew Tag", &g.spoofing.square_crew_tag);
 
-		components::sub_title("Session Attributes");
+		ImGui::SeparatorText("Session Attribute Spoof");
 		components::small_text("Only works when session host");
 
 		ImGui::Checkbox("Region", &g.spoofing.spoof_session_region_type);

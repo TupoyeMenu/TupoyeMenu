@@ -1,3 +1,4 @@
+#include "imgui.h"
 #include "views/view.hpp"
 
 namespace big
@@ -104,13 +105,15 @@ namespace big
 		draw_interloper_reaction(g.reactions.lost_connection_kick_others);
 		draw_interloper_reaction(g.reactions.breakup_others);
 
+		ImGui::Separator();
+
 		components::title("Notifications");
-		components::sub_title("GTA Threads");
+		ImGui::SeparatorText("GTA Threads");
 
 		draw_pair_option("Terminate", g.notifications.gta_thread_kill);
 		draw_pair_option("Start", g.notifications.gta_thread_start);
 
-		components::sub_title("Network Player Manager");
+		ImGui::SeparatorText("Network Player Manager");
 
 		ImGui::Text("Player Join");
 
@@ -123,7 +126,7 @@ namespace big
 		draw_pair_option("Init", g.notifications.network_player_mgr_init);
 		draw_pair_option("Shutdown", g.notifications.network_player_mgr_shutdown);
 
-		components::sub_title("Other");
+		ImGui::SeparatorText("Misc");
 
 		draw_pair_option("Transaction Error / Rate Limit", g.notifications.transaction_rate_limit);
 		draw_pair_option("Mismatch sync type", g.notifications.mismatch_sync_type);

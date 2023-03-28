@@ -8,7 +8,7 @@ namespace big
 {
 	void view::nearby()
 	{
-		components::sub_title("Peds");
+		ImGui::Text("Peds");
 		// Nearby Ped Actions
 		components::button<ImVec2(110, 0)>("Delete", [] {
 			for (auto peds : entity::get_entities(false, true))
@@ -43,8 +43,7 @@ namespace big
 		ImGui::SameLine(140.f);
 		components::command_checkbox<"pedrush">();
 
-		ImGui::Separator();
-		components::sub_title("Vehicles");
+		ImGui::SeparatorText("Vehicles");
 		// Nearby Vehicle Actions
 
 		components::button<ImVec2(110, 0), ImVec4(0.02745f, 0.4745f, 0.10196f, 1.f)>("Max Upgrade", [] {

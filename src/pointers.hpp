@@ -268,10 +268,6 @@ namespace big
 		PVOID m_write_player_creation_data_node{};
 		PVOID m_write_player_appearance_data_node{};
 
-		PVOID m_enumerate_audio_devices{};
-		PVOID m_direct_sound_capture_create{};
-		bool* m_refresh_audio_input{};
-
 		memory::byte_patch* m_disable_collision{};
 		memory::byte_patch* m_allow_weapons_in_vehicle{};
 

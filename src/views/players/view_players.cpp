@@ -1,3 +1,7 @@
+#define IMGUI_DEFINE_PLACEMENT_NEW
+#define IMGUI_DEFINE_MATH_OPERATORS
+#include "imgui.h"
+
 #include "fiber_pool.hpp"
 #include "fonts/fonts.hpp"
 #include "natives.hpp"
@@ -5,8 +9,6 @@
 #include "services/players/player_service.hpp"
 #include "views/view.hpp"
 
-#define IMGUI_DEFINE_PLACEMENT_NEW
-#define IMGUI_DEFINE_MATH_OPERATORS
 #include <imgui_internal.h>
 
 namespace big

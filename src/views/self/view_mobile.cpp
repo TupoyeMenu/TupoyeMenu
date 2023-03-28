@@ -8,8 +8,22 @@ namespace big
 {
 	void view::mobile()
 	{
-		components::sub_title("Merryweather");
-		ImGui::Separator();
+		ImGui::Text("Mors Mutual");
+
+		components::button("Mors Mutual Fix All Vehicles", [] {
+			int amount_fixed = mobile::mors_mutual::fix_all();
+			g_notification_service->push("Mobile", std::format("{} vehicle{} been fixed.", amount_fixed, amount_fixed == 1 ? " has" : "s have"));
+		});
+
+		ImGui::SeparatorText("CEO Abilities");
+
+		components::button("Bullshark Testosterone", [] {
+			mobile::ceo_abilities::request_bullshark_testosterone();
+		});
+
+		components::command_button<"ballisticarmor">();
+
+		ImGui::SeparatorText("Merryweather");
 
 		components::button("Request Ammo Drop", [] {
 			mobile::merry_weather::request_ammo_drop();
@@ -27,23 +41,6 @@ namespace big
 
 		components::button("Request Airstrike", [] {
 			mobile::merry_weather::request_airstrike();
-		});
-
-		components::sub_title("Mors Mutual");
-		ImGui::Separator();
-
-		components::button("Mors Mutual Fix All Vehicles", [] {
-			int amount_fixed = mobile::mors_mutual::fix_all();
-			g_notification_service->push("Mobile", std::format("{} vehicle{} been fixed.", amount_fixed, amount_fixed == 1 ? " has" : "s have"));
-		});
-
-		components::sub_title("CEO Abilities");
-		ImGui::Separator();
-
-		components::button("Bullshark Testosterone", [] {
-			mobile::ceo_abilities::request_bullshark_testosterone();
-		});
-
-		components::command_button<"ballisticarmor">();
+		});		
 	}
 }

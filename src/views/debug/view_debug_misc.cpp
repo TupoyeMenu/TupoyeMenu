@@ -1,6 +1,7 @@
 #include "gta/joaat.hpp"
 #include "gta_util.hpp"
 #include "gui/components/components.hpp"
+#include "imgui.h"
 #include "natives.hpp"
 #include "network/Network.hpp"
 #include "pointers.hpp"
@@ -61,19 +62,10 @@ namespace big
 			g_fiber_pool->reset();
 		}
 
-		if (g_local_player && g_local_player->m_player_info)
-		{
-			ImGui::InputScalar("Rockstar ID",
-			    ImGuiDataType_S64,
-			    &g_local_player->m_player_info->m_net_player_data.m_gamer_handle.m_rockstar_id,
-			    nullptr,
-			    nullptr,
-			    nullptr,
-			    ImGuiInputTextFlags_ReadOnly);
-		}
+		ImGui::SeparatorText("Log Toggles");
 
 		ImGui::Checkbox("Log Native Script Hooks", &g.debug.logs.script_hook_logs);
-		ImGui::Checkbox("Enable Stupid Script Native Logs", &g.debug.logs.stupid_script_native_logs);
+		ImGui::Checkbox("Log Stupid Script Native hooks", &g.debug.logs.stupid_script_native_logs);
 
 		ImGui::Checkbox("Log Packets", &g.debug.logs.packet_logs);
 		ImGui::Checkbox("Log Net Events", &g.debug.logs.net_event_logs);
@@ -105,6 +97,8 @@ namespace big
 
 			ImGui::TreePop();
 		}
+
+		ImGui::SeparatorText("Info");
 
 		if (ImGui::TreeNode("Addresses"))
 		{
@@ -145,6 +139,17 @@ namespace big
 			}
 
 			ImGui::TreePop();
+		}
+
+		if (g_local_player && g_local_player->m_player_info)
+		{
+			ImGui::InputScalar("Rockstar ID",
+			    ImGuiDataType_S64,
+			    &g_local_player->m_player_info->m_net_player_data.m_gamer_handle.m_rockstar_id,
+			    nullptr,
+			    nullptr,
+			    nullptr,
+			    ImGuiInputTextFlags_ReadOnly);
 		}
 
 		components::command_button<"fastquit">();

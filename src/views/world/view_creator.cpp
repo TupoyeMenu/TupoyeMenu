@@ -1,4 +1,5 @@
 #include "fiber_pool.hpp"
+#include "imgui.h"
 #include "script.hpp"
 #include "services/creator_storage/creator_storage_service.hpp"
 #include "thread_pool.hpp"
@@ -20,7 +21,7 @@ namespace big
 		}
 
 		ImGui::PushItemWidth(250);
-		components::sub_title("Saved Jobs");
+		ImGui::Text("Saved Jobs");
 
 		if (ImGui::ListBoxHeader("##empty", ImVec2(200, 200)))
 		{
@@ -73,7 +74,7 @@ namespace big
 
 		ImGui::EndGroup();
 
-		components::sub_title("Launch Creator");
+		ImGui::SeparatorText("Launch Creator");
 		ImGui::BeginGroup();
 		components::button("Race", [] {
 			scripts::start_creator_script(RAGE_JOAAT("fm_race_creator"));
@@ -92,7 +93,7 @@ namespace big
 		});
 		ImGui::EndGroup();
 
-		components::sub_title("Creator Options");
+		ImGui::SeparatorText("Creator Options");
 		ImGui::BeginGroup();
 		ImGui::Checkbox("Infinite Model Memory", &g.ugc.infinite_model_memory);
 		ImGui::SameLine(); components::help_marker("Infinite Model Memory is only useful if dev mode is not activated");

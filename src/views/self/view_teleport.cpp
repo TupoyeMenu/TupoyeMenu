@@ -1,4 +1,5 @@
 #include "fiber_pool.hpp"
+#include "imgui.h"
 #include "util/globals.hpp"
 #include "util/mobile.hpp"
 #include "util/teleport.hpp"
@@ -16,14 +17,14 @@ namespace big
 		components::command_button<"objectivetp">({}, "Objective");
 		components::command_checkbox<"autotptowp">();
 
-		ImGui::Text("Vehicles:");
+		ImGui::SeparatorText("Vehicles:");
 		components::command_button<"lastvehtp">();
 		ImGui::SameLine();
 		components::command_button<"bringpv">();
 		ImGui::SameLine();
 		components::command_button<"pvtp">();
 
-		ImGui::Text("Manual:");
+		ImGui::SeparatorText("Manual:");
 		
 		static float coords[3] = { 0.f, 0.f, 0.f }; // This is shit
 		ImGui::InputFloat3("Coords", coords);

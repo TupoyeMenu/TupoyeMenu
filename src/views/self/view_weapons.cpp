@@ -3,6 +3,7 @@
 #include "core/data/special_ammo_types.hpp"
 #include "fiber_pool.hpp"
 #include "gta/joaat.hpp"
+#include "imgui.h"
 #include "natives.hpp"
 #include "pointers.hpp"
 #include "services/gta_data/gta_data_service.hpp"
@@ -12,28 +13,29 @@ namespace big
 {
 	void view::weapons()
 	{
-		components::sub_title("Ammo");
+		ImGui::Text("Ammo");
 
 		ImGui::BeginGroup();
-
 		components::command_checkbox<"infammo">();
-		components::command_checkbox<"infammoloop">();
-		components::command_checkbox<"infclip">();
 		components::command_checkbox<"infrange">();
+		ImGui::Checkbox("Increased C4 Limit (Max = 50)", &g.weapons.increased_c4_limit);
 		ImGui::Checkbox("Allow Weapons In Interiors", &g.weapons.interior_weapon);
+		components::command_checkbox<"rapidfire">();
 
 		ImGui::EndGroup();
 		ImGui::SameLine();
 		ImGui::BeginGroup();
 
-		ImGui::Checkbox("Increased C4 Limit (Max = 50)", &g.weapons.increased_c4_limit);
+		components::command_checkbox<"infammoloop">();
+		components::command_checkbox<"infclip">();
 		ImGui::Checkbox("Increased Flare Limit (Max = 50)", &g.weapons.increased_flare_limit);
-
-		components::command_checkbox<"rapidfire">();
+		components::command_checkbox<"vehallweapons">();
 
 		ImGui::EndGroup();
 
-		ImGui::Separator();
+
+		ImGui::SeparatorText("Special Ammo");
+
 
 		ImGui::Checkbox("Enable Special Ammo", &g.weapons.ammo_special.toggle);
 
@@ -76,9 +78,7 @@ namespace big
 			ImGui::EndCombo();
 		}
 
-		ImGui::Separator();
-
-		components::sub_title("Misc");
+		ImGui::SeparatorText("Misc");
 
 		components::command_checkbox<"crosshairs">();
 		ImGui::SameLine();
@@ -108,9 +108,7 @@ namespace big
 		components::command_checkbox<"incrdamage">();
 		ImGui::InputFloat("Damage", &g.weapons.increased_damage, .1, 10, "%.1f");
 
-		ImGui::Separator();
-
-		components::sub_title("Custom Weapons");
+		ImGui::SeparatorText("Custom Weapons");
 
 		CustomWeapon selected = g.weapons.custom_weapon;
 
@@ -155,8 +153,7 @@ namespace big
 			break;
 		}
 
-		ImGui::Separator();
-		components::sub_title("Aim Assistance");
+		ImGui::SeparatorText("Noob Mode");
 		components::command_checkbox<"triggerbot">();
 		ImGui::SameLine();
 		components::command_checkbox<"aimbot">();

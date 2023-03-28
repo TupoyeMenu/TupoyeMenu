@@ -38,7 +38,7 @@ namespace big
 			ImGui::SetClipboardText(buf);
 		});
 
-		components::sub_title("Session Switcher");
+		ImGui::SeparatorText("Session Switcher");
 		if (ImGui::ListBoxHeader("###session_switch"))
 		{
 			for (const auto& session_type : sessions)
@@ -50,7 +50,7 @@ namespace big
 			ImGui::EndListBox();
 		}
 
-		components::sub_title("Region Switcher");
+		ImGui::SeparatorText("Region Switcher");
 		if (ImGui::ListBoxHeader("###region_switch"))
 		{
 			for (const auto& region_type : regions)
@@ -74,13 +74,13 @@ namespace big
 		ImGui::SameLine();
 		components::help_marker("Allows you to join full and solo sessions but can be detected by other modders");
 
-		components::sub_title("Player Magnet");
+		ImGui::SeparatorText("Player Magnet");
 		ImGui::Checkbox("Enabled", &g.session.player_magnet_enabled);
 		if (g.session.player_magnet_enabled)
 		{
 			ImGui::InputInt("Player Count", &g.session.player_magnet_count);
 		}
-		components::sub_title("Chat");
+		ImGui::SeparatorText("Chat");
 		ImGui::Checkbox("Auto-kick Chat Spammers", &g.session.kick_chat_spammers);
 		ImGui::Checkbox("Disable Filter", &g.session.chat_force_clean);
 		ImGui::SameLine();
@@ -125,10 +125,10 @@ namespace big
 			}
 		}
 
-		components::sub_title("Decloak");
+		ImGui::SeparatorText("Decloak");
 		components::script_patch_checkbox("Reveal OTR Players", &g.session.decloak_players);
 
-		components::sub_title("Force Host");
+		ImGui::SeparatorText("Force Host");
 		ImGui::Checkbox("Force Session Host", &g.session.force_session_host);
 		ImGui::SameLine();
 		components::help_marker("Join another session to apply changes. The original host of the session must leave or be kicked. This feature is easily detectable by other mod menus, use with caution");
@@ -154,7 +154,7 @@ namespace big
 				});
 		}
 
-		components::sub_title("All Players");
+		ImGui::SeparatorText("All Players");
 		ImGui::Checkbox("Off The Radar", &g.session.off_radar_all);
 		ImGui::SameLine();
 		ImGui::Checkbox("Never Wanted", &g.session.never_wanted_all);
@@ -366,7 +366,7 @@ namespace big
 		ImGui::SameLine();
 		components::help_marker("This cannot be reversed. Use with caution");
 
-		components::sub_title("Script Host Features");
+		ImGui::SeparatorText("Script Host Features");
 		ImGui::Checkbox("Disable CEO Money", &g.session.block_ceo_money);
 		ImGui::SameLine();
 		components::help_marker("Blocks CEO money drops across the entire session. This can also break other stuff, use with caution");

@@ -1,5 +1,6 @@
 #include "core/data/speed_units.hpp"
 #include "fiber_pool.hpp"
+#include "imgui.h"
 #include "util/mobile.hpp"
 #include "util/teleport.hpp"
 #include "views/view.hpp"
@@ -37,36 +38,19 @@ namespace big
 			vehicle::bring(veh, self::pos, true, -1);
 		});
 
-		ImGui::Separator();
-
-		components::button("Turn Engine On", [] {
-			vehicle::set_engine_state(self::veh, true, g.vehicle.change_engine_state_immediately, g.vehicle.disable_engine_auto_start);
-		});
-		ImGui::SameLine();
-		components::button("Turn Engine Off", [] {
-			vehicle::set_engine_state(self::veh, false, g.vehicle.change_engine_state_immediately, g.vehicle.disable_engine_auto_start);
-		});
-		ImGui::Checkbox("Disable Engine Auto Start", &g.vehicle.disable_engine_auto_start);
-		ImGui::SameLine();
-		ImGui::Checkbox("Change State Immediately", &g.vehicle.change_engine_state_immediately);
-
-		ImGui::Separator();
-
-		components::sub_title("General");
+		ImGui::SeparatorText("General");
 		{
 			ImGui::BeginGroup();
 
 			ImGui::Checkbox("God Mode", &g.vehicle.god_mode);
 			components::command_checkbox<"hornboost">();
 			components::command_checkbox<"vehjump">();
-			ImGui::Checkbox("Vehicle Flares", &g.vehicle.flares);
 			components::command_checkbox<"invisveh">();
 			if (g.vehicle.vehinvisibility)
 			{
 				components::command_checkbox<"localinvisveh">();
 			}
 			components::command_checkbox<"vehnocollision">();
-			components::command_checkbox<"vehallweapons">();
 
 			ImGui::EndGroup();
 			ImGui::SameLine();
@@ -74,8 +58,9 @@ namespace big
 
 			components::command_checkbox<"instantbrake">();
 			components::command_checkbox<"blockhoming">();
-			components::command_checkbox<"driveonwater">();
 			ImGui::Checkbox("Vehicle Chaff", &g.vehicle.chaff);
+			ImGui::Checkbox("Vehicle Flares", &g.vehicle.flares);
+			components::command_checkbox<"remove_speed_limit">();
 
 			ImGui::EndGroup();
 			ImGui::SameLine();
@@ -87,16 +72,14 @@ namespace big
 			{
 				ImGui::Checkbox("Fully Automatic Signal", &g.vehicle.auto_turn_signals);
 			}
-			components::command_checkbox<"driveunder">();
-			components::command_checkbox<"remove_speed_limit">();
+			components::command_checkbox<"driveunder">(); // Who named this????????????
+			components::command_checkbox<"driveonwater">();
 			components::command_checkbox<"keeponground">();
 
 			ImGui::EndGroup();
 		}
-		ImGui::Separator();
-
-
-		components::sub_title("Proofs");
+		
+		ImGui::SeparatorText("Proofs");
 		{
 			if (ImGui::Button("Check all"))
 			{
@@ -149,9 +132,8 @@ namespace big
 
 			ImGui::EndGroup();
 		}
-		ImGui::Separator();
 
-		components::sub_title("Speed Unit");
+		ImGui::SeparatorText("Speed Unit");
 		{
 			ImGui::RadioButton(speed_unit_strings[(int)SpeedUnit::KMPH].c_str(), (int*)&g.vehicle.speed_unit, (int)SpeedUnit::KMPH);
 			ImGui::SameLine();
@@ -159,9 +141,8 @@ namespace big
 			ImGui::SameLine();
 			ImGui::RadioButton(speed_unit_strings[(int)SpeedUnit::MPS].c_str(), (int*)&g.vehicle.speed_unit, (int)SpeedUnit::MPS);
 		}
-		ImGui::Separator();
 
-		components::sub_title("Speedo Meter");
+		ImGui::SeparatorText("Speedo Meter");
 		{
 			ImGui::Checkbox("Enabled", &g.vehicle.speedo_meter.enabled);
 

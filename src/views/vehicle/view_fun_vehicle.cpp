@@ -14,7 +14,20 @@ namespace big
 {
 	void view::fun_vehicle()
 	{
-		components::sub_title("Seat Changer");
+		ImGui::Text("Engine");
+
+		components::button("Turn Engine On", [] {
+			vehicle::set_engine_state(self::veh, true, g.vehicle.change_engine_state_immediately, g.vehicle.disable_engine_auto_start);
+		});
+		ImGui::SameLine();
+		components::button("Turn Engine Off", [] {
+			vehicle::set_engine_state(self::veh, false, g.vehicle.change_engine_state_immediately, g.vehicle.disable_engine_auto_start);
+		});
+		ImGui::Checkbox("Disable Engine Auto Start", &g.vehicle.disable_engine_auto_start);
+		ImGui::SameLine();
+		ImGui::Checkbox("Change State Immediately", &g.vehicle.change_engine_state_immediately);
+
+		ImGui::SeparatorText("Seat Changer");
 		{
 			static std::map<int, bool> seats;
 			static bool ready = true;
@@ -80,10 +93,8 @@ namespace big
 				}
 			}
 		}
-		ImGui::Separator();
+		ImGui::SeparatorText("Auto Drive");
 
-
-		components::sub_title("Auto Drive");
 		{
 			float auto_drive_speed_user_unit = vehicle::mps_to_speed(g.vehicle.auto_drive_speed, g.vehicle.speed_unit);
 			if (ImGui::SliderFloat(std::format("Top Speed({})", speed_unit_strings[(int)g.vehicle.speed_unit]).c_str(),
@@ -133,10 +144,8 @@ namespace big
 			if (components::button("Emergency Stop"))
 				g.vehicle.auto_drive_destination = AutoDriveDestination::EMERGENCY_STOP;
 		}
-		ImGui::Separator();
+		ImGui::SeparatorText("Rainbow Paint");
 
-
-		components::sub_title("Rainbow Paint");
 		{
 			ImGui::Checkbox("Primary", &g.vehicle.rainbow_paint.primary);
 			ImGui::SameLine();
@@ -175,7 +184,7 @@ namespace big
 				ImGui::SliderInt("RGB Speed", &g.vehicle.rainbow_paint.speed, 1, 10);
 			}
 		}
-		ImGui::Separator();
+		ImGui::SeparatorText("Boost");
 
 		const char* boost_behaviors[] = {"Default", "Instant Refill", "Infinite"};
 		if (ImGui::BeginCombo("Boost Behavior", boost_behaviors[static_cast<int>(g.vehicle.boost_behavior)]))
@@ -198,10 +207,8 @@ namespace big
 			ImGui::EndCombo();
 		}
 
-		ImGui::Separator();
+		ImGui::SeparatorText("Vehicle Fly");
 
-
-		components::sub_title("Vehicle Fly");
 		{
 			ImGui::BeginGroup();
 

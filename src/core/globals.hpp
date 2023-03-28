@@ -1,11 +1,12 @@
 #pragma once
 #include "backend/reactions/interloper_reaction.hpp"
 #include "backend/reactions/reaction.hpp"
-#include "core/data/ptfx_effects.hpp"
 #include "enums.hpp"
 #include "file_manager.hpp"
 
 #include <bitset>
+
+#define IMGUI_DEFINE_MATH_OPERATORS
 #include <imgui.h>
 #include <rage/rlSessionInfo.hpp>
 #include <weapon/CAmmoInfo.hpp>
@@ -258,16 +259,6 @@ namespace big
 
 		struct self
 		{
-			struct ptfx_effects
-			{
-				bool show          = false;
-				float size         = 0.2f;
-				int select         = 0;
-				const char* asset  = "scr_agencyheist";
-				const char* effect = "scr_fbi_mop_drips";
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(ptfx_effects, show, size)
-			} ptfx_effects{};
-
 			bool allow_ragdoll      = false;
 			bool clean_player       = false;
 			bool force_wanted_level = false;
@@ -318,7 +309,7 @@ namespace big
 			// do not save below entries
 			bool dance_mode = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(self, ptfx_effects, allow_ragdoll, clean_player, force_wanted_level, free_cam, invisibility, local_visibility, never_wanted, no_ragdoll, noclip, off_radar, super_run, no_collision, unlimited_oxygen, no_water_collision, wanted_level, god_mode, part_water, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_drown, proof_water, proof_mask, mobile_radio, fast_respawn, auto_tp, hud)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(self, allow_ragdoll, clean_player, force_wanted_level, free_cam, invisibility, local_visibility, never_wanted, no_ragdoll, noclip, off_radar, super_run, no_collision, unlimited_oxygen, no_water_collision, wanted_level, god_mode, part_water, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_drown, proof_water, proof_mask, mobile_radio, fast_respawn, auto_tp, hud)
 		} self{};
 
 		struct session

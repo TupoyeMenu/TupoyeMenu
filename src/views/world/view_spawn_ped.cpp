@@ -224,7 +224,7 @@ namespace big
 			}
 		}
 
-		components::sub_title("Ped Model");
+		ImGui::Text("Ped Model");
 		{
 			ImGui::BeginGroup();
 			{
@@ -426,10 +426,8 @@ namespace big
 				}
 			}
 		}
-		ImGui::Separator();
 
-
-		components::sub_title("Weapon");
+		ImGui::SeparatorText("Weapon");
 		{
 			ImGui::BeginGroup();
 			{
@@ -526,10 +524,8 @@ namespace big
 			}
 			ImGui::EndGroup();
 		}
-		ImGui::Separator();
 
-
-		components::sub_title("Spawn For");
+		ImGui::SeparatorText("Spawn For");
 		{
 			if (ImGui::BeginCombo("##ped_for",
 			        (selected_ped_for_player_id == SPAWN_PED_FOR_SELF ?

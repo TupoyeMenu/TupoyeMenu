@@ -758,21 +758,6 @@ namespace big
 			m_write_player_appearance_data_node = ptr.as<PVOID>();
 		});
 
-		// Enumerate Audio Devices
-		main_batch.add("EAD", "48 89 5C 24 08 48 89 7C 24 10 55 48 8B EC 48 83 EC 70 41", [this](memory::handle ptr) {
-			m_enumerate_audio_devices = ptr.as<PVOID>();
-		});
-
-		// Direct Sound Capture Create
-		main_batch.add("DSCC", "E8 ? ? ? ? 33 FF 85 C0 78 C1", [this](memory::handle ptr) {
-			m_direct_sound_capture_create = ptr.add(1).rip().as<PVOID>();
-		});
-
-		// Refresh Audio Input
-		main_batch.add("RAI", "40 88 3D ? ? ? ? 89 05 ? ? ? ? 40 38 3D", [this](memory::handle ptr) {
-			m_refresh_audio_input = ptr.add(3).rip().as<bool*>();
-		});
-
 		// Disable Collision
 		main_batch.add("DC", "48 8B D1 49 8B CA ? ? ? ? ? 48 8B D1 49 8B CA", [this](memory::handle ptr) {
 			m_disable_collision = memory::byte_patch::make(ptr.sub(2).as<uint8_t*>(), 0xEB).get();

@@ -1,3 +1,4 @@
+#include "imgui.h"
 #include "util/local_player.hpp"
 #include "views/view.hpp"
 
@@ -5,14 +6,16 @@ namespace big
 {
 	void view::blackhole()
 	{
+		ImGui::Text("Blackhole");
+		
 		components::command_checkbox<"blackhole">();
 
-		components::sub_title("Entities");
+		ImGui::SeparatorText("Entities");
 		components::command_checkbox<"blackholeincvehs">();
 		ImGui::SameLine();
 		components::command_checkbox<"blackholeincpeds">();
 
-		components::sub_title("Position");
+		ImGui::SeparatorText("Position");
 		ImGui::InputFloat("X", &g.world.blackhole.pos.x, 5.f, 200.f);
 		ImGui::InputFloat("Y", &g.world.blackhole.pos.y, 5.f, 200.f);
 		ImGui::InputFloat("Z", &g.world.blackhole.pos.z, 5.f, 200.f);
@@ -26,7 +29,7 @@ namespace big
 			g.world.blackhole.pos.z = player_pos->z;
 		});
 
-		components::sub_title("Customize Hole");
+		ImGui::SeparatorText("Hole Color");
 		ImGui::SetNextItemWidth(214);
 		ImGui::ColorPicker3("Color", g.world.blackhole.color, ImGuiColorEditFlags_NoDragDrop | ImGuiColorEditFlags_NoOptions | ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_DisplayHex);
 		ImGui::SliderInt("Alpha", &g.world.blackhole.alpha, 0, 255);

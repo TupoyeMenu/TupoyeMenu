@@ -152,40 +152,4 @@ namespace big::toxic
 	{
 		set_time_all((*g_pointers->m_network_time)->m_time + millis);
 	}
-
-	inline void ragdoll_player_old(player_ptr target)
-	{
-		auto pos = target->get_ped()->get_position();
-		FIRE::ADD_EXPLOSION(pos->x, pos->y, pos->z, (int)eExplosionTag::DIR_WATER_HYDRANT, 1, false, true, 0, false);
-	}
-
-	inline void full_acceleration(player_ptr target)
-	{
-		if (!target->get_ped())
-			return;
-
-		Vehicle veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(target->id()), true);
-		if (entity::take_control_of(veh))
-			VEHICLE::SET_VEHICLE_FORWARD_SPEED(veh, VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(ENTITY::GET_ENTITY_MODEL(veh)) * 3);
-	}
-
-	inline void launch_vehicle_up(player_ptr target)
-	{
-		if (!target->get_ped())
-			return;
-
-		Entity ent = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(target->id());
-
-		if (!PED::IS_PED_IN_ANY_VEHICLE(ent, true))
-			g_notification_service->push_warning("Toxic", "Target player is not in a vehicle.");
-		else
-		{
-			ent = PED::GET_VEHICLE_PED_IS_IN(ent, false);
-
-			if (entity::take_control_of(ent))
-				ENTITY::APPLY_FORCE_TO_ENTITY(ent, 1, 0.f, 0.f, 3000, 0.f, 0.f, 0.f, 0, 0, 1, 1, 0, 1);
-			else
-				g_notification_service->push_warning("Toxic", "Failed to take control of player vehicle.");
-		}
-	}
 }

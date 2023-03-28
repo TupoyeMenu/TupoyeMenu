@@ -211,8 +211,7 @@ namespace big
 			});
 		}
 
-		ImGui::Separator();
-		components::sub_title("Mod Options");
+		ImGui::SeparatorText("Mod Options");
 
 		bool is_bulletproof_tires = !owned_mods[MOD_TIRE_CAN_BURST];
 		if (ImGui::Checkbox("Bulletproof Tires", (bool*)&is_bulletproof_tires))
@@ -246,11 +245,10 @@ namespace big
 			});
 		}
 
-		ImGui::Separator();
+		ImGui::SeparatorText("Slot");
 
 		ImGui::BeginGroup();
 
-		components::sub_title("Slot");
 		if (ImGui::ListBoxHeader("##slot", ImVec2(200, 200)))
 		{
 			for (const auto& [slot, name] : slot_display_names)
@@ -402,9 +400,7 @@ namespace big
 			}
 		}
 
-
-		ImGui::Separator();
-		components::sub_title("Neon Light Options");
+		ImGui::SeparatorText("Neon Light Options");
 
 		ImGui::PushID("##headlight_en");
 		if (ImGui::Checkbox("Headlight", (bool*)&owned_mods[MOD_XENON_LIGHTS]))
@@ -475,8 +471,7 @@ namespace big
 		});
 		ImGui::PopID();
 
-		ImGui::Separator();
-		components::sub_title("Color Options");
+		ImGui::SeparatorText("Color Options");
 
 		static int color_to_change = 0;
 		static int color_type      = 8;
