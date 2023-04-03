@@ -36,6 +36,8 @@ namespace big
 		static void mobile();
 		static void notifications();
 		static void spinner();
+		static void orbital_drone();
+		static void overlay();
 		static void root();
 		static void self_tabs();
 		static void self();

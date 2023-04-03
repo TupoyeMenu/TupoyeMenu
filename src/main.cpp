@@ -25,6 +25,7 @@
 #include "services/mobile/mobile_service.hpp"
 #include "services/model_preview/model_preview_service.hpp"
 #include "services/notifications/notification_service.hpp"
+#include "services/orbital_drone/orbital_drone.hpp"
 #include "services/pickups/pickup_service.hpp"
 #include "services/player_database/player_database_service.hpp"
 #include "services/players/player_service.hpp"
@@ -131,7 +132,9 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				    g_script_mgr.add_script(std::make_unique<script>(&backend::turnsignal_loop, "Turn Signals"));
 				    g_script_mgr.add_script(std::make_unique<script>(&backend::disable_control_action_loop, "Disable Controls"));
 				    g_script_mgr.add_script(std::make_unique<script>(&backend::world_loop, "World"));
+				    g_script_mgr.add_script(std::make_unique<script>(&backend::orbital_drone, "Orbital Drone"));
 				    g_script_mgr.add_script(std::make_unique<script>(&context_menu_service::context_menu, "Context Menu"));
+
 				    LOG(INFO) << "Scripts registered.";
 
 				    auto native_hooks_instance = std::make_unique<native_hooks>();
