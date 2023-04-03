@@ -67,7 +67,6 @@ namespace big
 		static void context_menu();
 		static void gta_data();
 		static void menu_bar();
-		static void overlay();
 		static void chat_tabs();
 		static void chat();
 		static void chat_dm();

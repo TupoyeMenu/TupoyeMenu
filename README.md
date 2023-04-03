@@ -4,6 +4,7 @@
 
 A garbage fork of YimMenu made by an idiot
 
+## Using TupoyMenu master is not recommended lite branch is preffered
 This fork aims to make the game more enjoyable by adding untested broken features that crash your game.
 Strictly for educational purposes.
 
@@ -12,15 +13,19 @@ So here I am with an up-to-date menu focusing on protecting the user from toxic 
 
 ## Table of contents
 
- * [How to build](#how-to-build)
-    * [Curl](#curl)
-    * [Git](#git)
-    * [CMake](#CMake)
-    * [Cloning and generating project files](#cloning-and-generating-project-files)
- * [Staying Up To Date](#staying-up-to-date)
- * [Project Structure](#project-structure)
- * [Features](#features)
- * [Contributing](#contributing)
+- [TupoyeMenu](#tupoyemenu)
+  - [Using TupoyMenu master is not recommended lite branch is preffered](#using-tupoymenu-master-is-not-recommended-lite-branch-is-preffered)
+  - [Table of contents](#table-of-contents)
+  - [How to build](#how-to-build)
+    - [Curl](#curl)
+    - [Git](#git)
+    - [CMake](#cmake)
+    - [Cloning and generating project files](#cloning-and-generating-project-files)
+      - [Generate project files](#generate-project-files)
+  - [Staying Up To Date](#staying-up-to-date)
+  - [Project Structure](#project-structure)
+  - [Features](#features)
+  - [Contributing](#contributing)
  
 ## How to build
 

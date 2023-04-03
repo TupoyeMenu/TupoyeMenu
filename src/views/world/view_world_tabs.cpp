@@ -52,6 +52,11 @@ namespace big
 				view::nearby();
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("Orbital Drone"))
+			{
+				view::orbital_drone();
+				ImGui::EndTabItem();
+			}
 			ImGui::EndTabBar();
 		}
 	}
