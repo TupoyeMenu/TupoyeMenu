@@ -46,6 +46,14 @@ namespace big
 					{
 						g_gta_data_service->update_in_online();
 					}
+
+					if (*g_pointers->m_game_state == eGameState::Respawn)
+					{
+						if (ImGui::Button("Update Cache On Init"))
+						{
+							g_gta_data_service->update_on_init();
+						}
+					}		
 				}
 
 				break;
@@ -63,6 +71,18 @@ namespace big
 				break;
 			}
 			case eGtaDataUpdateState::UPDATING:
+			{
+				ImGui::Text("Updating cache, please wait...");
+
+				break;
+			}
+			case eGtaDataUpdateState::ON_INIT_WAITING:
+			{
+				ImGui::Text("Waiting for single player to be loaded...");
+
+				break;
+			}
+			case eGtaDataUpdateState::ON_INIT_UPDATE_START:
 			{
 				ImGui::Text("Updating cache, please wait...");
 

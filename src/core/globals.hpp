@@ -403,7 +403,7 @@ namespace big
 				int fill_ammo            = 0;
 				int fast_quit            = 0;
 				int cmd_excecutor        = 0x55;
-        
+
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys, editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, noclip, bringvehicle, invis, heal, fill_inventory, skip_cutscene, freecam, superrun, invisveh, localinvisveh, fill_ammo, fast_quit, cmd_excecutor)
 			} hotkeys{};
 
@@ -666,7 +666,7 @@ namespace big
 				float fov                   = 90.f;
 				float distance              = 200.f;
 				std::uint32_t selected_bone = 0x796E; // Default to head
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(aimbot, enable, smoothing, smoothing_speed, fov, selected_bone)
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(aimbot, enable, smoothing, smoothing_speed, fov, distance, selected_bone)
 			} aimbot{};
 
 			CustomWeapon custom_weapon    = CustomWeapon::NONE;

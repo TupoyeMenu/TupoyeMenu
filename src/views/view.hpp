@@ -31,6 +31,7 @@ namespace big
 		static void mobile();
 		static void notifications();
 		static void spinner();
+		static void overlay();
 		static void root();
 		static void self_tabs();
 		static void self();
@@ -59,10 +60,6 @@ namespace big
 		static void context_menu();
 		static void gta_data();
 		static void menu_bar();
-		static void overlay();
-		static void chat_tabs();
-		static void chat();
-		static void chat_dm();
 		static void creator();
 		static void blackhole();
 		static void model_swapper();

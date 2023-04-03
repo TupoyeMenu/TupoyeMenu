@@ -40,7 +40,7 @@ TupoyeMenu-lite is based of off TupoyeMenu wich is based off of YimMenu wich bas
 | Show transaction error | Breaks gameplay for no reason |
 | PTFX             | Useless bloat          |
 | Voice chat audio | Useless bloat          |
-| 
+| Orbital drone    | Bloat                  |
 
 ### Reworked
 | Feature | Reason                                   | Description   |
