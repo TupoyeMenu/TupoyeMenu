@@ -355,6 +355,7 @@ namespace big
 			bool force_script_host     = false;
 			bool player_magnet_enabled = false;
 			int player_magnet_count    = 32;
+			bool is_team               = false;
 			bool join_in_sctv_slots    = false;
 
 			const char chat_command_prefix = '/';
@@ -455,7 +456,7 @@ namespace big
 		{
 			struct orbital_drone
 			{
-				bool enabled = false;
+				bool enabled             = false;
 				bool detect_player       = false;
 				float nav_ovverride_fast = 3.f;
 				float nav_ovverride_slow = 0.25f;
