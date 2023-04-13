@@ -7,14 +7,14 @@ namespace big
 	{
 		if (ImGui::BeginTabBar("world_tabbar"))
 		{
-			if (ImGui::BeginTabItem("Spawn Ped"))
-			{
-				view::spawn_ped();
-				ImGui::EndTabItem();
-			}
 			if (ImGui::BeginTabItem("Time And Weather"))
 			{
 				view::time_and_weather();
+				ImGui::EndTabItem();
+			}
+			if (ImGui::BeginTabItem("Spawn Ped"))
+			{
+				view::spawn_ped();
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Embient Population"))
@@ -42,6 +42,7 @@ namespace big
 				view::nearby();
 				ImGui::EndTabItem();
 			}
+
 			ImGui::EndTabBar();
 		}
 	}

@@ -41,6 +41,7 @@ TupoyeMenu-lite is based of off TupoyeMenu wich is based off of YimMenu wich bas
 | PTFX             | Useless bloat          |
 | Voice chat audio | Useless bloat          |
 | Orbital drone    | Bloat                  |
+| Vehicle Controller | Bloat                |
 
 ### Reworked
 | Feature | Reason                                   | Description   |

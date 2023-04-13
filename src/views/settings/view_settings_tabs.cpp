@@ -42,9 +42,9 @@ namespace big
 				view::protection_settings();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Stat Editor"))
+			if (ImGui::BeginTabItem("GTA Cache"))
 			{
-				view::stat_editor();
+				view::gta_cache();
 				ImGui::EndTabItem();
 			}
 

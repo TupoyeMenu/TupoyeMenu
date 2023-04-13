@@ -253,8 +253,9 @@ namespace big
 			bool rid_join        = false;
 			bool lessen_breakups = false; // disabled by default due to anticheat concerns
 			bool receive_pickup  = false;
+			bool admin_check     = true;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(protections, script_events, rid_join, request_control, lessen_breakups, desync_kick, receive_pickup)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(protections, script_events, rid_join, request_control, lessen_breakups, desync_kick, receive_pickup, admin_check)
 		} protections{};
 
 		struct self
@@ -341,6 +342,7 @@ namespace big
 			bool force_script_host     = false;
 			bool player_magnet_enabled = false;
 			int player_magnet_count    = 32;
+			bool is_team               = false;
 			bool join_in_sctv_slots    = false;
 
 			const char chat_command_prefix = '/';

@@ -32,6 +32,12 @@ namespace big
 				view::session_browser();
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("Stat Editor"))
+			{
+				view::stat_editor();
+				ImGui::EndTabItem();
+			}
+
 			ImGui::EndTabBar();
 		}
 	}

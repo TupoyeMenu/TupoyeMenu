@@ -10,6 +10,8 @@
 #include "thread_pool.hpp"
 #include "util/misc.hpp"
 #include "util/system.hpp"
+#include "util/ped.hpp"
+#include "util/pathfind.hpp"
 #include "views/view.hpp"
 
 namespace big
@@ -55,11 +57,35 @@ namespace big
 			NETWORK::SHUTDOWN_AND_LOAD_MOST_RECENT_SAVE();
 		});
 
+		components::button("Tp To Safe Pos", [] {
+			Vector3 safepos{};
+			float heading;
+			if (pathfind::find_closest_vehicle_node(self::pos, safepos, heading, 0))
+				ENTITY::SET_ENTITY_COORDS(self::ped, safepos.x, safepos.y, safepos.z, 0, 0, 0, false);
+			else
+				g_notification_service->push_error("Find safe pos", "Failed to find a safe position");
+		});
+
 		ImGui::Text("Fiber Pool Usage %d/%d", g_fiber_pool->get_used_fibers(), g_fiber_pool->get_total_fibers());
 		ImGui::SameLine();
 		if (components::button("Reset"))
 		{
 			g_fiber_pool->reset();
+		}
+
+		if (ImGui::TreeNode("Animation player"))
+		{
+			static char dict[100], anim[100];
+
+			ImGui::PushItemWidth(200);
+			components::input_text_with_hint("##dictionary", "Dict", dict, IM_ARRAYSIZE(dict));
+			components::input_text_with_hint("##animation", "Animation", anim, IM_ARRAYSIZE(anim));
+			if (ImGui::Button("Play animation"))
+				g_fiber_pool->queue_job([=] {
+					ped::ped_play_animation(self::ped, dict, anim);
+				});
+			ImGui::PopItemWidth();
+			ImGui::TreePop();
 		}
 
 		ImGui::SeparatorText("Log Toggles");
@@ -139,17 +165,6 @@ namespace big
 			}
 
 			ImGui::TreePop();
-		}
-
-		if (g_local_player && g_local_player->m_player_info)
-		{
-			ImGui::InputScalar("Rockstar ID",
-			    ImGuiDataType_S64,
-			    &g_local_player->m_player_info->m_net_player_data.m_gamer_handle.m_rockstar_id,
-			    nullptr,
-			    nullptr,
-			    nullptr,
-			    ImGuiInputTextFlags_ReadOnly);
 		}
 
 		components::command_button<"fastquit">();

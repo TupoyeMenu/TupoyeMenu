@@ -8,6 +8,7 @@
 #include "pointers.hpp"
 #include "script.hpp"
 #include "script_global.hpp"
+#include "gta/enums.hpp"
 
 namespace big::vehicle
 {
@@ -885,5 +886,96 @@ namespace big::vehicle
 			}
 			return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMOD_DEF_0");
 		}
+	}
+
+	/*
+	 Set doorId to eDoorId::VEH_EXT_DOOR_INVALID_ID or simply -1 to apply to all vehicle doors.
+	*/
+	inline bool change_vehicle_door_lock_state(Vehicle veh, eDoorId doorId, eVehicleLockState state)
+	{
+		if (ENTITY::DOES_ENTITY_EXIST(veh))
+		{
+			if (doorId == eDoorId::VEH_EXT_DOOR_INVALID_ID)
+			{
+				VEHICLE::SET_VEHICLE_DOORS_LOCKED(veh, (int)state);
+				for (int i = 0; i < 6; i++)
+					VEHICLE::SET_VEHICLE_INDIVIDUAL_DOORS_LOCKED(veh, i, (int)state);
+				return VEHICLE::GET_VEHICLE_DOOR_LOCK_STATUS(veh) == (int)state;
+			}
+			else
+			{
+				if (VEHICLE::GET_IS_DOOR_VALID(veh, (int)doorId))
+					VEHICLE::SET_VEHICLE_INDIVIDUAL_DOORS_LOCKED(veh, (int)doorId, (int)state);
+
+				return VEHICLE::GET_VEHICLE_INDIVIDUAL_DOOR_LOCK_STATUS(veh, (int) doorId) == (int)state;
+			}
+		}
+
+		return false;
+	}
+
+	/*
+	* Set 'open' to false to close the door.
+	* Set doorId to eDoorId::VEH_EXT_DOOR_INVALID_ID or simply -1 to apply to all doors.
+	*/
+	inline bool operate_vehicle_door(Vehicle veh, eDoorId doorId, bool open)
+	{
+
+		bool success = false;
+		if (ENTITY::DOES_ENTITY_EXIST(veh))
+		{	
+			for (int i = 0; i < 6; i++)
+			{
+				if (doorId == eDoorId::VEH_EXT_DOOR_INVALID_ID || (int)doorId == i)
+				{
+					if (VEHICLE::GET_IS_DOOR_VALID(veh, i))
+					{
+						if (open)
+							VEHICLE::SET_VEHICLE_DOOR_OPEN(veh, i, false, false);
+						else
+							VEHICLE::SET_VEHICLE_DOOR_SHUT(veh, i, false);
+					}
+					success = true;
+				}
+			}
+		}
+		return success;
+	}
+
+	inline bool operate_vehicle_headlights(Vehicle veh, bool lights, bool highbeams)
+	{
+		if (ENTITY::DOES_ENTITY_EXIST(veh))
+		{
+			VEHICLE::SET_VEHICLE_FULLBEAM(veh, highbeams);
+			VEHICLE::SET_VEHICLE_LIGHTS(veh, lights ? 3 : 4);
+			int regular, highbeam;
+			VEHICLE::GET_VEHICLE_LIGHTS_STATE(veh, &regular, &highbeam);
+			return regular == (int)lights && (int)highbeams == highbeam;
+		}
+
+		return false;
+	}
+
+	/*
+	* Input index -1 to apply to all neons.
+	*/
+	inline bool operate_vehicle_neons(Vehicle veh, int index, bool toggle)
+	{
+
+		bool success = false;
+		if (ENTITY::DOES_ENTITY_EXIST(veh))
+		{
+			VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0); 
+			for (int i = 0; i < 4; i++)
+			{
+				if (index == -1 || index == i)
+				{
+					VEHICLE::SET_VEHICLE_NEON_ENABLED(veh, index, toggle);
+					success = true;
+				}
+			}
+		}
+
+		return success;
 	}
 }

@@ -14,6 +14,7 @@ namespace big
 		static void main_view();
 		static void debug_script_events();
 		static void debug_globals();
+		static void debug_locals();
 		static void debug_misc();
 		static void debug_threads();
 		static void debug_tabs();
@@ -35,7 +36,6 @@ namespace big
 		static void root();
 		static void self_tabs();
 		static void self();
-		static void outfit_editor(Ped ped_to_edit);
 		static void session();
 		static void settings_tabs();
 		static void missions();
@@ -64,6 +64,8 @@ namespace big
 		static void blackhole();
 		static void model_swapper();
 		static void nearby();
+		static void world();
+		static void gta_cache();
 
 		static void cmd_executor();
 

@@ -7,11 +7,6 @@ namespace big
 {
 	namespace freemode
 	{
-		inline void NETWORK_BAIL(rage::scrNativeCallContext* src)
-		{
-			LOG(INFO) << "NETWORK_BAIL prevented";
-		}
-
 		inline void IS_PLAYER_PLAYING(rage::scrNativeCallContext* src)
 		{
 			// block undead OTR
