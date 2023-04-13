@@ -7,14 +7,14 @@ namespace big
 	{
 		if (ImGui::BeginTabBar("world_tabbar"))
 		{
+			if (ImGui::BeginTabItem("GUI_TAB_WORLD"_T.data()))
+			{
+				view::world();
+				ImGui::EndTabItem();
+			}
 			if (ImGui::BeginTabItem("GUI_TAB_SPAWN_PED"_T.data()))
 			{
 				view::spawn_ped();
-				ImGui::EndTabItem();
-			}
-			if (ImGui::BeginTabItem("GUI_TAB_TIME_N_WEATHER"_T.data()))
-			{
-				view::time_and_weather();
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Embient Population"))
@@ -32,11 +32,6 @@ namespace big
 				view::train();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_WATER"_T.data()))
-			{
-				view::water();
-				ImGui::EndTabItem();
-			}
 			if (ImGui::BeginTabItem("GUI_TAB_BLACKHOLE"_T.data()))
 			{
 				view::blackhole();
@@ -52,7 +47,7 @@ namespace big
 				view::nearby();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Orbital Drone"))
+			if (ImGui::BeginTabItem("GUI_TAB_ORBITAL_DRONE"_T.data()))
 			{
 				view::orbital_drone();
 				ImGui::EndTabItem();

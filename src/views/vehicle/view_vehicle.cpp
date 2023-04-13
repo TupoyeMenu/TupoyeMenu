@@ -79,7 +79,8 @@ namespace big
 			components::command_checkbox<"blockhoming">();
 			components::command_checkbox<"driveonwater">();
 			ImGui::Checkbox("Vehicle Chaff", &g.vehicle.chaff);
-
+			components::command_checkbox<"vehiclecontrol">();
+			
 			ImGui::EndGroup();
 			ImGui::SameLine();
 			ImGui::BeginGroup();

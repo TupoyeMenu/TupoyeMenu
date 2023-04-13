@@ -1,3 +1,5 @@
+#include "core/data/admin_rids.hpp"
+#include "core/globals.hpp"
 #include "fiber_pool.hpp"
 #include "gta_util.hpp"
 #include "hooking.hpp"
@@ -9,8 +11,10 @@
 
 #include <network/Network.hpp>
 
+
 namespace big
 {
+
 	void* hooks::assign_physical_index(CNetworkPlayerMgr* netPlayerMgr, CNetGamePlayer* player, uint8_t new_index)
 	{
 		const auto* net_player_data = player->get_net_data();
@@ -43,6 +47,19 @@ namespace big
 		g_player_service->player_join(player);
 		if (net_player_data)
 		{
+			if (g.protections.admin_check)
+			{
+				auto found = std::find(admin_rids.begin(), admin_rids.end(), net_player_data->m_gamer_handle.m_rockstar_id);
+				if (found != admin_rids.end())
+				{
+					g_notification_service->push_warning("POTENTIAL_ADMIN_FOUND"_T.data(),
+					    std::vformat("PLAYER_DETECTED_AS_ADMIN"_T, std::make_format_args(net_player_data->m_name)));
+					LOG(WARNING) << net_player_data->m_name << " (" << net_player_data->m_gamer_handle.m_rockstar_id << ") has been detected as admin";
+					auto id = player->m_player_id;
+					if (auto plyr = g_player_service->get_by_id(id))
+						plyr->is_rockstar_admin = true;
+				}
+			}
 			if (g.notifications.player_join.above_map && *g_pointers->m_is_session_started) // prevent loading screen spam
 				notify::player_joined(player);
 
@@ -69,16 +86,8 @@ namespace big
 						        plyr->get_net_data()->m_gamer_handle.m_rockstar_id))
 						{
 							plyr->is_modder         = entry->is_modder;
-							plyr->is_rockstar_admin = entry->is_rockstar_admin;
 							plyr->block_join        = entry->block_join;
 							plyr->block_join_reason = plyr->block_join_reason;
-
-							if (entry->is_rockstar_admin)
-							{
-								std::string text = std::format("R* Admin: {} #{} joined", entry->name, entry->rockstar_id);
-								g_notification_service->push_error("R* Admin Joined", text);
-								LOG(WARNING) << text;
-							}
 
 							if (strcmp(plyr->get_name(), entry->name.data()))
 							{
@@ -102,4 +111,5 @@ namespace big
 		}
 		return result;
 	}
+
 }

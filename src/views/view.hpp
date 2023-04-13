@@ -14,6 +14,7 @@ namespace big
 		static void main_view();
 		static void debug_script_events();
 		static void debug_globals();
+		static void debug_locals();
 		static void debug_ped_flags();
 		static void debug_misc();
 		static void debug_threads();
@@ -55,6 +56,7 @@ namespace big
 		static void pv();
 		static void persist_car();
 		static void fun_vehicle();
+		static void vehicle_control();
 		static void spawn_ped();
 		static void world_tabs();
 		static void ambient();
@@ -72,10 +74,11 @@ namespace big
 		static void chat_dm();
 		static void creator();
 		static void train();
-		static void water();
 		static void blackhole();
 		static void model_swapper();
 		static void nearby();
+		static void world();
+		static void gta_cache();
 
 		static void cmd_executor();
 

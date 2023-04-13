@@ -47,21 +47,12 @@ namespace big
 				view::protection_settings();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_STAT_EDITOR"_T.data()))
+			if (ImGui::BeginTabItem("GTA Cache"))
 			{
-				view::stat_editor();
+				view::gta_cache();
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_OUTFIT_EDITOR"_T.data()))
-			{
-				view::outfit_editor();
-				ImGui::EndTabItem();
-			}
-			if (ImGui::BeginTabItem("GUI_TAB_OUTFIT_SLOTS"_T.data()))
-			{
-				view::outfit_slots();
-				ImGui::EndTabItem();
-			}
+
 			ImGui::EndTabBar();
 		}
 	}
