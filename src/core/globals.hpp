@@ -163,6 +163,7 @@ namespace big
 		struct reactions
 		{
 			reaction bounty{"Bounty", "Blocked Bounty from %s", "%s tried to set a bounty on me!"};
+			interloper_reaction blame_explode{"Blame Explode", "%s blamed %s for explosion", "%s blamed %s for explosion", false, false};
 			reaction ceo_kick{"CEO Kick", "Blocked CEO Kick from %s", "%s tried to kick me from my CEO!"};
 			reaction ceo_money{"CEO Money", "Blocked CEO Money from %s", "%s tried to drop money on me!"};
 			reaction clear_wanted_level{"Clear Wanted Level", "Blocked Clear Wanted Level from %s", "%s tried to clear my wanted level!"};
@@ -210,7 +211,7 @@ namespace big
 			reaction gamer_instruction_kick{"Gamer Instruction Kick", "Blocked Gamer Instruction Kick from %s", "%s tried to kick me out!"};
 			interloper_reaction lost_connection_kick_others{"Lost Connection Kick On Other Players", "%s is trying to lost connection kick %s!", "%s is trying to lost connection kick %s!", true, false};
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(reactions, bounty, ceo_money, ceo_kick, clear_wanted_level, crash, end_session_kick, fake_deposit, force_mission, force_teleport, gta_banner, kick_from_interior, mc_teleport, network_bail, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate_notification, give_collectible, transaction_error, tse_freeze, tse_sender_mismatch, vehicle_kick, teleport_to_warehouse, trigger_business_raid, start_activity, start_script, null_function_kick, destroy_personal_vehicle, clear_ped_tasks, turn_into_beast, remote_wanted_level, remote_wanted_level_others, remote_ragdoll, kick_vote, report_cash_spawn, modder_detection, request_control_event, report, breakup_others, gamer_instruction_kick, lost_connection_kick, lost_connection_kick_others)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(reactions, bounty, blame_explode, ceo_money, ceo_kick, clear_wanted_level, crash, end_session_kick, fake_deposit, force_mission, force_teleport, gta_banner, kick_from_interior, mc_teleport, network_bail, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate_notification, give_collectible, transaction_error, tse_freeze, tse_sender_mismatch, vehicle_kick, teleport_to_warehouse, trigger_business_raid, start_activity, start_script, null_function_kick, destroy_personal_vehicle, clear_ped_tasks, turn_into_beast, remote_wanted_level, remote_wanted_level_others, remote_ragdoll, kick_vote, report_cash_spawn, modder_detection, request_control_event, report, breakup_others, gamer_instruction_kick, lost_connection_kick, lost_connection_kick_others)
 		} reactions{};
 
 		struct player
@@ -336,7 +337,6 @@ namespace big
 			} custom_time;
 			bool chat_force_clean      = false;
 			bool log_chat_messages     = false;
-			bool log_text_messages     = false;
 			bool decloak_players       = false;
 			bool force_session_host    = false;
 			bool force_script_host     = false;
@@ -381,7 +381,7 @@ namespace big
 			bool show_cheating_message = false;
 			bool anonymous_bounty      = true;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, local_weather, override_time, override_weather, custom_time, population_control, chat_force_clean, log_chat_messages, log_text_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, join_in_sctv_slots, kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, local_weather, override_time, override_weather, custom_time, population_control, chat_force_clean, log_chat_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, join_in_sctv_slots, kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty)
 		} session{};
 
 		struct settings
@@ -656,21 +656,6 @@ namespace big
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(gravity_gun, launch_on_release)
 			} gravity_gun;
 
-			struct aimbot
-			{
-				bool enable                 = false;
-				bool smoothing              = true;
-				float smoothing_speed       = 2.f;
-				bool on_player              = true;
-				bool on_enemy               = false;
-				bool on_police              = false;
-				bool on_npc                 = false;
-				float fov                   = 90.f;
-				float distance              = 200.f;
-				std::uint32_t selected_bone = 0x796E; // Default to head
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(aimbot, enable, smoothing, smoothing_speed, fov, distance, selected_bone)
-			} aimbot{};
-
 			CustomWeapon custom_weapon    = CustomWeapon::NONE;
 			bool force_crosshairs         = false;
 			bool infinite_ammo_loop       = false;
@@ -685,10 +670,9 @@ namespace big
 			bool increased_flare_limit    = false;
 			bool rapid_fire               = false;
 			bool interior_weapon          = false;
-			bool triggerbot               = false;
 			bool infinite_range           = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(weapons, ammo_special, custom_weapon, aimbot, force_crosshairs, infinite_ammo, infinite_ammo_loop, infinite_mag, increased_damage, increase_damage, no_recoil, no_spread, vehicle_gun_model, increased_c4_limit, increased_flare_limit, rapid_fire, gravity_gun, interior_weapon, triggerbot, infinite_range)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(weapons, ammo_special, custom_weapon, force_crosshairs, infinite_ammo, infinite_ammo_loop, infinite_mag, increased_damage, increase_damage, no_recoil, no_spread, vehicle_gun_model, increased_c4_limit, increased_flare_limit, rapid_fire, gravity_gun, interior_weapon, infinite_range)
 		} weapons{};
 
 		struct window

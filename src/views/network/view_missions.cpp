@@ -24,7 +24,7 @@ namespace big
 	{
 		mission_found = false;
 
-		components::sub_title("Event Starter");
+		ImGui::Text("Event Starter");
 
 		ImGui::BeginGroup();
 		components::button("Hot Target", [] {
@@ -95,7 +95,7 @@ namespace big
 		});
 		ImGui::EndGroup();
 
-		ImGui::Separator();
+		ImGui::SeparatorText("Current Event");
 
 		if (check_script(RAGE_JOAAT("am_criminal_damage")))
 		{
@@ -281,5 +281,25 @@ namespace big
 		{
 			ImGui::Text("No active mission");
 		}
+
+		ImGui::SeparatorText("MiniGames");
+
+		components::command_button<"tutorialall">();
+		ImGui::SameLine();
+		components::command_button<"golfall">();
+		ImGui::SameLine();
+		components::command_button<"flightschoolall">();
+		ImGui::SameLine();
+		components::command_button<"dartsall">();
+
+		components::command_button<"badlandsall">();
+		ImGui::SameLine();
+		components::command_button<"spacemonkeyall">();
+		ImGui::SameLine();
+		components::command_button<"wizardall">();
+
+		components::command_button<"qub3dall">();
+		ImGui::SameLine();
+		components::command_button<"camhedzall">();
 	}
 }

@@ -13,7 +13,7 @@ namespace big
 		auto veh_count = g_gta_data_service->vehicles().size();
 		auto wep_count = g_gta_data_service->weapons().size();
 
-		components::sub_title("GTA cache stats:");
+		ImGui::Text("GTA cache stats:");
 		ImGui::Text("Peds Cached: %d\nVehicles Cached: %d\nWeapons Cached: %d", ped_count, veh_count, wep_count);
 
 		if (components::button("Rebuild Cache in Online"))

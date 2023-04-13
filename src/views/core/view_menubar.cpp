@@ -11,23 +11,27 @@ namespace big
 		{
 			if (ImGui::BeginMenu("File"))
 			{
-				if (ImGui::MenuItem("Unload Menu"))
+				if (ImGui::MenuItem("Unload Menu Clean"))
 				{
 					g_fiber_pool->reset();
 					g_fiber_pool->queue_job([] {
 						for (auto& command : g_looped_commands)
 							if (command->is_enabled())
 								command->on_disable();
-
 						g_running = false;
 					});
 				}
 
+				if (ImGui::MenuItem("Unload Menu Dumb"))
+				{
+					g_fiber_pool->reset();
+					g_running = false;
+				}
+
 				if (ImGui::MenuItem("Rage Quit (hard crash)"))
 				{
-					exit(0);
 					g_running = false;
-
+					exit(0);
 					TerminateProcess(GetCurrentProcess(), 0);
 				}
 				ImGui::EndMenu();

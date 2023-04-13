@@ -8,6 +8,7 @@ namespace big
 
 		virtual void execute(const std::vector<std::uint64_t>&, const std::shared_ptr<command_context> ctx)
 		{
+			g_running = false;
 			exit(0);
 		}
 	};

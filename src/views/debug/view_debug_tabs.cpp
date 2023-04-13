@@ -22,6 +22,11 @@ namespace big
 				view::debug_globals();
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("Locals"))
+			{
+				view::debug_locals();
+				ImGui::EndTabItem();
+			}
 			if (ImGui::BeginTabItem("Misc"))
 			{
 				view::debug_misc();

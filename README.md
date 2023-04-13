@@ -42,6 +42,7 @@ TupoyeMenu-lite is based of off TupoyeMenu wich is based off of YimMenu wich bas
 | Voice chat audio | Useless bloat          |
 | Orbital drone    | Bloat                  |
 | Vehicle Controller | Bloat                |
+| Aimbot & triggerbot | Bloat, cheats bad, L, noob, low quality, useless, cringe, learn how to aim |
 
 ### Reworked
 | Feature | Reason                                   | Description   |
@@ -67,6 +68,7 @@ Below is an incomplete list of feature that I believe are notable to this "base"
 
  - Smaller then TupoyeMenu
  - Bigger then YimMenu wtf how???
+ - EDIT: Now YimMenu is bigger, sad.
  
 ## Contributing
 

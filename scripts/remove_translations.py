@@ -1,4 +1,4 @@
-# Usage python3 remove_translations.py {path_to_file}
+# Usage `python3 remove_translations.py {path_to_file}`
 
 import json, sys, urllib.request
 

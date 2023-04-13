@@ -13,33 +13,32 @@ namespace big
 		ImGui::PopID();
 	}
 
+	void draw_common_reaction(reaction& reaction)
+	{
+		ImGui::Checkbox("Announce In Chat", &reaction.announce_in_chat);
+		ImGui::Checkbox("Notify", &reaction.notify);
+		ImGui::Checkbox("Log", &reaction.log);
+		ImGui::Checkbox("Add Player To Database", &reaction.add_to_player_db);
+		ImGui::BeginDisabled(!reaction.add_to_player_db);
+			ImGui::Checkbox("Block Joins", &reaction.block_joins);
+		ImGui::EndDisabled();
+		ImGui::Checkbox("Kick Attacker", &reaction.kick);
+	}
+
 	void draw_reaction(reaction& reaction)
 	{
 		if (ImGui::TreeNode(reaction.m_event_name))
 		{
-			ImGui::Checkbox("Announce In Chat", &reaction.announce_in_chat);
-			ImGui::Checkbox("Notify", &reaction.notify);
-			ImGui::Checkbox("Log", &reaction.log);
-			ImGui::Checkbox("Add Player To Database", &reaction.add_to_player_db);
-			if (reaction.add_to_player_db)
-				ImGui::Checkbox("Block Joins", &reaction.block_joins);
-			ImGui::Checkbox("Kick Player", &reaction.kick);
+			draw_common_reaction(reaction);
 			ImGui::TreePop();
 		}
 	}
 
-	// TODO code duplication
 	void draw_interloper_reaction(interloper_reaction& reaction)
 	{
 		if (ImGui::TreeNode(reaction.m_event_name))
 		{
-			ImGui::Checkbox("Announce In Chat", &reaction.announce_in_chat);
-			ImGui::Checkbox("Notify", &reaction.notify);
-			ImGui::Checkbox("Log", &reaction.log);
-			ImGui::Checkbox("Add Player To Database", &reaction.add_to_player_db);
-			if (reaction.add_to_player_db)
-				ImGui::Checkbox("Block Joins", &reaction.block_joins);
-			ImGui::Checkbox("Kick Attacker", &reaction.kick);
+			draw_common_reaction(reaction);
 
 			if (reaction.m_blockable || reaction.m_karmaable)
 				ImGui::Separator();
@@ -58,6 +57,7 @@ namespace big
 	{
 		components::title("Reactions");
 		draw_reaction(g.reactions.bounty);
+		draw_interloper_reaction(g.reactions.blame_explode);
 		draw_reaction(g.reactions.ceo_kick);
 		draw_reaction(g.reactions.ceo_money);
 		draw_reaction(g.reactions.clear_wanted_level);
