@@ -1,3 +1,9 @@
+/**
+ * @file pathfind.hpp
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 
 #include "natives.hpp"
@@ -39,9 +45,9 @@ namespace big::pathfind
 		return PATHFIND::ARE_ALL_NAVMESH_REGIONS_LOADED();
 	}
 
-	/*
-	Be sure to call this after having added a required region to free up memory since the game files suggest it is rather demanding to load navmesh
-	*/
+	/**
+	 * @note Be sure to call this after having added a required region to free up memory since the game files suggest it is rather demanding to load navmesh
+	 */
 	inline void remove_navmesh_required_areas()
 	{
 		PATHFIND::REMOVE_NAVMESH_REQUIRED_REGIONS();
@@ -55,12 +61,12 @@ namespace big::pathfind
 			return false;
 	}
 
-	/*
-	 zMeasureMult: how strongly should the difference in Z direction be weighted? 
-	 0.0 = ignored completely, 1.0 = the same as 2d distance. Default is 3.0 since we tend to care about
-	 height differences more than 2d distance.
-	 zTolerance: how far apart to the Z coords have to be before zMeasureMult kicks in?
-	 nth: Which coords are returned, 1 being closest, 2 being second closesst and so on
+	/**
+	 * @param zMeasureMult How strongly should the difference in Z direction be weighted? 
+	 * 0.0 = ignored completely, 1.0 = the same as 2d distance. Default is 3.0 since we tend to care about
+	 * height differences more than 2d distance.
+	 * @param zTolerance: How far apart to the Z coords have to be before zMeasureMult kicks in?
+	 * @param nth Which coords are returned, 1 being closest, 2 being second closesst and so on
 	*/
 	inline bool find_closest_vehicle_node(Vector3 coords, Vector3& outcoords, float& outheading, int flag, int nth = 1, float zMeasureMult = 3.f, float zTolerance = 0.f)
 	{

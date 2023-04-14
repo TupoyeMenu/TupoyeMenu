@@ -1,6 +1,6 @@
 #include "backend/looped_command.hpp"
 #include "natives.hpp"
-#include "util/entity.hpp"
+#include "util/ped.hpp"
 
 namespace big
 {
@@ -10,7 +10,7 @@ namespace big
 
 		virtual void on_tick() override
 		{
-			entity::clean_ped(self::ped);
+			ped::clean_ped(self::ped);
 		}
 	};
 

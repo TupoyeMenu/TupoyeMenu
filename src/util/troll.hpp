@@ -1,3 +1,10 @@
+/**
+ * @file troll.hpp
+ * @brief Trolling functions on other players.
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "gta/enums.hpp"
 #include "pointers.hpp"
@@ -6,6 +13,15 @@
 
 namespace big::troll
 {
+	/**
+	 * @brief Sets a bounty on player.
+	 * 
+	 * @param target Player to set bounty on.
+	 * @param value How much GTA$ do you want a bounty to be.
+	 * @note Max value is 10000, max legal value is 9000
+	 * 
+	 * @param anonymous Don't show your name when setting a bounty.
+	 */
 	inline void set_bounty_on_player(player_ptr target, int value, bool anonymous)
 	{
 		const size_t arg_count  = 22;

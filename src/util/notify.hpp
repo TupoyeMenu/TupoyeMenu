@@ -1,3 +1,10 @@
+/**
+ * @file notify.hpp
+ * @brief Basic notification related functions.
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "gta/enums.hpp"
 #include "natives.hpp"
@@ -11,6 +18,11 @@
 
 namespace big::notify
 {
+	/**
+	 * @brief Shows a notification above minimap.
+	 * 
+	 * @param text Notification text.
+	 */
 	inline void above_map(std::string_view text)
 	{
 		HUD::SET_TEXT_OUTLINE();
@@ -19,6 +31,15 @@ namespace big::notify
 		HUD::END_TEXT_COMMAND_THEFEED_POST_TICKER(false, false);
 	}
 
+	/**
+	 * @brief Processes crash messages.
+	 * Shows a YimMenu error notification with player and crash name;
+	 * Logs (WARNING) with player and crash name;
+	 * Adds `TRAIED_CRASH_PLAYER` infration to player.
+	 * 
+	 * @param player Player that is trying to crash us, can be null.
+	 * @param crash Crash name to display.
+	 */
 	inline void crash_blocked(CNetGamePlayer* player, const char* crash)
 	{
 		if (player)
@@ -44,7 +65,9 @@ namespace big::notify
 		}
 	}
 
-	// Shows a busy spinner till the value at the address equals the value passed or if timeout is hit
+	/**
+	 * @brief Shows a busy spinner till the value at the address equals the value passed or if timeout is hit
+	 */
 	inline void busy_spinner(std::string_view text, int* address, int value, int timeout = 15)
 	{
 		HUD::BEGIN_TEXT_COMMAND_BUSYSPINNER_ON("STRING");
@@ -57,6 +80,11 @@ namespace big::notify
 		HUD::BUSYSPINNER_OFF();
 	}
 
+	/**
+	 * @brief Shows help text using natives.
+	 * 
+	 * @param text Text to display.
+	 */
 	inline void display_help_text(std::string_view text)
 	{
 		HUD::BEGIN_TEXT_COMMAND_DISPLAY_HELP("STRING");
@@ -64,6 +92,11 @@ namespace big::notify
 		HUD::END_TEXT_COMMAND_DISPLAY_HELP(0, 0, 1, -1);
 	}
 
+	/**
+	 * @brief Shows `{} joined.` message above map.
+	 * 
+	 * @param net_game_player Player to get the name from.
+	 */
 	inline void player_joined(CNetGamePlayer* net_game_player)
 	{
 		above_map(std::format("<C>{}</C> joined.", net_game_player->get_name()));

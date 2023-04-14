@@ -1,3 +1,10 @@
+/**
+ * @file mobile.hpp
+ * @brief Triggers for in game services.
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "core/enums.hpp"
 #include "core/scr_globals.hpp"
@@ -17,15 +24,14 @@ namespace big::mobile
 
 	namespace util
 	{
-		int get_current_personal_vehicle();// forward declare
-		inline void despawn_current_personal_vehicle()
-		{
-			misc::clear_bits(scr_globals::vehicle_global.at(get_current_personal_vehicle(), 142).at(103).as<int*>(), eVehicleFlags::TRIGGER_SPAWN_TOGGLE);
-		}
-
 		inline int get_current_personal_vehicle()
 		{
 			return *script_global(2359296).at(0, 5568).at(681).at(2).as<int*>();
+		}
+
+		inline void despawn_current_personal_vehicle()
+		{
+			misc::clear_bits(scr_globals::vehicle_global.at(get_current_personal_vehicle(), 142).at(103).as<int*>(), eVehicleFlags::TRIGGER_SPAWN_TOGGLE);
 		}
 	}
 
@@ -55,8 +61,6 @@ namespace big::mobile
 		{
 			*script_global(scr_globals::mechanic_global).at(4485).as<int*>() = 1;
 		}
-
-
 	}
 
 	namespace mors_mutual

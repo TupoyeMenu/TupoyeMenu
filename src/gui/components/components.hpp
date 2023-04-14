@@ -1,3 +1,10 @@
+/**
+ * @file components.hpp
+ * @brief YimMenu wrapers for ImGui functions.
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "backend/command.hpp"
 #include "backend/looped_command.hpp"

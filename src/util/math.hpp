@@ -1,3 +1,9 @@
+/**
+ * @file math.hpp
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "pointers.hpp"
 

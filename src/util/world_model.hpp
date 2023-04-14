@@ -1,3 +1,10 @@
+/**
+ * @file world_model.hpp
+ * @brief Basic object related functions.
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "natives.hpp"
 #include "pointers.hpp"
@@ -13,6 +20,15 @@ namespace big::world_model
 		memcpy(backup.data(), g_pointers->m_world_model_spawn_bypass, patch_size);
 	}
 
+	/**
+	 * @brief Spawns objects.
+	 * @note Uses a bypass to allow spawning world models.
+	 * 
+	 * @param hash Model hash to spawn.
+	 * @param location Location to spawn object on.
+	 * @param is_networked Is this object synced to other players.
+	 * @return Spawned object.
+	 */
 	inline Object spawn(Hash hash, Vector3 location = Vector3(), bool is_networked = true)
 	{
 		STREAMING::REQUEST_MODEL(hash);

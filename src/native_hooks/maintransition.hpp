@@ -1,3 +1,11 @@
+/**
+ * @file maintransition.hpp
+ * @brief Native hooks for the maintransition script.
+ * Mosly contains seamless switch code.
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "core/enums.hpp"
 #include "core/globals.hpp"
@@ -30,6 +38,9 @@ namespace big
 		// PLAYER_SWITCH
 		//
 
+		/**
+		 * @brief This hook lets you stop player-switch in "Pre-HUD Checks"
+		 */
 		inline void IS_SWITCH_TO_MULTI_FIRSTPART_FINISHED(rage::scrNativeCallContext* src)
 		{
 			if (g.tunables.seamless_join)
@@ -38,6 +49,9 @@ namespace big
 				src->set_return_value<BOOL>(STREAMING::IS_SWITCH_TO_MULTI_FIRSTPART_FINISHED());
 		}
 
+		/**
+		 * @brief Prevets map from unloading.
+		 */
 		inline void SET_FOCUS_ENTITY(rage::scrNativeCallContext* src)
 		{
 			if (g.tunables.seamless_join)
@@ -46,12 +60,19 @@ namespace big
 				STREAMING::SET_FOCUS_ENTITY(src->get_arg<Entity>(0));
 		}
 
+		/**
+		 * @brief Draw hud and radar in transition.
+		 * @bug Doesn't work.
+		 */
 		inline void HIDE_HUD_AND_RADAR_THIS_FRAME(rage::scrNativeCallContext* src)
 		{
 			if (!g.tunables.seamless_join)
 				HUD::HIDE_HUD_AND_RADAR_THIS_FRAME();
 		}
 
+		/**
+		 * @brief Let's you controll your ped when going sp to mp.
+		 */
 		inline void ACTIVATE_FRONTEND_MENU(rage::scrNativeCallContext* src)
 		{
 			Hash menuhash = src->get_arg<Hash>(0);
@@ -65,6 +86,9 @@ namespace big
 				HUD::ACTIVATE_FRONTEND_MENU(menuhash, src->get_arg<BOOL>(1), src->get_arg<int>(2));
 		}
 
+		/**
+		 * @brief Let's you controll your ped when going sp to mp.
+		 */
 		inline void RESTART_FRONTEND_MENU(rage::scrNativeCallContext* src)
 		{
 			Hash menuhash = src->get_arg<Hash>(0);
@@ -85,6 +109,9 @@ namespace big
 			}
 		}
 
+		/**
+		 * @brief Prevents the game from freezing your screen.
+		 */
 		inline void TOGGLE_PAUSED_RENDERPHASES(rage::scrNativeCallContext* src)
 		{
 			if (g.tunables.seamless_join)
@@ -93,6 +120,9 @@ namespace big
 				GRAPHICS::TOGGLE_PAUSED_RENDERPHASES(src->get_arg<int>(0));
 		}
 
+		/**
+		 * @brief Makes you visible.
+		 */
 		inline void SET_ENTITY_VISIBLE(rage::scrNativeCallContext* src)
 		{
 			if (g.tunables.seamless_join && src->get_arg<Entity>(0) == self::ped)
@@ -101,18 +131,27 @@ namespace big
 				ENTITY::SET_ENTITY_VISIBLE(src->get_arg<Entity>(0), src->get_arg<BOOL>(1), src->get_arg<BOOL>(2));
 		}
 
+		/**
+		 * @brief Prevents the game from teleporting you.
+		 */
 		inline void SET_ENTITY_COORDS(rage::scrNativeCallContext* src)
 		{
 			if (!g.tunables.seamless_join || *scr_globals::transition_state.as<eTransitionState*>() == eTransitionState::TRANSITION_STATE_CONFIRM_FM_SESSION_JOINING || src->get_arg<Entity>(0) != self::ped)
 				ENTITY::SET_ENTITY_COORDS(src->get_arg<Entity>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<BOOL>(7));
 		}
 
+		/**
+		 * @brief Prevents you from falling.
+		 */
 		inline void SET_ENTITY_COLLISION(rage::scrNativeCallContext* src)
 		{
 			if (!g.tunables.seamless_join || src->get_arg<Entity>(0) != self::ped)
 				ENTITY::SET_ENTITY_COLLISION(src->get_arg<Entity>(0), src->get_arg<BOOL>(1), src->get_arg<BOOL>(2));
 		}
 
+		/**
+		 * @brief Allows controll in session switch.
+		 */
 		inline void SET_PLAYER_CONTROL(rage::scrNativeCallContext* src)
 		{
 			if (g.debug.logs.stupid_script_native_logs)
@@ -122,12 +161,18 @@ namespace big
 				PLAYER::SET_PLAYER_CONTROL(src->get_arg<Player>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2));
 		}
 
+		/**
+		 * @brief Allows controll in session switch.
+		 */
 		inline void FREEZE_ENTITY_POSITION(rage::scrNativeCallContext* src)
 		{
 			if (!g.tunables.seamless_join || src->get_arg<Entity>(0) != self::ped)
 				ENTITY::FREEZE_ENTITY_POSITION(src->get_arg<Entity>(0), src->get_arg<BOOL>(1));
 		}
 
+		/**
+		 * @brief Prevents player from teleporting after switch.
+		 */
 		inline void NETWORK_RESURRECT_LOCAL_PLAYER(rage::scrNativeCallContext* src)
 		{
 			if (g.debug.logs.stupid_script_native_logs)
@@ -141,12 +186,19 @@ namespace big
 		// PLAYER_SWITCH END
 		//
 
+		/**
+		 * @brief Prevent weird reloading when using custom dlcs.
+		 * @note You should not be using custom dlcs like this in the first place.
+		 */
 		inline void GET_EVER_HAD_BAD_PACK_ORDER(rage::scrNativeCallContext* src)
 		{
 			// LOG(VERBOSE) << "DLC::GET_EVER_HAD_BAD_PACK_ORDER(); // Returns: " << DLC::GET_EVER_HAD_BAD_PACK_ORDER();
 			src->set_return_value<BOOL>(false);
 		}
 
+		/**
+		 * @brief Prevent single player map from loading when going back from online.
+		 */
 		inline void ON_ENTER_SP(rage::scrNativeCallContext* src)
 		{
 			if (g.debug.logs.stupid_script_native_logs)

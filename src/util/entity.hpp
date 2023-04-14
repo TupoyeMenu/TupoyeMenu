@@ -1,3 +1,10 @@
+/**
+ * @file entity.hpp
+ * @brief Basic entity related functions.
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "gta/joaat.hpp"
 #include "gta/replay.hpp"
@@ -8,11 +15,24 @@
 
 namespace big::entity
 {
+	/**
+	 * @brief Checks if you have control over net_object
+	 * 
+	 * @param net_object Entity to check control of.
+	 * @return True if you have control over entity.
+	 */
 	inline bool network_has_control_of_entity(rage::netObject* net_object)
 	{
 		return !net_object || !net_object->m_next_owner_id && (net_object->m_control_id == -1);
 	}
 
+	/**
+	 * @brief Attemts to take control of given entity
+	 * 
+	 * @param ent Entity to take control of.
+	 * @param timeout When to give up trying to take control. In for loop iterations. 
+	 * @return True if the control has been taken.
+	 */
 	inline bool take_control_of(Entity ent, int timeout = 300)
 	{
 		auto hnd = g_pointers->m_handle_to_ptr(ent);
@@ -37,24 +57,20 @@ namespace big::entity
 		return false;
 	}
 
-	inline void cage_ped(Ped ped)
-	{
-		Hash hash = RAGE_JOAAT("prop_gold_cont_01");
-
-		Vector3 location = ENTITY::GET_ENTITY_COORDS(ped, true);
-		OBJECT::CREATE_OBJECT(hash, location.x, location.y, location.z - 1.f, true, false, false);
-	}
-
-	inline void clean_ped(Ped ped)
-	{
-		Ped player_ped = self::ped;
-
-		PED::CLEAR_PED_BLOOD_DAMAGE(player_ped);
-		PED::CLEAR_PED_WETNESS(player_ped);
-		PED::CLEAR_PED_ENV_DIRT(player_ped);
-		PED::RESET_PED_VISIBLE_DAMAGE(player_ped);
-	}
-
+	/**
+	 * @brief Deletes given entity.
+	 * Does the following steps to remove an entity 
+	 * 1. Removes all attachments of this entity.
+	 * 2. Makes the entity invisible.
+	 * 3. Teleports the entity to X: 15000 Y: 15000 Z: 10000.
+	 * 4. Marks the entity as mission entity.
+	 * 5. Deletes the entity.
+	 * 
+	 * @note Attempts to take control of entity on it's own.
+	 * If it cannot take control it will show a "Delete entity failed." warning.
+	 * 
+	 * @param ent Entity to delete
+	 */
 	inline void delete_entity(Entity ent)
 	{
 		if (take_control_of(ent, 1000))
@@ -62,16 +78,22 @@ namespace big::entity
 			ENTITY::DETACH_ENTITY(ent, 1, 1);
 			ENTITY::SET_ENTITY_VISIBLE(ent, false, false);
 			NETWORK::NETWORK_SET_ENTITY_ONLY_EXISTS_FOR_PARTICIPANTS(ent, true);
-			ENTITY::SET_ENTITY_COORDS_NO_OFFSET(ent, 50'000, 50'000, 100'000, 0, 0, 0);
+			ENTITY::SET_ENTITY_COORDS_NO_OFFSET(ent, 15'000, 15'000, 10'000, 0, 0, 0);
 			ENTITY::SET_ENTITY_AS_MISSION_ENTITY(ent, 1, 1);
 			ENTITY::DELETE_ENTITY(&ent);
 		}
 		else
 		{
-			g_notification_service->push_warning("Delete Crash Ped", "Delete entity failed.");
+			g_notification_service->push_warning("Delete Entity", "Delete entity failed.");
 		}
 	}
 
+	/**
+	 * @brief Raycasts for entitys from the current camera forward.
+	 * 
+	 * @param ent Entity that we have hit.
+	 * @return True if hit something other then the sky.
+	 */
 	inline bool raycast(Entity* ent)
 	{
 		BOOL hit;
@@ -101,6 +123,15 @@ namespace big::entity
 		return (bool)hit;
 	}
 
+	/**
+	 * @brief Gets all entitys from the replay interface.
+	 * 
+	 * @note Does not include local player or local vehicle.
+	 * 
+	 * @param vehicles Include vehicles.
+	 * @param peds Include peds.
+	 * @return std::vector<Entity> of all entitys in the replay interface.
+	 */
 	inline std::vector<Entity> get_entities(bool vehicles, bool peds)
 	{
 		std::vector<Entity> target_entities;
@@ -180,68 +211,5 @@ namespace big::entity
 		location.z = 1000.f;
 
 		return false;
-	}
-
-	inline double distance_to_middle_of_screen(const rage::fvector2& screen_pos)
-	{
-		double cumulative_distance{};
-
-		if (screen_pos.x > 0.5)
-			cumulative_distance += screen_pos.x - 0.5;
-		else
-			cumulative_distance += 0.5 - screen_pos.x;
-
-		if (screen_pos.y > 0.5)
-			cumulative_distance += screen_pos.y - 0.5;
-		else
-			cumulative_distance += 0.5 - screen_pos.y;
-
-		return cumulative_distance;
-	}
-
-	inline Entity get_entity_closest_to_middle_of_screen()
-	{
-		Entity closest_entity{};
-		float distance = 1;
-
-		auto replayInterface  = *g_pointers->m_replay_interface;
-		auto vehicleInterface = replayInterface->m_vehicle_interface;
-		auto pedInterface     = replayInterface->m_ped_interface;
-
-		for (const auto veh : (*vehicleInterface->m_vehicle_list))
-		{
-			if (veh.m_entity_ptr)
-			{
-				Vehicle handle = g_pointers->m_ptr_to_handle(veh.m_entity_ptr);
-				Vector3 pos    = ENTITY::GET_ENTITY_COORDS(handle, 1);
-				rage::fvector2 screenpos;
-				HUD::GET_HUD_SCREEN_POSITION_FROM_WORLD_POSITION(pos.x, pos.y, pos.z, &screenpos.x, &screenpos.y);
-
-				if (distance_to_middle_of_screen(screenpos) < distance && ENTITY::HAS_ENTITY_CLEAR_LOS_TO_ENTITY(PLAYER::PLAYER_PED_ID(), handle, 17))
-				{
-					closest_entity = handle;
-					distance       = distance_to_middle_of_screen(screenpos);
-				}
-			}
-		}
-
-		for (auto ped : *pedInterface->m_ped_list)
-		{
-			if (ped.m_entity_ptr)
-			{
-				Vehicle handle = g_pointers->m_ptr_to_handle(ped.m_entity_ptr);
-				Vector3 pos    = ENTITY::GET_ENTITY_COORDS(handle, 1);
-				rage::fvector2 screenpos;
-				HUD::GET_HUD_SCREEN_POSITION_FROM_WORLD_POSITION(pos.x, pos.y, pos.z, &screenpos.x, &screenpos.y);
-
-				if (distance_to_middle_of_screen(screenpos) < distance && ENTITY::HAS_ENTITY_CLEAR_LOS_TO_ENTITY(PLAYER::PLAYER_PED_ID(), handle, 17) && handle != PLAYER::PLAYER_PED_ID())
-				{
-					closest_entity = handle;
-					distance       = distance_to_middle_of_screen(screenpos);
-				}
-			}
-		}
-
-		return closest_entity;
 	}
 }

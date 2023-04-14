@@ -1,3 +1,8 @@
+/**
+ * @file session.hpp
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "core/data/session_types.hpp"
 #include "fiber_pool.hpp"
@@ -32,6 +37,11 @@ namespace big::session
 		}
 	}
 
+	/**
+	 * @brief Join session by type.
+	 * 
+	 * @param session Session type. 
+	 */
 	inline void join_type(eSessionType session)
 	{
 		*script_global(2695915).as<int*>() = (session == eSessionType::SC_TV ? 1 : 0);// If SC TV Then Enable Spectator Mode
@@ -48,6 +58,9 @@ namespace big::session
 
 	static constexpr char const* weathers[] = {"EXTRASUNNY", "CLEAR", "CLOUDS", "SMOG", "FOGGY", "OVERCAST", "RAIN", "THUNDER", "CLEARING", "NEUTRAL", "SNOW", "BLIZZARD", "SNOWLIGHT", "XMAS", "HALLOWEEN"};
 
+	/**
+	 * @brief Sets local weather using `g.session.local_weather`.
+	 */
 	inline void local_weather()
 	{
 		MISC::CLEAR_OVERRIDE_WEATHER();
@@ -75,6 +88,11 @@ namespace big::session
 		misc::clear_bit(scr_globals::gpbd_fm_3.at(self::id, scr_globals::size::gpbd_fm_3).at(10).at(205).at(idx, 1).as<int*>(), bit);
 	}
 
+	/**
+	 * @brief Joins session by is't rage::rlSessionInfo.
+	 * 
+	 * @param info Session info to join.
+	 */
 	inline void join_session(const rage::rlSessionInfo& info)
 	{
 		g.session.join_queued = true;
@@ -88,6 +106,10 @@ namespace big::session
 		return;
 	}
 
+	/**
+	 * @brief Joines player by Rockstar ID.
+	 * @param rid RID to join.
+	*/
 	inline void join_by_rockstar_id(uint64_t rid)
 	{
 		if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(RAGE_JOAAT("maintransition")) != 0 || STREAMING::IS_PLAYER_SWITCH_IN_PROGRESS())
@@ -116,6 +138,12 @@ namespace big::session
 		g_notification_service->push_error("RID Joiner", "Target player is offline?");
 	}
 
+	/**
+	 * @brief Adds player to the database and assigns infraction.
+	 * 
+	 * @param player Player to add infraction to.
+	 * @param infraction Infraction to add.
+	 */
 	inline void add_infraction(player_ptr player, Infraction infraction)
 	{
 		LOG(INFO) << std::format("Anti-Cheat: {} - {}", player->get_name(), infraction_desc[infraction]);

@@ -1,3 +1,10 @@
+/**
+ * @file native_hooks.cpp
+ * @brief Hooks to native functions.
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #include "native_hooks.hpp"
 
 #include "all_scripts.hpp"
@@ -126,16 +133,16 @@ namespace big
 		add_native_detour(RAGE_JOAAT("carmod_shop"), 0x5F4B6931816E599B, carmod_shop::DISABLE_ALL_CONTROL_ACTIONS);
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x6F3D4ED9BEE4E61D, maintransition::NETWORK_SESSION_HOST); // RID Joiner from https://github.com/YimMenu/YimMenu/issues/172
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x933BBEEB8C61B5F4, maintransition::IS_SWITCH_TO_MULTI_FIRSTPART_FINISHED); // This hook lets you stop player-switch in "Pre-HUD Checks"
-		add_native_detour(RAGE_JOAAT("maintransition"), 0x06843DA7060A026B, maintransition::SET_ENTITY_COORDS); // Prevents the game from teleporting you
-		add_native_detour(RAGE_JOAAT("maintransition"), 0x1A9205C1B9EE827F, maintransition::SET_ENTITY_COLLISION); // Prevents you from falling
-		add_native_detour(RAGE_JOAAT("maintransition"), 0xEA1C610A04DB6BBB, maintransition::SET_ENTITY_VISIBLE); // Makes you visible
-		add_native_detour(RAGE_JOAAT("maintransition"), 0x8D32347D6D4C40A2, maintransition::SET_PLAYER_CONTROL); // Allows controll in session switch
-		add_native_detour(RAGE_JOAAT("maintransition"), 0x428CA6DBD1094446, maintransition::FREEZE_ENTITY_POSITION); // Allows controll in session switch
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x198F77705FA0931D, maintransition::SET_FOCUS_ENTITY); // Prevets map from unloading.
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x719FF505F097FD20, maintransition::HIDE_HUD_AND_RADAR_THIS_FRAME); // Draw hud and radar in transition. (Doesn't work.)
 		add_native_detour(RAGE_JOAAT("maintransition"), 0xEF01D36B9C9D0C7B, maintransition::ACTIVATE_FRONTEND_MENU); // Let's you controll your ped when going sp to mp.
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x10706DC6AD2D49C0, maintransition::RESTART_FRONTEND_MENU); // Let's you controll your ped when going sp to mp.
 		add_native_detour(RAGE_JOAAT("maintransition"), 0xDFC252D8A3E15AB7, maintransition::TOGGLE_PAUSED_RENDERPHASES); // Prevents the game from freezing your screen.
+		add_native_detour(RAGE_JOAAT("maintransition"), 0xEA1C610A04DB6BBB, maintransition::SET_ENTITY_VISIBLE); // Makes you visible.
+		add_native_detour(RAGE_JOAAT("maintransition"), 0x06843DA7060A026B, maintransition::SET_ENTITY_COORDS); // Prevents the game from teleporting you.
+		add_native_detour(RAGE_JOAAT("maintransition"), 0x1A9205C1B9EE827F, maintransition::SET_ENTITY_COLLISION); // Prevents you from falling.
+		add_native_detour(RAGE_JOAAT("maintransition"), 0x8D32347D6D4C40A2, maintransition::SET_PLAYER_CONTROL); // Allows controll in session switch.
+		add_native_detour(RAGE_JOAAT("maintransition"), 0x428CA6DBD1094446, maintransition::FREEZE_ENTITY_POSITION); // Allows controll in session switch.
 		add_native_detour(RAGE_JOAAT("maintransition"), 0xEA23C49EAA83ACFB, maintransition::NETWORK_RESURRECT_LOCAL_PLAYER); // Prevents player from teleporting after switch.
 		add_native_detour(RAGE_JOAAT("maintransition"), 0x8D30F648014A92B5, maintransition::GET_EVER_HAD_BAD_PACK_ORDER); // Prevent weird reloading when using custom dlcs.
 		add_native_detour(RAGE_JOAAT("maintransition"), 0xD7C10C4A637992C9, maintransition::ON_ENTER_SP); // Prevent single player map from loading when going back from online.

@@ -1,3 +1,10 @@
+/**
+ * @file teleport.hpp
+ * @brief Teleportation related functions.
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "blip.hpp"
 #include "entity.hpp"
@@ -73,6 +80,12 @@ namespace big::teleport
 		return teleport_player_to_coords(player, self::pos);
 	}
 
+	/**
+	 * @brief Teleports local ped into vehicle.
+	 * 
+	 * @param veh Vehicle to teleport into.
+	 * @return True if teleport is successful.
+	 */
 	inline bool into_vehicle(Vehicle veh)
 	{
 		if (!ENTITY::IS_ENTITY_A_VEHICLE(veh))
@@ -109,11 +122,23 @@ namespace big::teleport
 		return true;
 	}
 
+	/**
+	 * @brief Teleports local ped to coords.
+	 * 
+	 * @param location Coords to teleport to.
+	 */
 	inline void to_coords(Vector3 location)
 	{
 		PED::SET_PED_COORDS_KEEP_VEHICLE(self::ped, location.x, location.y, location.z + 1.f);
 	}
 
+	/**
+	 * @brief Teleports local ped to blip.
+	 * 
+	 * @param sprite Blip sprite to search for.
+	 * @param color Blip color to search for, set to -1 to ignore.
+	 * @return True if teleport is successful.
+	 */
 	inline bool to_blip(int sprite, int color = -1)
 	{
 		Vector3 location;
@@ -129,20 +154,33 @@ namespace big::teleport
 		return true;
 	}
 
-	inline bool to_entity(Entity ent)
+	/**
+	 * @brief Teleports local ped to entity.
+	 * 
+	 * @param ent Entity to teleport to.
+	 */
+	inline void to_entity(Entity ent)
 	{
 		Vector3 location = ENTITY::GET_ENTITY_COORDS(ent, true);
 
 		PED::SET_PED_COORDS_KEEP_VEHICLE(self::ped, location.x, location.y, location.z);
-
-		return true;
 	}
 
-	inline bool to_player(Player player)
+	/**
+	 * @brief Teleports local ped to player.
+	 * 
+	 * @param player Player to teleport to.
+	 */
+	inline void to_player(Player player)
 	{
-		return to_entity(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(player));
+		to_entity(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(player));
 	}
 
+	/**
+	 * @brief Teleport local ped to map waypoint.
+	 * 
+	 * @return True if teleport is successful.
+	 */
 	inline bool to_waypoint()
 	{
 		if (!to_blip((int)BlipIcons::Waypoint))
@@ -154,6 +192,11 @@ namespace big::teleport
 		return true;
 	}
 
+	/**
+	 * @brief Teleport local ped to objective blip.
+	 * 
+	 * @return True if teleport is successful. 
+	 */
 	inline bool to_objective()
 	{
 		Vector3 location;
@@ -166,6 +209,6 @@ namespace big::teleport
 
 		PED::SET_PED_COORDS_KEEP_VEHICLE(self::ped, location.x, location.y, location.z);
 
-		return false;
+		return true;
 	}
 }

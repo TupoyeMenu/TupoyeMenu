@@ -1,3 +1,10 @@
+/**
+ * @file blip.hpp
+ * @brief Map blip related functions.
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "gta/enums.hpp"
 #include "natives.hpp"
@@ -5,6 +12,14 @@
 
 namespace big::blip
 {
+	/**
+	 * @brief Searches for blips based on the sprite and color provided.
+	 * 
+	 * @param location Blip location output.
+	 * @param sprite Blip sprite to search for.
+	 * @param color Color to search for, use -1 to ignore color search.
+	 * @return True if blip exists, otherwise returns false.
+	 */
 	inline bool get_blip_location(Vector3& location, int sprite, int color = -1)
 	{
 		Blip blip;
@@ -19,6 +34,12 @@ namespace big::blip
 		return true;
 	}
 
+	/**
+	 * @brief Tries to find the objectibe marker and return it's location.
+	 * 
+	 * @param location Objective location output.
+	 * @return True if it has faound the objective, otherwise returns false.
+	 */
 	inline bool get_objective_location(Vector3& location)
 	{
 		if (get_blip_location(location, (int)BlipIcons::Circle, (int)BlipColors::YellowMission))

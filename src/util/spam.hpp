@@ -1,3 +1,10 @@
+/**
+ * @file spam.hpp
+ * @brief Chat logging and filtering functions.
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "file_manager/file.hpp"
 #include "services/players/player_service.hpp"
@@ -56,6 +63,12 @@ namespace
 
 namespace big::spam
 {
+	/**
+	 * @brief Checks a given text against a spam filter.
+	 * 
+	 * @param text Text to test.
+	 * @return True if text is spam.
+	 */
 	inline bool is_text_spam(const char* text)
 	{
 		for (auto e : spam_texts)
@@ -65,6 +78,15 @@ namespace big::spam
 		return false;
 	}
 
+	/**
+	 * @brief Logs chat into a log file.
+	 * - If is_spam is false chat goes into chat.log
+	 * - If is_spam is true chat goes into spam.log
+	 * 
+	 * @param msg Chat message to log.
+	 * @param player Player that sent the message.
+	 * @param is_spam Is this message spam.
+	 */
 	inline void log_chat(char* msg, player_ptr player, bool is_spam)
 	{
 		std::ofstream spam_log(g_file_manager->get_project_file(is_spam ? "./spam.log" : "./chat.log").get_path(), std::ios::app);

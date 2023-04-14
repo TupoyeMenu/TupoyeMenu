@@ -1,13 +1,11 @@
 #pragma once
 #include "esp/view_esp.hpp"
 #include "gui/components/components.hpp"
-#include "util/animator.hpp"
 
 namespace big
 {
 	class view
 	{
-		inline static animator window_animator      = animator();
 		inline static ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoCollapse;
 
 	public:

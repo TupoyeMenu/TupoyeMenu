@@ -1,3 +1,9 @@
+/**
+ * @file animator.hpp
+ * 
+ * @copyright GNU General Public License Version 2.
+ * @deprecated Animations from YimMenu UI.
+ */
 #pragma once
 
 namespace big

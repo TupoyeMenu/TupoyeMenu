@@ -2,6 +2,7 @@
 #include "core/enums.hpp"
 #include "gta/enums.hpp"
 #include "util/entity.hpp"
+#include "util/ped.hpp"
 
 namespace big
 {
@@ -21,7 +22,7 @@ namespace big
 					{
 						if (ENTITY::IS_ENTITY_A_PED(entity))
 						{
-							entity::cage_ped(entity);
+							ped::cage_ped(entity);
 						}
 					}
 					else

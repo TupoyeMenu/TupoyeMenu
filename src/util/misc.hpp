@@ -1,3 +1,10 @@
+/**
+ * @file misc.hpp
+ * @brief Bitset functions.
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 
 namespace big::misc

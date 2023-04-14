@@ -1,3 +1,9 @@
+/**
+ * @file custom_text_service.hpp
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "gta/joaat.hpp"
 
@@ -23,8 +29,8 @@ namespace big
 		bool add_label_overwrite(rage::joaat_t hash, std::string_view overwrite);
 
 		/**
-		 * \brief Get the custom text for a label.
-		 * \return nullptr if no custom text exists
+		 * @brief Get the custom text for a label.
+		 * @return nullptr if no custom text exists
 		 */
 		[[nodiscard]] const char* get_text(const char* label) const;
 	};

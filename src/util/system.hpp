@@ -1,3 +1,8 @@
+/**
+ * @file system.hpp
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "crossmap.hpp"
 #include "file_manager.hpp"
@@ -6,6 +11,9 @@
 
 namespace big::system
 {
+	/**
+	 * @brief Dumbs native entry points into entrypoints.txt
+	 */
 	inline void dump_entry_points()
 	{
 		DWORD64 base_address = memory::module("GTA5.exe").begin().as<DWORD64>();
@@ -23,6 +31,9 @@ namespace big::system
 		file.close();
 	}
 
+	/**
+	 * @brief Gets the address relative to GTA5.exe
+	 */
 	inline uintptr_t get_relative_address(void* ptr)
 	{
 		uintptr_t base_address = memory::module("GTA5.exe").begin().as<uintptr_t>();

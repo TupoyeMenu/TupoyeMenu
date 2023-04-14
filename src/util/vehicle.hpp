@@ -1,3 +1,10 @@
+/**
+ * @file vehicle.hpp
+ * @brief Basic vehicle related functions.
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "core/scr_globals.hpp"
 #include "entity.hpp"
@@ -12,6 +19,13 @@
 
 namespace big::vehicle
 {
+	/**
+	 * @brief Converts Miles Per Second into othether units.
+	 * 
+	 * @param mps Miles Per Second input.
+	 * @param speed_unit Speed unit to convert to.
+	 * @return Speed in specified units.
+	 */
 	inline float mps_to_speed(float mps, SpeedUnit speed_unit)
 	{
 		switch (speed_unit)
@@ -23,6 +37,13 @@ namespace big::vehicle
 		return mps;
 	}
 
+	/**
+	 * @brief Converts specified units into Miles Per Second.
+	 * 
+	 * @param speed Speed input.
+	 * @param speed_unit Speed unit to convert from.
+	 * @return Speed in Miles Per Second.
+	 */
 	inline float speed_to_mps(float speed, SpeedUnit speed_unit)
 	{
 		switch (speed_unit)
@@ -34,6 +55,10 @@ namespace big::vehicle
 		return speed;
 	}
 
+	/**
+	 * @brief Gets the offset to spawn vehicle at.
+	 * @return Position to spawn at.
+	 */
 	inline Vector3 get_spawn_location(bool spawn_inside, Ped ped = self::ped)
 	{
 		float y_offset = 0;
@@ -50,6 +75,12 @@ namespace big::vehicle
 		return ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(ped, 0.f, y_offset, 0.f);
 	}
 
+	/**
+	 * @brief Makes vehicle networked if it isn't.
+	 * 
+	 * @param veh Vehicle to set for.
+	 * @param is_stolen Set's vehicle stolen flag.
+	 */
 	inline void set_mp_bitset(Vehicle veh, bool is_stolen = false)
 	{
 		DECORATOR::DECOR_SET_INT(veh, "MPBitset", 0);
@@ -59,6 +90,15 @@ namespace big::vehicle
 		VEHICLE::SET_VEHICLE_IS_STOLEN(veh, is_stolen);
 	}
 
+	/**
+	 * @brief Teleports vehicle to location.
+	 * 
+	 * @param veh Vehicle to teleport.
+	 * @param location Location to teleport to.
+	 * @param put_in Teleport local ped into vehicle.
+	 * @param seatIdx Seat to teleport local ped into, -1 for any seat.
+	 * @bug CLEAR_PED_TASKS_IMMEDIATELY not longer works with player peds.
+	 */
 	inline void bring(Vehicle veh, Vector3 location, bool put_in = true, int seatIdx = -1)
 	{
 		if (!ENTITY::IS_ENTITY_A_VEHICLE(veh))
@@ -97,6 +137,13 @@ namespace big::vehicle
 		}
 	}
 
+	/**
+	 * @brief Gets the closest vehicle to location using the replay interface.
+	 * 
+	 * @param location Location to search in.
+	 * @param range Range to search in.
+	 * @return Vehicle that has been found, if not found 0.
+	 */
 	inline Vehicle get_closest_to_location(Vector3 location, float range)
 	{
 		if (const auto replay = *g_pointers->m_replay_interface; replay)
@@ -138,6 +185,13 @@ namespace big::vehicle
 		return 0;
 	}
 
+	/**
+	 * @brief Sets vehicles license plate text.
+	 * 
+	 * @param veh Vehicle to set license plate of.
+	 * @param plate license plate text to set.
+	 * @return True if set seccessfuly.
+	 */
 	inline bool set_plate(Vehicle veh, const char* plate)
 	{
 		if (!ENTITY::IS_ENTITY_A_VEHICLE(veh) || !entity::take_control_of(veh))
@@ -153,6 +207,12 @@ namespace big::vehicle
 		return true;
 	}
 
+	/**
+	 * @brief Fixes given vehicle.
+	 * 
+	 * @param veh Vehicle to fix.
+	 * @return True if repaired seccessfuly. 
+	 */
 	inline bool repair(Vehicle veh)
 	{
 		if (!ENTITY::IS_ENTITY_A_VEHICLE(veh) || !entity::take_control_of(veh))
@@ -167,6 +227,19 @@ namespace big::vehicle
 		return true;
 	}
 
+	/**
+	 * @brief Spawns vehicle.
+	 * 
+	 * @param hash Model hash to spawn.
+	 * @param location Location to spawn vehicle on.
+	 * @param heading The direction vehicle is facing.
+	 * @param is_networked Is this vehicle synced to other players.
+	 * @param script_veh Is this vehicle a script host vehicle.
+	 * @param is_stolen Set's vehicle stolen flag.
+	 * @return Spawned vehicle.
+	 * @todo Better script_veh Description.
+	 * @todo Check if VEHICLE::CREATE_VEHICLE p7 is related to YimMenu/YimMenu#424.
+	 */
 	inline Vehicle spawn(Hash hash, Vector3 location, float heading, bool is_networked = true, bool script_veh = false, bool is_stolen = false)
 	{
 		for (uint8_t i = 0; !STREAMING::HAS_MODEL_LOADED(hash) && i < 100; i++)
@@ -607,6 +680,15 @@ namespace big::vehicle
 		}
 	}
 
+	/**
+	 * @brief Sets vehicle engine state.
+	 * 
+	 * @param current_vehicle Vehicle to set the engine state of.
+	 * @param state Engine state, true on, false off.
+	 * @param immediately Don't play start up animation and sound.
+	 * @param disable_auto_start If we have torned off the engine this will prevent local ped from starting the back automatically.
+	 * @bug Does not check for control.
+	 */
 	inline void set_engine_state(Vehicle current_vehicle, bool state, bool immediately, bool disable_auto_start)
 	{
 		if (current_vehicle)
@@ -615,6 +697,12 @@ namespace big::vehicle
 			return g_notification_service->push_warning("Vehicle", "Please enter a vehicle.");
 	}
 
+	/**
+	 * @brief Removes all modifactions from given vehicle.
+	 * Similar to `downgradeveh` command.
+	 * 
+	 * @param vehicle Vehicle to downgrade.
+	 */
 	inline void downgrade(Vehicle vehicle)
 	{
 		VEHICLE::SET_VEHICLE_MOD_KIT(vehicle, 0);

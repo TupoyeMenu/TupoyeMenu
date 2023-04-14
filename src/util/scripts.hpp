@@ -1,3 +1,10 @@
+/**
+ * @file scripts.hpp
+ * @brief Functions related to GTA 5 .ysc scipts.
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "core/scr_globals.hpp"
 #include "fiber_pool.hpp"
@@ -85,8 +92,12 @@ namespace big::scripts
 		return true;
 	}
 
-	// force launcher script over the lobby, take two
-	// try to get am_launcher in a consistent state before trying to start the script taking account of all participants
+	/**
+	 * @brief Force launcher script over the lobby, take two.
+	 * Try to get am_launcher in a consistent state before trying to start the script taking account of all participants
+	 * 
+	 * @param script_id Look in launcher script for enum.
+	 */
 	inline void start_launcher_script(int script_id)
 	{
 		static auto check_players_in_state = [](GtaThread* launcher, int state) -> bool {

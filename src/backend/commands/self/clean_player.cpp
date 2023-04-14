@@ -1,6 +1,6 @@
 #include "backend/command.hpp"
 #include "natives.hpp"
-#include "util/entity.hpp"
+#include "util/ped.hpp"
 
 namespace big
 {
@@ -10,7 +10,7 @@ namespace big
 
 		virtual void execute(const std::vector<std::uint64_t>&, const std::shared_ptr<command_context> ctx)
 		{
-			entity::clean_ped(self::ped);
+			ped::clean_ped(self::ped);
 		}
 	};
 

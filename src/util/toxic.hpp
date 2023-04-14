@@ -1,3 +1,11 @@
+/**
+ * @file toxic.hpp
+ * @brief Toxic functions.
+ * 
+ * @copyright GNU General Public License Version 2.
+ * @bug Exists.
+ */
+
 #pragma once
 #include "core/enums.hpp"
 #include "core/scr_globals.hpp"
@@ -18,6 +26,17 @@
 
 namespace big::toxic
 {
+	/**
+	 * @brief Creates an explosion owned by other player.
+	 * 
+	 * @param to_blame Player to blame for explosion.
+	 * @param pos Position to explode.
+	 * @param explosion_type Explosion type.
+	 * @param damage How much damage would an explosion deal.
+	 * @param is_audible Can you hear the explosion.
+	 * @param is_invisible Is explosion invisible.
+	 * @param camera_shake How much cam shake does the explosion make, does not sync for other players.
+	 */
 	inline void blame_explode_coord(player_ptr to_blame, Vector3 pos, eExplosionTag explosion_type, float damage, bool is_audible, bool is_invisible, float camera_shake)
 	{
 		g_pointers->m_blame_explode->apply();
@@ -28,12 +47,29 @@ namespace big::toxic
 		g_pointers->m_explosion_patch->restore();
 	}
 
+	/**
+	 * @brief Creates an explosion owned by other player.
+	 * 
+	 * @param to_blame Player to blame for explosion.
+	 * @param target Player to explode.
+	 * @param explosion_type Explosion type.
+	 * @param damage How much damage would an explosion deal.
+	 * @param is_audible Can you hear the explosion.
+	 * @param is_invisible Is explosion invisible.
+	 * @param camera_shake How much cam shake does the explosion make, does not sync for other players.
+	 */
 	inline void blame_explode_player(player_ptr to_blame, player_ptr target, eExplosionTag explosion_type, float damage, bool is_audible, bool is_invisible, float camera_shake)
 	{
 		Vector3 coords = ENTITY::GET_ENTITY_COORDS(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(target->id()), true);
 		blame_explode_coord(to_blame, coords, explosion_type, damage, is_audible, is_invisible, camera_shake);
 	}
 
+	/**
+	 * @brief Sends start activity script event.
+	 * 
+	 * @param target Player to start activity for.
+	 * @param type Activity to start.
+	 */
 	inline void start_activity(player_ptr target, eActivityType type)
 	{
 		const size_t arg_count = 4;

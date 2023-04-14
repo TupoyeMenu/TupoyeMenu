@@ -331,6 +331,7 @@ namespace big
 			&& player->m_player_info->m_ped && player->m_player_info->m_ped->m_net_object
 			&& ownerNetId != player->m_player_info->m_ped->m_net_object->m_object_id && !offset_object)
 		{
+			// TODO: Add infraction.
 			g.reactions.blame_explode.process(g_player_service->get_by_id(player->m_player_id), g_player_service->get_by_rid(reinterpret_cast<CPed*>(entity)->m_player_info->m_net_player_data.m_gamer_handle.m_rockstar_id));
 			return;
 		}

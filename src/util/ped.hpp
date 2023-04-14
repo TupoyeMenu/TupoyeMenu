@@ -1,16 +1,57 @@
+/**
+ * @file ped.hpp
+ * @brief Basic ped related functions.
+ * 
+ * @copyright GNU General Public License Version 2.
+ */
+
 #pragma once
 #include "entity.hpp"
+#include "gta/enums.hpp"
+#include "math.hpp"
 #include "natives.hpp"
+#include "outfit.hpp"
 #include "pointers.hpp"
 #include "script.hpp"
-#include "vehicle.hpp"
-#include "outfit.hpp"
 #include "services/players/player_service.hpp"
-#include "math.hpp"
-#include "gta/enums.hpp"
+#include "vehicle.hpp"
 
 namespace big::ped
 {
+	/**
+	 * @brief Spawns "prop_gold_cont_01" inside the ped.
+	 * 
+	 * @param ped Ped to cage.
+	 */
+	inline void cage_ped(Ped ped)
+	{
+		Hash hash = RAGE_JOAAT("prop_gold_cont_01");
+
+		Vector3 location = ENTITY::GET_ENTITY_COORDS(ped, true);
+		OBJECT::CREATE_OBJECT(hash, location.x, location.y, location.z - 1.f, true, false, false);
+	}
+
+	/**
+	 * @brief Removes decals from ped.
+	 * 
+	 * @param ped Ped to remove dacals from.
+	 */
+	inline void clean_ped(Ped ped)
+	{
+		Ped player_ped = self::ped;
+
+		PED::CLEAR_PED_BLOOD_DAMAGE(player_ped);
+		PED::CLEAR_PED_WETNESS(player_ped);
+		PED::CLEAR_PED_ENV_DIRT(player_ped);
+		PED::RESET_PED_VISIBLE_DAMAGE(player_ped);
+	}
+
+	/**
+	 * @brief Sets the model of local ped.
+	 * 
+	 * @param hash Model hash.
+	 * @return True model has been set successfully.
+	 */
 	inline bool change_player_model(const Hash hash)
 	{
 		for (uint8_t i = 0; !STREAMING::HAS_MODEL_LOADED(hash) && i < 100; i++)
@@ -33,6 +74,12 @@ namespace big::ped
 		return true;
 	}
 
+	/**
+	 * @brief Copys outfit from target to local ped.
+	 * 
+	 * @param target Target to copy from.
+	 * @return True if models are the same.
+	 */
 	inline bool steal_outfit(const Ped target)
 	{
 		Ped ped = self::ped;
@@ -49,41 +96,11 @@ namespace big::ped
 		return true;
 	}
 
-	inline int spawn_in_vehicle(std::string_view model, Vehicle veh, bool is_networked = true, bool clean_up = true)
-	{
-		if (const Hash hash = rage::joaat(model.data()); hash)
-		{
-			for (uint8_t i = 0; !STREAMING::HAS_MODEL_LOADED(hash) && i < 100; i++)
-			{
-				STREAMING::REQUEST_MODEL(hash);
-
-				script::get_current()->yield();
-			}
-			if (!STREAMING::HAS_MODEL_LOADED(hash))
-			{
-				g_notification_service->push_warning("Spawn", "Failed to spawn model, did you give an incorrect model?");
-
-				return -1;
-			}
-
-			Ped ped = PED::CREATE_PED_INSIDE_VEHICLE(veh, 0, hash, -1, is_networked, false);
-
-			script::get_current()->yield();
-
-			STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
-
-			if (*g_pointers->m_is_session_started)
-			{
-				DECORATOR::DECOR_SET_INT(ped, "MPBitset", 0);
-				ENTITY::SET_ENTITY_SHOULD_FREEZE_WAITING_ON_COLLISION(ped, clean_up);
-			}
-
-			return ped;
-		}
-
-		return -1;
-	}
-
+	/**
+	 * @brief Sets your local ped to be the same as target ped.
+	 * 
+	 * @param target Ped to copy from.
+	 */
 	inline void steal_identity(const Ped target)
 	{
 		const int max_health     = ENTITY::GET_ENTITY_MAX_HEALTH(self::ped);
@@ -98,19 +115,73 @@ namespace big::ped
 		PED::SET_PED_ARMOUR(self::ped, current_armor);
 	}
 
+	/**
+	 * @brief Takes control of ped and applys max damage to it.
+	 * 
+	 * @param ped Ped to apply damage to.
+	 */
 	inline void kill_ped(const Ped ped)
 	{
 		if (entity::take_control_of(ped))
 			PED::APPLY_DAMAGE_TO_PED(ped, PED::GET_PED_MAX_HEALTH(ped) * 2, false, 0);
 	}
 
+	/**
+	 * @brief Kills the ped if it's ralationship with player equals `relation_id`.
+	 * 
+	 * @param ped Ped to kill.
+	 * @param relation_id Relation ID to check.
+	 */
 	inline void kill_ped_by_relation(Ped ped, int relation_id)
 	{
 		if (PED::GET_RELATIONSHIP_BETWEEN_PEDS(ped, PLAYER::PLAYER_PED_ID()) == relation_id)
 			kill_ped(ped);
 	}
 
-	inline Ped spawn(ePedType pedType, Hash hash, Hash clone, Vector3 location, float heading, bool is_networked = true)
+	/**
+	 * @brief Spawns ped in vehicle.
+	 * 
+	 * @param hash Model hash to spawn.
+	 * @param veh Vehicle to spawn in.
+	 * @param is_networked Is this ped synced to other players.
+	 * @return Spawned ped.
+	 */
+	inline Ped spawn_in_vehicle(Hash hash, Vehicle veh, bool is_networked = true)
+	{
+		for (uint8_t i = 0; !STREAMING::HAS_MODEL_LOADED(hash) && i < 100; i++)
+		{
+			STREAMING::REQUEST_MODEL(hash);
+
+			script::get_current()->yield();
+		}
+		if (!STREAMING::HAS_MODEL_LOADED(hash))
+		{
+			g_notification_service->push_warning("Spawn", "Failed to spawn model, did you give an incorrect model?");
+
+			return -1;
+		}
+
+		Ped ped = PED::CREATE_PED_INSIDE_VEHICLE(veh, 0, hash, -1, is_networked, false);
+
+		script::get_current()->yield();
+
+		STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
+
+		return ped;
+	}
+
+	/**
+	 * @brief Spawns ped.
+	 * 
+	 * @param pedType Ped type to use.
+	 * @param hash Model hash to spawn.
+	 * @param clone Ped to clone from, using PED::CLONE_PED_TO_TARGET(Ped, Ped), use 0 to ignore.
+	 * @param location Location to spawn ped on.
+	 * @param heading The direction ped is facing.
+	 * @param is_networked Is this ped synced to other players.
+	 * @return Spawned ped.
+	 */
+	inline Ped spawn(ePedType pedType, Hash hash, Ped clone, Vector3 location, float heading, bool is_networked = true)
 	{
 		for (uint8_t i = 0; !STREAMING::HAS_MODEL_LOADED(hash) && i < 100; i++)
 		{
@@ -137,11 +208,14 @@ namespace big::ped
 		return ped;
 	}
 
-	///
-	/// GPL-3 CODE STARTS HERE
-	/// SKIDDED FROM https://github.com/gta-chaos-mod/ChaosModV
-	///
 
+	/**
+	 * @copyright GNU General Public License Version 3.
+	 * @author ChaosMod https://github.com/gta-chaos-mod/ChaosModV
+	 * @brief Creates a ped relationship group that attacks everyone.
+	 * @note Custom relgroups do not sync in MP.\n 
+	 * See https://github.com/YimMenu/YimMenu/pull/1050#discussion_r1131709894.
+	 */
 	inline Hash create_bad_ped_relationship_group(std::string group_name)
 	{
 		static const Hash playerGroup = RAGE_JOAAT("PLAYER");
@@ -157,6 +231,14 @@ namespace big::ped
 		return relationshipGroup;
 	}
 
+	/**
+	 * @copyright GNU General Public License Version 3.
+	 * @author ChaosMod https://github.com/gta-chaos-mod/ChaosModV
+	 * @todo Rewrite this function.
+	 * @brief Creates a Jesus ped with railgun that attacks everyone.
+	 * @param pos Position to spawn at.
+	 * @param target The main target of the ped.
+	 */
 	inline Ped spawn_griefer_jesus(Vector3 pos, Ped target)
 	{
 		Hash relationshipGroup = create_bad_ped_relationship_group("_HOSTILE_JESUS");
@@ -189,6 +271,14 @@ namespace big::ped
 		return ped;
 	}
 
+	/**
+	 * @copyright GNU General Public License Version 3.
+	 * @author ChaosMod https://github.com/gta-chaos-mod/ChaosModV
+	 * @todo Rewrite this function.
+	 * @brief Creates a Jesus ped with railgun on Oppressor Mk2 that attacks everyone.
+	 * @param pos Position to spawn at.
+	 * @param target The main target of the ped.
+	 */
 	inline Ped spawn_extrime_griefer_jesus(Vector3 pos, Ped target)
 	{
 		float heading = ENTITY::GET_ENTITY_HEADING(PED::IS_PED_IN_ANY_VEHICLE(target, false) ? PED::GET_VEHICLE_PED_IS_IN(target, false) : target);
@@ -200,7 +290,7 @@ namespace big::ped
 
 		Hash relationshipGroup = create_bad_ped_relationship_group("_HOSTILE_JESUS");
 
-		Ped ped = ped::spawn_in_vehicle("u_m_m_jesus_01", veh, true);
+		Ped ped = ped::spawn_in_vehicle(RAGE_JOAAT("u_m_m_jesus_01"), veh, true);
 
 		PED::SET_PED_RELATIONSHIP_GROUP_HASH(ped, relationshipGroup);
 		PED::SET_PED_HEARING_RANGE(ped, 9999.f);
@@ -225,6 +315,15 @@ namespace big::ped
 		return ped;
 	}
 
+	/**
+	 * @copyright GNU General Public License Version 3.
+	 * @author ChaosMod https://github.com/gta-chaos-mod/ChaosModV
+	 * @todo Rewrite this function.
+	 * @brief Creates a Jesus ped with railgun on a vehicle that attacks everyone.
+	 * @param pos Position to spawn at.
+	 * @param target The main target of the ped.
+	 * @param vehicle Hash of the vehicle you want ped to spawn in.
+	 */
 	inline Ped spawn_griefer_jet(Vector3 pos, Ped target, Hash vehicle)
 	{
 		float heading = ENTITY::GET_ENTITY_HEADING(PED::IS_PED_IN_ANY_VEHICLE(target, false) ? PED::GET_VEHICLE_PED_IS_IN(target, false) : target);
@@ -235,7 +334,7 @@ namespace big::ped
 
 		Hash relationshipGroup = create_bad_ped_relationship_group("_HOSTILE_JESUS");
 
-		Ped ped = ped::spawn_in_vehicle("u_m_m_jesus_01", veh, true);
+		Ped ped = ped::spawn_in_vehicle(RAGE_JOAAT("u_m_m_jesus_01"), veh, true);
 
 		PED::SET_PED_RELATIONSHIP_GROUP_HASH(ped, relationshipGroup);
 		PED::SET_PED_HEARING_RANGE(ped, 9999.f);
@@ -255,10 +354,11 @@ namespace big::ped
 		return ped;
 	}
 
-	///
-	/// GPL-3 CODE ENDS HERE
-	///
-
+	/**
+	 * @brief Randomizes ped clothing.
+	 * 
+	 * @param ped Ped to randomize clothing of.
+	 */
 	inline void set_ped_random_component_variation(Ped ped)
 	{
 		auto range = [](int lower_bound, int upper_bound) -> int {
@@ -270,7 +370,7 @@ namespace big::ped
 			int drawable_id_max = PED::GET_NUMBER_OF_PED_DRAWABLE_VARIATIONS(ped, item.id) - 1;
 			if (drawable_id_max == -1)
 				continue;
-			int drawable_id = range(0, drawable_id_max);
+			int drawable_id    = range(0, drawable_id_max);
 			int texture_id_max = PED::GET_NUMBER_OF_PED_TEXTURE_VARIATIONS(ped, item.id, drawable_id) - 1;
 			if (texture_id_max == -1)
 				continue;
@@ -279,6 +379,12 @@ namespace big::ped
 		}
 	}
 
+	/**
+	 * @brief Gets player_ptr of the ped.
+	 * 
+	 * @param ped Ped to search.
+	 * @return player_ptr of found player, if player was not found nullptr.
+	 */
 	inline player_ptr get_player_from_ped(Ped ped)
 	{
 		for (auto& p : g_player_service->players())
@@ -292,7 +398,13 @@ namespace big::ped
 		return nullptr;
 	}
 
-	inline bool load_animation_dict (const char* dict)
+	/**
+	 * @brief Loads animation dictionary.
+	 * 
+	 * @param dict Dictionary name.
+	 * @return True if animation_dict has loaded.
+	 */
+	inline bool load_animation_dict(const char* dict)
 	{
 		if (STREAMING::HAS_ANIM_DICT_LOADED(dict))
 			return true;
@@ -306,21 +418,37 @@ namespace big::ped
 		return STREAMING::HAS_ANIM_DICT_LOADED(dict);
 	}
 
+	/**
+	 * @brief Plays an animation on a ped.
+	 * 
+	 * @param ped Ped to play animation on.
+	 * @param animDict Animation dictionary name.
+	 * @param animName Animation name.
+	 * @param speed Blend in speed.
+	 * @param speedMultiplier Blend out speed.
+	 * @param duration The ammount of time this animation can play, use -1 for default.
+	 * @param flag You know were to look for enum.
+	 */
 	inline void ped_play_animation(Ped ped, const std::string_view& animDict, const std::string_view& animName, float speed = 4.f, float speedMultiplier = -4.f, int duration = -1, int flag = 0, float playbackRate = 0, bool lockPos = false)
 	{
 		if (load_animation_dict(animDict.data()))
-			TASK::TASK_PLAY_ANIM(ped, animDict.data(), animName.data(), speed, speedMultiplier, duration, flag, playbackRate, lockPos, lockPos, lockPos);		
+			TASK::TASK_PLAY_ANIM(ped, animDict.data(), animName.data(), speed, speedMultiplier, duration, flag, playbackRate, lockPos, lockPos, lockPos);
 	}
 
-	/*
-	* Will make the ped enter the vehicle with animation if vehicle is in vicinity
-	* Param movespeed: 1 = walk, 2 = run, 3 = sprint
+	/**
+	* @brief Will make the ped enter the vehicle with animation if vehicle is in vicinity
+	*
+	* @param ped Ped to use.
+	* @param veh Vehicle to enter.
+	* @param seat Seat to enter.
+	* @param movespeed 1 = walk, 2 = run, 3 = sprint
 	*/
 	inline void ped_enter_vehicle_animated(Ped ped, Vehicle veh, eVehicleSeats seat, int movespeed)
 	{
 		if (entity::take_control_of(ped))
 		{
-			if (ENTITY::DOES_ENTITY_EXIST(veh)) {
+			if (ENTITY::DOES_ENTITY_EXIST(veh))
+			{
 				if (math::distance_between_vectors(ENTITY::GET_ENTITY_COORDS(ped, 0), ENTITY::GET_ENTITY_COORDS(veh, 0)) < 15.f)
 					TASK::TASK_ENTER_VEHICLE(ped, veh, 10000, (int)seat, movespeed, 8, NULL);
 				else
