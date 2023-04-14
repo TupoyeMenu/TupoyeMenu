@@ -42,7 +42,6 @@ namespace big
 		static void root();
 		static void self_tabs();
 		static void self();
-		static void outfit_editor(Ped ped_to_edit);
 		static void session();
 		static void settings_tabs();
 		static void missions();

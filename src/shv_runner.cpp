@@ -19,11 +19,7 @@ namespace big
 	{
 		while (g_running)
 		{
-			TRY_CLAUSE
-			{
-				run_tick();
-			}
-			EXCEPT_CLAUSE
+			run_tick();
 			script::get_current()->yield();
 		}
 	}

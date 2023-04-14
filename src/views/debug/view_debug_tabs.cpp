@@ -22,12 +22,16 @@ namespace big
 				view::debug_globals();
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("DEBUG_TAB_LOCALS"_T.data()))
+			{
+				view::debug_locals();
+				ImGui::EndTabItem();
+			}
 			if (ImGui::BeginTabItem("Ped Flags"))
 			{
 				view::debug_ped_flags();
 				ImGui::EndTabItem();
 			}
-
 			if (ImGui::BeginTabItem("DEBUG_TAB_MISC"_T.data()))
 			{
 				view::debug_misc();
