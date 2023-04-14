@@ -208,148 +208,102 @@ namespace big::ped
 		return ped;
 	}
 
-
 	/**
-	 * @copyright GNU General Public License Version 3.
-	 * @author ChaosMod https://github.com/gta-chaos-mod/ChaosModV
-	 * @brief Creates a ped relationship group that attacks everyone.
-	 * @note Custom relgroups do not sync in MP.\n 
-	 * See https://github.com/YimMenu/YimMenu/pull/1050#discussion_r1131709894.
+	 * @brief Makes the ped attack the target.
+	 * - Adds this ped to `HATES_PLAYER` relationship group.
+	 * - Sets hearing range to 5000.
+	 * - Disables dying animation.
+	 * - Prevents ragdoll from player impact, bullets and fire.
+	 * - Attacks the target ped.
+	 * 
+	 * @param ped Ped to apply flags to.
+	 * @param ped_to_attack Ped to attack
 	 */
-	inline Hash create_bad_ped_relationship_group(std::string group_name)
+	inline void set_attacker_ped_flags(Ped ped, Ped ped_to_attack)
 	{
-		static const Hash playerGroup = RAGE_JOAAT("PLAYER");
-		static const Hash civGroup    = RAGE_JOAAT("CIVMALE");
-		static const Hash femCivGroup = RAGE_JOAAT("CIVFEMALE");
+		PED::SET_PED_RELATIONSHIP_GROUP_HASH(ped, RAGE_JOAAT("HATES_PLAYER"));
+		PED::SET_PED_HEARING_RANGE(ped, 5000.f);
+		PED::SET_PED_CONFIG_FLAG(ped, 281, true); // Disables the dumb scripted dying animation.
 
-		Hash relationshipGroup;
-		PED::ADD_RELATIONSHIP_GROUP(group_name.c_str(), &relationshipGroup);
-		PED::SET_RELATIONSHIP_BETWEEN_GROUPS(5, relationshipGroup, playerGroup);
-		PED::SET_RELATIONSHIP_BETWEEN_GROUPS(5, relationshipGroup, civGroup);
-		PED::SET_RELATIONSHIP_BETWEEN_GROUPS(5, relationshipGroup, femCivGroup);
+		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 5, true); // Always fight.
 
-		return relationshipGroup;
+		PED::SET_PED_CAN_RAGDOLL_FROM_PLAYER_IMPACT(ped, false);
+		PED::SET_RAGDOLL_BLOCKING_FLAGS(ped, 5); // Don't ragoll from fire and bullets.
+		TASK::TASK_COMBAT_PED(ped, ped_to_attack, 0, 16); // 16 allows to fight armed peds.
 	}
 
 	/**
-	 * @copyright GNU General Public License Version 3.
-	 * @author ChaosMod https://github.com/gta-chaos-mod/ChaosModV
-	 * @todo Rewrite this function.
 	 * @brief Creates a Jesus ped with railgun that attacks everyone.
-	 * @param pos Position to spawn at.
+	 * 
 	 * @param target The main target of the ped.
+	 * @return Created ped.
 	 */
-	inline Ped spawn_griefer_jesus(Vector3 pos, Ped target)
+	inline Ped spawn_griefer_jesus(Ped ped_to_attack)
 	{
-		Hash relationshipGroup = create_bad_ped_relationship_group("_HOSTILE_JESUS");
-
-		Ped ped = ped::spawn(ePedType::PED_TYPE_CRIMINAL, RAGE_JOAAT("u_m_m_jesus_01"), 0, pos, 0);
-
-		if (PED::IS_PED_IN_ANY_VEHICLE(target, false))
-		{
-			PED::SET_PED_INTO_VEHICLE(ped, PED::GET_VEHICLE_PED_IS_IN(target, false), -2);
-		}
-
-		PED::SET_PED_RELATIONSHIP_GROUP_HASH(ped, relationshipGroup);
-		PED::SET_PED_HEARING_RANGE(ped, 9999.f);
-		PED::SET_PED_CONFIG_FLAG(ped, 281, true);
+		Ped ped;
+		Vector3 pos = ENTITY::GET_ENTITY_COORDS(ped_to_attack, false) + Vector3(0, 0, 1);
+		if (PED::IS_PED_IN_ANY_VEHICLE(ped_to_attack, false))
+			ped = ped::spawn_in_vehicle(ePedType::PED_TYPE_CRIMINAL, RAGE_JOAAT("u_m_m_jesus_01"), true);
+		else
+			ped = ped::spawn(ePedType::PED_TYPE_CRIMINAL, RAGE_JOAAT("u_m_m_jesus_01"), 0, pos, 0);
 
 		ENTITY::SET_ENTITY_PROOFS(ped, false, true, true, false, false, false, false, false);
-
-		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 5, true);
-		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 46, true);
-
-		PED::SET_PED_CAN_RAGDOLL_FROM_PLAYER_IMPACT(ped, false);
-		PED::SET_RAGDOLL_BLOCKING_FLAGS(ped, 5);
-		PED::SET_PED_SUFFERS_CRITICAL_HITS(ped, false);
-
 		WEAPON::GIVE_WEAPON_TO_PED(ped, RAGE_JOAAT("WEAPON_RAILGUN"), 9999, true, true);
-		TASK::TASK_COMBAT_PED(ped, target, 0, 16);
-
 		PED::SET_PED_FIRING_PATTERN(ped, RAGE_JOAAT("FIRING_PATTERN_FULL_AUTO"));
+		ped::set_attacker_ped_flags(ped, ped_to_attack);
 
 		return ped;
 	}
 
 	/**
-	 * @copyright GNU General Public License Version 3.
-	 * @author ChaosMod https://github.com/gta-chaos-mod/ChaosModV
-	 * @todo Rewrite this function.
 	 * @brief Creates a Jesus ped with railgun on Oppressor Mk2 that attacks everyone.
-	 * @param pos Position to spawn at.
-	 * @param target The main target of the ped.
+	 * 
+	 * @param ped_to_attack The main target of the ped.
+	 * @return Created ped.
 	 */
-	inline Ped spawn_extrime_griefer_jesus(Vector3 pos, Ped target)
+	inline Ped spawn_extrime_griefer_jesus(Ped ped_to_attack)
 	{
-		float heading = ENTITY::GET_ENTITY_HEADING(PED::IS_PED_IN_ANY_VEHICLE(target, false) ? PED::GET_VEHICLE_PED_IS_IN(target, false) : target);
+		Vector3 pos = ENTITY::GET_ENTITY_COORDS(ped_to_attack, false) + Vector3(0, 0, 5);
+		float heading = ENTITY::GET_ENTITY_HEADING(PED::IS_PED_IN_ANY_VEHICLE(ped_to_attack, false) ? PED::GET_VEHICLE_PED_IS_IN(ped_to_attack, false) : ped_to_attack);
 
 		Vehicle veh = vehicle::spawn(RAGE_JOAAT("oppressor2"), pos, heading, true, false, true);
 		VEHICLE::SET_VEHICLE_ENGINE_ON(veh, true, true, false);
 		vehicle::max_vehicle(veh);
-		ENTITY::SET_ENTITY_PROOFS(veh, false, true, true, false, false, false, false, false);
-
-		Hash relationshipGroup = create_bad_ped_relationship_group("_HOSTILE_JESUS");
+		ENTITY::SET_ENTITY_PROOFS(veh, false, true, true, false, false, false, false, false);  // Fire and explosion proof.
 
 		Ped ped = ped::spawn_in_vehicle(RAGE_JOAAT("u_m_m_jesus_01"), veh, true);
-
-		PED::SET_PED_RELATIONSHIP_GROUP_HASH(ped, relationshipGroup);
-		PED::SET_PED_HEARING_RANGE(ped, 9999.f);
-		PED::SET_PED_CONFIG_FLAG(ped, 281, true);
-
-		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 3, false);
-		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 5, true);
-		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 46, true);
-
-		ENTITY::SET_ENTITY_PROOFS(ped, false, true, true, false, false, false, false, false);
-
-		PED::SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE(ped, 1);
-		PED::SET_PED_CAN_RAGDOLL_FROM_PLAYER_IMPACT(ped, false);
-		PED::SET_RAGDOLL_BLOCKING_FLAGS(ped, 5);
-		PED::SET_PED_SUFFERS_CRITICAL_HITS(ped, false);
-
+		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 3, false); // Never leave the vehicle.
+		PED::SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE(ped, 1); // Disable knock off vehicle.
+		ENTITY::SET_ENTITY_PROOFS(ped, false, true, true, false, false, false, false, false); // Fire and explosion proof.
 		WEAPON::GIVE_WEAPON_TO_PED(ped, RAGE_JOAAT("WEAPON_RAILGUN"), 9999, true, true);
-		TASK::TASK_COMBAT_PED(ped, target, 0, 16);
-
 		PED::SET_PED_FIRING_PATTERN(ped, RAGE_JOAAT("FIRING_PATTERN_FULL_AUTO"));
+		ped::set_attacker_ped_flags(ped, ped_to_attack);
 
 		return ped;
 	}
 
 	/**
-	 * @copyright GNU General Public License Version 3.
-	 * @author ChaosMod https://github.com/gta-chaos-mod/ChaosModV
-	 * @todo Rewrite this function.
-	 * @brief Creates a Jesus ped with railgun on a vehicle that attacks everyone.
-	 * @param pos Position to spawn at.
-	 * @param target The main target of the ped.
+	 * @brief Creates a Jesus ped with railgun in a vehicle that attacks everyone.
+	 * 
+	 * @param ped_to_attack The main target of the ped.
 	 * @param vehicle Hash of the vehicle you want ped to spawn in.
+	 * @return Created ped.
 	 */
-	inline Ped spawn_griefer_jet(Vector3 pos, Ped target, Hash vehicle)
+	inline Ped spawn_griefer_jet(Ped ped_to_attack, Hash vehicle)
 	{
-		float heading = ENTITY::GET_ENTITY_HEADING(PED::IS_PED_IN_ANY_VEHICLE(target, false) ? PED::GET_VEHICLE_PED_IS_IN(target, false) : target);
+		Vector3 pos = ENTITY::GET_ENTITY_COORDS(ped_to_attack, false) + Vector3(0, 0, 30);
+		float heading = ENTITY::GET_ENTITY_HEADING(PED::IS_PED_IN_ANY_VEHICLE(ped_to_attack, false) ? PED::GET_VEHICLE_PED_IS_IN(ped_to_attack, false) : ped_to_attack);
 
 		Vehicle veh = vehicle::spawn(vehicle, pos, heading, true);
 		VEHICLE::SET_VEHICLE_ENGINE_ON(veh, true, true, false);
 		VEHICLE::CONTROL_LANDING_GEAR(veh, 3);
 
-		Hash relationshipGroup = create_bad_ped_relationship_group("_HOSTILE_JESUS");
-
 		Ped ped = ped::spawn_in_vehicle(RAGE_JOAAT("u_m_m_jesus_01"), veh, true);
-
-		PED::SET_PED_RELATIONSHIP_GROUP_HASH(ped, relationshipGroup);
-		PED::SET_PED_HEARING_RANGE(ped, 9999.f);
-		PED::SET_PED_CONFIG_FLAG(ped, 281, true);
-
 		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 3, false);
-		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 5, true);
-		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 46, true);
-
-		TASK::TASK_PLANE_MISSION(ped, veh, 0, target, 0, 0, 0, 6, 0.0, 0.0, 0.0, 2500.0, -1500.0, 0);
-
+		TASK::TASK_PLANE_MISSION(ped, veh, PED::GET_VEHICLE_PED_IS_IN(ped_to_attack, false), ped_to_attack, 0, 0, 0, 6, 150.f, 0.f, 0.f, 2500.f, -200.f, -1.f);
 		WEAPON::GIVE_WEAPON_TO_PED(ped, RAGE_JOAAT("WEAPON_RAILGUN"), 9999, true, true);
-		TASK::TASK_COMBAT_PED(ped, target, 0, 16);
-
 		PED::SET_PED_FIRING_PATTERN(ped, RAGE_JOAAT("FIRING_PATTERN_FULL_AUTO"));
+		ped::set_attacker_ped_flags(ped, ped_to_attack);
 
 		return ped;
 	}
@@ -380,7 +334,7 @@ namespace big::ped
 	}
 
 	/**
-	 * @brief Gets player_ptr of the ped.
+	 * @brief Gets player_ptr from player ped.
 	 * 
 	 * @param ped Ped to search.
 	 * @return player_ptr of found player, if player was not found nullptr.

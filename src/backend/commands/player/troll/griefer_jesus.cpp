@@ -17,8 +17,7 @@ namespace big
 		virtual void execute(player_ptr player, const std::vector<std::uint64_t>& _args, const std::shared_ptr<command_context> ctx)
 		{
             Ped player_ped = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(player->id());
-			Vector3 pos = misc::fvector3_to_Vector3(*player->get_ped()->get_position()) + Vector3(0, 0, 10);
-			ped::spawn_griefer_jesus(pos, player_ped);
+			ped::spawn_griefer_jesus(player_ped);
 		}
 	};
 
@@ -34,8 +33,7 @@ namespace big
 		virtual void execute(player_ptr player, const std::vector<std::uint64_t>& _args, const std::shared_ptr<command_context> ctx)
 		{
             Ped player_ped = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(player->id());
-			Vector3 pos = misc::fvector3_to_Vector3(*player->get_ped()->get_position()) + Vector3(0, 0, 10);
-			ped::spawn_extrime_griefer_jesus(pos, player_ped);
+			ped::spawn_extrime_griefer_jesus(player_ped);
 		}
 	};
 
@@ -51,8 +49,7 @@ namespace big
 		virtual void execute(player_ptr player, const std::vector<std::uint64_t>& _args, const std::shared_ptr<command_context> ctx)
 		{
             Ped player_ped = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(player->id());
-			Vector3 pos = misc::fvector3_to_Vector3(*player->get_ped()->get_position()) + Vector3(0, 0, 10);
-			ped::spawn_griefer_jet(pos, player_ped, RAGE_JOAAT("lazer"));
+			ped::spawn_griefer_jet(player_ped, RAGE_JOAAT("lazer"));
 		}
 	};
 
