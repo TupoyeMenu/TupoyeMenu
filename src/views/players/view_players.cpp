@@ -74,7 +74,7 @@ namespace big
 	{
 		const auto player_count = g_player_service->players().size() + 1;
 
-		if (!*g_pointers->m_is_session_started && player_count < 2)
+		if (!*g_pointers->m_gta.m_is_session_started && player_count < 2)
 			return;
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {2.0f, 2.0f});

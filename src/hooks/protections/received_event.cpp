@@ -194,7 +194,7 @@ namespace big
 				if (!player->is_valid() || !player->get_ped())
 					return;
 
-				g_pointers->m_send_network_damage(g_player_service->get_self()->get_ped(),
+				g_pointers->m_gta.m_send_network_damage(g_player_service->get_self()->get_ped(),
 				    player->get_ped(),
 				    (rage::fvector3*)&localPos,
 				    hitComponent,
@@ -322,10 +322,10 @@ namespace big
 
 		buffer->Seek(0);
 
-		auto object = g_pointers->m_get_net_object(*g_pointers->m_network_object_mgr, ownerNetId, true);
+		auto object = g_pointers->m_gta.m_get_net_object(*g_pointers->m_gta.m_network_object_mgr, ownerNetId, true);
 		auto entity = object ? object->GetGameObject() : nullptr;
 
-		auto offset_object = g_pointers->m_get_net_object(*g_pointers->m_network_object_mgr, f210, true);
+		auto offset_object = g_pointers->m_gta.m_get_net_object(*g_pointers->m_gta.m_network_object_mgr, f210, true);
 
 		if (f208 == 0 && entity && entity->m_entity_type == 4 && reinterpret_cast<CPed*>(entity)->m_player_info
 			&& player->m_player_info->m_ped && player->m_player_info->m_ped->m_net_object
@@ -352,14 +352,14 @@ namespace big
 	{
 		if (event_id > 91u)
 		{
-			g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+			g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 			return;
 		}
 
 		const auto event_name = *(char**)((DWORD64)event_manager + 8i64 * event_id + 243376);
 		if (event_name == nullptr || source_player == nullptr || source_player->m_player_id < 0 || source_player->m_player_id >= 32)
 		{
-			g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+			g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 			return;
 		}
 
@@ -397,7 +397,7 @@ namespace big
 			buffer->ReadDword(&increment_stat_event->m_amount, 0x20);
 			if (hooks::increment_stat_event(increment_stat_event.get(), source_player))
 			{
-				g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 				return;
 			}
 			buffer->Seek(0);
@@ -415,7 +415,7 @@ namespace big
 
 				if ((action >= 15 && action <= 18) || action == 33)
 				{
-					g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+					g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 					notify::crash_blocked(source_player, "vehicle temp action");
 					return;
 				}
@@ -423,7 +423,7 @@ namespace big
 			else if (type > ScriptEntityChangeType::SetVehicleExclusiveDriver || type < ScriptEntityChangeType::BlockingOfNonTemporaryEvents)
 			{
 				notify::crash_blocked(source_player, "invalid script entity change type");
-				g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 				return;
 			}
 			buffer->Seek(0);
@@ -438,7 +438,7 @@ namespace big
 
 			if (hooks::scripted_game_event(scripted_game_event.get(), source_player))
 			{
-				g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 
 				return;
 			}
@@ -452,7 +452,7 @@ namespace big
 
 			if (g_local_player && g_local_player->m_net_object && g_local_player->m_net_object->m_object_id == net_id)
 			{
-				g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 				g.reactions.clear_ped_tasks.process(plyr);
 				return;
 			}
@@ -466,7 +466,7 @@ namespace big
 
 			if (g_local_player && g_local_player->m_net_object && g_local_player->m_net_object->m_object_id == net_id)
 			{
-				g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 				g.reactions.remote_ragdoll.process(plyr);
 				return;
 			}
@@ -510,7 +510,7 @@ namespace big
 
 				if(g.protections.request_control)
 				{
-					g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+					g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 					return;
 				}
 			}
@@ -543,7 +543,7 @@ namespace big
 					// most definitely a crash
 					LOG(INFO) << std::hex << std::uppercase << "0x" << id.m_hash;
 					notify::crash_blocked(source_player, "rope");
-					g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+					g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 					return;
 				}
 			}
@@ -556,14 +556,14 @@ namespace big
 				if (pop_group == 0 && (percentage == 0 || percentage == 103))
 				{
 					notify::crash_blocked(source_player, "pop group override");
-					g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+					g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 					return;
 				}
 			}
 			else if (type > WorldStateDataType::VehiclePlayerLocking || type < WorldStateDataType::CarGen)
 			{
 				notify::crash_blocked(source_player, "invalid world state type");
-				g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 				return;
 			}
 
@@ -578,7 +578,7 @@ namespace big
 			if (hash == RAGE_JOAAT("WEAPON_UNARMED"))
 			{
 				notify::crash_blocked(source_player, "remove unarmed");
-				g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 				return;
 			}
 
@@ -586,7 +586,7 @@ namespace big
 			{
 				g_notification_service->push_warning("Protections",
 				    std::format("{} tried to remove a weapon.", source_player->get_name()));
-				g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 				return;
 			}
 
@@ -601,7 +601,7 @@ namespace big
 			{
 				g_notification_service->push_warning("Protections",
 				    std::format("{} tried to remove all weapons.", source_player->get_name()));
-				g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 				return;
 			}
 
@@ -628,7 +628,7 @@ namespace big
 				if (object_type < eNetObjType::NET_OBJ_TYPE_AUTOMOBILE || object_type > eNetObjType::NET_OBJ_TYPE_TRAIN)
 				{
 					notify::crash_blocked(source_player, "out of bounds give control type");
-					g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+					g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 					return;
 				}
 			}
@@ -645,7 +645,7 @@ namespace big
 				{
 					notify::crash_blocked(source_player, "sound spam");
 				}
-				g_pointers->m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 				return;
 			}
 

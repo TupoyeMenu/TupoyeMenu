@@ -16,7 +16,7 @@ namespace big
 			{
 				CMsgJoinResponse response{};
 				response.m_status_code = player->block_join_reason;
-				g_pointers->m_write_join_response_data(&response, ctx->m_join_response_data, 512, &ctx->m_join_response_size);
+				g_pointers->m_gta.m_write_join_response_data(&response, ctx->m_join_response_data, 512, &ctx->m_join_response_size);
 				g_notification_service->push("Block Join",
 				    std::format("Blocked {} from joining", player->name));
 				return false;
@@ -25,7 +25,7 @@ namespace big
 			{
 				CMsgJoinResponse response{};
 				response.m_status_code = 0;
-				g_pointers->m_write_join_response_data(&response, ctx->m_join_response_data, 512, &ctx->m_join_response_size);
+				g_pointers->m_gta.m_write_join_response_data(&response, ctx->m_join_response_data, 512, &ctx->m_join_response_size);
 				g_notification_service->push("Force Allow Join", std::format("Allowed {} to join", player->name));
 				return true;
 			}

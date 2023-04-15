@@ -60,7 +60,7 @@ namespace big
 						plyr->is_rockstar_admin = true;
 				}
 			}
-			if (g.notifications.player_join.above_map && *g_pointers->m_is_session_started) // prevent loading screen spam
+			if (g.notifications.player_join.above_map && *g_pointers->m_gta.m_is_session_started) // prevent loading screen spam
 				notify::player_joined(player);
 
 			if (g.notifications.player_join.log)

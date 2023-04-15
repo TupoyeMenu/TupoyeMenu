@@ -26,7 +26,7 @@ namespace big
 			{
 				ImGui::Text("TupoyeMenu requires a rebuild of the game cache. This may take up to one minute to generate.");
 
-				if (*g_pointers->m_is_session_started)
+				if (*g_pointers->m_gta.m_is_session_started)
 				{
 					if (ImGui::Button("Update Cache"))
 					{
@@ -47,7 +47,7 @@ namespace big
 						g_gta_data_service->update_in_online();
 					}
 
-					if (*g_pointers->m_game_state == eGameState::Respawn)
+					if (*g_pointers->m_gta.m_game_state == eGameState::Respawn)
 					{
 						if (ImGui::Button("Update Cache On Init"))
 						{

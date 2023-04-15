@@ -18,7 +18,11 @@
 #include "gta/enums.hpp"
 
 namespace big::vehicle
-{
+{	struct disable_collisions
+	{
+		inline static memory::byte_patch* m_patch;
+	};
+	
 	/**
 	 * @brief Converts Miles Per Second into othether units.
 	 * 
@@ -146,7 +150,7 @@ namespace big::vehicle
 	 */
 	inline Vehicle get_closest_to_location(Vector3 location, float range)
 	{
-		if (const auto replay = *g_pointers->m_replay_interface; replay)
+		if (const auto replay = *g_pointers->m_gta.m_replay_interface; replay)
 		{
 			if (const auto veh_interface = replay->m_vehicle_interface; veh_interface)
 			{
@@ -168,7 +172,7 @@ namespace big::vehicle
 
 					if (dist < min_dist)
 					{
-						int32_t tmp_handle = g_pointers->m_ptr_to_handle(veh_ptr);
+						int32_t tmp_handle = g_pointers->m_gta.m_ptr_to_handle(veh_ptr);
 
 						if (entity::take_control_of(tmp_handle))
 						{
@@ -257,7 +261,7 @@ namespace big::vehicle
 
 		STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
 
-		if (*g_pointers->m_is_session_started)
+		if (*g_pointers->m_gta.m_is_session_started)
 		{
 			set_mp_bitset(veh, is_stolen);
 		}
