@@ -36,7 +36,7 @@ namespace big
 {
 	void view::debug_threads()
 	{
-		if (!g_pointers->m_script_threads)
+		if (!g_pointers->m_gta.m_script_threads)
 		{
 			selected_thread = nullptr;
 			return;
@@ -44,7 +44,7 @@ namespace big
 
 		if (ImGui::ListBoxHeader("##threads", ImVec2(250, -ImGui::GetFrameHeight())))
 		{
-			for (auto script : *g_pointers->m_script_threads)
+			for (auto script : *g_pointers->m_gta.m_script_threads)
 			{
 				if (script)
 				{
@@ -170,7 +170,7 @@ namespace big
 
 		ImGui::EndGroup();
 
-		if (*g_pointers->m_game_state != eGameState::Invalid && std::chrono::high_resolution_clock::now() - last_stack_update_time > 100ms)
+		if (*g_pointers->m_gta.m_game_state != eGameState::Invalid && std::chrono::high_resolution_clock::now() - last_stack_update_time > 100ms)
 		{
 			last_stack_update_time = std::chrono::high_resolution_clock::now();
 			g_fiber_pool->queue_job([] {

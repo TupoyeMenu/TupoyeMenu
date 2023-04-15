@@ -49,7 +49,7 @@ namespace big
 		static std::string message = "";
 		components::input_text_with_hint("###Message", "Message", &message, ImGuiInputTextFlags_EnterReturnsTrue, [] {
 			const auto net_game_player = g_player_service->get_self()->get_net_game_player();
-			if (g_pointers->m_send_chat_message(*g_pointers->m_send_chat_ptr,
+			if (g_pointers->m_gta.m_send_chat_message(*g_pointers->m_gta.m_send_chat_ptr,
 			        net_game_player->get_net_data(),
 			        (char*)message.c_str(),
 			        g.chat.local))

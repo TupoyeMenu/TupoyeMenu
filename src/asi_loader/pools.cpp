@@ -23,9 +23,9 @@ namespace rage
 		{
 			if (TypeHasFlag(PoolTypePed))
 			{
-				for (int i = 0; i < big::g_pointers->m_ped_pool->size; i++)
+				for (int i = 0; i < big::g_pointers->m_gta.m_ped_pool->size; i++)
 				{
-					if (uintptr_t address = big::g_pointers->m_ped_pool->getAddress(i))
+					if (uintptr_t address = big::g_pointers->m_gta.m_ped_pool->getAddress(i))
 					{
 						_pointers.push_back(address);
 					}
@@ -34,11 +34,11 @@ namespace rage
 
 			if (TypeHasFlag(PoolTypeVehicle))
 			{
-				for (int i = 0; i < big::g_pointers->m_vehicle_pool->size; i++)
+				for (int i = 0; i < big::g_pointers->m_gta.m_vehicle_pool->size; i++)
 				{
-					if (big::g_pointers->m_vehicle_pool->isValid(i))
+					if (big::g_pointers->m_gta.m_vehicle_pool->isValid(i))
 					{
-						if (uintptr_t address = big::g_pointers->m_vehicle_pool->getAddress(i))
+						if (uintptr_t address = big::g_pointers->m_gta.m_vehicle_pool->getAddress(i))
 						{
 							_pointers.push_back(address);
 						}
@@ -48,9 +48,9 @@ namespace rage
 
 			if (TypeHasFlag(PoolTypeObject))
 			{
-				for (int i = 0; i < big::g_pointers->m_prop_pool->size; i++)
+				for (int i = 0; i < big::g_pointers->m_gta.m_prop_pool->size; i++)
 				{
-					if (uintptr_t address = big::g_pointers->m_prop_pool->getAddress(i))
+					if (uintptr_t address = big::g_pointers->m_gta.m_prop_pool->getAddress(i))
 					{
 						_pointers.push_back(address);
 					}
@@ -59,9 +59,9 @@ namespace rage
 
 			if (TypeHasFlag(PoolTypePickup))
 			{
-				for (int i = 0; i < big::g_pointers->m_pickup_pool->size; i++)
+				for (int i = 0; i < big::g_pointers->m_gta.m_pickup_pool->size; i++)
 				{
-					if (uintptr_t address = big::g_pointers->m_pickup_pool->getAddress(i))
+					if (uintptr_t address = big::g_pointers->m_gta.m_pickup_pool->getAddress(i))
 					{
 						_pointers.push_back(address);
 					}
@@ -70,9 +70,9 @@ namespace rage
 
 			if (TypeHasFlag(PoolTypeCamera))
 			{
-				for (int i = 0; i < big::g_pointers->m_camera_pool->size; i++)
+				for (int i = 0; i < big::g_pointers->m_gta.m_camera_pool->size; i++)
 				{
-					if (uintptr_t address = big::g_pointers->m_camera_pool->getAddress(i))
+					if (uintptr_t address = big::g_pointers->m_gta.m_camera_pool->getAddress(i))
 					{
 						_pointers.push_back(address);
 					}
@@ -100,7 +100,7 @@ namespace rage
 		{
 			if (count == max)
 				break;
-			auto entity = big::g_pointers->m_handle_to_ptr(cEntity);
+			auto entity = big::g_pointers->m_gta.m_handle_to_ptr(cEntity);
 			if (entity)
 			{
 				entities.push_back((const Entity&)entity);

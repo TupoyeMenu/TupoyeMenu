@@ -97,7 +97,7 @@ void ScriptManager::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 PUINT64 DLL_EXPORT getGlobalPtr(int globalId)
 {
-	return reinterpret_cast<PUINT64>(&big::g_pointers->m_script_globals[globalId >> 18 & 0x3F][globalId & 0x3FFFF]);
+	return reinterpret_cast<PUINT64>(&big::g_pointers->m_gta.m_script_globals[globalId >> 18 & 0x3F][globalId & 0x3FFFF]);
 }
 
 int DLL_EXPORT worldGetAllPeds(int* arr, int arrSize)
@@ -122,13 +122,13 @@ int DLL_EXPORT worldGetAllPickups(int* arr, int arrSize)
 
 DLL_EXPORT BYTE* getScriptHandleBaseAddress(int handle)
 {
-	return (BYTE*)big::g_pointers->m_handle_to_ptr(handle);
+	return (BYTE*)big::g_pointers->m_gta.m_handle_to_ptr(handle);
 }
 
 int DLL_EXPORT registerRawStreamingFile(const std::string& fileName, const std::string& registerAs)
 {
 	int textureID = -1;
-	if (big::g_pointers->m_register_file(&textureID, fileName.c_str(), true, fileName.c_str(), false))
+	if (big::g_pointers->m_gta.m_register_file(&textureID, fileName.c_str(), true, fileName.c_str(), false))
 	{
 		LOG(VERBOSE) << "Registered File " << fileName.c_str() << " with ID:" << textureID;
 		return textureID;

@@ -5,7 +5,7 @@ namespace big
 {
 	void view::chat_tabs()
 	{
-		if (!*g_pointers->m_is_session_started)
+		if (!*g_pointers->m_gta.m_is_session_started)
 			return;
 
 		ImGui::SetNextWindowSize({450, 525}, ImGuiCond_FirstUseEver);

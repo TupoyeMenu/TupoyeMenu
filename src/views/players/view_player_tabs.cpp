@@ -6,7 +6,7 @@ namespace big
 {
 	void view::view_player_tabs()
 	{
-		if (!*g_pointers->m_is_session_started && !g_player_service->get_selected()->is_valid())
+		if (!*g_pointers->m_gta.m_is_session_started && !g_player_service->get_selected()->is_valid())
 			return;
 
 		if (ImGui::Begin("Player", &g.window.player))

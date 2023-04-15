@@ -507,7 +507,7 @@ namespace big::ped
 
 			STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
 
-			if (*g_pointers->m_is_session_started)
+			if (*g_pointers->m_gta.m_is_session_started)
 			{
 				DECORATOR::DECOR_SET_INT(ped, "MPBitset", 0);
 				ENTITY::SET_ENTITY_SHOULD_FREEZE_WAITING_ON_COLLISION(ped, clean_up);
@@ -720,7 +720,7 @@ namespace big::ped
 		{
 			if (p.second->get_ped())
 			{
-				if (p.second->get_ped() == g_pointers->m_handle_to_ptr(ped))
+				if (p.second->get_ped() == g_pointers->m_gta.m_handle_to_ptr(ped))
 					return p.second;
 			}
 		}

@@ -10,7 +10,7 @@ namespace big
 		if (g_spinner_service->spinner.active)
 		{
 			ImGui::SetNextWindowSize({380, 90});
-			ImGui::SetNextWindowPos({(float)*g_pointers->m_resolution_x - 400.f, (float)*g_pointers->m_resolution_y - 100.f});
+			ImGui::SetNextWindowPos({(float)*g_pointers->m_gta.m_resolution_x - 400.f, (float)*g_pointers->m_gta.m_resolution_y - 100.f});
 
 			if (ImGui::Begin("spinner", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoMouseInputs | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBringToFrontOnFocus))
 			{
