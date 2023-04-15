@@ -30,7 +30,7 @@ namespace big
 			if (m_entity != ent)
 			{
 				ENTITY::FREEZE_ENTITY_POSITION(m_entity, false);
-				ENTITY::SET_ENTITY_COLLISION(m_entity, true, true);
+				ENTITY::SET_ENTITY_COLLISION(m_entity, true, false);
 
 				m_entity = ent;
 			}

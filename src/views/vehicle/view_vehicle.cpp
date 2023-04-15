@@ -144,8 +144,7 @@ namespace big
 
 		ImGui::SeparatorText("Speedo Meter");
 		{
-			ImGui::Checkbox("Enabled", &g.vehicle.speedo_meter.enabled);
-
+			components::command_checkbox<"speedometer">();
 			if (g.vehicle.speedo_meter.enabled)
 			{
 				ImGui::Text("Position (X, Y)");
@@ -158,9 +157,9 @@ namespace big
 					g.vehicle.speedo_meter.y = pos[1];
 				}
 
+				components::command_checkbox<"speedometerleftside">();
 				ImGui::SameLine();
-
-				ImGui::Checkbox("Left Sided", &g.vehicle.speedo_meter.left_side);
+				components::command_checkbox<"speedometergears">();
 			}
 		}
 

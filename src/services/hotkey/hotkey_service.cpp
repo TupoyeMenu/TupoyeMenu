@@ -11,19 +11,20 @@ namespace big
 {
 	hotkey_service::hotkey_service()
 	{
-		register_hotkey("waypoint", g.settings.hotkeys.teleport_waypoint, RAGE_JOAAT("waypointtp"));
-		register_hotkey("objective", g.settings.hotkeys.teleport_objective, RAGE_JOAAT("objectivetp"));
-		register_hotkey("noclip", g.settings.hotkeys.noclip, RAGE_JOAAT("noclip"));
+		// ordered alphabetically to more easily see if a certain hotkey is present
 		register_hotkey("bringpv", g.settings.hotkeys.bringvehicle, RAGE_JOAAT("bringpv"));
-		register_hotkey("invis", g.settings.hotkeys.invis, RAGE_JOAAT("invis"));
-		register_hotkey("heal", g.settings.hotkeys.heal, RAGE_JOAAT("heal"));
-		register_hotkey("fillsnacks", g.settings.hotkeys.fill_inventory, RAGE_JOAAT("fillsnacks"));
-		register_hotkey("skipcutscene", g.settings.hotkeys.skip_cutscene, RAGE_JOAAT("skipcutscene"));
-		register_hotkey("invisveh", g.settings.hotkeys.invisveh, RAGE_JOAAT("invisveh"));
-		register_hotkey("localinvisveh", g.settings.hotkeys.localinvisveh, RAGE_JOAAT("localinvisveh"));
+		register_hotkey("quicksearch", g.settings.hotkeys.cmd_excecutor, RAGE_JOAAT("cmdexecutor"));
 		register_hotkey("fastquit", g.settings.hotkeys.fast_quit, RAGE_JOAAT("fastquit"));
 		register_hotkey("fillammo", g.settings.hotkeys.fill_ammo, RAGE_JOAAT("fillammo"));
-		register_hotkey("quicksearch", g.settings.hotkeys.cmd_excecutor, RAGE_JOAAT("cmdexecutor"));
+		register_hotkey("fillsnacks", g.settings.hotkeys.fill_inventory, RAGE_JOAAT("fillsnacks"));
+		register_hotkey("heal", g.settings.hotkeys.heal, RAGE_JOAAT("heal"));
+		register_hotkey("invis", g.settings.hotkeys.invis, RAGE_JOAAT("invis"));
+		register_hotkey("invisveh", g.settings.hotkeys.invisveh, RAGE_JOAAT("invisveh"));
+		register_hotkey("localinvisveh", g.settings.hotkeys.localinvisveh, RAGE_JOAAT("localinvisveh"));
+		register_hotkey("noclip", g.settings.hotkeys.noclip, RAGE_JOAAT("noclip"));
+		register_hotkey("objective", g.settings.hotkeys.teleport_objective, RAGE_JOAAT("objectivetp"));
+		register_hotkey("skipcutscene", g.settings.hotkeys.skip_cutscene, RAGE_JOAAT("skipcutscene"));
+		register_hotkey("waypoint", g.settings.hotkeys.teleport_waypoint, RAGE_JOAAT("waypointtp"));
 
 		g_renderer->add_wndproc_callback([this](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 			wndproc(static_cast<eKeyState>(msg), wparam);
