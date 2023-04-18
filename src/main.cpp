@@ -48,18 +48,10 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 		    nullptr,
 		    0,
 		    [](PVOID) -> DWORD {
-			    bool cant_find_window;
 			    auto handler = exception_handler();
 
 			    while (!FindWindow("grcWindow", nullptr))
-			    {
-				    cant_find_window = true;
 				    std::this_thread::sleep_for(100ms);
-			    }
-#ifdef ENABLE_ASI_LOADER
-			    if (cant_find_window)
-				    std::this_thread::sleep_for(20s);
-#endif // ENABLE_ASI_LOADER
 
 			    std::filesystem::path base_dir = std::getenv("appdata");
 			    base_dir /= "TupoyeMenu";

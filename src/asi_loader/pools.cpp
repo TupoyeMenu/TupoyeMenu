@@ -1,7 +1,6 @@
 #ifdef ENABLE_ASI_LOADER
 	#include "pools.h"
-
-	#include "pointers.hpp"
+	#include "util/pools.hpp"
 
 namespace rage
 {
@@ -21,42 +20,6 @@ namespace rage
 
 		void Run(std::vector<uintptr_t>& _pointers)
 		{
-			if (TypeHasFlag(PoolTypePed))
-			{
-				for (int i = 0; i < big::g_pointers->m_gta.m_ped_pool->size; i++)
-				{
-					if (uintptr_t address = big::g_pointers->m_gta.m_ped_pool->getAddress(i))
-					{
-						_pointers.push_back(address);
-					}
-				}
-			}
-
-			if (TypeHasFlag(PoolTypeVehicle))
-			{
-				for (int i = 0; i < big::g_pointers->m_gta.m_vehicle_pool->size; i++)
-				{
-					if (big::g_pointers->m_gta.m_vehicle_pool->isValid(i))
-					{
-						if (uintptr_t address = big::g_pointers->m_gta.m_vehicle_pool->getAddress(i))
-						{
-							_pointers.push_back(address);
-						}
-					}
-				}
-			}
-
-			if (TypeHasFlag(PoolTypeObject))
-			{
-				for (int i = 0; i < big::g_pointers->m_gta.m_prop_pool->size; i++)
-				{
-					if (uintptr_t address = big::g_pointers->m_gta.m_prop_pool->getAddress(i))
-					{
-						_pointers.push_back(address);
-					}
-				}
-			}
-
 			if (TypeHasFlag(PoolTypePickup))
 			{
 				for (int i = 0; i < big::g_pointers->m_gta.m_pickup_pool->size; i++)
@@ -89,24 +52,58 @@ namespace rage
 		EntityPoolTask(type).Run(result);
 	}
 
+	/**
+	 * @brief Get the All World objects
+	 * 
+	 * @param type Entity type to return.
+	 * @param max Max entitys to include is a vector.
+	 * @return std::vector<Entity> Found entitys.
+	 * @todo This is awful, but it should work for now.
+	 * Make it all use the same method.
+	 */
 	std::vector<Entity> GetAllWorld(EntityPoolType type, int max)
 	{
-		int count = 0;
 		std::vector<Entity> entities;
-		std::vector<uintptr_t> pointers;
-		GetEntityPointers(type, pointers);
-
-		for (const auto& cEntity : pointers)
+		switch (type)
 		{
-			if (count == max)
-				break;
-			auto entity = big::g_pointers->m_gta.m_handle_to_ptr(cEntity);
-			if (entity)
-			{
-				entities.push_back((const Entity&)entity);
-				count++;
-			}
+		case EntityPoolType::PoolTypeVehicle:
+		{
+			entities = big::pools::get_all_vehicles_array();
+			break;
 		}
+		case EntityPoolType::PoolTypePed:
+		{
+			entities = big::pools::get_all_peds_array();
+			break;
+		}
+		case EntityPoolType::PoolTypeObject:
+		{
+			entities = big::pools::get_all_props_array();
+			break;
+		}
+		default:
+		{
+			int count = 0;
+			std::vector<uintptr_t> pointers;
+			GetEntityPointers(type, pointers);
+
+			for (const auto& cEntity : pointers)
+			{
+				if (count == max)
+					break;
+				auto entity = big::g_pointers->m_gta.m_handle_to_ptr(cEntity);
+				if (entity)
+				{
+					entities.push_back((const Entity&)entity);
+					count++;
+				}
+			}
+			break;
+		}
+		}
+
+		if (entities.size() > max)
+			entities.resize(max);
 
 		return entities;
 	}

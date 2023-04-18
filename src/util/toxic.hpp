@@ -29,7 +29,16 @@ namespace big::toxic
 		explosion_anti_cheat_bypass::m_can_blame_others->apply();
 		explosion_anti_cheat_bypass::m_can_use_blocked_explosions->apply();
 
-		FIRE::ADD_OWNED_EXPLOSION(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(to_blame->id()), pos.x, pos.y, pos.z, (int)explosion_type, damage, is_audible, is_invisible, camera_shake);
+		FIRE::ADD_OWNED_EXPLOSION(
+		    (*g_pointers->m_gta.m_is_session_started && to_blame) ? PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(to_blame->id()) : 0,
+		    pos.x,
+		    pos.y,
+		    pos.z,
+		    (int)explosion_type,
+		    damage,
+		    is_audible,
+		    is_invisible,
+		    camera_shake);
 
 		explosion_anti_cheat_bypass::m_can_use_blocked_explosions->restore();
 		explosion_anti_cheat_bypass::m_can_blame_others->restore();
