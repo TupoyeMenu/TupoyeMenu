@@ -221,41 +221,6 @@ namespace big
 
 				break;
 			}
-			case rage::eNetMessage::MsgLostConnectionToHost:
-			{
-				uint64_t session_id;
-				buffer.ReadQWord(&session_id, 64);
-				rage::rlGamerHandle handle;
-				gamer_handle_deserialize(handle, buffer);
-
-				auto self = g_player_service->get_self();
-				if (self->get_net_data() && self->get_net_data()->m_gamer_handle.m_rockstar_id == handle.m_rockstar_id)
-				{
-					session::add_infraction(player, Infraction::TRIED_KICK_PLAYER);
-					g.reactions.lost_connection_kick.process(player);
-					return true;
-				}
-
-				for (auto& [_, plyr] : g_player_service->players())
-				{
-					if (plyr->get_net_data() && plyr != player
-					    && plyr->get_net_data()->m_gamer_handle.m_rockstar_id == handle.m_rockstar_id)
-					{
-						session::add_infraction(player, Infraction::LOST_CONNECTION_KICK_DETECTED);
-						g.reactions.lost_connection_kick_others.process(player, plyr);
-
-						if (g.reactions.lost_connection_kick_others.block)
-							return true;
-						else
-							break;
-					}
-				}
-
-				if (player->get_net_data() && player->get_net_data()->m_gamer_handle.m_rockstar_id == handle.m_rockstar_id)
-					break;
-				else
-					return true;
-			}
 			case rage::eNetMessage::MsgNetComplaint:
 			{
 				uint64_t host_token{};
@@ -313,93 +278,10 @@ namespace big
 			}
 			case rage::eNetMessage::MsgTransitionGamerInstruction:
 			{
+				// this kick is still a thing
 				if (is_kick_instruction(buffer))
 				{
 					g.reactions.gamer_instruction_kick.process(player);
-					return true;
-				}
-				break;
-			}
-			}
-		}
-		else
-		{
-			switch (msgType)
-			{
-			case rage::eNetMessage::MsgLostConnectionToHost:
-			{
-				uint64_t session_id;
-				buffer.ReadQWord(&session_id, 64);
-				rage::rlGamerHandle handle;
-				gamer_handle_deserialize(handle, buffer);
-
-				auto self = g_player_service->get_self();
-				if (self->get_net_data() && self->get_net_data()->m_gamer_handle.m_rockstar_id == handle.m_rockstar_id)
-				{
-					g_notification_service->push_error("Kick", "Someone tried to lost connection kick you remotely!");
-					return true;
-				}
-
-				for (auto& [_, plyr] : g_player_service->players())
-				{
-					if (plyr->get_net_data() && plyr->get_net_data()->m_gamer_handle.m_rockstar_id == handle.m_rockstar_id)
-					{
-						g_notification_service->push_error("Kick", std::format("Someone tried to lost connection kick {} remotely!", plyr->get_name()));
-						return true;
-					}
-				}
-
-				return true;
-			}
-			case rage::eNetMessage::MsgRemoveGamersFromSessionCmd:
-			{
-				if (!g_player_service->get_self()->is_host())
-					break;
-
-				player_ptr target;
-				uint64_t session_id;
-				buffer.ReadQWord(&session_id, 64);
-				uint32_t count;
-				buffer.ReadDword(&count, 6);
-				for (std::uint32_t i = 0; i < count; i++)
-				{
-					uint64_t peer_id;
-					buffer.ReadQWord(&peer_id, 64);
-
-					if (g_player_service->get_self()->get_net_data() && g_player_service->get_self()->get_net_data()->m_peer_id_2 == peer_id)
-					{
-						target = g_player_service->get_self();
-					}
-					else
-					{
-						for (std::uint32_t i = 0; i < gta_util::get_network()->m_game_session_ptr->m_peer_count; i++)
-						{
-							if (gta_util::get_network()->m_game_session_ptr->m_peers[i]->m_peer_data.m_peer_id_2 == peer_id)
-							{
-								target = g_player_service->get_by_host_token(
-								    gta_util::get_network()->m_game_session_ptr->m_peers[i]->m_peer_data.m_host_token);
-								break;
-							}
-						}
-					}
-				}
-
-				if (target && count == 1 && frame->m_msg_id == -1)
-				{
-					if (target->id() == g_player_service->get_self()->id())
-						g_notification_service->push_error("Kick", "Someone tried to breakup kick you remotely!");
-					else
-						g_notification_service->push_error("Kick",
-						    std::format("Someone tried to breakup kick {} remotely!", target->get_name()));
-				}
-
-				return true;
-			}
-			case rage::eNetMessage::MsgTransitionGamerInstruction:
-			{
-				if (is_kick_instruction(buffer))
-				{
-					g_notification_service->push_error("Kick", "Someone tried to gamer instruction kick you remotely!");
 					return true;
 				}
 				break;

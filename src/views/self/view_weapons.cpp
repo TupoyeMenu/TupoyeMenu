@@ -110,6 +110,7 @@ namespace big
 
 		ImGui::SeparatorText("Custom Weapons");
 
+		ImGui::Checkbox("Custom Gun only fires when weapon is out", &g.self.custom_weapon_stop);
 		CustomWeapon selected = g.weapons.custom_weapon;
 
 		if (ImGui::BeginCombo("Weapon", custom_weapons[(int)selected].name))

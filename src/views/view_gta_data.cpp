@@ -35,16 +35,9 @@ namespace big
 				}
 				else
 				{
-					ImGui::TextWrapped("You are currently in single player, you can force build the cache in single player but risk crashing when going into multiplayer or load online and cache.");
-
-					if (ImGui::Button("I don't care, update in single player!"))
+					if (ImGui::Button("Update Cache"))
 					{
 						g_gta_data_service->update_now();
-					}
-
-					if (ImGui::Button("Update cache in online."))
-					{
-						g_gta_data_service->update_in_online();
 					}
 
 					if (*g_pointers->m_gta.m_game_state == eGameState::Respawn)
@@ -53,7 +46,7 @@ namespace big
 						{
 							g_gta_data_service->update_on_init();
 						}
-					}		
+					}
 				}
 
 				break;
