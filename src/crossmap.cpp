@@ -1,3 +1,8 @@
+/**
+ * @file crossmap.cpp
+ * @brief Native hash crossmap.
+ */
+
 #include "crossmap.hpp"
 
 namespace big

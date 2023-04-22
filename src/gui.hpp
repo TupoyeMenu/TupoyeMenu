@@ -25,10 +25,16 @@ namespace big
 		void override_mouse(bool override);
 
 		void dx_init();
+		/**
+		* @brief Used to draw the GUI.
+		*/
 		void dx_on_tick();
 
 		void restore_default_style();
 
+		/**
+		* @brief Disables controll when gui is open.
+		*/
 		void script_on_tick();
 		static void script_func();
 

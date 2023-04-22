@@ -12,8 +12,15 @@ namespace big
 		ImGui::Checkbox("Force Teleport", &g.protections.script_events.force_teleport);
 		ImGui::Checkbox("GTA Banner", &g.protections.script_events.gta_banner);
 		ImGui::Checkbox("MC Teleport", &g.protections.script_events.mc_teleport);
+#ifndef ENABLE_SOCIALCLUB
+		ImGui::BeginDisabled(true);
+#endif // ENABLE_SOCIALCLUB
 		ImGui::Checkbox("Block RID Joining", &g.protections.rid_join);
 		ImGui::SameLine(); components::help_marker("This will block anyone trying to join, kick or crash you with your Rockstar ID, including your friends");
+#ifndef ENABLE_SOCIALCLUB
+		ImGui::EndDisabled();
+		ImGui::SameLine(); components::help_marker("This feature is currently disabled, Enable `ENABLE_SOCIALCLUB` to enable.");
+#endif // ENABLE_SOCIALCLUB
 		ImGui::EndGroup();
 
 		ImGui::SameLine();
@@ -27,7 +34,7 @@ namespace big
 		ImGui::Checkbox("Rotate Cam", &g.protections.script_events.rotate_cam);
 		ImGui::Checkbox("Teleport To Warehouse", &g.protections.script_events.teleport_to_warehouse);
 		ImGui::Checkbox("Lessen Breakup Kicks As Host", &g.protections.lessen_breakups);
-		ImGui::SameLine(); components::help_marker("Attacker must join after you have become host for this to work. There are anti-cheat concerns with this feature");
+		ImGui::SameLine(); components::help_marker("Attacker must join after you have become host for this to work. There are anti-cheat concerns with this feature.");
 		ImGui::EndGroup();
 
 		ImGui::SameLine();

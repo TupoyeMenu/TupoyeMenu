@@ -1,3 +1,8 @@
+/**
+ * @file hooking.cpp
+ * @brief Hooking initialization.
+ */
+
 #include "hooking.hpp"
 
 #include "common.hpp"

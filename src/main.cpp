@@ -1,3 +1,8 @@
+/**
+ * @file main.cpp
+ * @brief File with the DllMain function, used for initialization.
+ */
+
 #include "backend/backend.hpp"
 #include "byte_patch_manager.hpp"
 #include "common.hpp"

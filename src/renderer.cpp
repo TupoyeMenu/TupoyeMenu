@@ -1,3 +1,8 @@
+/**
+ * @file renderer.cpp
+ * @brief General rendering and ImGui initialization.
+ */
+
 #include "renderer.hpp"
 
 #include "common.hpp"
@@ -35,6 +40,9 @@ namespace big
 
 		auto& io = ImGui::GetIO();
 
+		/**
+		 * @todo Add a toggle for Keyboard Controls, as they partially broken in Proton GE.
+		 */
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
 		// io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Enable Docking
