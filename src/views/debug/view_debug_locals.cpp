@@ -30,10 +30,10 @@ namespace big
 
 			ImGui::Separator();
 
-			ImGui::Text("Offset: %d", i + 1);
+			ImGui::Text("DEBUG_GLOBAL_OFFSET"_T.data(), i + 1);
 			ImGui::InputInt("##offset", &offsets[i][0]);
 
-			ImGui::Text("Size:");
+			ImGui::Text("DEBUG_GLOBAL_SIZE"_T.data());
 			ImGui::SameLine();
 			ImGui::InputInt("##size", &offsets[i][1]);
 
@@ -48,14 +48,14 @@ namespace big
 			previous_offset_count = 0;
 		};
 
-		if (components::button("Cancel"))
+		if (components::button("CANCEL"_T))
 		{
 			reset_values();
 
 			ImGui::CloseCurrentPopup();
 		}
 		ImGui::SameLine();
-		if (components::button("Save"))
+		if (components::button("SAVE"_T))
 		{
 			if (locals_service::does_script_exist(script_thread_name))
 			{
@@ -77,13 +77,13 @@ namespace big
 
 	void view::debug_locals()
 	{
-		if (components::button("Load"))
+		if (components::button("LOAD"_T))
 			g_locals_service.load();
 		ImGui::SameLine();
-		if (components::button("Save"))
+		if (components::button("SAVE"_T))
 			g_locals_service.save();
 
-		if (components::button("Add local"))
+		if (components::button("Add Local"))
 		{
 			ImGui::OpenPopup("##addlocal");
 		}
@@ -99,166 +99,133 @@ namespace big
 		{
 			ImGui::BeginGroup();
 			ImGui::PushID(local_.get_id());
-
-			ImGui::Text("%s : %s", local_.m_name, local_.m_script_thread_name);
-			if (ImGui::IsItemHovered())
+			ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
+			if (ImGui::TreeNode(strcmp(local_.m_name, "") == 0 ? std::string(local_.m_script_thread_name + std::string(" "))
+			                                                         .append(local_.get_local_chain_text())
+			                                                         .data() :
+			                                                     local_.m_name))
 			{
-				ImGui::OpenPopup("##addlocal");
-			}
-
-			if (ImGui::BeginPopupModal("##addlocal"))
-			{
-				render_local_creator_popup_content();
-
-				ImGui::EndPopup();
-			}
-
-			for (auto& local_ : g_locals_service.m_locals)
-			{
-				ImGui::BeginGroup();
-				ImGui::PushID(local_.get_id());
-				ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
-				if (ImGui::TreeNode(strcmp(local_.m_name, "") == 0 ? 
-					std::string(local_.m_script_thread_name + std::string(" ")).append(local_.get_local_chain_text()).data(): local_.m_name))
+				ImGui::Text("%s : %s", local_.m_script_thread_name, local_.m_name);
+				if (ImGui::IsItemHovered())
 				{
-					ImGui::Text("%s : %s", local_.m_script_thread_name, local_.m_name);
-					if (ImGui::IsItemHovered())
-					{
-						ImGui::BeginTooltip();
-						ImGui::Text(local_.get_local_chain_text());
-						ImGui::EndTooltip();
-					}
+					ImGui::BeginTooltip();
+					ImGui::Text(local_.get_local_chain_text());
+					ImGui::EndTooltip();
+				}
 
-					//Find the thread among the script threads
-					if (!local_.m_script_thread)
-						local_.m_script_thread = gta_util::find_script_thread(rage::joaat(local_.m_script_thread_name));
+				//Find the thread among the script threads
+				if (!local_.m_script_thread)
+					local_.m_script_thread = gta_util::find_script_thread(rage::joaat(local_.m_script_thread_name));
 
-					if (local_.m_script_thread && locals_service::is_script_thread_running(local_.m_script_thread))
+				if (local_.m_script_thread && locals_service::is_script_thread_running(local_.m_script_thread))
+				{
+					//Check whether the address is found
+					if (local_.m_internal_address)
 					{
-						//Check whether the address is found
-						if (local_.m_internal_address)
+						if (ImGui::RadioButton("Int", local_.m_edit_mode == 0))
+							local_.m_edit_mode = 0;
+						ImGui::SameLine();
+						if (ImGui::RadioButton("Float", local_.m_edit_mode == 1))
+							local_.m_edit_mode = 1;
+						ImGui::SameLine();
+						if (ImGui::RadioButton("Bitfield", local_.m_edit_mode == 2))
+							local_.m_edit_mode = 2;
+						ImGui::SameLine();
+						if (ImGui::RadioButton("Vector3", local_.m_edit_mode == 3))
+							local_.m_edit_mode = 3;
+
+
+						ImGui::LabelText(local_.get_local_chain_text(), "Value");
+
+						ImGui::SetNextItemWidth(200);
+
+						switch (local_.m_edit_mode)
 						{
-							if (ImGui::RadioButton("Int", local_.m_edit_mode == 0))
-								local_.m_edit_mode = 0;
-							ImGui::SameLine();
-							if (ImGui::RadioButton("Float", local_.m_edit_mode == 1))
-								local_.m_edit_mode = 1;
-							ImGui::SameLine();
-							if (ImGui::RadioButton("Bitfield", local_.m_edit_mode == 2))
-								local_.m_edit_mode = 2;
-							ImGui::SameLine();
-							if (ImGui::RadioButton("Vector3", local_.m_edit_mode == 3))
-								local_.m_edit_mode = 3;
+						case 0:
 
-
-							ImGui::LabelText(local_.get_local_chain_text(), "Value");
-
-							ImGui::SetNextItemWidth(200);
-
-							switch (local_.m_edit_mode)
+							if (ImGui::InputInt("##local_value", local_.m_freeze ? &local_.m_freeze_value_int : local_.m_internal_address))
 							{
-							case 0:
-
-								if (ImGui::InputInt("##local_value",
-								        local_.m_freeze ? &local_.m_freeze_value_int : local_.m_internal_address))
-								{
-									local_.m_value = *local_.m_internal_address;
-								}
-
-								if (local_.m_freeze)
-								{
-									*local_.m_internal_address = local_.m_freeze_value_int;
-								}
-								break;
-							case 1:
-
-								if (ImGui::InputFloat("##local_value",
-								        local_.m_freeze ? &local_.m_freeze_value_float : (float*)local_.m_internal_address))
-								{
-									local_.m_value = *local_.m_internal_address;
-								}
-
-								if (local_.m_freeze)
-								{
-									*local_.m_internal_address = local_.m_freeze_value_int;
-								}
-								break;
-							case 2:
-
-								if (ImGui::Bitfield("##local_value",
-								        local_.m_freeze ? &local_.m_freeze_value_int : local_.m_internal_address))
-								{
-									local_.m_value = *local_.m_internal_address;
-								}
-
-								if (local_.m_freeze)
-								{
-									*local_.m_internal_address = local_.m_freeze_value_float;
-								}
-								break;
-
-							case 3:
-								ImGui::SetNextItemWidth(300);
-								if (ImGui::InputFloat3("##local_value",
-								        local_.m_freeze ? (float*)&local_.m_freeze_value_vector3 : (float*)local_.m_internal_address))
-								{
-									local_.m_value = *local_.m_internal_address;
-								}
-
-								if (local_.m_freeze)
-								{
-									*local_.m_internal_address_vector3 = local_.m_freeze_value_vector3;
-								}
-								break;
+								local_.m_value = *local_.m_internal_address;
 							}
 
-							ImGui::SameLine();
-							if (ImGui::Checkbox("Freeze", &local_.m_freeze))
+							if (local_.m_freeze)
 							{
-								local_.m_freeze_value_int     = *local_.m_internal_address;
-								local_.m_freeze_value_float   = (float)*local_.m_internal_address;
-								local_.m_freeze_value_vector3 = *local_.m_internal_address_vector3;
+								*local_.m_internal_address = local_.m_freeze_value_int;
 							}
+							break;
+						case 1:
+
+							if (ImGui::InputFloat("##local_value",
+							        local_.m_freeze ? &local_.m_freeze_value_float : (float*)local_.m_internal_address))
+							{
+								local_.m_value = *local_.m_internal_address;
+							}
+
+							if (local_.m_freeze)
+							{
+								*local_.m_internal_address = local_.m_freeze_value_int;
+							}
+							break;
+						case 2:
+
+							if (ImGui::Bitfield("##local_value", local_.m_freeze ? &local_.m_freeze_value_int : local_.m_internal_address))
+							{
+								local_.m_value = *local_.m_internal_address;
+							}
+
+							if (local_.m_freeze)
+							{
+								*local_.m_internal_address = local_.m_freeze_value_float;
+							}
+							break;
+
+						case 3:
+							ImGui::SetNextItemWidth(300);
+							if (ImGui::InputFloat3("##local_value",
+							        local_.m_freeze ? (float*)&local_.m_freeze_value_vector3 : (float*)local_.m_internal_address))
+							{
+								local_.m_value = *local_.m_internal_address;
+							}
+
+							if (local_.m_freeze)
+							{
+								*local_.m_internal_address_vector3 = local_.m_freeze_value_vector3;
+							}
+							break;
 						}
-						else
+
+						ImGui::SameLine();
+						if (ImGui::Checkbox("Freeze", &local_.m_freeze))
 						{
-							if (components::button("Fetch"))
-							{
-								local_.fetch_local_pointer();
-							}
+							local_.m_freeze_value_int     = *local_.m_internal_address;
+							local_.m_freeze_value_float   = (float)*local_.m_internal_address;
+							local_.m_freeze_value_vector3 = *local_.m_internal_address_vector3;
 						}
 					}
 					else
 					{
-						ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
-						ImGui::Text("%s isn't running", local_.m_script_thread_name);
-						ImGui::PopStyleColor();
+						if (components::button("Fetch"))
+						{
+							local_.fetch_local_pointer();
+						}
 					}
-					if (components::button("Delete"))
-						std::erase_if(g_locals_service.m_locals, [local_](local l) {
-							return l.get_id() == local_.get_id();
-						});
-
-					ImGui::PopID();
-					ImGui::Separator();
-
-					ImGui::TreePop();
 				}
-				ImGui::EndGroup();
-			}
-			else
-			{
-				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
-				ImGui::Text("%s isn't running", local_.m_script_thread_name);
-				ImGui::PopStyleColor();
-			}
-			if (components::button("Delete"))
-				std::erase_if(g_locals_service.m_locals, [local_](local l) {
-					return l.get_id() == local_.get_id();
-				});
+				else
+				{
+					ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
+					ImGui::Text("%s isn't running", local_.m_script_thread_name);
+					ImGui::PopStyleColor();
+				}
+				if (components::button("Delete"))
+					std::erase_if(g_locals_service.m_locals, [local_](local l) {
+						return l.get_id() == local_.get_id();
+					});
 
-			ImGui::PopID();
-			ImGui::Separator();
+				ImGui::PopID();
+				ImGui::Separator();
+
+				ImGui::TreePop();
+			}
 			ImGui::EndGroup();
 		}
 	}
