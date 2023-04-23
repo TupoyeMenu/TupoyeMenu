@@ -10,7 +10,7 @@ namespace big
 		if (ImGui::SliderFloat("##gui-scale", &g.window.gui_scale, 1.f, 1.5f, "%.2f"))
 			g_renderer->rescale(g.window.gui_scale);
 		ImGui::SameLine();
-		components::help_marker("Changing the UI scale will crash you, don't touch this!.");
+		components::help_marker("Changing the UI scale in game will crash you, don't touch this!.\nOk maybe crashes are linux only.");
 
 		ImGui::SeparatorText("Colors");
 		static ImVec4 col_gui = ImGui::ColorConvertU32ToFloat4(g.window.color);
@@ -52,7 +52,7 @@ namespace big
 		ImGui::SameLine();
 		ImGui::BeginGroup();
 
-		ImGui::Checkbox("Show Coords", &g.window.ingame_overlay.show_coords);
+		ImGui::Checkbox("Show FPS", &g.window.ingame_overlay.show_fps);
 		ImGui::Checkbox("Show Replay Interface", &g.window.ingame_overlay.show_replay_interface);
 		ImGui::Checkbox("Show Game Version", &g.window.ingame_overlay.show_game_versions);
 
