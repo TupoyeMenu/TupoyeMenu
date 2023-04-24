@@ -17,6 +17,11 @@ namespace big
 				view::spawn_ped();
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("Squad spawner"))
+			{
+				view::squad_spawner();
+				ImGui::EndTabItem();
+			}
 			if (ImGui::BeginTabItem("Embient Population"))
 			{
 				view::ambient();

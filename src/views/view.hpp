@@ -33,7 +33,6 @@ namespace big
 		static void reaction_settings();
 		static void protection_settings();
 		static void translation_settings();
-		static void heading();
 		static void mobile();
 		static void notifications();
 		static void spinner();
@@ -59,6 +58,7 @@ namespace big
 		static void spawn_ped();
 		static void world_tabs();
 		static void ambient();
+		static void squad_spawner();
 		static void time_and_weather();
 		static void network_tabs();
 		static void spoofing();
