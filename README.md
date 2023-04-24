@@ -42,6 +42,7 @@ TupoyeMenu-lite is based of off TupoyeMenu wich is based off of YimMenu wich bas
 | Voice chat audio | Useless bloat          |
 | Orbital drone    | Bloat                  |
 | Vehicle Controller | Bloat                |
+| Squad Spawner    | Bloat?                 |
 | Aimbot & triggerbot | Bloat, cheats bad, L, noob, low quality, useless, cringe, learn how to aim |
 
 ### Reworked

@@ -26,10 +26,8 @@ namespace big
 		static void hotkey_settings();
 		static void reaction_settings();
 		static void protection_settings();
-		static void heading();
 		static void mobile();
 		static void notifications();
-		static void spinner();
 		static void overlay();
 		static void root();
 		static void self_tabs();
@@ -62,7 +60,6 @@ namespace big
 		static void blackhole();
 		static void model_swapper();
 		static void nearby();
-		static void world();
 		static void gta_cache();
 
 		static void cmd_executor();
