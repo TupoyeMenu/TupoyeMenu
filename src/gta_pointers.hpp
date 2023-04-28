@@ -76,9 +76,6 @@ namespace big
 
 #ifdef ENABLE_ASI_LOADER
 		functions::register_file_t m_register_file{};
-
-		rage::GenericPool* m_pickup_pool{};
-		rage::GenericPool* m_camera_pool{};
 #endif // ENABLE_ASI_LOADER
 
 		CGameScriptHandlerMgr** m_script_handler_mgr{};
@@ -274,6 +271,11 @@ namespace big
 		GenericPool** m_ped_pool{};
 		GenericPool** m_prop_pool{};
 		VehiclePool*** m_vehicle_pool{};
+
+#ifdef ENABLE_ASI_LOADER
+		GenericPool** m_pickup_pool{};
+		GenericPool** m_camera_pool{};
+#endif // ENABLE_ASI_LOADER
 	};
 #pragma pack(pop)
 	static_assert(sizeof(gta_pointers) % 8 == 0, "Pointers are not properly aligned");

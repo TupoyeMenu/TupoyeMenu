@@ -1,9 +1,9 @@
 #ifdef ENABLE_ASI_LOADER
-	#include "shv_runner.h"
+#include "shv_runner.hpp"
 
-	#include "common.hpp"
-	#include "natives.hpp"
-	#include "script.hpp"
+#include "common.hpp"
+#include "natives.hpp"
+#include "script.hpp"
 
 namespace big
 {

@@ -5,6 +5,7 @@
 #include "renderer.hpp"
 #include "script.hpp"
 #include "views/view.hpp"
+#include "asi_loader/script_manager.hpp"
 
 #include <imgui.h>
 
@@ -33,6 +34,9 @@ namespace big
 			{
 				g.cmd_executor.enabled = false;
 			}
+		});
+		g_renderer->add_wndproc_callback([this](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+			script_manager::wndproc(hwnd, msg, wparam, lparam);
 		});
 
 		g_renderer->add_dx_callback(esp::draw, 2); // TODO: move to ESP service

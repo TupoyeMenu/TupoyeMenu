@@ -1,21 +1,21 @@
 #ifdef ENABLE_ASI_LOADER
-	#include "script_manager.h"
+#include "script_manager.hpp"
 
-	#include "invoker.hpp"
-	#include "pointers.hpp"
-	#include "pools.h"
-	#include "renderer.hpp"
-	#include "script.hpp"
-	#include "shv_runner.h"
+#include "invoker.hpp"
+#include "pointers.hpp"
+#include "renderer.hpp"
+#include "script.hpp"
+#include "shv_runner.hpp"
+#include "util/pools.hpp"
 
-	#include <set>
+#include <set>
 
-	#define DLL_EXPORT __declspec(dllexport)
+#define DLL_EXPORT __declspec(dllexport)
 
-void DLL_EXPORT scriptWait(unsigned long waitTime)
+void DLL_EXPORT scriptWait(unsigned long wait_time)
 {
 	typedef std::chrono::duration<unsigned long long> my_duran_duran_duration;
-	big::script::get_current()->yield(std::chrono::duration_cast<my_duran_duran_duration>(std::chrono::milliseconds(waitTime)));
+	big::script::get_current()->yield(std::chrono::duration_cast<my_duran_duran_duration>(std::chrono::milliseconds(wait_time)));
 }
 
 void DLL_EXPORT scriptRegister(HMODULE module, void (*function)())
@@ -37,7 +37,7 @@ void DLL_EXPORT scriptUnregister(HMODULE module)
 
 eGameVersion DLL_EXPORT getGameVersion()
 {
-	return VER_1_0_2699_16;
+	return VER_1_0_2845_0;
 }
 
 void DLL_EXPORT scriptRegisterAdditionalThread(HMODULE module, void (*function)())
@@ -82,42 +82,47 @@ void DLL_EXPORT keyboardHandlerUnregister(TKeyboardFn function)
 	g_keyboardFunctions.erase(function);
 }
 
-void ScriptManager::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+void script_manager::wndproc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	if (uMsg == WM_KEYDOWN || uMsg == WM_KEYUP || uMsg == WM_SYSKEYDOWN || uMsg == WM_SYSKEYUP)
 	{
-		auto functions = g_keyboardFunctions;
+		auto keyboard_functions = g_keyboardFunctions;
 
-		for (auto& function : functions)
+		for (auto& keyboard_function : keyboard_functions)
 		{
-			function((DWORD)wParam, lParam & 0xFFFF, (lParam >> 16) & 0xFF, (lParam >> 24) & 1, (uMsg == WM_SYSKEYDOWN || uMsg == WM_SYSKEYUP), (lParam >> 30) & 1, (uMsg == WM_SYSKEYUP || uMsg == WM_KEYUP));
+			keyboard_function((DWORD)wParam, lParam & 0xFFFF, (lParam >> 16) & 0xFF, (lParam >> 24) & 1, (uMsg == WM_SYSKEYDOWN || uMsg == WM_SYSKEYUP), (lParam >> 30) & 1, (uMsg == WM_SYSKEYUP || uMsg == WM_KEYUP));
 		}
 	}
 }
 
-PUINT64 DLL_EXPORT getGlobalPtr(int globalId)
+PUINT64 DLL_EXPORT getGlobalPtr(int global_id)
 {
-	return reinterpret_cast<PUINT64>(&big::g_pointers->m_gta.m_script_globals[globalId >> 18 & 0x3F][globalId & 0x3FFFF]);
+	return reinterpret_cast<PUINT64>(&big::g_pointers->m_gta.m_script_globals[global_id >> 18 & 0x3F][global_id & 0x3FFFF]);
 }
 
-int DLL_EXPORT worldGetAllPeds(int* arr, int arrSize)
+int DLL_EXPORT worldGetAllPeds(int* arr, int array_size)
 {
-	return rage::GetAllWorld(PoolTypePed, arrSize, arr);
+	return big::pools::get_all_peds().to_int_array(arr, array_size);
 }
 
-int DLL_EXPORT worldGetAllVehicles(int* arr, int arrSize)
+int DLL_EXPORT worldGetAllVehicles(int* arr, int array_size)
 {
-	return rage::GetAllWorld(PoolTypeVehicle, arrSize, arr);
+	return big::pools::get_all_vehicles().to_int_array(arr, array_size);
 }
 
-int DLL_EXPORT worldGetAllObjects(int* arr, int arrSize)
+int DLL_EXPORT worldGetAllObjects(int* arr, int array_size)
 {
-	return rage::GetAllWorld(PoolTypeObject, arrSize, arr);
+	return big::pools::get_all_props().to_int_array(arr, array_size);
 }
 
-int DLL_EXPORT worldGetAllPickups(int* arr, int arrSize)
+int DLL_EXPORT worldGetAllPickups(int* arr, int array_size)
 {
-	return rage::GetAllWorld(PoolTypePickup, arrSize, arr);
+	return big::pools::get_all_pickups().to_int_array(arr, array_size);
+}
+
+int DLL_EXPORT worldGetAllCameras(int* arr, int array_size)
+{
+	return big::pools::get_all_cameras().to_int_array(arr, array_size);
 }
 
 DLL_EXPORT BYTE* getScriptHandleBaseAddress(int handle)
@@ -125,16 +130,16 @@ DLL_EXPORT BYTE* getScriptHandleBaseAddress(int handle)
 	return (BYTE*)big::g_pointers->m_gta.m_handle_to_ptr(handle);
 }
 
-int DLL_EXPORT registerRawStreamingFile(const std::string& fileName, const std::string& registerAs)
+int DLL_EXPORT registerRawStreamingFile(const std::string& file_name, const std::string& register_as)
 {
 	int textureID = -1;
-	if (big::g_pointers->m_gta.m_register_file(&textureID, fileName.c_str(), true, fileName.c_str(), false))
+	if (big::g_pointers->m_gta.m_register_file(&textureID, file_name.c_str(), true, file_name.c_str(), false))
 	{
-		LOG(VERBOSE) << "Registered File " << fileName.c_str() << " with ID:" << textureID;
+		LOG(VERBOSE) << "Registered File " << file_name.c_str() << " with ID:" << textureID;
 		return textureID;
 	}
 
-	LOG(FATAL) << "Failed to register " << fileName.c_str();
+	LOG(FATAL) << "Failed to register " << file_name.c_str();
 	return 0;
 }
 
@@ -150,7 +155,7 @@ DLL_EXPORT void presentCallbackUnregister(PresentCallback cb)
 }
 
 /* textures */
-DLL_EXPORT int createTexture(const char* texFileName)
+DLL_EXPORT int createTexture(const char* texfile_name)
 {
 	return -1; // Implement later if we can get the DirectXTK working.
 }

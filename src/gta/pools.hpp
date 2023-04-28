@@ -1,11 +1,15 @@
+/**
+ * @file pools.hpp
+ * @brief Pool Interator class to iterate over pools. Has just enough operators defined to be able to be used in a for loop, not suitable for any other iterating.
+ * 
+ * @copyright GNU General Public License Version 3.
+ * @note everything pasted from https://github.com/gta-chaos-mod/ChaosModV/blob/master/ChaosMod/Util/EntityIterator.h
+ * Thanks to menyoo for most of these!!
+ */
+
 #pragma once
 #include "natives.hpp"
 #include "pointers.hpp"
-
-// everything pasted from https://github.com/gta-chaos-mod/ChaosModV/blob/master/ChaosMod/Util/EntityIterator.h
-// Thanks to menyoo for most of these!!
-
-// Pool Interator class to iterate over pools. Has just enough operators defined to be able to be used in a for loop, not suitable for any other iterating.
 
 template<typename T>
 class pool_iterator
@@ -46,8 +50,10 @@ public:
 	}
 };
 
-// Common functions for VehiclePool and GenericPool
 template<typename T>
+/**
+ * @brief Common functions for VehiclePool and GenericPool
+ */
 class PoolUtils
 {
 public:
@@ -60,6 +66,21 @@ public:
 		}
 
 		return arr;
+	}
+
+	inline auto to_int_array(int* arr, int max)
+	{
+		auto entities = to_array();
+
+		if (entities.size() > max)
+			entities.resize(max);
+
+		for (int i = 0; i < entities.size(); ++i)
+		{
+			arr[i] = entities[i];
+		}
+
+		return entities.size();
 	}
 
 	auto begin()

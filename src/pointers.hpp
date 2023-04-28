@@ -15,10 +15,6 @@
 	#include "sc_pointers.hpp"
 #endif // ENABLE_SOCIALCLUB
 
-#ifdef ENABLE_ASI_LOADER
-	#include "asi_loader/pools.h"
-#endif // ENABLE_ASI_LOADER
-
 namespace big
 {
 	class pointers

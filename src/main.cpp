@@ -16,8 +16,8 @@
 #include "renderer.hpp"
 #include "script_mgr.hpp"
 #ifdef ENABLE_ASI_LOADER
-	#include "asi_loader/asi_scripts.h"
-	#include "shv_runner.h"
+	#include "asi_loader/asi_scripts.hpp"
+	#include "shv_runner.hpp"
 #endif // ENABLE_ASI_LOADER
 
 #include "services/context_menu/context_menu_service.hpp"
@@ -132,7 +132,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				    LOG(INFO) << "Hooking enabled.";
 
 #ifdef ENABLE_ASI_LOADER
-				    ASILoader::Initialize();
+				    asi_loader::initialize();
 				    LOG(INFO) << "ASI Loader initialized.";
 #endif // ENABLE_ASI_LOADER
 

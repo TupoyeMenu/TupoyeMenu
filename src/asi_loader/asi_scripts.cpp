@@ -1,71 +1,61 @@
+/**
+ * @file asi_scripts.cpp
+ * @brief Find and load any asi plugins in the OpenHookV directory.
+ * @note Skidded from https://github.com/YimMenu/YimMenu/pull/135.
+ */
+
 #ifdef ENABLE_ASI_LOADER
-	#include "asi_scripts.h"
+#include "asi_scripts.hpp"
 
-	#include "core/globals.hpp"
-	#include "pe_image.h"
+#include "pe_image.hpp"
 
-using namespace Utility;
-
-void ASILoader::Initialize()
+namespace big::asi_loader
 {
-	LOG(INFO) << "Loading *.asi plugins.";
-
-	std::string currentFolder = std::getenv("appdata");
-	currentFolder += "\\TupoyeMenu";
-	const std::string asiFolder = currentFolder + "\\OpenHookV";
-
-	const std::string asiSearchQuery = asiFolder + "\\*.asi";
-
-	WIN32_FIND_DATAA fileData;
-	HANDLE fileHandle = FindFirstFileA(asiSearchQuery.c_str(), &fileData);
-	if (fileHandle != INVALID_HANDLE_VALUE)
+	void initialize()
 	{
-		do
+		LOG(INFO) << "Loading *.asi plugins.";
+
+		const auto asi_folder = g_file_manager->get_project_folder("./OpenHookV");
+
+		for (const auto& item : std::filesystem::directory_iterator(asi_folder.get_path()))
 		{
-			const std::string pluginPath = asiFolder + "\\" + fileData.cFileName;
+			if (item.is_directory())
+				continue;
 
-			LOG(INFO) << "Loading " << pluginPath.c_str();
+			const auto path = item.path();
+			if (path.extension() != ".asi")
+				continue;
 
-			PEImage pluginImage;
-			if (!pluginImage.Load(pluginPath))
+			pe_utils::pe_image plugin_image;
+			if (!plugin_image.load(path.string()))
 			{
-				LOG(FATAL) << "Failed to load image.";
+				LOG(WARNING) << "Failed to load image: " << path.filename();
+
 				continue;
 			}
 
-			// Image not compatible, needs patching
-			if (!pluginImage.IsOpenVHookCompatible())
+			if (!plugin_image.is_openvhook_compatible())
 			{
-				LOG(INFO) << "Detected non compatible image. Patching compatibility.";
+				LOG(INFO) << "ASI is not compatible, patching imports...";
 
-				if (pluginImage.PatchCompatibility())
+				if (!plugin_image.patch_compatibility())
 				{
-					LOG(INFO) << "Successfully patched.";
-				}
-				else
-				{
-					LOG(FATAL) << "Failed to patch compatibility.";
+					LOG(WARNING) << "Failed to patch image: " << path.filename();
+
 					continue;
 				}
 			}
-
-			// Image compatible (now), load it
-			HMODULE module = LoadLibraryA(pluginPath.c_str());
-			if (module)
+			const auto hmod = LoadLibraryA(path.string().c_str());
+			if (!hmod)
 			{
-				big::g.debug.asi_plugins_loaded = true;
-				LOG(INFO) << "Loaded " << fileData.cFileName << " -> " HEX_TO_UPPER(module);
-			}
-			else
-			{
-				LOG(FATAL) << "Failed to load";
-			}
+				LOG(WARNING) << "Failed to load image: " << path.filename();
 
-		} while (FindNextFileA(fileHandle, &fileData));
+				continue;
+			}
+			LOG(INFO) << "Loaded image: " << path.filename() << " -> " << HEX_TO_UPPER(hmod);
+		}
 
-		FindClose(fileHandle);
+		LOG(INFO) << "Finished loading *.asi plugins.";
 	}
-
-	LOG(INFO) << "Finished loading *.asi plugins.";
 }
 #endif // ENABLE_ASI_LOADER

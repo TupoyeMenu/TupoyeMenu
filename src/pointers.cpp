@@ -6,10 +6,6 @@
 #include "rage/atSingleton.hpp"
 #include "security/RageSecurity.hpp"
 
-#ifdef ENABLE_ASI_LOADER
-	#include "asi_loader/pools.h"
-#endif // ENABLE_ASI_LOADER
-
 #ifdef ENABLE_SOCIALCLUB
     #include "sc_pointers_layout_info.hpp"
 #endif // ENABLE_SOCIALCLUB
@@ -1373,7 +1369,7 @@ namespace big
             "4C 8B 05 ? ? ? ? 40 8A F2 8B E9",
             [](memory::handle ptr)
             {
-                g_pointers->m_gta.m_pickup_pool = ptr.add(3).rip().as<rage::GenericPool*>();
+                g_pointers->m_gta.m_pickup_pool = ptr.add(3).rip().as<GenericPool**>();
             }
         },
         // Camera Pool
@@ -1382,7 +1378,7 @@ namespace big
             "48 8B C8 EB 02 33 C9 48 85 C9 74 26",
             [](memory::handle ptr)
             {
-                g_pointers->m_gta.m_camera_pool = ptr.sub(9).rip().as<rage::GenericPool*>();
+                g_pointers->m_gta.m_camera_pool = ptr.sub(9).rip().as<GenericPool**>();
             }
         },
 #endif // ENABLE_ASI_LOADER
