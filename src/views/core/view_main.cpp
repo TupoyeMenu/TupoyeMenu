@@ -43,5 +43,6 @@ namespace big
 				ImGui::EndTabBar();
 			}
 		}
+		ImGui::End();
 	}
 }

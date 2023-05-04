@@ -680,6 +680,7 @@ namespace big
 
 		struct window
 		{
+			bool about    = false;
 			bool main     = true;
 			bool users    = true;
 			bool player   = true;
@@ -711,7 +712,7 @@ namespace big
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(ingame_overlay, opened, corner, show_coords, show_watermark, show_with_menu_opened, show_fps, show_players, show_replay_interface, show_game_versions)
 			} ingame_overlay{};
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, main, users, player, ingame_overlay, switched_view, demo, color, gui_scale)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, about, main, users, player, ingame_overlay, switched_view, demo, color, gui_scale)
 		} window{};
 
 		struct context_menu

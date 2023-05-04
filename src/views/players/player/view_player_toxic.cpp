@@ -1,3 +1,14 @@
+/**
+ * @file view_player_toxic.cpp
+ * @brief Toxic options to disrupt the game for selected player.
+ * 
+ * @copyright GNU General Public License Version 2.
+ * This file is part of YimMenu.
+ * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
+ * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "core/data/apartment_names.hpp"
 #include "core/data/warehouse_names.hpp"
 #include "util/ped.hpp"
@@ -142,6 +153,11 @@ namespace big
 			ImGui::SameLine();
 			components::help_marker("This cannot be reversed. Use with caution");
 
+			ImGui::TreePop();
+		}
+
+		if (ImGui::TreeNode("Loops"))
+		{
 			ImGui::Checkbox("Kill Loop", &g_player_service->get_selected()->kill_loop);
 			ImGui::SameLine();
 			ImGui::Checkbox("Explosion Loop", &g_player_service->get_selected()->explosion_loop);
@@ -175,8 +191,6 @@ namespace big
 			ImGui::SameLine();
 			components::player_command_button<"remweaps">(g_player_service->get_selected(), {});
 
-			components::player_command_button<"tutorial">(g_player_service->get_selected(), {});
-			ImGui::SameLine();
 			components::player_command_button<"golf">(g_player_service->get_selected(), {});
 			ImGui::SameLine();
 			components::player_command_button<"flightschool">(g_player_service->get_selected(), {});
