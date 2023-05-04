@@ -66,17 +66,23 @@ namespace big
 		}
 
 		template<template_str cmd_str>
-		static void command_checkbox(std::optional<const std::string_view> label_override = std::nullopt)
+		static bool command_checkbox(std::optional<const std::string_view> label_override = std::nullopt)
 		{
 			static bool_command* command = dynamic_cast<bool_command*>(command::get(rage::consteval_joaat(cmd_str.value)));
 			if (command == nullptr)
-				return ImGui::Text("INVALID COMMAND");
+			{
+				ImGui::Text("INVALID COMMAND");
+				return false;
+			}
 
-			if (ImGui::Checkbox(label_override.value_or(command->get_label()).data(), &command->is_enabled()))
+			bool updated;
+			if (updated = ImGui::Checkbox(label_override.value_or(command->get_label()).data(), &command->is_enabled()))
 				command->refresh();
 
 			ImGui::SameLine();
 			help_marker(command->get_description());
+
+			return updated;
 		}
 
 		template<ImVec2 size = ImVec2(0, 0), ImVec4 color = ImVec4(0.172f, 0.380f, 0.909f, 1.f)> // TODO: Use GUI Color.

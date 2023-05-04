@@ -150,6 +150,8 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 #endif // ENABLE_ASI_LOADER
 
 				    g_running = true;
+					// start update loop after setting g_running to true to prevent it from exiting instantly
+					g_player_database_service->start_update_loop();
 
 				    while (g_running)
 					    std::this_thread::sleep_for(500ms);
