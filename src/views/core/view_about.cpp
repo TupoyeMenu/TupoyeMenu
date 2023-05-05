@@ -22,7 +22,7 @@ Menus - Bases we use:
 
 Libraries we use:
 * [GTAV-Classes](https://github.com/Yimura/GTAV-Classes) GTA 5 class defenitions.
-* [AsyncLogger](https://github.com/Yimura/AsyncLogger) The log libraty we use.
+* [AsyncLogger](https://github.com/Yimura/AsyncLogger) The log library we use.
 * [imgui_markdown](https://github.com/juliettef/imgui_markdown) markdown for Dear ImGui.
 * [ImGui](https://github.com/ocornut/imgui) User inteface.
 * [nlohmann json](https://github.com/nlohmann/json) Json parsing.
