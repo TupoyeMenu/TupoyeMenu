@@ -157,7 +157,7 @@ namespace big
 				ImGui::TreePop();
 			}
 
-			if (persistent_player* current_player = g_player_database_service->get_player_by_rockstar_id(
+			if (auto current_player = g_player_database_service->get_player_by_rockstar_id(
 			        g_player_service->get_selected()->get_net_data()->m_gamer_handle.m_rockstar_id))
 			{
 				if (ImGui::TreeNode("Player DB Info"))
