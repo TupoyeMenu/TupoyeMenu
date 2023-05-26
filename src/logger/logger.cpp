@@ -83,6 +83,9 @@ namespace big
 		Logger::AddSink([this](LogMessagePtr msg) {
 			format_file(std::move(msg));
 		});
+		Logger::AddSink([this](LogMessagePtr msg) {
+			format_log(std::move(msg));
+		});
 	}
 
 	void logger::destroy()
@@ -167,8 +170,6 @@ namespace big
 
 	void logger::format_console_simple(const LogMessagePtr msg)
 	{
-		const auto color = get_color(msg->Level());
-
 		const auto timestamp = std::format("{0:%H:%M:%S}", msg->Timestamp());
 		const auto& location = msg->Location();
 		const auto level     = msg->Level();
@@ -192,5 +193,10 @@ namespace big
 
 		m_file_out << "[" << timestamp << "]"
 		           << "[" << get_level_string(level) << "/" << file << ":" << location.line() << "] " << msg->Message() << std::flush;
+	}
+
+	void logger::format_log(const LogMessagePtr msg)
+	{
+		m_log_messages.push_back(msg);
 	}
 }

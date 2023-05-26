@@ -31,7 +31,6 @@ namespace big
 		g_renderer->add_dx_callback(view::cmd_executor, -4);
 		g_renderer->add_dx_callback(
 		    [this] {
-			    ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 			    dx_on_tick();
 		    },
 		    -5);
@@ -167,6 +166,7 @@ namespace big
 
 	void gui::dx_on_tick()
 	{
+		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 		if (m_is_open)
 		{
 			ImGui::PushStyleColor(ImGuiCol_WindowBg, ImGui::ColorConvertU32ToFloat4(g.window.color));
@@ -246,7 +246,7 @@ namespace big
 
 	void gui::toggle_mouse()
 	{
-		if (m_is_open || g_gui->m_override_mouse)
+		if (g_gui->m_is_open || g_gui->m_override_mouse)
 		{
 			ImGui::GetIO().MouseDrawCursor = true;
 			ImGui::GetIO().ConfigFlags &= ~ImGuiConfigFlags_NoMouse;

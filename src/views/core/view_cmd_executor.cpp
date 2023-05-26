@@ -8,69 +8,110 @@
  * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "backend/context/default_command_context.hpp"
+#include "backend/context/console_command_context.hpp"
 #include "gui.hpp"
+#include "natives.hpp"
 #include "pointers.hpp"
 #include "services/hotkey/hotkey_service.hpp"
 #include "views/view.hpp"
 
+#include "imgui_internal.h"
+
 namespace big
 {
+	ImVec4 get_log_color(const eLogLevel level)
+	{
+		switch (level)
+		{
+		case VERBOSE: return ImVec4(0.0f, 0.44f, 0.85f, 1.0f);
+		case INFO: return ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+		case WARNING: return ImVec4(1.0f, 0.7f, 0.0f, 1.0f);
+		case FATAL: return ImVec4(1.0f, 0.4f, 0.4f, 1.0f);
+		}
+		return ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	}
+
+	static bool did_set_focus = false;
 	void view::cmd_executor()
 	{
 		if (!g.cmd_executor.enabled)
+		{
+			did_set_focus = false;
 			return;
+		}
 
-		float screen_x = (float)*g_pointers->m_gta.m_resolution_x;
-		float screen_y = (float)*g_pointers->m_gta.m_resolution_y;
-
-		ImGui::SetNextWindowPos(ImVec2(screen_x * 0.25f, screen_y * 0.2f), ImGuiCond_Always);
-		ImGui::SetNextWindowBgAlpha(0.65f);
-		ImGui::SetNextWindowSize({screen_x * 0.5f, -1});
-
-		if (ImGui::Begin("cmd_executor", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav))
+		if (ImGui::Begin("Console", &g.cmd_executor.enabled))
 		{
 			static char command_buffer[255];
-			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {10.f, 15.f});
-			components::sub_title("TupoyeMenu Command Executor");
 
-			// set focus by default on input box
-			ImGui::SetKeyboardFocusHere(0);
-
-			ImGui::SetNextItemWidth(screen_x * 0.5f);
-			components::input_text_with_hint("", "Type your command", command_buffer, sizeof(command_buffer), ImGuiInputTextFlags_EnterReturnsTrue, [] {
-				if (command::process(command_buffer, std::make_shared<default_command_context>(), true))
-				{
-					g.cmd_executor.enabled = false;
-					command_buffer[0]      = 0;
-				}
+			g_fiber_pool->queue_job([] { // Disable control here because we are not always focused.
+				PAD::DISABLE_ALL_CONTROL_ACTIONS(0);
+				PAD::DISABLE_ALL_CONTROL_ACTIONS(2);
 			});
 
-			components::small_text("You can execute several commands at the same time by separating them with \";\"");
-			ImGui::Spacing();
+			const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing();
+			ImGui::BeginChild("##scrolling_region_log", ImVec2(0, -footer_height_to_reserve), true, ImGuiWindowFlags_HorizontalScrollbar);
+			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1)); // Tighten spacing
 
-			auto possible_commands = command::get_suggestions(command_buffer);
-			if (possible_commands.size() == 0)
+			for (auto msg : g_log->get_log_messages())
 			{
-				ImGui::Text("No commands could be found. :(");
+				ImGui::PushStyleColor(ImGuiCol_Text, get_log_color(msg->Level()));
+				ImGui::TextUnformatted(msg->Message().c_str());
+				ImGui::PopStyleColor();
 			}
-			else
-			{
-				for (auto cmd : possible_commands)
-				{
-					ImGui::Text(std::format("{} - {} - {} | {} Args",
-					    cmd->get_name(),
-					    cmd->get_label(),
-					    cmd->get_description(),
-					    cmd->get_num_args() ? cmd->get_num_args().value() : 0)
-					                .data());
 
-					// check if we aren't on the last iteration
-					if (cmd != possible_commands.back())
-						ImGui::Separator();
+			if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+				ImGui::SetScrollHereY(1.0f);
+
+			ImGui::PopStyleVar();
+			ImGui::EndChild();
+
+			ImGui::Separator();
+
+			// Set focus by default on input box.
+			// This is dumb but if we don't do this check then we can't use suggestions.
+			if(!did_set_focus)
+			{
+				did_set_focus = true;
+				ImGui::SetKeyboardFocusHere(0);
+			}
+
+			bool is_input_text_enter_pressed = false;
+			components::input_text_with_hint("", "Type your command", command_buffer, sizeof(command_buffer), ImGuiInputTextFlags_EnterReturnsTrue, [&is_input_text_enter_pressed]
+			{
+				did_set_focus = false;
+				is_input_text_enter_pressed = true;
+				if (command::process(command_buffer, std::make_shared<console_command_context>(), true))
+					command_buffer[0] = 0;
+			});
+			const bool is_input_text_active = ImGui::IsItemActive();
+			const bool is_input_text_activated = ImGui::IsItemActivated();
+
+			if (is_input_text_activated)
+				ImGui::OpenPopup("##popup");
+
+			{
+				ImGui::SetNextWindowPos(ImVec2(ImGui::GetItemRectMin().x, ImGui::GetItemRectMax().y));
+				if (ImGui::BeginPopup("##popup", ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_ChildWindow))
+				{
+					auto possible_commands = command::get_suggestions(command_buffer);
+
+					for (auto cmd : possible_commands)
+					{
+						if (ImGui::Selectable(cmd->get_name().c_str()))
+						{
+							ImGui::ClearActiveID();
+							strcpy(command_buffer, cmd->get_name().c_str());
+							//did_set_focus = false; // Set focus back to `input_text_with_hint`.
+						}
+					}
+
+					if (is_input_text_enter_pressed || (!is_input_text_active && !ImGui::IsWindowFocused()))
+						ImGui::CloseCurrentPopup();
+
+					ImGui::EndPopup();
 				}
 			}
-
 			ImGui::PopStyleVar();
 		}
 

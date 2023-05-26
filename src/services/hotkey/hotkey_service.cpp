@@ -85,9 +85,6 @@ namespace big
 		if (g.cmd_executor.enabled)
 			return;
 
-		if (g_gui->is_open())
-			return;
-
 		if (state == eKeyState::RELEASE || state == eKeyState::DOWN)
 		{
 			auto& hotkey_map = m_hotkeys[state == eKeyState::RELEASE];
