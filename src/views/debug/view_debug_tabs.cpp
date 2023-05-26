@@ -32,6 +32,11 @@ namespace big
 				view::debug_ped_flags();
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("Animations"))
+			{
+				view::debug_animations();
+				ImGui::EndTabItem();
+			}
 			if (ImGui::BeginTabItem("DEBUG_TAB_MISC"_T.data()))
 			{
 				view::debug_misc();

@@ -12,6 +12,8 @@ namespace big
 
 	public:
 		static void main_view();
+
+		static void debug_animations();
 		static void debug_script_events();
 		static void debug_globals();
 		static void debug_locals();
@@ -36,7 +38,6 @@ namespace big
 		static void mobile();
 		static void notifications();
 		static void spinner();
-		static void orbital_drone();
 		static void overlay();
 		static void root();
 		static void self_tabs();

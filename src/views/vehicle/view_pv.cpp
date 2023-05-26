@@ -54,7 +54,7 @@ namespace big
 
 		ImGui::SetNextItemWidth(300.f);
 		if (ImGui::BeginCombo("VEHICLE_CLASS"_T.data(),
-		        selected_class == -1 ? "ALL"_T.data() : class_arr[selected_class].c_str()))
+			selected_class == -1 ? "ALL"_T.data() : class_arr[selected_class].c_str()))
 		{
 			if (ImGui::Selectable("ALL"_T.data(), selected_class == -1))
 			{
@@ -114,8 +114,9 @@ namespace big
 						components::selectable(label, false, [&personal_veh] {
 							if (g.clone_pv.spawn_clone)
 							{
-								Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside);
-								float spawn_heading    = ENTITY::GET_ENTITY_HEADING(self::ped);
+								Vector3 spawn_location =
+								    vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside, personal_veh->get_hash());
+								float spawn_heading = ENTITY::GET_ENTITY_HEADING(self::ped);
 
 								auto vehicle_idx = personal_veh->get_vehicle_idx();
 								auto owned_mods  = vehicle::get_owned_mods_from_vehicle_idx(vehicle_idx);

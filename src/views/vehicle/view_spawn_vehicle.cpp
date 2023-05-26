@@ -34,7 +34,7 @@ namespace big
 
 		ImGui::SetNextItemWidth(300.f);
 		if (ImGui::BeginCombo("VEHICLE_CLASS"_T.data(),
-		        selected_class == -1 ? "ALL"_T.data() : class_arr[selected_class].c_str()))
+			selected_class == -1 ? "ALL"_T.data() : class_arr[selected_class].c_str()))
 		{
 			if (ImGui::Selectable("ALL"_T.data(), selected_class == -1))
 			{
@@ -105,8 +105,8 @@ namespace big
 					components::selectable(std::vformat("SPAWN_VEHICLE_CURRENT_VEHICLE"_T, std::make_format_args(item.m_display_name)), false, [] {
 						if (self::veh)
 						{
-							Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside);
-							float spawn_heading    = ENTITY::GET_ENTITY_HEADING(self::ped);
+							Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside, veh_hash);
+							float spawn_heading = ENTITY::GET_ENTITY_HEADING(self::ped);
 
 							auto owned_mods = vehicle::get_owned_mods_from_vehicle(self::veh);
 
@@ -171,8 +171,9 @@ namespace big
 					{
 						ImGui::PushID(vehicle.m_hash);
 						components::selectable(vehicle.m_display_name, false, [&vehicle] {
-							const auto spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside);
-							const auto spawn_heading  = ENTITY::GET_ENTITY_HEADING(self::ped);
+							const auto spawn_location =
+							    vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside, vehicle.m_hash);
+							const auto spawn_heading = ENTITY::GET_ENTITY_HEADING(self::ped);
 
 							const auto veh = vehicle::spawn(vehicle.m_hash, spawn_location, spawn_heading);
 
