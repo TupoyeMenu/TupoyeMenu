@@ -72,19 +72,25 @@ namespace big
 			g_fiber_pool->reset();
 		}
 
-		if (g_local_player && g_local_player->m_player_info)
+		if (ImGui::TreeNode("Animation player"))
 		{
-			ImGui::InputScalar("Rockstar ID",
-			    ImGuiDataType_S64,
-			    &g_local_player->m_player_info->m_net_player_data.m_gamer_handle.m_rockstar_id,
-			    nullptr,
-			    nullptr,
-			    nullptr,
-			    ImGuiInputTextFlags_ReadOnly);
+			static char dict[100], anim[100];
+
+			ImGui::PushItemWidth(200);
+			components::input_text_with_hint("##dictionary", "Dict", dict, IM_ARRAYSIZE(dict));
+			components::input_text_with_hint("##animation", "Animation", anim, IM_ARRAYSIZE(anim));
+			if (ImGui::Button("Play animation"))
+				g_fiber_pool->queue_job([=] {
+					ped::ped_play_animation(self::ped, dict, anim);
+				});
+			ImGui::PopItemWidth();
+			ImGui::TreePop();
 		}
 
+		ImGui::SeparatorText("Log Toggles");
+
 		ImGui::Checkbox("Log Native Script Hooks", &g.debug.logs.script_hook_logs);
-		ImGui::Checkbox("Enable Stupid Script Native Logs", &g.debug.logs.stupid_script_native_logs);
+		ImGui::Checkbox("Log Stupid Native Hooks", &g.debug.logs.stupid_script_native_logs);
 
 		ImGui::Checkbox("Log Packets", &g.debug.logs.packet_logs);
 		ImGui::Checkbox("Log Net Events", &g.debug.logs.net_event_logs);
@@ -116,6 +122,8 @@ namespace big
 
 			ImGui::TreePop();
 		}
+
+		ImGui::SeparatorText("Info");
 
 		if (ImGui::TreeNode("Addresses"))
 		{
@@ -158,19 +166,15 @@ namespace big
 			ImGui::TreePop();
 		}
 
-		if (ImGui::TreeNode("Animation player"))
+		if (g_local_player && g_local_player->m_player_info)
 		{
-			static char dict[100], anim[100];
-
-			ImGui::PushItemWidth(200);
-			components::input_text_with_hint("##dictionary", "Dict", dict, IM_ARRAYSIZE(dict));
-			components::input_text_with_hint("##animation", "Animation", anim, IM_ARRAYSIZE(anim));
-			if (ImGui::Button("Play animation"))
-				g_fiber_pool->queue_job([=] {
-					ped::ped_play_animation(self::ped, dict, anim);
-				});
-			ImGui::PopItemWidth();
-			ImGui::TreePop();
+			ImGui::InputScalar("Rockstar ID",
+			    ImGuiDataType_S64,
+			    &g_local_player->m_player_info->m_net_player_data.m_gamer_handle.m_rockstar_id,
+			    nullptr,
+			    nullptr,
+			    nullptr,
+			    ImGuiInputTextFlags_ReadOnly);
 		}
 
 		components::command_button<"fastquit">();

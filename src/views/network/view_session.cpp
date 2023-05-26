@@ -93,7 +93,6 @@ namespace big
 		ImGui::SameLine();
 		components::help_marker("Your sent chat messages will not be censored to the receivers"); // TODO: add translation
 		ImGui::Checkbox("LOG_CHAT_MSG"_T.data(), &g.session.log_chat_messages);
-		ImGui::Checkbox("LOG_TXT_MSG"_T.data(), &g.session.log_text_messages);
 		static char msg[256];
 		components::input_text("##message", msg, sizeof(msg));
 		ImGui::SameLine();

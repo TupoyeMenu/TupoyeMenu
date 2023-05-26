@@ -371,7 +371,6 @@ namespace big
 			} custom_time;
 			bool chat_force_clean      = false;
 			bool log_chat_messages     = false;
-			bool log_text_messages     = false;
 			bool decloak_players       = false;
 			bool force_session_host    = false;
 			bool force_script_host     = false;
@@ -416,7 +415,7 @@ namespace big
 			bool show_cheating_message = false;
 			bool anonymous_bounty      = true;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, local_weather, override_time, override_weather, custom_time, population_control, chat_force_clean, log_chat_messages, log_text_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, join_in_sctv_slots, kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, local_weather, override_time, override_weather, custom_time, population_control, chat_force_clean, log_chat_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, join_in_sctv_slots, kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty)
 		} session{};
 
 		struct settings

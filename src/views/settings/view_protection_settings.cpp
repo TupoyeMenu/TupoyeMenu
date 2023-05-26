@@ -12,8 +12,15 @@ namespace big
 		ImGui::Checkbox("FORCE_TELEPORT"_T.data(), &g.protections.script_events.force_teleport);
 		ImGui::Checkbox("GTA_BANNER"_T.data(), &g.protections.script_events.gta_banner);
 		ImGui::Checkbox("MC_TELEPORT"_T.data(), &g.protections.script_events.mc_teleport);
+#ifndef ENABLE_SOCIALCLUB
+		ImGui::BeginDisabled(true);
+#endif // ENABLE_SOCIALCLUB
 		ImGui::Checkbox("BLOCK_RID_JOINING"_T.data(), &g.protections.rid_join);
 		ImGui::SameLine(); components::help_marker("BLOCK_RID_JOINING_DESCRIPTION"_T);
+#ifndef ENABLE_SOCIALCLUB
+		ImGui::EndDisabled();
+		ImGui::SameLine(); components::help_marker("This feature is currently disabled, Enable `ENABLE_SOCIALCLUB` to enable.");
+#endif // ENABLE_SOCIALCLUB
 		ImGui::EndGroup();
 
 		ImGui::SameLine();
