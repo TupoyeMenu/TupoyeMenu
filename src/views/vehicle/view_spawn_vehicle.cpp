@@ -62,7 +62,7 @@ namespace big
 
 		ImGui::SetNextItemWidth(300.f);
 		components::input_text_with_hint("MODEL_NAME"_T, "SEARCH"_T, search, sizeof(search), ImGuiInputTextFlags_EnterReturnsTrue, [] {
-			Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside);
+			Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside, rage::joaat(search));
 			float spawn_heading = ENTITY::GET_ENTITY_HEADING(self::ped);
 
 			const Vehicle veh = vehicle::spawn(rage::joaat(search), spawn_location, spawn_heading);
@@ -88,7 +88,7 @@ namespace big
 		});
 
 
-		if (ImGui::ListBoxHeader("###vehicles", ImVec2(300, -ImGui::GetFrameHeight())))
+		if (ImGui::BeginListBox("###vehicles", ImVec2(300, -ImGui::GetFrameHeight())))
 		{
 			if (self::veh)
 			{
@@ -215,7 +215,7 @@ namespace big
 			{
 				ImGui::Text("NO_VEHICLE_IN_REGISTRY"_T.data());
 			}
-			ImGui::ListBoxFooter();
+			ImGui::EndListBox();
 		}
 	}
 }

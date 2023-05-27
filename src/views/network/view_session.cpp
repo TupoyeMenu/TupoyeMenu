@@ -46,7 +46,7 @@ namespace big
 		});
 
 		components::sub_title("SESSION_SWITCHER"_T);
-		if (ImGui::ListBoxHeader("###session_switch"))
+		if (ImGui::BeginListBox("###session_switch"))
 		{
 			for (const auto& session_type : sessions)
 			{
@@ -58,7 +58,7 @@ namespace big
 		}
 
 		components::sub_title("REGION_SWITCHER"_T);
-		if (ImGui::ListBoxHeader("###region_switch"))
+		if (ImGui::BeginListBox("###region_switch"))
 		{
 			for (const auto& region_type : regions)
 			{

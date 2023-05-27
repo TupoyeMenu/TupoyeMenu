@@ -53,11 +53,10 @@ namespace big
 
 	void view::player_database()
 	{
-
 		ImGui::SetNextItemWidth(300.f);
 		components::input_text_with_hint("PLAYER"_T, "SEARCH"_T, search, sizeof(search), ImGuiInputTextFlags_None);
 
-		if (ImGui::ListBoxHeader("###players", {180, static_cast<float>(*g_pointers->m_gta.m_resolution_y - 400 - 38 * 4)}))
+		if (ImGui::BeginListBox("###players", ImVec2(180, -ImGui::GetFrameHeight())))
 		{
 			auto& item_arr = g_player_database_service->get_sorted_players();
 			if (item_arr.size() > 0)
@@ -82,20 +81,20 @@ namespace big
 				ImGui::Text("NO_STORED_PLAYERS"_T.data());
 			}
 
-			ImGui::ListBoxFooter();
+			ImGui::EndListBox();
 		}
 
 		if (auto selected = g_player_database_service->get_selected())
 		{
 			ImGui::SameLine();
-			if (ImGui::BeginChild("###selected_player", {500, static_cast<float>(*g_pointers->m_gta.m_resolution_y - 388 - 38 * 4)}, false, ImGuiWindowFlags_NoBackground))
+			if (ImGui::BeginChild("###selected_player", ImVec2(500, -ImGui::GetFrameHeight()), false, ImGuiWindowFlags_NoBackground))
 			{
 				if (ImGui::InputText("NAME"_T.data(), name_buf, sizeof(name_buf)))
 				{
 					current_player->name = name_buf;
 				}
 
-				if (ImGui::InputScalar("RID"_T.data(), ImGuiDataType_S64, &current_player->rockstar_id) || ImGui::Checkbox("IS_MODDER"_T.data(), &current_player->is_modder) || ImGui::Checkbox("Force Allow Join", &current_player.force_allow_join); || ImGui::Checkbox("BLOCK_JOIN"_T.data(), &current_player->block_join))
+				if (ImGui::InputScalar("RID"_T.data(), ImGuiDataType_S64, &current_player->rockstar_id) || ImGui::Checkbox("Is Modder", &current_player->is_modder) || ImGui::Checkbox("Force Allow Join", &current_player->force_allow_join) || ImGui::Checkbox("Block Join", &current_player->block_join))
 				{
 					if (current_player->rockstar_id != selected->rockstar_id)
 						g_player_database_service->update_rockstar_id(selected->rockstar_id, current_player->rockstar_id);

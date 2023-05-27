@@ -24,7 +24,7 @@ namespace big
 		ImGui::SameLine();
 		components::command_button<"pvtp">();
 
-		ImGui::SeperatorText("GUI_TAB_IPL"_T.data());
+		ImGui::SeparatorText("GUI_TAB_IPL"_T.data());
 
 		if (ImGui::BeginCombo("IPL_LOCATION"_T.data(), ipls[g.self.ipls.select].friendly_name))
 		{

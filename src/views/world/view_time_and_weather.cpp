@@ -32,7 +32,7 @@ namespace big
 					session::local_weather();
 				});
 
-				ImGui::ListBoxFooter();
+				ImGui::EndListBox();
 			}
 
 			ImGui::TreePop();

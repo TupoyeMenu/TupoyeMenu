@@ -44,7 +44,7 @@ namespace big::vehicle
 	{
 		float y_offset = 0;
 
-		if (self::veh != 0)
+		if (self::veh != 0 && STREAMING::IS_MODEL_VALID(hash))
 		{
 			Vector3 min, max, result;
 			MISC::GET_MODEL_DIMENSIONS(hash, &min, &max);
