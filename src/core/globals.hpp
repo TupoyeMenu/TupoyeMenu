@@ -7,6 +7,8 @@
 #include "file_manager.hpp"
 
 #include <bitset>
+
+#define IMGUI_DEFINE_MATH_OPERATORS
 #include <imgui.h>
 #include <rage/rlSessionInfo.hpp>
 #include <weapon/CAmmoInfo.hpp>
