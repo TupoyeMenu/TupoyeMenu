@@ -1,7 +1,7 @@
 #include "gui/components/components.hpp"
 #include "util/animations.hpp"
 #include "util/ped.hpp"
-#include "view_debug.hpp"
+#include "views/view.hpp"
 
 namespace big
 {
