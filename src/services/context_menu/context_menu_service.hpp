@@ -102,12 +102,6 @@ namespace big
 			            else
 				            g_notification_service->push_warning("Toxic", "Failed to take control of vehicle.");
 		            }},
-		        {"COPY VEHICLE",
-		            [this] {
-			            Vehicle v = persist_car_service::clone_ped_car(PLAYER::PLAYER_PED_ID(), m_handle);
-			            script::get_current()->yield();
-			            PED::SET_PED_INTO_VEHICLE(PLAYER::PLAYER_PED_ID(), v, -1);
-		            }},
 		        {"BOOST",
 		            [this] {
 			            if (entity::take_control_of(m_handle))
