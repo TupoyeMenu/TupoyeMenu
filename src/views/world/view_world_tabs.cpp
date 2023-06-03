@@ -54,7 +54,6 @@ namespace big
 				view::nearby();
 				ImGui::EndTabItem();
 			}
-
 			ImGui::EndTabBar();
 		}
 	}

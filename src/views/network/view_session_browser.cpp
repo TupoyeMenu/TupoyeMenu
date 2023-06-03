@@ -33,7 +33,7 @@ namespace big
 
 		ImGui::SetNextItemWidth(300.f);
 
-		if (ImGui::ListBoxHeader("###sessions", {300, static_cast<float>(*g_pointers->m_gta.m_resolution_y - 400 - 38 * 4)}))
+		if (ImGui::BeginListBox("###sessions", ImVec2(300, -ImGui::GetFrameHeight())))
 		{
 			if (g_matchmaking_service->get_num_found_sessions())
 			{
@@ -66,13 +66,13 @@ namespace big
 				ImGui::Text("No sessions");
 			}
 
-			ImGui::ListBoxFooter();
+			ImGui::EndListBox();
 		}
 
 		if (selected_session_idx != -1)
 		{
 			ImGui::SameLine();
-			if (ImGui::BeginChild("###selected_session", {300, static_cast<float>(*g_pointers->m_gta.m_resolution_y - 388 - 38 * 4)}, false, ImGuiWindowFlags_NoBackground))
+			if (ImGui::BeginChild("###selected_session", ImVec2(300, -ImGui::GetFrameHeight()), false, ImGuiWindowFlags_NoBackground))
 			{
 				auto& session = g_matchmaking_service->get_found_sessions()[selected_session_idx];
 

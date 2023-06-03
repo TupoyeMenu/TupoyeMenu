@@ -53,7 +53,7 @@ namespace big
 			return;
 		}
 
-		if (ImGui::ListBoxHeader("##threads", ImVec2(250, -ImGui::GetFrameHeight())))
+		if (ImGui::BeginListBox("##threads", ImVec2(250, -ImGui::GetFrameHeight())))
 		{
 			for (auto script : *g_pointers->m_gta.m_script_threads)
 			{
@@ -81,7 +81,7 @@ namespace big
 					ImGui::PopID();
 				}
 			}
-			ImGui::ListBoxFooter();
+			ImGui::EndListBox();
 		}
 
 		ImGui::SameLine();
@@ -188,5 +188,7 @@ namespace big
 				update_free_stacks_count();
 			});
 		}
+
+		ImGui::EndTabItem();
 	}
 }

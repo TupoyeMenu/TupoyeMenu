@@ -38,6 +38,11 @@ namespace big
 				view::debug_locals();
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("Animations"))
+			{
+				view::debug_animations();
+				ImGui::EndTabItem();
+			}
 			if (ImGui::BeginTabItem("Misc"))
 			{
 				view::debug_misc();

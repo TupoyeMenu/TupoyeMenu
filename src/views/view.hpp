@@ -22,6 +22,8 @@ namespace big
 	public:
 		static void about_view();
 		static void main_view();
+
+		static void debug_animations();
 		static void debug_script_events();
 		static void debug_globals();
 		static void debug_locals();
