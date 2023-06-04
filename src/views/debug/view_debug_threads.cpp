@@ -188,7 +188,5 @@ namespace big
 				update_free_stacks_count();
 			});
 		}
-
-		ImGui::EndTabItem();
 	}
 }
