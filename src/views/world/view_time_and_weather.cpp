@@ -37,7 +37,7 @@ namespace big
 			g_fiber_pool->queue_job([] {
 				session::local_weather();
 			});
-			ImGui::ListBoxFooter();
+			ImGui::EndListBox();
 		}
 
 	}

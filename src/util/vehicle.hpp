@@ -66,15 +66,22 @@ namespace big::vehicle
 
 	/**
 	 * @brief Gets the offset to spawn vehicle at.
+	 * @param spawn_inside Something...
+	 * @param hash Vehicle hash to get better results.
+	 * @param ped Entity to get offset from.
+	 * @todo The Ped param should be entity instead.
 	 * @return Position to spawn at.
 	 */
-	inline Vector3 get_spawn_location(bool spawn_inside, Ped ped = self::ped)
+	inline Vector3 get_spawn_location(bool spawn_inside, Hash hash, Ped ped = self::ped)
 	{
 		float y_offset = 0;
 
-		if (self::veh != 0)
+		if (self::veh != 0 && STREAMING::IS_MODEL_VALID(hash))
 		{
-			y_offset = 10.f;
+			Vector3 min, max, result;
+			MISC::GET_MODEL_DIMENSIONS(hash, &min, &max);
+			result = max - min;
+			y_offset = result.y;
 		}
 		else if (!spawn_inside)
 		{

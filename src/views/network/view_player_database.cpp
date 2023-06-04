@@ -62,11 +62,10 @@ namespace big
 
 	void view::player_database()
 	{
-
 		ImGui::SetNextItemWidth(300.f);
 		components::input_text_with_hint("Player", "Search", search, sizeof(search), ImGuiInputTextFlags_None);
 
-		if (ImGui::ListBoxHeader("###players", {180, static_cast<float>(*g_pointers->m_gta.m_resolution_y - 400 - 38 * 4)}))
+		if (ImGui::BeginListBox("###players", ImVec2(180, -ImGui::GetFrameHeight())))
 		{
 			auto& item_arr = g_player_database_service->get_sorted_players();
 			if (item_arr.size() > 0)
@@ -91,13 +90,13 @@ namespace big
 				ImGui::Text("No stored players");
 			}
 
-			ImGui::ListBoxFooter();
+			ImGui::EndListBox();
 		}
 
 		if (auto selected = g_player_database_service->get_selected())
 		{
 			ImGui::SameLine();
-			if (ImGui::BeginChild("###selected_player", {500, static_cast<float>(*g_pointers->m_gta.m_resolution_y - 388 - 38 * 4)}, false, ImGuiWindowFlags_NoBackground))
+			if (ImGui::BeginChild("###selected_player", ImVec2(500, -ImGui::GetFrameHeight()), false, ImGuiWindowFlags_NoBackground))
 			{
 				if (ImGui::InputText("Name", name_buf, sizeof(name_buf)))
 				{

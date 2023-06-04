@@ -102,7 +102,7 @@ namespace big
 		ImGui::SeparatorText("Log Toggles");
 
 		ImGui::Checkbox("Log Native Script Hooks", &g.debug.logs.script_hook_logs);
-		ImGui::Checkbox("Log Stupid Native hooks", &g.debug.logs.stupid_script_native_logs);
+		ImGui::Checkbox("Log Stupid Native Hooks", &g.debug.logs.stupid_script_native_logs);
 
 		ImGui::Checkbox("Log Packets", &g.debug.logs.packet_logs);
 		ImGui::Checkbox("Log Net Events", &g.debug.logs.net_event_logs);
@@ -120,7 +120,7 @@ namespace big
 
 			if (g.debug.logs.script_event.filter_player)
 			{
-				ImGui::ListBoxHeader("##filter_player");
+				ImGui::BeginListBox("##filter_player");
 				for (const auto& [_, player] : g_player_service->players())
 				{
 					if (components::selectable(player->get_name(), g.debug.logs.script_event.player_id == player->id()))
@@ -176,6 +176,17 @@ namespace big
 			}
 
 			ImGui::TreePop();
+		}
+
+		if (g_local_player && g_local_player->m_player_info)
+		{
+			ImGui::InputScalar("Rockstar ID",
+			    ImGuiDataType_S64,
+			    &g_local_player->m_player_info->m_net_player_data.m_gamer_handle.m_rockstar_id,
+			    nullptr,
+			    nullptr,
+			    nullptr,
+			    ImGuiInputTextFlags_ReadOnly);
 		}
 
 		components::command_button<"fastquit">();
