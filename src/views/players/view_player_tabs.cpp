@@ -1,5 +1,6 @@
 #include "pointers.hpp"
 #include "services/players/player_service.hpp"
+#include "lua/lua_manager.hpp"
 #include "views/view.hpp"
 
 namespace big
@@ -16,26 +17,36 @@ namespace big
 				if (ImGui::BeginTabItem("INFO"_T.data()))
 				{
 					view::view_player_info();
+					if (g_lua_manager)
+						g_lua_manager->draw_gui(RAGE_JOAAT("INFO"));
 					ImGui::EndTabItem();
 				}
 				if (ImGui::BeginTabItem("TROLL"_T.data()))
 				{
 					view::view_player_troll();
+					if (g_lua_manager)
+						g_lua_manager->draw_gui(RAGE_JOAAT("TROLL"));
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("Vehicle"))
+				if (ImGui::BeginTabItem("VEHICLE"_T.data()))
 				{
 					view::view_player_vehicle();
+					if (g_lua_manager)
+						g_lua_manager->draw_gui(RAGE_JOAAT("VEHICLE"));
 					ImGui::EndTabItem();
 				}
 				if (ImGui::BeginTabItem("MISC"_T.data()))
 				{
 					view::view_player_misc();
+					if (g_lua_manager)
+						g_lua_manager->draw_gui(RAGE_JOAAT("MISC"));
 					ImGui::EndTabItem();
 				}
 				if (ImGui::BeginTabItem("TOXIC"_T.data()))
 				{
 					view::view_player_toxic();
+					if (g_lua_manager)
+						g_lua_manager->draw_gui(RAGE_JOAAT("TOXIC"));
 					ImGui::EndTabItem();
 				}
 
@@ -46,6 +57,8 @@ namespace big
 #endif // ENABLE_CRASHES
 				{
 					view::view_player_kicks_and_crashes();
+					if (g_lua_manager)
+						g_lua_manager->draw_gui(RAGE_JOAAT("KICK"));
 					ImGui::EndTabItem();
 				}
 

@@ -193,6 +193,8 @@ namespace big
 
 		components::command_button<"beastall">({});
 
+		components::command_button<"bringall">({});
+		ImGui::SameLine();
 		components::command_button<"giveweapsall">({});
 		ImGui::SameLine();
 		components::command_button<"remweapsall">({});

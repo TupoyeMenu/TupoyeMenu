@@ -79,6 +79,7 @@ namespace big
 		static void nearby();
 		static void world();
 		static void gta_cache();
+		static void lua_scripts();
 
 		static void cmd_executor();
 

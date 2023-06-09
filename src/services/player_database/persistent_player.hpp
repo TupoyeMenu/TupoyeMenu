@@ -52,11 +52,12 @@ namespace big
 		int block_join_reason     = 1;
 		bool force_allow_join     = false;
 		bool is_modder            = false;
+		bool notify_online		  = false;
 		std::unordered_set<int> infractions;
 		std::optional<CommandAccessLevel> command_access_level = std::nullopt;
 		PlayerOnlineStatus online_state                        = PlayerOnlineStatus::UNKNOWN;
 
-		NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(persistent_player, name, rockstar_id, block_join, block_join_reason, force_allow_join, is_modder, infractions, command_access_level)
+		NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(persistent_player, name, rockstar_id, block_join, block_join_reason, force_allow_join, is_modder, notify_online, infractions, command_access_level)
 	};
 
 };

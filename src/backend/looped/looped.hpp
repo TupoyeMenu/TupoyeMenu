@@ -37,7 +37,6 @@ namespace big
 		static void self_dance_mode();
 
 		static void script_starter();
-		static void session_local_time();
 		static void seamless_join();
 		
 		static void world_population_control();
@@ -55,11 +54,8 @@ namespace big
 
 		static void vehicle_auto_drive();
 		static void vehicle_boost_behavior();
-		static void vehicle_fly();
-		static void vehicle_god_mode();
 		static void vehicle_ls_customs();
 		static void vehicle_rainbow_paint();
-		static void vehicle_turn_signals();
 		static void vehicle_flares();
 		static void vehicle_chaff();
 
