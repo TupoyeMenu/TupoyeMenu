@@ -687,6 +687,28 @@ namespace big::vehicle
 	}
 
 	/**
+	 * @brief Upgrades vehicle to max without doing visual modifications.
+	 *
+	 * @param veh Vehicle to upgrade.
+	 */
+	inline void max_vehicle_performance(Vehicle veh)
+	{
+		if(entity::take_control_of(veh))
+		{
+			VehicleModType perfomance_mods[] = {MOD_ENGINE, MOD_BRAKES, MOD_TRANSMISSION, MOD_SUSPENSION, MOD_ARMOR, MOD_NITROUS, MOD_TURBO};
+			VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
+
+			for(auto mod_slot : perfomance_mods)
+			{
+				if(mod_slot != MOD_NITROUS && mod_slot != MOD_TURBO)
+					VEHICLE::SET_VEHICLE_MOD(veh, mod_slot, VEHICLE::GET_NUM_VEHICLE_MODS(veh, mod_slot) -1, true);
+				else
+					VEHICLE::TOGGLE_VEHICLE_MOD(veh, mod_slot, true);
+			}
+		}
+	}
+
+	/**
 	 * @brief Sets vehicle engine state.
 	 * 
 	 * @param current_vehicle Vehicle to set the engine state of.

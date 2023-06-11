@@ -11,9 +11,7 @@ namespace big
 	protected:
 		std::string m_name;
 		std::string m_label;
-		rage::joaat_t m_label_hash;
 		std::string m_description;
-		rage::joaat_t m_description_hash;
 		std::optional<std::uint8_t> m_num_args;
 		bool m_fiber_pool;
 

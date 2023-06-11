@@ -68,9 +68,6 @@ namespace big
 		ImGui::SameLine();
 		ImGui::BeginGroup();
 
-		components::command_checkbox<"invis">();
-		if (g.self.invisibility)
-			components::command_checkbox<"localvis">(); // TODO: does nothing in SP
 		components::command_checkbox<"cleanloop">();
 		components::command_checkbox<"nocollision">();
 		ImGui::Checkbox("Dance Mode", &g.self.dance_mode);
