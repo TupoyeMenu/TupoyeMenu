@@ -36,7 +36,6 @@ namespace big
 		}
 	};
 
-	invisibility g_invisibility("invis", "Invisiblity", "Makes you invisible", g.self.invisibility);
-	bool_command g_local_visibility("localvis", "Visible Locally", "Makes you visible to yourself, but other players would still not be able to see you",
-	    g.self.local_visibility);
+	invisibility g_invisibility("invis", "Invisibility", "Makes you invisible", g.self.invisibility);
+	bool_command g_local_visibility("localvis", "Visible Locally", "Makes you visible to yourself, but other players would still not be able to see you", g.self.local_visibility);
 }

@@ -6,7 +6,7 @@ A branch of TupoyeMenu attemting to make less bloated and more stable menu.
 
 Strictly for educational purposes.
 
-TupoyeMenu-lite is based of off TupoyeMenu wich is based off of YimMenu wich based of off [BigBaseV2](https://github.com/Pocakking/BigBaseV2) which was an amazing base at the time but nowadays is a bit dated.
+TupoyeMenu-lite is based of off [TupoyeMenu](https://github.com/TupoyeMenu/TupoyeMenu) wich is based off of [YimMenu](https://github.com/YimMenu/YimMenu) wich based of off [BigBaseV2](https://github.com/Pocakking/BigBaseV2) which was an amazing base at the time but nowadays is a bit dated.
 
 ## Table of contents
 
@@ -15,9 +15,9 @@ TupoyeMenu-lite is based of off TupoyeMenu wich is based off of YimMenu wich bas
   - [Changes from TupoyeMenu](#changes-from-tupoyemenu)
     - [Removed](#removed)
     - [Reworked](#reworked)
-  - [Compiling](#compiling)
+  - [How to compile TupoyeMenu](#how-to-compile-tupoyemenu)
+  - [Staying Up To Date](#staying-up-to-date)
   - [Project Structure](#project-structure)
-  - [Features](#features)
   - [Contributing](#contributing)
   - [Credits](#credits)
   - [Donate](#donate)
@@ -52,8 +52,28 @@ TupoyeMenu-lite is based of off TupoyeMenu wich is based off of YimMenu wich bas
 |---------|------------------------------------------|---------------|
 | GUI     | Bloated, pain to navigate, inconsistant  | Reworked GUI for easyer navigation and better look |
 
-## Compiling
-For instructions on how to build go to https://github.com/YimMenu/YimMenu
+
+## How to compile TupoyeMenu
+
+Read the [SETUP](https://github.com/YimMenu/YimMenu/wiki/Setup-your-PC-for-YimMenu-Development) guide.
+And replace YimMenu with TupoyeMenu.
+You can also use some cmake options.
+ - `GEN_PDB`: Generate pdb.
+ - `ENABLE_CRASHES` Enables the crash options, very few very old, not even working.
+ - `ENABLE_SOCIALCLUB` Enable Social Club hooking.
+ - `ENABLE_ASI_LOADER` Enable shitty built in ASI Loader.
+
+  
+## Staying Up To Date
+```bash
+git pull https://github.com/tupoy-ya/TupoyeMenu.git
+```
+
+CMake should be handling removed / added files automatically without any user input.
+
+If this is not the case for some reason you'll have to redo the steps in the [Making changes to the source code section of the SETUP](https://github.com/YimMenu/YimMenu/wiki/Setup-your-PC-for-YimMenu-Development#making-changes-to-the-source-code).
+
+If you are doing custom modifications to the codebase and have a fork you are on your own for staying up to date with upstream (this repository), google stuff like "merge from upstream" and learn how to use Git.
 
 ## Project Structure
 - `native_hooks/` hooks to natives
@@ -65,14 +85,6 @@ For instructions on how to build go to https://github.com/YimMenu/YimMenu
 - `util/` general utility functions to keep code as compact and as much in one place as possible
 - `views/` all gui windows are here
 
-## Features
-
-Below is an incomplete list of feature that I believe are notable to this "base" or menu.
-
- - Smaller then TupoyeMenu
- - Bigger then YimMenu wtf how???
- - EDIT: Now YimMenu is bigger, sad.
- 
 ## Contributing
 
 You're free to contribute to TupoyeMenu as long as the features are useful, not overly toxic and do not contain anything money related that might get the menu targeted by Take2.

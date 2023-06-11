@@ -10,7 +10,7 @@
  * 
  */
 
-#include "pointers.hpp"
+#include "lua/lua_manager.hpp"
 #include "views/view.hpp"
 
 namespace big
@@ -27,33 +27,46 @@ namespace big
 			if (ImGui::BeginTabItem("Spawn Ped"))
 			{
 				view::spawn_ped();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SPAWN_PED"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Embient Population"))
 			{
 				view::ambient();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("Embient Population"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Creator"))
 			{
 				view::creator();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_CREATOR"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Blackhole"))
 			{
 				view::blackhole();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_BLACKHOLE"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Model Swapper"))
 			{
 				view::model_swapper();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_MODEL_SWAPPER"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Nearby"))
 			{
 				view::nearby();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_NEARBY"));
 				ImGui::EndTabItem();
 			}
+
 			ImGui::EndTabBar();
 		}
 	}

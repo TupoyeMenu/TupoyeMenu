@@ -39,11 +39,11 @@ namespace big
 
 			//render status circle
 			ImGui::GetWindowDrawList()->AddCircleFilled(ImVec2(cursor_pos.x + 4.f + circle_size, cursor_pos.y + 4.f + circle_size),
-				circle_size,
-				ImColor(plyr_state == PlayerOnlineStatus::ONLINE  ? ImVec4(0.f, 1.f, 0.f, 1.f) :
-						plyr_state == PlayerOnlineStatus::OFFLINE ? ImVec4(1.f, 0.f, 0.f, 1.f) :
-						plyr_state == PlayerOnlineStatus::UNKNOWN ? ImVec4(.5f, .5f, .5f, 1.0f) :
-																	ImVec4(.5f, .5f, .5f, 1.0f)));
+			    circle_size,
+			    ImColor(plyr_state == PlayerOnlineStatus::ONLINE  ? ImVec4(0.f, 1.f, 0.f, 1.f) :
+			            plyr_state == PlayerOnlineStatus::OFFLINE ? ImVec4(1.f, 0.f, 0.f, 1.f) :
+			            plyr_state == PlayerOnlineStatus::UNKNOWN ? ImVec4(.5f, .5f, .5f, 1.0f) :
+			                                                        ImVec4(.5f, .5f, .5f, 1.0f)));
 
 			//we need some padding
 			ImVec2 cursor = ImGui::GetCursorPos();
@@ -103,7 +103,11 @@ namespace big
 					current_player->name = name_buf;
 				}
 
-				if (ImGui::InputScalar("Rockstar ID", ImGuiDataType_S64, &current_player->rockstar_id) || ImGui::Checkbox("Is Modder", &current_player->is_modder) || ImGui::Checkbox("Force Allow Join", &current_player->force_allow_join) || ImGui::Checkbox("Block Join", &current_player->block_join))
+				if (ImGui::InputScalar("RID", ImGuiDataType_S64, &current_player->rockstar_id)
+				    || ImGui::Checkbox("Is Modder", &current_player->is_modder)
+				    || ImGui::Checkbox("Force Allow Join", &current_player->force_allow_join)
+				    || ImGui::Checkbox("Block Join", &current_player->block_join)
+					|| ImGui::Checkbox("Notify When Online", &current_player->notify_online))
 				{
 					if (current_player->rockstar_id != selected->rockstar_id)
 						g_player_database_service->update_rockstar_id(selected->rockstar_id, current_player->rockstar_id);

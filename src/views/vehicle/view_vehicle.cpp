@@ -21,7 +21,7 @@ namespace big
 	{
 		components::button("Mors Mutual Fix All Vehicles", [] {
 			int amount_fixed = mobile::mors_mutual::fix_all();
-			g_notification_service->push("Mobile", std::format("{} vehicle{} been fixed.", amount_fixed, amount_fixed == 1 ? " has" : "s have"));
+			g_notification_service->push_success("Mobile", std::format("{} vehicle{} been fixed.", amount_fixed, amount_fixed == 1 ? " has" : "s have"));
 		});
 		ImGui::SameLine();
 		components::button("Repair", [] {
@@ -52,7 +52,7 @@ namespace big
 		{
 			ImGui::BeginGroup();
 
-			ImGui::Checkbox("God Mode", &g.vehicle.god_mode);
+			components::command_checkbox<"vehgodmode">("God Mode");
 			components::command_checkbox<"hornboost">();
 			components::command_checkbox<"vehjump">();
 			components::command_checkbox<"invisveh">();
@@ -85,6 +85,8 @@ namespace big
 			components::command_checkbox<"driveunder">(); // Who named this????????????
 			components::command_checkbox<"driveonwater">();
 			components::command_checkbox<"keeponground">();
+
+			components::command_checkbox<"mutesiren">();
 
 			ImGui::EndGroup();
 		}

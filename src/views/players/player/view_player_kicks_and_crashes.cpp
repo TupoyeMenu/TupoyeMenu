@@ -23,9 +23,6 @@ namespace big
 	{
 		std::string title = std::format("Player Kick Options: {}", g_player_service->get_selected()->get_name());
 		ImGui::Text(title.c_str());
-		ImGui::Text("Player ID: %d", g_player_service->get_selected()->id());
-
-		ImGui::Text("Kicks");
 		auto const is_session_host = [] {
 			return gta_util::get_network()->m_game_session_ptr->is_host();
 		};

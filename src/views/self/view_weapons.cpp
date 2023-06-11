@@ -90,8 +90,6 @@ namespace big
 
 		ImGui::SeparatorText("Misc");
 
-		components::command_checkbox<"crosshairs">();
-		ImGui::SameLine();
 		components::command_checkbox<"norecoil">();
 		ImGui::SameLine();
 		components::command_checkbox<"nospread">();
