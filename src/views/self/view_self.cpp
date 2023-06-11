@@ -44,10 +44,10 @@ namespace big
 		components::command_checkbox<"nophone">();
 		components::command_checkbox<"infoxy">();
 		components::command_checkbox<"fastrespawn">();
-		if(!g.self.super_jump)
-			components::command_checkbox<"beastjump">();
-		if(!g.self.beast_jump)
-			components::command_checkbox<"superjump">();
+		components::command_checkbox<"invis">();
+		if (g.self.invisibility)
+			components::command_checkbox<"localvis">(); // TODO: does nothing in SP
+		components::command_checkbox<"nocollision">();
 
 		ImGui::EndGroup();
 		ImGui::SameLine();
@@ -60,16 +60,16 @@ namespace big
 		components::command_checkbox<"walkunder">();
 		ImGui::Checkbox("Jump Ragdoll", &g.self.allow_ragdoll);
 		ImGui::Checkbox("Always Control", &g.tunables.always_control);
+		if (!g.self.super_jump)
+			components::command_checkbox<"beastjump">();
+		if (!g.self.beast_jump)
+			components::command_checkbox<"superjump">();
 
 		ImGui::EndGroup();
 		ImGui::SameLine();
 		ImGui::BeginGroup();
 
-		components::command_checkbox<"invis">();
-		if (g.self.invisibility)
-			components::command_checkbox<"localvis">(); // TODO: does nothing in SP
 		components::command_checkbox<"cleanloop">();
-		components::command_checkbox<"nocollision">();
 		components::command_checkbox<"mobileradio">();
 		components::command_checkbox<"superman">();
 
@@ -78,7 +78,7 @@ namespace big
 		ImGui::Checkbox("Phone Anim", &g.tunables.phone_anim);
 
 		components::command_checkbox<"orbitaldrone">();
-		components::options_modal("Orbital drone", []{
+		components::options_modal("Orbital drone", [] {
 			ImGui::Separator();
 			ImGui::BeginGroup();
 			ImGui::Text("ORBITAL_DRONE_USAGE_DESCR"_T.data());
@@ -100,13 +100,8 @@ namespace big
 			ImGui::EndGroup();
 		});
 
-		ImGui::EndGroup();
-
-		components::sub_title("PTFX Styles");
-
 		components::command_checkbox<"ptfx">();
-		if (g.self.ptfx_effects.show)
-		{
+		components::options_modal("PTFX", [] {
 			ImGui::SliderFloat("PTFX Size", &g.self.ptfx_effects.size, 0.1f, 2.f);
 			if (ImGui::BeginCombo("Asset", ptfx_named[g.self.ptfx_effects.select].friendly_name))
 			{
@@ -139,8 +134,26 @@ namespace big
 
 				ImGui::EndCombo();
 			}
-		}
+		});
 
+		ImGui::Checkbox("NEVER_WANTED"_T.data(), &g.self.never_wanted);
+		components::options_modal("Police", [] {
+			ImGui::Checkbox("NEVER_WANTED"_T.data(), &g.self.never_wanted);
+			components::command_button<"clearwantedlvl">();
+			if (!g.self.never_wanted)
+			{
+				ImGui::Checkbox("FORCE_WANTED_LVL"_T.data(), &g.self.force_wanted_level);
+				if (ImGui::IsItemHovered())
+					ImGui::SetTooltip("FORCE_WANTED_LVL_INFO"_T.data());
+				ImGui::Text("WANTED_LVL"_T.data());
+				if (ImGui::SliderInt("###wanted_level", &g.self.wanted_level, 0, 5) && !g.self.force_wanted_level && g_local_player != nullptr)
+				{
+					g_local_player->m_player_info->m_wanted_level = g.self.wanted_level;
+				}
+			}
+		});
+
+		ImGui::EndGroup();
 
 		ImGui::Separator();
 
@@ -200,28 +213,7 @@ namespace big
 
 		ImGui::EndGroup();
 
-		ImGui::Separator();
-
-		components::sub_title("POLICE"_T);
-
-		components::command_button<"clearwantedlvl">();
-
-		ImGui::Checkbox("NEVER_WANTED"_T.data(), &g.self.never_wanted);
-
-		if (!g.self.never_wanted)
-		{
-			ImGui::Checkbox("FORCE_WANTED_LVL"_T.data(), &g.self.force_wanted_level);
-			ImGui::SameLine(); components::help_marker("FORCE_WANTED_LVL_INFO"_T);
-			ImGui::Text("WANTED_LVL"_T.data());
-			if (ImGui::SliderInt("###wanted_level", &g.self.wanted_level, 0, 5) && !g.self.force_wanted_level && g_local_player != nullptr)
-			{
-				g_local_player->m_player_info->m_wanted_level = g.self.wanted_level;
-			}
-		}
-
-		ImGui::Separator();
-
-		components::sub_title("HUD"_T);
+		ImGui::SeparatorText("HUD"_T.data());
 
 		ImGui::BeginGroup();
 

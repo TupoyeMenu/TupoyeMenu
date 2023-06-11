@@ -2,6 +2,7 @@
 #include "fonts/fonts.hpp"
 #include "natives.hpp"
 #include "pointers.hpp"
+#include "services/player_database/player_database_service.hpp"
 #include "services/players/player_service.hpp"
 #include "views/view.hpp"
 
@@ -53,6 +54,21 @@ namespace big
 			g_player_service->set_selected(plyr);
 			g.window.player = true;
 		}
+		if (ImGui::IsItemHovered()
+		    && g_player_database_service->get_player_by_rockstar_id(plyr->get_net_data()->m_gamer_handle.m_rockstar_id) != nullptr)
+		{
+			auto sorted_player =
+			    g_player_database_service->get_player_by_rockstar_id(plyr->get_net_data()->m_gamer_handle.m_rockstar_id);
+
+			if (!sorted_player->infractions.empty())
+			{
+				ImGui::BeginTooltip();
+				for (auto infraction : sorted_player->infractions)
+					ImGui::BulletText(infraction_desc[(Infraction)infraction]);
+				ImGui::EndTooltip();
+			}
+		}
+
 		ImGui::PopID();
 		ImGui::PopStyleVar();
 
@@ -79,7 +95,7 @@ namespace big
 
 		if (ImGui::Begin("Playerlist", &g.window.users, window_flags))
 		{
-			float window_height = (ImGui::CalcTextSize("A").y + ImGui::GetStyle().ItemInnerSpacing.y * 2 + 6.0f) * 32 + 10.0f;
+			float window_height = (ImGui::CalcTextSize("A").y + ImGui::GetStyle().ItemInnerSpacing.y * 2 + 6.0f) * player_count + 10.0f;
 
 			ImGui::PushStyleColor(ImGuiCol_FrameBg, {0.f, 0.f, 0.f, 0.f});
 			ImGui::PushStyleColor(ImGuiCol_ScrollbarBg, {0.f, 0.f, 0.f, 0.f});
