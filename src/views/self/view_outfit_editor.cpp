@@ -27,7 +27,7 @@ namespace big
 				item.drawable_id     = PED::GET_PED_DRAWABLE_VARIATION(self::ped, item.id);
 				item.drawable_id_max = PED::GET_NUMBER_OF_PED_DRAWABLE_VARIATIONS(self::ped, item.id) - 1;
 
-				item.texture_id     = PED::GET_PED_TEXTURE_VARIATION(self::ped, item.id);
+				item.texture_id = PED::GET_PED_TEXTURE_VARIATION(self::ped, item.id);
 				item.texture_id_max = PED::GET_NUMBER_OF_PED_TEXTURE_VARIATIONS(self::ped, item.id, item.drawable_id) - 1;
 			}
 
@@ -68,7 +68,7 @@ namespace big
 			for (auto& item : props.items)
 				ss << item.id << " " << item.drawable_id << " " << item.texture_id << " ";
 			ImGui::SetClipboardText(ss.str().c_str());
-			g_notification_service->push("Outfit", "Export To Clipboard");
+			g_notification_service->push_success("Outfit", "Export To Clipboard");
 		});
 		ImGui::SameLine();
 

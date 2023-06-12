@@ -34,7 +34,7 @@ namespace big
 		ImGui::PushItemWidth(250);
 		ImGui::Text("Saved Jobs");
 
-		if (ImGui::ListBoxHeader("##empty", ImVec2(200, 200)))
+		if (ImGui::BeginListBox("##empty", ImVec2(200, 200)))
 		{
 			for (const auto& pair : creator_files)
 			{
@@ -42,7 +42,7 @@ namespace big
 					selected_creator_file = pair;
 			}
 
-			ImGui::ListBoxFooter();
+			ImGui::EndListBox();
 		}
 
 		ImGui::SameLine();

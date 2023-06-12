@@ -10,7 +10,7 @@
  * 
  */
 
-#include "pointers.hpp"
+#include "lua/lua_manager.hpp"
 #include "views/view.hpp"
 
 namespace big
@@ -22,26 +22,36 @@ namespace big
 			if (ImGui::BeginTabItem("Vehicle"))
 			{
 				view::vehicle();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_VEHICLE"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("LS Customs"))
 			{
 				view::lsc();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_LSC"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Spawn Vehicle"))
 			{
 				view::spawn_vehicle();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SPAWN_VEHICLE"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Personal Vehicle"))
 			{
 				view::pv();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_PERSONAL_VEHICLE"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Fun Features"))
 			{
 				view::fun_vehicle();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_VEHICLE_FUN_FEATURES"));
 				ImGui::EndTabItem();
 			}
 

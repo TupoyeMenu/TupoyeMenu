@@ -8,6 +8,7 @@
  * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
+
 #include "natives.hpp"
 #include "pointers.hpp"
 #include "util/outfit.hpp"
@@ -62,7 +63,7 @@ namespace big
 				for (auto& item : props.items)
 					ss << item.id << " " << item.drawable_id << " " << item.texture_id << " ";
 				ImGui::SetClipboardText(ss.str().c_str());
-				g_notification_service->push("Outfit", "Export To Clipboard");
+				g_notification_service->push_success("Outfit", "Export To Clipboard");
 			});
 			ImGui::SameLine();
 

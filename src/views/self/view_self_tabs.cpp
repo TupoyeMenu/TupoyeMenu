@@ -9,7 +9,7 @@
  * You should have received a copy of the GNU General Public License along with TupoyeMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "pointers.hpp"
+#include "lua/lua_manager.hpp"
 #include "views/view.hpp"
 
 namespace big
@@ -21,31 +21,43 @@ namespace big
 			if (ImGui::BeginTabItem("Self"))
 			{
 				view::self();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SELF"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Weapons"))
 			{
 				view::weapons();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_WEAPONS"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Mobile"))
 			{
 				view::mobile();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_MOBILE"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Teleport"))
 			{
 				view::teleport();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_TELEPORT"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Outfit Editor"))
 			{
 				view::outfit_editor();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_OUTFIT_EDITOR"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Outfit Slots"))
 			{
 				view::outfit_slots();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_OUTFIT_SLOTS"));
 				ImGui::EndTabItem();
 			}
 

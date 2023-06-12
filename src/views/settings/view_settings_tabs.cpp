@@ -9,7 +9,7 @@
  * You should have received a copy of the GNU General Public License along with TupoyeMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "pointers.hpp"
+#include "lua/lua_manager.hpp"
 #include "views/view.hpp"
 
 namespace big
@@ -21,41 +21,64 @@ namespace big
 			if (ImGui::BeginTabItem("Settings"))
 			{
 				view::settings();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("Settings"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Hotkeys"))
 			{
 				view::hotkey_settings();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("Hotkeys"));
+				ImGui::EndTabItem();
+			}
+			if (ImGui::BeginTabItem("Lua Scripts"))
+			{
+				view::lua_scripts();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("Lua Scripts"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Context Menu"))
 			{
 				view::context_menu_settings();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("Context Menu"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("ESP"))
 			{
 				view::esp_settings();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("ESP"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("GUI"))
 			{
 				view::gui_settings();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Reactions"))
 			{
 				view::reaction_settings();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("Reactions"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Protection"))
 			{
 				view::protection_settings();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("Protection"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("GTA Cache"))
 			{
 				view::gta_cache();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GTA Cache"));
 				ImGui::EndTabItem();
 			}
 

@@ -9,7 +9,7 @@
  * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "pointers.hpp"
+#include "lua/lua_manager.hpp"
 #include "views/view.hpp"
 
 namespace big
@@ -21,31 +21,43 @@ namespace big
 			if (ImGui::BeginTabItem("Spoofing"))
 			{
 				view::spoofing();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SPOOFING"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Session"))
 			{
 				view::session();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SESSION"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Missions"))
 			{
 				view::missions();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_MISSIONS"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Player Database"))
 			{
 				view::player_database();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_PLAYER_DB"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Session Browser"))
 			{
 				view::session_browser();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SESSION_BROWSER"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Stat Editor"))
 			{
 				view::stat_editor();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_STAT_EDITOR"));
 				ImGui::EndTabItem();
 			}
 

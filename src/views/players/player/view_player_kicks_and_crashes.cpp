@@ -23,41 +23,30 @@ namespace big
 	{
 		std::string title = std::format("Player Kick Options: {}", g_player_service->get_selected()->get_name());
 		ImGui::Text(title.c_str());
-		ImGui::Text("Player ID: %d", g_player_service->get_selected()->id());
+		auto const is_session_host = [] {
+			return gta_util::get_network()->m_game_session_ptr->is_host();
+		};
 
-		if (ImGui::TreeNode("Kick"))
-		{
-			auto const is_session_host = [] {
-				return gta_util::get_network()->m_game_session_ptr->is_host();
-			};
+		components::player_command_button<"breakup">(g_player_service->get_selected());
+		ImGui::SameLine();
+		components::command_checkbox<"breakupcheating">();
 
-			components::player_command_button<"breakup">(g_player_service->get_selected());
-			ImGui::SameLine();
-			components::command_checkbox<"breakupcheating">();
+		components::player_command_button<"bailkick">(g_player_service->get_selected());
+		ImGui::SameLine();
+		components::player_command_button<"nfkick">(g_player_service->get_selected());
 
-			components::player_command_button<"bailkick">(g_player_service->get_selected());
-			ImGui::SameLine();
-			components::player_command_button<"nfkick">(g_player_service->get_selected());
+		components::player_command_button<"oomkick">(g_player_service->get_selected());
+		ImGui::SameLine();
+		components::player_command_button<"shkick">(g_player_service->get_selected());
 
-			components::player_command_button<"oomkick">(g_player_service->get_selected());
-			ImGui::SameLine();
-			components::player_command_button<"shkick">(g_player_service->get_selected());
-
-			components::player_command_button<"endkick">(g_player_service->get_selected());
-			ImGui::SameLine();
-			components::player_command_button<"desync">(g_player_service->get_selected());
-
-			ImGui::TreePop();
-		}
+		components::player_command_button<"endkick">(g_player_service->get_selected());
+		ImGui::SameLine();
+		components::player_command_button<"desync">(g_player_service->get_selected());
 
 #ifdef ENABLE_CRASHES
-		if (ImGui::TreeNode("Crashes (shit)"))
-		{
-			components::player_command_button<"slodpedcrash">(g_player_service->get_selected());
-			components::player_command_button<"tsecrash">(g_player_service->get_selected());
-
-			ImGui::TreePop();
-		}
+		ImGui::SeparatorText("Crashes (shit)");
+		components::player_command_button<"slodpedcrash">(g_player_service->get_selected());
+		components::player_command_button<"tsecrash">(g_player_service->get_selected());
 #endif // ENABLE_CRASHES
 	}
 }

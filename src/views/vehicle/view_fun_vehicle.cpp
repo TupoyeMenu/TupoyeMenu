@@ -124,7 +124,7 @@ namespace big
 					if (ImGui::Selectable(driving_style_names[i], g.vehicle.auto_drive_style == (AutoDriveStyle)i))
 					{
 						g.vehicle.auto_drive_style = (AutoDriveStyle)i;
-						g_notification_service->push_warning("Auto Drive", std::format("Driving style set to {}.", driving_style_names[i]));
+						g_notification_service->push_success("Auto Drive", std::format("Driving style set to {}.", driving_style_names[i]));
 					}
 
 					if (g.vehicle.auto_drive_style == (AutoDriveStyle)i)
@@ -157,13 +157,13 @@ namespace big
 		ImGui::SeparatorText("Rainbow Paint");
 
 		{
-			ImGui::Checkbox("Primary", &g.vehicle.rainbow_paint.primary);
+			components::command_checkbox<"rainbowpri">("Primary");
 			ImGui::SameLine();
-			ImGui::Checkbox("Secondary", &g.vehicle.rainbow_paint.secondary);
+			components::command_checkbox<"rainbowsec">("Secondary");
 			ImGui::SameLine();
-			ImGui::Checkbox("Neon", &g.vehicle.rainbow_paint.neon);
+			components::command_checkbox<"rainbowneons">("Neon");
 			ImGui::SameLine();
-			ImGui::Checkbox("Smoke", &g.vehicle.rainbow_paint.smoke);
+			components::command_checkbox<"rainbowsmoke">("Smoke");
 
 			const char* rgb_types[] = {"Off", "Fade", "Spasm"};
 
@@ -191,7 +191,7 @@ namespace big
 			{
 				ImGui::SameLine();
 				ImGui::SetNextItemWidth(150);
-				ImGui::SliderInt("RGB Speed", &g.vehicle.rainbow_paint.speed, 1, 10);
+				components::command_int_slider<"rainbowspeed">("RGB Speed");
 			}
 		}
 		ImGui::SeparatorText("Boost");
@@ -222,7 +222,7 @@ namespace big
 		{
 			ImGui::BeginGroup();
 
-			ImGui::Checkbox("Enabled", &g.vehicle.fly.enabled);
+			components::command_checkbox<"vehiclefly">("Enabled");
 			ImGui::Checkbox("Don't Stop", &g.vehicle.fly.dont_stop);
 
 			ImGui::EndGroup();

@@ -93,7 +93,7 @@ namespace big
 		components::input_text_with_hint("Model Name", "Search", search, sizeof(search), ImGuiInputTextFlags_None);
 
 		g_mobile_service->refresh_personal_vehicles();
-		if (ImGui::ListBoxHeader("###personal_veh_list", ImVec2(300, -ImGui::GetFrameHeight())))
+		if (ImGui::BeginListBox("###personal_veh_list", ImVec2(300, -ImGui::GetFrameHeight())))
 		{
 			if (g_mobile_service->personal_vehicles().empty())
 			{
@@ -123,8 +123,9 @@ namespace big
 						components::selectable(label, false, [&personal_veh] {
 							if (g.clone_pv.spawn_clone)
 							{
-								Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside);
-								float spawn_heading    = ENTITY::GET_ENTITY_HEADING(self::ped);
+								Vector3 spawn_location =
+								    vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside, personal_veh->get_hash());
+								float spawn_heading = ENTITY::GET_ENTITY_HEADING(self::ped);
 
 								auto vehicle_idx = personal_veh->get_vehicle_idx();
 								auto owned_mods  = vehicle::get_owned_mods_from_vehicle_idx(vehicle_idx);
@@ -182,7 +183,7 @@ namespace big
 				}
 			}
 
-			ImGui::ListBoxFooter();
+			ImGui::EndListBox();
 		}
 	}
 }

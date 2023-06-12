@@ -28,7 +28,57 @@ namespace big
 		components::command_button<"objectivetp">({}, "Objective");
 		components::command_checkbox<"autotptowp">();
 
+		ImGui::SeparatorText("Movement");
+
+		static float new_location[3];
+		static float increment = 1;
+
+		components::small_text("Custom teleport");
+		ImGui::SetNextItemWidth(200);
+		ImGui::InputFloat3("##Customlocation", new_location);
+		ImGui::SameLine();
+		components::button("Teleport", [] {
+			teleport::teleport_player_to_coords(g_player_service->get_self(), {new_location[0], new_location[1], new_location[2]});
+		});
+
+		ImGui::Spacing();
+		components::small_text("Specific movement");
+		ImGui::SetNextItemWidth(200);
+		ImGui::InputFloat("Distance", &increment);
+
+		ImGui::BeginGroup();
+		components::button("Forward", [] {
+			teleport::teleport_player_to_coords(g_player_service->get_self(), ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(self::ped, 0, increment, 0));
+		});
+		components::button("Backward", [] {
+			teleport::teleport_player_to_coords(g_player_service->get_self(), ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(self::ped, 0, -increment, 0));
+		});
+		ImGui::EndGroup();
+
+		ImGui::SameLine();
+
+		ImGui::BeginGroup();
+		components::button("Left", [] {
+			teleport::teleport_player_to_coords(g_player_service->get_self(), ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(self::ped, -increment, 0, 0));
+		});
+		components::button("Right", [] {
+			teleport::teleport_player_to_coords(g_player_service->get_self(), ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(self::ped, increment, 0, 0));
+		});
+		ImGui::EndGroup();
+
+		ImGui::SameLine();
+
+		ImGui::BeginGroup();
+		components::button("Up", [] {
+			teleport::teleport_player_to_coords(g_player_service->get_self(), ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(self::ped, 0, 0, increment));
+		});
+		components::button("Down", [] {
+			teleport::teleport_player_to_coords(g_player_service->get_self(), ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(self::ped, 0, 0, -increment));
+		});
+		ImGui::EndGroup();
+
 		ImGui::SeparatorText("Vehicles:");
+
 		components::command_button<"lastvehtp">();
 		ImGui::SameLine();
 		components::command_button<"bringpv">();
@@ -80,23 +130,14 @@ namespace big
 			    selected_ipl.location.z);
 		}
 
-		components::sub_title("IPL Informations");
-		ImGui::Text(std::vformat("IPL Count {}", std::make_format_args(selected_ipl.ipl_names.size())).data());
-		ImGui::Text(std::vformat("Position X: {} | Y: {} | Z: {}",
-		    std::make_format_args(selected_ipl.location.x, selected_ipl.location.y, selected_ipl.location.z))
+		ImGui::Spacing();
+		components::small_text("IPL Informations");
+
+		ImGui::Text(std::format("IPL Count {}", selected_ipl.ipl_names.size()).data());
+		ImGui::Text(std::format("Position X: {} | Y: {} | Z: {}",
+		    selected_ipl.location.x,
+		    selected_ipl.location.y,
+		    selected_ipl.location.z)
 		                .data());
-
-		ImGui::SeparatorText("Manual:");
-		
-		static float coords[3] = { 0.f, 0.f, 0.f }; // This is shit
-		ImGui::InputFloat3("Coords", coords);
-
-		components::button("Teleport to Coords", [] {
-			Vector3 coords_v;
-			coords_v.x = coords[1];
-			coords_v.y = coords[2];
-			coords_v.z = coords[3];
-			teleport::to_coords(coords_v);
-		});
 	}
 }

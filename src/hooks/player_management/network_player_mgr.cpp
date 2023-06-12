@@ -9,6 +9,7 @@
  */
 
 #include "hooking.hpp"
+#include "lua/lua_manager.hpp"
 #include "pointers.hpp"
 #include "services/players/player_service.hpp"
 
@@ -26,6 +27,7 @@ namespace big
 		g_hooking->get_original<hooks::network_player_mgr_init>()(_this, a2, a3, a4);
 
 		g_player_service->player_join(_this->m_local_net_player);
+		g_lua_manager->trigger_event<"player_mgr_init">();
 	}
 
 	void hooks::network_player_mgr_shutdown(CNetworkPlayerMgr* _this)
@@ -39,5 +41,6 @@ namespace big
 			g_notification_service->push("Network Player Manager", "Leaving session and cleaning up player data.");
 
 		g_hooking->get_original<hooks::network_player_mgr_shutdown>()(_this);
+		g_lua_manager->trigger_event<"player_mgr_shutdown">();
 	}
 }

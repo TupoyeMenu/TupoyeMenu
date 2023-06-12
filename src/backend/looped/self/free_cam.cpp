@@ -71,7 +71,7 @@ namespace big
 			Vector3 rot = CAM::GET_CAM_ROT(camera, 2);
 			//float pitch = math::deg_to_rad(rot.x); // vertical
 			//float roll = rot.y;
-			float yaw = math::deg_to_rad(rot.z);// horizontal
+			float yaw = math::deg_to_rad(rot.z); // horizontal
 
 			position.x += (vecChange.x * cos(yaw) - vecChange.y * sin(yaw)) * mult;
 			position.y += (vecChange.x * sin(yaw) + vecChange.y * cos(yaw)) * mult;
@@ -95,5 +95,5 @@ namespace big
 		}
 	};
 
-	free_cam g_free_cam("freecam", "Freecam", "Allows you to move your camera freely?", g.self.free_cam);
+	free_cam g_free_cam("freecam", "Freecam", "Detaches the camera from the player and allows you to move it around freely", g.self.free_cam);
 }

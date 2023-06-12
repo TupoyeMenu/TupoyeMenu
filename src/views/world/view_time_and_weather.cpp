@@ -8,8 +8,8 @@
  * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "core/data/weathers.hpp"
 #include "fiber_pool.hpp"
-#include "imgui.h"
 #include "util/session.hpp"
 #include "views/view.hpp"
 
@@ -17,28 +17,36 @@ namespace big
 {
 	void view::time_and_weather()
 	{
-		ImGui::Text("Local Time");
-		ImGui::Checkbox("Override Time", &g.session.override_time);
+		components::command_checkbox<"timeoverride">();
 
-		if (g.session.override_time)
+		if (g.world.custom_time.override_time)
 		{
-			ImGui::SliderInt("Hour", &g.session.custom_time.hour, 0, 23);
-			ImGui::SliderInt("Minute", &g.session.custom_time.minute, 0, 59);
-			ImGui::SliderInt("Second", &g.session.custom_time.second, 0, 59);
+			ImGui::SliderInt("Hour", &g.world.custom_time.hour, 0, 23);
+			ImGui::SliderInt("Minute", &g.world.custom_time.minute, 0, 59);
+			ImGui::SliderInt("Second", &g.world.custom_time.second, 0, 59);
 		}
 
-		components::button("Clear Override", [] {
-			MISC::CLEAR_OVERRIDE_WEATHER();
-		});
+		components::command_checkbox<"weatheroverride">();
 
-		ImGui::SeparatorText("Local Weather");
-		if (ImGui::ListBox("##weather-listbox", &g.session.local_weather, session::weathers, 15))
+		if (g.world.override_weather)
 		{
-			g_fiber_pool->queue_job([] {
-				session::local_weather();
-			});
-			ImGui::ListBoxFooter();
-		}
+			if (ImGui::BeginCombo("Weather", weathers[g.world.local_weather]))
+			{
+				for (int i = 0; i < weathers.size(); i++)
+				{
+					if (ImGui::Selectable(weathers[i], g.world.local_weather == i))
+					{
+						g.world.local_weather = i;
+					}
 
+					if (g.world.local_weather == i)
+					{
+						ImGui::SetItemDefaultFocus();
+					}
+				}
+
+				ImGui::EndCombo();
+			}
+		}
 	}
 }

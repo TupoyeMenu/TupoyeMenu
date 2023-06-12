@@ -21,7 +21,7 @@ namespace big
 	{
 		components::button("Mors Mutual Fix All Vehicles", [] {
 			int amount_fixed = mobile::mors_mutual::fix_all();
-			g_notification_service->push("Mobile", std::format("{} vehicle{} been fixed.", amount_fixed, amount_fixed == 1 ? " has" : "s have"));
+			g_notification_service->push_success("Mobile", std::format("{} vehicle{} been fixed.", amount_fixed, amount_fixed == 1 ? " has" : "s have"));
 		});
 		ImGui::SameLine();
 		components::button("Repair", [] {
@@ -52,7 +52,7 @@ namespace big
 		{
 			ImGui::BeginGroup();
 
-			ImGui::Checkbox("God Mode", &g.vehicle.god_mode);
+			components::command_checkbox<"vehgodmode">("God Mode");
 			components::command_checkbox<"hornboost">();
 			components::command_checkbox<"vehjump">();
 			components::command_checkbox<"invisveh">();
@@ -85,6 +85,25 @@ namespace big
 			components::command_checkbox<"driveunder">(); // Who named this????????????
 			components::command_checkbox<"driveonwater">();
 			components::command_checkbox<"keeponground">();
+
+			components::command_checkbox<"mutesiren">();
+
+			components::command_checkbox<"speedometer">();
+			components::options_modal("Speedometer", [] {
+				ImGui::Text("Position (X, Y)");
+
+				float pos[2] = {g.vehicle.speedo_meter.x, g.vehicle.speedo_meter.y};
+
+				if (ImGui::SliderFloat2("###speedo_pos", pos, .001f, .999f, "%.3f"))
+				{
+					g.vehicle.speedo_meter.x = pos[0];
+					g.vehicle.speedo_meter.y = pos[1];
+				}
+
+				components::command_checkbox<"speedometerleftside">();
+				ImGui::SameLine();
+				components::command_checkbox<"speedometergears">();
+			});
 
 			ImGui::EndGroup();
 		}
@@ -150,27 +169,6 @@ namespace big
 			ImGui::RadioButton(speed_unit_strings[(int)SpeedUnit::MIPH].c_str(), (int*)&g.vehicle.speed_unit, (int)SpeedUnit::MIPH);
 			ImGui::SameLine();
 			ImGui::RadioButton(speed_unit_strings[(int)SpeedUnit::MPS].c_str(), (int*)&g.vehicle.speed_unit, (int)SpeedUnit::MPS);
-		}
-
-		ImGui::SeparatorText("Speedo Meter");
-		{
-			components::command_checkbox<"speedometer">();
-			if (g.vehicle.speedo_meter.enabled)
-			{
-				ImGui::Text("Position (X, Y)");
-
-				float pos[2] = {g.vehicle.speedo_meter.x, g.vehicle.speedo_meter.y};
-
-				if (ImGui::SliderFloat2("###speedo_pos", pos, .001f, .999f, "%.3f"))
-				{
-					g.vehicle.speedo_meter.x = pos[0];
-					g.vehicle.speedo_meter.y = pos[1];
-				}
-
-				components::command_checkbox<"speedometerleftside">();
-				ImGui::SameLine();
-				components::command_checkbox<"speedometergears">();
-			}
 		}
 
 		g.vehicle.proof_mask = 0;

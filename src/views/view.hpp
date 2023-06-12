@@ -22,6 +22,8 @@ namespace big
 	public:
 		static void about_view();
 		static void main_view();
+
+		static void debug_animations();
 		static void debug_script_events();
 		static void debug_globals();
 		static void debug_locals();
@@ -73,6 +75,7 @@ namespace big
 		static void model_swapper();
 		static void nearby();
 		static void gta_cache();
+		static void lua_scripts();
 
 		static void cmd_executor();
 

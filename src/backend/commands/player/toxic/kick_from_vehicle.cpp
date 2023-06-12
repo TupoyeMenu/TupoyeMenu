@@ -29,7 +29,8 @@ namespace big
 			else
 			{
 				// use a private method to kick player from vehicle
-				(*g_pointers->m_gta.m_network_object_mgr)->ChangeOwner(vehicle->m_net_object, g_player_service->get_self()->get_net_game_player(), 0);
+				(*g_pointers->m_gta.m_network_object_mgr)
+				    ->ChangeOwner(vehicle->m_net_object, g_player_service->get_self()->get_net_game_player(), 0);
 			}
 		}
 	};

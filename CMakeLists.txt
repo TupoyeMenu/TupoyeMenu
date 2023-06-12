@@ -14,6 +14,7 @@ include(scripts/async-logger.cmake)
 include(scripts/pugixml.cmake)
 include(scripts/json.cmake)
 include(scripts/zydis.cmake)
+include(scripts/lua.cmake)
 
 message("\nFetching custom modules")
 include(scripts/imgui.cmake)
@@ -46,7 +47,7 @@ target_include_directories(TupoyeMenu PRIVATE
 )
 
 target_precompile_headers(TupoyeMenu PRIVATE "${SRC_DIR}/common.hpp")
-target_link_libraries(TupoyeMenu PRIVATE pugixml minhook AsyncLogger dbghelp imgui Zydis)
+target_link_libraries(TupoyeMenu PRIVATE pugixml minhook AsyncLogger dbghelp imgui Zydis lua_static)
 
 # Build Options
 include(scripts/build_options.cmake)

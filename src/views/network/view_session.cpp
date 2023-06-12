@@ -51,7 +51,7 @@ namespace big
 
 		if (ImGui::TreeNode("Session Switcher"))
 		{
-			if (ImGui::ListBoxHeader("###session_switch"))
+			if (ImGui::BeginListBox("###session_switch"))
 			{
 				for (const auto& session_type : sessions)
 				{
@@ -67,7 +67,7 @@ namespace big
 
 		if (ImGui::TreeNode("Region Switcher"))
 		{
-			if (ImGui::ListBoxHeader("###region_switch"))
+			if (ImGui::BeginListBox("###region_switch"))
 			{
 				for (const auto& region_type : regions)
 				{

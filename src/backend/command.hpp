@@ -31,11 +31,11 @@ namespace big
 		{
 			return m_name;
 		}
-		inline const std::string& get_label()
+		inline const std::string get_label()
 		{
 			return m_label;
 		}
-		inline const std::string& get_description()
+		inline const std::string get_description()
 		{
 			return m_description;
 		}

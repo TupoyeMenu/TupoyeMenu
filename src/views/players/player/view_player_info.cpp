@@ -9,6 +9,7 @@
  * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "core/data/block_join_reasons.hpp"
 #include "core/data/command_access_levels.hpp"
 #include "core/data/game_states.hpp"
 #include "core/data/language_codes.hpp"
@@ -157,6 +158,8 @@ namespace big
 				ImGui::TreePop();
 			}
 
+			ImGui::Checkbox("Block Explosions", &g_player_service->get_selected()->block_explosions);
+
 			if (auto current_player = g_player_database_service->get_player_by_rockstar_id(
 			        g_player_service->get_selected()->get_net_data()->m_gamer_handle.m_rockstar_id))
 			{
@@ -169,6 +172,30 @@ namespace big
 						{
 							ImGui::BulletText(infraction_desc[(Infraction)infraction]);
 						}
+					}
+
+					if (ImGui::Checkbox("Is Modder", &current_player->is_modder) || ImGui::Checkbox("Force Allow Join", &current_player->force_allow_join) || ImGui::Checkbox("Block Join", &current_player->block_join))
+					{
+						g_player_database_service->save();
+					}
+
+					if (ImGui::BeginCombo("Block Join Alert", block_join_reasons[current_player->block_join_reason]))
+					{
+						for (const auto& reason : block_join_reasons)
+						{
+							if (ImGui::Selectable(reason.second, reason.first == current_player->block_join_reason))
+							{
+								current_player->block_join_reason = reason.first;
+								g_player_database_service->save();
+							}
+
+							if (reason.first == current_player->block_join_reason)
+							{
+								ImGui::SetItemDefaultFocus();
+							}
+						}
+
+						ImGui::EndCombo();
 					}
 
 					if (ImGui::BeginCombo("Chat Command Permissions",

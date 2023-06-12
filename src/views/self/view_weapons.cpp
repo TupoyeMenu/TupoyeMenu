@@ -41,57 +41,51 @@ namespace big
 		ImGui::Checkbox("Increased Flare Limit (Max = 50)", &g.weapons.increased_flare_limit);
 		components::command_checkbox<"vehallweapons">();
 
-		ImGui::EndGroup();
-
-
-		ImGui::SeparatorText("Special Ammo");
-
-
 		ImGui::Checkbox("Enable Special Ammo", &g.weapons.ammo_special.toggle);
+		components::options_modal("Special ammo", [] {
+			eAmmoSpecialType selected_ammo   = g.weapons.ammo_special.type;
+			eExplosionTag selected_explosion = g.weapons.ammo_special.explosion_tag;
 
-		eAmmoSpecialType selected_ammo   = g.weapons.ammo_special.type;
-		eExplosionTag selected_explosion = g.weapons.ammo_special.explosion_tag;
-
-		if (ImGui::BeginCombo("Special Ammo", SPECIAL_AMMOS[(int)selected_ammo].name))
-		{
-			for (const auto& special_ammo : SPECIAL_AMMOS)
+			if (ImGui::BeginCombo("Special Ammo", SPECIAL_AMMOS[(int)selected_ammo].name))
 			{
-				if (ImGui::Selectable(special_ammo.name, special_ammo.type == selected_ammo))
+				for (const auto& special_ammo : SPECIAL_AMMOS)
 				{
-					g.weapons.ammo_special.type = special_ammo.type;
-				}
+					if (ImGui::Selectable(special_ammo.name, special_ammo.type == selected_ammo))
+					{
+						g.weapons.ammo_special.type = special_ammo.type;
+					}
 
-				if (special_ammo.type == selected_ammo)
-				{
-					ImGui::SetItemDefaultFocus();
+					if (special_ammo.type == selected_ammo)
+					{
+						ImGui::SetItemDefaultFocus();
+					}
 				}
+				ImGui::EndCombo();
 			}
 
-			ImGui::EndCombo();
-		}
-
-		if (ImGui::BeginCombo("Bullet Impact", BULLET_IMPACTS[selected_explosion]))
-		{
-			for (const auto& [type, name] : BULLET_IMPACTS)
+			if (ImGui::BeginCombo("Bullet Impact", BULLET_IMPACTS[selected_explosion]))
 			{
-				if (ImGui::Selectable(name, type == selected_explosion))
+				for (const auto& [type, name] : BULLET_IMPACTS)
 				{
-					g.weapons.ammo_special.explosion_tag = type;
+					if (ImGui::Selectable(name, type == selected_explosion))
+					{
+						g.weapons.ammo_special.explosion_tag = type;
+					}
+
+					if (type == selected_explosion)
+					{
+						ImGui::SetItemDefaultFocus();
+					}
 				}
 
-				if (type == selected_explosion)
-				{
-					ImGui::SetItemDefaultFocus();
-				}
+				ImGui::EndCombo();
 			}
+		});
 
-			ImGui::EndCombo();
-		}
+		ImGui::EndGroup();
 
 		ImGui::SeparatorText("Misc");
 
-		components::command_checkbox<"crosshairs">();
-		ImGui::SameLine();
 		components::command_checkbox<"norecoil">();
 		ImGui::SameLine();
 		components::command_checkbox<"nospread">();

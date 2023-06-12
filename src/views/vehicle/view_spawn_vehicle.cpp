@@ -43,8 +43,7 @@ namespace big
 		const auto& class_arr     = g_gta_data_service->vehicle_classes();
 
 		ImGui::SetNextItemWidth(300.f);
-		if (ImGui::BeginCombo("Vehicle Class",
-		        selected_class == -1 ? "All" : class_arr[selected_class].c_str()))
+		if (ImGui::BeginCombo("Vehicle Class", selected_class == -1 ? "All" : class_arr[selected_class].c_str()))
 		{
 			if (ImGui::Selectable("All", selected_class == -1))
 			{
@@ -72,7 +71,7 @@ namespace big
 
 		ImGui::SetNextItemWidth(300.f);
 		components::input_text_with_hint("Model Name", "Search", search, sizeof(search), ImGuiInputTextFlags_EnterReturnsTrue, [] {
-			Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside);
+			Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside, rage::joaat(search));
 			float spawn_heading = ENTITY::GET_ENTITY_HEADING(self::ped);
 
 			const Vehicle veh = vehicle::spawn(rage::joaat(search), spawn_location, spawn_heading);
@@ -98,7 +97,7 @@ namespace big
 		});
 
 
-		if (ImGui::ListBoxHeader("###vehicles", ImVec2(300, -ImGui::GetFrameHeight())))
+		if (ImGui::BeginListBox("###vehicles", ImVec2(300, -ImGui::GetFrameHeight())))
 		{
 			if (self::veh)
 			{
@@ -115,8 +114,8 @@ namespace big
 					components::selectable(std::format("Current Vehicle [{}]", item.m_display_name), false, [] {
 						if (self::veh)
 						{
-							Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside);
-							float spawn_heading    = ENTITY::GET_ENTITY_HEADING(self::ped);
+							Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside, veh_hash);
+							float spawn_heading = ENTITY::GET_ENTITY_HEADING(self::ped);
 
 							auto owned_mods = vehicle::get_owned_mods_from_vehicle(self::veh);
 
@@ -181,8 +180,9 @@ namespace big
 					{
 						ImGui::PushID(vehicle.m_hash);
 						components::selectable(vehicle.m_display_name, false, [&vehicle] {
-							const auto spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside);
-							const auto spawn_heading  = ENTITY::GET_ENTITY_HEADING(self::ped);
+							const auto spawn_location =
+							    vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside, vehicle.m_hash);
+							const auto spawn_heading = ENTITY::GET_ENTITY_HEADING(self::ped);
 
 							const auto veh = vehicle::spawn(vehicle.m_hash, spawn_location, spawn_heading);
 
@@ -224,7 +224,7 @@ namespace big
 			{
 				ImGui::Text("No vehicles in registry.");
 			}
-			ImGui::ListBoxFooter();
+			ImGui::EndListBox();
 		}
 	}
 }
