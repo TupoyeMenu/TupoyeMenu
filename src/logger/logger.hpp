@@ -43,7 +43,7 @@ namespace big
 		void destroy();
 
 		std::vector<LogMessagePtr> get_log_messages() { return m_log_messages; }
-		void clear_log_messages() { m_log_messages.clear(); }
+		void clear_log_messages();
 
 	private:
 		void create_backup();

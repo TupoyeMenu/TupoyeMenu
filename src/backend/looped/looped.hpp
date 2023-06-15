@@ -56,8 +56,6 @@ namespace big
 		static void vehicle_boost_behavior();
 		static void vehicle_ls_customs();
 		static void vehicle_rainbow_paint();
-		static void vehicle_flares();
-		static void vehicle_chaff();
 
 		static void weapons_ammo_special_type();
 		static void weapons_cage_gun();

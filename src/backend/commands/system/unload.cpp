@@ -17,5 +17,5 @@ namespace big
 		}
 	};
 
-	unload g_unload("unload", "Unload Menu", "Unloads TupoyeMenu.", 0);
+	unload g_unload("unload", "Unload Menu", "Unloads TupoyeMenu", 0);
 }

@@ -75,8 +75,6 @@ namespace big
 		{
 			looped::vehicle_auto_drive();
 			looped::vehicle_boost_behavior();
-			looped::vehicle_chaff();
-			looped::vehicle_flares();
 
 			script::get_current()->yield();
 		}

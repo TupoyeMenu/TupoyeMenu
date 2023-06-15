@@ -31,19 +31,13 @@ namespace big
 		return ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
-	static bool did_set_focus = false;
 	void view::cmd_executor()
 	{
 		if (!g.cmd_executor.enabled)
-		{
-			did_set_focus = false;
 			return;
-		}
 
-		if (ImGui::Begin("Console", &g.cmd_executor.enabled))
+		if (ImGui::Begin("Console", &g.cmd_executor.enabled, ImGuiWindowFlags_NoFocusOnAppearing))
 		{
-			static char command_buffer[255];
-
 			g_fiber_pool->queue_job([] { // Disable control here because we are not always focused.
 				PAD::DISABLE_ALL_CONTROL_ACTIONS(0);
 				PAD::DISABLE_ALL_CONTROL_ACTIONS(2);
@@ -69,52 +63,45 @@ namespace big
 			ImGui::Separator();
 
 			// Set focus by default on input box.
-			// This is dumb but if we don't do this check then we can't use suggestions.
-			if(!did_set_focus)
+			if(!ImGui::IsPopupOpen("##popup"))
 			{
-				did_set_focus = true;
 				ImGui::SetKeyboardFocusHere(0);
 			}
 
+			static std::string command_buffer = "";
 			bool is_input_text_enter_pressed = false;
-			components::input_text_with_hint("", "Type your command", command_buffer, sizeof(command_buffer), ImGuiInputTextFlags_EnterReturnsTrue, [&is_input_text_enter_pressed]
+			if(ImGui::InputTextWithHint("", "Type your command", &command_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
 			{
-				did_set_focus = false;
 				is_input_text_enter_pressed = true;
-				if (command::process(command_buffer, std::make_shared<console_command_context>(), true))
-					command_buffer[0] = 0;
-			});
+				command::process(command_buffer, std::make_shared<console_command_context>(), false);
+				command_buffer = "";
+			}
 			const bool is_input_text_active = ImGui::IsItemActive();
 			const bool is_input_text_activated = ImGui::IsItemActivated();
 
 			if (is_input_text_activated)
 				ImGui::OpenPopup("##popup");
 
+			ImGui::SetNextWindowPos(ImVec2(ImGui::GetItemRectMin().x, ImGui::GetItemRectMax().y));
+			if (ImGui::BeginPopup("##popup", ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_ChildWindow))
 			{
-				ImGui::SetNextWindowPos(ImVec2(ImGui::GetItemRectMin().x, ImGui::GetItemRectMax().y));
-				if (ImGui::BeginPopup("##popup", ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_ChildWindow))
+				auto possible_commands = command::get_suggestions(command_buffer);
+
+				for (auto cmd : possible_commands)
 				{
-					auto possible_commands = command::get_suggestions(command_buffer);
-
-					for (auto cmd : possible_commands)
+					if (components::selectable(cmd->get_name(), false))
 					{
-						if (ImGui::Selectable(cmd->get_name().c_str()))
-						{
-							ImGui::ClearActiveID();
-							strcpy(command_buffer, cmd->get_name().c_str());
-							//did_set_focus = false; // Set focus back to `input_text_with_hint`.
-						}
+						ImGui::ClearActiveID();
+						command_buffer = cmd->get_name();
 					}
-
-					if (is_input_text_enter_pressed || (!is_input_text_active && !ImGui::IsWindowFocused()))
-						ImGui::CloseCurrentPopup();
-
-					ImGui::EndPopup();
 				}
-			}
-			ImGui::PopStyleVar();
-		}
 
+				if (is_input_text_enter_pressed || (!is_input_text_active && !ImGui::IsWindowFocused()))
+					ImGui::CloseCurrentPopup();
+
+				ImGui::EndPopup();
+			}
+		}
 		ImGui::End();
 	}
 

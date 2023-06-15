@@ -12,5 +12,5 @@ namespace big
 		}
 	};
 
-	clear g_clear("clear", "Clear Console", "Clears all text in console.", 0);
+	clear g_clear("clear", "Clear Console", "Clears all text in console", 0);
 }

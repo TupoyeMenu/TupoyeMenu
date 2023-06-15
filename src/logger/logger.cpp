@@ -100,6 +100,11 @@ namespace big
 			FreeConsole();
 	}
 
+	void logger::clear_log_messages()
+	{
+		m_log_messages.clear();
+	}
+
 	void logger::create_backup()
 	{
 		if (m_file.exists())

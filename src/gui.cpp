@@ -42,6 +42,9 @@ namespace big
 			if (g.cmd_executor.enabled && msg == WM_KEYUP && wparam == VK_ESCAPE)
 			{
 				g.cmd_executor.enabled = false;
+
+				if(!g_gui->is_open())
+					g_gui->override_mouse(false);
 			}
 		});
 		g_renderer->add_wndproc_callback([this](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
