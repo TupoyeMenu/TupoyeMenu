@@ -22,7 +22,7 @@ namespace big
 			int64_t args2[] = { (int64_t)eRemoteEvent::Crash2, (int64_t)self::id, rand() % INT64_MAX };
 			g_pointers->m_gta.m_trigger_script_event(1, args2, sizeof(args2) / sizeof(args2[0]), 1 << player->id());
 
-			int64_t args3[] = { (int64_t)eRemoteEvent::Crash3, (int64_t)self::id, rand() % INT64_MAX, NAN, NAN };
+			int64_t args3[] = { (int64_t)eRemoteEvent::Crash3, (int64_t)self::id, rand() % INT64_MAX, (int64_t)NAN, (int64_t)NAN };
 			g_pointers->m_gta.m_trigger_script_event(1, args3, sizeof(args3) / sizeof(args3[0]), 1 << player->id());
 
 			int64_t args4[] = { (int64_t)eRemoteEvent::MCTeleport, (int64_t)self::id, rand() % INT64_MAX, rand() % INT64_MAX };

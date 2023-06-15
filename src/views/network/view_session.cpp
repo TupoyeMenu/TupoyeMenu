@@ -176,7 +176,7 @@ namespace big
 
 		if (ImGui::SliderInt("WANTED_LVL"_T.data(), &global_wanted_level, 0, 5))
 		{
-			scr_globals
+			scr_globals::globalplayer_bd.as<GlobalPlayerBD*>()->Entries[self::id].RemoteWantedLevelAmount = global_wanted_level;
 		}
 
 		ImGui::SameLine();
