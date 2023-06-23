@@ -64,15 +64,13 @@ namespace big
 
 		ImGui::Checkbox("Show Watermark", &g.window.ingame_overlay.show_watermark);
 		ImGui::Checkbox("Show Players", &g.window.ingame_overlay.show_players);
-		ImGui::Checkbox("Show Coords", &g.window.ingame_overlay.show_coords);
+		ImGui::Checkbox("Show Position", &g.window.ingame_overlay.show_position);
 
 		ImGui::EndGroup();
 		ImGui::SameLine();
 		ImGui::BeginGroup();
 
-		ImGui::Checkbox("Show Coords", &g.window.ingame_overlay.show_coords);
 		ImGui::Checkbox("Show Replay Interface", &g.window.ingame_overlay.show_replay_interface);
-		ImGui::Checkbox("Show Position", &g.window.ingame_overlay.show_position);
 		ImGui::Checkbox("Show Game Version", &g.window.ingame_overlay.show_game_versions);
 
 		ImGui::EndGroup();
