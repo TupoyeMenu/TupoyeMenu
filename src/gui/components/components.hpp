@@ -110,12 +110,12 @@ namespace big
 		{
 			bool status = false;
 
-			if constexpr (color.x != 0.24f || color.y != 0.23f || color.z != 0.29f || color.w != 1.0f)
+			if constexpr (color.x != 0.172f || color.y != 0.380f || color.z != 0.909f || color.w != 1.0f)
 				ImGui::PushStyleColor(ImGuiCol_Button, color);
 
 			status = ImGui::Button(text.data(), size);
 
-			if constexpr (color.x != 0.24f || color.y != 0.23f || color.z != 0.29f || color.w != 1.0f)
+			if constexpr (color.x != 0.172f || color.y != 0.380f || color.z != 0.909f || color.w != 1.0f)
 				ImGui::PopStyleColor(1);
 			return status;
 		}
