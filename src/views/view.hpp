@@ -7,9 +7,6 @@ namespace big
 {
 	class view
 	{
-		inline static animator window_animator      = animator();
-		inline static ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoCollapse;
-
 	public:
 		static void main_view();
 

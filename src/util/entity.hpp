@@ -62,18 +62,21 @@ namespace big::entity
 
 	inline void delete_entity(Entity ent)
 	{
+		if (!ENTITY::DOES_ENTITY_EXIST(ent))
+			return;
+
 		if (take_control_of(ent, 1000))
 		{
 			ENTITY::DETACH_ENTITY(ent, 1, 1);
 			ENTITY::SET_ENTITY_VISIBLE(ent, false, false);
 			NETWORK::NETWORK_SET_ENTITY_ONLY_EXISTS_FOR_PARTICIPANTS(ent, true);
-			ENTITY::SET_ENTITY_COORDS_NO_OFFSET(ent, 50'000, 50'000, 100'000, 0, 0, 0);
+			ENTITY::SET_ENTITY_COORDS_NO_OFFSET(ent, 0, 0, 0, 0, 0, 0);
 			ENTITY::SET_ENTITY_AS_MISSION_ENTITY(ent, 1, 1);
 			ENTITY::DELETE_ENTITY(&ent);
 		}
 		else
 		{
-			g_notification_service->push_warning("Delete Crash Ped", "Delete entity failed.");
+			g_notification_service->push_warning("Delete Entity", "Delete entity failed.");
 		}
 	}
 
@@ -106,16 +109,15 @@ namespace big::entity
 		return (bool)hit;
 	}
 
-	inline std::vector<Entity> get_entities(bool vehicles, bool peds)
+	inline std::vector<Entity> get_entities(bool vehicles, bool peds, bool props = false, bool include_self_veh = false)
 	{
 		std::vector<Entity> target_entities;
-		target_entities.clear();
 
 		if (vehicles)
 		{
 			for (auto vehicle : pools::get_all_vehicles())
 			{
-				if (vehicle == gta_util::get_local_vehicle())
+				if (!include_self_veh && vehicle == gta_util::get_local_vehicle())
 					continue;
 
 				target_entities.push_back(g_pointers->m_gta.m_ptr_to_handle(vehicle));
@@ -126,11 +128,15 @@ namespace big::entity
 		{
 			for (auto ped : pools::get_all_peds())
 			{
-				// make sure to not include ourselves
-				if (ped == gta_util::get_local_ped())
-					continue;
-
 				target_entities.push_back(g_pointers->m_gta.m_ptr_to_handle(ped));
+			}
+		}
+
+		if (props)
+		{
+			for (auto prop : pools::get_all_props())
+			{
+				target_entities.push_back(g_pointers->m_gta.m_ptr_to_handle(prop));
 			}
 		}
 		return target_entities;
