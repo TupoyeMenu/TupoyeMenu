@@ -89,7 +89,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 				    auto renderer_instance = std::make_unique<renderer>();
 				    LOG(INFO) << "Renderer initialized.";
-				    auto gui_instance = std::make_unique<gui>();
 
 				    auto fiber_pool_instance = std::make_unique<fiber_pool>(11);
 				    LOG(INFO) << "Fiber pool initialized.";
@@ -109,7 +108,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				    auto gta_data_service_instance          = std::make_unique<gta_data_service>();
 				    auto model_preview_service_instance     = std::make_unique<model_preview_service>();
 				    auto handling_service_instance          = std::make_unique<handling_service>();
-				    auto gui_service_instance               = std::make_unique<gui_service>();
 				    auto script_patcher_service_instance    = std::make_unique<script_patcher_service>();
 				    auto player_database_service_instance   = std::make_unique<player_database_service>();
 				    auto hotkey_service_instance            = std::make_unique<hotkey_service>();
