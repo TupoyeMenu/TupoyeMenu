@@ -50,6 +50,7 @@ namespace big
 		std::uint64_t rockstar_id = 0;
 		bool block_join           = false;
 		int block_join_reason     = 1;
+		bool force_allow_join     = false;
 		bool is_modder            = false;
 		bool notify_online        = false;
 		std::unordered_set<int> infractions;
@@ -57,7 +58,7 @@ namespace big
 		std::optional<CommandAccessLevel> command_access_level = std::nullopt;
 		PlayerOnlineStatus online_state                        = PlayerOnlineStatus::UNKNOWN;
 
-		NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(persistent_player, name, rockstar_id, block_join, block_join_reason, is_modder, notify_online, infractions, notes, command_access_level)
+		NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(persistent_player, name, rockstar_id, block_join, block_join_reason, force_allow_join, is_modder, notify_online, infractions, notes, command_access_level)
 	};
 
 };
