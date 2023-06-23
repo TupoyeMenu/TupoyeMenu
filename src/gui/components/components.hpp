@@ -120,9 +120,14 @@ namespace big
 		static bool button(const std::string_view text)
 		{
 			bool status = false;
-			ImGui::PushStyleColor(ImGuiCol_Button, color);
+
+			if constexpr (color.x != 0.172f || color.y != 0.380f || color.z != 0.909f || color.w != 1.0f)
+				ImGui::PushStyleColor(ImGuiCol_Button, color);
+
 			status = ImGui::Button(text.data(), size);
-			ImGui::PopStyleColor(1);
+
+			if constexpr (color.x != 0.172f || color.y != 0.380f || color.z != 0.909f || color.w != 1.0f)
+				ImGui::PopStyleColor(1);
 			return status;
 		}
 

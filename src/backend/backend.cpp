@@ -5,6 +5,7 @@
 #include "script.hpp"
 #include "script_patches.hpp"
 #include "services/context_menu/context_menu_service.hpp"
+#include "services/script_connection/script_connection_service.hpp"
 #include "services/tunables/tunables_service.hpp"
 #include "thread_pool.hpp"
 
@@ -102,6 +103,9 @@ namespace big
 			looped::phone_anim();
 			looped::disable_help_text();
 			
+			if (g_script_connection_service)
+				g_script_connection_service->on_tick();
+
 			script::get_current()->yield();
 		}
 	}

@@ -28,7 +28,7 @@ namespace big
 		ImGui::BeginGroup();
 		components::command_checkbox<"infammo">();
 		components::command_checkbox<"infrange">();
-		ImGui::Checkbox("Increased C4 Limit (Max = 50)", &g.weapons.increased_c4_limit);
+		ImGui::Checkbox("Increase C4 Limit (Max = 50)", &g.weapons.increased_c4_limit);
 		ImGui::Checkbox("Allow Weapons In Interiors", &g.weapons.interior_weapon);
 		components::command_checkbox<"rapidfire">();
 
@@ -38,7 +38,7 @@ namespace big
 
 		components::command_checkbox<"infammoloop">();
 		components::command_checkbox<"infclip">();
-		ImGui::Checkbox("Increased Flare Limit (Max = 50)", &g.weapons.increased_flare_limit);
+		ImGui::Checkbox("Increase Flare Limit (Max = 50)", &g.weapons.increased_flare_limit);
 		components::command_checkbox<"vehallweapons">();
 
 		ImGui::Checkbox("Enable Special Ammo", &g.weapons.ammo_special.toggle);

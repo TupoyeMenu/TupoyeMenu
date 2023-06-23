@@ -61,7 +61,10 @@ namespace
 	    "\xE5\xBC\xBA\xE5\xA5\xB8", //"rape" in Chinese
 	    "\xE8\x90\x9D",             //"loli" in Chinese
 	    "\xE6\x8C\x82",             //"hack" in Chinese
-	    "\xE5\x85\x83"              //chinese dollar
+	    "\xE5\x85\x83",             //chinese dollar
+	    "TRUSTPILOT",
+	    "cashlounge",
+	    "Fast Delivery",
 	};
 }
 

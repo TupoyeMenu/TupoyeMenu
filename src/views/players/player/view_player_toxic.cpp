@@ -228,5 +228,6 @@ namespace big
 
 			ImGui::TreePop();
 		}
+		ImGui::EndGroup();
 	}
 }

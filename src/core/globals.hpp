@@ -5,12 +5,13 @@
 #include "file_manager.hpp"
 
 #include <bitset>
-
-#define IMGUI_DEFINE_MATH_OPERATORS
-#include <imgui.h>
 #include <rage/rlSessionInfo.hpp>
 #include <weapon/CAmmoInfo.hpp>
 #include <weapon/CWeaponInfo.hpp>
+
+#define IMGUI_DEFINE_MATH_OPERATORS
+#include <imgui.h>
+
 
 class CNetGamePlayer;
 
@@ -506,7 +507,14 @@ namespace big
 				bool ped_rush   = false;
 				bool combative  = false;
 
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(nearby, ignore, ped_rain, veh_rain, high_alert, ped_rush, combative)
+				struct auto_disarm
+				{
+					bool enable     = false;
+					bool neutralize = false;
+					NLOHMANN_DEFINE_TYPE_INTRUSIVE(auto_disarm, enable, neutralize)
+				} auto_disarm{};
+
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(nearby, ignore, ped_rain, veh_rain, high_alert, ped_rush, combative, auto_disarm)
 			} nearby{};
 
 			struct model_swapper
@@ -556,16 +564,18 @@ namespace big
 			bool rockstar_crew   = false;
 			bool square_crew_tag = false;
 
-			bool spoof_session_region_type  = false;
-			int session_region_type         = 0;
-			bool spoof_session_language     = false;
-			int session_language            = 0;
-			bool spoof_session_player_count = false;
-			int session_player_count        = 25;
+			bool spoof_session_region_type      = false;
+			int session_region_type             = 0;
+			bool spoof_session_language         = false;
+			int session_language                = 0;
+			bool spoof_session_player_count     = false;
+			int session_player_count            = 25;
+			bool spoof_session_bad_sport_status = false;
+			bool session_bad_sport              = false;
 
 			bool voice_chat_audio = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(spoofing, hide_from_player_list, pool_type, spoof_cheater, spoof_hide_god, spoof_hide_spectate, spoof_crew_data, crew_tag, rockstar_crew, square_crew_tag, spoof_session_region_type, session_region_type, spoof_session_language, session_language, spoof_session_player_count, session_player_count, voice_chat_audio)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(spoofing, hide_from_player_list, pool_type, spoof_cheater, spoof_hide_god, spoof_hide_spectate, spoof_crew_data, crew_tag, rockstar_crew, square_crew_tag, spoof_session_region_type, session_region_type, spoof_session_language, session_language, spoof_session_player_count, session_player_count, voice_chat_audio, spoof_session_bad_sport_status, session_bad_sport)
 		} spoofing{};
 
 		struct vehicle
@@ -636,6 +646,7 @@ namespace big
 			bool no_water_collision                     = false;
 			bool disable_engine_auto_start              = false;
 			bool change_engine_state_immediately        = false;
+			bool keep_engine_running                    = false;
 			bool vehinvisibility                        = false;
 			bool localveh_visibility                    = false;
 			bool localped_visibility                    = true;
@@ -644,7 +655,7 @@ namespace big
 			bool unlimited_weapons                      = false;
 			bool siren_mute                             = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(vehicle, speedo_meter, fly, rainbow_paint, speed_unit, god_mode, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_water, proof_mask, auto_drive_destination, auto_drive_style, auto_drive_speed, auto_turn_signals, boost_behavior, drive_on_water, horn_boost, instant_brake, block_homing, seatbelt, turn_signals, vehicle_jump, keep_vehicle_repaired, flares, chaff, no_water_collision, disable_engine_auto_start, change_engine_state_immediately, vehinvisibility, localveh_visibility, localped_visibility, keep_on_ground, no_collision, unlimited_weapons, siren_mute)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(vehicle, speedo_meter, fly, rainbow_paint, speed_unit, god_mode, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_water, proof_mask, auto_drive_destination, auto_drive_style, auto_drive_speed, auto_turn_signals, boost_behavior, drive_on_water, horn_boost, instant_brake, block_homing, seatbelt, turn_signals, vehicle_jump, keep_vehicle_repaired, flares, chaff, no_water_collision, disable_engine_auto_start, change_engine_state_immediately, keep_engine_running, vehinvisibility, localveh_visibility, localped_visibility, keep_on_ground, no_collision, unlimited_weapons, siren_mute)
 		} vehicle{};
 
 		struct weapons
@@ -700,15 +711,16 @@ namespace big
 			bool player   = true;
 			bool demo     = false;
 
-			ImU32 color     = 3357612055;
-			float gui_scale = 1.f;
+			ImU32 background_color = 3357612055;
+			ImU32 text_color       = 4294967295;
+			ImU32 button_color     = 4293353517;
+			ImU32 frame_color      = 2939499829;
+			float gui_scale        = 1.f;
 
 			ImFont* font_title     = nullptr;
 			ImFont* font_sub_title = nullptr;
 			ImFont* font_small     = nullptr;
 			ImFont* font_icon      = nullptr;
-
-			bool switched_view = true;
 
 			struct ingame_overlay
 			{
@@ -718,15 +730,15 @@ namespace big
 
 				bool show_watermark        = false;
 				bool show_fps              = true;
-				bool show_coords           = true;
+				bool show_position         = true;
 				bool show_players          = true;
-				bool show_replay_interface = true;
+				bool show_replay_interface = false;
 				bool show_game_versions    = false;
 
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(ingame_overlay, opened, corner, show_coords, show_watermark, show_with_menu_opened, show_fps, show_players, show_replay_interface, show_game_versions)
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(ingame_overlay, opened, corner, show_watermark, show_with_menu_opened, show_fps, show_players, show_replay_interface, show_position, show_game_versions)
 			} ingame_overlay{};
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, about, main, users, player, ingame_overlay, switched_view, demo, color, gui_scale)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, background_color, main, users, player, ingame_overlay, text_color, button_color, frame_color, demo, gui_scale)
 		} window{};
 
 		struct context_menu

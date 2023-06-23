@@ -27,7 +27,7 @@
 
 namespace big
 {
-	void view::session()
+	void view::network()
 	{
 		ImGui::Text("Session Joiner");
 		static uint64_t rid = 0;

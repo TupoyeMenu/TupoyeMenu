@@ -50,14 +50,11 @@ namespace big
 			    network_player_mgr != nullptr && g.window.ingame_overlay.show_players)
 				ImGui::Text("Players: %i/%i", network_player_mgr->m_player_count, network_player_mgr->m_player_limit);
 
-			if (g.window.ingame_overlay.show_coords)
+			if (g.window.ingame_overlay.show_position)
 				ImGui::Text("Coords: (X:%.1f, Y:%.1f, Z:%.1f)", self::pos.x, self::pos.y, self::pos.z);
 
 			if (g.window.ingame_overlay.show_fps)
 				ImGui::Text("FPS: %.1f  Frame Time: %.1f", ImGui::GetIO().Framerate / 2, 1000.0f / ImGui::GetIO().Framerate);
-
-			//if (g.window.ingame_overlay.show_time)
-			//	ImGui::Text(std::format("Time: {:%d-%m-%Y %H:%M:%OS}", std::chrono::current_zone()->to_local(std::chrono::system_clock::now())).c_str());
 
 			// can't easily get used item count using pools, so keeping replay interface for now
 			if (auto replay_interface = *g_pointers->m_gta.m_replay_interface; g.window.ingame_overlay.show_replay_interface)

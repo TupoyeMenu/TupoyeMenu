@@ -72,7 +72,7 @@ namespace big
 		ImGui::SetNextItemWidth(300.f);
 		components::input_text_with_hint("Model Name", "Search", search, sizeof(search), ImGuiInputTextFlags_EnterReturnsTrue, [] {
 			Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside, rage::joaat(search));
-			float spawn_heading = ENTITY::GET_ENTITY_HEADING(self::ped);
+			float spawn_heading    = ENTITY::GET_ENTITY_HEADING(self::ped);
 
 			const Vehicle veh = vehicle::spawn(rage::joaat(search), spawn_location, spawn_heading);
 

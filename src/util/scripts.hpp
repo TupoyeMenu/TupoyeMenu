@@ -10,6 +10,7 @@
  */
 
 #pragma once
+#include "core/data/all_script_names.hpp"
 #include "core/scr_globals.hpp"
 #include "fiber_pool.hpp"
 #include "gta/script_handler.hpp"
@@ -96,11 +97,20 @@ namespace big::scripts
 		return true;
 	}
 
+	inline int launcher_index_from_hash(rage::joaat_t script_hash)
+	{
+		for (int i = 0; i < launcher_scripts.size(); i++)
+			if (launcher_scripts[i] == script_hash)
+				return i;
+
+		return -1;
+	}
+
 	/**
 	 * @brief Force launcher script over the lobby, take two.
 	 * Try to get am_launcher in a consistent state before trying to start the script taking account of all participants
 	 * 
-	 * @param script_id Look in launcher script for enum.
+	 * @param script_id Look in launcher ysc script for enum.
 	 */
 	inline void start_launcher_script(int script_id)
 	{

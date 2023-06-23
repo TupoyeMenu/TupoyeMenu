@@ -8,6 +8,7 @@
  * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#pragma once
 #include "gta/pools.hpp"
 
 namespace big::pools
