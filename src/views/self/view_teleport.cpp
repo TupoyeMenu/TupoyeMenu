@@ -10,18 +10,14 @@ namespace big
 {
 	void view::teleport()
 	{
-		components::sub_title("BLIPS"_T.data());
-		ImGui::Spacing();
+		ImGui::Text("BLIPS"_T.data());
 
 		components::command_button<"waypointtp">({}, "Waypoint");
 		ImGui::SameLine();
 		components::command_button<"objectivetp">({}, "Objective");
 		components::command_checkbox<"autotptowp">();
 
-		ImGui::Separator();
-
-		components::sub_title("Movement");
-		ImGui::Spacing();
+		ImGui::SeparatorText("Movement");
 
 		components::small_text("Current coordinates");
 		float coords[3] = {self::pos.x, self::pos.y, self::pos.z};
@@ -81,10 +77,7 @@ namespace big
 		});
 		ImGui::EndGroup();
 
-		ImGui::Separator();
-
-		components::sub_title("VEHICLES"_T.data());
-		ImGui::Spacing();
+		ImGui::SeparatorText("VEHICLES"_T.data());
 
 		components::command_button<"lastvehtp">();
 		ImGui::SameLine();
@@ -144,18 +137,5 @@ namespace big
 		ImGui::Text(std::vformat("IPL_POSITION"_T,
 		    std::make_format_args(selected_ipl.location.x, selected_ipl.location.y, selected_ipl.location.z))
 		                .data());
-
-		ImGui::SeparatorText("Manual:");
-		
-		static float coords[3] = { 0.f, 0.f, 0.f }; // This is shit
-		ImGui::InputFloat3("Coords", coords);
-
-		components::button("Teleport to Coords", [] {
-			Vector3 coords_v;
-			coords_v.x = coords[1];
-			coords_v.y = coords[2];
-			coords_v.z = coords[3];
-			teleport::to_coords(coords_v);
-		});
 	}
 }
