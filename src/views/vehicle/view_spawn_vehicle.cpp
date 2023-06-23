@@ -34,7 +34,7 @@ namespace big
 
 		ImGui::SetNextItemWidth(300.f);
 		if (ImGui::BeginCombo("VEHICLE_CLASS"_T.data(),
-			selected_class == -1 ? "ALL"_T.data() : class_arr[selected_class].c_str()))
+		        selected_class == -1 ? "ALL"_T.data() : class_arr[selected_class].c_str()))
 		{
 			if (ImGui::Selectable("ALL"_T.data(), selected_class == -1))
 			{
@@ -63,7 +63,7 @@ namespace big
 		ImGui::SetNextItemWidth(300.f);
 		components::input_text_with_hint("MODEL_NAME"_T, "SEARCH"_T, search, sizeof(search), ImGuiInputTextFlags_EnterReturnsTrue, [] {
 			Vector3 spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside, rage::joaat(search));
-			float spawn_heading = ENTITY::GET_ENTITY_HEADING(self::ped);
+			float spawn_heading    = ENTITY::GET_ENTITY_HEADING(self::ped);
 
 			const Vehicle veh = vehicle::spawn(rage::joaat(search), spawn_location, spawn_heading);
 

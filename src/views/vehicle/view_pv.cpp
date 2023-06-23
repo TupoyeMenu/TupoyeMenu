@@ -54,7 +54,7 @@ namespace big
 
 		ImGui::SetNextItemWidth(300.f);
 		if (ImGui::BeginCombo("VEHICLE_CLASS"_T.data(),
-			selected_class == -1 ? "ALL"_T.data() : class_arr[selected_class].c_str()))
+		        selected_class == -1 ? "ALL"_T.data() : class_arr[selected_class].c_str()))
 		{
 			if (ImGui::Selectable("ALL"_T.data(), selected_class == -1))
 			{

@@ -21,8 +21,6 @@ namespace big
 
 		ImGui::Text(std::format("Total sessions found: {}", g_matchmaking_service->get_num_found_sessions()).data());
 
-		ImGui::SetNextItemWidth(300.f);
-
 		if (ImGui::BeginListBox("###sessions", ImVec2(300, -ImGui::GetFrameHeight())))
 		{
 			if (g_matchmaking_service->get_num_found_sessions())
