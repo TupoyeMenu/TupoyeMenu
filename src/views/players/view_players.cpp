@@ -93,7 +93,7 @@ namespace big
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {2.0f, 2.0f});
 
-		if (ImGui::Begin("Playerlist", &g.window.users, window_flags))
+		if (ImGui::Begin("Playerlist", &g.window.users))
 		{
 			float window_height = (ImGui::CalcTextSize("A").y + ImGui::GetStyle().ItemInnerSpacing.y * 2 + 6.0f) * player_count + 10.0f;
 

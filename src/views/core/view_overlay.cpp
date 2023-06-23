@@ -28,6 +28,7 @@ namespace big
 		}
 
 		ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
+		g_gui->push_theme_colors();
 		if (ImGui::Begin("overlay", nullptr, window_flags))
 		{
 			if (g.window.ingame_overlay.show_watermark)
@@ -47,6 +48,15 @@ namespace big
 
 			//if (g.window.ingame_overlay.show_time)
 			//	ImGui::Text(std::format("Time: {:%d-%m-%Y %H:%M:%OS}", std::chrono::current_zone()->to_local(std::chrono::system_clock::now())).c_str());
+
+			if (g.window.ingame_overlay.show_position && g_local_player)
+			{
+				ImGui::Separator();
+
+				auto& pos = *g_local_player->get_position();
+
+				ImGui::Text("Pos: %.2f, %.2f, %.2f", pos.x, pos.y, pos.z);
+			}
 
 			// can't easily get used item count using pools, so keeping replay interface for now
 			if (auto replay_interface = *g_pointers->m_gta.m_replay_interface; g.window.ingame_overlay.show_replay_interface)
@@ -95,5 +105,7 @@ namespace big
 			}
 		}
 		ImGui::End();
+
+		g_gui->pop_theme_colors();
 	}
 }

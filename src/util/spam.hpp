@@ -50,7 +50,10 @@ namespace
 	    "\xE5\xBC\xBA\xE5\xA5\xB8", //"rape" in Chinese
 	    "\xE8\x90\x9D",             //"loli" in Chinese
 	    "\xE6\x8C\x82",             //"hack" in Chinese
-	    "\xE5\x85\x83"              //chinese dollar
+	    "\xE5\x85\x83",             //chinese dollar
+	    "TRUSTPILOT",
+	    "cashlounge",
+	    "Fast Delivery",
 	};
 }
 
@@ -64,7 +67,7 @@ namespace big::spam
 
 		return false;
 	}
-	
+
 	inline void log_chat(char* msg, player_ptr player, bool is_spam)
 	{
 		std::ofstream spam_log(g_file_manager->get_project_file(is_spam ? "./spam.log" : "./chat.log").get_path(), std::ios::app);

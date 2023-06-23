@@ -17,7 +17,7 @@
 
 namespace big
 {
-	void view::session()
+	void view::network()
 	{
 		static uint64_t rid = 0;
 		ImGui::InputScalar("INPUT_RID"_T.data(), ImGuiDataType_U64, &rid);

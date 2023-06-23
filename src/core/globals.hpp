@@ -598,16 +598,18 @@ namespace big
 			bool rockstar_crew   = false;
 			bool square_crew_tag = false;
 
-			bool spoof_session_region_type  = false;
-			int session_region_type         = 0;
-			bool spoof_session_language     = false;
-			int session_language            = 0;
-			bool spoof_session_player_count = false;
-			int session_player_count        = 25;
+			bool spoof_session_region_type      = false;
+			int session_region_type             = 0;
+			bool spoof_session_language         = false;
+			int session_language                = 0;
+			bool spoof_session_player_count     = false;
+			int session_player_count            = 25;
+			bool spoof_session_bad_sport_status = false;
+			bool session_bad_sport              = false;
 
 			bool voice_chat_audio = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(spoofing, hide_from_player_list, pool_type, spoof_cheater, spoof_hide_god, spoof_hide_spectate, spoof_crew_data, crew_tag, rockstar_crew, square_crew_tag, spoof_session_region_type, session_region_type, spoof_session_language, session_language, spoof_session_player_count, session_player_count, voice_chat_audio)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(spoofing, hide_from_player_list, pool_type, spoof_cheater, spoof_hide_god, spoof_hide_spectate, spoof_crew_data, crew_tag, rockstar_crew, square_crew_tag, spoof_session_region_type, session_region_type, spoof_session_language, session_language, spoof_session_player_count, session_player_count, voice_chat_audio, spoof_session_bad_sport_status, session_bad_sport)
 		} spoofing{};
 
 		struct vehicle
@@ -761,15 +763,16 @@ namespace big
 			bool demo     = false;
 			bool log      = false;
 
-			ImU32 color     = 3357612055;
-			float gui_scale = 1.f;
+			ImU32 background_color = 3357612055;
+			ImU32 text_color       = 4294967295;
+			ImU32 button_color     = 4216956014;
+			ImU32 frame_color      = 2939772740;
+			float gui_scale        = 1.f;
 
 			ImFont* font_title     = nullptr;
 			ImFont* font_sub_title = nullptr;
 			ImFont* font_small     = nullptr;
 			ImFont* font_icon      = nullptr;
-
-			bool switched_view = true;
 
 			struct ingame_overlay
 			{
@@ -779,12 +782,12 @@ namespace big
 
 				bool show_watermark        = false;
 				bool show_fps              = true;
-				bool show_coords           = true;
+				bool show_position         = true;
 				bool show_players          = true;
-				bool show_replay_interface = true;
+				bool show_replay_interface = false;
 				bool show_game_versions    = false;
 
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(ingame_overlay, opened, corner, show_coords, show_watermark, show_with_menu_opened, show_fps, show_players, show_replay_interface, show_game_versions)
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(ingame_overlay, opened, corner, show_watermark, show_with_menu_opened, show_fps, show_players, show_replay_interface, show_position, show_game_versions)
 			} ingame_overlay{};
 
 			struct vehicle_control
@@ -797,7 +800,7 @@ namespace big
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(vehicle_control, operation_animation, max_summon_range, render_distance_on_veh)
 			} vehicle_control{};
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, main, users, player, ingame_overlay, switched_view, chat, demo, log, color, gui_scale, vehicle_control)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, background_color, main, users, player, ingame_overlay, text_color, button_color, frame_color, chat, demo, log, gui_scale, vehicle_control)
 		} window{};
 
 		struct context_menu

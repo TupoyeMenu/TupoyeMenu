@@ -7,18 +7,18 @@ namespace big
 	{
 		if (ImGui::BeginTabBar("network_tabbar"))
 		{
+			if (ImGui::BeginTabItem("GUI_TAB_NETWORK"_T.data()))
+			{
+				view::network();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_NETWORK"));
+				ImGui::EndTabItem();
+			}
 			if (ImGui::BeginTabItem("GUI_TAB_SPOOFING"_T.data()))
 			{
 				view::spoofing();
 				if (g_lua_manager)
 					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SPOOFING"));
-				ImGui::EndTabItem();
-			}
-			if (ImGui::BeginTabItem("GUI_TAB_SESSION"_T.data()))
-			{
-				view::session();
-				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SESSION"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("GUI_TAB_MISSIONS"_T.data()))

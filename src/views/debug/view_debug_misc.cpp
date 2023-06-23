@@ -8,6 +8,8 @@
 #include "script_global.hpp"
 #include "thread_pool.hpp"
 #include "util/misc.hpp"
+#include "util/pathfind.hpp"
+#include "util/ped.hpp"
 #include "util/system.hpp"
 #include "util/ped.hpp"
 #include "util/pathfind.hpp"
