@@ -22,56 +22,56 @@ namespace big
 			{
 				view::settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("Settings"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SETTINGS"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Hotkeys"))
 			{
 				view::hotkey_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("Hotkeys"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_HOTKEYS"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Lua Scripts"))
 			{
 				view::lua_scripts();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("Lua Scripts"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_LUA_SCRIPTS"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Context Menu"))
 			{
 				view::context_menu_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("Context Menu"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_CONTEXT_MENU"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("ESP"))
 			{
 				view::esp_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("ESP"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_ESP"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("GUI"))
 			{
 				view::gui_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_GUI"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Reactions"))
 			{
 				view::reaction_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("Reactions"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_REACTIONS"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Protection"))
 			{
 				view::protection_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("Protection"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_PROTECTION"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("GTA Cache"))

@@ -42,7 +42,7 @@ namespace big
 		}
 
 		std::ofstream file_stream(m_file_path);
-		file_stream << json;
+		file_stream << json.dump(4);
 	}
 
 	void player_database_service::load()

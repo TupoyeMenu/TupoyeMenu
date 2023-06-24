@@ -23,10 +23,11 @@
 
 #include <network/Network.hpp>
 #include <script/globals/GPBD_FM_3.hpp>
+#include <script/globals/GlobalPlayerBD.hpp>
 
 namespace big
 {
-	void view::session()
+	void view::network()
 	{
 		ImGui::Text("Session Joiner");
 		static uint64_t rid = 0;
@@ -189,14 +190,14 @@ namespace big
 
 		if (ImGui::SliderInt("Wanted Level", &global_wanted_level, 0, 5))
 		{
-			*scr_globals::globalplayer_bd.at(self::id, scr_globals::size::globalplayer_bd).at(213).as<int*>() = global_wanted_level;
+			scr_globals::globalplayer_bd.as<GlobalPlayerBD*>()->Entries[self::id].RemoteWantedLevelAmount = global_wanted_level;
 		}
 
 		ImGui::SameLine();
 		if (ImGui::Checkbox("Force", &g.session.wanted_level_all))
 		{
-			*scr_globals::globalplayer_bd.at(self::id, scr_globals::size::globalplayer_bd).at(212).as<Player*>() = __rdtsc() + 32;
-			*scr_globals::globalplayer_bd.at(self::id, scr_globals::size::globalplayer_bd).at(213).as<int*>() = global_wanted_level;
+			scr_globals::globalplayer_bd.as<GlobalPlayerBD*>()->Entries[self::id].RemoteWantedLevelPlayer = __rdtsc() + 32;
+			scr_globals::globalplayer_bd.as<GlobalPlayerBD*>()->Entries[self::id].RemoteWantedLevelAmount = global_wanted_level;
 		}
 
 		if (ImGui::TreeNode("Toxic"))

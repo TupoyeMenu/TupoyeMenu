@@ -125,8 +125,8 @@ namespace big
 		{
 			ImFontConfig font_icons_cfg{};
 			font_icons_cfg.FontDataOwnedByAtlas = false;
-			std::strcpy(font_icons_cfg.Name, "Icons");
-			g.window.font_icon = io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(font_icons), sizeof(font_icons), 24.f, &font_icons_cfg);
+			std::strcpy(font_icons_cfg.Name, "fontello");
+			g.window.font_icon = io.Fonts->AddFontFromMemoryCompressedTTF(font_icons_compressed_data, sizeof(font_icons_compressed_data), 24.f, &font_icons_cfg);
 		}
 
 		rescale(g.window.gui_scale);

@@ -48,6 +48,21 @@ namespace big
 			vehicle::bring(veh, self::pos, true, -1);
 		});
 
+		ImGui::SeparatorText("Engine");
+
+		components::button("Turn Engine On", [] {
+			vehicle::set_engine_state(self::veh, true, g.vehicle.change_engine_state_immediately, g.vehicle.disable_engine_auto_start);
+		});
+		ImGui::SameLine();
+		components::button("Turn Engine Off", [] {
+			vehicle::set_engine_state(self::veh, false, g.vehicle.change_engine_state_immediately, g.vehicle.disable_engine_auto_start);
+		});
+		ImGui::Checkbox("Disable Engine Auto Start", &g.vehicle.disable_engine_auto_start);
+		ImGui::SameLine();
+		ImGui::Checkbox("Change State Immediately", &g.vehicle.change_engine_state_immediately);
+		ImGui::SameLine();
+		components::command_checkbox<"keepengine">();
+
 		ImGui::SeparatorText("General");
 		{
 			ImGui::BeginGroup();

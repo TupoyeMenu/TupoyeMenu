@@ -74,9 +74,33 @@ namespace big
 			{
 				mode_str += "Bullet, ";
 			}
+			if (ped_damage_bits & (uint32_t)eEntityProofs::FIRE)
+			{
+				mode_str += "Fire, ";
+			}
+			if (ped_damage_bits & (uint32_t)eEntityProofs::COLLISION)
+			{
+				mode_str += "Collision, ";
+			}
+			if (ped_damage_bits & (uint32_t)eEntityProofs::MELEE)
+			{
+				mode_str += "Melee, ";
+			}
 			if (ped_damage_bits & (uint32_t)eEntityProofs::EXPLOSION)
 			{
 				mode_str += "Explosion, ";
+			}
+			if (ped_damage_bits & (uint32_t)eEntityProofs::STEAM)
+			{
+				mode_str += "Steam, ";
+			}
+			if (ped_damage_bits & (uint32_t)eEntityProofs::DROWN)
+			{
+				mode_str += "Drown, ";
+			}
+			if (ped_damage_bits & (uint32_t)eEntityProofs::WATER)
+			{
+				mode_str += "Water";
 			}
 		}
 
@@ -102,13 +126,37 @@ namespace big
 			}
 			else
 			{
+				if (veh_damage_bits & (uint32_t)eEntityProofs::BULLET)
+				{
+					mode_str += "Bullet, ";
+				}
+				if (veh_damage_bits & (uint32_t)eEntityProofs::FIRE)
+				{
+					mode_str += "Fire, ";
+				}
 				if (veh_damage_bits & (uint32_t)eEntityProofs::COLLISION)
 				{
 					mode_str += "Collision, ";
 				}
+				if (veh_damage_bits & (uint32_t)eEntityProofs::MELEE)
+				{
+					mode_str += "Melee, ";
+				}
 				if (veh_damage_bits & (uint32_t)eEntityProofs::EXPLOSION)
 				{
 					mode_str += "Explosion, ";
+				}
+				if (veh_damage_bits & (uint32_t)eEntityProofs::STEAM)
+				{
+					mode_str += "Steam, ";
+				}
+				if (veh_damage_bits & (uint32_t)eEntityProofs::DROWN)
+				{
+					mode_str += "Drown, ";
+				}
+				if (veh_damage_bits & (uint32_t)eEntityProofs::WATER)
+				{
+					mode_str += "Water";
 				}
 			}
 
@@ -158,8 +206,6 @@ namespace big
 				ImGui::TreePop();
 			}
 
-			ImGui::Checkbox("Block Explosions", &g_player_service->get_selected()->block_explosions);
-
 			if (auto current_player = g_player_database_service->get_player_by_rockstar_id(
 			        g_player_service->get_selected()->get_net_data()->m_gamer_handle.m_rockstar_id))
 			{
@@ -176,6 +222,8 @@ namespace big
 
 					if (ImGui::Checkbox("Is Modder", &current_player->is_modder) || ImGui::Checkbox("Force Allow Join", &current_player->force_allow_join) || ImGui::Checkbox("Block Join", &current_player->block_join))
 					{
+						g_player_service->get_selected()->is_modder = current_player->is_modder;
+						g_player_service->get_selected()->block_join = current_player->block_join;
 						g_player_database_service->save();
 					}
 
@@ -227,17 +275,20 @@ namespace big
 		{
 			if (ImGui::TreeNode("Ped Info"))
 			{
+				auto pos = cped->m_navigation->get_position();
 				ImGui::Text("Health: %f / %f", cped->m_health, cped->m_maxhealth);
 				ImGui::SameLine();
 				ImGui::Text("Armor: %f", cped->m_armor);
 				ImGui::Text("Pos X: %f, Y: %f, Z: %f",
-				    cped->m_navigation->get_position()->x,
-				    cped->m_navigation->get_position()->y,
-				    cped->m_navigation->get_position()->z);
+				    pos->x,
+				    pos->y,
+				    pos->z);
 
 				ImGui::Text("Distance: %f", math::distance_between_vectors(misc::fvector3_to_Vector3(*g_local_player->get_position()), misc::fvector3_to_Vector3(*cped->get_position())));
-				ImGui::Text("Speed: %f", cped->get_speed());
-				ImGui::Text("Can Be Ragdolled: %s", cped->can_be_ragdolled() ? "Yes" : "No");
+				if(cped->m_vehicle != nullptr)
+					ImGui::Text("Speed: %f", cped->m_vehicle->get_speed());
+				else
+					ImGui::Text("Speed: %f", cped->get_speed());
 				ImGui::TreePop();
 			}
 

@@ -55,9 +55,8 @@ namespace big
 		ImGui::Checkbox("Spectate", &g.protections.script_events.spectate);
 		ImGui::Checkbox("Vehicle Kick", &g.protections.script_events.vehicle_kick);
 		ImGui::Checkbox("Wanted Level", &g.protections.script_events.clear_wanted_level);
-		ImGui::Checkbox("Desync Kick", &g.protections.desync_kick);
 		ImGui::Checkbox("Request Controll", &g.protections.request_control);
-		ImGui::Checkbox("RECEIVE_PICKUP", &g.protections.receive_pickup);
+		ImGui::Checkbox("Receive Pickup", &g.protections.receive_pickup);
 		ImGui::SameLine(); components::help_marker("This prevents any pickup from the ground such as unwanted money drops.\nAttention: Normal pickups are also no longer possible.");
 		ImGui::Checkbox("Admin Check", &g.protections.admin_check);
 		ImGui::EndGroup();

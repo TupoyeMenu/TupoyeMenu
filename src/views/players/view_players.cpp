@@ -36,10 +36,14 @@ namespace big
 		if (plyr->is_friend())
 			player_icons += FONT_ICON_FRIEND;
 		if (const auto ped = plyr->get_ped(); ped != nullptr)
+		{
 			if (ped->m_ped_task_flag & (uint8_t)ePedTask::TASK_DRIVING)
 				player_icons += FONT_ICON_VEHICLE;
+			if (ped->m_damage_bits & (uint32_t)eEntityProofs::GOD)
+				player_icons += FONT_ICON_GODMODE;
+		}
 		if (plyr->is_modder)
-			player_icons += FONT_ICON_NOTFRIEND;
+			player_icons += FONT_ICON_MODDER;
 
 		const auto player_iconsc    = player_icons.c_str();
 		const auto player_icons_end = player_iconsc + player_icons.size();
@@ -106,7 +110,7 @@ namespace big
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {2.0f, 2.0f});
 
-		if (ImGui::Begin("Playerlist", &g.window.users, window_flags))
+		if (ImGui::Begin("Playerlist", &g.window.users))
 		{
 			float window_height = (ImGui::CalcTextSize("A").y + ImGui::GetStyle().ItemInnerSpacing.y * 2 + 6.0f) * player_count + 10.0f;
 

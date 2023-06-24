@@ -91,8 +91,6 @@ namespace big
 				toxic::start_activity(g_player_service->get_selected(), eActivityType::Skydive);
 			});
 			ImGui::SameLine();
-			components::player_command_button<"cayotp">(g_player_service->get_selected(), {});
-			ImGui::SameLine();
 			components::player_command_button<"interiortp">(g_player_service->get_selected(), {81}, "TP To MOC");
 
 			components::player_command_button<"interiortp">(g_player_service->get_selected(), {123}, "TP To Casino");
@@ -230,5 +228,6 @@ namespace big
 
 			ImGui::TreePop();
 		}
+		ImGui::EndGroup();
 	}
 }

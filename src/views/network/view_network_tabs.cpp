@@ -18,18 +18,18 @@ namespace big
 	{
 		if (ImGui::BeginTabBar("network_tabbar"))
 		{
+			if (ImGui::BeginTabItem("Network"))
+			{
+				view::network();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_NETWORK"));
+				ImGui::EndTabItem();
+			}
 			if (ImGui::BeginTabItem("Spoofing"))
 			{
 				view::spoofing();
 				if (g_lua_manager)
 					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SPOOFING"));
-				ImGui::EndTabItem();
-			}
-			if (ImGui::BeginTabItem("Session"))
-			{
-				view::session();
-				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SESSION"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Missions"))

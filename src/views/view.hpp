@@ -17,8 +17,6 @@ namespace big
 {
 	class view
 	{
-		inline static ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoCollapse;
-
 	public:
 		static void about_view();
 		static void main_view();
@@ -46,7 +44,7 @@ namespace big
 		static void root();
 		static void self_tabs();
 		static void self();
-		static void session();
+		static void network();
 		static void settings_tabs();
 		static void missions();
 		static void player_database();

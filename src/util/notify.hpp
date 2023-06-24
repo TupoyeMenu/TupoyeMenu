@@ -85,6 +85,19 @@ namespace big::notify
 	}
 
 	/**
+	 * @brief Shows subtitle with given text.
+	 *
+	 * @param text Text to display.
+	 * @param ms Time in milliseconds to show text on screen before disappearing.
+	 */
+	inline void show_subtitle(std::string_view text, int ms = 2000)
+	{
+		HUD::BEGIN_TEXT_COMMAND_PRINT("STRING");
+		HUD::ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME(text.data());
+		HUD::END_TEXT_COMMAND_PRINT(ms, 1);
+	}
+
+	/**
 	 * @brief Shows help text using natives.
 	 * 
 	 * @param text Text to display.

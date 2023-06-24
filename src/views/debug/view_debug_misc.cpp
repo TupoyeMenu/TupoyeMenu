@@ -20,6 +20,8 @@
 #include "script_global.hpp"
 #include "thread_pool.hpp"
 #include "util/misc.hpp"
+#include "util/pathfind.hpp"
+#include "util/ped.hpp"
 #include "util/system.hpp"
 #include "util/ped.hpp"
 #include "util/pathfind.hpp"
@@ -101,7 +103,6 @@ namespace big
 
 		ImGui::SeparatorText("Log Toggles");
 
-		ImGui::Checkbox("Log Native Script Hooks", &g.debug.logs.script_hook_logs);
 		ImGui::Checkbox("Log Stupid Native Hooks", &g.debug.logs.stupid_script_native_logs);
 
 		ImGui::Checkbox("Log Packets", &g.debug.logs.packet_logs);

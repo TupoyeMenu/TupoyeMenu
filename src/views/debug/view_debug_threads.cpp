@@ -23,6 +23,7 @@
 #include "script.hpp"
 #include "script_global.hpp"
 #include "util/misc.hpp"
+#include "util/scripts.hpp"
 #include "util/system.hpp"
 #include "views/view.hpp"
 
@@ -179,6 +180,21 @@ namespace big
 			update_free_stacks_count();
 		});
 
+		ImGui::SameLine();
+
+		components::button("Start With Launcher", [] {
+			auto hash = rage::joaat(selected_script);
+			auto idx  = scripts::launcher_index_from_hash(hash);
+
+			if (idx == -1)
+			{
+				g_notification_service->push_warning("Script Launcher", "This script cannot be started using am_launcher");
+				return;
+			}
+
+			scripts::start_launcher_script(idx);
+		});
+
 		ImGui::EndGroup();
 
 		if (*g_pointers->m_gta.m_game_state != eGameState::Invalid && std::chrono::high_resolution_clock::now() - last_stack_update_time > 100ms)
@@ -187,6 +203,14 @@ namespace big
 			g_fiber_pool->queue_job([] {
 				update_free_stacks_count();
 			});
+
+			if (*g_pointers->m_gta.m_game_state != eGameState::Invalid && std::chrono::high_resolution_clock::now() - last_stack_update_time > 100ms)
+			{
+				last_stack_update_time = std::chrono::high_resolution_clock::now();
+				g_fiber_pool->queue_job([] {
+					update_free_stacks_count();
+				});
+			}
 		}
 	}
 }

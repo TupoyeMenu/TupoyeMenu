@@ -71,7 +71,7 @@ namespace big::entity
 	 * Does the following steps to remove an entity 
 	 * 1. Removes all attachments of this entity.
 	 * 2. Makes the entity invisible.
-	 * 3. Teleports the entity to X: 15000 Y: 15000 Z: 10000.
+	 * 3. Teleports the entity to X: 0 Y: 0 Z: 0.
 	 * 4. Marks the entity as mission entity.
 	 * 5. Deletes the entity.
 	 * 
@@ -82,12 +82,15 @@ namespace big::entity
 	 */
 	inline void delete_entity(Entity ent)
 	{
+		if (!ENTITY::DOES_ENTITY_EXIST(ent))
+			return;
+
 		if (take_control_of(ent, 1000))
 		{
 			ENTITY::DETACH_ENTITY(ent, 1, 1);
 			ENTITY::SET_ENTITY_VISIBLE(ent, false, false);
 			NETWORK::NETWORK_SET_ENTITY_ONLY_EXISTS_FOR_PARTICIPANTS(ent, true);
-			ENTITY::SET_ENTITY_COORDS_NO_OFFSET(ent, 15'000, 15'000, 10'000, 0, 0, 0);
+			ENTITY::SET_ENTITY_COORDS_NO_OFFSET(ent, 0, 0, 0, 0, 0, 0);
 			ENTITY::SET_ENTITY_AS_MISSION_ENTITY(ent, 1, 1);
 			ENTITY::DELETE_ENTITY(&ent);
 		}
@@ -139,18 +142,19 @@ namespace big::entity
 	 * 
 	 * @param vehicles Include vehicles.
 	 * @param peds Include peds.
+	 * @param props Include props. Default: false.
+	 * @param include_self_veh Include vehicle local player is in. Default: false.
 	 * @return std::vector<Entity> of all entitys in the replay interface.
 	 */
-	inline std::vector<Entity> get_entities(bool vehicles, bool peds)
+	inline std::vector<Entity> get_entities(bool vehicles, bool peds, bool props = false, bool include_self_veh = false)
 	{
 		std::vector<Entity> target_entities;
-		target_entities.clear();
 
 		if (vehicles)
 		{
 			for (auto vehicle : pools::get_all_vehicles())
 			{
-				if (vehicle == gta_util::get_local_vehicle())
+				if (!include_self_veh && vehicle == gta_util::get_local_vehicle())
 					continue;
 
 				target_entities.push_back(g_pointers->m_gta.m_ptr_to_handle(vehicle));
@@ -161,11 +165,15 @@ namespace big::entity
 		{
 			for (auto ped : pools::get_all_peds())
 			{
-				// make sure to not include ourselves
-				if (ped == gta_util::get_local_ped())
-					continue;
-
 				target_entities.push_back(g_pointers->m_gta.m_ptr_to_handle(ped));
+			}
+		}
+
+		if (props)
+		{
+			for (auto prop : pools::get_all_props())
+			{
+				target_entities.push_back(g_pointers->m_gta.m_ptr_to_handle(prop));
 			}
 		}
 		return target_entities;
@@ -277,7 +285,8 @@ namespace big::entity
 			}
 		}
 
-		*pointer = closest_entity_ptr;
+		if (pointer)
+			*pointer = closest_entity_ptr;
 
 		return closest_entity;
 	}
