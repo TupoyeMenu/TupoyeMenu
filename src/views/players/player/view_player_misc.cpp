@@ -35,6 +35,7 @@ namespace big
 		ImGui::Checkbox("Off The Radar", &g_player_service->get_selected()->off_radar);
 		ImGui::Checkbox("Never Wanted", &g_player_service->get_selected()->never_wanted);
 		ImGui::Checkbox("Semi Godmode", &g_player_service->get_selected()->semi_godmode);
+		ImGui::Checkbox("Block Explosions", &g_player_service->get_selected()->block_explosions);
 
 		components::button("Gooch Test", [] {
 			*script_global(1890378).at(289).at(1).as<Player*>() = g_player_service->get_selected()->id();

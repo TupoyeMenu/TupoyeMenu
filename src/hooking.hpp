@@ -147,7 +147,6 @@ namespace big
 		static bool script_handler_is_networked(CGameScriptHandler* this_);
 		static bool script_handler_dtor(CGameScriptHandler* this_, bool free_memory);
 
-		static int nt_query_virtual_memory(void* _this, HANDLE handle, PVOID base_addr, int info_class, MEMORY_BASIC_INFORMATION* info, int size, size_t* return_len);
 		static void queue_dependency(void* dependency);
 
 		static int linux_dx_error_fix();

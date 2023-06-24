@@ -101,7 +101,6 @@ namespace big
 				bool metric_logs{};
 				bool packet_logs{};
 
-				bool script_hook_logs{};
 				bool stupid_script_native_logs{};
 
 				bool net_event_logs{};
@@ -120,7 +119,7 @@ namespace big
 					NLOHMANN_DEFINE_TYPE_INTRUSIVE(script_event, logs, filter_player, player_id)
 				} script_event{};
 
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(logs, metric_logs, script_hook_logs, stupid_script_native_logs, packet_logs, net_event_logs, remote_sound_logs, script_event)
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(logs, metric_logs, stupid_script_native_logs, packet_logs, net_event_logs, remote_sound_logs, script_event)
 			} logs{};
 
 			bool sort_scripts       = false;
