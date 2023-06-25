@@ -52,7 +52,7 @@ namespace big
 		const auto window = ImGui::GetCurrentWindow();
 		ImGui::PushFont(g.window.font_icon);
 		const auto icons_size = ImGui::CalcTextSize(player_iconsc, player_icons_end);
-		const ImVec2 icons_pos(window->DC.CursorPos.x + 300.0f - 32.0f - icons_size.x, window->DC.CursorPos.y + 2.0f);
+		const ImVec2 icons_pos(window->DC.CursorPos.x + (ImGui::GetWindowSize().x - ImGui::GetStyle().FramePadding.x * 2) - 32.0f - icons_size.x, window->DC.CursorPos.y + 2.0f);
 		const ImRect icons_box(icons_pos, icons_pos + icons_size);
 		ImGui::PopFont();
 
@@ -66,7 +66,7 @@ namespace big
 
 		ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, {0.0, 0.5});
 		ImGui::PushID(plyr->id());
-		if (ImGui::Button(plyr->get_name(), {300.0f - ImGui::GetStyle().ScrollbarSize, 0.f}))
+		if (ImGui::Button(plyr->get_name(), {ImGui::GetWindowSize().x - ImGui::GetStyle().FramePadding.x * 2, 0.f}))
 		{
 			g_player_service->set_selected(plyr);
 			g.window.player = true;
@@ -110,9 +110,9 @@ namespace big
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {2.0f, 2.0f});
 
-		if (ImGui::Begin("Playerlist", &g.window.users))
+		if (ImGui::Begin(std::format("Playerlist {}###Playerlist", player_count).c_str(), &g.window.users))
 		{
-			float window_height = (ImGui::CalcTextSize("A").y + ImGui::GetStyle().ItemInnerSpacing.y * 2 + 6.0f) * player_count + 10.0f;
+			float window_height = (ImGui::CalcTextSize("A").y + ImGui::GetStyle().ItemInnerSpacing.y * 2 + 6.0f) * player_count;
 
 			ImGui::PushStyleColor(ImGuiCol_FrameBg, {0.f, 0.f, 0.f, 0.f});
 			ImGui::PushStyleColor(ImGuiCol_ScrollbarBg, {0.f, 0.f, 0.f, 0.f});
