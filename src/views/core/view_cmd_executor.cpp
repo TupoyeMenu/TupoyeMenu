@@ -36,7 +36,8 @@ namespace big
 		if (!g.cmd_executor.enabled)
 			return;
 
-		if (ImGui::Begin("Console", &g.cmd_executor.enabled, ImGuiWindowFlags_NoFocusOnAppearing))
+		ImGui::SetNextWindowSize(ImVec2(496, 746), ImGuiCond_FirstUseEver);
+		if (ImGui::Begin("Console", &g.cmd_executor.enabled))
 		{
 			g_fiber_pool->queue_job([] { // Disable control here because we are not always focused.
 				PAD::DISABLE_ALL_CONTROL_ACTIONS(0);
@@ -62,28 +63,27 @@ namespace big
 
 			ImGui::Separator();
 
-			// Set focus by default on input box.
-			if(!ImGui::IsPopupOpen("##popup"))
-			{
-				ImGui::SetKeyboardFocusHere(0);
-			}
-
 			static std::string command_buffer = "";
+			bool reset_focus = false;
 			bool is_input_text_enter_pressed = false;
-			if(ImGui::InputTextWithHint("", "Type your command", &command_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
+			if(ImGui::InputTextWithHint("##command_input", "Type your command", &command_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
 			{
-				is_input_text_enter_pressed = true;
 				command::process(command_buffer, std::make_shared<console_command_context>(), false);
 				command_buffer = "";
+				reset_focus = true;
+				is_input_text_enter_pressed = true;
 			}
+
+			if(reset_focus || ImGui::IsWindowAppearing())
+				ImGui::SetKeyboardFocusHere(-1);
+
 			const bool is_input_text_active = ImGui::IsItemActive();
-			const bool is_input_text_activated = ImGui::IsItemActivated();
+			if (ImGui::IsItemActivated())
+				ImGui::OpenPopup("##autocomplete");
 
-			if (is_input_text_activated)
-				ImGui::OpenPopup("##popup");
-
+			// FIXME: This thing breaks everything need to disable keyboard and make manual navigation.
 			ImGui::SetNextWindowPos(ImVec2(ImGui::GetItemRectMin().x, ImGui::GetItemRectMax().y));
-			if (ImGui::BeginPopup("##popup", ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_ChildWindow))
+			if (ImGui::BeginPopup("##autocomplete", ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_ChildWindow))
 			{
 				auto possible_commands = command::get_suggestions(command_buffer);
 
@@ -91,7 +91,7 @@ namespace big
 				{
 					if (components::selectable(cmd->get_name(), false))
 					{
-						ImGui::ClearActiveID();
+						reset_focus = true;
 						command_buffer = cmd->get_name();
 					}
 				}
