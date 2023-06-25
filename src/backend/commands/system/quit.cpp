@@ -2,7 +2,7 @@
 
 namespace big
 {
-	class fast_quit : command
+	class quit : command
 	{
 		using command::command;
 
@@ -13,5 +13,6 @@ namespace big
 		}
 	};
 
-	fast_quit g_fast_quit("fastquit", "Rage Quit", "We all have bad times sometimes. Close your GTA instant.", 0);
+	quit g_quit("quit", "Rage Quit", "We all have bad times sometimes. Close your GTA instant", 0);
+	quit g_exit("exit", "Exit", "We all have bad times sometimes. Close your GTA instant. Alias for quit", 0);
 }

@@ -25,7 +25,7 @@ namespace big
 		if (ImGui::Hotkey("Toggle Command Executor", &g.settings.hotkeys.cmd_excecutor))
 			g_hotkey_service->update_hotkey("cmdexecutor", g.settings.hotkeys.cmd_excecutor);
 		if (ImGui::Hotkey("Rage Quit (Like Alt + F4)", &g.settings.hotkeys.fast_quit))
-			g_hotkey_service->update_hotkey("fastquit", g.settings.hotkeys.fast_quit);
+			g_hotkey_service->update_hotkey("quit", g.settings.hotkeys.fast_quit);
 
 		ImGui::SeparatorText("Teleport");
 		if (ImGui::Hotkey("Teleport to waypoint", &g.settings.hotkeys.teleport_waypoint))

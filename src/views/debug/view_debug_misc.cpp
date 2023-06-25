@@ -190,6 +190,6 @@ namespace big
 			    ImGuiInputTextFlags_ReadOnly);
 		}
 
-		components::command_button<"fastquit">();
+		components::command_button<"quit">();
 	}
 }

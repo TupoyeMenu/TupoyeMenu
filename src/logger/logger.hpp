@@ -42,6 +42,9 @@ namespace big
 		void initialize();
 		void destroy();
 
+		std::vector<LogMessagePtr> get_log_messages() { return m_log_messages; }
+		void clear_log_messages();
+
 	private:
 		void create_backup();
 
@@ -51,6 +54,7 @@ namespace big
 		void format_console(const LogMessagePtr msg);
 		void format_console_simple(const LogMessagePtr msg);
 		void format_file(const LogMessagePtr msg);
+		void format_log(const LogMessagePtr msg);
 
 	private:
 		bool m_attach_console;
@@ -64,6 +68,7 @@ namespace big
 
 		std::ofstream m_console_out;
 		std::ofstream m_file_out;
+		std::vector<LogMessagePtr> m_log_messages;
 
 		file m_file;
 	};

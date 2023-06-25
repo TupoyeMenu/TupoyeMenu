@@ -83,9 +83,8 @@ namespace big
 
 			components::command_checkbox<"instantbrake">();
 			components::command_checkbox<"blockhoming">();
-			ImGui::Checkbox("Vehicle Chaff", &g.vehicle.chaff);
-			ImGui::Checkbox("Vehicle Flares", &g.vehicle.flares);
 			components::command_checkbox<"remove_speed_limit">();
+			components::command_checkbox<"keeponground">();
 
 			ImGui::EndGroup();
 			ImGui::SameLine();
@@ -99,28 +98,30 @@ namespace big
 			}
 			components::command_checkbox<"driveunder">(); // Who named this????????????
 			components::command_checkbox<"driveonwater">();
-			components::command_checkbox<"keeponground">();
-
-			components::command_checkbox<"mutesiren">();
-
-			components::command_checkbox<"speedometer">();
-			components::options_modal("Speedometer", [] {
-				ImGui::Text("Position (X, Y)");
-
-				float pos[2] = {g.vehicle.speedo_meter.x, g.vehicle.speedo_meter.y};
-
-				if (ImGui::SliderFloat2("###speedo_pos", pos, .001f, .999f, "%.3f"))
-				{
-					g.vehicle.speedo_meter.x = pos[0];
-					g.vehicle.speedo_meter.y = pos[1];
-				}
-
-				components::command_checkbox<"speedometerleftside">();
-				ImGui::SameLine();
-				components::command_checkbox<"speedometergears">();
-			});
 
 			ImGui::EndGroup();
+		}
+
+		ImGui::SeparatorText("Speedometer");
+		{
+			components::command_checkbox<"speedometer">();
+
+			ImGui::BeginDisabled(!g.vehicle.speedo_meter.enabled);
+
+			ImGui::Text("Position (X, Y)");
+			float pos[2] = {g.vehicle.speedo_meter.x, g.vehicle.speedo_meter.y};
+
+			if (ImGui::SliderFloat2("###speedo_pos", pos, .001f, .999f, "%.3f"))
+			{
+				g.vehicle.speedo_meter.x = pos[0];
+				g.vehicle.speedo_meter.y = pos[1];
+			}
+
+			components::command_checkbox<"speedometerleftside">();
+			ImGui::SameLine();
+			components::command_checkbox<"speedometergears">();
+
+			ImGui::EndDisabled();
 		}
 		
 		ImGui::SeparatorText("Proofs");
