@@ -24,7 +24,7 @@ namespace big
 
 	void view::settings()
 	{
-		components::sub_title("SETTINGS_MISC"_T);
+		ImGui::SeparatorText("SETTINGS_MISC"_T.data());
 		ImGui::Checkbox("SETTINGS_MISC_DEV_DLC"_T.data(), &g.settings.dev_dlc);
 		ImGui::Checkbox("Enable Cable Cars", &g.tunables.cable_cars);
 
@@ -39,6 +39,12 @@ namespace big
 			scripts_popupmodal();
 
 			ImGui::EndPopup();
+		}
+
+		if (ImGui::Button("Reset Settings"))
+		{
+			g.write_default_config();
+			g.load();
 		}
 	}
 }

@@ -63,13 +63,6 @@ namespace big
 					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_MODEL_SWAPPER"));
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_NEARBY"_T.data()))
-			{
-				view::nearby();
-				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_NEARBY"));
-				ImGui::EndTabItem();
-			}
 
 			ImGui::EndTabBar();
 		}

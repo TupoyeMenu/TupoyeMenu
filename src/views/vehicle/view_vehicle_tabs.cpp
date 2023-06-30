@@ -35,20 +35,6 @@ namespace big
 					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SPAWN_VEHICLE"));
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_PERSONAL_VEHICLE"_T.data()))
-			{
-				view::pv();
-				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_PERSONAL_VEHICLE"));
-				ImGui::EndTabItem();
-			}
-			if (ImGui::BeginTabItem("GUI_TAB_PERSIST_CAR"_T.data()))
-			{
-				view::persist_car();
-				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_PERSIST_CAR"));
-				ImGui::EndTabItem();
-			}
 			if (ImGui::BeginTabItem("GUI_TAB_VEHICLE_FUN_FEATURES"_T.data()))
 			{
 				view::fun_vehicle();

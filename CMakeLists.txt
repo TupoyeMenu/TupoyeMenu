@@ -32,8 +32,14 @@ file(GLOB_RECURSE SRC_MAIN
     "${SRC_DIR}/**.cxx"
     "${SRC_DIR}/**.asm"
 )
-add_library(TupoyeMenu MODULE "${SRC_MAIN}")
 
+if (MSVC)
+  add_compile_options(/bigobj)
+else ()
+  add_compile_options(-Wa,-mbig-obj)
+endif ()
+
+add_library(TupoyeMenu MODULE "${SRC_MAIN}")
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(TARGET TupoyeMenu PROPERTY CXX_STANDARD 23) # 23 Because std::format is not avalible in std:c++20 for some reason. Maybe it's because i use v142 toolset.

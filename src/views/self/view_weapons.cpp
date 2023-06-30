@@ -12,7 +12,7 @@ namespace big
 {
 	void view::weapons()
 	{
-		components::sub_title("AMMO"_T);
+		ImGui::SeparatorText("AMMO"_T.data());
 
 		ImGui::BeginGroup();
 
@@ -74,9 +74,7 @@ namespace big
 
 		ImGui::EndGroup();
 
-		ImGui::Separator();
-
-		components::sub_title("MISC"_T);
+		ImGui::SeparatorText("MISC"_T.data());
 
 		components::command_checkbox<"norecoil">();
 		ImGui::SameLine();
@@ -104,9 +102,7 @@ namespace big
 		components::command_checkbox<"incrdamage">();
 		ImGui::InputFloat("Damage", &g.weapons.increased_damage, .1, 10, "%.1f");
 
-		ImGui::Separator();
-
-		components::sub_title("CUSTOM_WEAPONS"_T);
+		ImGui::SeparatorText("CUSTOM_WEAPONS"_T.data());
 
 		ImGui::Checkbox("Custom Gun only fires when weapon is out", &g.self.custom_weapon_stop);
 		CustomWeapon selected = g.weapons.custom_weapon;
@@ -152,8 +148,7 @@ namespace big
 			break;
 		}
 
-		ImGui::Separator();
-		components::sub_title("Aim Assistance");
+		ImGui::SeparatorText("Aim Assistance");
 		components::command_checkbox<"triggerbot">();
 		ImGui::SameLine();
 		components::command_checkbox<"aimbot">();

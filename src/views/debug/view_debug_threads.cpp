@@ -169,6 +169,21 @@ namespace big
 			update_free_stacks_count();
 		});
 
+		ImGui::SameLine();
+
+		components::button("Start With Launcher", [] {
+			auto hash = rage::joaat(selected_script);
+			auto idx  = scripts::launcher_index_from_hash(hash);
+
+			if (idx == -1)
+			{
+				g_notification_service->push_warning("Script Launcher", "This script cannot be started using am_launcher");
+				return;
+			}
+
+			scripts::start_launcher_script(idx);
+		});
+
 		ImGui::EndGroup();
 
 		if (*g_pointers->m_gta.m_game_state != eGameState::Invalid && std::chrono::high_resolution_clock::now() - last_stack_update_time > 100ms)
@@ -178,21 +193,6 @@ namespace big
 				update_free_stacks_count();
 			});
 
-			ImGui::SameLine();
-
-			components::button("Start With Launcher", [] {
-				auto hash = rage::joaat(selected_script);
-				auto idx  = scripts::launcher_index_from_hash(hash);
-
-				if (idx == -1)
-				{
-					g_notification_service->push_warning("Script Launcher", "This script cannot be started using am_launcher");
-					return;
-				}
-
-				scripts::start_launcher_script(idx);
-			});
-
 			if (*g_pointers->m_gta.m_game_state != eGameState::Invalid && std::chrono::high_resolution_clock::now() - last_stack_update_time > 100ms)
 			{
 				last_stack_update_time = std::chrono::high_resolution_clock::now();
@@ -200,10 +200,6 @@ namespace big
 					update_free_stacks_count();
 				});
 			}
-
-			ImGui::EndTabItem();
 		}
-
-		ImGui::EndTabItem();
 	}
 }

@@ -169,6 +169,8 @@ namespace big
 		    ImVec4(button_color.x + 0.14f, button_color.y + 0.14f, button_color.z + 0.14f, button_color.w);
 		auto button_active_color =
 		    ImVec4(button_color.x + 0.33f, button_color.y + 0.33f, button_color.z + 0.33f, button_color.w);
+		auto button_hovered_color =
+		    ImVec4(button_color.x + 0.15f, button_color.y + 0.15f, button_color.z + 0.15f, button_color.w);
 		auto frame_color = ImGui::ColorConvertU32ToFloat4(g.window.frame_color);
 		auto frame_hovered_color =
 		    ImVec4(frame_color.x + 0.14f, frame_color.y + 0.14f, frame_color.z + 0.14f, button_color.w);
