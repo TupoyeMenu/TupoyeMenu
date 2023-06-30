@@ -207,6 +207,22 @@ namespace big
 		{
 			if (g.debug.logs.stupid_script_native_logs)
 				LOG(VERBOSE) << "DLC::ON_ENTER_SP();";
+
+			if(!g.tunables.dont_unload_online_maps)
+				DLC::ON_ENTER_SP();
+		}
+
+		/**
+		 * 
+		 * @param src 
+		 */
+		inline void CLEAR_PED_TASKS_IMMEDIATELY(rage::scrNativeCallContext* src)
+		{
+			if (src->get_arg<Ped>(0) == self::ped && g.debug.logs.stupid_script_native_logs)
+				LOG(VERBOSE) << std::format("TASK::CLEAR_PED_TASKS_IMMEDIATELY({}); // In: {}", src->get_arg<Ped>(0), SCRIPT::GET_THIS_SCRIPT_NAME());
+
+			if (!g.tunables.seamless_join)
+				TASK::CLEAR_PED_TASKS_IMMEDIATELY(src->get_arg<Ped>(0));
 		}
 	}
 }

@@ -63,15 +63,6 @@ namespace big
 				src->set_return_value<BOOL>(SOCIALCLUB::SC_TRANSITION_NEWS_SHOW_TIMED(src->get_arg<Any>(0), src->get_arg<Any>(0)));
 		}
 
-		inline void CLEAR_PED_TASKS_IMMEDIATELY(rage::scrNativeCallContext* src)
-		{
-			if (SCRIPT::GET_HASH_OF_THIS_SCRIPT_NAME() != RAGE_JOAAT("maintransition") || !g.tunables.seamless_join)
-				TASK::CLEAR_PED_TASKS_IMMEDIATELY(src->get_arg<Ped>(0));
-
-			if (src->get_arg<Ped>(0) == self::ped && g.debug.logs.stupid_script_native_logs)
-				LOG(VERBOSE) << std::format("TASK::CLEAR_PED_TASKS_IMMEDIATELY({}); // In: {}", src->get_arg<Ped>(0), SCRIPT::GET_THIS_SCRIPT_NAME());
-		}
-
 		void NETWORK_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(rage::scrNativeCallContext* src)
 		{
 			if (rage::scrThread::get() && rage::scrThread::get()->m_handler)

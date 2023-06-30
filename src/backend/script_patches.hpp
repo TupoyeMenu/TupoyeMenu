@@ -1,3 +1,15 @@
+/**
+ * @file script_patches.hpp
+ *
+ * @brief Patches to ysc scripts the game runs.
+ * 
+ * @copyright GNU General Public License Version 2.
+ * This file is part of YimMenu.
+ * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
+ * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 #include "pointers.hpp"
 #include "services/script_patcher/script_patcher_service.hpp"
@@ -43,11 +55,6 @@ namespace big
 		    0,
 		    {0x2B, 0x2B, 0x2B, 0x00, 0x55},
 		    &g.self.invisibility});
-		g_script_patcher_service->add_patch({RAGE_JOAAT("maintransition"),
-		    "2D 00 02 00 00 2C ? ? ? 56 ? ? 2C ? ? ? 74 58 ? ? 2C ? ? ? 73",
-		    5,
-		    {0x72, 0x2E, 0x00, 0x01},
-		    &g.tunables.seamless_join}); // Prevents infinite loading screen.
 
 		g_script_patcher_service->add_patch(
 		    {RAGE_JOAAT("carmod_shop"), "2D 01 0A 00 00 4F ? ? 40 ? 41 ? 39 03", 5, {0x2E, 0x01, 0x00}, &g.vehicle.ls_customs}); // disable camera
@@ -61,6 +68,48 @@ namespace big
 		    {RAGE_JOAAT("carmod_shop"), "2D 03 16 00 00 5D", 5, {0x72, 0x2E, 0x03, 0x01}, &g.vehicle.ls_customs}); // allow all vehicles
 		g_script_patcher_service->add_patch(
 		    {RAGE_JOAAT("carmod_shop"), "2D 03 07 00 00 71 38 02", 5, {0x72, 0x2E, 0x03, 0x01}, &g.vehicle.ls_customs}); // allow all vehicles 2
+
+				/**
+		 * @brief Prevents infinite loading screen.
+		 */
+		g_script_patcher_service->add_patch({RAGE_JOAAT("maintransition"),
+		    "2D 00 02 00 00 2C ? ? ? 56 ? ? 2C ? ? ? 74 58 ? ? 2C ? ? ? 73",
+		    5,
+		    {0x72, 0x2E, 0x00, 0x01},
+		    &g.tunables.seamless_join});
+
+		/**
+		 * @brief Prevents intro animation from running.
+		 * @code {.asm}
+		 * ; Can be found at:
+		 * ; Function hash: 0xB92740F6
+		 * ; Has TASK_SCRIPTED_ANIMATION in OPEN_SEQUENCE_TASK.
+		 * @endcode
+		 * 
+		 * @authors Dayibbaba helped me find this function.
+		 * @return LEAVE 9, 0
+		 */
+		g_script_patcher_service->add_patch({RAGE_JOAAT("freemode"),
+		    "2D 09 53 00 00",
+			5,
+			{ 0x2E, 0x09, 0x00 },
+		    &g.tunables.seamless_join});
+		
+		/**
+		 * @brief Prevents freezing after we skiped the intro animation.
+		 * @code {.asm}
+		 * ; Can be found at:
+		 * ; Function hash: 0x48A59AF2
+		 * ; Has if (ENTITY::IS_ENTITY_PLAYING_ANIM(uParam0->f_122, animDict, animName, 3))
+		 * @endcode
+		 *
+		 * @return PUSH_CONST_1; LEAVE 1, 1
+		 */
+		g_script_patcher_service->add_patch({RAGE_JOAAT("freemode"),
+		    "2D 01 06 00 00 38 00 41 ? 56",
+			5,
+			{ 0x72, 0x2E, 0x01, 0x01 },
+		    &g.tunables.seamless_join});
 
 		for (auto& entry : *g_pointers->m_gta.m_script_program_table)
 		{
