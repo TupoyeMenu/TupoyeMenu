@@ -33,8 +33,6 @@ namespace big
 		ImGui::Checkbox("REMOTE_OFF_RADAR"_T.data(), &g.protections.script_events.remote_off_radar);
 		ImGui::Checkbox("ROTATE_CAM"_T.data(), &g.protections.script_events.rotate_cam);
 		ImGui::Checkbox("TELEPORT_TO_WAREHOUSE"_T.data(), &g.protections.script_events.teleport_to_warehouse);
-		ImGui::Checkbox("LESSEN_BREAKUP_KICK"_T.data(), &g.protections.lessen_breakups);
-		ImGui::SameLine(); components::help_marker("LESSEN_BREAKUP_KICK_DESCRIPTION"_T);
 		ImGui::EndGroup();
 
 		ImGui::SameLine();

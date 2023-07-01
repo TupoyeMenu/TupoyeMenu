@@ -142,4 +142,6 @@ namespace big::functions
 	using get_entity_attached_to = rage::CDynamicEntity* (*)(rage::CDynamicEntity* entity);
 
 	using migrate_object = void (*)(CNetGamePlayer* player, rage::netObject* object, int type);
+
+	using handle_chat_message = void (*)(void* chat_data, void*, rage::rlGamerHandle* handle, const char* text, bool is_team);
 }
