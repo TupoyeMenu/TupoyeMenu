@@ -40,13 +40,6 @@ namespace big
 					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SPAWN_VEHICLE"));
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Personal Vehicle"))
-			{
-				view::pv();
-				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_PERSONAL_VEHICLE"));
-				ImGui::EndTabItem();
-			}
 			if (ImGui::BeginTabItem("Fun Features"))
 			{
 				view::fun_vehicle();

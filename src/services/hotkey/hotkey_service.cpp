@@ -35,6 +35,7 @@ namespace big
 		register_hotkey("objective", g.settings.hotkeys.teleport_objective, RAGE_JOAAT("objectivetp"));
 		register_hotkey("skipcutscene", g.settings.hotkeys.skip_cutscene, RAGE_JOAAT("skipcutscene"));
 		register_hotkey("waypoint", g.settings.hotkeys.teleport_waypoint, RAGE_JOAAT("waypointtp"));
+		register_hotkey("clearwantedlvl", g.settings.hotkeys.clear_wanted, RAGE_JOAAT("clearwantedlvl"));
 
 		g_renderer->add_wndproc_callback([this](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 			wndproc(static_cast<eKeyState>(msg), wparam);

@@ -218,7 +218,6 @@ namespace big
 		}
 
 		ImGui::SeparatorText("Vehicle Fly");
-
 		{
 			ImGui::BeginGroup();
 

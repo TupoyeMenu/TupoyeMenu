@@ -50,5 +50,11 @@ namespace big
 
 			ImGui::EndPopup();
 		}
+
+		if (ImGui::Button("Reset Settings"))
+		{
+			g.write_default_config();
+			g.load();
+		}
 	}
 }

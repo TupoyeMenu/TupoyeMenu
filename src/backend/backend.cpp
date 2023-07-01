@@ -8,6 +8,7 @@
 #include "services/script_connection/script_connection_service.hpp"
 #include "services/tunables/tunables_service.hpp"
 #include "thread_pool.hpp"
+#include "util/teleport.hpp"
 
 namespace big
 {
@@ -17,6 +18,7 @@ namespace big
 			command->refresh();
 
 		register_script_patches();
+		teleport::fetch_saved_locations();
 
 		while (g_running)
 		{

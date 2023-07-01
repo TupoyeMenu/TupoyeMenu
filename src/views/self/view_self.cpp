@@ -62,7 +62,7 @@ namespace big
 		components::command_checkbox<"fastrun">();
 		ImGui::Checkbox("Jump Ragdoll", &g.self.allow_ragdoll);
 		ImGui::Checkbox("Always Control", &g.tunables.always_control);
-		ImGui::Checkbox("No Idle Kick", &g.tunables.no_idle_kick);
+		components::command_checkbox<"noidlekick">();
 
 		ImGui::EndGroup();
 		ImGui::SameLine();

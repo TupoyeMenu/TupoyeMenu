@@ -47,11 +47,11 @@ namespace big
 
 		void attempt_save();
 		bool load();
+		bool write_default_config();
 
 	private:
 		bool deep_compare(nlohmann::json& current_settings, const nlohmann::json& default_settings, bool compare_value = false);
 		bool save();
-		bool write_default_config();
 
 	private:
 		bool m_running;
@@ -419,9 +419,10 @@ namespace big
 				int localinvisveh        = 0;
 				int fill_ammo            = 0;
 				int fast_quit            = 0;
+				int clear_wanted            = 0;
 				int cmd_excecutor        = 0x55;
 
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys, editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, noclip, bringvehicle, invis, heal, fill_inventory, skip_cutscene, freecam, superrun, invisveh, localinvisveh, fill_ammo, fast_quit, cmd_excecutor)
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys, editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, noclip, bringvehicle, invis, heal, fill_inventory, skip_cutscene, freecam, superrun, invisveh, localinvisveh, fill_ammo, fast_quit, clear_wanted, cmd_excecutor)
 			} hotkeys{};
 
 			bool dev_dlc = false;

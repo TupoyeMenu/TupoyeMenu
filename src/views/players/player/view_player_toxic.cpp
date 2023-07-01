@@ -111,6 +111,21 @@ namespace big
 			ImGui::SameLine();
 			components::player_command_button<"interiortp">(g_player_service->get_selected(), {161}, "TP To Multi Floor Garage");
 
+			static float new_location[3];
+			auto& current_location = *reinterpret_cast<float(*)[3]>(g_player_service->get_selected()->get_ped()->m_navigation->get_position());
+
+			components::small_text("Custom TP");
+			ImGui::SetNextItemWidth(400);
+			ImGui::InputFloat3("##customlocation", new_location);
+			components::button("TP", [] {
+				teleport::teleport_player_to_coords(g_player_service->get_selected(), *reinterpret_cast<rage::fvector3*>(&new_location));
+			});
+			ImGui::SameLine();
+			if (ImGui::Button("Get current"))
+			{
+				std::copy(std::begin(current_location), std::end(current_location), std::begin(new_location));
+			}
+
 			ImGui::TreePop();
 		}
 
@@ -222,8 +237,8 @@ namespace big
 			components::player_command_button<"fakeban">(g_player_service->get_selected(), {});
 
 			static int wanted_level;
-			ImGui::SliderInt("Wanted Level", &wanted_level, 0, 5);
-			ImGui::SameLine();
+			components::small_text("Wanted Level");
+			ImGui::SliderInt("##wantedlevelslider", &wanted_level, 0, 5);
 			components::player_command_button<"wanted">(g_player_service->get_selected(), {(uint64_t)wanted_level}, "Set");
 
 			ImGui::TreePop();

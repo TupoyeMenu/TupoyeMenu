@@ -64,6 +64,8 @@ namespace big
 		ImGui::SeparatorText("Misc");
 		if (ImGui::Hotkey("Skip Cutscene", &g.settings.hotkeys.skip_cutscene))
 			g_hotkey_service->update_hotkey("skipcutscene", g.settings.hotkeys.skip_cutscene);
+		if (ImGui::Hotkey("Clear Wanted", &g.settings.hotkeys.clear_wanted))
+			g_hotkey_service->update_hotkey("clearwantedlvl", g.settings.hotkeys.clear_wanted);
 
 		ImGui::PopItemWidth();
 	}

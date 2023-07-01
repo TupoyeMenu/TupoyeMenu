@@ -23,6 +23,14 @@ namespace big
 			int amount_fixed = mobile::mors_mutual::fix_all();
 			g_notification_service->push_success("Mobile", std::format("{} vehicle{} been fixed.", amount_fixed, amount_fixed == 1 ? " has" : "s have"));
 		});
+
+		ImGui::SameLine();
+		components::button("Delete Current",[]{
+			auto handle = self::veh;
+			if(ENTITY::DOES_ENTITY_EXIST(handle))
+				TASK::CLEAR_PED_TASKS_IMMEDIATELY(self::ped), entity::delete_entity(handle);
+		});
+
 		ImGui::SameLine();
 		components::button("Repair", [] {
 			vehicle::repair(self::veh);

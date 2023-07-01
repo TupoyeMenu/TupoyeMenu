@@ -71,7 +71,6 @@ namespace big
 		static void creator();
 		static void blackhole();
 		static void model_swapper();
-		static void nearby();
 		static void gta_cache();
 		static void lua_scripts();
 

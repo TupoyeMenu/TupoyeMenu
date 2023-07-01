@@ -17,7 +17,7 @@
 
 namespace big
 {
-	void view::spawn_vehicle()
+	void render_spawn_new_vehicle()
 	{
 		if (ImGui::Checkbox("Preview", &g.spawn_vehicle.preview_vehicle))
 		{
@@ -225,6 +225,20 @@ namespace big
 				ImGui::Text("No vehicles in registry.");
 			}
 			ImGui::EndListBox();
+		}
+	}
+
+	void view::spawn_vehicle()
+	{
+		static int spawn_type = 0;
+		ImGui::RadioButton("New", &spawn_type, 0);
+		ImGui::SameLine();
+		ImGui::RadioButton("Personal", &spawn_type, 1);
+
+		switch (spawn_type)
+		{
+		case 0: render_spawn_new_vehicle(); break;
+		case 1: view::pv(); break;
 		}
 	}
 }
