@@ -1,8 +1,7 @@
 #ifdef ENABLE_ASI_LOADER
-	#include "asi_scripts.h"
+#include "asi_scripts.h"
 
-	#include "core/globals.hpp"
-	#include "pe_image.h"
+#include "pe_image.h"
 
 using namespace Utility;
 
