@@ -30,7 +30,6 @@ namespace big
 		static void debug_tabs();
 
 		static void esp_settings();
-		static void context_menu_settings();
 		static void outfit_editor();
 		static void outfit_slots();
 		static void stat_editor();
@@ -38,6 +37,7 @@ namespace big
 		static void hotkey_settings();
 		static void reaction_settings();
 		static void protection_settings();
+		static void context_menu_settings();
 		static void mobile();
 		static void notifications();
 		static void overlay();

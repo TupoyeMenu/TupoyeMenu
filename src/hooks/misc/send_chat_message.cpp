@@ -32,7 +32,7 @@ namespace big
 		if (g.session.chat_commands && message[0] == g.session.chat_command_prefix)
 			command::process(std::string(message + 1), std::make_shared<chat_command_context>(g_player_service->get_self()));
 		else
-			g_lua_manager->trigger_event<"chat_message_received">(self::id, message);
+			g_lua_manager->trigger_event<menu_event::ChatMessageReceived>(self::id, message);
 
 		packet msg{};
 		msg.write_message(rage::eNetMessage::MsgTextMessage);

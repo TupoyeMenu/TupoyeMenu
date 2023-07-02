@@ -78,11 +78,6 @@ namespace big
 			cached_creator_files = false;
 		});
 
-		ImGui::Separator();
-
-		static char job_link[69]{};
-		components::input_text("SocialClub Job Link", job_link, sizeof(job_link));
-
 		ImGui::EndGroup();
 
 		ImGui::SeparatorText("Launch Creator");

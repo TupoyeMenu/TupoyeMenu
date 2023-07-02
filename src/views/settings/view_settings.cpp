@@ -8,6 +8,9 @@
  * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "core/data/language_codes.hpp"
+#include "pointers.hpp"
+#include "thread_pool.hpp"
 #include "views/view.hpp"
 #include "script_mgr.hpp"
 
@@ -22,12 +25,11 @@ namespace big
 		ImGui::Spacing();
 		components::sub_title("These scripts are responsible for all looped features.\nOnly disable if you know what you are doing.");
 
-		for (const auto& script : g_script_mgr.scripts())
-		{
+		g_script_mgr.for_each_script([](const auto& script) {
 			if (script->is_toggleable())
 				if (ImGui::Checkbox(script->name(), script->toggle_ptr()))
 					g_notification_service->push(std::string(script->name()).append(" script"), script->is_enabled() ? "Resumed" : "Halted");
-		}
+		});
 
 		ImGui::EndGroup();
 	}
