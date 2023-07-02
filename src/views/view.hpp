@@ -20,7 +20,6 @@ namespace big
 		static void debug_tabs();
 
 		static void esp_settings();
-		static void context_menu_settings();
 		static void outfit_editor();
 		static void outfit_slots();
 		static void stat_editor();
@@ -31,7 +30,11 @@ namespace big
 		static void handling_saved_profiles();
 		static void reaction_settings();
 		static void protection_settings();
+<<<<<<< HEAD
 		static void translation_settings();
+=======
+		static void heading();
+>>>>>>> 3bdd0796f438aaa7f19028996f98ea66ac01c223
 		static void mobile();
 		static void notifications();
 		static void spinner();

@@ -49,13 +49,6 @@ namespace big
 					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_GUI"));
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("GUI_TAB_TRANSLATION"_T.data()))
-			{
-				view::translation_settings();
-				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_TRANSLATION"));
-				ImGui::EndTabItem();
-			}
 			if (ImGui::BeginTabItem("GUI_TAB_REACTIONS"_T.data()))
 			{
 				view::reaction_settings();
