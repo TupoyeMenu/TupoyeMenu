@@ -43,8 +43,6 @@ namespace big
 		ImGui::Checkbox("Remote Off Radar", &g.protections.script_events.remote_off_radar);
 		ImGui::Checkbox("Rotate Cam", &g.protections.script_events.rotate_cam);
 		ImGui::Checkbox("Teleport To Warehouse", &g.protections.script_events.teleport_to_warehouse);
-		ImGui::Checkbox("Lessen Breakup Kicks As Host", &g.protections.lessen_breakups);
-		ImGui::SameLine(); components::help_marker("Attacker must join after you have become host for this to work. There are anti-cheat concerns with this feature.");
 		ImGui::EndGroup();
 
 		ImGui::SameLine();
