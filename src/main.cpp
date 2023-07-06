@@ -67,7 +67,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 			    std::srand(std::chrono::system_clock::now().time_since_epoch().count());
 
-			    LOG(INFO) << "Tupoye Menu Initializing";
+			    LOG(INFO) << "TupoyeMenu Initializing";
 			    LOGF(INFO, "Git Info\n\tBranch:\t{}\n\tHash:\t{}\n\tSubject:\t{}\n\tDate:\t{}", version::GIT_BRANCH, version::GIT_SHA1, version::GIT_COMMIT_SUBJECT, version::GIT_DATE);
 
 			    auto thread_pool_instance = std::make_unique<thread_pool>();
@@ -81,10 +81,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 			    auto byte_patch_manager_instance = std::make_unique<byte_patch_manager>();
 			    LOG(INFO) << "Byte Patch Manager initialized.";
-
-			    auto renderer_instance = std::make_unique<renderer>();
-			    LOG(INFO) << "Renderer initialized.";
-			    auto gui_instance = std::make_unique<gui>();
 
 			    auto renderer_instance = std::make_unique<renderer>();
 			    LOG(INFO) << "Renderer initialized.";
