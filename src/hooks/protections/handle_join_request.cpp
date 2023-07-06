@@ -18,6 +18,15 @@
 
 namespace big
 {
+	/**
+	 * @brief Checks if it's ok to let the player into the session.
+	 * @param network Network.
+	 * @param session Session that the player is trying to join.
+	 * @param player_info Player that is joining.
+	 * @param ctx Join context, just read the class.
+	 * @param is_transition_session Is not actually a bool, seems to be some sort of class.
+	 * @return bool 
+	 */
 	bool hooks::handle_join_request(Network* network, rage::snSession* session, rage::rlGamerInfo* player_info, CJoinRequestContext* ctx, BOOL is_transition_session)
 	{
 		LOG(VERBOSE) << player_info->m_name << " " << is_transition_session;

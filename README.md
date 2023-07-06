@@ -66,7 +66,7 @@ You can also use some cmake options.
   
 ## Staying Up To Date
 ```bash
-git pull https://github.com/tupoy-ya/TupoyeMenu.git
+git pull https://github.com/TupoyeMenu/TupoyeMenu.git
 ```
 
 CMake should be handling removed / added files automatically without any user input.

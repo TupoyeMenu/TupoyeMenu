@@ -75,6 +75,19 @@ namespace lua::event
 	// event.register_handler(menu_event.ScriptedGameEventReceived, function (player_id, script_event_args)
 	//     log.info(player_id)
 	//     log.info(script_event_args)
+	//     return false -- Ignore this event
+	// end)
+	// ```
+
+	// Lua API: Field
+	// Table: menu_event
+	// Field: NetworkBail: integer
+	// Event that is triggered when `NETWORK_BAIL` native hook is triggerd.
+	// **Exemple Usage:**
+	// ```lua
+	// event.register_handler(menu_event.NetworkBail, function (nContext, p1, p2, script_name)
+	//     log.info(script_name)
+	//     return false -- Don't bail.
 	// end)
 	// ```
 
@@ -91,21 +104,22 @@ namespace lua::event
 	static void register_handler(const menu_event& menu_event, sol::function func, sol::this_state state)
 	{
 		const auto module = sol::state_view(state)["!this"].get<big::lua_module*>();
-		
+
 		module->m_event_callbacks[menu_event].push_back(func);
 	}
 
 	static void bind(sol::state& state)
 	{
 		state.new_enum<menu_event>("menu_event",
-		{
-			{"PlayerLeave",					menu_event::PlayerLeave},
-			{"PlayerJoin",					menu_event::PlayerJoin},
-			{"PlayerMgrInit",				menu_event::PlayerMgrInit},
-			{"PlayerMgrShutdown",			menu_event::PlayerMgrShutdown},
-			{"ChatMessageReceived",			menu_event::ChatMessageReceived},
-			{"ScriptedGameEventReceived",	menu_event::ScriptedGameEventReceived},
-		});
+		    {
+		        {"PlayerLeave", menu_event::PlayerLeave},
+		        {"PlayerJoin", menu_event::PlayerJoin},
+		        {"PlayerMgrInit", menu_event::PlayerMgrInit},
+		        {"PlayerMgrShutdown", menu_event::PlayerMgrShutdown},
+		        {"ChatMessageReceived", menu_event::ChatMessageReceived},
+		        {"ScriptedGameEventReceived", menu_event::ScriptedGameEventReceived},
+		        {"NetworkBail", menu_event::NetworkBail},
+		    });
 
 
 		auto ns                = state["event"].get_or_create<sol::table>();
