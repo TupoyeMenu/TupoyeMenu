@@ -196,13 +196,17 @@ def get_natives_func_from_natives_hpp_file(natives_hpp):
 
                     continue
 
+            # Sol somehow choke on this, terrible software
+            if func_name == "DRAW_TEXTURED_POLY_WITH_THREE_COLOURS":
+                continue
+
             args = []
             args_start = line.split("(")[1]
             if args_start[0] == ")":
                 # no args
                 pass
             else:
-                args_str = args_start.rstrip()[:-1]
+                args_str = args_start.split(")")[0]
                 i = 0
                 for arg in args_str.split(","):
                     arg_type = arg[: arg.rfind(" ")].strip()

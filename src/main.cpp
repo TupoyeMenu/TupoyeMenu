@@ -147,7 +147,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    LOG(INFO) << "ASI Loader initialized.";
 #endif // ENABLE_ASI_LOADER
 
-			    auto lua_manager_instance = std::make_unique<lua_manager>();
+			    auto lua_manager_instance = std::make_unique<lua_manager>(g_file_manager->get_project_folder("scripts"));
 			    LOG(INFO) << "Lua manager initialized.";
 
 			    g_running = true;
