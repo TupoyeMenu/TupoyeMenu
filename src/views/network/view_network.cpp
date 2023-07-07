@@ -174,6 +174,14 @@ namespace big
 						script->m_net_component->block_host_migration(true);
 				});
 		}
+		ImGui::SameLine();
+		components::help_marker("This might break freemode missions and interiors. Use with caution");
+
+		ImGui::SameLine();
+
+		ImGui::Checkbox("Fast Join", &g.session.fast_join);
+		ImGui::SameLine();
+		components::help_marker("This WILL break jobs");
 
 		ImGui::SeparatorText("All Players");
 		ImGui::Checkbox("Off The Radar", &g.session.off_radar_all);

@@ -19,9 +19,18 @@ namespace big
 	{
 		if (ImGui::BeginTabBar("world_tabbar"))
 		{
+			if(ImGui::BeginTabItem("World"))
+			{
+				view::world();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_WORLD"));
+				ImGui::EndTabItem();
+			}
 			if (ImGui::BeginTabItem("Time And Weather"))
 			{
 				view::time_and_weather();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_TIME_N_WEATHER"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Spawn Ped"))

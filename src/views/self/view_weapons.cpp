@@ -36,7 +36,7 @@ namespace big
 		ImGui::SameLine();
 		ImGui::BeginGroup();
 
-		components::command_checkbox<"infammoloop">();
+		components::command_checkbox<"alwaysfullammo">();
 		components::command_checkbox<"infclip">();
 		ImGui::Checkbox("Increase Flare Limit (Max = 50)", &g.weapons.increased_flare_limit);
 		components::command_checkbox<"vehallweapons">();

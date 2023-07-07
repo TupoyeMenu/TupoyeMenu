@@ -58,6 +58,7 @@ namespace big
 		static void fun_vehicle();
 		static void spawn_ped();
 		static void world_tabs();
+		static void world();
 		static void ambient();
 		static void time_and_weather();
 		static void network_tabs();

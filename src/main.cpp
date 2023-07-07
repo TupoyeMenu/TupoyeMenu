@@ -71,7 +71,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 			    std::srand(std::chrono::system_clock::now().time_since_epoch().count());
 
-			    LOG(INFO) << "Tupoye Menu Initializing";
+			    LOG(INFO) << "TupoyeMenu Initializing";
 			    LOGF(INFO, "Git Info\n\tBranch:\t{}\n\tHash:\t{}\n\tSubject:\t{}\n\tDate:\t{}", version::GIT_BRANCH, version::GIT_SHA1, version::GIT_COMMIT_SUBJECT, version::GIT_DATE);
 
 			    auto thread_pool_instance = std::make_unique<thread_pool>();
@@ -133,18 +133,18 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 			    LOG(INFO) << "Scripts registered.";
 
-			    auto native_hooks_instance = std::make_unique<native_hooks>();
-			    LOG(INFO) << "Dynamic native hooker initialized.";
-
 			    g_hooking->enable();
 			    LOG(INFO) << "Hooking enabled.";
+
+			    auto native_hooks_instance = std::make_unique<native_hooks>();
+			    LOG(INFO) << "Dynamic native hooker initialized.";
 
 #ifdef ENABLE_ASI_LOADER
 			    asi_loader::initialize();
 			    LOG(INFO) << "ASI Loader initialized.";
 #endif // ENABLE_ASI_LOADER
 
-			    auto lua_manager_instance = std::make_unique<lua_manager>();
+			    auto lua_manager_instance = std::make_unique<lua_manager>(g_file_manager->get_project_folder("scripts"));
 			    LOG(INFO) << "Lua manager initialized.";
 
 			    g_running = true;
@@ -201,8 +201,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    LOG(INFO) << "Mobile Service reset.";
 			    player_service_instance.reset();
 			    LOG(INFO) << "Player Service reset.";
-			    player_database_service_instance.reset();
-			    LOG(INFO) << "Player Database Service reset.";
 			    pickup_service_instance.reset();
 			    LOG(INFO) << "Pickup Service reset.";
 			    globals_service_instace.reset();

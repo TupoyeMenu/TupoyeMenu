@@ -2,11 +2,11 @@
 
 ![](https://img.shields.io/badge/dynamic/json?color=ffab00&label=Online%20Version&query=%24.game.online&url=https%3A%2F%2Fraw.githubusercontent.com%2FTupoyeMenu%2FTupoyeMenu%2Flite%2Fmetadata.json&style=flat-square&labelColor=000000) ![](https://img.shields.io/badge/dynamic/json?color=ffab00&label=Game%20Build&query=%24.game.build&url=https%3A%2F%2Fraw.githubusercontent.com%2FTupoyeMenu%2FTupoyeMenu%2Flite%2Fmetadata.json&style=flat-square&labelColor=000000)
 
-A branch of TupoyeMenu attemting to make less bloated and more stable menu.
+A branch of TupoyeMenu attempting to make less bloated and more stable menu.
 
 Strictly for educational purposes.
 
-TupoyeMenu-lite is based of off [TupoyeMenu](https://github.com/TupoyeMenu/TupoyeMenu) wich is based off of [YimMenu](https://github.com/YimMenu/YimMenu) wich based of off [BigBaseV2](https://github.com/Pocakking/BigBaseV2) which was an amazing base at the time but nowadays is a bit dated.
+TupoyeMenu-lite is based of off [TupoyeMenu](https://github.com/TupoyeMenu/TupoyeMenu) which is based off of [YimMenu](https://github.com/YimMenu/YimMenu) which based of off [BigBaseV2](https://github.com/Pocakking/BigBaseV2) which was an amazing base at the time but nowadays is a bit dated.
 
 ## Table of contents
 
@@ -28,29 +28,29 @@ TupoyeMenu-lite is based of off [TupoyeMenu](https://github.com/TupoyeMenu/Tupoy
 |------------------|------------------------|
 | cpr and related  | Bloat                  |
 | HUD color        | Low quality?           |
-| SuperMan         | Low quality            |
+| Superman         | Low quality            |
 | Super jump       | Low quality            |
 | Beast jump       | Low quality            |
-| PartWater        | Useless                |
+| Part Water       | Useless                |
 | Train features   | Useless, doesn't work? |
-| Ped flag debug   | Idk, low quality bloat?|
+| Ped flag debug   | Low quality bloat?     |
 | Persist car      | Low quality, bloat     |
-| Translations     | Bloat, pain to maintain, unreadeble code, cpr dependent, internet dependent, learn English |
+| Translations     | Bloat, pain to maintain, unreadable code, cpr dependent, internet dependent, learn English |
 | Handling editor  | Bloat?                 |
 | Fancy spinner    | Bloat, only used once  |
 | Custom chat      | Low quality            |
-| Show transaction error | Breaks gameplay for no reason |
+| Show transaction error | Breaks game play for no reason |
 | PTFX             | Useless bloat          |
 | Voice chat audio | Useless bloat          |
 | Orbital drone    | Bloat                  |
 | Vehicle Controller | Bloat                |
 | Squad Spawner    | Bloat?                 |
-| Aimbot & triggerbot | Bloat, cheats bad, L, noob, low quality, useless, cringe, learn how to aim |
+| Aim-bot & trigger-bot | Bloat, cheats bad, L, noob, low quality, useless, cringe, learn how to aim |
 
 ### Reworked
 | Feature | Reason                                   | Description   |
 |---------|------------------------------------------|---------------|
-| GUI     | Bloated, pain to navigate, inconsistant  | Reworked GUI for easyer navigation and better look |
+| GUI     | Bloated, pain to navigate, inconsistent  | Reworked GUI for easier navigation and better look |
 
 
 ## How to compile TupoyeMenu

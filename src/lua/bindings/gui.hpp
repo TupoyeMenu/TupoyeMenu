@@ -31,9 +31,27 @@ namespace lua::gui
 
 	public:
 		tab(rage::joaat_t hash) :
-		    m_tab_hash(hash)
+			m_tab_hash(hash)
 		{
 		}
+
+		inline rage::joaat_t hash() const
+		{
+			return m_tab_hash;
+		}
+
+		// Lua API: Function
+		// Class: tab
+		// Name: clear
+		// Clear the tab of all its custom lua content that you own.
+		void clear(sol::this_state state)
+		{
+			auto module = sol::state_view(state)["!this"].get<big::lua_module*>();
+
+			if (module->m_gui.contains(m_tab_hash))
+				module->m_gui[m_tab_hash] = {};
+		}
+
 
 		// Lua API: Function
 		// Class: tab
@@ -147,7 +165,7 @@ namespace lua::gui
 	// Name: get_tab
 	// Param: tab_name: string: Name of the tab to get.
 	// Returns: tab: A tab instance which corresponds to the tab in the GUI.
-	static tab get_tab(const std::string& tab_name)
+	static tab get_tab(const std::string& tab_name, sol::this_state state)
 	{
 		return tab(rage::joaat(tab_name));
 	}
@@ -244,6 +262,7 @@ namespace lua::gui
 		);
 
 		ns.new_usertype<tab>("tab",
+			"clear", &tab::clear,
 			"add_button", &tab::add_button,
 			"add_text", &tab::add_text,
 			"add_checkbox", &tab::add_checkbox,

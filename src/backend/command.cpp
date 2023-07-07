@@ -35,6 +35,13 @@ namespace big
 	    m_fiber_pool(fiber_pool)
 	{
 		g_commands[rage::joaat(name)] = this;
+
+		constexpr bool generate_command_documentation = false;
+		if constexpr (generate_command_documentation)
+		{
+			LOG(INFO) << "Command | " << m_name << " | " << m_label << " | " << m_description << " | "
+			          << std::to_string(m_num_args.value_or(0));
+		}
 	}
 
 	void command::call(const std::vector<std::uint64_t>& args, const std::shared_ptr<command_context> ctx)

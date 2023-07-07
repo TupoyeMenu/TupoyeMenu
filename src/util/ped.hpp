@@ -11,14 +11,14 @@
 
 #pragma once
 #include "entity.hpp"
+#include "vehicle.hpp"
 #include "gta/enums.hpp"
+#include "local_player.hpp"
 #include "math.hpp"
 #include "natives.hpp"
 #include "outfit.hpp"
 #include "pointers.hpp"
-#include "script.hpp"
 #include "services/players/player_service.hpp"
-#include "vehicle.hpp"
 
 namespace big::ped
 {
@@ -126,8 +126,15 @@ namespace big::ped
 	 */
 	inline void kill_ped(const Ped ped)
 	{
-		if (entity::take_control_of(ped))
-			PED::APPLY_DAMAGE_TO_PED(ped, PED::GET_PED_MAX_HEALTH(ped) * 2, false, 0);
+		if (entity::take_control_of(ped, 0))
+			ENTITY::SET_ENTITY_HEALTH(ped, 0, self::ped);
+		else
+		{
+			auto ptr = g_pointers->m_gta.m_handle_to_ptr(ped);
+			if (!ptr)
+				return;
+			g_pointers->m_gta.m_send_network_damage(g_player_service->get_self()->get_ped(), ptr, ptr->get_position(), 0, true, RAGE_JOAAT("weapon_explosion"), 10000.0f, 2, 0, (1 << 4), 0, 0, 0, false, false, true, true, nullptr);
+		}
 	}
 
 	/**

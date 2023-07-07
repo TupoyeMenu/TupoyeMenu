@@ -137,10 +137,6 @@ namespace big
 
 		static void serialize_take_off_ped_variation_task(ClonedTakeOffPedVariationInfo* info, rage::CSyncDataBase* serializer);
 
-		static CGameScriptHandler* create_script_handler(CGameScriptHandlerMgr* this_, void* unk);
-		static bool script_handler_is_networked(CGameScriptHandler* this_);
-		static bool script_handler_dtor(CGameScriptHandler* this_, bool free_memory);
-
 		static void queue_dependency(void* dependency);
 
 		static int linux_dx_error_fix();
@@ -254,9 +250,6 @@ namespace big
 		{
 			return detour_hook_helper::hook_to_detour_hook_helper<detour_function>::m_detour_hook->get_original<decltype(detour_function)>();
 		}
-
-		void hook_script_handler(CGameScriptHandler* handler);
-		std::unordered_map<CGameScriptHandler*, std::unique_ptr<vmt_hook>> m_handler_hooks;
 
 	private:
 		bool m_enabled{};

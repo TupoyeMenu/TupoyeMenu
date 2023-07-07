@@ -395,7 +395,8 @@ namespace big
 			bool show_cheating_message = false;
 			bool anonymous_bounty      = true;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, chat_force_clean, log_chat_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, join_in_sctv_slots, kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty, lock_session)
+			bool fast_join = false;
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, chat_force_clean, log_chat_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, join_in_sctv_slots, kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty, lock_session, fast_join)
 		} session{};
 
 		struct settings
@@ -683,8 +684,8 @@ namespace big
 			} gravity_gun;
 
 			CustomWeapon custom_weapon    = CustomWeapon::NONE;
-			bool infinite_ammo_loop       = false;
 			bool infinite_ammo            = false;
+			bool always_full_ammo         = false;
 			bool infinite_mag             = false;
 			float increased_damage        = 1;
 			bool increase_damage          = false;
@@ -697,7 +698,7 @@ namespace big
 			bool interior_weapon          = false;
 			bool infinite_range           = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(weapons, ammo_special, custom_weapon, infinite_ammo, infinite_ammo_loop, infinite_mag, increased_damage, increase_damage, no_recoil, no_spread, vehicle_gun_model, increased_c4_limit, increased_flare_limit, rapid_fire, gravity_gun, interior_weapon, infinite_range)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(weapons, ammo_special, custom_weapon, infinite_ammo, always_full_ammo, infinite_mag, increased_damage, increase_damage, no_recoil, no_spread, vehicle_gun_model, increased_c4_limit, increased_flare_limit, rapid_fire, gravity_gun, interior_weapon, infinite_range)
 		} weapons{};
 
 		struct window
@@ -728,11 +729,26 @@ namespace big
 				bool show_watermark        = false;
 				bool show_fps              = true;
 				bool show_position         = true;
+				bool show_indicators       = true;
 				bool show_players          = true;
 				bool show_replay_interface = false;
 				bool show_game_versions    = false;
 
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(ingame_overlay, opened, corner, show_watermark, show_with_menu_opened, show_fps, show_players, show_replay_interface, show_position, show_game_versions)
+				struct ingame_overlay_indicators
+				{
+					bool show_player_godmode   = true;
+					bool show_off_radar        = true;
+					bool show_vehicle_godmode  = true;
+					bool show_never_wanted     = true;
+					bool show_infinite_ammo    = false;
+					bool show_always_full_ammo = false;
+					bool show_infinite_mag     = false;
+					bool show_invisibility    = false;
+
+					NLOHMANN_DEFINE_TYPE_INTRUSIVE(ingame_overlay_indicators, show_player_godmode, show_off_radar, show_vehicle_godmode, show_never_wanted, show_always_full_ammo, show_infinite_ammo, show_infinite_mag, show_invisibility)
+				} ingame_overlay_indicators{};
+
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(ingame_overlay, ingame_overlay_indicators, opened, corner, show_watermark, show_with_menu_opened, show_fps, show_indicators, show_players, show_replay_interface, show_position, show_game_versions)
 			} ingame_overlay{};
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, background_color, main, users, player, ingame_overlay, text_color, button_color, frame_color, demo, gui_scale)
@@ -880,7 +896,14 @@ namespace big
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(stat_editor, stat, packed_stat)
 		} stat_editor{};
 
-		NLOHMANN_DEFINE_TYPE_INTRUSIVE(menu_settings, debug, tunables, notifications, player, player_db, protections, self, session, settings, spawn_vehicle, clone_pv, spoofing, vehicle, weapons, window, context_menu, esp, session_browser, ugc, reactions, world, stat_editor)
+		struct lua
+		{
+			bool enable_auto_reload_changed_scripts = false;
+
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(lua, enable_auto_reload_changed_scripts)
+		} lua{};
+
+		NLOHMANN_DEFINE_TYPE_INTRUSIVE(menu_settings, debug, tunables, notifications, player, player_db, protections, self, session, settings, spawn_vehicle, clone_pv, spoofing, vehicle, weapons, window, context_menu, esp, session_browser, ugc, reactions, world, stat_editor, lua)
 	};
 
 	inline auto g = menu_settings();

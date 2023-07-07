@@ -16,7 +16,6 @@
 #include "network/ChatData.hpp"
 #include "pointers.hpp"
 #include "script.hpp"
-#include "session.hpp"
 
 #include <script/HudColor.hpp>
 
@@ -58,14 +57,6 @@ namespace big::notify
 		{
 			g_notification_service->push_error("Protections", std::format("Blocked {} crash from unknown player", crash));
 			LOG(WARNING) << std::format("Blocked {} crash from unknown player", crash);
-		}
-
-		if (player)
-		{
-			if (auto plyr = g_player_service->get_by_id(player->m_player_id))
-			{
-				session::add_infraction(plyr, Infraction::TRIED_CRASH_PLAYER);
-			}
 		}
 	}
 

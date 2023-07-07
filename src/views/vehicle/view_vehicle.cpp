@@ -129,6 +129,15 @@ namespace big
 			ImGui::SameLine();
 			components::command_checkbox<"speedometergears">();
 
+			ImGui::Text("Speed Unit");
+			{
+				ImGui::RadioButton(speed_unit_strings[(int)SpeedUnit::KMPH].c_str(), (int*)&g.vehicle.speed_unit, (int)SpeedUnit::KMPH);
+				ImGui::SameLine();
+				ImGui::RadioButton(speed_unit_strings[(int)SpeedUnit::MIPH].c_str(), (int*)&g.vehicle.speed_unit, (int)SpeedUnit::MIPH);
+				ImGui::SameLine();
+				ImGui::RadioButton(speed_unit_strings[(int)SpeedUnit::MPS].c_str(), (int*)&g.vehicle.speed_unit, (int)SpeedUnit::MPS);
+			}
+
 			ImGui::EndDisabled();
 		}
 		
@@ -184,15 +193,6 @@ namespace big
 			ImGui::Checkbox("Water", &g.vehicle.proof_water);
 
 			ImGui::EndGroup();
-		}
-
-		ImGui::SeparatorText("Speed Unit");
-		{
-			ImGui::RadioButton(speed_unit_strings[(int)SpeedUnit::KMPH].c_str(), (int*)&g.vehicle.speed_unit, (int)SpeedUnit::KMPH);
-			ImGui::SameLine();
-			ImGui::RadioButton(speed_unit_strings[(int)SpeedUnit::MIPH].c_str(), (int*)&g.vehicle.speed_unit, (int)SpeedUnit::MIPH);
-			ImGui::SameLine();
-			ImGui::RadioButton(speed_unit_strings[(int)SpeedUnit::MPS].c_str(), (int*)&g.vehicle.speed_unit, (int)SpeedUnit::MPS);
 		}
 
 		g.vehicle.proof_mask = 0;

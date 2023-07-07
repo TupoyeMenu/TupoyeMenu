@@ -23,13 +23,13 @@ namespace lua::native
 		return return_values;
 	}
 
-	int LUA_NATIVE_SYSTEM_START_NEW_SCRIPT_WITH_NAME_HASH( unsigned scriptHash, int stackSize )
+	int LUA_NATIVE_SYSTEM_START_NEW_SCRIPT_WITH_NAME_HASH( Hash scriptHash, int stackSize )
 	{
 		auto retval = SYSTEM::START_NEW_SCRIPT_WITH_NAME_HASH(scriptHash, stackSize);
 		return retval;
 	}
 
-	std::tuple<int, Any> LUA_NATIVE_SYSTEM_START_NEW_SCRIPT_WITH_NAME_HASH_AND_ARGS( unsigned scriptHash, Any args, int argCount, int stackSize )
+	std::tuple<int, Any> LUA_NATIVE_SYSTEM_START_NEW_SCRIPT_WITH_NAME_HASH_AND_ARGS( Hash scriptHash, Any args, int argCount, int stackSize )
 	{
 		std::tuple<int, Any> return_values;
 		std::get<0>(return_values) = SYSTEM::START_NEW_SCRIPT_WITH_NAME_HASH_AND_ARGS(scriptHash, &args, argCount, stackSize);
@@ -254,18 +254,18 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_AUDIO_PLAY_PED_RINGTONE( const char* ringtoneName, int ped, bool p2 )
+	void LUA_NATIVE_AUDIO_PLAY_PED_RINGTONE( const char* ringtoneName, Ped ped, bool p2 )
 	{
 		AUDIO::PLAY_PED_RINGTONE(ringtoneName, ped, p2);
 	}
 
-	bool LUA_NATIVE_AUDIO_IS_PED_RINGTONE_PLAYING( int ped )
+	bool LUA_NATIVE_AUDIO_IS_PED_RINGTONE_PLAYING( Ped ped )
 	{
 		auto retval = (bool)AUDIO::IS_PED_RINGTONE_PLAYING(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_AUDIO_STOP_PED_RINGTONE( int ped )
+	void LUA_NATIVE_AUDIO_STOP_PED_RINGTONE( Ped ped )
 	{
 		AUDIO::STOP_PED_RINGTONE(ped);
 	}
@@ -292,7 +292,7 @@ namespace lua::native
 		AUDIO::ADD_LINE_TO_CONVERSATION(index, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
 	}
 
-	void LUA_NATIVE_AUDIO_ADD_PED_TO_CONVERSATION( int index, int ped, const char* p2 )
+	void LUA_NATIVE_AUDIO_ADD_PED_TO_CONVERSATION( int index, Ped ped, const char* p2 )
 	{
 		AUDIO::ADD_PED_TO_CONVERSATION(index, ped, p2);
 	}
@@ -302,7 +302,7 @@ namespace lua::native
 		AUDIO::SET_POSITION_FOR_NULL_CONV_PED(p0, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_ENTITY_FOR_NULL_CONV_PED( int p0, int entity )
+	void LUA_NATIVE_AUDIO_SET_ENTITY_FOR_NULL_CONV_PED( int p0, Entity entity )
 	{
 		AUDIO::SET_ENTITY_FOR_NULL_CONV_PED(p0, entity);
 	}
@@ -392,12 +392,12 @@ namespace lua::native
 		AUDIO::SKIP_TO_NEXT_SCRIPTED_CONVERSATION_LINE();
 	}
 
-	void LUA_NATIVE_AUDIO_INTERRUPT_CONVERSATION( int ped, const char* voiceline, const char* speaker )
+	void LUA_NATIVE_AUDIO_INTERRUPT_CONVERSATION( Ped ped, const char* voiceline, const char* speaker )
 	{
 		AUDIO::INTERRUPT_CONVERSATION(ped, voiceline, speaker);
 	}
 
-	void LUA_NATIVE_AUDIO_INTERRUPT_CONVERSATION_AND_PAUSE( int ped, const char* p1, const char* speaker )
+	void LUA_NATIVE_AUDIO_INTERRUPT_CONVERSATION_AND_PAUSE( Ped ped, const char* p1, const char* speaker )
 	{
 		AUDIO::INTERRUPT_CONVERSATION_AND_PAUSE(ped, p1, speaker);
 	}
@@ -523,12 +523,12 @@ namespace lua::native
 		AUDIO::PLAY_DEFERRED_SOUND_FRONTEND(soundName, soundsetName);
 	}
 
-	void LUA_NATIVE_AUDIO_PLAY_SOUND_FROM_ENTITY( int soundId, const char* audioName, int entity, const char* audioRef, bool isNetwork, Any p5 )
+	void LUA_NATIVE_AUDIO_PLAY_SOUND_FROM_ENTITY( int soundId, const char* audioName, Entity entity, const char* audioRef, bool isNetwork, Any p5 )
 	{
 		AUDIO::PLAY_SOUND_FROM_ENTITY(soundId, audioName, entity, audioRef, isNetwork, p5);
 	}
 
-	void LUA_NATIVE_AUDIO_PLAY_SOUND_FROM_ENTITY_HASH( int soundId, unsigned model, int entity, unsigned soundSetHash, Any p4, Any p5 )
+	void LUA_NATIVE_AUDIO_PLAY_SOUND_FROM_ENTITY_HASH( int soundId, Hash model, Entity entity, Hash soundSetHash, Any p4, Any p5 )
 	{
 		AUDIO::PLAY_SOUND_FROM_ENTITY_HASH(soundId, model, entity, soundSetHash, p4, p5);
 	}
@@ -586,17 +586,17 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_AUDIO_PLAY_PED_AMBIENT_SPEECH_NATIVE( int ped, const char* speechName, const char* speechParam, Any p3 )
+	void LUA_NATIVE_AUDIO_PLAY_PED_AMBIENT_SPEECH_NATIVE( Ped ped, const char* speechName, const char* speechParam, Any p3 )
 	{
 		AUDIO::PLAY_PED_AMBIENT_SPEECH_NATIVE(ped, speechName, speechParam, p3);
 	}
 
-	void LUA_NATIVE_AUDIO_PLAY_PED_AMBIENT_SPEECH_AND_CLONE_NATIVE( int ped, const char* speechName, const char* speechParam, Any p3 )
+	void LUA_NATIVE_AUDIO_PLAY_PED_AMBIENT_SPEECH_AND_CLONE_NATIVE( Ped ped, const char* speechName, const char* speechParam, Any p3 )
 	{
 		AUDIO::PLAY_PED_AMBIENT_SPEECH_AND_CLONE_NATIVE(ped, speechName, speechParam, p3);
 	}
 
-	void LUA_NATIVE_AUDIO_PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE( int ped, const char* speechName, const char* voiceName, const char* speechParam, bool p4 )
+	void LUA_NATIVE_AUDIO_PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE( Ped ped, const char* speechName, const char* voiceName, const char* speechParam, bool p4 )
 	{
 		AUDIO::PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE(ped, speechName, voiceName, speechParam, p4);
 	}
@@ -616,12 +616,12 @@ namespace lua::native
 		AUDIO::RESET_TREVOR_RAGE();
 	}
 
-	void LUA_NATIVE_AUDIO_SET_PLAYER_ANGRY( int ped, bool toggle )
+	void LUA_NATIVE_AUDIO_SET_PLAYER_ANGRY( Ped ped, bool toggle )
 	{
 		AUDIO::SET_PLAYER_ANGRY(ped, toggle);
 	}
 
-	void LUA_NATIVE_AUDIO_PLAY_PAIN( int ped, int painID, int p1, Any p3 )
+	void LUA_NATIVE_AUDIO_PLAY_PAIN( Ped ped, int painID, int p1, Any p3 )
 	{
 		AUDIO::PLAY_PAIN(ped, painID, p1, p3);
 	}
@@ -641,70 +641,70 @@ namespace lua::native
 		AUDIO::DEACTIVATE_AUDIO_SLOWMO_MODE(mode);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_AMBIENT_VOICE_NAME( int ped, const char* name )
+	void LUA_NATIVE_AUDIO_SET_AMBIENT_VOICE_NAME( Ped ped, const char* name )
 	{
 		AUDIO::SET_AMBIENT_VOICE_NAME(ped, name);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_AMBIENT_VOICE_NAME_HASH( int ped, unsigned hash )
+	void LUA_NATIVE_AUDIO_SET_AMBIENT_VOICE_NAME_HASH( Ped ped, Hash hash )
 	{
 		AUDIO::SET_AMBIENT_VOICE_NAME_HASH(ped, hash);
 	}
 
-	unsigned LUA_NATIVE_AUDIO_GET_AMBIENT_VOICE_NAME_HASH( int ped )
+	Hash LUA_NATIVE_AUDIO_GET_AMBIENT_VOICE_NAME_HASH( Ped ped )
 	{
 		auto retval = AUDIO::GET_AMBIENT_VOICE_NAME_HASH(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_AUDIO_SET_PED_VOICE_FULL( int ped )
+	void LUA_NATIVE_AUDIO_SET_PED_VOICE_FULL( Ped ped )
 	{
 		AUDIO::SET_PED_VOICE_FULL(ped);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_PED_RACE_AND_VOICE_GROUP( int ped, int p1, unsigned voiceGroup )
+	void LUA_NATIVE_AUDIO_SET_PED_RACE_AND_VOICE_GROUP( Ped ped, int p1, Hash voiceGroup )
 	{
 		AUDIO::SET_PED_RACE_AND_VOICE_GROUP(ped, p1, voiceGroup);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_PED_VOICE_GROUP( int ped, unsigned voiceGroupHash )
+	void LUA_NATIVE_AUDIO_SET_PED_VOICE_GROUP( Ped ped, Hash voiceGroupHash )
 	{
 		AUDIO::SET_PED_VOICE_GROUP(ped, voiceGroupHash);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_PED_VOICE_GROUP_FROM_RACE_TO_PVG( int ped, unsigned voiceGroupHash )
+	void LUA_NATIVE_AUDIO_SET_PED_VOICE_GROUP_FROM_RACE_TO_PVG( Ped ped, Hash voiceGroupHash )
 	{
 		AUDIO::SET_PED_VOICE_GROUP_FROM_RACE_TO_PVG(ped, voiceGroupHash);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_PED_GENDER( int ped, bool p1 )
+	void LUA_NATIVE_AUDIO_SET_PED_GENDER( Ped ped, bool p1 )
 	{
 		AUDIO::SET_PED_GENDER(ped, p1);
 	}
 
-	void LUA_NATIVE_AUDIO_STOP_CURRENT_PLAYING_SPEECH( int ped )
+	void LUA_NATIVE_AUDIO_STOP_CURRENT_PLAYING_SPEECH( Ped ped )
 	{
 		AUDIO::STOP_CURRENT_PLAYING_SPEECH(ped);
 	}
 
-	void LUA_NATIVE_AUDIO_STOP_CURRENT_PLAYING_AMBIENT_SPEECH( int ped )
+	void LUA_NATIVE_AUDIO_STOP_CURRENT_PLAYING_AMBIENT_SPEECH( Ped ped )
 	{
 		AUDIO::STOP_CURRENT_PLAYING_AMBIENT_SPEECH(ped);
 	}
 
-	bool LUA_NATIVE_AUDIO_IS_AMBIENT_SPEECH_PLAYING( int ped )
+	bool LUA_NATIVE_AUDIO_IS_AMBIENT_SPEECH_PLAYING( Ped ped )
 	{
 		auto retval = (bool)AUDIO::IS_AMBIENT_SPEECH_PLAYING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_AUDIO_IS_SCRIPTED_SPEECH_PLAYING( int p0 )
+	bool LUA_NATIVE_AUDIO_IS_SCRIPTED_SPEECH_PLAYING( Ped p0 )
 	{
 		auto retval = (bool)AUDIO::IS_SCRIPTED_SPEECH_PLAYING(p0);
 		return retval;
 	}
 
-	bool LUA_NATIVE_AUDIO_IS_ANY_SPEECH_PLAYING( int ped )
+	bool LUA_NATIVE_AUDIO_IS_ANY_SPEECH_PLAYING( Ped ped )
 	{
 		auto retval = (bool)AUDIO::IS_ANY_SPEECH_PLAYING(ped);
 		return retval;
@@ -716,35 +716,35 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_AUDIO_DOES_CONTEXT_EXIST_FOR_THIS_PED( int ped, const char* speechName, bool p2 )
+	bool LUA_NATIVE_AUDIO_DOES_CONTEXT_EXIST_FOR_THIS_PED( Ped ped, const char* speechName, bool p2 )
 	{
 		auto retval = (bool)AUDIO::DOES_CONTEXT_EXIST_FOR_THIS_PED(ped, speechName, p2);
 		return retval;
 	}
 
-	bool LUA_NATIVE_AUDIO_IS_PED_IN_CURRENT_CONVERSATION( int ped )
+	bool LUA_NATIVE_AUDIO_IS_PED_IN_CURRENT_CONVERSATION( Ped ped )
 	{
 		auto retval = (bool)AUDIO::IS_PED_IN_CURRENT_CONVERSATION(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_AUDIO_SET_PED_IS_DRUNK( int ped, bool toggle )
+	void LUA_NATIVE_AUDIO_SET_PED_IS_DRUNK( Ped ped, bool toggle )
 	{
 		AUDIO::SET_PED_IS_DRUNK(ped, toggle);
 	}
 
-	void LUA_NATIVE_AUDIO_PLAY_ANIMAL_VOCALIZATION( int pedHandle, int p1, const char* speechName )
+	void LUA_NATIVE_AUDIO_PLAY_ANIMAL_VOCALIZATION( Ped pedHandle, int p1, const char* speechName )
 	{
 		AUDIO::PLAY_ANIMAL_VOCALIZATION(pedHandle, p1, speechName);
 	}
 
-	bool LUA_NATIVE_AUDIO_IS_ANIMAL_VOCALIZATION_PLAYING( int pedHandle )
+	bool LUA_NATIVE_AUDIO_IS_ANIMAL_VOCALIZATION_PLAYING( Ped pedHandle )
 	{
 		auto retval = (bool)AUDIO::IS_ANIMAL_VOCALIZATION_PLAYING(pedHandle);
 		return retval;
 	}
 
-	void LUA_NATIVE_AUDIO_SET_ANIMAL_MOOD( int animal, int mood )
+	void LUA_NATIVE_AUDIO_SET_ANIMAL_MOOD( Ped animal, int mood )
 	{
 		AUDIO::SET_ANIMAL_MOOD(animal, mood);
 	}
@@ -811,23 +811,23 @@ namespace lua::native
 		AUDIO::SET_RADIO_TO_STATION_NAME(stationName);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_VEH_RADIO_STATION( int vehicle, const char* radioStation )
+	void LUA_NATIVE_AUDIO_SET_VEH_RADIO_STATION( Vehicle vehicle, const char* radioStation )
 	{
 		AUDIO::SET_VEH_RADIO_STATION(vehicle, radioStation);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_VEH_HAS_NORMAL_RADIO( int vehicle )
+	void LUA_NATIVE_AUDIO_SET_VEH_HAS_NORMAL_RADIO( Vehicle vehicle )
 	{
 		AUDIO::SET_VEH_HAS_NORMAL_RADIO(vehicle);
 	}
 
-	bool LUA_NATIVE_AUDIO_IS_VEHICLE_RADIO_ON( int vehicle )
+	bool LUA_NATIVE_AUDIO_IS_VEHICLE_RADIO_ON( Vehicle vehicle )
 	{
 		auto retval = (bool)AUDIO::IS_VEHICLE_RADIO_ON(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_AUDIO_SET_VEH_FORCED_RADIO_THIS_FRAME( int vehicle )
+	void LUA_NATIVE_AUDIO_SET_VEH_FORCED_RADIO_THIS_FRAME( Vehicle vehicle )
 	{
 		AUDIO::SET_VEH_FORCED_RADIO_THIS_FRAME(vehicle);
 	}
@@ -842,7 +842,7 @@ namespace lua::native
 		AUDIO::SET_STATIC_EMITTER_ENABLED(emitterName, toggle);
 	}
 
-	void LUA_NATIVE_AUDIO_LINK_STATIC_EMITTER_TO_ENTITY( const char* emitterName, int entity )
+	void LUA_NATIVE_AUDIO_LINK_STATIC_EMITTER_TO_ENTITY( const char* emitterName, Entity entity )
 	{
 		AUDIO::LINK_STATIC_EMITTER_TO_ENTITY(emitterName, entity);
 	}
@@ -924,12 +924,12 @@ namespace lua::native
 		AUDIO::SET_NEXT_RADIO_TRACK(radioName, radioTrack, p2, p3);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_VEHICLE_RADIO_LOUD( int vehicle, bool toggle )
+	void LUA_NATIVE_AUDIO_SET_VEHICLE_RADIO_LOUD( Vehicle vehicle, bool toggle )
 	{
 		AUDIO::SET_VEHICLE_RADIO_LOUD(vehicle, toggle);
 	}
 
-	bool LUA_NATIVE_AUDIO_CAN_VEHICLE_RECEIVE_CB_RADIO( int vehicle )
+	bool LUA_NATIVE_AUDIO_CAN_VEHICLE_RECEIVE_CB_RADIO( Vehicle vehicle )
 	{
 		auto retval = (bool)AUDIO::CAN_VEHICLE_RECEIVE_CB_RADIO(vehicle);
 		return retval;
@@ -952,7 +952,7 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_AUDIO_SET_VEHICLE_RADIO_ENABLED( int vehicle, bool toggle )
+	void LUA_NATIVE_AUDIO_SET_VEHICLE_RADIO_ENABLED( Vehicle vehicle, bool toggle )
 	{
 		AUDIO::SET_VEHICLE_RADIO_ENABLED(vehicle, toggle);
 	}
@@ -978,7 +978,7 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_AUDIO_FIND_RADIO_STATION_INDEX( unsigned stationNameHash )
+	int LUA_NATIVE_AUDIO_FIND_RADIO_STATION_INDEX( Hash stationNameHash )
 	{
 		auto retval = AUDIO::FIND_RADIO_STATION_INDEX(stationNameHash);
 		return retval;
@@ -1047,13 +1047,13 @@ namespace lua::native
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_AUDIO_GET_CURRENT_TRACK_SOUND_NAME( const char* radioStationName )
+	Hash LUA_NATIVE_AUDIO_GET_CURRENT_TRACK_SOUND_NAME( const char* radioStationName )
 	{
 		auto retval = AUDIO::GET_CURRENT_TRACK_SOUND_NAME(radioStationName);
 		return retval;
 	}
 
-	void LUA_NATIVE_AUDIO_SET_VEHICLE_MISSILE_WARNING_ENABLED( int vehicle, bool toggle )
+	void LUA_NATIVE_AUDIO_SET_VEHICLE_MISSILE_WARNING_ENABLED( Vehicle vehicle, bool toggle )
 	{
 		AUDIO::SET_VEHICLE_MISSILE_WARNING_ENABLED(vehicle, toggle);
 	}
@@ -1120,17 +1120,17 @@ namespace lua::native
 		AUDIO::CANCEL_ALL_POLICE_REPORTS();
 	}
 
-	void LUA_NATIVE_AUDIO_BLIP_SIREN( int vehicle )
+	void LUA_NATIVE_AUDIO_BLIP_SIREN( Vehicle vehicle )
 	{
 		AUDIO::BLIP_SIREN(vehicle);
 	}
 
-	void LUA_NATIVE_AUDIO_OVERRIDE_VEH_HORN( int vehicle, bool override, int hornHash )
+	void LUA_NATIVE_AUDIO_OVERRIDE_VEH_HORN( Vehicle vehicle, bool override, int hornHash )
 	{
 		AUDIO::OVERRIDE_VEH_HORN(vehicle, override, hornHash);
 	}
 
-	bool LUA_NATIVE_AUDIO_IS_HORN_ACTIVE( int vehicle )
+	bool LUA_NATIVE_AUDIO_IS_HORN_ACTIVE( Vehicle vehicle )
 	{
 		auto retval = (bool)AUDIO::IS_HORN_ACTIVE(vehicle);
 		return retval;
@@ -1180,12 +1180,12 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_AUDIO_PLAY_STREAM_FROM_PED( int ped )
+	void LUA_NATIVE_AUDIO_PLAY_STREAM_FROM_PED( Ped ped )
 	{
 		AUDIO::PLAY_STREAM_FROM_PED(ped);
 	}
 
-	void LUA_NATIVE_AUDIO_PLAY_STREAM_FROM_VEHICLE( int vehicle )
+	void LUA_NATIVE_AUDIO_PLAY_STREAM_FROM_VEHICLE( Vehicle vehicle )
 	{
 		AUDIO::PLAY_STREAM_FROM_VEHICLE(vehicle);
 	}
@@ -1210,27 +1210,27 @@ namespace lua::native
 		AUDIO::STOP_STREAM();
 	}
 
-	void LUA_NATIVE_AUDIO_STOP_PED_SPEAKING( int ped, bool shaking )
+	void LUA_NATIVE_AUDIO_STOP_PED_SPEAKING( Ped ped, bool shaking )
 	{
 		AUDIO::STOP_PED_SPEAKING(ped, shaking);
 	}
 
-	void LUA_NATIVE_AUDIO_BLOCK_ALL_SPEECH_FROM_PED( int ped, bool p1, bool p2 )
+	void LUA_NATIVE_AUDIO_BLOCK_ALL_SPEECH_FROM_PED( Ped ped, bool p1, bool p2 )
 	{
 		AUDIO::BLOCK_ALL_SPEECH_FROM_PED(ped, p1, p2);
 	}
 
-	void LUA_NATIVE_AUDIO_STOP_PED_SPEAKING_SYNCED( int ped, bool p1 )
+	void LUA_NATIVE_AUDIO_STOP_PED_SPEAKING_SYNCED( Ped ped, bool p1 )
 	{
 		AUDIO::STOP_PED_SPEAKING_SYNCED(ped, p1);
 	}
 
-	void LUA_NATIVE_AUDIO_DISABLE_PED_PAIN_AUDIO( int ped, bool toggle )
+	void LUA_NATIVE_AUDIO_DISABLE_PED_PAIN_AUDIO( Ped ped, bool toggle )
 	{
 		AUDIO::DISABLE_PED_PAIN_AUDIO(ped, toggle);
 	}
 
-	bool LUA_NATIVE_AUDIO_IS_AMBIENT_SPEECH_DISABLED( int ped )
+	bool LUA_NATIVE_AUDIO_IS_AMBIENT_SPEECH_DISABLED( Ped ped )
 	{
 		auto retval = (bool)AUDIO::IS_AMBIENT_SPEECH_DISABLED(ped);
 		return retval;
@@ -1246,62 +1246,62 @@ namespace lua::native
 		AUDIO::UNBLOCK_SPEECH_CONTEXT_GROUP(p0);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_SIREN_WITH_NO_DRIVER( int vehicle, bool toggle )
+	void LUA_NATIVE_AUDIO_SET_SIREN_WITH_NO_DRIVER( Vehicle vehicle, bool toggle )
 	{
 		AUDIO::SET_SIREN_WITH_NO_DRIVER(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_SIREN_BYPASS_MP_DRIVER_CHECK( int vehicle, bool toggle )
+	void LUA_NATIVE_AUDIO_SET_SIREN_BYPASS_MP_DRIVER_CHECK( Vehicle vehicle, bool toggle )
 	{
 		AUDIO::SET_SIREN_BYPASS_MP_DRIVER_CHECK(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_AUDIO_TRIGGER_SIREN_AUDIO( int vehicle )
+	void LUA_NATIVE_AUDIO_TRIGGER_SIREN_AUDIO( Vehicle vehicle )
 	{
 		AUDIO::TRIGGER_SIREN_AUDIO(vehicle);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_HORN_PERMANENTLY_ON( int vehicle )
+	void LUA_NATIVE_AUDIO_SET_HORN_PERMANENTLY_ON( Vehicle vehicle )
 	{
 		AUDIO::SET_HORN_PERMANENTLY_ON(vehicle);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_HORN_ENABLED( int vehicle, bool toggle )
+	void LUA_NATIVE_AUDIO_SET_HORN_ENABLED( Vehicle vehicle, bool toggle )
 	{
 		AUDIO::SET_HORN_ENABLED(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_AUDIO_VEHICLE_PRIORITY( int vehicle, Any p1 )
+	void LUA_NATIVE_AUDIO_SET_AUDIO_VEHICLE_PRIORITY( Vehicle vehicle, Any p1 )
 	{
 		AUDIO::SET_AUDIO_VEHICLE_PRIORITY(vehicle, p1);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_HORN_PERMANENTLY_ON_TIME( int vehicle, float time )
+	void LUA_NATIVE_AUDIO_SET_HORN_PERMANENTLY_ON_TIME( Vehicle vehicle, float time )
 	{
 		AUDIO::SET_HORN_PERMANENTLY_ON_TIME(vehicle, time);
 	}
 
-	void LUA_NATIVE_AUDIO_USE_SIREN_AS_HORN( int vehicle, bool toggle )
+	void LUA_NATIVE_AUDIO_USE_SIREN_AS_HORN( Vehicle vehicle, bool toggle )
 	{
 		AUDIO::USE_SIREN_AS_HORN(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_AUDIO_FORCE_USE_AUDIO_GAME_OBJECT( int vehicle, const char* audioName )
+	void LUA_NATIVE_AUDIO_FORCE_USE_AUDIO_GAME_OBJECT( Vehicle vehicle, const char* audioName )
 	{
 		AUDIO::FORCE_USE_AUDIO_GAME_OBJECT(vehicle, audioName);
 	}
 
-	void LUA_NATIVE_AUDIO_PRELOAD_VEHICLE_AUDIO_BANK( unsigned vehicleModel )
+	void LUA_NATIVE_AUDIO_PRELOAD_VEHICLE_AUDIO_BANK( Hash vehicleModel )
 	{
 		AUDIO::PRELOAD_VEHICLE_AUDIO_BANK(vehicleModel);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_VEHICLE_STARTUP_REV_SOUND( int vehicle, const char* p1, const char* p2 )
+	void LUA_NATIVE_AUDIO_SET_VEHICLE_STARTUP_REV_SOUND( Vehicle vehicle, const char* p1, const char* p2 )
 	{
 		AUDIO::SET_VEHICLE_STARTUP_REV_SOUND(vehicle, p1, p2);
 	}
 
-	void LUA_NATIVE_AUDIO_RESET_VEHICLE_STARTUP_REV_SOUND( int vehicle )
+	void LUA_NATIVE_AUDIO_RESET_VEHICLE_STARTUP_REV_SOUND( Vehicle vehicle )
 	{
 		AUDIO::RESET_VEHICLE_STARTUP_REV_SOUND(vehicle);
 	}
@@ -1311,58 +1311,58 @@ namespace lua::native
 		AUDIO::SET_VEHICLE_FORCE_REVERSE_WARNING(p0, p1);
 	}
 
-	bool LUA_NATIVE_AUDIO_IS_VEHICLE_AUDIBLY_DAMAGED( int vehicle )
+	bool LUA_NATIVE_AUDIO_IS_VEHICLE_AUDIBLY_DAMAGED( Vehicle vehicle )
 	{
 		auto retval = (bool)AUDIO::IS_VEHICLE_AUDIBLY_DAMAGED(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_AUDIO_SET_VEHICLE_AUDIO_ENGINE_DAMAGE_FACTOR( int vehicle, float damageFactor )
+	void LUA_NATIVE_AUDIO_SET_VEHICLE_AUDIO_ENGINE_DAMAGE_FACTOR( Vehicle vehicle, float damageFactor )
 	{
 		AUDIO::SET_VEHICLE_AUDIO_ENGINE_DAMAGE_FACTOR(vehicle, damageFactor);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_VEHICLE_AUDIO_BODY_DAMAGE_FACTOR( int vehicle, float intensity )
+	void LUA_NATIVE_AUDIO_SET_VEHICLE_AUDIO_BODY_DAMAGE_FACTOR( Vehicle vehicle, float intensity )
 	{
 		AUDIO::SET_VEHICLE_AUDIO_BODY_DAMAGE_FACTOR(vehicle, intensity);
 	}
 
-	void LUA_NATIVE_AUDIO_ENABLE_VEHICLE_FANBELT_DAMAGE( int vehicle, bool toggle )
+	void LUA_NATIVE_AUDIO_ENABLE_VEHICLE_FANBELT_DAMAGE( Vehicle vehicle, bool toggle )
 	{
 		AUDIO::ENABLE_VEHICLE_FANBELT_DAMAGE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_AUDIO_ENABLE_VEHICLE_EXHAUST_POPS( int vehicle, bool toggle )
+	void LUA_NATIVE_AUDIO_ENABLE_VEHICLE_EXHAUST_POPS( Vehicle vehicle, bool toggle )
 	{
 		AUDIO::ENABLE_VEHICLE_EXHAUST_POPS(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_VEHICLE_BOOST_ACTIVE( int vehicle, bool toggle )
+	void LUA_NATIVE_AUDIO_SET_VEHICLE_BOOST_ACTIVE( Vehicle vehicle, bool toggle )
 	{
 		AUDIO::SET_VEHICLE_BOOST_ACTIVE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_PLAYER_VEHICLE_ALARM_AUDIO_ACTIVE( int vehicle, bool toggle )
+	void LUA_NATIVE_AUDIO_SET_PLAYER_VEHICLE_ALARM_AUDIO_ACTIVE( Vehicle vehicle, bool toggle )
 	{
 		AUDIO::SET_PLAYER_VEHICLE_ALARM_AUDIO_ACTIVE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_SCRIPT_UPDATE_DOOR_AUDIO( unsigned doorHash, bool toggle )
+	void LUA_NATIVE_AUDIO_SET_SCRIPT_UPDATE_DOOR_AUDIO( Hash doorHash, bool toggle )
 	{
 		AUDIO::SET_SCRIPT_UPDATE_DOOR_AUDIO(doorHash, toggle);
 	}
 
-	void LUA_NATIVE_AUDIO_PLAY_VEHICLE_DOOR_OPEN_SOUND( int vehicle, int doorId )
+	void LUA_NATIVE_AUDIO_PLAY_VEHICLE_DOOR_OPEN_SOUND( Vehicle vehicle, int doorId )
 	{
 		AUDIO::PLAY_VEHICLE_DOOR_OPEN_SOUND(vehicle, doorId);
 	}
 
-	void LUA_NATIVE_AUDIO_PLAY_VEHICLE_DOOR_CLOSE_SOUND( int vehicle, int doorId )
+	void LUA_NATIVE_AUDIO_PLAY_VEHICLE_DOOR_CLOSE_SOUND( Vehicle vehicle, int doorId )
 	{
 		AUDIO::PLAY_VEHICLE_DOOR_CLOSE_SOUND(vehicle, doorId);
 	}
 
-	void LUA_NATIVE_AUDIO_ENABLE_STALL_WARNING_SOUNDS( int vehicle, bool toggle )
+	void LUA_NATIVE_AUDIO_ENABLE_STALL_WARNING_SOUNDS( Vehicle vehicle, bool toggle )
 	{
 		AUDIO::ENABLE_STALL_WARNING_SOUNDS(vehicle, toggle);
 	}
@@ -1432,12 +1432,12 @@ namespace lua::native
 		AUDIO::SET_AUDIO_SCRIPT_CLEANUP_TIME(time);
 	}
 
-	void LUA_NATIVE_AUDIO_ADD_ENTITY_TO_AUDIO_MIX_GROUP( int entity, const char* groupName, float p2 )
+	void LUA_NATIVE_AUDIO_ADD_ENTITY_TO_AUDIO_MIX_GROUP( Entity entity, const char* groupName, float p2 )
 	{
 		AUDIO::ADD_ENTITY_TO_AUDIO_MIX_GROUP(entity, groupName, p2);
 	}
 
-	void LUA_NATIVE_AUDIO_REMOVE_ENTITY_FROM_AUDIO_MIX_GROUP( int entity, float p1 )
+	void LUA_NATIVE_AUDIO_REMOVE_ENTITY_FROM_AUDIO_MIX_GROUP( Entity entity, float p1 )
 	{
 		AUDIO::REMOVE_ENTITY_FROM_AUDIO_MIX_GROUP(entity, p1);
 	}
@@ -1546,44 +1546,44 @@ namespace lua::native
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_AUDIO_GET_VEHICLE_DEFAULT_HORN( int vehicle )
+	Hash LUA_NATIVE_AUDIO_GET_VEHICLE_DEFAULT_HORN( Vehicle vehicle )
 	{
 		auto retval = AUDIO::GET_VEHICLE_DEFAULT_HORN(vehicle);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_AUDIO_GET_VEHICLE_DEFAULT_HORN_IGNORE_MODS( int vehicle )
+	Hash LUA_NATIVE_AUDIO_GET_VEHICLE_DEFAULT_HORN_IGNORE_MODS( Vehicle vehicle )
 	{
 		auto retval = AUDIO::GET_VEHICLE_DEFAULT_HORN_IGNORE_MODS(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_AUDIO_RESET_PED_AUDIO_FLAGS( int ped )
+	void LUA_NATIVE_AUDIO_RESET_PED_AUDIO_FLAGS( Ped ped )
 	{
 		AUDIO::RESET_PED_AUDIO_FLAGS(ped);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_PED_FOOTSTEPS_EVENTS_ENABLED( int ped, bool toggle )
+	void LUA_NATIVE_AUDIO_SET_PED_FOOTSTEPS_EVENTS_ENABLED( Ped ped, bool toggle )
 	{
 		AUDIO::SET_PED_FOOTSTEPS_EVENTS_ENABLED(ped, toggle);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_PED_CLOTH_EVENTS_ENABLED( int ped, bool toggle )
+	void LUA_NATIVE_AUDIO_SET_PED_CLOTH_EVENTS_ENABLED( Ped ped, bool toggle )
 	{
 		AUDIO::SET_PED_CLOTH_EVENTS_ENABLED(ped, toggle);
 	}
 
-	void LUA_NATIVE_AUDIO_OVERRIDE_PLAYER_GROUND_MATERIAL( unsigned hash, bool toggle )
+	void LUA_NATIVE_AUDIO_OVERRIDE_PLAYER_GROUND_MATERIAL( Hash hash, bool toggle )
 	{
 		AUDIO::OVERRIDE_PLAYER_GROUND_MATERIAL(hash, toggle);
 	}
 
-	void LUA_NATIVE_AUDIO_USE_FOOTSTEP_SCRIPT_SWEETENERS( int ped, bool p1, unsigned hash )
+	void LUA_NATIVE_AUDIO_USE_FOOTSTEP_SCRIPT_SWEETENERS( Ped ped, bool p1, Hash hash )
 	{
 		AUDIO::USE_FOOTSTEP_SCRIPT_SWEETENERS(ped, p1, hash);
 	}
 
-	void LUA_NATIVE_AUDIO_OVERRIDE_MICROPHONE_SETTINGS( unsigned hash, bool toggle )
+	void LUA_NATIVE_AUDIO_OVERRIDE_MICROPHONE_SETTINGS( Hash hash, bool toggle )
 	{
 		AUDIO::OVERRIDE_MICROPHONE_SETTINGS(hash, toggle);
 	}
@@ -1598,7 +1598,7 @@ namespace lua::native
 		AUDIO::DISTANT_COP_CAR_SIRENS(value);
 	}
 
-	void LUA_NATIVE_AUDIO_SET_SIREN_CAN_BE_CONTROLLED_BY_AUDIO( int vehicle, bool p1 )
+	void LUA_NATIVE_AUDIO_SET_SIREN_CAN_BE_CONTROLLED_BY_AUDIO( Vehicle vehicle, bool p1 )
 	{
 		AUDIO::SET_SIREN_CAN_BE_CONTROLLED_BY_AUDIO(vehicle, p1);
 	}
@@ -1642,7 +1642,7 @@ namespace lua::native
 		AUDIO::INIT_SYNCH_SCENE_AUDIO_WITH_POSITION(audioEvent, x, y, z);
 	}
 
-	void LUA_NATIVE_AUDIO_INIT_SYNCH_SCENE_AUDIO_WITH_ENTITY( const char* audioEvent, int entity )
+	void LUA_NATIVE_AUDIO_INIT_SYNCH_SCENE_AUDIO_WITH_ENTITY( const char* audioEvent, Entity entity )
 	{
 		AUDIO::INIT_SYNCH_SCENE_AUDIO_WITH_ENTITY(audioEvent, entity);
 	}
@@ -1673,7 +1673,7 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_AUDIO_REQUEST_TENNIS_BANKS( int ped )
+	void LUA_NATIVE_AUDIO_REQUEST_TENNIS_BANKS( Ped ped )
 	{
 		AUDIO::REQUEST_TENNIS_BANKS(ped);
 	}
@@ -1705,23 +1705,23 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_AUDIO_GET_VEHICLE_HORN_SOUND_INDEX( int vehicle )
+	int LUA_NATIVE_AUDIO_GET_VEHICLE_HORN_SOUND_INDEX( Vehicle vehicle )
 	{
 		auto retval = AUDIO::GET_VEHICLE_HORN_SOUND_INDEX(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_AUDIO_SET_VEHICLE_HORN_SOUND_INDEX( int vehicle, int value )
+	void LUA_NATIVE_AUDIO_SET_VEHICLE_HORN_SOUND_INDEX( Vehicle vehicle, int value )
 	{
 		AUDIO::SET_VEHICLE_HORN_SOUND_INDEX(vehicle, value);
 	}
 
-	void LUA_NATIVE_BRAIN_ADD_SCRIPT_TO_RANDOM_PED( const char* name, unsigned model, float p2, float p3 )
+	void LUA_NATIVE_BRAIN_ADD_SCRIPT_TO_RANDOM_PED( const char* name, Hash model, float p2, float p3 )
 	{
 		BRAIN::ADD_SCRIPT_TO_RANDOM_PED(name, model, p2, p3);
 	}
 
-	void LUA_NATIVE_BRAIN_REGISTER_OBJECT_SCRIPT_BRAIN( const char* scriptName, unsigned modelHash, int p2, float activationRange, int p4, int p5 )
+	void LUA_NATIVE_BRAIN_REGISTER_OBJECT_SCRIPT_BRAIN( const char* scriptName, Hash modelHash, int p2, float activationRange, int p4, int p5 )
 	{
 		BRAIN::REGISTER_OBJECT_SCRIPT_BRAIN(scriptName, modelHash, p2, activationRange, p4, p5);
 	}
@@ -1783,31 +1783,31 @@ namespace lua::native
 		CAM::STOP_RENDERING_SCRIPT_CAMS_USING_CATCH_UP(render, p1, p2, p3);
 	}
 
-	int LUA_NATIVE_CAM_CREATE_CAM( const char* camName, bool p1 )
+	Cam LUA_NATIVE_CAM_CREATE_CAM( const char* camName, bool p1 )
 	{
 		auto retval = CAM::CREATE_CAM(camName, p1);
 		return retval;
 	}
 
-	int LUA_NATIVE_CAM_CREATE_CAM_WITH_PARAMS( const char* camName, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float fov, bool p8, int p9 )
+	Cam LUA_NATIVE_CAM_CREATE_CAM_WITH_PARAMS( const char* camName, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float fov, bool p8, int p9 )
 	{
 		auto retval = CAM::CREATE_CAM_WITH_PARAMS(camName, posX, posY, posZ, rotX, rotY, rotZ, fov, p8, p9);
 		return retval;
 	}
 
-	int LUA_NATIVE_CAM_CREATE_CAMERA( unsigned camHash, bool p1 )
+	Cam LUA_NATIVE_CAM_CREATE_CAMERA( Hash camHash, bool p1 )
 	{
 		auto retval = CAM::CREATE_CAMERA(camHash, p1);
 		return retval;
 	}
 
-	int LUA_NATIVE_CAM_CREATE_CAMERA_WITH_PARAMS( unsigned camHash, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float fov, bool p8, Any p9 )
+	Cam LUA_NATIVE_CAM_CREATE_CAMERA_WITH_PARAMS( Hash camHash, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float fov, bool p8, Any p9 )
 	{
 		auto retval = CAM::CREATE_CAMERA_WITH_PARAMS(camHash, posX, posY, posZ, rotX, rotY, rotZ, fov, p8, p9);
 		return retval;
 	}
 
-	void LUA_NATIVE_CAM_DESTROY_CAM( int cam, bool bScriptHostCam )
+	void LUA_NATIVE_CAM_DESTROY_CAM( Cam cam, bool bScriptHostCam )
 	{
 		CAM::DESTROY_CAM(cam, bScriptHostCam);
 	}
@@ -1817,144 +1817,144 @@ namespace lua::native
 		CAM::DESTROY_ALL_CAMS(bScriptHostCam);
 	}
 
-	bool LUA_NATIVE_CAM_DOES_CAM_EXIST( int cam )
+	bool LUA_NATIVE_CAM_DOES_CAM_EXIST( Cam cam )
 	{
 		auto retval = (bool)CAM::DOES_CAM_EXIST(cam);
 		return retval;
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_ACTIVE( int cam, bool active )
+	void LUA_NATIVE_CAM_SET_CAM_ACTIVE( Cam cam, bool active )
 	{
 		CAM::SET_CAM_ACTIVE(cam, active);
 	}
 
-	bool LUA_NATIVE_CAM_IS_CAM_ACTIVE( int cam )
+	bool LUA_NATIVE_CAM_IS_CAM_ACTIVE( Cam cam )
 	{
 		auto retval = (bool)CAM::IS_CAM_ACTIVE(cam);
 		return retval;
 	}
 
-	bool LUA_NATIVE_CAM_IS_CAM_RENDERING( int cam )
+	bool LUA_NATIVE_CAM_IS_CAM_RENDERING( Cam cam )
 	{
 		auto retval = (bool)CAM::IS_CAM_RENDERING(cam);
 		return retval;
 	}
 
-	int LUA_NATIVE_CAM_GET_RENDERING_CAM(  )
+	Cam LUA_NATIVE_CAM_GET_RENDERING_CAM(  )
 	{
 		auto retval = CAM::GET_RENDERING_CAM();
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_CAM_GET_CAM_COORD( int cam )
+	Vector3 LUA_NATIVE_CAM_GET_CAM_COORD( Cam cam )
 	{
 		auto retval = CAM::GET_CAM_COORD(cam);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_CAM_GET_CAM_ROT( int cam, int rotationOrder )
+	Vector3 LUA_NATIVE_CAM_GET_CAM_ROT( Cam cam, int rotationOrder )
 	{
 		auto retval = CAM::GET_CAM_ROT(cam, rotationOrder);
 		return retval;
 	}
 
-	float LUA_NATIVE_CAM_GET_CAM_FOV( int cam )
+	float LUA_NATIVE_CAM_GET_CAM_FOV( Cam cam )
 	{
 		auto retval = CAM::GET_CAM_FOV(cam);
 		return retval;
 	}
 
-	float LUA_NATIVE_CAM_GET_CAM_NEAR_CLIP( int cam )
+	float LUA_NATIVE_CAM_GET_CAM_NEAR_CLIP( Cam cam )
 	{
 		auto retval = CAM::GET_CAM_NEAR_CLIP(cam);
 		return retval;
 	}
 
-	float LUA_NATIVE_CAM_GET_CAM_FAR_CLIP( int cam )
+	float LUA_NATIVE_CAM_GET_CAM_FAR_CLIP( Cam cam )
 	{
 		auto retval = CAM::GET_CAM_FAR_CLIP(cam);
 		return retval;
 	}
 
-	float LUA_NATIVE_CAM_GET_CAM_NEAR_DOF( int cam )
+	float LUA_NATIVE_CAM_GET_CAM_NEAR_DOF( Cam cam )
 	{
 		auto retval = CAM::GET_CAM_NEAR_DOF(cam);
 		return retval;
 	}
 
-	float LUA_NATIVE_CAM_GET_CAM_FAR_DOF( int cam )
+	float LUA_NATIVE_CAM_GET_CAM_FAR_DOF( Cam cam )
 	{
 		auto retval = CAM::GET_CAM_FAR_DOF(cam);
 		return retval;
 	}
 
-	float LUA_NATIVE_CAM_GET_CAM_DOF_STRENGTH( int cam )
+	float LUA_NATIVE_CAM_GET_CAM_DOF_STRENGTH( Cam cam )
 	{
 		auto retval = CAM::GET_CAM_DOF_STRENGTH(cam);
 		return retval;
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_PARAMS( int cam, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float fieldOfView, Any p8, int p9, int p10, int p11 )
+	void LUA_NATIVE_CAM_SET_CAM_PARAMS( Cam cam, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float fieldOfView, Any p8, int p9, int p10, int p11 )
 	{
 		CAM::SET_CAM_PARAMS(cam, posX, posY, posZ, rotX, rotY, rotZ, fieldOfView, p8, p9, p10, p11);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_COORD( int cam, float posX, float posY, float posZ )
+	void LUA_NATIVE_CAM_SET_CAM_COORD( Cam cam, float posX, float posY, float posZ )
 	{
 		CAM::SET_CAM_COORD(cam, posX, posY, posZ);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_ROT( int cam, float rotX, float rotY, float rotZ, int rotationOrder )
+	void LUA_NATIVE_CAM_SET_CAM_ROT( Cam cam, float rotX, float rotY, float rotZ, int rotationOrder )
 	{
 		CAM::SET_CAM_ROT(cam, rotX, rotY, rotZ, rotationOrder);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_FOV( int cam, float fieldOfView )
+	void LUA_NATIVE_CAM_SET_CAM_FOV( Cam cam, float fieldOfView )
 	{
 		CAM::SET_CAM_FOV(cam, fieldOfView);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_NEAR_CLIP( int cam, float nearClip )
+	void LUA_NATIVE_CAM_SET_CAM_NEAR_CLIP( Cam cam, float nearClip )
 	{
 		CAM::SET_CAM_NEAR_CLIP(cam, nearClip);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_FAR_CLIP( int cam, float farClip )
+	void LUA_NATIVE_CAM_SET_CAM_FAR_CLIP( Cam cam, float farClip )
 	{
 		CAM::SET_CAM_FAR_CLIP(cam, farClip);
 	}
 
-	void LUA_NATIVE_CAM_FORCE_CAM_FAR_CLIP( int cam, float p1 )
+	void LUA_NATIVE_CAM_FORCE_CAM_FAR_CLIP( Cam cam, float p1 )
 	{
 		CAM::FORCE_CAM_FAR_CLIP(cam, p1);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_MOTION_BLUR_STRENGTH( int cam, float strength )
+	void LUA_NATIVE_CAM_SET_CAM_MOTION_BLUR_STRENGTH( Cam cam, float strength )
 	{
 		CAM::SET_CAM_MOTION_BLUR_STRENGTH(cam, strength);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_NEAR_DOF( int cam, float nearDOF )
+	void LUA_NATIVE_CAM_SET_CAM_NEAR_DOF( Cam cam, float nearDOF )
 	{
 		CAM::SET_CAM_NEAR_DOF(cam, nearDOF);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_FAR_DOF( int cam, float farDOF )
+	void LUA_NATIVE_CAM_SET_CAM_FAR_DOF( Cam cam, float farDOF )
 	{
 		CAM::SET_CAM_FAR_DOF(cam, farDOF);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_DOF_STRENGTH( int cam, float dofStrength )
+	void LUA_NATIVE_CAM_SET_CAM_DOF_STRENGTH( Cam cam, float dofStrength )
 	{
 		CAM::SET_CAM_DOF_STRENGTH(cam, dofStrength);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_DOF_PLANES( int cam, float p1, float p2, float p3, float p4 )
+	void LUA_NATIVE_CAM_SET_CAM_DOF_PLANES( Cam cam, float p1, float p2, float p3, float p4 )
 	{
 		CAM::SET_CAM_DOF_PLANES(cam, p1, p2, p3, p4);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_USE_SHALLOW_DOF_MODE( int cam, bool toggle )
+	void LUA_NATIVE_CAM_SET_CAM_USE_SHALLOW_DOF_MODE( Cam cam, bool toggle )
 	{
 		CAM::SET_CAM_USE_SHALLOW_DOF_MODE(cam, toggle);
 	}
@@ -1969,7 +1969,7 @@ namespace lua::native
 		CAM::SET_USE_HI_DOF_ON_SYNCED_SCENE_THIS_UPDATE();
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_DOF_OVERRIDDEN_FOCUS_DISTANCE( int camera, float p1 )
+	void LUA_NATIVE_CAM_SET_CAM_DOF_OVERRIDDEN_FOCUS_DISTANCE( Cam camera, float p1 )
 	{
 		CAM::SET_CAM_DOF_OVERRIDDEN_FOCUS_DISTANCE(camera, p1);
 	}
@@ -1979,102 +1979,102 @@ namespace lua::native
 		CAM::SET_CAM_DOF_OVERRIDDEN_FOCUS_DISTANCE_BLEND_LEVEL(p0, p1);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_DOF_FNUMBER_OF_LENS( int camera, float p1 )
+	void LUA_NATIVE_CAM_SET_CAM_DOF_FNUMBER_OF_LENS( Cam camera, float p1 )
 	{
 		CAM::SET_CAM_DOF_FNUMBER_OF_LENS(camera, p1);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_DOF_FOCAL_LENGTH_MULTIPLIER( int camera, float multiplier )
+	void LUA_NATIVE_CAM_SET_CAM_DOF_FOCAL_LENGTH_MULTIPLIER( Cam camera, float multiplier )
 	{
 		CAM::SET_CAM_DOF_FOCAL_LENGTH_MULTIPLIER(camera, multiplier);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_DOF_FOCUS_DISTANCE_BIAS( int camera, float p1 )
+	void LUA_NATIVE_CAM_SET_CAM_DOF_FOCUS_DISTANCE_BIAS( Cam camera, float p1 )
 	{
 		CAM::SET_CAM_DOF_FOCUS_DISTANCE_BIAS(camera, p1);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_DOF_MAX_NEAR_IN_FOCUS_DISTANCE( int camera, float p1 )
+	void LUA_NATIVE_CAM_SET_CAM_DOF_MAX_NEAR_IN_FOCUS_DISTANCE( Cam camera, float p1 )
 	{
 		CAM::SET_CAM_DOF_MAX_NEAR_IN_FOCUS_DISTANCE(camera, p1);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_DOF_MAX_NEAR_IN_FOCUS_DISTANCE_BLEND_LEVEL( int camera, float p1 )
+	void LUA_NATIVE_CAM_SET_CAM_DOF_MAX_NEAR_IN_FOCUS_DISTANCE_BLEND_LEVEL( Cam camera, float p1 )
 	{
 		CAM::SET_CAM_DOF_MAX_NEAR_IN_FOCUS_DISTANCE_BLEND_LEVEL(camera, p1);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_DOF_SHOULD_KEEP_LOOK_AT_TARGET_IN_FOCUS( int camera, bool state )
+	void LUA_NATIVE_CAM_SET_CAM_DOF_SHOULD_KEEP_LOOK_AT_TARGET_IN_FOCUS( Cam camera, bool state )
 	{
 		CAM::SET_CAM_DOF_SHOULD_KEEP_LOOK_AT_TARGET_IN_FOCUS(camera, state);
 	}
 
-	void LUA_NATIVE_CAM_ATTACH_CAM_TO_ENTITY( int cam, int entity, float xOffset, float yOffset, float zOffset, bool isRelative )
+	void LUA_NATIVE_CAM_ATTACH_CAM_TO_ENTITY( Cam cam, Entity entity, float xOffset, float yOffset, float zOffset, bool isRelative )
 	{
 		CAM::ATTACH_CAM_TO_ENTITY(cam, entity, xOffset, yOffset, zOffset, isRelative);
 	}
 
-	void LUA_NATIVE_CAM_ATTACH_CAM_TO_PED_BONE( int cam, int ped, int boneIndex, float x, float y, float z, bool heading )
+	void LUA_NATIVE_CAM_ATTACH_CAM_TO_PED_BONE( Cam cam, Ped ped, int boneIndex, float x, float y, float z, bool heading )
 	{
 		CAM::ATTACH_CAM_TO_PED_BONE(cam, ped, boneIndex, x, y, z, heading);
 	}
 
-	void LUA_NATIVE_CAM_HARD_ATTACH_CAM_TO_PED_BONE( int cam, int ped, int boneIndex, float p3, float p4, float p5, float p6, float p7, float p8, bool p9 )
+	void LUA_NATIVE_CAM_HARD_ATTACH_CAM_TO_PED_BONE( Cam cam, Ped ped, int boneIndex, float p3, float p4, float p5, float p6, float p7, float p8, bool p9 )
 	{
 		CAM::HARD_ATTACH_CAM_TO_PED_BONE(cam, ped, boneIndex, p3, p4, p5, p6, p7, p8, p9);
 	}
 
-	void LUA_NATIVE_CAM_HARD_ATTACH_CAM_TO_ENTITY( int cam, int entity, float xRot, float yRot, float zRot, float xOffset, float yOffset, float zOffset, bool isRelative )
+	void LUA_NATIVE_CAM_HARD_ATTACH_CAM_TO_ENTITY( Cam cam, Entity entity, float xRot, float yRot, float zRot, float xOffset, float yOffset, float zOffset, bool isRelative )
 	{
 		CAM::HARD_ATTACH_CAM_TO_ENTITY(cam, entity, xRot, yRot, zRot, xOffset, yOffset, zOffset, isRelative);
 	}
 
-	void LUA_NATIVE_CAM_ATTACH_CAM_TO_VEHICLE_BONE( int cam, int vehicle, int boneIndex, bool relativeRotation, float rotX, float rotY, float rotZ, float offsetX, float offsetY, float offsetZ, bool fixedDirection )
+	void LUA_NATIVE_CAM_ATTACH_CAM_TO_VEHICLE_BONE( Cam cam, Vehicle vehicle, int boneIndex, bool relativeRotation, float rotX, float rotY, float rotZ, float offsetX, float offsetY, float offsetZ, bool fixedDirection )
 	{
 		CAM::ATTACH_CAM_TO_VEHICLE_BONE(cam, vehicle, boneIndex, relativeRotation, rotX, rotY, rotZ, offsetX, offsetY, offsetZ, fixedDirection);
 	}
 
-	void LUA_NATIVE_CAM_DETACH_CAM( int cam )
+	void LUA_NATIVE_CAM_DETACH_CAM( Cam cam )
 	{
 		CAM::DETACH_CAM(cam);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_INHERIT_ROLL_VEHICLE( int cam, bool p1 )
+	void LUA_NATIVE_CAM_SET_CAM_INHERIT_ROLL_VEHICLE( Cam cam, bool p1 )
 	{
 		CAM::SET_CAM_INHERIT_ROLL_VEHICLE(cam, p1);
 	}
 
-	void LUA_NATIVE_CAM_POINT_CAM_AT_COORD( int cam, float x, float y, float z )
+	void LUA_NATIVE_CAM_POINT_CAM_AT_COORD( Cam cam, float x, float y, float z )
 	{
 		CAM::POINT_CAM_AT_COORD(cam, x, y, z);
 	}
 
-	void LUA_NATIVE_CAM_POINT_CAM_AT_ENTITY( int cam, int entity, float p2, float p3, float p4, bool p5 )
+	void LUA_NATIVE_CAM_POINT_CAM_AT_ENTITY( Cam cam, Entity entity, float p2, float p3, float p4, bool p5 )
 	{
 		CAM::POINT_CAM_AT_ENTITY(cam, entity, p2, p3, p4, p5);
 	}
 
-	void LUA_NATIVE_CAM_POINT_CAM_AT_PED_BONE( int cam, int ped, int boneIndex, float x, float y, float z, bool p6 )
+	void LUA_NATIVE_CAM_POINT_CAM_AT_PED_BONE( Cam cam, Ped ped, int boneIndex, float x, float y, float z, bool p6 )
 	{
 		CAM::POINT_CAM_AT_PED_BONE(cam, ped, boneIndex, x, y, z, p6);
 	}
 
-	void LUA_NATIVE_CAM_STOP_CAM_POINTING( int cam )
+	void LUA_NATIVE_CAM_STOP_CAM_POINTING( Cam cam )
 	{
 		CAM::STOP_CAM_POINTING(cam);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_AFFECTS_AIMING( int cam, bool toggle )
+	void LUA_NATIVE_CAM_SET_CAM_AFFECTS_AIMING( Cam cam, bool toggle )
 	{
 		CAM::SET_CAM_AFFECTS_AIMING(cam, toggle);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_CONTROLS_MINI_MAP_HEADING( int cam, bool toggle )
+	void LUA_NATIVE_CAM_SET_CAM_CONTROLS_MINI_MAP_HEADING( Cam cam, bool toggle )
 	{
 		CAM::SET_CAM_CONTROLS_MINI_MAP_HEADING(cam, toggle);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_IS_INSIDE_VEHICLE( int cam, bool toggle )
+	void LUA_NATIVE_CAM_SET_CAM_IS_INSIDE_VEHICLE( Cam cam, bool toggle )
 	{
 		CAM::SET_CAM_IS_INSIDE_VEHICLE(cam, toggle);
 	}
@@ -2084,134 +2084,134 @@ namespace lua::native
 		CAM::ALLOW_MOTION_BLUR_DECAY(p0, p1);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_DEBUG_NAME( int camera, const char* name )
+	void LUA_NATIVE_CAM_SET_CAM_DEBUG_NAME( Cam camera, const char* name )
 	{
 		CAM::SET_CAM_DEBUG_NAME(camera, name);
 	}
 
-	int LUA_NATIVE_CAM_GET_DEBUG_CAM(  )
+	Cam LUA_NATIVE_CAM_GET_DEBUG_CAM(  )
 	{
 		auto retval = CAM::GET_DEBUG_CAM();
 		return retval;
 	}
 
-	void LUA_NATIVE_CAM_ADD_CAM_SPLINE_NODE( int camera, float x, float y, float z, float xRot, float yRot, float zRot, int length, int smoothingStyle, int rotationOrder )
+	void LUA_NATIVE_CAM_ADD_CAM_SPLINE_NODE( Cam camera, float x, float y, float z, float xRot, float yRot, float zRot, int length, int smoothingStyle, int rotationOrder )
 	{
 		CAM::ADD_CAM_SPLINE_NODE(camera, x, y, z, xRot, yRot, zRot, length, smoothingStyle, rotationOrder);
 	}
 
-	void LUA_NATIVE_CAM_ADD_CAM_SPLINE_NODE_USING_CAMERA_FRAME( int cam, int cam2, int length, int p3 )
+	void LUA_NATIVE_CAM_ADD_CAM_SPLINE_NODE_USING_CAMERA_FRAME( Cam cam, Cam cam2, int length, int p3 )
 	{
 		CAM::ADD_CAM_SPLINE_NODE_USING_CAMERA_FRAME(cam, cam2, length, p3);
 	}
 
-	void LUA_NATIVE_CAM_ADD_CAM_SPLINE_NODE_USING_CAMERA( int cam, int cam2, int length, int p3 )
+	void LUA_NATIVE_CAM_ADD_CAM_SPLINE_NODE_USING_CAMERA( Cam cam, Cam cam2, int length, int p3 )
 	{
 		CAM::ADD_CAM_SPLINE_NODE_USING_CAMERA(cam, cam2, length, p3);
 	}
 
-	void LUA_NATIVE_CAM_ADD_CAM_SPLINE_NODE_USING_GAMEPLAY_FRAME( int cam, int length, int p2 )
+	void LUA_NATIVE_CAM_ADD_CAM_SPLINE_NODE_USING_GAMEPLAY_FRAME( Cam cam, int length, int p2 )
 	{
 		CAM::ADD_CAM_SPLINE_NODE_USING_GAMEPLAY_FRAME(cam, length, p2);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_SPLINE_PHASE( int cam, float p1 )
+	void LUA_NATIVE_CAM_SET_CAM_SPLINE_PHASE( Cam cam, float p1 )
 	{
 		CAM::SET_CAM_SPLINE_PHASE(cam, p1);
 	}
 
-	float LUA_NATIVE_CAM_GET_CAM_SPLINE_PHASE( int cam )
+	float LUA_NATIVE_CAM_GET_CAM_SPLINE_PHASE( Cam cam )
 	{
 		auto retval = CAM::GET_CAM_SPLINE_PHASE(cam);
 		return retval;
 	}
 
-	float LUA_NATIVE_CAM_GET_CAM_SPLINE_NODE_PHASE( int cam )
+	float LUA_NATIVE_CAM_GET_CAM_SPLINE_NODE_PHASE( Cam cam )
 	{
 		auto retval = CAM::GET_CAM_SPLINE_NODE_PHASE(cam);
 		return retval;
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_SPLINE_DURATION( int cam, int timeDuration )
+	void LUA_NATIVE_CAM_SET_CAM_SPLINE_DURATION( Cam cam, int timeDuration )
 	{
 		CAM::SET_CAM_SPLINE_DURATION(cam, timeDuration);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_SPLINE_SMOOTHING_STYLE( int cam, int smoothingStyle )
+	void LUA_NATIVE_CAM_SET_CAM_SPLINE_SMOOTHING_STYLE( Cam cam, int smoothingStyle )
 	{
 		CAM::SET_CAM_SPLINE_SMOOTHING_STYLE(cam, smoothingStyle);
 	}
 
-	int LUA_NATIVE_CAM_GET_CAM_SPLINE_NODE_INDEX( int cam )
+	int LUA_NATIVE_CAM_GET_CAM_SPLINE_NODE_INDEX( Cam cam )
 	{
 		auto retval = CAM::GET_CAM_SPLINE_NODE_INDEX(cam);
 		return retval;
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_SPLINE_NODE_EASE( int cam, int easingFunction, int p2, float p3 )
+	void LUA_NATIVE_CAM_SET_CAM_SPLINE_NODE_EASE( Cam cam, int easingFunction, int p2, float p3 )
 	{
 		CAM::SET_CAM_SPLINE_NODE_EASE(cam, easingFunction, p2, p3);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_SPLINE_NODE_VELOCITY_SCALE( int cam, int p1, float scale )
+	void LUA_NATIVE_CAM_SET_CAM_SPLINE_NODE_VELOCITY_SCALE( Cam cam, int p1, float scale )
 	{
 		CAM::SET_CAM_SPLINE_NODE_VELOCITY_SCALE(cam, p1, scale);
 	}
 
-	void LUA_NATIVE_CAM_OVERRIDE_CAM_SPLINE_VELOCITY( int cam, int p1, float p2, float p3 )
+	void LUA_NATIVE_CAM_OVERRIDE_CAM_SPLINE_VELOCITY( Cam cam, int p1, float p2, float p3 )
 	{
 		CAM::OVERRIDE_CAM_SPLINE_VELOCITY(cam, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_CAM_OVERRIDE_CAM_SPLINE_MOTION_BLUR( int cam, int p1, float p2, float p3 )
+	void LUA_NATIVE_CAM_OVERRIDE_CAM_SPLINE_MOTION_BLUR( Cam cam, int p1, float p2, float p3 )
 	{
 		CAM::OVERRIDE_CAM_SPLINE_MOTION_BLUR(cam, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_SPLINE_NODE_EXTRA_FLAGS( int cam, int p1, int flags )
+	void LUA_NATIVE_CAM_SET_CAM_SPLINE_NODE_EXTRA_FLAGS( Cam cam, int p1, int flags )
 	{
 		CAM::SET_CAM_SPLINE_NODE_EXTRA_FLAGS(cam, p1, flags);
 	}
 
-	bool LUA_NATIVE_CAM_IS_CAM_SPLINE_PAUSED( int cam )
+	bool LUA_NATIVE_CAM_IS_CAM_SPLINE_PAUSED( Cam cam )
 	{
 		auto retval = (bool)CAM::IS_CAM_SPLINE_PAUSED(cam);
 		return retval;
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_ACTIVE_WITH_INTERP( int camTo, int camFrom, int duration, int easeLocation, int easeRotation )
+	void LUA_NATIVE_CAM_SET_CAM_ACTIVE_WITH_INTERP( Cam camTo, Cam camFrom, int duration, int easeLocation, int easeRotation )
 	{
 		CAM::SET_CAM_ACTIVE_WITH_INTERP(camTo, camFrom, duration, easeLocation, easeRotation);
 	}
 
-	bool LUA_NATIVE_CAM_IS_CAM_INTERPOLATING( int cam )
+	bool LUA_NATIVE_CAM_IS_CAM_INTERPOLATING( Cam cam )
 	{
 		auto retval = (bool)CAM::IS_CAM_INTERPOLATING(cam);
 		return retval;
 	}
 
-	void LUA_NATIVE_CAM_SHAKE_CAM( int cam, const char* type, float amplitude )
+	void LUA_NATIVE_CAM_SHAKE_CAM( Cam cam, const char* type, float amplitude )
 	{
 		CAM::SHAKE_CAM(cam, type, amplitude);
 	}
 
-	void LUA_NATIVE_CAM_ANIMATED_SHAKE_CAM( int cam, const char* p1, const char* p2, const char* p3, float amplitude )
+	void LUA_NATIVE_CAM_ANIMATED_SHAKE_CAM( Cam cam, const char* p1, const char* p2, const char* p3, float amplitude )
 	{
 		CAM::ANIMATED_SHAKE_CAM(cam, p1, p2, p3, amplitude);
 	}
 
-	bool LUA_NATIVE_CAM_IS_CAM_SHAKING( int cam )
+	bool LUA_NATIVE_CAM_IS_CAM_SHAKING( Cam cam )
 	{
 		auto retval = (bool)CAM::IS_CAM_SHAKING(cam);
 		return retval;
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_SHAKE_AMPLITUDE( int cam, float amplitude )
+	void LUA_NATIVE_CAM_SET_CAM_SHAKE_AMPLITUDE( Cam cam, float amplitude )
 	{
 		CAM::SET_CAM_SHAKE_AMPLITUDE(cam, amplitude);
 	}
 
-	void LUA_NATIVE_CAM_STOP_CAM_SHAKING( int cam, bool p1 )
+	void LUA_NATIVE_CAM_STOP_CAM_SHAKING( Cam cam, bool p1 )
 	{
 		CAM::STOP_CAM_SHAKING(cam, p1);
 	}
@@ -2237,29 +2237,29 @@ namespace lua::native
 		CAM::STOP_SCRIPT_GLOBAL_SHAKING(p0);
 	}
 
-	void LUA_NATIVE_CAM_TRIGGER_VEHICLE_PART_BROKEN_CAMERA_SHAKE( int vehicle, int p1, float p2 )
+	void LUA_NATIVE_CAM_TRIGGER_VEHICLE_PART_BROKEN_CAMERA_SHAKE( Vehicle vehicle, int p1, float p2 )
 	{
 		CAM::TRIGGER_VEHICLE_PART_BROKEN_CAMERA_SHAKE(vehicle, p1, p2);
 	}
 
-	bool LUA_NATIVE_CAM_PLAY_CAM_ANIM( int cam, const char* animName, const char* animDictionary, float x, float y, float z, float xRot, float yRot, float zRot, bool p9, int p10 )
+	bool LUA_NATIVE_CAM_PLAY_CAM_ANIM( Cam cam, const char* animName, const char* animDictionary, float x, float y, float z, float xRot, float yRot, float zRot, bool p9, int p10 )
 	{
 		auto retval = (bool)CAM::PLAY_CAM_ANIM(cam, animName, animDictionary, x, y, z, xRot, yRot, zRot, p9, p10);
 		return retval;
 	}
 
-	bool LUA_NATIVE_CAM_IS_CAM_PLAYING_ANIM( int cam, const char* animName, const char* animDictionary )
+	bool LUA_NATIVE_CAM_IS_CAM_PLAYING_ANIM( Cam cam, const char* animName, const char* animDictionary )
 	{
 		auto retval = (bool)CAM::IS_CAM_PLAYING_ANIM(cam, animName, animDictionary);
 		return retval;
 	}
 
-	void LUA_NATIVE_CAM_SET_CAM_ANIM_CURRENT_PHASE( int cam, float phase )
+	void LUA_NATIVE_CAM_SET_CAM_ANIM_CURRENT_PHASE( Cam cam, float phase )
 	{
 		CAM::SET_CAM_ANIM_CURRENT_PHASE(cam, phase);
 	}
 
-	float LUA_NATIVE_CAM_GET_CAM_ANIM_CURRENT_PHASE( int cam )
+	float LUA_NATIVE_CAM_GET_CAM_ANIM_CURRENT_PHASE( Cam cam )
 	{
 		auto retval = CAM::GET_CAM_ANIM_CURRENT_PHASE(cam);
 		return retval;
@@ -2271,32 +2271,32 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_CAM_SET_FLY_CAM_HORIZONTAL_RESPONSE( int cam, float p1, float p2, float p3 )
+	void LUA_NATIVE_CAM_SET_FLY_CAM_HORIZONTAL_RESPONSE( Cam cam, float p1, float p2, float p3 )
 	{
 		CAM::SET_FLY_CAM_HORIZONTAL_RESPONSE(cam, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_CAM_SET_FLY_CAM_VERTICAL_RESPONSE( int cam, float p1, float p2, float p3 )
+	void LUA_NATIVE_CAM_SET_FLY_CAM_VERTICAL_RESPONSE( Cam cam, float p1, float p2, float p3 )
 	{
 		CAM::SET_FLY_CAM_VERTICAL_RESPONSE(cam, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_CAM_SET_FLY_CAM_MAX_HEIGHT( int cam, float height )
+	void LUA_NATIVE_CAM_SET_FLY_CAM_MAX_HEIGHT( Cam cam, float height )
 	{
 		CAM::SET_FLY_CAM_MAX_HEIGHT(cam, height);
 	}
 
-	void LUA_NATIVE_CAM_SET_FLY_CAM_COORD_AND_CONSTRAIN( int cam, float x, float y, float z )
+	void LUA_NATIVE_CAM_SET_FLY_CAM_COORD_AND_CONSTRAIN( Cam cam, float x, float y, float z )
 	{
 		CAM::SET_FLY_CAM_COORD_AND_CONSTRAIN(cam, x, y, z);
 	}
 
-	void LUA_NATIVE_CAM_SET_FLY_CAM_VERTICAL_CONTROLS_THIS_UPDATE( int cam )
+	void LUA_NATIVE_CAM_SET_FLY_CAM_VERTICAL_CONTROLS_THIS_UPDATE( Cam cam )
 	{
 		CAM::SET_FLY_CAM_VERTICAL_CONTROLS_THIS_UPDATE(cam);
 	}
 
-	bool LUA_NATIVE_CAM_WAS_FLY_CAM_CONSTRAINED_ON_PREVIOUS_UDPATE( int cam )
+	bool LUA_NATIVE_CAM_WAS_FLY_CAM_CONSTRAINED_ON_PREVIOUS_UDPATE( Cam cam )
 	{
 		auto retval = (bool)CAM::WAS_FLY_CAM_CONSTRAINED_ON_PREVIOUS_UDPATE(cam);
 		return retval;
@@ -2448,7 +2448,7 @@ namespace lua::native
 		CAM::STOP_GAMEPLAY_CAM_SHAKING(p0);
 	}
 
-	void LUA_NATIVE_CAM_SET_GAMEPLAY_CAM_FOLLOW_PED_THIS_UPDATE( int ped )
+	void LUA_NATIVE_CAM_SET_GAMEPLAY_CAM_FOLLOW_PED_THIS_UPDATE( Ped ped )
 	{
 		CAM::SET_GAMEPLAY_CAM_FOLLOW_PED_THIS_UPDATE(ped);
 	}
@@ -2487,12 +2487,12 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_CAM_SET_GAMEPLAY_CAM_IGNORE_ENTITY_COLLISION_THIS_UPDATE( int entity )
+	void LUA_NATIVE_CAM_SET_GAMEPLAY_CAM_IGNORE_ENTITY_COLLISION_THIS_UPDATE( Entity entity )
 	{
 		CAM::SET_GAMEPLAY_CAM_IGNORE_ENTITY_COLLISION_THIS_UPDATE(entity);
 	}
 
-	void LUA_NATIVE_CAM_DISABLE_CAM_COLLISION_FOR_OBJECT( int entity )
+	void LUA_NATIVE_CAM_DISABLE_CAM_COLLISION_FOR_OBJECT( Entity entity )
 	{
 		CAM::DISABLE_CAM_COLLISION_FOR_OBJECT(entity);
 	}
@@ -2502,7 +2502,7 @@ namespace lua::native
 		CAM::BYPASS_CAMERA_COLLISION_BUOYANCY_TEST_THIS_UPDATE();
 	}
 
-	void LUA_NATIVE_CAM_SET_GAMEPLAY_CAM_ENTITY_TO_LIMIT_FOCUS_OVER_BOUNDING_SPHERE_THIS_UPDATE( int entity )
+	void LUA_NATIVE_CAM_SET_GAMEPLAY_CAM_ENTITY_TO_LIMIT_FOCUS_OVER_BOUNDING_SPHERE_THIS_UPDATE( Entity entity )
 	{
 		CAM::SET_GAMEPLAY_CAM_ENTITY_TO_LIMIT_FOCUS_OVER_BOUNDING_SPHERE_THIS_UPDATE(entity);
 	}
@@ -2560,7 +2560,7 @@ namespace lua::native
 		CAM::SET_THIRD_PERSON_CAM_ORBIT_DISTANCE_LIMITS_THIS_UPDATE(p0, distance);
 	}
 
-	void LUA_NATIVE_CAM_SET_IN_VEHICLE_CAM_STATE_THIS_UPDATE( int p0, int p1 )
+	void LUA_NATIVE_CAM_SET_IN_VEHICLE_CAM_STATE_THIS_UPDATE( Vehicle p0, int p1 )
 	{
 		CAM::SET_IN_VEHICLE_CAM_STATE_THIS_UPDATE(p0, p1);
 	}
@@ -2613,7 +2613,7 @@ namespace lua::native
 		CAM::SET_FOLLOW_VEHICLE_CAM_HIGH_ANGLE_MODE_EVERY_UPDATE(p0, p1);
 	}
 
-	bool LUA_NATIVE_CAM_SET_TABLE_GAMES_CAMERA_THIS_UPDATE( unsigned hash )
+	bool LUA_NATIVE_CAM_SET_TABLE_GAMES_CAMERA_THIS_UPDATE( Hash hash )
 	{
 		auto retval = (bool)CAM::SET_TABLE_GAMES_CAMERA_THIS_UPDATE(hash);
 		return retval;
@@ -2759,7 +2759,7 @@ namespace lua::native
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_CAM_GET_FINAL_RENDERED_REMOTE_PLAYER_CAM_ROT( int player, int rotationOrder )
+	Vector3 LUA_NATIVE_CAM_GET_FINAL_RENDERED_REMOTE_PLAYER_CAM_ROT( Player player, int rotationOrder )
 	{
 		auto retval = CAM::GET_FINAL_RENDERED_REMOTE_PLAYER_CAM_ROT(player, rotationOrder);
 		return retval;
@@ -2771,7 +2771,7 @@ namespace lua::native
 		return retval;
 	}
 
-	float LUA_NATIVE_CAM_GET_FINAL_RENDERED_REMOTE_PLAYER_CAM_FOV( int player )
+	float LUA_NATIVE_CAM_GET_FINAL_RENDERED_REMOTE_PLAYER_CAM_FOV( Player player )
 	{
 		auto retval = CAM::GET_FINAL_RENDERED_REMOTE_PLAYER_CAM_FOV(player);
 		return retval;
@@ -2812,12 +2812,12 @@ namespace lua::native
 		CAM::SET_GAMEPLAY_COORD_HINT(x, y, z, duration, blendOutDuration, blendInDuration, p6);
 	}
 
-	void LUA_NATIVE_CAM_SET_GAMEPLAY_PED_HINT( int ped, float x1, float y1, float z1, bool p4, int duration, int blendOutDuration, int blendInDuration )
+	void LUA_NATIVE_CAM_SET_GAMEPLAY_PED_HINT( Ped ped, float x1, float y1, float z1, bool p4, int duration, int blendOutDuration, int blendInDuration )
 	{
 		CAM::SET_GAMEPLAY_PED_HINT(ped, x1, y1, z1, p4, duration, blendOutDuration, blendInDuration);
 	}
 
-	void LUA_NATIVE_CAM_SET_GAMEPLAY_VEHICLE_HINT( int vehicle, float offsetX, float offsetY, float offsetZ, bool p4, int time, int easeInTime, int easeOutTime )
+	void LUA_NATIVE_CAM_SET_GAMEPLAY_VEHICLE_HINT( Vehicle vehicle, float offsetX, float offsetY, float offsetZ, bool p4, int time, int easeInTime, int easeOutTime )
 	{
 		CAM::SET_GAMEPLAY_VEHICLE_HINT(vehicle, offsetX, offsetY, offsetZ, p4, time, easeInTime, easeOutTime);
 	}
@@ -2827,7 +2827,7 @@ namespace lua::native
 		CAM::SET_GAMEPLAY_OBJECT_HINT(object, xOffset, yOffset, zOffset, p4, time, easeInTime, easeOutTime);
 	}
 
-	void LUA_NATIVE_CAM_SET_GAMEPLAY_ENTITY_HINT( int entity, float xOffset, float yOffset, float zOffset, bool p4, int time, int easeInTime, int easeOutTime, int p8 )
+	void LUA_NATIVE_CAM_SET_GAMEPLAY_ENTITY_HINT( Entity entity, float xOffset, float yOffset, float zOffset, bool p4, int time, int easeInTime, int easeOutTime, int p8 )
 	{
 		CAM::SET_GAMEPLAY_ENTITY_HINT(entity, xOffset, yOffset, zOffset, p4, time, easeInTime, easeOutTime, p8);
 	}
@@ -2953,18 +2953,18 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_CAM_CREATE_CINEMATIC_SHOT( unsigned p0, int time, bool p2, int entity )
+	void LUA_NATIVE_CAM_CREATE_CINEMATIC_SHOT( Hash p0, int time, bool p2, Entity entity )
 	{
 		CAM::CREATE_CINEMATIC_SHOT(p0, time, p2, entity);
 	}
 
-	bool LUA_NATIVE_CAM_IS_CINEMATIC_SHOT_ACTIVE( unsigned p0 )
+	bool LUA_NATIVE_CAM_IS_CINEMATIC_SHOT_ACTIVE( Hash p0 )
 	{
 		auto retval = (bool)CAM::IS_CINEMATIC_SHOT_ACTIVE(p0);
 		return retval;
 	}
 
-	void LUA_NATIVE_CAM_STOP_CINEMATIC_SHOT( unsigned p0 )
+	void LUA_NATIVE_CAM_STOP_CINEMATIC_SHOT( Hash p0 )
 	{
 		CAM::STOP_CINEMATIC_SHOT(p0);
 	}
@@ -3028,7 +3028,7 @@ namespace lua::native
 		CAM::SET_CUTSCENE_CAM_FAR_CLIP_THIS_UPDATE(p0);
 	}
 
-	int LUA_NATIVE_CAM_GET_FOCUS_PED_ON_SCREEN( float p0, int p1, float p2, float p3, float p4, float p5, float p6, int p7, int p8 )
+	Ped LUA_NATIVE_CAM_GET_FOCUS_PED_ON_SCREEN( float p0, int p1, float p2, float p3, float p4, float p5, float p6, int p7, int p8 )
 	{
 		auto retval = CAM::GET_FOCUS_PED_ON_SCREEN(p0, p1, p2, p3, p4, p5, p6, p7, p8);
 		return retval;
@@ -3054,7 +3054,7 @@ namespace lua::native
 		CAM::SET_FIRST_PERSON_FLASH_EFFECT_VEHICLE_MODEL_NAME(vehicleName);
 	}
 
-	void LUA_NATIVE_CAM_SET_FIRST_PERSON_FLASH_EFFECT_VEHICLE_MODEL_HASH( unsigned vehicleModel )
+	void LUA_NATIVE_CAM_SET_FIRST_PERSON_FLASH_EFFECT_VEHICLE_MODEL_HASH( Hash vehicleModel )
 	{
 		CAM::SET_FIRST_PERSON_FLASH_EFFECT_VEHICLE_MODEL_HASH(vehicleModel);
 	}
@@ -3346,7 +3346,7 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_CUTSCENE_GET_ENTITY_INDEX_OF_CUTSCENE_ENTITY( const char* cutsceneEntName, unsigned modelHash )
+	Entity LUA_NATIVE_CUTSCENE_GET_ENTITY_INDEX_OF_CUTSCENE_ENTITY( const char* cutsceneEntName, Hash modelHash )
 	{
 		auto retval = CUTSCENE::GET_ENTITY_INDEX_OF_CUTSCENE_ENTITY(cutsceneEntName, modelHash);
 		return retval;
@@ -3370,18 +3370,18 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_CUTSCENE_REGISTER_ENTITY_FOR_CUTSCENE( int cutscenePed, const char* cutsceneEntName, int p2, unsigned modelHash, int p4 )
+	void LUA_NATIVE_CUTSCENE_REGISTER_ENTITY_FOR_CUTSCENE( Ped cutscenePed, const char* cutsceneEntName, int p2, Hash modelHash, int p4 )
 	{
 		CUTSCENE::REGISTER_ENTITY_FOR_CUTSCENE(cutscenePed, cutsceneEntName, p2, modelHash, p4);
 	}
 
-	int LUA_NATIVE_CUTSCENE_GET_ENTITY_INDEX_OF_REGISTERED_ENTITY( const char* cutsceneEntName, unsigned modelHash )
+	Entity LUA_NATIVE_CUTSCENE_GET_ENTITY_INDEX_OF_REGISTERED_ENTITY( const char* cutsceneEntName, Hash modelHash )
 	{
 		auto retval = CUTSCENE::GET_ENTITY_INDEX_OF_REGISTERED_ENTITY(cutsceneEntName, modelHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_CUTSCENE_SET_VEHICLE_MODEL_PLAYER_WILL_EXIT_SCENE( unsigned modelHash )
+	void LUA_NATIVE_CUTSCENE_SET_VEHICLE_MODEL_PLAYER_WILL_EXIT_SCENE( Hash modelHash )
 	{
 		CUTSCENE::SET_VEHICLE_MODEL_PLAYER_WILL_EXIT_SCENE(modelHash);
 	}
@@ -3391,13 +3391,13 @@ namespace lua::native
 		CUTSCENE::SET_CUTSCENE_TRIGGER_AREA(x1, y1, z1, x2, y2, z2);
 	}
 
-	bool LUA_NATIVE_CUTSCENE_CAN_SET_ENTER_STATE_FOR_REGISTERED_ENTITY( const char* cutsceneEntName, unsigned modelHash )
+	bool LUA_NATIVE_CUTSCENE_CAN_SET_ENTER_STATE_FOR_REGISTERED_ENTITY( const char* cutsceneEntName, Hash modelHash )
 	{
 		auto retval = (bool)CUTSCENE::CAN_SET_ENTER_STATE_FOR_REGISTERED_ENTITY(cutsceneEntName, modelHash);
 		return retval;
 	}
 
-	bool LUA_NATIVE_CUTSCENE_CAN_SET_EXIT_STATE_FOR_REGISTERED_ENTITY( const char* cutsceneEntName, unsigned modelHash )
+	bool LUA_NATIVE_CUTSCENE_CAN_SET_EXIT_STATE_FOR_REGISTERED_ENTITY( const char* cutsceneEntName, Hash modelHash )
 	{
 		auto retval = (bool)CUTSCENE::CAN_SET_EXIT_STATE_FOR_REGISTERED_ENTITY(cutsceneEntName, modelHash);
 		return retval;
@@ -3461,23 +3461,23 @@ namespace lua::native
 		CUTSCENE::SET_CAN_DISPLAY_MINIMAP_DURING_CUTSCENE_THIS_UPDATE();
 	}
 
-	void LUA_NATIVE_CUTSCENE_SET_CUTSCENE_PED_COMPONENT_VARIATION( const char* cutsceneEntName, int componentId, int drawableId, int textureId, unsigned modelHash )
+	void LUA_NATIVE_CUTSCENE_SET_CUTSCENE_PED_COMPONENT_VARIATION( const char* cutsceneEntName, int componentId, int drawableId, int textureId, Hash modelHash )
 	{
 		CUTSCENE::SET_CUTSCENE_PED_COMPONENT_VARIATION(cutsceneEntName, componentId, drawableId, textureId, modelHash);
 	}
 
-	void LUA_NATIVE_CUTSCENE_SET_CUTSCENE_PED_COMPONENT_VARIATION_FROM_PED( const char* cutsceneEntName, int ped, unsigned modelHash )
+	void LUA_NATIVE_CUTSCENE_SET_CUTSCENE_PED_COMPONENT_VARIATION_FROM_PED( const char* cutsceneEntName, Ped ped, Hash modelHash )
 	{
 		CUTSCENE::SET_CUTSCENE_PED_COMPONENT_VARIATION_FROM_PED(cutsceneEntName, ped, modelHash);
 	}
 
-	bool LUA_NATIVE_CUTSCENE_DOES_CUTSCENE_ENTITY_EXIST( const char* cutsceneEntName, unsigned modelHash )
+	bool LUA_NATIVE_CUTSCENE_DOES_CUTSCENE_ENTITY_EXIST( const char* cutsceneEntName, Hash modelHash )
 	{
 		auto retval = (bool)CUTSCENE::DOES_CUTSCENE_ENTITY_EXIST(cutsceneEntName, modelHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_CUTSCENE_SET_CUTSCENE_PED_PROP_VARIATION( const char* cutsceneEntName, int componentId, int drawableId, int textureId, unsigned modelHash )
+	void LUA_NATIVE_CUTSCENE_SET_CUTSCENE_PED_PROP_VARIATION( const char* cutsceneEntName, int componentId, int drawableId, int textureId, Hash modelHash )
 	{
 		CUTSCENE::SET_CUTSCENE_PED_PROP_VARIATION(cutsceneEntName, componentId, drawableId, textureId, modelHash);
 	}
@@ -3889,55 +3889,55 @@ namespace lua::native
 		return return_values;
 	}
 
-	bool LUA_NATIVE_DECORATOR_DECOR_SET_TIME( int entity, const char* propertyName, int timestamp )
+	bool LUA_NATIVE_DECORATOR_DECOR_SET_TIME( Entity entity, const char* propertyName, int timestamp )
 	{
 		auto retval = (bool)DECORATOR::DECOR_SET_TIME(entity, propertyName, timestamp);
 		return retval;
 	}
 
-	bool LUA_NATIVE_DECORATOR_DECOR_SET_BOOL( int entity, const char* propertyName, bool value )
+	bool LUA_NATIVE_DECORATOR_DECOR_SET_BOOL( Entity entity, const char* propertyName, bool value )
 	{
 		auto retval = (bool)DECORATOR::DECOR_SET_BOOL(entity, propertyName, value);
 		return retval;
 	}
 
-	bool LUA_NATIVE_DECORATOR_DECOR_SET_FLOAT( int entity, const char* propertyName, float value )
+	bool LUA_NATIVE_DECORATOR_DECOR_SET_FLOAT( Entity entity, const char* propertyName, float value )
 	{
 		auto retval = (bool)DECORATOR::DECOR_SET_FLOAT(entity, propertyName, value);
 		return retval;
 	}
 
-	bool LUA_NATIVE_DECORATOR_DECOR_SET_INT( int entity, const char* propertyName, int value )
+	bool LUA_NATIVE_DECORATOR_DECOR_SET_INT( Entity entity, const char* propertyName, int value )
 	{
 		auto retval = (bool)DECORATOR::DECOR_SET_INT(entity, propertyName, value);
 		return retval;
 	}
 
-	bool LUA_NATIVE_DECORATOR_DECOR_GET_BOOL( int entity, const char* propertyName )
+	bool LUA_NATIVE_DECORATOR_DECOR_GET_BOOL( Entity entity, const char* propertyName )
 	{
 		auto retval = (bool)DECORATOR::DECOR_GET_BOOL(entity, propertyName);
 		return retval;
 	}
 
-	float LUA_NATIVE_DECORATOR_DECOR_GET_FLOAT( int entity, const char* propertyName )
+	float LUA_NATIVE_DECORATOR_DECOR_GET_FLOAT( Entity entity, const char* propertyName )
 	{
 		auto retval = DECORATOR::DECOR_GET_FLOAT(entity, propertyName);
 		return retval;
 	}
 
-	int LUA_NATIVE_DECORATOR_DECOR_GET_INT( int entity, const char* propertyName )
+	int LUA_NATIVE_DECORATOR_DECOR_GET_INT( Entity entity, const char* propertyName )
 	{
 		auto retval = DECORATOR::DECOR_GET_INT(entity, propertyName);
 		return retval;
 	}
 
-	bool LUA_NATIVE_DECORATOR_DECOR_EXIST_ON( int entity, const char* propertyName )
+	bool LUA_NATIVE_DECORATOR_DECOR_EXIST_ON( Entity entity, const char* propertyName )
 	{
 		auto retval = (bool)DECORATOR::DECOR_EXIST_ON(entity, propertyName);
 		return retval;
 	}
 
-	bool LUA_NATIVE_DECORATOR_DECOR_REMOVE( int entity, const char* propertyName )
+	bool LUA_NATIVE_DECORATOR_DECOR_REMOVE( Entity entity, const char* propertyName )
 	{
 		auto retval = (bool)DECORATOR::DECOR_REMOVE(entity, propertyName);
 		return retval;
@@ -3965,7 +3965,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_DLC_IS_DLC_PRESENT( unsigned dlcHash )
+	bool LUA_NATIVE_DLC_IS_DLC_PRESENT( Hash dlcHash )
 	{
 		auto retval = (bool)DLC::IS_DLC_PRESENT(dlcHash);
 		return retval;
@@ -4026,126 +4026,126 @@ namespace lua::native
 		DLC::ON_ENTER_MP();
 	}
 
-	bool LUA_NATIVE_ENTITY_DOES_ENTITY_EXIST( int entity )
+	bool LUA_NATIVE_ENTITY_DOES_ENTITY_EXIST( Entity entity )
 	{
 		auto retval = (bool)ENTITY::DOES_ENTITY_EXIST(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_DOES_ENTITY_BELONG_TO_THIS_SCRIPT( int entity, bool p1 )
+	bool LUA_NATIVE_ENTITY_DOES_ENTITY_BELONG_TO_THIS_SCRIPT( Entity entity, bool p1 )
 	{
 		auto retval = (bool)ENTITY::DOES_ENTITY_BELONG_TO_THIS_SCRIPT(entity, p1);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_DOES_ENTITY_HAVE_DRAWABLE( int entity )
+	bool LUA_NATIVE_ENTITY_DOES_ENTITY_HAVE_DRAWABLE( Entity entity )
 	{
 		auto retval = (bool)ENTITY::DOES_ENTITY_HAVE_DRAWABLE(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_DOES_ENTITY_HAVE_PHYSICS( int entity )
+	bool LUA_NATIVE_ENTITY_DOES_ENTITY_HAVE_PHYSICS( Entity entity )
 	{
 		auto retval = (bool)ENTITY::DOES_ENTITY_HAVE_PHYSICS(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_DOES_ENTITY_HAVE_SKELETON( int entity )
+	bool LUA_NATIVE_ENTITY_DOES_ENTITY_HAVE_SKELETON( Entity entity )
 	{
 		auto retval = (bool)ENTITY::DOES_ENTITY_HAVE_SKELETON(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_DOES_ENTITY_HAVE_ANIM_DIRECTOR( int entity )
+	bool LUA_NATIVE_ENTITY_DOES_ENTITY_HAVE_ANIM_DIRECTOR( Entity entity )
 	{
 		auto retval = (bool)ENTITY::DOES_ENTITY_HAVE_ANIM_DIRECTOR(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_HAS_ENTITY_ANIM_FINISHED( int entity, const char* animDict, const char* animName, int p3 )
+	bool LUA_NATIVE_ENTITY_HAS_ENTITY_ANIM_FINISHED( Entity entity, const char* animDict, const char* animName, int p3 )
 	{
 		auto retval = (bool)ENTITY::HAS_ENTITY_ANIM_FINISHED(entity, animDict, animName, p3);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_HAS_ENTITY_BEEN_DAMAGED_BY_ANY_OBJECT( int entity )
+	bool LUA_NATIVE_ENTITY_HAS_ENTITY_BEEN_DAMAGED_BY_ANY_OBJECT( Entity entity )
 	{
 		auto retval = (bool)ENTITY::HAS_ENTITY_BEEN_DAMAGED_BY_ANY_OBJECT(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_HAS_ENTITY_BEEN_DAMAGED_BY_ANY_PED( int entity )
+	bool LUA_NATIVE_ENTITY_HAS_ENTITY_BEEN_DAMAGED_BY_ANY_PED( Entity entity )
 	{
 		auto retval = (bool)ENTITY::HAS_ENTITY_BEEN_DAMAGED_BY_ANY_PED(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_HAS_ENTITY_BEEN_DAMAGED_BY_ANY_VEHICLE( int entity )
+	bool LUA_NATIVE_ENTITY_HAS_ENTITY_BEEN_DAMAGED_BY_ANY_VEHICLE( Entity entity )
 	{
 		auto retval = (bool)ENTITY::HAS_ENTITY_BEEN_DAMAGED_BY_ANY_VEHICLE(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_HAS_ENTITY_BEEN_DAMAGED_BY_ENTITY( int entity1, int entity2, bool p2 )
+	bool LUA_NATIVE_ENTITY_HAS_ENTITY_BEEN_DAMAGED_BY_ENTITY( Entity entity1, Entity entity2, bool p2 )
 	{
 		auto retval = (bool)ENTITY::HAS_ENTITY_BEEN_DAMAGED_BY_ENTITY(entity1, entity2, p2);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_HAS_ENTITY_CLEAR_LOS_TO_ENTITY( int entity1, int entity2, int traceType )
+	bool LUA_NATIVE_ENTITY_HAS_ENTITY_CLEAR_LOS_TO_ENTITY( Entity entity1, Entity entity2, int traceType )
 	{
 		auto retval = (bool)ENTITY::HAS_ENTITY_CLEAR_LOS_TO_ENTITY(entity1, entity2, traceType);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_HAS_ENTITY_CLEAR_LOS_TO_ENTITY_ADJUST_FOR_COVER( int entity1, int entity2, int traceType )
+	bool LUA_NATIVE_ENTITY_HAS_ENTITY_CLEAR_LOS_TO_ENTITY_ADJUST_FOR_COVER( Entity entity1, Entity entity2, int traceType )
 	{
 		auto retval = (bool)ENTITY::HAS_ENTITY_CLEAR_LOS_TO_ENTITY_ADJUST_FOR_COVER(entity1, entity2, traceType);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_HAS_ENTITY_CLEAR_LOS_TO_ENTITY_IN_FRONT( int entity1, int entity2 )
+	bool LUA_NATIVE_ENTITY_HAS_ENTITY_CLEAR_LOS_TO_ENTITY_IN_FRONT( Entity entity1, Entity entity2 )
 	{
 		auto retval = (bool)ENTITY::HAS_ENTITY_CLEAR_LOS_TO_ENTITY_IN_FRONT(entity1, entity2);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_HAS_ENTITY_COLLIDED_WITH_ANYTHING( int entity )
+	bool LUA_NATIVE_ENTITY_HAS_ENTITY_COLLIDED_WITH_ANYTHING( Entity entity )
 	{
 		auto retval = (bool)ENTITY::HAS_ENTITY_COLLIDED_WITH_ANYTHING(entity);
 		return retval;
 	}
 
-	int LUA_NATIVE_ENTITY_GET_LAST_ENTITY_HIT_BY_ENTITY_( int entity )
+	Entity LUA_NATIVE_ENTITY_GET_LAST_ENTITY_HIT_BY_ENTITY_( Entity entity )
 	{
 		auto retval = ENTITY::GET_LAST_ENTITY_HIT_BY_ENTITY_(entity);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_ENTITY_GET_LAST_MATERIAL_HIT_BY_ENTITY( int entity )
+	Hash LUA_NATIVE_ENTITY_GET_LAST_MATERIAL_HIT_BY_ENTITY( Entity entity )
 	{
 		auto retval = ENTITY::GET_LAST_MATERIAL_HIT_BY_ENTITY(entity);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_ENTITY_GET_COLLISION_NORMAL_OF_LAST_HIT_FOR_ENTITY( int entity )
+	Vector3 LUA_NATIVE_ENTITY_GET_COLLISION_NORMAL_OF_LAST_HIT_FOR_ENTITY( Entity entity )
 	{
 		auto retval = ENTITY::GET_COLLISION_NORMAL_OF_LAST_HIT_FOR_ENTITY(entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_ENTITY_FORCE_ENTITY_AI_AND_ANIMATION_UPDATE( int entity )
+	void LUA_NATIVE_ENTITY_FORCE_ENTITY_AI_AND_ANIMATION_UPDATE( Entity entity )
 	{
 		ENTITY::FORCE_ENTITY_AI_AND_ANIMATION_UPDATE(entity);
 	}
 
-	float LUA_NATIVE_ENTITY_GET_ENTITY_ANIM_CURRENT_TIME( int entity, const char* animDict, const char* animName )
+	float LUA_NATIVE_ENTITY_GET_ENTITY_ANIM_CURRENT_TIME( Entity entity, const char* animDict, const char* animName )
 	{
 		auto retval = ENTITY::GET_ENTITY_ANIM_CURRENT_TIME(entity, animDict, animName);
 		return retval;
 	}
 
-	float LUA_NATIVE_ENTITY_GET_ENTITY_ANIM_TOTAL_TIME( int entity, const char* animDict, const char* animName )
+	float LUA_NATIVE_ENTITY_GET_ENTITY_ANIM_TOTAL_TIME( Entity entity, const char* animDict, const char* animName )
 	{
 		auto retval = ENTITY::GET_ENTITY_ANIM_TOTAL_TIME(entity, animDict, animName);
 		return retval;
@@ -4157,78 +4157,78 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_ENTITY_GET_ENTITY_ATTACHED_TO( int entity )
+	Entity LUA_NATIVE_ENTITY_GET_ENTITY_ATTACHED_TO( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_ATTACHED_TO(entity);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_COORDS( int entity, bool alive )
+	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_COORDS( Entity entity, bool alive )
 	{
 		auto retval = ENTITY::GET_ENTITY_COORDS(entity, alive);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_FORWARD_VECTOR( int entity )
+	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_FORWARD_VECTOR( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_FORWARD_VECTOR(entity);
 		return retval;
 	}
 
-	float LUA_NATIVE_ENTITY_GET_ENTITY_FORWARD_X( int entity )
+	float LUA_NATIVE_ENTITY_GET_ENTITY_FORWARD_X( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_FORWARD_X(entity);
 		return retval;
 	}
 
-	float LUA_NATIVE_ENTITY_GET_ENTITY_FORWARD_Y( int entity )
+	float LUA_NATIVE_ENTITY_GET_ENTITY_FORWARD_Y( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_FORWARD_Y(entity);
 		return retval;
 	}
 
-	float LUA_NATIVE_ENTITY_GET_ENTITY_HEADING( int entity )
+	float LUA_NATIVE_ENTITY_GET_ENTITY_HEADING( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_HEADING(entity);
 		return retval;
 	}
 
-	float LUA_NATIVE_ENTITY_GET_ENTITY_HEADING_FROM_EULERS( int entity )
+	float LUA_NATIVE_ENTITY_GET_ENTITY_HEADING_FROM_EULERS( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_HEADING_FROM_EULERS(entity);
 		return retval;
 	}
 
-	int LUA_NATIVE_ENTITY_GET_ENTITY_HEALTH( int entity )
+	int LUA_NATIVE_ENTITY_GET_ENTITY_HEALTH( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_HEALTH(entity);
 		return retval;
 	}
 
-	int LUA_NATIVE_ENTITY_GET_ENTITY_MAX_HEALTH( int entity )
+	int LUA_NATIVE_ENTITY_GET_ENTITY_MAX_HEALTH( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_MAX_HEALTH(entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_MAX_HEALTH( int entity, int value )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_MAX_HEALTH( Entity entity, int value )
 	{
 		ENTITY::SET_ENTITY_MAX_HEALTH(entity, value);
 	}
 
-	float LUA_NATIVE_ENTITY_GET_ENTITY_HEIGHT( int entity, float X, float Y, float Z, bool atTop, bool inWorldCoords )
+	float LUA_NATIVE_ENTITY_GET_ENTITY_HEIGHT( Entity entity, float X, float Y, float Z, bool atTop, bool inWorldCoords )
 	{
 		auto retval = ENTITY::GET_ENTITY_HEIGHT(entity, X, Y, Z, atTop, inWorldCoords);
 		return retval;
 	}
 
-	float LUA_NATIVE_ENTITY_GET_ENTITY_HEIGHT_ABOVE_GROUND( int entity )
+	float LUA_NATIVE_ENTITY_GET_ENTITY_HEIGHT_ABOVE_GROUND( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_HEIGHT_ABOVE_GROUND(entity);
 		return retval;
 	}
 
-	std::tuple<Vector3, Vector3, Vector3, Vector3> LUA_NATIVE_ENTITY_GET_ENTITY_MATRIX( int entity, Vector3 forwardVector, Vector3 rightVector, Vector3 upVector, Vector3 position )
+	std::tuple<Vector3, Vector3, Vector3, Vector3> LUA_NATIVE_ENTITY_GET_ENTITY_MATRIX( Entity entity, Vector3 forwardVector, Vector3 rightVector, Vector3 upVector, Vector3 position )
 	{
 		std::tuple<Vector3, Vector3, Vector3, Vector3> return_values;
 		ENTITY::GET_ENTITY_MATRIX(entity, &forwardVector, &rightVector, &upVector, &position);
@@ -4240,31 +4240,31 @@ namespace lua::native
 		return return_values;
 	}
 
-	unsigned LUA_NATIVE_ENTITY_GET_ENTITY_MODEL( int entity )
+	Hash LUA_NATIVE_ENTITY_GET_ENTITY_MODEL( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_MODEL(entity);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_ENTITY_GET_OFFSET_FROM_ENTITY_GIVEN_WORLD_COORDS( int entity, float posX, float posY, float posZ )
+	Vector3 LUA_NATIVE_ENTITY_GET_OFFSET_FROM_ENTITY_GIVEN_WORLD_COORDS( Entity entity, float posX, float posY, float posZ )
 	{
 		auto retval = ENTITY::GET_OFFSET_FROM_ENTITY_GIVEN_WORLD_COORDS(entity, posX, posY, posZ);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_ENTITY_GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS( int entity, float offsetX, float offsetY, float offsetZ )
+	Vector3 LUA_NATIVE_ENTITY_GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS( Entity entity, float offsetX, float offsetY, float offsetZ )
 	{
 		auto retval = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(entity, offsetX, offsetY, offsetZ);
 		return retval;
 	}
 
-	float LUA_NATIVE_ENTITY_GET_ENTITY_PITCH( int entity )
+	float LUA_NATIVE_ENTITY_GET_ENTITY_PITCH( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_PITCH(entity);
 		return retval;
 	}
 
-	std::tuple<float, float, float, float> LUA_NATIVE_ENTITY_GET_ENTITY_QUATERNION( int entity, float x, float y, float z, float w )
+	std::tuple<float, float, float, float> LUA_NATIVE_ENTITY_GET_ENTITY_QUATERNION( Entity entity, float x, float y, float z, float w )
 	{
 		std::tuple<float, float, float, float> return_values;
 		ENTITY::GET_ENTITY_QUATERNION(entity, &x, &y, &z, &w);
@@ -4276,381 +4276,381 @@ namespace lua::native
 		return return_values;
 	}
 
-	float LUA_NATIVE_ENTITY_GET_ENTITY_ROLL( int entity )
+	float LUA_NATIVE_ENTITY_GET_ENTITY_ROLL( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_ROLL(entity);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_ROTATION( int entity, int rotationOrder )
+	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_ROTATION( Entity entity, int rotationOrder )
 	{
 		auto retval = ENTITY::GET_ENTITY_ROTATION(entity, rotationOrder);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_ROTATION_VELOCITY( int entity )
+	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_ROTATION_VELOCITY( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_ROTATION_VELOCITY(entity);
 		return retval;
 	}
 
-	std::tuple<const char*, int> LUA_NATIVE_ENTITY_GET_ENTITY_SCRIPT( int entity, int script )
+	std::tuple<const char*, ScrHandle> LUA_NATIVE_ENTITY_GET_ENTITY_SCRIPT( Entity entity, ScrHandle script )
 	{
-		std::tuple<const char*, int> return_values;
+		std::tuple<const char*, ScrHandle> return_values;
 		std::get<0>(return_values) = ENTITY::GET_ENTITY_SCRIPT(entity, &script);
 		std::get<1>(return_values) = script;
 
 		return return_values;
 	}
 
-	float LUA_NATIVE_ENTITY_GET_ENTITY_SPEED( int entity )
+	float LUA_NATIVE_ENTITY_GET_ENTITY_SPEED( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_SPEED(entity);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_SPEED_VECTOR( int entity, bool relative )
+	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_SPEED_VECTOR( Entity entity, bool relative )
 	{
 		auto retval = ENTITY::GET_ENTITY_SPEED_VECTOR(entity, relative);
 		return retval;
 	}
 
-	float LUA_NATIVE_ENTITY_GET_ENTITY_UPRIGHT_VALUE( int entity )
+	float LUA_NATIVE_ENTITY_GET_ENTITY_UPRIGHT_VALUE( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_UPRIGHT_VALUE(entity);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_VELOCITY( int entity )
+	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_VELOCITY( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_VELOCITY(entity);
 		return retval;
 	}
 
-	Object LUA_NATIVE_ENTITY_GET_OBJECT_INDEX_FROM_ENTITY_INDEX( int entity )
+	Object LUA_NATIVE_ENTITY_GET_OBJECT_INDEX_FROM_ENTITY_INDEX( Entity entity )
 	{
 		auto retval = ENTITY::GET_OBJECT_INDEX_FROM_ENTITY_INDEX(entity);
 		return retval;
 	}
 
-	int LUA_NATIVE_ENTITY_GET_PED_INDEX_FROM_ENTITY_INDEX( int entity )
+	Ped LUA_NATIVE_ENTITY_GET_PED_INDEX_FROM_ENTITY_INDEX( Entity entity )
 	{
 		auto retval = ENTITY::GET_PED_INDEX_FROM_ENTITY_INDEX(entity);
 		return retval;
 	}
 
-	int LUA_NATIVE_ENTITY_GET_VEHICLE_INDEX_FROM_ENTITY_INDEX( int entity )
+	Vehicle LUA_NATIVE_ENTITY_GET_VEHICLE_INDEX_FROM_ENTITY_INDEX( Entity entity )
 	{
 		auto retval = ENTITY::GET_VEHICLE_INDEX_FROM_ENTITY_INDEX(entity);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_ENTITY_GET_WORLD_POSITION_OF_ENTITY_BONE( int entity, int boneIndex )
+	Vector3 LUA_NATIVE_ENTITY_GET_WORLD_POSITION_OF_ENTITY_BONE( Entity entity, int boneIndex )
 	{
 		auto retval = ENTITY::GET_WORLD_POSITION_OF_ENTITY_BONE(entity, boneIndex);
 		return retval;
 	}
 
-	int LUA_NATIVE_ENTITY_GET_NEAREST_PLAYER_TO_ENTITY( int entity )
+	Player LUA_NATIVE_ENTITY_GET_NEAREST_PLAYER_TO_ENTITY( Entity entity )
 	{
 		auto retval = ENTITY::GET_NEAREST_PLAYER_TO_ENTITY(entity);
 		return retval;
 	}
 
-	int LUA_NATIVE_ENTITY_GET_NEAREST_PLAYER_TO_ENTITY_ON_TEAM( int entity, int team )
+	Player LUA_NATIVE_ENTITY_GET_NEAREST_PLAYER_TO_ENTITY_ON_TEAM( Entity entity, int team )
 	{
 		auto retval = ENTITY::GET_NEAREST_PLAYER_TO_ENTITY_ON_TEAM(entity, team);
 		return retval;
 	}
 
-	int LUA_NATIVE_ENTITY_GET_NEAREST_PARTICIPANT_TO_ENTITY( int entity )
+	int LUA_NATIVE_ENTITY_GET_NEAREST_PARTICIPANT_TO_ENTITY( Entity entity )
 	{
 		auto retval = ENTITY::GET_NEAREST_PARTICIPANT_TO_ENTITY(entity);
 		return retval;
 	}
 
-	int LUA_NATIVE_ENTITY_GET_ENTITY_TYPE( int entity )
+	int LUA_NATIVE_ENTITY_GET_ENTITY_TYPE( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_TYPE(entity);
 		return retval;
 	}
 
-	int LUA_NATIVE_ENTITY_GET_ENTITY_POPULATION_TYPE( int entity )
+	int LUA_NATIVE_ENTITY_GET_ENTITY_POPULATION_TYPE( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_POPULATION_TYPE(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_AN_ENTITY( int handle )
+	bool LUA_NATIVE_ENTITY_IS_AN_ENTITY( ScrHandle handle )
 	{
 		auto retval = (bool)ENTITY::IS_AN_ENTITY(handle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_A_PED( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_A_PED( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_A_PED(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_A_MISSION_ENTITY( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_A_MISSION_ENTITY( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_A_MISSION_ENTITY(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_A_VEHICLE( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_A_VEHICLE( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_A_VEHICLE(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_AN_OBJECT( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_AN_OBJECT( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_AN_OBJECT(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_AT_COORD( int entity, float xPos, float yPos, float zPos, float xSize, float ySize, float zSize, bool p7, bool p8, int p9 )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_AT_COORD( Entity entity, float xPos, float yPos, float zPos, float xSize, float ySize, float zSize, bool p7, bool p8, int p9 )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_AT_COORD(entity, xPos, yPos, zPos, xSize, ySize, zSize, p7, p8, p9);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_AT_ENTITY( int entity1, int entity2, float xSize, float ySize, float zSize, bool p5, bool p6, int p7 )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_AT_ENTITY( Entity entity1, Entity entity2, float xSize, float ySize, float zSize, bool p5, bool p6, int p7 )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_AT_ENTITY(entity1, entity2, xSize, ySize, zSize, p5, p6, p7);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_ATTACHED( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_ATTACHED( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_ATTACHED(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_ATTACHED_TO_ANY_OBJECT( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_ATTACHED_TO_ANY_OBJECT( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_ATTACHED_TO_ANY_OBJECT(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_ATTACHED_TO_ANY_PED( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_ATTACHED_TO_ANY_PED( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_ATTACHED_TO_ANY_PED(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_ATTACHED_TO_ANY_VEHICLE( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_ATTACHED_TO_ANY_VEHICLE( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_ATTACHED_TO_ANY_VEHICLE(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_ATTACHED_TO_ENTITY( int from, int to )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_ATTACHED_TO_ENTITY( Entity from, Entity to )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_ATTACHED_TO_ENTITY(from, to);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_DEAD( int entity, bool p1 )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_DEAD( Entity entity, bool p1 )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_DEAD(entity, p1);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_IN_AIR( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_IN_AIR( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_IN_AIR(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_IN_ANGLED_AREA( int entity, float x1, float y1, float z1, float x2, float y2, float z2, float width, bool debug, bool includeZ, Any p10 )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_IN_ANGLED_AREA( Entity entity, float x1, float y1, float z1, float x2, float y2, float z2, float width, bool debug, bool includeZ, Any p10 )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_IN_ANGLED_AREA(entity, x1, y1, z1, x2, y2, z2, width, debug, includeZ, p10);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_IN_AREA( int entity, float x1, float y1, float z1, float x2, float y2, float z2, bool p7, bool p8, Any p9 )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_IN_AREA( Entity entity, float x1, float y1, float z1, float x2, float y2, float z2, bool p7, bool p8, Any p9 )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_IN_AREA(entity, x1, y1, z1, x2, y2, z2, p7, p8, p9);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_IN_ZONE( int entity, const char* zone )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_IN_ZONE( Entity entity, const char* zone )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_IN_ZONE(entity, zone);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_IN_WATER( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_IN_WATER( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_IN_WATER(entity);
 		return retval;
 	}
 
-	float LUA_NATIVE_ENTITY_GET_ENTITY_SUBMERGED_LEVEL( int entity )
+	float LUA_NATIVE_ENTITY_GET_ENTITY_SUBMERGED_LEVEL( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_SUBMERGED_LEVEL(entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_REQUIRES_MORE_EXPENSIVE_RIVER_CHECK( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_REQUIRES_MORE_EXPENSIVE_RIVER_CHECK( Entity entity, bool toggle )
 	{
 		ENTITY::SET_ENTITY_REQUIRES_MORE_EXPENSIVE_RIVER_CHECK(entity, toggle);
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_ON_SCREEN( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_ON_SCREEN( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_ON_SCREEN(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_PLAYING_ANIM( int entity, const char* animDict, const char* animName, int taskFlag )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_PLAYING_ANIM( Entity entity, const char* animDict, const char* animName, int taskFlag )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_PLAYING_ANIM(entity, animDict, animName, taskFlag);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_STATIC( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_STATIC( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_STATIC(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_TOUCHING_ENTITY( int entity, int targetEntity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_TOUCHING_ENTITY( Entity entity, Entity targetEntity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_TOUCHING_ENTITY(entity, targetEntity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_TOUCHING_MODEL( int entity, unsigned modelHash )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_TOUCHING_MODEL( Entity entity, Hash modelHash )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_TOUCHING_MODEL(entity, modelHash);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_UPRIGHT( int entity, float angle )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_UPRIGHT( Entity entity, float angle )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_UPRIGHT(entity, angle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_UPSIDEDOWN( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_UPSIDEDOWN( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_UPSIDEDOWN(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_VISIBLE( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_VISIBLE( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_VISIBLE(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_VISIBLE_TO_SCRIPT( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_VISIBLE_TO_SCRIPT( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_VISIBLE_TO_SCRIPT(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_OCCLUDED( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_OCCLUDED( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_OCCLUDED(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_WOULD_ENTITY_BE_OCCLUDED( unsigned entityModelHash, float x, float y, float z, bool p4 )
+	bool LUA_NATIVE_ENTITY_WOULD_ENTITY_BE_OCCLUDED( Hash entityModelHash, float x, float y, float z, bool p4 )
 	{
 		auto retval = (bool)ENTITY::WOULD_ENTITY_BE_OCCLUDED(entityModelHash, x, y, z, p4);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_IS_ENTITY_WAITING_FOR_WORLD_COLLISION( int entity )
+	bool LUA_NATIVE_ENTITY_IS_ENTITY_WAITING_FOR_WORLD_COLLISION( Entity entity )
 	{
 		auto retval = (bool)ENTITY::IS_ENTITY_WAITING_FOR_WORLD_COLLISION(entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_ENTITY_APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS( int entity, int forceType, float x, float y, float z, bool p5, bool isDirectionRel, bool isForceRel, bool p8 )
+	void LUA_NATIVE_ENTITY_APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS( Entity entity, int forceType, float x, float y, float z, bool p5, bool isDirectionRel, bool isForceRel, bool p8 )
 	{
 		ENTITY::APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(entity, forceType, x, y, z, p5, isDirectionRel, isForceRel, p8);
 	}
 
-	void LUA_NATIVE_ENTITY_APPLY_FORCE_TO_ENTITY( int entity, int forceFlags, float x, float y, float z, float offX, float offY, float offZ, int boneIndex, bool isDirectionRel, bool ignoreUpVec, bool isForceRel, bool p12, bool p13 )
+	void LUA_NATIVE_ENTITY_APPLY_FORCE_TO_ENTITY( Entity entity, int forceFlags, float x, float y, float z, float offX, float offY, float offZ, int boneIndex, bool isDirectionRel, bool ignoreUpVec, bool isForceRel, bool p12, bool p13 )
 	{
 		ENTITY::APPLY_FORCE_TO_ENTITY(entity, forceFlags, x, y, z, offX, offY, offZ, boneIndex, isDirectionRel, ignoreUpVec, isForceRel, p12, p13);
 	}
 
-	void LUA_NATIVE_ENTITY_ATTACH_ENTITY_TO_ENTITY( int entity1, int entity2, int boneIndex, float xPos, float yPos, float zPos, float xRot, float yRot, float zRot, bool p9, bool useSoftPinning, bool collision, bool isPed, int vertexIndex, bool fixedRot, Any p15 )
+	void LUA_NATIVE_ENTITY_ATTACH_ENTITY_TO_ENTITY( Entity entity1, Entity entity2, int boneIndex, float xPos, float yPos, float zPos, float xRot, float yRot, float zRot, bool p9, bool useSoftPinning, bool collision, bool isPed, int vertexIndex, bool fixedRot, Any p15 )
 	{
 		ENTITY::ATTACH_ENTITY_TO_ENTITY(entity1, entity2, boneIndex, xPos, yPos, zPos, xRot, yRot, zRot, p9, useSoftPinning, collision, isPed, vertexIndex, fixedRot, p15);
 	}
 
-	void LUA_NATIVE_ENTITY_ATTACH_ENTITY_BONE_TO_ENTITY_BONE( int entity1, int entity2, int boneIndex1, int boneIndex2, bool p4, bool p5 )
+	void LUA_NATIVE_ENTITY_ATTACH_ENTITY_BONE_TO_ENTITY_BONE( Entity entity1, Entity entity2, int boneIndex1, int boneIndex2, bool p4, bool p5 )
 	{
 		ENTITY::ATTACH_ENTITY_BONE_TO_ENTITY_BONE(entity1, entity2, boneIndex1, boneIndex2, p4, p5);
 	}
 
-	void LUA_NATIVE_ENTITY_ATTACH_ENTITY_BONE_TO_ENTITY_BONE_Y_FORWARD( int entity1, int entity2, int boneIndex1, int boneIndex2, bool p4, bool p5 )
+	void LUA_NATIVE_ENTITY_ATTACH_ENTITY_BONE_TO_ENTITY_BONE_Y_FORWARD( Entity entity1, Entity entity2, int boneIndex1, int boneIndex2, bool p4, bool p5 )
 	{
 		ENTITY::ATTACH_ENTITY_BONE_TO_ENTITY_BONE_Y_FORWARD(entity1, entity2, boneIndex1, boneIndex2, p4, p5);
 	}
 
-	void LUA_NATIVE_ENTITY_ATTACH_ENTITY_TO_ENTITY_PHYSICALLY( int entity1, int entity2, int boneIndex1, int boneIndex2, float xPos1, float yPos1, float zPos1, float xPos2, float yPos2, float zPos2, float xRot, float yRot, float zRot, float breakForce, bool fixedRot, bool p15, bool collision, bool p17, int p18 )
+	void LUA_NATIVE_ENTITY_ATTACH_ENTITY_TO_ENTITY_PHYSICALLY( Entity entity1, Entity entity2, int boneIndex1, int boneIndex2, float xPos1, float yPos1, float zPos1, float xPos2, float yPos2, float zPos2, float xRot, float yRot, float zRot, float breakForce, bool fixedRot, bool p15, bool collision, bool p17, int p18 )
 	{
 		ENTITY::ATTACH_ENTITY_TO_ENTITY_PHYSICALLY(entity1, entity2, boneIndex1, boneIndex2, xPos1, yPos1, zPos1, xPos2, yPos2, zPos2, xRot, yRot, zRot, breakForce, fixedRot, p15, collision, p17, p18);
 	}
 
-	void LUA_NATIVE_ENTITY_ATTACH_ENTITY_TO_ENTITY_PHYSICALLY_OVERRIDE_INVERSE_MASS( int firstEntityIndex, int secondEntityIndex, int firstEntityBoneIndex, int secondEntityBoneIndex, float secondEntityOffsetX, float secondEntityOffsetY, float secondEntityOffsetZ, float firstEntityOffsetX, float firstEntityOffsetY, float firstEntityOffsetZ, float vecRotationX, float vecRotationY, float vecRotationZ, float physicalStrength, bool constrainRotation, bool doInitialWarp, bool collideWithEntity, bool addInitialSeperation, int rotOrder, float invMassScaleA, float invMassScaleB )
+	void LUA_NATIVE_ENTITY_ATTACH_ENTITY_TO_ENTITY_PHYSICALLY_OVERRIDE_INVERSE_MASS( Entity firstEntityIndex, Entity secondEntityIndex, int firstEntityBoneIndex, int secondEntityBoneIndex, float secondEntityOffsetX, float secondEntityOffsetY, float secondEntityOffsetZ, float firstEntityOffsetX, float firstEntityOffsetY, float firstEntityOffsetZ, float vecRotationX, float vecRotationY, float vecRotationZ, float physicalStrength, bool constrainRotation, bool doInitialWarp, bool collideWithEntity, bool addInitialSeperation, int rotOrder, float invMassScaleA, float invMassScaleB )
 	{
 		ENTITY::ATTACH_ENTITY_TO_ENTITY_PHYSICALLY_OVERRIDE_INVERSE_MASS(firstEntityIndex, secondEntityIndex, firstEntityBoneIndex, secondEntityBoneIndex, secondEntityOffsetX, secondEntityOffsetY, secondEntityOffsetZ, firstEntityOffsetX, firstEntityOffsetY, firstEntityOffsetZ, vecRotationX, vecRotationY, vecRotationZ, physicalStrength, constrainRotation, doInitialWarp, collideWithEntity, addInitialSeperation, rotOrder, invMassScaleA, invMassScaleB);
 	}
 
-	void LUA_NATIVE_ENTITY_PROCESS_ENTITY_ATTACHMENTS( int entity )
+	void LUA_NATIVE_ENTITY_PROCESS_ENTITY_ATTACHMENTS( Entity entity )
 	{
 		ENTITY::PROCESS_ENTITY_ATTACHMENTS(entity);
 	}
 
-	int LUA_NATIVE_ENTITY_GET_ENTITY_BONE_INDEX_BY_NAME( int entity, const char* boneName )
+	int LUA_NATIVE_ENTITY_GET_ENTITY_BONE_INDEX_BY_NAME( Entity entity, const char* boneName )
 	{
 		auto retval = ENTITY::GET_ENTITY_BONE_INDEX_BY_NAME(entity, boneName);
 		return retval;
 	}
 
-	void LUA_NATIVE_ENTITY_CLEAR_ENTITY_LAST_DAMAGE_ENTITY( int entity )
+	void LUA_NATIVE_ENTITY_CLEAR_ENTITY_LAST_DAMAGE_ENTITY( Entity entity )
 	{
 		ENTITY::CLEAR_ENTITY_LAST_DAMAGE_ENTITY(entity);
 	}
 
-	int LUA_NATIVE_ENTITY_DELETE_ENTITY( int entity )
+	Entity LUA_NATIVE_ENTITY_DELETE_ENTITY( Entity entity )
 	{
 		ENTITY::DELETE_ENTITY(&entity);
 		return entity;
 	}
 
-	void LUA_NATIVE_ENTITY_DETACH_ENTITY( int entity, bool dynamic, bool collision )
+	void LUA_NATIVE_ENTITY_DETACH_ENTITY( Entity entity, bool dynamic, bool collision )
 	{
 		ENTITY::DETACH_ENTITY(entity, dynamic, collision);
 	}
 
-	void LUA_NATIVE_ENTITY_FREEZE_ENTITY_POSITION( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_FREEZE_ENTITY_POSITION( Entity entity, bool toggle )
 	{
 		ENTITY::FREEZE_ENTITY_POSITION(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_SHOULD_FREEZE_WAITING_ON_COLLISION( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_SHOULD_FREEZE_WAITING_ON_COLLISION( Entity entity, bool toggle )
 	{
 		ENTITY::SET_ENTITY_SHOULD_FREEZE_WAITING_ON_COLLISION(entity, toggle);
 	}
 
-	bool LUA_NATIVE_ENTITY_PLAY_ENTITY_ANIM( int entity, const char* animName, const char* animDict, float p3, bool loop, bool stayInAnim, bool p6, float delta, Any bitset )
+	bool LUA_NATIVE_ENTITY_PLAY_ENTITY_ANIM( Entity entity, const char* animName, const char* animDict, float p3, bool loop, bool stayInAnim, bool p6, float delta, Any bitset )
 	{
 		auto retval = (bool)ENTITY::PLAY_ENTITY_ANIM(entity, animName, animDict, p3, loop, stayInAnim, p6, delta, bitset);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_PLAY_SYNCHRONIZED_ENTITY_ANIM( int entity, int syncedScene, const char* animation, const char* propName, float p4, float p5, Any p6, float p7 )
+	bool LUA_NATIVE_ENTITY_PLAY_SYNCHRONIZED_ENTITY_ANIM( Entity entity, int syncedScene, const char* animation, const char* propName, float p4, float p5, Any p6, float p7 )
 	{
 		auto retval = (bool)ENTITY::PLAY_SYNCHRONIZED_ENTITY_ANIM(entity, syncedScene, animation, propName, p4, p5, p6, p7);
 		return retval;
@@ -4668,19 +4668,19 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_STOP_ENTITY_ANIM( int entity, const char* animation, const char* animGroup, float p3 )
+	bool LUA_NATIVE_ENTITY_STOP_ENTITY_ANIM( Entity entity, const char* animation, const char* animGroup, float p3 )
 	{
 		auto retval = (bool)ENTITY::STOP_ENTITY_ANIM(entity, animation, animGroup, p3);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_STOP_SYNCHRONIZED_ENTITY_ANIM( int entity, float p1, bool p2 )
+	bool LUA_NATIVE_ENTITY_STOP_SYNCHRONIZED_ENTITY_ANIM( Entity entity, float p1, bool p2 )
 	{
 		auto retval = (bool)ENTITY::STOP_SYNCHRONIZED_ENTITY_ANIM(entity, p1, p2);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ENTITY_HAS_ANIM_EVENT_FIRED( int entity, unsigned actionHash )
+	bool LUA_NATIVE_ENTITY_HAS_ANIM_EVENT_FIRED( Entity entity, Hash actionHash )
 	{
 		auto retval = (bool)ENTITY::HAS_ANIM_EVENT_FIRED(entity, actionHash);
 		return retval;
@@ -4696,34 +4696,34 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_ANIM_CURRENT_TIME( int entity, const char* animDictionary, const char* animName, float time )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_ANIM_CURRENT_TIME( Entity entity, const char* animDictionary, const char* animName, float time )
 	{
 		ENTITY::SET_ENTITY_ANIM_CURRENT_TIME(entity, animDictionary, animName, time);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_ANIM_SPEED( int entity, const char* animDictionary, const char* animName, float speedMultiplier )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_ANIM_SPEED( Entity entity, const char* animDictionary, const char* animName, float speedMultiplier )
 	{
 		ENTITY::SET_ENTITY_ANIM_SPEED(entity, animDictionary, animName, speedMultiplier);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_AS_MISSION_ENTITY( int entity, bool p1, bool p2 )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_AS_MISSION_ENTITY( Entity entity, bool p1, bool p2 )
 	{
 		ENTITY::SET_ENTITY_AS_MISSION_ENTITY(entity, p1, p2);
 	}
 
-	int LUA_NATIVE_ENTITY_SET_ENTITY_AS_NO_LONGER_NEEDED( int entity )
+	Entity LUA_NATIVE_ENTITY_SET_ENTITY_AS_NO_LONGER_NEEDED( Entity entity )
 	{
 		ENTITY::SET_ENTITY_AS_NO_LONGER_NEEDED(&entity);
 		return entity;
 	}
 
-	int LUA_NATIVE_ENTITY_SET_PED_AS_NO_LONGER_NEEDED( int ped )
+	Ped LUA_NATIVE_ENTITY_SET_PED_AS_NO_LONGER_NEEDED( Ped ped )
 	{
 		ENTITY::SET_PED_AS_NO_LONGER_NEEDED(&ped);
 		return ped;
 	}
 
-	int LUA_NATIVE_ENTITY_SET_VEHICLE_AS_NO_LONGER_NEEDED( int vehicle )
+	Vehicle LUA_NATIVE_ENTITY_SET_VEHICLE_AS_NO_LONGER_NEEDED( Vehicle vehicle )
 	{
 		ENTITY::SET_VEHICLE_AS_NO_LONGER_NEEDED(&vehicle);
 		return vehicle;
@@ -4735,125 +4735,125 @@ namespace lua::native
 		return object;
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_CAN_BE_DAMAGED( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_CAN_BE_DAMAGED( Entity entity, bool toggle )
 	{
 		ENTITY::SET_ENTITY_CAN_BE_DAMAGED(entity, toggle);
 	}
 
-	bool LUA_NATIVE_ENTITY_GET_ENTITY_CAN_BE_DAMAGED( int entity )
+	bool LUA_NATIVE_ENTITY_GET_ENTITY_CAN_BE_DAMAGED( Entity entity )
 	{
 		auto retval = (bool)ENTITY::GET_ENTITY_CAN_BE_DAMAGED(entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_CAN_BE_DAMAGED_BY_RELATIONSHIP_GROUP( int entity, bool bCanBeDamaged, int relGroup )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_CAN_BE_DAMAGED_BY_RELATIONSHIP_GROUP( Entity entity, bool bCanBeDamaged, int relGroup )
 	{
 		ENTITY::SET_ENTITY_CAN_BE_DAMAGED_BY_RELATIONSHIP_GROUP(entity, bCanBeDamaged, relGroup);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_CAN_ONLY_BE_DAMAGED_BY_SCRIPT_PARTICIPANTS( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_CAN_ONLY_BE_DAMAGED_BY_SCRIPT_PARTICIPANTS( Entity entity, bool toggle )
 	{
 		ENTITY::SET_ENTITY_CAN_ONLY_BE_DAMAGED_BY_SCRIPT_PARTICIPANTS(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_CAN_BE_TARGETED_WITHOUT_LOS( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_CAN_BE_TARGETED_WITHOUT_LOS( Entity entity, bool toggle )
 	{
 		ENTITY::SET_ENTITY_CAN_BE_TARGETED_WITHOUT_LOS(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_COLLISION( int entity, bool toggle, bool keepPhysics )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_COLLISION( Entity entity, bool toggle, bool keepPhysics )
 	{
 		ENTITY::SET_ENTITY_COLLISION(entity, toggle, keepPhysics);
 	}
 
-	bool LUA_NATIVE_ENTITY_GET_ENTITY_COLLISION_DISABLED( int entity )
+	bool LUA_NATIVE_ENTITY_GET_ENTITY_COLLISION_DISABLED( Entity entity )
 	{
 		auto retval = (bool)ENTITY::GET_ENTITY_COLLISION_DISABLED(entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_COMPLETELY_DISABLE_COLLISION( int entity, bool toggle, bool keepPhysics )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_COMPLETELY_DISABLE_COLLISION( Entity entity, bool toggle, bool keepPhysics )
 	{
 		ENTITY::SET_ENTITY_COMPLETELY_DISABLE_COLLISION(entity, toggle, keepPhysics);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_COORDS( int entity, float xPos, float yPos, float zPos, bool xAxis, bool yAxis, bool zAxis, bool clearArea )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_COORDS( Entity entity, float xPos, float yPos, float zPos, bool xAxis, bool yAxis, bool zAxis, bool clearArea )
 	{
 		ENTITY::SET_ENTITY_COORDS(entity, xPos, yPos, zPos, xAxis, yAxis, zAxis, clearArea);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_COORDS_WITHOUT_PLANTS_RESET( int entity, float xPos, float yPos, float zPos, bool alive, bool deadFlag, bool ragdollFlag, bool clearArea )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_COORDS_WITHOUT_PLANTS_RESET( Entity entity, float xPos, float yPos, float zPos, bool alive, bool deadFlag, bool ragdollFlag, bool clearArea )
 	{
 		ENTITY::SET_ENTITY_COORDS_WITHOUT_PLANTS_RESET(entity, xPos, yPos, zPos, alive, deadFlag, ragdollFlag, clearArea);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_COORDS_NO_OFFSET( int entity, float xPos, float yPos, float zPos, bool xAxis, bool yAxis, bool zAxis )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_COORDS_NO_OFFSET( Entity entity, float xPos, float yPos, float zPos, bool xAxis, bool yAxis, bool zAxis )
 	{
 		ENTITY::SET_ENTITY_COORDS_NO_OFFSET(entity, xPos, yPos, zPos, xAxis, yAxis, zAxis);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_DYNAMIC( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_DYNAMIC( Entity entity, bool toggle )
 	{
 		ENTITY::SET_ENTITY_DYNAMIC(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_HEADING( int entity, float heading )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_HEADING( Entity entity, float heading )
 	{
 		ENTITY::SET_ENTITY_HEADING(entity, heading);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_HEALTH( int entity, int health, int p2 )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_HEALTH( Entity entity, int health, int p2 )
 	{
 		ENTITY::SET_ENTITY_HEALTH(entity, health, p2);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_INVINCIBLE( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_INVINCIBLE( Entity entity, bool toggle )
 	{
 		ENTITY::SET_ENTITY_INVINCIBLE(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_IS_TARGET_PRIORITY( int entity, bool p1, float p2 )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_IS_TARGET_PRIORITY( Entity entity, bool p1, float p2 )
 	{
 		ENTITY::SET_ENTITY_IS_TARGET_PRIORITY(entity, p1, p2);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_LIGHTS( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_LIGHTS( Entity entity, bool toggle )
 	{
 		ENTITY::SET_ENTITY_LIGHTS(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_LOAD_COLLISION_FLAG( int entity, bool toggle, Any p2 )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_LOAD_COLLISION_FLAG( Entity entity, bool toggle, Any p2 )
 	{
 		ENTITY::SET_ENTITY_LOAD_COLLISION_FLAG(entity, toggle, p2);
 	}
 
-	bool LUA_NATIVE_ENTITY_HAS_COLLISION_LOADED_AROUND_ENTITY( int entity )
+	bool LUA_NATIVE_ENTITY_HAS_COLLISION_LOADED_AROUND_ENTITY( Entity entity )
 	{
 		auto retval = (bool)ENTITY::HAS_COLLISION_LOADED_AROUND_ENTITY(entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_MAX_SPEED( int entity, float speed )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_MAX_SPEED( Entity entity, float speed )
 	{
 		ENTITY::SET_ENTITY_MAX_SPEED(entity, speed);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_ONLY_DAMAGED_BY_PLAYER( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_ONLY_DAMAGED_BY_PLAYER( Entity entity, bool toggle )
 	{
 		ENTITY::SET_ENTITY_ONLY_DAMAGED_BY_PLAYER(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_ONLY_DAMAGED_BY_RELATIONSHIP_GROUP( int entity, bool p1, Any p2 )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_ONLY_DAMAGED_BY_RELATIONSHIP_GROUP( Entity entity, bool p1, Any p2 )
 	{
 		ENTITY::SET_ENTITY_ONLY_DAMAGED_BY_RELATIONSHIP_GROUP(entity, p1, p2);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_PROOFS( int entity, bool bulletProof, bool fireProof, bool explosionProof, bool collisionProof, bool meleeProof, bool steamProof, bool p7, bool waterProof )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_PROOFS( Entity entity, bool bulletProof, bool fireProof, bool explosionProof, bool collisionProof, bool meleeProof, bool steamProof, bool p7, bool waterProof )
 	{
 		ENTITY::SET_ENTITY_PROOFS(entity, bulletProof, fireProof, explosionProof, collisionProof, meleeProof, steamProof, p7, waterProof);
 	}
 
-	std::tuple<bool, bool, bool, bool, bool, bool, bool, bool, bool> LUA_NATIVE_ENTITY_GET_ENTITY_PROOFS( int entity, bool bulletProof, bool fireProof, bool explosionProof, bool collisionProof, bool meleeProof, bool steamProof, bool p7, bool drownProof )
+	std::tuple<bool, bool, bool, bool, bool, bool, bool, bool, bool> LUA_NATIVE_ENTITY_GET_ENTITY_PROOFS( Entity entity, bool bulletProof, bool fireProof, bool explosionProof, bool collisionProof, bool meleeProof, bool steamProof, bool p7, bool drownProof )
 	{
 		std::tuple<bool, bool, bool, bool, bool, bool, bool, bool, bool> return_values;
 		std::get<0>(return_values) = (bool)ENTITY::GET_ENTITY_PROOFS(entity, (BOOL*)&bulletProof, (BOOL*)&fireProof, (BOOL*)&explosionProof, (BOOL*)&collisionProof, (BOOL*)&meleeProof, (BOOL*)&steamProof, (BOOL*)&p7, (BOOL*)&drownProof);
@@ -4869,79 +4869,79 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_QUATERNION( int entity, float x, float y, float z, float w )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_QUATERNION( Entity entity, float x, float y, float z, float w )
 	{
 		ENTITY::SET_ENTITY_QUATERNION(entity, x, y, z, w);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_RECORDS_COLLISIONS( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_RECORDS_COLLISIONS( Entity entity, bool toggle )
 	{
 		ENTITY::SET_ENTITY_RECORDS_COLLISIONS(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_ROTATION( int entity, float pitch, float roll, float yaw, int rotationOrder, bool p5 )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_ROTATION( Entity entity, float pitch, float roll, float yaw, int rotationOrder, bool p5 )
 	{
 		ENTITY::SET_ENTITY_ROTATION(entity, pitch, roll, yaw, rotationOrder, p5);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_VISIBLE( int entity, bool toggle, bool p2 )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_VISIBLE( Entity entity, bool toggle, bool p2 )
 	{
 		ENTITY::SET_ENTITY_VISIBLE(entity, toggle, p2);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_WATER_REFLECTION_FLAG( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_WATER_REFLECTION_FLAG( Entity entity, bool toggle )
 	{
 		ENTITY::SET_ENTITY_WATER_REFLECTION_FLAG(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_MIRROR_REFLECTION_FLAG( int entity, bool p1 )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_MIRROR_REFLECTION_FLAG( Entity entity, bool p1 )
 	{
 		ENTITY::SET_ENTITY_MIRROR_REFLECTION_FLAG(entity, p1);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_VELOCITY( int entity, float x, float y, float z )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_VELOCITY( Entity entity, float x, float y, float z )
 	{
 		ENTITY::SET_ENTITY_VELOCITY(entity, x, y, z);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_ANGULAR_VELOCITY( int entity, float x, float y, float z )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_ANGULAR_VELOCITY( Entity entity, float x, float y, float z )
 	{
 		ENTITY::SET_ENTITY_ANGULAR_VELOCITY(entity, x, y, z);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_HAS_GRAVITY( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_HAS_GRAVITY( Entity entity, bool toggle )
 	{
 		ENTITY::SET_ENTITY_HAS_GRAVITY(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_LOD_DIST( int entity, int value )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_LOD_DIST( Entity entity, int value )
 	{
 		ENTITY::SET_ENTITY_LOD_DIST(entity, value);
 	}
 
-	int LUA_NATIVE_ENTITY_GET_ENTITY_LOD_DIST( int entity )
+	int LUA_NATIVE_ENTITY_GET_ENTITY_LOD_DIST( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_LOD_DIST(entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_ALPHA( int entity, int alphaLevel, bool skin )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_ALPHA( Entity entity, int alphaLevel, bool skin )
 	{
 		ENTITY::SET_ENTITY_ALPHA(entity, alphaLevel, skin);
 	}
 
-	int LUA_NATIVE_ENTITY_GET_ENTITY_ALPHA( int entity )
+	int LUA_NATIVE_ENTITY_GET_ENTITY_ALPHA( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_ALPHA(entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_ENTITY_RESET_ENTITY_ALPHA( int entity )
+	void LUA_NATIVE_ENTITY_RESET_ENTITY_ALPHA( Entity entity )
 	{
 		ENTITY::RESET_ENTITY_ALPHA(entity);
 	}
 
-	void LUA_NATIVE_ENTITY_RESET_PICKUP_ENTITY_GLOW( int entity )
+	void LUA_NATIVE_ENTITY_RESET_PICKUP_ENTITY_GLOW( Entity entity )
 	{
 		ENTITY::RESET_PICKUP_ENTITY_GLOW(entity);
 	}
@@ -4951,178 +4951,178 @@ namespace lua::native
 		ENTITY::SET_PICKUP_COLLIDES_WITH_PROJECTILES(p0, p1);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_SORT_BIAS( int entity, float p1 )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_SORT_BIAS( Entity entity, float p1 )
 	{
 		ENTITY::SET_ENTITY_SORT_BIAS(entity, p1);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_ALWAYS_PRERENDER( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_ALWAYS_PRERENDER( Entity entity, bool toggle )
 	{
 		ENTITY::SET_ENTITY_ALWAYS_PRERENDER(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_RENDER_SCORCHED( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_RENDER_SCORCHED( Entity entity, bool toggle )
 	{
 		ENTITY::SET_ENTITY_RENDER_SCORCHED(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_TRAFFICLIGHT_OVERRIDE( int entity, int state )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_TRAFFICLIGHT_OVERRIDE( Entity entity, int state )
 	{
 		ENTITY::SET_ENTITY_TRAFFICLIGHT_OVERRIDE(entity, state);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_IS_IN_VEHICLE( int entity )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_IS_IN_VEHICLE( Entity entity )
 	{
 		ENTITY::SET_ENTITY_IS_IN_VEHICLE(entity);
 	}
 
-	void LUA_NATIVE_ENTITY_CREATE_MODEL_SWAP( float x, float y, float z, float radius, unsigned originalModel, unsigned newModel, bool p6 )
+	void LUA_NATIVE_ENTITY_CREATE_MODEL_SWAP( float x, float y, float z, float radius, Hash originalModel, Hash newModel, bool p6 )
 	{
 		ENTITY::CREATE_MODEL_SWAP(x, y, z, radius, originalModel, newModel, p6);
 	}
 
-	void LUA_NATIVE_ENTITY_REMOVE_MODEL_SWAP( float x, float y, float z, float radius, unsigned originalModel, unsigned newModel, bool p6 )
+	void LUA_NATIVE_ENTITY_REMOVE_MODEL_SWAP( float x, float y, float z, float radius, Hash originalModel, Hash newModel, bool p6 )
 	{
 		ENTITY::REMOVE_MODEL_SWAP(x, y, z, radius, originalModel, newModel, p6);
 	}
 
-	void LUA_NATIVE_ENTITY_CREATE_MODEL_HIDE( float x, float y, float z, float radius, unsigned modelHash, bool p5 )
+	void LUA_NATIVE_ENTITY_CREATE_MODEL_HIDE( float x, float y, float z, float radius, Hash modelHash, bool p5 )
 	{
 		ENTITY::CREATE_MODEL_HIDE(x, y, z, radius, modelHash, p5);
 	}
 
-	void LUA_NATIVE_ENTITY_CREATE_MODEL_HIDE_EXCLUDING_SCRIPT_OBJECTS( float x, float y, float z, float radius, unsigned modelHash, bool p5 )
+	void LUA_NATIVE_ENTITY_CREATE_MODEL_HIDE_EXCLUDING_SCRIPT_OBJECTS( float x, float y, float z, float radius, Hash modelHash, bool p5 )
 	{
 		ENTITY::CREATE_MODEL_HIDE_EXCLUDING_SCRIPT_OBJECTS(x, y, z, radius, modelHash, p5);
 	}
 
-	void LUA_NATIVE_ENTITY_REMOVE_MODEL_HIDE( float x, float y, float z, float radius, unsigned modelHash, bool p5 )
+	void LUA_NATIVE_ENTITY_REMOVE_MODEL_HIDE( float x, float y, float z, float radius, Hash modelHash, bool p5 )
 	{
 		ENTITY::REMOVE_MODEL_HIDE(x, y, z, radius, modelHash, p5);
 	}
 
-	void LUA_NATIVE_ENTITY_CREATE_FORCED_OBJECT( float x, float y, float z, Any p3, unsigned modelHash, bool p5 )
+	void LUA_NATIVE_ENTITY_CREATE_FORCED_OBJECT( float x, float y, float z, Any p3, Hash modelHash, bool p5 )
 	{
 		ENTITY::CREATE_FORCED_OBJECT(x, y, z, p3, modelHash, p5);
 	}
 
-	void LUA_NATIVE_ENTITY_REMOVE_FORCED_OBJECT( float x, float y, float z, float p3, unsigned modelHash )
+	void LUA_NATIVE_ENTITY_REMOVE_FORCED_OBJECT( float x, float y, float z, float p3, Hash modelHash )
 	{
 		ENTITY::REMOVE_FORCED_OBJECT(x, y, z, p3, modelHash);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_NO_COLLISION_ENTITY( int entity1, int entity2, bool thisFrameOnly )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_NO_COLLISION_ENTITY( Entity entity1, Entity entity2, bool thisFrameOnly )
 	{
 		ENTITY::SET_ENTITY_NO_COLLISION_ENTITY(entity1, entity2, thisFrameOnly);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_MOTION_BLUR( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_MOTION_BLUR( Entity entity, bool toggle )
 	{
 		ENTITY::SET_ENTITY_MOTION_BLUR(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_CAN_AUTO_VAULT_ON_ENTITY( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_CAN_AUTO_VAULT_ON_ENTITY( Entity entity, bool toggle )
 	{
 		ENTITY::SET_CAN_AUTO_VAULT_ON_ENTITY(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_CAN_CLIMB_ON_ENTITY( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_CAN_CLIMB_ON_ENTITY( Entity entity, bool toggle )
 	{
 		ENTITY::SET_CAN_CLIMB_ON_ENTITY(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_WAIT_FOR_COLLISIONS_BEFORE_PROBE( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_WAIT_FOR_COLLISIONS_BEFORE_PROBE( Entity entity, bool toggle )
 	{
 		ENTITY::SET_WAIT_FOR_COLLISIONS_BEFORE_PROBE(entity, toggle);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_NOWEAPONDECALS( int entity, bool p1 )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_NOWEAPONDECALS( Entity entity, bool p1 )
 	{
 		ENTITY::SET_ENTITY_NOWEAPONDECALS(entity, p1);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_USE_MAX_DISTANCE_FOR_WATER_REFLECTION( int entity, bool p1 )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_USE_MAX_DISTANCE_FOR_WATER_REFLECTION( Entity entity, bool p1 )
 	{
 		ENTITY::SET_ENTITY_USE_MAX_DISTANCE_FOR_WATER_REFLECTION(entity, p1);
 	}
 
-	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_BONE_ROTATION( int entity, int boneIndex )
+	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_BONE_ROTATION( Entity entity, int boneIndex )
 	{
 		auto retval = ENTITY::GET_ENTITY_BONE_ROTATION(entity, boneIndex);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_BONE_POSTION( int entity, int boneIndex )
+	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_BONE_POSTION( Entity entity, int boneIndex )
 	{
 		auto retval = ENTITY::GET_ENTITY_BONE_POSTION(entity, boneIndex);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_BONE_OBJECT_ROTATION( int entity, int boneIndex )
+	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_BONE_OBJECT_ROTATION( Entity entity, int boneIndex )
 	{
 		auto retval = ENTITY::GET_ENTITY_BONE_OBJECT_ROTATION(entity, boneIndex);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_BONE_OBJECT_POSTION( int entity, int boneIndex )
+	Vector3 LUA_NATIVE_ENTITY_GET_ENTITY_BONE_OBJECT_POSTION( Entity entity, int boneIndex )
 	{
 		auto retval = ENTITY::GET_ENTITY_BONE_OBJECT_POSTION(entity, boneIndex);
 		return retval;
 	}
 
-	int LUA_NATIVE_ENTITY_GET_ENTITY_BONE_COUNT( int entity )
+	int LUA_NATIVE_ENTITY_GET_ENTITY_BONE_COUNT( Entity entity )
 	{
 		auto retval = ENTITY::GET_ENTITY_BONE_COUNT(entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_ENTITY_ENABLE_ENTITY_BULLET_COLLISION( int entity )
+	void LUA_NATIVE_ENTITY_ENABLE_ENTITY_BULLET_COLLISION( Entity entity )
 	{
 		ENTITY::ENABLE_ENTITY_BULLET_COLLISION(entity);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_CAN_ONLY_BE_DAMAGED_BY_ENTITY( int entity1, int entity2 )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_CAN_ONLY_BE_DAMAGED_BY_ENTITY( Entity entity1, Entity entity2 )
 	{
 		ENTITY::SET_ENTITY_CAN_ONLY_BE_DAMAGED_BY_ENTITY(entity1, entity2);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ENTITY_CANT_CAUSE_COLLISION_DAMAGED_ENTITY( int entity1, int entity2 )
+	void LUA_NATIVE_ENTITY_SET_ENTITY_CANT_CAUSE_COLLISION_DAMAGED_ENTITY( Entity entity1, Entity entity2 )
 	{
 		ENTITY::SET_ENTITY_CANT_CAUSE_COLLISION_DAMAGED_ENTITY(entity1, entity2);
 	}
 
-	void LUA_NATIVE_ENTITY_SET_ALLOW_MIGRATE_TO_SPECTATOR( int entity, Any p1 )
+	void LUA_NATIVE_ENTITY_SET_ALLOW_MIGRATE_TO_SPECTATOR( Entity entity, Any p1 )
 	{
 		ENTITY::SET_ALLOW_MIGRATE_TO_SPECTATOR(entity, p1);
 	}
 
-	int LUA_NATIVE_ENTITY_GET_ENTITY_OF_TYPE_ATTACHED_TO_ENTITY( int entity, unsigned modelHash )
+	Entity LUA_NATIVE_ENTITY_GET_ENTITY_OF_TYPE_ATTACHED_TO_ENTITY( Entity entity, Hash modelHash )
 	{
 		auto retval = ENTITY::GET_ENTITY_OF_TYPE_ATTACHED_TO_ENTITY(entity, modelHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_ENTITY_SET_PICK_UP_BY_CARGOBOB_DISABLED( int entity, bool toggle )
+	void LUA_NATIVE_ENTITY_SET_PICK_UP_BY_CARGOBOB_DISABLED( Entity entity, bool toggle )
 	{
 		ENTITY::SET_PICK_UP_BY_CARGOBOB_DISABLED(entity, toggle);
 	}
 
-	void LUA_NATIVE_EVENT_SET_DECISION_MAKER( int ped, unsigned name )
+	void LUA_NATIVE_EVENT_SET_DECISION_MAKER( Ped ped, Hash name )
 	{
 		EVENT::SET_DECISION_MAKER(ped, name);
 	}
 
-	void LUA_NATIVE_EVENT_CLEAR_DECISION_MAKER_EVENT_RESPONSE( unsigned name, int eventType )
+	void LUA_NATIVE_EVENT_CLEAR_DECISION_MAKER_EVENT_RESPONSE( Hash name, int eventType )
 	{
 		EVENT::CLEAR_DECISION_MAKER_EVENT_RESPONSE(name, eventType);
 	}
 
-	void LUA_NATIVE_EVENT_BLOCK_DECISION_MAKER_EVENT( unsigned name, int eventType )
+	void LUA_NATIVE_EVENT_BLOCK_DECISION_MAKER_EVENT( Hash name, int eventType )
 	{
 		EVENT::BLOCK_DECISION_MAKER_EVENT(name, eventType);
 	}
 
-	void LUA_NATIVE_EVENT_UNBLOCK_DECISION_MAKER_EVENT( unsigned name, int eventType )
+	void LUA_NATIVE_EVENT_UNBLOCK_DECISION_MAKER_EVENT( Hash name, int eventType )
 	{
 		EVENT::UNBLOCK_DECISION_MAKER_EVENT(name, eventType);
 	}
@@ -5133,7 +5133,7 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_EVENT_ADD_SHOCKING_EVENT_FOR_ENTITY( int eventType, int entity, float duration )
+	int LUA_NATIVE_EVENT_ADD_SHOCKING_EVENT_FOR_ENTITY( int eventType, Entity entity, float duration )
 	{
 		auto retval = EVENT::ADD_SHOCKING_EVENT_FOR_ENTITY(eventType, entity, duration);
 		return retval;
@@ -5145,7 +5145,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_EVENT_REMOVE_SHOCKING_EVENT( int event )
+	bool LUA_NATIVE_EVENT_REMOVE_SHOCKING_EVENT( ScrHandle event )
 	{
 		auto retval = (bool)EVENT::REMOVE_SHOCKING_EVENT(event);
 		return retval;
@@ -5191,7 +5191,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	int LUA_NATIVE_FILES_GET_TATTOO_SHOP_DLC_ITEM_INDEX( unsigned overlayHash, Any p1, int character )
+	int LUA_NATIVE_FILES_GET_TATTOO_SHOP_DLC_ITEM_INDEX( Hash overlayHash, Any p1, int character )
 	{
 		auto retval = FILES::GET_TATTOO_SHOP_DLC_ITEM_INDEX(overlayHash, p1, character);
 		return retval;
@@ -5227,13 +5227,13 @@ namespace lua::native
 		return outComponent;
 	}
 
-	int LUA_NATIVE_FILES_GET_SHOP_PED_QUERY_COMPONENT_INDEX( unsigned componentHash )
+	int LUA_NATIVE_FILES_GET_SHOP_PED_QUERY_COMPONENT_INDEX( Hash componentHash )
 	{
 		auto retval = FILES::GET_SHOP_PED_QUERY_COMPONENT_INDEX(componentHash);
 		return retval;
 	}
 
-	Any LUA_NATIVE_FILES_GET_SHOP_PED_COMPONENT( unsigned componentHash, Any outComponent )
+	Any LUA_NATIVE_FILES_GET_SHOP_PED_COMPONENT( Hash componentHash, Any outComponent )
 	{
 		FILES::GET_SHOP_PED_COMPONENT(componentHash, &outComponent);
 		return outComponent;
@@ -5245,45 +5245,45 @@ namespace lua::native
 		return outProp;
 	}
 
-	int LUA_NATIVE_FILES_GET_SHOP_PED_QUERY_PROP_INDEX( unsigned componentHash )
+	int LUA_NATIVE_FILES_GET_SHOP_PED_QUERY_PROP_INDEX( Hash componentHash )
 	{
 		auto retval = FILES::GET_SHOP_PED_QUERY_PROP_INDEX(componentHash);
 		return retval;
 	}
 
-	Any LUA_NATIVE_FILES_GET_SHOP_PED_PROP( unsigned componentHash, Any outProp )
+	Any LUA_NATIVE_FILES_GET_SHOP_PED_PROP( Hash componentHash, Any outProp )
 	{
 		FILES::GET_SHOP_PED_PROP(componentHash, &outProp);
 		return outProp;
 	}
 
-	unsigned LUA_NATIVE_FILES_GET_HASH_NAME_FOR_COMPONENT( int entity, int componentId, int drawableVariant, int textureVariant )
+	Hash LUA_NATIVE_FILES_GET_HASH_NAME_FOR_COMPONENT( Entity entity, int componentId, int drawableVariant, int textureVariant )
 	{
 		auto retval = FILES::GET_HASH_NAME_FOR_COMPONENT(entity, componentId, drawableVariant, textureVariant);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_FILES_GET_HASH_NAME_FOR_PROP( int entity, int componentId, int propIndex, int propTextureIndex )
+	Hash LUA_NATIVE_FILES_GET_HASH_NAME_FOR_PROP( Entity entity, int componentId, int propIndex, int propTextureIndex )
 	{
 		auto retval = FILES::GET_HASH_NAME_FOR_PROP(entity, componentId, propIndex, propTextureIndex);
 		return retval;
 	}
 
-	int LUA_NATIVE_FILES_GET_SHOP_PED_APPAREL_VARIANT_COMPONENT_COUNT( unsigned componentHash )
+	int LUA_NATIVE_FILES_GET_SHOP_PED_APPAREL_VARIANT_COMPONENT_COUNT( Hash componentHash )
 	{
 		auto retval = FILES::GET_SHOP_PED_APPAREL_VARIANT_COMPONENT_COUNT(componentHash);
 		return retval;
 	}
 
-	int LUA_NATIVE_FILES_GET_SHOP_PED_APPAREL_VARIANT_PROP_COUNT( unsigned propHash )
+	int LUA_NATIVE_FILES_GET_SHOP_PED_APPAREL_VARIANT_PROP_COUNT( Hash propHash )
 	{
 		auto retval = FILES::GET_SHOP_PED_APPAREL_VARIANT_PROP_COUNT(propHash);
 		return retval;
 	}
 
-	std::tuple<unsigned, int, int> LUA_NATIVE_FILES_GET_VARIANT_COMPONENT( unsigned componentHash, int variantComponentIndex, unsigned nameHash, int enumValue, int componentType )
+	std::tuple<Hash, int, int> LUA_NATIVE_FILES_GET_VARIANT_COMPONENT( Hash componentHash, int variantComponentIndex, Hash nameHash, int enumValue, int componentType )
 	{
-		std::tuple<unsigned, int, int> return_values;
+		std::tuple<Hash, int, int> return_values;
 		FILES::GET_VARIANT_COMPONENT(componentHash, variantComponentIndex, &nameHash, &enumValue, &componentType);
 		std::get<0>(return_values) = nameHash;
 		std::get<1>(return_values) = enumValue;
@@ -5292,9 +5292,9 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<unsigned, int, int> LUA_NATIVE_FILES_GET_VARIANT_PROP( unsigned componentHash, int variantPropIndex, unsigned nameHash, int enumValue, int anchorPoint )
+	std::tuple<Hash, int, int> LUA_NATIVE_FILES_GET_VARIANT_PROP( Hash componentHash, int variantPropIndex, Hash nameHash, int enumValue, int anchorPoint )
 	{
-		std::tuple<unsigned, int, int> return_values;
+		std::tuple<Hash, int, int> return_values;
 		FILES::GET_VARIANT_PROP(componentHash, variantPropIndex, &nameHash, &enumValue, &anchorPoint);
 		std::get<0>(return_values) = nameHash;
 		std::get<1>(return_values) = enumValue;
@@ -5303,21 +5303,21 @@ namespace lua::native
 		return return_values;
 	}
 
-	int LUA_NATIVE_FILES_GET_SHOP_PED_APPAREL_FORCED_COMPONENT_COUNT( unsigned componentHash )
+	int LUA_NATIVE_FILES_GET_SHOP_PED_APPAREL_FORCED_COMPONENT_COUNT( Hash componentHash )
 	{
 		auto retval = FILES::GET_SHOP_PED_APPAREL_FORCED_COMPONENT_COUNT(componentHash);
 		return retval;
 	}
 
-	int LUA_NATIVE_FILES_GET_SHOP_PED_APPAREL_FORCED_PROP_COUNT( unsigned componentHash )
+	int LUA_NATIVE_FILES_GET_SHOP_PED_APPAREL_FORCED_PROP_COUNT( Hash componentHash )
 	{
 		auto retval = FILES::GET_SHOP_PED_APPAREL_FORCED_PROP_COUNT(componentHash);
 		return retval;
 	}
 
-	std::tuple<unsigned, int, int> LUA_NATIVE_FILES_GET_FORCED_COMPONENT( unsigned componentHash, int forcedComponentIndex, unsigned nameHash, int enumValue, int componentType )
+	std::tuple<Hash, int, int> LUA_NATIVE_FILES_GET_FORCED_COMPONENT( Hash componentHash, int forcedComponentIndex, Hash nameHash, int enumValue, int componentType )
 	{
-		std::tuple<unsigned, int, int> return_values;
+		std::tuple<Hash, int, int> return_values;
 		FILES::GET_FORCED_COMPONENT(componentHash, forcedComponentIndex, &nameHash, &enumValue, &componentType);
 		std::get<0>(return_values) = nameHash;
 		std::get<1>(return_values) = enumValue;
@@ -5326,9 +5326,9 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<unsigned, int, int> LUA_NATIVE_FILES_GET_FORCED_PROP( unsigned componentHash, int forcedPropIndex, unsigned nameHash, int enumValue, int anchorPoint )
+	std::tuple<Hash, int, int> LUA_NATIVE_FILES_GET_FORCED_PROP( Hash componentHash, int forcedPropIndex, Hash nameHash, int enumValue, int anchorPoint )
 	{
-		std::tuple<unsigned, int, int> return_values;
+		std::tuple<Hash, int, int> return_values;
 		FILES::GET_FORCED_PROP(componentHash, forcedPropIndex, &nameHash, &enumValue, &anchorPoint);
 		std::get<0>(return_values) = nameHash;
 		std::get<1>(return_values) = enumValue;
@@ -5337,19 +5337,19 @@ namespace lua::native
 		return return_values;
 	}
 
-	bool LUA_NATIVE_FILES_DOES_SHOP_PED_APPAREL_HAVE_RESTRICTION_TAG( unsigned componentHash, unsigned restrictionTagHash, int componentId )
+	bool LUA_NATIVE_FILES_DOES_SHOP_PED_APPAREL_HAVE_RESTRICTION_TAG( Hash componentHash, Hash restrictionTagHash, int componentId )
 	{
 		auto retval = (bool)FILES::DOES_SHOP_PED_APPAREL_HAVE_RESTRICTION_TAG(componentHash, restrictionTagHash, componentId);
 		return retval;
 	}
 
-	bool LUA_NATIVE_FILES_DOES_CURRENT_PED_COMPONENT_HAVE_RESTRICTION_TAG( int ped, int componentId, unsigned restrictionTagHash )
+	bool LUA_NATIVE_FILES_DOES_CURRENT_PED_COMPONENT_HAVE_RESTRICTION_TAG( Ped ped, int componentId, Hash restrictionTagHash )
 	{
 		auto retval = (bool)FILES::DOES_CURRENT_PED_COMPONENT_HAVE_RESTRICTION_TAG(ped, componentId, restrictionTagHash);
 		return retval;
 	}
 
-	bool LUA_NATIVE_FILES_DOES_CURRENT_PED_PROP_HAVE_RESTRICTION_TAG( int ped, int componentId, unsigned restrictionTagHash )
+	bool LUA_NATIVE_FILES_DOES_CURRENT_PED_PROP_HAVE_RESTRICTION_TAG( Ped ped, int componentId, Hash restrictionTagHash )
 	{
 		auto retval = (bool)FILES::DOES_CURRENT_PED_PROP_HAVE_RESTRICTION_TAG(ped, componentId, restrictionTagHash);
 		return retval;
@@ -5379,7 +5379,7 @@ namespace lua::native
 		return retval;
 	}
 
-	std::tuple<bool, Any> LUA_NATIVE_FILES_GET_SHOP_PED_OUTFIT_PROP_VARIANT( unsigned outfitHash, int variantIndex, Any outPropVariant )
+	std::tuple<bool, Any> LUA_NATIVE_FILES_GET_SHOP_PED_OUTFIT_PROP_VARIANT( Hash outfitHash, int variantIndex, Any outPropVariant )
 	{
 		std::tuple<bool, Any> return_values;
 		std::get<0>(return_values) = (bool)FILES::GET_SHOP_PED_OUTFIT_PROP_VARIANT(outfitHash, variantIndex, &outPropVariant);
@@ -5388,7 +5388,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, Any> LUA_NATIVE_FILES_GET_SHOP_PED_OUTFIT_COMPONENT_VARIANT( unsigned outfitHash, int variantIndex, Any outComponentVariant )
+	std::tuple<bool, Any> LUA_NATIVE_FILES_GET_SHOP_PED_OUTFIT_COMPONENT_VARIANT( Hash outfitHash, int variantIndex, Any outComponentVariant )
 	{
 		std::tuple<bool, Any> return_values;
 		std::get<0>(return_values) = (bool)FILES::GET_SHOP_PED_OUTFIT_COMPONENT_VARIANT(outfitHash, variantIndex, &outComponentVariant);
@@ -5403,7 +5403,7 @@ namespace lua::native
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_FILES_GET_DLC_VEHICLE_MODEL( int dlcVehicleIndex )
+	Hash LUA_NATIVE_FILES_GET_DLC_VEHICLE_MODEL( int dlcVehicleIndex )
 	{
 		auto retval = FILES::GET_DLC_VEHICLE_MODEL(dlcVehicleIndex);
 		return retval;
@@ -5484,57 +5484,57 @@ namespace lua::native
 		return return_values;
 	}
 
-	bool LUA_NATIVE_FILES_IS_CONTENT_ITEM_LOCKED( unsigned itemHash )
+	bool LUA_NATIVE_FILES_IS_CONTENT_ITEM_LOCKED( Hash itemHash )
 	{
 		auto retval = (bool)FILES::IS_CONTENT_ITEM_LOCKED(itemHash);
 		return retval;
 	}
 
-	bool LUA_NATIVE_FILES_IS_DLC_VEHICLE_MOD( unsigned hash )
+	bool LUA_NATIVE_FILES_IS_DLC_VEHICLE_MOD( Hash hash )
 	{
 		auto retval = (bool)FILES::IS_DLC_VEHICLE_MOD(hash);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_FILES_GET_DLC_VEHICLE_MOD_LOCK_HASH( unsigned hash )
+	Hash LUA_NATIVE_FILES_GET_DLC_VEHICLE_MOD_LOCK_HASH( Hash hash )
 	{
 		auto retval = FILES::GET_DLC_VEHICLE_MOD_LOCK_HASH(hash);
 		return retval;
 	}
 
-	void LUA_NATIVE_FILES_EXECUTE_CONTENT_CHANGESET_GROUP_FOR_ALL( unsigned hash )
+	void LUA_NATIVE_FILES_EXECUTE_CONTENT_CHANGESET_GROUP_FOR_ALL( Hash hash )
 	{
 		FILES::EXECUTE_CONTENT_CHANGESET_GROUP_FOR_ALL(hash);
 	}
 
-	void LUA_NATIVE_FILES_REVERT_CONTENT_CHANGESET_GROUP_FOR_ALL( unsigned hash )
+	void LUA_NATIVE_FILES_REVERT_CONTENT_CHANGESET_GROUP_FOR_ALL( Hash hash )
 	{
 		FILES::REVERT_CONTENT_CHANGESET_GROUP_FOR_ALL(hash);
 	}
 
-	int LUA_NATIVE_FIRE_START_SCRIPT_FIRE( float X, float Y, float Z, int maxChildren, bool isGasFire )
+	FireId LUA_NATIVE_FIRE_START_SCRIPT_FIRE( float X, float Y, float Z, int maxChildren, bool isGasFire )
 	{
 		auto retval = FIRE::START_SCRIPT_FIRE(X, Y, Z, maxChildren, isGasFire);
 		return retval;
 	}
 
-	void LUA_NATIVE_FIRE_REMOVE_SCRIPT_FIRE( int fireHandle )
+	void LUA_NATIVE_FIRE_REMOVE_SCRIPT_FIRE( FireId fireHandle )
 	{
 		FIRE::REMOVE_SCRIPT_FIRE(fireHandle);
 	}
 
-	int LUA_NATIVE_FIRE_START_ENTITY_FIRE( int entity )
+	FireId LUA_NATIVE_FIRE_START_ENTITY_FIRE( Entity entity )
 	{
 		auto retval = FIRE::START_ENTITY_FIRE(entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_FIRE_STOP_ENTITY_FIRE( int entity )
+	void LUA_NATIVE_FIRE_STOP_ENTITY_FIRE( Entity entity )
 	{
 		FIRE::STOP_ENTITY_FIRE(entity);
 	}
 
-	bool LUA_NATIVE_FIRE_IS_ENTITY_ON_FIRE( int entity )
+	bool LUA_NATIVE_FIRE_IS_ENTITY_ON_FIRE( Entity entity )
 	{
 		auto retval = (bool)FIRE::IS_ENTITY_ON_FIRE(entity);
 		return retval;
@@ -5570,12 +5570,12 @@ namespace lua::native
 		FIRE::ADD_EXPLOSION(x, y, z, explosionType, damageScale, isAudible, isInvisible, cameraShake, noDamage);
 	}
 
-	void LUA_NATIVE_FIRE_ADD_OWNED_EXPLOSION( int ped, float x, float y, float z, int explosionType, float damageScale, bool isAudible, bool isInvisible, float cameraShake )
+	void LUA_NATIVE_FIRE_ADD_OWNED_EXPLOSION( Ped ped, float x, float y, float z, int explosionType, float damageScale, bool isAudible, bool isInvisible, float cameraShake )
 	{
 		FIRE::ADD_OWNED_EXPLOSION(ped, x, y, z, explosionType, damageScale, isAudible, isInvisible, cameraShake);
 	}
 
-	void LUA_NATIVE_FIRE_ADD_EXPLOSION_WITH_USER_VFX( float x, float y, float z, int explosionType, unsigned explosionFx, float damageScale, bool isAudible, bool isInvisible, float cameraShake )
+	void LUA_NATIVE_FIRE_ADD_EXPLOSION_WITH_USER_VFX( float x, float y, float z, int explosionType, Hash explosionFx, float damageScale, bool isAudible, bool isInvisible, float cameraShake )
 	{
 		FIRE::ADD_EXPLOSION_WITH_USER_VFX(x, y, z, explosionType, explosionFx, damageScale, isAudible, isInvisible, cameraShake);
 	}
@@ -5598,7 +5598,7 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_FIRE_GET_OWNER_OF_EXPLOSION_IN_SPHERE( int explosionType, float x, float y, float z, float radius )
+	Entity LUA_NATIVE_FIRE_GET_OWNER_OF_EXPLOSION_IN_SPHERE( int explosionType, float x, float y, float z, float radius )
 	{
 		auto retval = FIRE::GET_OWNER_OF_EXPLOSION_IN_SPHERE(explosionType, x, y, z, radius);
 		return retval;
@@ -5610,7 +5610,7 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_FIRE_GET_OWNER_OF_EXPLOSION_IN_ANGLED_AREA( int explosionType, float x1, float y1, float z1, float x2, float y2, float z2, float radius )
+	Entity LUA_NATIVE_FIRE_GET_OWNER_OF_EXPLOSION_IN_ANGLED_AREA( int explosionType, float x1, float y1, float z1, float x2, float y2, float z2, float radius )
 	{
 		auto retval = FIRE::GET_OWNER_OF_EXPLOSION_IN_ANGLED_AREA(explosionType, x1, y1, z1, x2, y2, z2, radius);
 		return retval;
@@ -5669,11 +5669,6 @@ namespace lua::native
 	void LUA_NATIVE_GRAPHICS_DRAW_TEXTURED_POLY( float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, int red, int green, int blue, int alpha, const char* textureDict, const char* textureName, float u1, float v1, float w1, float u2, float v2, float w2, float u3, float v3, float w3 )
 	{
 		GRAPHICS::DRAW_TEXTURED_POLY(x1, y1, z1, x2, y2, z2, x3, y3, z3, red, green, blue, alpha, textureDict, textureName, u1, v1, w1, u2, v2, w2, u3, v3, w3);
-	}
-
-	void LUA_NATIVE_GRAPHICS_DRAW_TEXTURED_POLY_WITH_THREE_COLOURS( float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float red1, float green1, float blue1, int alpha1, float red2, float green2, float blue2, int alpha2, float red3, float green3, float blue3, int alpha3, const char* textureDict, const char* textureName, float u1, float v1, float w1, float u2, float v2, float w2, float u3, float v3, float w3 )
-	{
-		GRAPHICS::DRAW_TEXTURED_POLY_WITH_THREE_COLOURS(x1, y1, z1, x2, y2, z2, x3, y3, z3, red1, green1, blue1, alpha1, red2, green2, blue2, alpha2, red3, green3, blue3, alpha3, textureDict, textureName, u1, v1, w1, u2, v2, w2, u3, v3, w3);
 	}
 
 	void LUA_NATIVE_GRAPHICS_DRAW_BOX( float x1, float y1, float z1, float x2, float y2, float z2, int red, int green, int blue, int alpha )
@@ -5887,7 +5882,7 @@ namespace lua::native
 		GRAPHICS::FADE_UP_PED_LIGHT(p0);
 	}
 
-	void LUA_NATIVE_GRAPHICS_UPDATE_LIGHTS_ON_ENTITY( int entity )
+	void LUA_NATIVE_GRAPHICS_UPDATE_LIGHTS_ON_ENTITY( Entity entity )
 	{
 		GRAPHICS::UPDATE_LIGHTS_ON_ENTITY(entity);
 	}
@@ -6071,18 +6066,18 @@ namespace lua::native
 		GRAPHICS::DRAW_SPRITE_ARX_WITH_UV(textureDict, textureName, x, y, width, height, u1, v1, u2, v2, heading, red, green, blue, alpha, p15);
 	}
 
-	int LUA_NATIVE_GRAPHICS_ADD_ENTITY_ICON( int entity, const char* icon )
+	int LUA_NATIVE_GRAPHICS_ADD_ENTITY_ICON( Entity entity, const char* icon )
 	{
 		auto retval = GRAPHICS::ADD_ENTITY_ICON(entity, icon);
 		return retval;
 	}
 
-	void LUA_NATIVE_GRAPHICS_SET_ENTITY_ICON_VISIBILITY( int entity, bool toggle )
+	void LUA_NATIVE_GRAPHICS_SET_ENTITY_ICON_VISIBILITY( Entity entity, bool toggle )
 	{
 		GRAPHICS::SET_ENTITY_ICON_VISIBILITY(entity, toggle);
 	}
 
-	void LUA_NATIVE_GRAPHICS_SET_ENTITY_ICON_COLOR( int entity, int red, int green, int blue, int alpha )
+	void LUA_NATIVE_GRAPHICS_SET_ENTITY_ICON_COLOR( Entity entity, int red, int green, int blue, int alpha )
 	{
 		GRAPHICS::SET_ENTITY_ICON_COLOR(entity, red, green, blue, alpha);
 	}
@@ -6139,7 +6134,7 @@ namespace lua::native
 		GRAPHICS::SET_BINK_MOVIE_VOLUME(binkMovie, value);
 	}
 
-	void LUA_NATIVE_GRAPHICS_ATTACH_TV_AUDIO_TO_ENTITY( int entity )
+	void LUA_NATIVE_GRAPHICS_ATTACH_TV_AUDIO_TO_ENTITY( Entity entity )
 	{
 		GRAPHICS::ATTACH_TV_AUDIO_TO_ENTITY(entity);
 	}
@@ -6283,7 +6278,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_GRAPHICS_OVERRIDE_PED_CREW_LOGO_TEXTURE( int ped, const char* txd, const char* txn )
+	bool LUA_NATIVE_GRAPHICS_OVERRIDE_PED_CREW_LOGO_TEXTURE( Ped ped, const char* txd, const char* txn )
 	{
 		auto retval = (bool)GRAPHICS::OVERRIDE_PED_CREW_LOGO_TEXTURE(ped, txd, txn);
 		return retval;
@@ -6718,31 +6713,31 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_GRAPHICS_START_PARTICLE_FX_NON_LOOPED_ON_PED_BONE( const char* effectName, int ped, float offsetX, float offsetY, float offsetZ, float rotX, float rotY, float rotZ, int boneIndex, float scale, bool axisX, bool axisY, bool axisZ )
+	bool LUA_NATIVE_GRAPHICS_START_PARTICLE_FX_NON_LOOPED_ON_PED_BONE( const char* effectName, Ped ped, float offsetX, float offsetY, float offsetZ, float rotX, float rotY, float rotZ, int boneIndex, float scale, bool axisX, bool axisY, bool axisZ )
 	{
 		auto retval = (bool)GRAPHICS::START_PARTICLE_FX_NON_LOOPED_ON_PED_BONE(effectName, ped, offsetX, offsetY, offsetZ, rotX, rotY, rotZ, boneIndex, scale, axisX, axisY, axisZ);
 		return retval;
 	}
 
-	bool LUA_NATIVE_GRAPHICS_START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_PED_BONE( const char* effectName, int ped, float offsetX, float offsetY, float offsetZ, float rotX, float rotY, float rotZ, int boneIndex, float scale, bool axisX, bool axisY, bool axisZ )
+	bool LUA_NATIVE_GRAPHICS_START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_PED_BONE( const char* effectName, Ped ped, float offsetX, float offsetY, float offsetZ, float rotX, float rotY, float rotZ, int boneIndex, float scale, bool axisX, bool axisY, bool axisZ )
 	{
 		auto retval = (bool)GRAPHICS::START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_PED_BONE(effectName, ped, offsetX, offsetY, offsetZ, rotX, rotY, rotZ, boneIndex, scale, axisX, axisY, axisZ);
 		return retval;
 	}
 
-	bool LUA_NATIVE_GRAPHICS_START_PARTICLE_FX_NON_LOOPED_ON_ENTITY( const char* effectName, int entity, float offsetX, float offsetY, float offsetZ, float rotX, float rotY, float rotZ, float scale, bool axisX, bool axisY, bool axisZ )
+	bool LUA_NATIVE_GRAPHICS_START_PARTICLE_FX_NON_LOOPED_ON_ENTITY( const char* effectName, Entity entity, float offsetX, float offsetY, float offsetZ, float rotX, float rotY, float rotZ, float scale, bool axisX, bool axisY, bool axisZ )
 	{
 		auto retval = (bool)GRAPHICS::START_PARTICLE_FX_NON_LOOPED_ON_ENTITY(effectName, entity, offsetX, offsetY, offsetZ, rotX, rotY, rotZ, scale, axisX, axisY, axisZ);
 		return retval;
 	}
 
-	bool LUA_NATIVE_GRAPHICS_START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY( const char* effectName, int entity, float offsetX, float offsetY, float offsetZ, float rotX, float rotY, float rotZ, float scale, bool axisX, bool axisY, bool axisZ )
+	bool LUA_NATIVE_GRAPHICS_START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY( const char* effectName, Entity entity, float offsetX, float offsetY, float offsetZ, float rotX, float rotY, float rotZ, float scale, bool axisX, bool axisY, bool axisZ )
 	{
 		auto retval = (bool)GRAPHICS::START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(effectName, entity, offsetX, offsetY, offsetZ, rotX, rotY, rotZ, scale, axisX, axisY, axisZ);
 		return retval;
 	}
 
-	bool LUA_NATIVE_GRAPHICS_START_PARTICLE_FX_NON_LOOPED_ON_ENTITY_BONE( const char* effectName, int entity, float offsetX, float offsetY, float offsetZ, float rotX, float rotY, float rotZ, int boneIndex, float scale, bool axisX, bool axisY, bool axisZ )
+	bool LUA_NATIVE_GRAPHICS_START_PARTICLE_FX_NON_LOOPED_ON_ENTITY_BONE( const char* effectName, Entity entity, float offsetX, float offsetY, float offsetZ, float rotX, float rotY, float rotZ, int boneIndex, float scale, bool axisX, bool axisY, bool axisZ )
 	{
 		auto retval = (bool)GRAPHICS::START_PARTICLE_FX_NON_LOOPED_ON_ENTITY_BONE(effectName, entity, offsetX, offsetY, offsetZ, rotX, rotY, rotZ, boneIndex, scale, axisX, axisY, axisZ);
 		return retval;
@@ -6779,31 +6774,31 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_GRAPHICS_START_PARTICLE_FX_LOOPED_ON_PED_BONE( const char* effectName, int ped, float xOffset, float yOffset, float zOffset, float xRot, float yRot, float zRot, int boneIndex, float scale, bool xAxis, bool yAxis, bool zAxis )
+	int LUA_NATIVE_GRAPHICS_START_PARTICLE_FX_LOOPED_ON_PED_BONE( const char* effectName, Ped ped, float xOffset, float yOffset, float zOffset, float xRot, float yRot, float zRot, int boneIndex, float scale, bool xAxis, bool yAxis, bool zAxis )
 	{
 		auto retval = GRAPHICS::START_PARTICLE_FX_LOOPED_ON_PED_BONE(effectName, ped, xOffset, yOffset, zOffset, xRot, yRot, zRot, boneIndex, scale, xAxis, yAxis, zAxis);
 		return retval;
 	}
 
-	int LUA_NATIVE_GRAPHICS_START_PARTICLE_FX_LOOPED_ON_ENTITY( const char* effectName, int entity, float xOffset, float yOffset, float zOffset, float xRot, float yRot, float zRot, float scale, bool xAxis, bool yAxis, bool zAxis )
+	int LUA_NATIVE_GRAPHICS_START_PARTICLE_FX_LOOPED_ON_ENTITY( const char* effectName, Entity entity, float xOffset, float yOffset, float zOffset, float xRot, float yRot, float zRot, float scale, bool xAxis, bool yAxis, bool zAxis )
 	{
 		auto retval = GRAPHICS::START_PARTICLE_FX_LOOPED_ON_ENTITY(effectName, entity, xOffset, yOffset, zOffset, xRot, yRot, zRot, scale, xAxis, yAxis, zAxis);
 		return retval;
 	}
 
-	int LUA_NATIVE_GRAPHICS_START_PARTICLE_FX_LOOPED_ON_ENTITY_BONE( const char* effectName, int entity, float xOffset, float yOffset, float zOffset, float xRot, float yRot, float zRot, int boneIndex, float scale, bool xAxis, bool yAxis, bool zAxis )
+	int LUA_NATIVE_GRAPHICS_START_PARTICLE_FX_LOOPED_ON_ENTITY_BONE( const char* effectName, Entity entity, float xOffset, float yOffset, float zOffset, float xRot, float yRot, float zRot, int boneIndex, float scale, bool xAxis, bool yAxis, bool zAxis )
 	{
 		auto retval = GRAPHICS::START_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(effectName, entity, xOffset, yOffset, zOffset, xRot, yRot, zRot, boneIndex, scale, xAxis, yAxis, zAxis);
 		return retval;
 	}
 
-	int LUA_NATIVE_GRAPHICS_START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY( const char* effectName, int entity, float xOffset, float yOffset, float zOffset, float xRot, float yRot, float zRot, float scale, bool xAxis, bool yAxis, bool zAxis, float r, float g, float b, float a )
+	int LUA_NATIVE_GRAPHICS_START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY( const char* effectName, Entity entity, float xOffset, float yOffset, float zOffset, float xRot, float yRot, float zRot, float scale, bool xAxis, bool yAxis, bool zAxis, float r, float g, float b, float a )
 	{
 		auto retval = GRAPHICS::START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(effectName, entity, xOffset, yOffset, zOffset, xRot, yRot, zRot, scale, xAxis, yAxis, zAxis, r, g, b, a);
 		return retval;
 	}
 
-	int LUA_NATIVE_GRAPHICS_START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE( const char* effectName, int entity, float xOffset, float yOffset, float zOffset, float xRot, float yRot, float zRot, int boneIndex, float scale, bool xAxis, bool yAxis, bool zAxis, float r, float g, float b, float a )
+	int LUA_NATIVE_GRAPHICS_START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE( const char* effectName, Entity entity, float xOffset, float yOffset, float zOffset, float xRot, float yRot, float zRot, int boneIndex, float scale, bool xAxis, bool yAxis, bool zAxis, float r, float g, float b, float a )
 	{
 		auto retval = GRAPHICS::START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(effectName, entity, xOffset, yOffset, zOffset, xRot, yRot, zRot, boneIndex, scale, xAxis, yAxis, zAxis, r, g, b, a);
 		return retval;
@@ -6819,7 +6814,7 @@ namespace lua::native
 		GRAPHICS::REMOVE_PARTICLE_FX(ptfxHandle, p1);
 	}
 
-	void LUA_NATIVE_GRAPHICS_REMOVE_PARTICLE_FX_FROM_ENTITY( int entity )
+	void LUA_NATIVE_GRAPHICS_REMOVE_PARTICLE_FX_FROM_ENTITY( Entity entity )
 	{
 		GRAPHICS::REMOVE_PARTICLE_FX_FROM_ENTITY(entity);
 	}
@@ -6875,7 +6870,7 @@ namespace lua::native
 		GRAPHICS::SET_PARTICLE_FX_CAM_INSIDE_VEHICLE(p0);
 	}
 
-	void LUA_NATIVE_GRAPHICS_SET_PARTICLE_FX_CAM_INSIDE_NONPLAYER_VEHICLE( int vehicle, bool p1 )
+	void LUA_NATIVE_GRAPHICS_SET_PARTICLE_FX_CAM_INSIDE_NONPLAYER_VEHICLE( Vehicle vehicle, bool p1 )
 	{
 		GRAPHICS::SET_PARTICLE_FX_CAM_INSIDE_NONPLAYER_VEHICLE(vehicle, p1);
 	}
@@ -7000,7 +6995,7 @@ namespace lua::native
 		GRAPHICS::WASH_DECALS_IN_RANGE(x, y, z, range, p4);
 	}
 
-	void LUA_NATIVE_GRAPHICS_WASH_DECALS_FROM_VEHICLE( int vehicle, float p1 )
+	void LUA_NATIVE_GRAPHICS_WASH_DECALS_FROM_VEHICLE( Vehicle vehicle, float p1 )
 	{
 		GRAPHICS::WASH_DECALS_FROM_VEHICLE(vehicle, p1);
 	}
@@ -7025,7 +7020,7 @@ namespace lua::native
 		GRAPHICS::REMOVE_DECALS_FROM_OBJECT_FACING(obj, x, y, z);
 	}
 
-	void LUA_NATIVE_GRAPHICS_REMOVE_DECALS_FROM_VEHICLE( int vehicle )
+	void LUA_NATIVE_GRAPHICS_REMOVE_DECALS_FROM_VEHICLE( Vehicle vehicle )
 	{
 		GRAPHICS::REMOVE_DECALS_FROM_VEHICLE(vehicle);
 	}
@@ -7116,7 +7111,7 @@ namespace lua::native
 		GRAPHICS::MOVE_VEHICLE_DECALS(p0, p1);
 	}
 
-	bool LUA_NATIVE_GRAPHICS_ADD_VEHICLE_CREW_EMBLEM( int vehicle, int ped, int boneIndex, float x1, float x2, float x3, float y1, float y2, float y3, float z1, float z2, float z3, float scale, Any p13, int alpha )
+	bool LUA_NATIVE_GRAPHICS_ADD_VEHICLE_CREW_EMBLEM( Vehicle vehicle, Ped ped, int boneIndex, float x1, float x2, float x3, float y1, float y2, float y3, float z1, float z2, float z3, float scale, Any p13, int alpha )
 	{
 		auto retval = (bool)GRAPHICS::ADD_VEHICLE_CREW_EMBLEM(vehicle, ped, boneIndex, x1, x2, x3, y1, y2, y3, z1, z2, z3, scale, p13, alpha);
 		return retval;
@@ -7131,18 +7126,18 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_GRAPHICS_REMOVE_VEHICLE_CREW_EMBLEM( int vehicle, int p1 )
+	void LUA_NATIVE_GRAPHICS_REMOVE_VEHICLE_CREW_EMBLEM( Vehicle vehicle, int p1 )
 	{
 		GRAPHICS::REMOVE_VEHICLE_CREW_EMBLEM(vehicle, p1);
 	}
 
-	int LUA_NATIVE_GRAPHICS_GET_VEHICLE_CREW_EMBLEM_REQUEST_STATE( int vehicle, int p1 )
+	int LUA_NATIVE_GRAPHICS_GET_VEHICLE_CREW_EMBLEM_REQUEST_STATE( Vehicle vehicle, int p1 )
 	{
 		auto retval = GRAPHICS::GET_VEHICLE_CREW_EMBLEM_REQUEST_STATE(vehicle, p1);
 		return retval;
 	}
 
-	bool LUA_NATIVE_GRAPHICS_DOES_VEHICLE_HAVE_CREW_EMBLEM( int vehicle, int p1 )
+	bool LUA_NATIVE_GRAPHICS_DOES_VEHICLE_HAVE_CREW_EMBLEM( Vehicle vehicle, int p1 )
 	{
 		auto retval = (bool)GRAPHICS::DOES_VEHICLE_HAVE_CREW_EMBLEM(vehicle, p1);
 		return retval;
@@ -7627,7 +7622,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_GRAPHICS_IS_TVSHOW_CURRENTLY_PLAYING( unsigned videoCliphash )
+	bool LUA_NATIVE_GRAPHICS_IS_TVSHOW_CURRENTLY_PLAYING( Hash videoCliphash )
 	{
 		auto retval = (bool)GRAPHICS::IS_TVSHOW_CURRENTLY_PLAYING(videoCliphash);
 		return retval;
@@ -7643,7 +7638,7 @@ namespace lua::native
 		GRAPHICS::SET_TV_PLAYER_WATCHING_THIS_FRAME(p0);
 	}
 
-	unsigned LUA_NATIVE_GRAPHICS_GET_CURRENT_TV_CLIP_NAMEHASH(  )
+	Hash LUA_NATIVE_GRAPHICS_GET_CURRENT_TV_CLIP_NAMEHASH(  )
 	{
 		auto retval = GRAPHICS::GET_CURRENT_TV_CLIP_NAMEHASH();
 		return retval;
@@ -7666,7 +7661,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_GRAPHICS_UI3DSCENE_ASSIGN_PED_TO_SLOT( const char* presetName, int ped, int slot, float posX, float posY, float posZ )
+	bool LUA_NATIVE_GRAPHICS_UI3DSCENE_ASSIGN_PED_TO_SLOT( const char* presetName, Ped ped, int slot, float posX, float posY, float posZ )
 	{
 		auto retval = (bool)GRAPHICS::UI3DSCENE_ASSIGN_PED_TO_SLOT(presetName, ped, slot, posX, posY, posZ);
 		return retval;
@@ -8140,7 +8135,7 @@ namespace lua::native
 		HUD::BEGIN_TEXT_COMMAND_SET_BLIP_NAME(textLabel);
 	}
 
-	void LUA_NATIVE_HUD_END_TEXT_COMMAND_SET_BLIP_NAME( int blip )
+	void LUA_NATIVE_HUD_END_TEXT_COMMAND_SET_BLIP_NAME( Blip blip )
 	{
 		HUD::END_TEXT_COMMAND_SET_BLIP_NAME(blip);
 	}
@@ -8190,12 +8185,12 @@ namespace lua::native
 		HUD::ADD_TEXT_COMPONENT_SUBSTRING_TEXT_LABEL(labelName);
 	}
 
-	void LUA_NATIVE_HUD_ADD_TEXT_COMPONENT_SUBSTRING_TEXT_LABEL_HASH_KEY( unsigned gxtEntryHash )
+	void LUA_NATIVE_HUD_ADD_TEXT_COMPONENT_SUBSTRING_TEXT_LABEL_HASH_KEY( Hash gxtEntryHash )
 	{
 		HUD::ADD_TEXT_COMPONENT_SUBSTRING_TEXT_LABEL_HASH_KEY(gxtEntryHash);
 	}
 
-	void LUA_NATIVE_HUD_ADD_TEXT_COMPONENT_SUBSTRING_BLIP_NAME( int blip )
+	void LUA_NATIVE_HUD_ADD_TEXT_COMPONENT_SUBSTRING_BLIP_NAME( Blip blip )
 	{
 		HUD::ADD_TEXT_COMPONENT_SUBSTRING_BLIP_NAME(blip);
 	}
@@ -8359,7 +8354,7 @@ namespace lua::native
 		return retval;
 	}
 
-	const char* LUA_NATIVE_HUD_GET_STREET_NAME_FROM_HASH_KEY( unsigned hash )
+	const char* LUA_NATIVE_HUD_GET_STREET_NAME_FROM_HASH_KEY( Hash hash )
 	{
 		auto retval = HUD::GET_STREET_NAME_FROM_HASH_KEY(hash);
 		return retval;
@@ -8447,7 +8442,7 @@ namespace lua::native
 		HUD::CLEAR_VALID_VEHICLE_HIT_HASHES();
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_ROUTE( int blip, bool enabled )
+	void LUA_NATIVE_HUD_SET_BLIP_ROUTE( Blip blip, bool enabled )
 	{
 		HUD::SET_BLIP_ROUTE(blip, enabled);
 	}
@@ -8457,7 +8452,7 @@ namespace lua::native
 		HUD::CLEAR_ALL_BLIP_ROUTES();
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_ROUTE_COLOUR( int blip, int colour )
+	void LUA_NATIVE_HUD_SET_BLIP_ROUTE_COLOUR( Blip blip, int colour )
 	{
 		HUD::SET_BLIP_ROUTE_COLOUR(blip, colour);
 	}
@@ -8497,7 +8492,7 @@ namespace lua::native
 		HUD::SET_RADAR_ZOOM(zoomLevel);
 	}
 
-	void LUA_NATIVE_HUD_SET_RADAR_ZOOM_TO_BLIP( int blip, float zoom )
+	void LUA_NATIVE_HUD_SET_RADAR_ZOOM_TO_BLIP( Blip blip, float zoom )
 	{
 		HUD::SET_RADAR_ZOOM_TO_BLIP(blip, zoom);
 	}
@@ -8679,7 +8674,7 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_HUD_LINK_NAMED_RENDERTARGET( unsigned modelHash )
+	void LUA_NATIVE_HUD_LINK_NAMED_RENDERTARGET( Hash modelHash )
 	{
 		HUD::LINK_NAMED_RENDERTARGET(modelHash);
 	}
@@ -8690,7 +8685,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_HUD_IS_NAMED_RENDERTARGET_LINKED( unsigned modelHash )
+	bool LUA_NATIVE_HUD_IS_NAMED_RENDERTARGET_LINKED( Hash modelHash )
 	{
 		auto retval = (bool)HUD::IS_NAMED_RENDERTARGET_LINKED(modelHash);
 		return retval;
@@ -8748,85 +8743,85 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_GET_NEXT_BLIP_INFO_ID( int blipSprite )
+	Blip LUA_NATIVE_HUD_GET_NEXT_BLIP_INFO_ID( int blipSprite )
 	{
 		auto retval = HUD::GET_NEXT_BLIP_INFO_ID(blipSprite);
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_GET_FIRST_BLIP_INFO_ID( int blipSprite )
+	Blip LUA_NATIVE_HUD_GET_FIRST_BLIP_INFO_ID( int blipSprite )
 	{
 		auto retval = HUD::GET_FIRST_BLIP_INFO_ID(blipSprite);
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_GET_CLOSEST_BLIP_INFO_ID( int blipSprite )
+	Blip LUA_NATIVE_HUD_GET_CLOSEST_BLIP_INFO_ID( int blipSprite )
 	{
 		auto retval = HUD::GET_CLOSEST_BLIP_INFO_ID(blipSprite);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_HUD_GET_BLIP_INFO_ID_COORD( int blip )
+	Vector3 LUA_NATIVE_HUD_GET_BLIP_INFO_ID_COORD( Blip blip )
 	{
 		auto retval = HUD::GET_BLIP_INFO_ID_COORD(blip);
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_GET_BLIP_INFO_ID_DISPLAY( int blip )
+	int LUA_NATIVE_HUD_GET_BLIP_INFO_ID_DISPLAY( Blip blip )
 	{
 		auto retval = HUD::GET_BLIP_INFO_ID_DISPLAY(blip);
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_GET_BLIP_INFO_ID_TYPE( int blip )
+	int LUA_NATIVE_HUD_GET_BLIP_INFO_ID_TYPE( Blip blip )
 	{
 		auto retval = HUD::GET_BLIP_INFO_ID_TYPE(blip);
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_GET_BLIP_INFO_ID_ENTITY_INDEX( int blip )
+	Entity LUA_NATIVE_HUD_GET_BLIP_INFO_ID_ENTITY_INDEX( Blip blip )
 	{
 		auto retval = HUD::GET_BLIP_INFO_ID_ENTITY_INDEX(blip);
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_GET_BLIP_INFO_ID_PICKUP_INDEX( int blip )
+	Pickup LUA_NATIVE_HUD_GET_BLIP_INFO_ID_PICKUP_INDEX( Blip blip )
 	{
 		auto retval = HUD::GET_BLIP_INFO_ID_PICKUP_INDEX(blip);
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_GET_BLIP_FROM_ENTITY( int entity )
+	Blip LUA_NATIVE_HUD_GET_BLIP_FROM_ENTITY( Entity entity )
 	{
 		auto retval = HUD::GET_BLIP_FROM_ENTITY(entity);
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_ADD_BLIP_FOR_RADIUS( float posX, float posY, float posZ, float radius )
+	Blip LUA_NATIVE_HUD_ADD_BLIP_FOR_RADIUS( float posX, float posY, float posZ, float radius )
 	{
 		auto retval = HUD::ADD_BLIP_FOR_RADIUS(posX, posY, posZ, radius);
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_ADD_BLIP_FOR_AREA( float x, float y, float z, float width, float height )
+	Blip LUA_NATIVE_HUD_ADD_BLIP_FOR_AREA( float x, float y, float z, float width, float height )
 	{
 		auto retval = HUD::ADD_BLIP_FOR_AREA(x, y, z, width, height);
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_ADD_BLIP_FOR_ENTITY( int entity )
+	Blip LUA_NATIVE_HUD_ADD_BLIP_FOR_ENTITY( Entity entity )
 	{
 		auto retval = HUD::ADD_BLIP_FOR_ENTITY(entity);
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_ADD_BLIP_FOR_PICKUP( int pickup )
+	Blip LUA_NATIVE_HUD_ADD_BLIP_FOR_PICKUP( Pickup pickup )
 	{
 		auto retval = HUD::ADD_BLIP_FOR_PICKUP(pickup);
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_ADD_BLIP_FOR_COORD( float x, float y, float z )
+	Blip LUA_NATIVE_HUD_ADD_BLIP_FOR_COORD( float x, float y, float z )
 	{
 		auto retval = HUD::ADD_BLIP_FOR_COORD(x, y, z);
 		return retval;
@@ -8842,23 +8837,23 @@ namespace lua::native
 		HUD::ALLOW_SONAR_BLIPS(toggle);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_COORDS( int blip, float posX, float posY, float posZ )
+	void LUA_NATIVE_HUD_SET_BLIP_COORDS( Blip blip, float posX, float posY, float posZ )
 	{
 		HUD::SET_BLIP_COORDS(blip, posX, posY, posZ);
 	}
 
-	Vector3 LUA_NATIVE_HUD_GET_BLIP_COORDS( int blip )
+	Vector3 LUA_NATIVE_HUD_GET_BLIP_COORDS( Blip blip )
 	{
 		auto retval = HUD::GET_BLIP_COORDS(blip);
 		return retval;
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_SPRITE( int blip, int spriteId )
+	void LUA_NATIVE_HUD_SET_BLIP_SPRITE( Blip blip, int spriteId )
 	{
 		HUD::SET_BLIP_SPRITE(blip, spriteId);
 	}
 
-	int LUA_NATIVE_HUD_GET_BLIP_SPRITE( int blip )
+	int LUA_NATIVE_HUD_GET_BLIP_SPRITE( Blip blip )
 	{
 		auto retval = HUD::GET_BLIP_SPRITE(blip);
 		return retval;
@@ -8874,126 +8869,126 @@ namespace lua::native
 		HUD::SET_COP_BLIP_SPRITE_AS_STANDARD();
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_NAME_FROM_TEXT_FILE( int blip, const char* gxtEntry )
+	void LUA_NATIVE_HUD_SET_BLIP_NAME_FROM_TEXT_FILE( Blip blip, const char* gxtEntry )
 	{
 		HUD::SET_BLIP_NAME_FROM_TEXT_FILE(blip, gxtEntry);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_NAME_TO_PLAYER_NAME( int blip, int player )
+	void LUA_NATIVE_HUD_SET_BLIP_NAME_TO_PLAYER_NAME( Blip blip, Player player )
 	{
 		HUD::SET_BLIP_NAME_TO_PLAYER_NAME(blip, player);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_ALPHA( int blip, int alpha )
+	void LUA_NATIVE_HUD_SET_BLIP_ALPHA( Blip blip, int alpha )
 	{
 		HUD::SET_BLIP_ALPHA(blip, alpha);
 	}
 
-	int LUA_NATIVE_HUD_GET_BLIP_ALPHA( int blip )
+	int LUA_NATIVE_HUD_GET_BLIP_ALPHA( Blip blip )
 	{
 		auto retval = HUD::GET_BLIP_ALPHA(blip);
 		return retval;
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_FADE( int blip, int opacity, int duration )
+	void LUA_NATIVE_HUD_SET_BLIP_FADE( Blip blip, int opacity, int duration )
 	{
 		HUD::SET_BLIP_FADE(blip, opacity, duration);
 	}
 
-	int LUA_NATIVE_HUD_GET_BLIP_FADE_DIRECTION( int blip )
+	int LUA_NATIVE_HUD_GET_BLIP_FADE_DIRECTION( Blip blip )
 	{
 		auto retval = HUD::GET_BLIP_FADE_DIRECTION(blip);
 		return retval;
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_ROTATION( int blip, int rotation )
+	void LUA_NATIVE_HUD_SET_BLIP_ROTATION( Blip blip, int rotation )
 	{
 		HUD::SET_BLIP_ROTATION(blip, rotation);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_ROTATION_WITH_FLOAT( int blip, float heading )
+	void LUA_NATIVE_HUD_SET_BLIP_ROTATION_WITH_FLOAT( Blip blip, float heading )
 	{
 		HUD::SET_BLIP_ROTATION_WITH_FLOAT(blip, heading);
 	}
 
-	int LUA_NATIVE_HUD_GET_BLIP_ROTATION( int blip )
+	int LUA_NATIVE_HUD_GET_BLIP_ROTATION( Blip blip )
 	{
 		auto retval = HUD::GET_BLIP_ROTATION(blip);
 		return retval;
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_FLASH_TIMER( int blip, int duration )
+	void LUA_NATIVE_HUD_SET_BLIP_FLASH_TIMER( Blip blip, int duration )
 	{
 		HUD::SET_BLIP_FLASH_TIMER(blip, duration);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_FLASH_INTERVAL( int blip, Any p1 )
+	void LUA_NATIVE_HUD_SET_BLIP_FLASH_INTERVAL( Blip blip, Any p1 )
 	{
 		HUD::SET_BLIP_FLASH_INTERVAL(blip, p1);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_COLOUR( int blip, int color )
+	void LUA_NATIVE_HUD_SET_BLIP_COLOUR( Blip blip, int color )
 	{
 		HUD::SET_BLIP_COLOUR(blip, color);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_SECONDARY_COLOUR( int blip, int r, int g, int b )
+	void LUA_NATIVE_HUD_SET_BLIP_SECONDARY_COLOUR( Blip blip, int r, int g, int b )
 	{
 		HUD::SET_BLIP_SECONDARY_COLOUR(blip, r, g, b);
 	}
 
-	int LUA_NATIVE_HUD_GET_BLIP_COLOUR( int blip )
+	int LUA_NATIVE_HUD_GET_BLIP_COLOUR( Blip blip )
 	{
 		auto retval = HUD::GET_BLIP_COLOUR(blip);
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_GET_BLIP_HUD_COLOUR( int blip )
+	int LUA_NATIVE_HUD_GET_BLIP_HUD_COLOUR( Blip blip )
 	{
 		auto retval = HUD::GET_BLIP_HUD_COLOUR(blip);
 		return retval;
 	}
 
-	bool LUA_NATIVE_HUD_IS_BLIP_SHORT_RANGE( int blip )
+	bool LUA_NATIVE_HUD_IS_BLIP_SHORT_RANGE( Blip blip )
 	{
 		auto retval = (bool)HUD::IS_BLIP_SHORT_RANGE(blip);
 		return retval;
 	}
 
-	bool LUA_NATIVE_HUD_IS_BLIP_ON_MINIMAP( int blip )
+	bool LUA_NATIVE_HUD_IS_BLIP_ON_MINIMAP( Blip blip )
 	{
 		auto retval = (bool)HUD::IS_BLIP_ON_MINIMAP(blip);
 		return retval;
 	}
 
-	bool LUA_NATIVE_HUD_DOES_BLIP_HAVE_GPS_ROUTE( int blip )
+	bool LUA_NATIVE_HUD_DOES_BLIP_HAVE_GPS_ROUTE( Blip blip )
 	{
 		auto retval = (bool)HUD::DOES_BLIP_HAVE_GPS_ROUTE(blip);
 		return retval;
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_HIDDEN_ON_LEGEND( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SET_BLIP_HIDDEN_ON_LEGEND( Blip blip, bool toggle )
 	{
 		HUD::SET_BLIP_HIDDEN_ON_LEGEND(blip, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_HIGH_DETAIL( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SET_BLIP_HIGH_DETAIL( Blip blip, bool toggle )
 	{
 		HUD::SET_BLIP_HIGH_DETAIL(blip, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_AS_MISSION_CREATOR_BLIP( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SET_BLIP_AS_MISSION_CREATOR_BLIP( Blip blip, bool toggle )
 	{
 		HUD::SET_BLIP_AS_MISSION_CREATOR_BLIP(blip, toggle);
 	}
 
-	bool LUA_NATIVE_HUD_IS_MISSION_CREATOR_BLIP( int blip )
+	bool LUA_NATIVE_HUD_IS_MISSION_CREATOR_BLIP( Blip blip )
 	{
 		auto retval = (bool)HUD::IS_MISSION_CREATOR_BLIP(blip);
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_GET_NEW_SELECTED_MISSION_CREATOR_BLIP(  )
+	Blip LUA_NATIVE_HUD_GET_NEW_SELECTED_MISSION_CREATOR_BLIP(  )
 	{
 		auto retval = HUD::GET_NEW_SELECTED_MISSION_CREATOR_BLIP();
 		return retval;
@@ -9025,119 +9020,119 @@ namespace lua::native
 		HUD::SET_BLIP_MARKER_LONG_DISTANCE(p0, p1);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_FLASHES( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SET_BLIP_FLASHES( Blip blip, bool toggle )
 	{
 		HUD::SET_BLIP_FLASHES(blip, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_FLASHES_ALTERNATE( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SET_BLIP_FLASHES_ALTERNATE( Blip blip, bool toggle )
 	{
 		HUD::SET_BLIP_FLASHES_ALTERNATE(blip, toggle);
 	}
 
-	bool LUA_NATIVE_HUD_IS_BLIP_FLASHING( int blip )
+	bool LUA_NATIVE_HUD_IS_BLIP_FLASHING( Blip blip )
 	{
 		auto retval = (bool)HUD::IS_BLIP_FLASHING(blip);
 		return retval;
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_AS_SHORT_RANGE( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SET_BLIP_AS_SHORT_RANGE( Blip blip, bool toggle )
 	{
 		HUD::SET_BLIP_AS_SHORT_RANGE(blip, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_SCALE( int blip, float scale )
+	void LUA_NATIVE_HUD_SET_BLIP_SCALE( Blip blip, float scale )
 	{
 		HUD::SET_BLIP_SCALE(blip, scale);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_SCALE_2D( int blip, float xScale, float yScale )
+	void LUA_NATIVE_HUD_SET_BLIP_SCALE_2D( Blip blip, float xScale, float yScale )
 	{
 		HUD::SET_BLIP_SCALE_2D(blip, xScale, yScale);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_PRIORITY( int blip, int priority )
+	void LUA_NATIVE_HUD_SET_BLIP_PRIORITY( Blip blip, int priority )
 	{
 		HUD::SET_BLIP_PRIORITY(blip, priority);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_DISPLAY( int blip, int displayId )
+	void LUA_NATIVE_HUD_SET_BLIP_DISPLAY( Blip blip, int displayId )
 	{
 		HUD::SET_BLIP_DISPLAY(blip, displayId);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_CATEGORY( int blip, int index )
+	void LUA_NATIVE_HUD_SET_BLIP_CATEGORY( Blip blip, int index )
 	{
 		HUD::SET_BLIP_CATEGORY(blip, index);
 	}
 
-	int LUA_NATIVE_HUD_REMOVE_BLIP( int blip )
+	Blip LUA_NATIVE_HUD_REMOVE_BLIP( Blip blip )
 	{
 		HUD::REMOVE_BLIP(&blip);
 		return blip;
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_AS_FRIENDLY( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SET_BLIP_AS_FRIENDLY( Blip blip, bool toggle )
 	{
 		HUD::SET_BLIP_AS_FRIENDLY(blip, toggle);
 	}
 
-	void LUA_NATIVE_HUD_PULSE_BLIP( int blip )
+	void LUA_NATIVE_HUD_PULSE_BLIP( Blip blip )
 	{
 		HUD::PULSE_BLIP(blip);
 	}
 
-	void LUA_NATIVE_HUD_SHOW_NUMBER_ON_BLIP( int blip, int number )
+	void LUA_NATIVE_HUD_SHOW_NUMBER_ON_BLIP( Blip blip, int number )
 	{
 		HUD::SHOW_NUMBER_ON_BLIP(blip, number);
 	}
 
-	void LUA_NATIVE_HUD_HIDE_NUMBER_ON_BLIP( int blip )
+	void LUA_NATIVE_HUD_HIDE_NUMBER_ON_BLIP( Blip blip )
 	{
 		HUD::HIDE_NUMBER_ON_BLIP(blip);
 	}
 
-	void LUA_NATIVE_HUD_SHOW_HEIGHT_ON_BLIP( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SHOW_HEIGHT_ON_BLIP( Blip blip, bool toggle )
 	{
 		HUD::SHOW_HEIGHT_ON_BLIP(blip, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SHOW_TICK_ON_BLIP( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SHOW_TICK_ON_BLIP( Blip blip, bool toggle )
 	{
 		HUD::SHOW_TICK_ON_BLIP(blip, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SHOW_GOLD_TICK_ON_BLIP( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SHOW_GOLD_TICK_ON_BLIP( Blip blip, bool toggle )
 	{
 		HUD::SHOW_GOLD_TICK_ON_BLIP(blip, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SHOW_FOR_SALE_ICON_ON_BLIP( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SHOW_FOR_SALE_ICON_ON_BLIP( Blip blip, bool toggle )
 	{
 		HUD::SHOW_FOR_SALE_ICON_ON_BLIP(blip, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SHOW_HEADING_INDICATOR_ON_BLIP( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SHOW_HEADING_INDICATOR_ON_BLIP( Blip blip, bool toggle )
 	{
 		HUD::SHOW_HEADING_INDICATOR_ON_BLIP(blip, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SHOW_OUTLINE_INDICATOR_ON_BLIP( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SHOW_OUTLINE_INDICATOR_ON_BLIP( Blip blip, bool toggle )
 	{
 		HUD::SHOW_OUTLINE_INDICATOR_ON_BLIP(blip, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SHOW_FRIEND_INDICATOR_ON_BLIP( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SHOW_FRIEND_INDICATOR_ON_BLIP( Blip blip, bool toggle )
 	{
 		HUD::SHOW_FRIEND_INDICATOR_ON_BLIP(blip, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SHOW_CREW_INDICATOR_ON_BLIP( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SHOW_CREW_INDICATOR_ON_BLIP( Blip blip, bool toggle )
 	{
 		HUD::SHOW_CREW_INDICATOR_ON_BLIP(blip, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_EXTENDED_HEIGHT_THRESHOLD( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SET_BLIP_EXTENDED_HEIGHT_THRESHOLD( Blip blip, bool toggle )
 	{
 		HUD::SET_BLIP_EXTENDED_HEIGHT_THRESHOLD(blip, toggle);
 	}
@@ -9147,22 +9142,22 @@ namespace lua::native
 		HUD::SET_BLIP_SHORT_HEIGHT_THRESHOLD(p0, p1);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_USE_HEIGHT_INDICATOR_ON_EDGE( int blip, Any p1 )
+	void LUA_NATIVE_HUD_SET_BLIP_USE_HEIGHT_INDICATOR_ON_EDGE( Blip blip, Any p1 )
 	{
 		HUD::SET_BLIP_USE_HEIGHT_INDICATOR_ON_EDGE(blip, p1);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_AS_MINIMAL_ON_EDGE( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SET_BLIP_AS_MINIMAL_ON_EDGE( Blip blip, bool toggle )
 	{
 		HUD::SET_BLIP_AS_MINIMAL_ON_EDGE(blip, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SET_RADIUS_BLIP_EDGE( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SET_RADIUS_BLIP_EDGE( Blip blip, bool toggle )
 	{
 		HUD::SET_RADIUS_BLIP_EDGE(blip, toggle);
 	}
 
-	bool LUA_NATIVE_HUD_DOES_BLIP_EXIST( int blip )
+	bool LUA_NATIVE_HUD_DOES_BLIP_EXIST( Blip blip )
 	{
 		auto retval = (bool)HUD::DOES_BLIP_EXIST(blip);
 		return retval;
@@ -9194,27 +9189,27 @@ namespace lua::native
 		HUD::SET_NEW_WAYPOINT(x, y);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_BRIGHT( int blip, bool toggle )
+	void LUA_NATIVE_HUD_SET_BLIP_BRIGHT( Blip blip, bool toggle )
 	{
 		HUD::SET_BLIP_BRIGHT(blip, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SET_BLIP_SHOW_CONE( int blip, bool toggle, int hudColorIndex )
+	void LUA_NATIVE_HUD_SET_BLIP_SHOW_CONE( Blip blip, bool toggle, int hudColorIndex )
 	{
 		HUD::SET_BLIP_SHOW_CONE(blip, toggle, hudColorIndex);
 	}
 
-	void LUA_NATIVE_HUD_REMOVE_COP_BLIP_FROM_PED( int ped )
+	void LUA_NATIVE_HUD_REMOVE_COP_BLIP_FROM_PED( Ped ped )
 	{
 		HUD::REMOVE_COP_BLIP_FROM_PED(ped);
 	}
 
-	void LUA_NATIVE_HUD_SETUP_FAKE_CONE_DATA( int blip, float p1, float p2, float p3, float p4, float p5, float p6, Any p7, int p8 )
+	void LUA_NATIVE_HUD_SETUP_FAKE_CONE_DATA( Blip blip, float p1, float p2, float p3, float p4, float p5, float p6, Any p7, int p8 )
 	{
 		HUD::SETUP_FAKE_CONE_DATA(blip, p1, p2, p3, p4, p5, p6, p7, p8);
 	}
 
-	void LUA_NATIVE_HUD_REMOVE_FAKE_CONE_DATA( int blip )
+	void LUA_NATIVE_HUD_REMOVE_FAKE_CONE_DATA( Blip blip )
 	{
 		HUD::REMOVE_FAKE_CONE_DATA(blip);
 	}
@@ -9240,7 +9235,7 @@ namespace lua::native
 		HUD::SHOW_ACCOUNT_PICKER();
 	}
 
-	int LUA_NATIVE_HUD_GET_MAIN_PLAYER_BLIP_ID(  )
+	Blip LUA_NATIVE_HUD_GET_MAIN_PLAYER_BLIP_ID(  )
 	{
 		auto retval = HUD::GET_MAIN_PLAYER_BLIP_ID();
 		return retval;
@@ -9256,7 +9251,7 @@ namespace lua::native
 		HUD::HIDE_LOADING_ON_FADE_THIS_FRAME();
 	}
 
-	void LUA_NATIVE_HUD_SET_RADAR_AS_INTERIOR_THIS_FRAME( unsigned interior, float x, float y, int z, int zoom )
+	void LUA_NATIVE_HUD_SET_RADAR_AS_INTERIOR_THIS_FRAME( Hash interior, float x, float y, int z, int zoom )
 	{
 		HUD::SET_RADAR_AS_INTERIOR_THIS_FRAME(interior, x, y, z, zoom);
 	}
@@ -9433,18 +9428,18 @@ namespace lua::native
 		HUD::HUD_SUPPRESS_WEAPON_WHEEL_RESULTS_THIS_FRAME();
 	}
 
-	unsigned LUA_NATIVE_HUD_HUD_GET_WEAPON_WHEEL_CURRENTLY_HIGHLIGHTED(  )
+	Hash LUA_NATIVE_HUD_HUD_GET_WEAPON_WHEEL_CURRENTLY_HIGHLIGHTED(  )
 	{
 		auto retval = HUD::HUD_GET_WEAPON_WHEEL_CURRENTLY_HIGHLIGHTED();
 		return retval;
 	}
 
-	void LUA_NATIVE_HUD_HUD_SET_WEAPON_WHEEL_TOP_SLOT( unsigned weaponHash )
+	void LUA_NATIVE_HUD_HUD_SET_WEAPON_WHEEL_TOP_SLOT( Hash weaponHash )
 	{
 		HUD::HUD_SET_WEAPON_WHEEL_TOP_SLOT(weaponHash);
 	}
 
-	unsigned LUA_NATIVE_HUD_HUD_GET_WEAPON_WHEEL_TOP_SLOT( int weaponTypeIndex )
+	Hash LUA_NATIVE_HUD_HUD_GET_WEAPON_WHEEL_TOP_SLOT( int weaponTypeIndex )
 	{
 		auto retval = HUD::HUD_GET_WEAPON_WHEEL_TOP_SLOT(weaponTypeIndex);
 		return retval;
@@ -9545,7 +9540,7 @@ namespace lua::native
 		HUD::TOGGLE_STEALTH_RADAR(toggle);
 	}
 
-	void LUA_NATIVE_HUD_SET_MINIMAP_IN_SPECTATOR_MODE( bool toggle, int ped )
+	void LUA_NATIVE_HUD_SET_MINIMAP_IN_SPECTATOR_MODE( bool toggle, Ped ped )
 	{
 		HUD::SET_MINIMAP_IN_SPECTATOR_MODE(toggle, ped);
 	}
@@ -9768,7 +9763,7 @@ namespace lua::native
 		HUD::SET_FLOATING_HELP_TEXT_WORLD_POSITION(hudIndex, x, y, z);
 	}
 
-	void LUA_NATIVE_HUD_SET_FLOATING_HELP_TEXT_TO_ENTITY( int hudIndex, int entity, float offsetX, float offsetY )
+	void LUA_NATIVE_HUD_SET_FLOATING_HELP_TEXT_TO_ENTITY( int hudIndex, Entity entity, float offsetX, float offsetY )
 	{
 		HUD::SET_FLOATING_HELP_TEXT_TO_ENTITY(hudIndex, entity, offsetX, offsetY);
 	}
@@ -9783,7 +9778,7 @@ namespace lua::native
 		HUD::CLEAR_FLOATING_HELP(hudIndex, p1);
 	}
 
-	void LUA_NATIVE_HUD_CREATE_MP_GAMER_TAG_WITH_CREW_COLOR( int player, const char* username, bool pointedClanTag, bool isRockstarClan, const char* clanTag, int clanFlag, int r, int g, int b )
+	void LUA_NATIVE_HUD_CREATE_MP_GAMER_TAG_WITH_CREW_COLOR( Player player, const char* username, bool pointedClanTag, bool isRockstarClan, const char* clanTag, int clanFlag, int r, int g, int b )
 	{
 		HUD::CREATE_MP_GAMER_TAG_WITH_CREW_COLOR(player, username, pointedClanTag, isRockstarClan, clanTag, clanFlag, r, g, b);
 	}
@@ -9794,7 +9789,7 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_CREATE_FAKE_MP_GAMER_TAG( int ped, const char* username, bool pointedClanTag, bool isRockstarClan, const char* clanTag, int clanFlag )
+	int LUA_NATIVE_HUD_CREATE_FAKE_MP_GAMER_TAG( Ped ped, const char* username, bool pointedClanTag, bool isRockstarClan, const char* clanTag, int clanFlag )
 	{
 		auto retval = HUD::CREATE_FAKE_MP_GAMER_TAG(ped, username, pointedClanTag, isRockstarClan, clanTag, clanFlag);
 		return retval;
@@ -9947,7 +9942,7 @@ namespace lua::native
 		HUD::SET_WARNING_MESSAGE_WITH_HEADER_AND_SUBSTRING_FLAGS_EXTENDED(labelTitle, labelMessage, p2, p3, labelMessage2, p5, p6, p7, p8, p9, background, errorCode);
 	}
 
-	unsigned LUA_NATIVE_HUD_GET_WARNING_SCREEN_MESSAGE_HASH(  )
+	Hash LUA_NATIVE_HUD_GET_WARNING_SCREEN_MESSAGE_HASH(  )
 	{
 		auto retval = HUD::GET_WARNING_SCREEN_MESSAGE_HASH();
 		return retval;
@@ -10008,7 +10003,7 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_GET_NORTH_BLID_INDEX(  )
+	Blip LUA_NATIVE_HUD_GET_NORTH_BLID_INDEX(  )
 	{
 		auto retval = HUD::GET_NORTH_BLID_INDEX();
 		return retval;
@@ -10029,17 +10024,17 @@ namespace lua::native
 		HUD::DRAW_HUD_OVER_FADE_THIS_FRAME();
 	}
 
-	void LUA_NATIVE_HUD_ACTIVATE_FRONTEND_MENU( unsigned menuhash, bool togglePause, int component )
+	void LUA_NATIVE_HUD_ACTIVATE_FRONTEND_MENU( Hash menuhash, bool togglePause, int component )
 	{
 		HUD::ACTIVATE_FRONTEND_MENU(menuhash, togglePause, component);
 	}
 
-	void LUA_NATIVE_HUD_RESTART_FRONTEND_MENU( unsigned menuHash, int p1 )
+	void LUA_NATIVE_HUD_RESTART_FRONTEND_MENU( Hash menuHash, int p1 )
 	{
 		HUD::RESTART_FRONTEND_MENU(menuHash, p1);
 	}
 
-	unsigned LUA_NATIVE_HUD_GET_CURRENT_FRONTEND_MENU_VERSION(  )
+	Hash LUA_NATIVE_HUD_GET_CURRENT_FRONTEND_MENU_VERSION(  )
 	{
 		auto retval = HUD::GET_CURRENT_FRONTEND_MENU_VERSION();
 		return retval;
@@ -10120,17 +10115,17 @@ namespace lua::native
 		HUD::PAUSE_TOGGLE_FULLSCREEN_MAP(p0);
 	}
 
-	void LUA_NATIVE_HUD_PAUSE_MENU_ACTIVATE_CONTEXT( unsigned contextHash )
+	void LUA_NATIVE_HUD_PAUSE_MENU_ACTIVATE_CONTEXT( Hash contextHash )
 	{
 		HUD::PAUSE_MENU_ACTIVATE_CONTEXT(contextHash);
 	}
 
-	void LUA_NATIVE_HUD_PAUSE_MENU_DEACTIVATE_CONTEXT( unsigned contextHash )
+	void LUA_NATIVE_HUD_PAUSE_MENU_DEACTIVATE_CONTEXT( Hash contextHash )
 	{
 		HUD::PAUSE_MENU_DEACTIVATE_CONTEXT(contextHash);
 	}
 
-	bool LUA_NATIVE_HUD_PAUSE_MENU_IS_CONTEXT_ACTIVE( unsigned contextHash )
+	bool LUA_NATIVE_HUD_PAUSE_MENU_IS_CONTEXT_ACTIVE( Hash contextHash )
 	{
 		auto retval = (bool)HUD::PAUSE_MENU_IS_CONTEXT_ACTIVE(contextHash);
 		return retval;
@@ -10287,7 +10282,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_HUD_GET_MENU_PED_MASKED_INT_STAT( unsigned statHash, int outValue, int mask, bool p3 )
+	std::tuple<bool, int> LUA_NATIVE_HUD_GET_MENU_PED_MASKED_INT_STAT( Hash statHash, int outValue, int mask, bool p3 )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)HUD::GET_MENU_PED_MASKED_INT_STAT(statHash, &outValue, mask, p3);
@@ -10296,7 +10291,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, Any> LUA_NATIVE_HUD_GET_CHARACTER_MENU_PED_MASKED_INT_STAT( unsigned statHash, Any outValue, int p2, int mask, bool p4 )
+	std::tuple<bool, Any> LUA_NATIVE_HUD_GET_CHARACTER_MENU_PED_MASKED_INT_STAT( Hash statHash, Any outValue, int p2, int mask, bool p4 )
 	{
 		std::tuple<bool, Any> return_values;
 		std::get<0>(return_values) = (bool)HUD::GET_CHARACTER_MENU_PED_MASKED_INT_STAT(statHash, &outValue, p2, mask, p4);
@@ -10305,7 +10300,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, float> LUA_NATIVE_HUD_GET_MENU_PED_FLOAT_STAT( unsigned statHash, float outValue )
+	std::tuple<bool, float> LUA_NATIVE_HUD_GET_MENU_PED_FLOAT_STAT( Hash statHash, float outValue )
 	{
 		std::tuple<bool, float> return_values;
 		std::get<0>(return_values) = (bool)HUD::GET_MENU_PED_FLOAT_STAT(statHash, &outValue);
@@ -10323,7 +10318,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, bool> LUA_NATIVE_HUD_GET_MENU_PED_BOOL_STAT( unsigned statHash, bool outValue )
+	std::tuple<bool, bool> LUA_NATIVE_HUD_GET_MENU_PED_BOOL_STAT( Hash statHash, bool outValue )
 	{
 		std::tuple<bool, bool> return_values;
 		std::get<0>(return_values) = (bool)HUD::GET_MENU_PED_BOOL_STAT(statHash, (BOOL*)&outValue);
@@ -10337,7 +10332,7 @@ namespace lua::native
 		HUD::CLEAR_PED_IN_PAUSE_MENU();
 	}
 
-	void LUA_NATIVE_HUD_GIVE_PED_TO_PAUSE_MENU( int ped, int p1 )
+	void LUA_NATIVE_HUD_GIVE_PED_TO_PAUSE_MENU( Ped ped, int p1 )
 	{
 		HUD::GIVE_PED_TO_PAUSE_MENU(ped, p1);
 	}
@@ -10369,7 +10364,7 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_HUD_OPEN_SOCIAL_CLUB_MENU( unsigned menu )
+	void LUA_NATIVE_HUD_OPEN_SOCIAL_CLUB_MENU( Hash menu )
 	{
 		HUD::OPEN_SOCIAL_CLUB_MENU(menu);
 	}
@@ -10405,7 +10400,7 @@ namespace lua::native
 		HUD::SET_ALLOW_COMMA_ON_TEXT_INPUT(p0);
 	}
 
-	void LUA_NATIVE_HUD_OVERRIDE_MP_TEXT_CHAT_TEAM_STRING( unsigned gxtEntryHash )
+	void LUA_NATIVE_HUD_OVERRIDE_MP_TEXT_CHAT_TEAM_STRING( Hash gxtEntryHash )
 	{
 		HUD::OVERRIDE_MP_TEXT_CHAT_TEAM_STRING(gxtEntryHash);
 	}
@@ -10441,54 +10436,54 @@ namespace lua::native
 		HUD::FLAG_PLAYER_CONTEXT_IN_TOURNAMENT(toggle);
 	}
 
-	void LUA_NATIVE_HUD_SET_PED_HAS_AI_BLIP( int ped, bool hasCone )
+	void LUA_NATIVE_HUD_SET_PED_HAS_AI_BLIP( Ped ped, bool hasCone )
 	{
 		HUD::SET_PED_HAS_AI_BLIP(ped, hasCone);
 	}
 
-	void LUA_NATIVE_HUD_SET_PED_HAS_AI_BLIP_WITH_COLOUR( int ped, bool hasCone, int color )
+	void LUA_NATIVE_HUD_SET_PED_HAS_AI_BLIP_WITH_COLOUR( Ped ped, bool hasCone, int color )
 	{
 		HUD::SET_PED_HAS_AI_BLIP_WITH_COLOUR(ped, hasCone, color);
 	}
 
-	bool LUA_NATIVE_HUD_DOES_PED_HAVE_AI_BLIP( int ped )
+	bool LUA_NATIVE_HUD_DOES_PED_HAVE_AI_BLIP( Ped ped )
 	{
 		auto retval = (bool)HUD::DOES_PED_HAVE_AI_BLIP(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_HUD_SET_PED_AI_BLIP_GANG_ID( int ped, int gangId )
+	void LUA_NATIVE_HUD_SET_PED_AI_BLIP_GANG_ID( Ped ped, int gangId )
 	{
 		HUD::SET_PED_AI_BLIP_GANG_ID(ped, gangId);
 	}
 
-	void LUA_NATIVE_HUD_SET_PED_AI_BLIP_HAS_CONE( int ped, bool toggle )
+	void LUA_NATIVE_HUD_SET_PED_AI_BLIP_HAS_CONE( Ped ped, bool toggle )
 	{
 		HUD::SET_PED_AI_BLIP_HAS_CONE(ped, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SET_PED_AI_BLIP_FORCED_ON( int ped, bool toggle )
+	void LUA_NATIVE_HUD_SET_PED_AI_BLIP_FORCED_ON( Ped ped, bool toggle )
 	{
 		HUD::SET_PED_AI_BLIP_FORCED_ON(ped, toggle);
 	}
 
-	void LUA_NATIVE_HUD_SET_PED_AI_BLIP_NOTICE_RANGE( int ped, float range )
+	void LUA_NATIVE_HUD_SET_PED_AI_BLIP_NOTICE_RANGE( Ped ped, float range )
 	{
 		HUD::SET_PED_AI_BLIP_NOTICE_RANGE(ped, range);
 	}
 
-	void LUA_NATIVE_HUD_SET_PED_AI_BLIP_SPRITE( int ped, int spriteId )
+	void LUA_NATIVE_HUD_SET_PED_AI_BLIP_SPRITE( Ped ped, int spriteId )
 	{
 		HUD::SET_PED_AI_BLIP_SPRITE(ped, spriteId);
 	}
 
-	int LUA_NATIVE_HUD_GET_AI_PED_PED_BLIP_INDEX( int ped )
+	Blip LUA_NATIVE_HUD_GET_AI_PED_PED_BLIP_INDEX( Ped ped )
 	{
 		auto retval = HUD::GET_AI_PED_PED_BLIP_INDEX(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_HUD_GET_AI_PED_VEHICLE_BLIP_INDEX( int ped )
+	Blip LUA_NATIVE_HUD_GET_AI_PED_VEHICLE_BLIP_INDEX( Ped ped )
 	{
 		auto retval = HUD::GET_AI_PED_VEHICLE_BLIP_INDEX(ped);
 		return retval;
@@ -10520,15 +10515,15 @@ namespace lua::native
 		HUD::HIDE_HUDMARKERS_THIS_FRAME();
 	}
 
-	float LUA_NATIVE_INTERIOR_GET_INTERIOR_HEADING( int interior )
+	float LUA_NATIVE_INTERIOR_GET_INTERIOR_HEADING( Interior interior )
 	{
 		auto retval = INTERIOR::GET_INTERIOR_HEADING(interior);
 		return retval;
 	}
 
-	std::tuple<Vector3, unsigned> LUA_NATIVE_INTERIOR_GET_INTERIOR_LOCATION_AND_NAMEHASH( int interior, Vector3 position, unsigned nameHash )
+	std::tuple<Vector3, Hash> LUA_NATIVE_INTERIOR_GET_INTERIOR_LOCATION_AND_NAMEHASH( Interior interior, Vector3 position, Hash nameHash )
 	{
-		std::tuple<Vector3, unsigned> return_values;
+		std::tuple<Vector3, Hash> return_values;
 		INTERIOR::GET_INTERIOR_LOCATION_AND_NAMEHASH(interior, &position, &nameHash);
 		std::get<0>(return_values) = position;
 		std::get<1>(return_values) = nameHash;
@@ -10536,13 +10531,13 @@ namespace lua::native
 		return return_values;
 	}
 
-	int LUA_NATIVE_INTERIOR_GET_INTERIOR_GROUP_ID( int interior )
+	int LUA_NATIVE_INTERIOR_GET_INTERIOR_GROUP_ID( Interior interior )
 	{
 		auto retval = INTERIOR::GET_INTERIOR_GROUP_ID(interior);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_INTERIOR_GET_OFFSET_FROM_INTERIOR_IN_WORLD_COORDS( int interior, float x, float y, float z )
+	Vector3 LUA_NATIVE_INTERIOR_GET_OFFSET_FROM_INTERIOR_IN_WORLD_COORDS( Interior interior, float x, float y, float z )
 	{
 		auto retval = INTERIOR::GET_OFFSET_FROM_INTERIOR_IN_WORLD_COORDS(interior, x, y, z);
 		return retval;
@@ -10554,46 +10549,46 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_INTERIOR_IS_VALID_INTERIOR( int interior )
+	bool LUA_NATIVE_INTERIOR_IS_VALID_INTERIOR( Interior interior )
 	{
 		auto retval = (bool)INTERIOR::IS_VALID_INTERIOR(interior);
 		return retval;
 	}
 
-	void LUA_NATIVE_INTERIOR_CLEAR_ROOM_FOR_ENTITY( int entity )
+	void LUA_NATIVE_INTERIOR_CLEAR_ROOM_FOR_ENTITY( Entity entity )
 	{
 		INTERIOR::CLEAR_ROOM_FOR_ENTITY(entity);
 	}
 
-	void LUA_NATIVE_INTERIOR_FORCE_ROOM_FOR_ENTITY( int entity, int interior, unsigned roomHashKey )
+	void LUA_NATIVE_INTERIOR_FORCE_ROOM_FOR_ENTITY( Entity entity, Interior interior, Hash roomHashKey )
 	{
 		INTERIOR::FORCE_ROOM_FOR_ENTITY(entity, interior, roomHashKey);
 	}
 
-	unsigned LUA_NATIVE_INTERIOR_GET_ROOM_KEY_FROM_ENTITY( int entity )
+	Hash LUA_NATIVE_INTERIOR_GET_ROOM_KEY_FROM_ENTITY( Entity entity )
 	{
 		auto retval = INTERIOR::GET_ROOM_KEY_FROM_ENTITY(entity);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_INTERIOR_GET_KEY_FOR_ENTITY_IN_ROOM( int entity )
+	Hash LUA_NATIVE_INTERIOR_GET_KEY_FOR_ENTITY_IN_ROOM( Entity entity )
 	{
 		auto retval = INTERIOR::GET_KEY_FOR_ENTITY_IN_ROOM(entity);
 		return retval;
 	}
 
-	int LUA_NATIVE_INTERIOR_GET_INTERIOR_FROM_ENTITY( int entity )
+	Interior LUA_NATIVE_INTERIOR_GET_INTERIOR_FROM_ENTITY( Entity entity )
 	{
 		auto retval = INTERIOR::GET_INTERIOR_FROM_ENTITY(entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_INTERIOR_RETAIN_ENTITY_IN_INTERIOR( int entity, int interior )
+	void LUA_NATIVE_INTERIOR_RETAIN_ENTITY_IN_INTERIOR( Entity entity, Interior interior )
 	{
 		INTERIOR::RETAIN_ENTITY_IN_INTERIOR(entity, interior);
 	}
 
-	void LUA_NATIVE_INTERIOR_CLEAR_INTERIOR_STATE_OF_ENTITY( int entity )
+	void LUA_NATIVE_INTERIOR_CLEAR_INTERIOR_STATE_OF_ENTITY( Entity entity )
 	{
 		INTERIOR::CLEAR_INTERIOR_STATE_OF_ENTITY(entity);
 	}
@@ -10603,7 +10598,7 @@ namespace lua::native
 		INTERIOR::FORCE_ACTIVATING_TRACKING_ON_ENTITY(p0, p1);
 	}
 
-	void LUA_NATIVE_INTERIOR_FORCE_ROOM_FOR_GAME_VIEWPORT( int interiorID, unsigned roomHashKey )
+	void LUA_NATIVE_INTERIOR_FORCE_ROOM_FOR_GAME_VIEWPORT( int interiorID, Hash roomHashKey )
 	{
 		INTERIOR::FORCE_ROOM_FOR_GAME_VIEWPORT(interiorID, roomHashKey);
 	}
@@ -10613,12 +10608,12 @@ namespace lua::native
 		INTERIOR::SET_ROOM_FOR_GAME_VIEWPORT_BY_NAME(roomName);
 	}
 
-	void LUA_NATIVE_INTERIOR_SET_ROOM_FOR_GAME_VIEWPORT_BY_KEY( unsigned roomHashKey )
+	void LUA_NATIVE_INTERIOR_SET_ROOM_FOR_GAME_VIEWPORT_BY_KEY( Hash roomHashKey )
 	{
 		INTERIOR::SET_ROOM_FOR_GAME_VIEWPORT_BY_KEY(roomHashKey);
 	}
 
-	unsigned LUA_NATIVE_INTERIOR_GET_ROOM_KEY_FOR_GAME_VIEWPORT(  )
+	Hash LUA_NATIVE_INTERIOR_GET_ROOM_KEY_FOR_GAME_VIEWPORT(  )
 	{
 		auto retval = INTERIOR::GET_ROOM_KEY_FOR_GAME_VIEWPORT();
 		return retval;
@@ -10629,52 +10624,52 @@ namespace lua::native
 		INTERIOR::CLEAR_ROOM_FOR_GAME_VIEWPORT();
 	}
 
-	int LUA_NATIVE_INTERIOR_GET_INTERIOR_FROM_PRIMARY_VIEW(  )
+	Interior LUA_NATIVE_INTERIOR_GET_INTERIOR_FROM_PRIMARY_VIEW(  )
 	{
 		auto retval = INTERIOR::GET_INTERIOR_FROM_PRIMARY_VIEW();
 		return retval;
 	}
 
-	int LUA_NATIVE_INTERIOR_GET_INTERIOR_AT_COORDS( float x, float y, float z )
+	Interior LUA_NATIVE_INTERIOR_GET_INTERIOR_AT_COORDS( float x, float y, float z )
 	{
 		auto retval = INTERIOR::GET_INTERIOR_AT_COORDS(x, y, z);
 		return retval;
 	}
 
-	void LUA_NATIVE_INTERIOR_ADD_PICKUP_TO_INTERIOR_ROOM_BY_NAME( int pickup, const char* roomName )
+	void LUA_NATIVE_INTERIOR_ADD_PICKUP_TO_INTERIOR_ROOM_BY_NAME( Pickup pickup, const char* roomName )
 	{
 		INTERIOR::ADD_PICKUP_TO_INTERIOR_ROOM_BY_NAME(pickup, roomName);
 	}
 
-	void LUA_NATIVE_INTERIOR_PIN_INTERIOR_IN_MEMORY( int interior )
+	void LUA_NATIVE_INTERIOR_PIN_INTERIOR_IN_MEMORY( Interior interior )
 	{
 		INTERIOR::PIN_INTERIOR_IN_MEMORY(interior);
 	}
 
-	void LUA_NATIVE_INTERIOR_UNPIN_INTERIOR( int interior )
+	void LUA_NATIVE_INTERIOR_UNPIN_INTERIOR( Interior interior )
 	{
 		INTERIOR::UNPIN_INTERIOR(interior);
 	}
 
-	bool LUA_NATIVE_INTERIOR_IS_INTERIOR_READY( int interior )
+	bool LUA_NATIVE_INTERIOR_IS_INTERIOR_READY( Interior interior )
 	{
 		auto retval = (bool)INTERIOR::IS_INTERIOR_READY(interior);
 		return retval;
 	}
 
-	bool LUA_NATIVE_INTERIOR_SET_INTERIOR_IN_USE( int interior )
+	bool LUA_NATIVE_INTERIOR_SET_INTERIOR_IN_USE( Interior interior )
 	{
 		auto retval = (bool)INTERIOR::SET_INTERIOR_IN_USE(interior);
 		return retval;
 	}
 
-	int LUA_NATIVE_INTERIOR_GET_INTERIOR_AT_COORDS_WITH_TYPE( float x, float y, float z, const char* interiorType )
+	Interior LUA_NATIVE_INTERIOR_GET_INTERIOR_AT_COORDS_WITH_TYPE( float x, float y, float z, const char* interiorType )
 	{
 		auto retval = INTERIOR::GET_INTERIOR_AT_COORDS_WITH_TYPE(x, y, z, interiorType);
 		return retval;
 	}
 
-	int LUA_NATIVE_INTERIOR_GET_INTERIOR_AT_COORDS_WITH_TYPEHASH( float x, float y, float z, unsigned typeHash )
+	Interior LUA_NATIVE_INTERIOR_GET_INTERIOR_AT_COORDS_WITH_TYPEHASH( float x, float y, float z, Hash typeHash )
 	{
 		auto retval = INTERIOR::GET_INTERIOR_AT_COORDS_WITH_TYPEHASH(x, y, z, typeHash);
 		return retval;
@@ -10691,7 +10686,7 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_INTERIOR_GET_INTERIOR_FROM_COLLISION( float x, float y, float z )
+	Interior LUA_NATIVE_INTERIOR_GET_INTERIOR_FROM_COLLISION( float x, float y, float z )
 	{
 		auto retval = INTERIOR::GET_INTERIOR_FROM_COLLISION(x, y, z);
 		return retval;
@@ -10702,59 +10697,59 @@ namespace lua::native
 		INTERIOR::ENABLE_STADIUM_PROBES_THIS_FRAME(toggle);
 	}
 
-	void LUA_NATIVE_INTERIOR_ACTIVATE_INTERIOR_ENTITY_SET( int interior, const char* entitySetName )
+	void LUA_NATIVE_INTERIOR_ACTIVATE_INTERIOR_ENTITY_SET( Interior interior, const char* entitySetName )
 	{
 		INTERIOR::ACTIVATE_INTERIOR_ENTITY_SET(interior, entitySetName);
 	}
 
-	void LUA_NATIVE_INTERIOR_DEACTIVATE_INTERIOR_ENTITY_SET( int interior, const char* entitySetName )
+	void LUA_NATIVE_INTERIOR_DEACTIVATE_INTERIOR_ENTITY_SET( Interior interior, const char* entitySetName )
 	{
 		INTERIOR::DEACTIVATE_INTERIOR_ENTITY_SET(interior, entitySetName);
 	}
 
-	bool LUA_NATIVE_INTERIOR_IS_INTERIOR_ENTITY_SET_ACTIVE( int interior, const char* entitySetName )
+	bool LUA_NATIVE_INTERIOR_IS_INTERIOR_ENTITY_SET_ACTIVE( Interior interior, const char* entitySetName )
 	{
 		auto retval = (bool)INTERIOR::IS_INTERIOR_ENTITY_SET_ACTIVE(interior, entitySetName);
 		return retval;
 	}
 
-	void LUA_NATIVE_INTERIOR_SET_INTERIOR_ENTITY_SET_TINT_INDEX( int interior, const char* entitySetName, int color )
+	void LUA_NATIVE_INTERIOR_SET_INTERIOR_ENTITY_SET_TINT_INDEX( Interior interior, const char* entitySetName, int color )
 	{
 		INTERIOR::SET_INTERIOR_ENTITY_SET_TINT_INDEX(interior, entitySetName, color);
 	}
 
-	void LUA_NATIVE_INTERIOR_REFRESH_INTERIOR( int interior )
+	void LUA_NATIVE_INTERIOR_REFRESH_INTERIOR( Interior interior )
 	{
 		INTERIOR::REFRESH_INTERIOR(interior);
 	}
 
-	void LUA_NATIVE_INTERIOR_ENABLE_EXTERIOR_CULL_MODEL_THIS_FRAME( unsigned mapObjectHash )
+	void LUA_NATIVE_INTERIOR_ENABLE_EXTERIOR_CULL_MODEL_THIS_FRAME( Hash mapObjectHash )
 	{
 		INTERIOR::ENABLE_EXTERIOR_CULL_MODEL_THIS_FRAME(mapObjectHash);
 	}
 
-	void LUA_NATIVE_INTERIOR_ENABLE_SHADOW_CULL_MODEL_THIS_FRAME( unsigned mapObjectHash )
+	void LUA_NATIVE_INTERIOR_ENABLE_SHADOW_CULL_MODEL_THIS_FRAME( Hash mapObjectHash )
 	{
 		INTERIOR::ENABLE_SHADOW_CULL_MODEL_THIS_FRAME(mapObjectHash);
 	}
 
-	void LUA_NATIVE_INTERIOR_DISABLE_INTERIOR( int interior, bool toggle )
+	void LUA_NATIVE_INTERIOR_DISABLE_INTERIOR( Interior interior, bool toggle )
 	{
 		INTERIOR::DISABLE_INTERIOR(interior, toggle);
 	}
 
-	bool LUA_NATIVE_INTERIOR_IS_INTERIOR_DISABLED( int interior )
+	bool LUA_NATIVE_INTERIOR_IS_INTERIOR_DISABLED( Interior interior )
 	{
 		auto retval = (bool)INTERIOR::IS_INTERIOR_DISABLED(interior);
 		return retval;
 	}
 
-	void LUA_NATIVE_INTERIOR_CAP_INTERIOR( int interior, bool toggle )
+	void LUA_NATIVE_INTERIOR_CAP_INTERIOR( Interior interior, bool toggle )
 	{
 		INTERIOR::CAP_INTERIOR(interior, toggle);
 	}
 
-	bool LUA_NATIVE_INTERIOR_IS_INTERIOR_CAPPED( int interior )
+	bool LUA_NATIVE_INTERIOR_IS_INTERIOR_CAPPED( Interior interior )
 	{
 		auto retval = (bool)INTERIOR::IS_INTERIOR_CAPPED(interior);
 		return retval;
@@ -10765,58 +10760,58 @@ namespace lua::native
 		INTERIOR::DISABLE_METRO_SYSTEM(toggle);
 	}
 
-	void LUA_NATIVE_INTERIOR_SET_IS_EXTERIOR_ONLY( int entity, bool toggle )
+	void LUA_NATIVE_INTERIOR_SET_IS_EXTERIOR_ONLY( Entity entity, bool toggle )
 	{
 		INTERIOR::SET_IS_EXTERIOR_ONLY(entity, toggle);
 	}
 
-	int LUA_NATIVE_ITEMSET_CREATE_ITEMSET( bool p0 )
+	ScrHandle LUA_NATIVE_ITEMSET_CREATE_ITEMSET( bool p0 )
 	{
 		auto retval = ITEMSET::CREATE_ITEMSET(p0);
 		return retval;
 	}
 
-	void LUA_NATIVE_ITEMSET_DESTROY_ITEMSET( int itemset )
+	void LUA_NATIVE_ITEMSET_DESTROY_ITEMSET( ScrHandle itemset )
 	{
 		ITEMSET::DESTROY_ITEMSET(itemset);
 	}
 
-	bool LUA_NATIVE_ITEMSET_IS_ITEMSET_VALID( int itemset )
+	bool LUA_NATIVE_ITEMSET_IS_ITEMSET_VALID( ScrHandle itemset )
 	{
 		auto retval = (bool)ITEMSET::IS_ITEMSET_VALID(itemset);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ITEMSET_ADD_TO_ITEMSET( int item, int itemset )
+	bool LUA_NATIVE_ITEMSET_ADD_TO_ITEMSET( ScrHandle item, ScrHandle itemset )
 	{
 		auto retval = (bool)ITEMSET::ADD_TO_ITEMSET(item, itemset);
 		return retval;
 	}
 
-	void LUA_NATIVE_ITEMSET_REMOVE_FROM_ITEMSET( int item, int itemset )
+	void LUA_NATIVE_ITEMSET_REMOVE_FROM_ITEMSET( ScrHandle item, ScrHandle itemset )
 	{
 		ITEMSET::REMOVE_FROM_ITEMSET(item, itemset);
 	}
 
-	int LUA_NATIVE_ITEMSET_GET_ITEMSET_SIZE( int itemset )
+	int LUA_NATIVE_ITEMSET_GET_ITEMSET_SIZE( ScrHandle itemset )
 	{
 		auto retval = ITEMSET::GET_ITEMSET_SIZE(itemset);
 		return retval;
 	}
 
-	int LUA_NATIVE_ITEMSET_GET_INDEXED_ITEM_IN_ITEMSET( int index, int itemset )
+	ScrHandle LUA_NATIVE_ITEMSET_GET_INDEXED_ITEM_IN_ITEMSET( int index, ScrHandle itemset )
 	{
 		auto retval = ITEMSET::GET_INDEXED_ITEM_IN_ITEMSET(index, itemset);
 		return retval;
 	}
 
-	bool LUA_NATIVE_ITEMSET_IS_IN_ITEMSET( int item, int itemset )
+	bool LUA_NATIVE_ITEMSET_IS_IN_ITEMSET( ScrHandle item, ScrHandle itemset )
 	{
 		auto retval = (bool)ITEMSET::IS_IN_ITEMSET(item, itemset);
 		return retval;
 	}
 
-	void LUA_NATIVE_ITEMSET_CLEAN_ITEMSET( int itemset )
+	void LUA_NATIVE_ITEMSET_CLEAN_ITEMSET( ScrHandle itemset )
 	{
 		ITEMSET::CLEAN_ITEMSET(itemset);
 	}
@@ -11009,13 +11004,13 @@ namespace lua::native
 		return return_values;
 	}
 
-	unsigned LUA_NATIVE_MISC_GET_PREV_WEATHER_TYPE_HASH_NAME(  )
+	Hash LUA_NATIVE_MISC_GET_PREV_WEATHER_TYPE_HASH_NAME(  )
 	{
 		auto retval = MISC::GET_PREV_WEATHER_TYPE_HASH_NAME();
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_MISC_GET_NEXT_WEATHER_TYPE_HASH_NAME(  )
+	Hash LUA_NATIVE_MISC_GET_NEXT_WEATHER_TYPE_HASH_NAME(  )
 	{
 		auto retval = MISC::GET_NEXT_WEATHER_TYPE_HASH_NAME();
 		return retval;
@@ -11068,9 +11063,9 @@ namespace lua::native
 		MISC::CLEAR_WEATHER_TYPE_NOW_PERSIST_NETWORK(milliseconds);
 	}
 
-	std::tuple<unsigned, unsigned, float> LUA_NATIVE_MISC_GET_CURR_WEATHER_STATE( unsigned weatherType1, unsigned weatherType2, float percentWeather2 )
+	std::tuple<Hash, Hash, float> LUA_NATIVE_MISC_GET_CURR_WEATHER_STATE( Hash weatherType1, Hash weatherType2, float percentWeather2 )
 	{
-		std::tuple<unsigned, unsigned, float> return_values;
+		std::tuple<Hash, Hash, float> return_values;
 		MISC::GET_CURR_WEATHER_STATE(&weatherType1, &weatherType2, &percentWeather2);
 		std::get<0>(return_values) = weatherType1;
 		std::get<1>(return_values) = weatherType2;
@@ -11079,7 +11074,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_MISC_SET_CURR_WEATHER_STATE( unsigned weatherType1, unsigned weatherType2, float percentWeather2 )
+	void LUA_NATIVE_MISC_SET_CURR_WEATHER_STATE( Hash weatherType1, Hash weatherType2, float percentWeather2 )
 	{
 		MISC::SET_CURR_WEATHER_STATE(weatherType1, weatherType2, percentWeather2);
 	}
@@ -11416,7 +11411,7 @@ namespace lua::native
 		return address;
 	}
 
-	unsigned LUA_NATIVE_MISC_GET_HASH_KEY( const char* string )
+	Hash LUA_NATIVE_MISC_GET_HASH_KEY( const char* string )
 	{
 		auto retval = MISC::GET_HASH_KEY(string);
 		return retval;
@@ -11446,7 +11441,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_MISC_IS_POSITION_OCCUPIED( float x, float y, float z, float range, bool p4, bool checkVehicles, bool checkPeds, bool p7, bool p8, int ignoreEntity, bool p10 )
+	bool LUA_NATIVE_MISC_IS_POSITION_OCCUPIED( float x, float y, float z, float range, bool p4, bool checkVehicles, bool checkPeds, bool p7, bool p8, Entity ignoreEntity, bool p10 )
 	{
 		auto retval = (bool)MISC::IS_POSITION_OCCUPIED(x, y, z, range, p4, checkVehicles, checkPeds, p7, p8, ignoreEntity, p10);
 		return retval;
@@ -11745,22 +11740,22 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_MISC_SHOOT_SINGLE_BULLET_BETWEEN_COORDS( float x1, float y1, float z1, float x2, float y2, float z2, int damage, bool p7, unsigned weaponHash, int ownerPed, bool isAudible, bool isInvisible, float speed )
+	void LUA_NATIVE_MISC_SHOOT_SINGLE_BULLET_BETWEEN_COORDS( float x1, float y1, float z1, float x2, float y2, float z2, int damage, bool p7, Hash weaponHash, Ped ownerPed, bool isAudible, bool isInvisible, float speed )
 	{
 		MISC::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(x1, y1, z1, x2, y2, z2, damage, p7, weaponHash, ownerPed, isAudible, isInvisible, speed);
 	}
 
-	void LUA_NATIVE_MISC_SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY( float x1, float y1, float z1, float x2, float y2, float z2, int damage, bool p7, unsigned weaponHash, int ownerPed, bool isAudible, bool isInvisible, float speed, int entity, Any p14 )
+	void LUA_NATIVE_MISC_SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY( float x1, float y1, float z1, float x2, float y2, float z2, int damage, bool p7, Hash weaponHash, Ped ownerPed, bool isAudible, bool isInvisible, float speed, Entity entity, Any p14 )
 	{
 		MISC::SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(x1, y1, z1, x2, y2, z2, damage, p7, weaponHash, ownerPed, isAudible, isInvisible, speed, entity, p14);
 	}
 
-	void LUA_NATIVE_MISC_SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY_NEW( float x1, float y1, float z1, float x2, float y2, float z2, int damage, bool p7, unsigned weaponHash, int ownerPed, bool isAudible, bool isInvisible, float speed, int entity, bool p14, bool p15, int targetEntity, bool p17, Any p18, Any p19, Any p20 )
+	void LUA_NATIVE_MISC_SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY_NEW( float x1, float y1, float z1, float x2, float y2, float z2, int damage, bool p7, Hash weaponHash, Ped ownerPed, bool isAudible, bool isInvisible, float speed, Entity entity, bool p14, bool p15, Entity targetEntity, bool p17, Any p18, Any p19, Any p20 )
 	{
 		MISC::SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY_NEW(x1, y1, z1, x2, y2, z2, damage, p7, weaponHash, ownerPed, isAudible, isInvisible, speed, entity, p14, p15, targetEntity, p17, p18, p19, p20);
 	}
 
-	std::tuple<Vector3, Vector3> LUA_NATIVE_MISC_GET_MODEL_DIMENSIONS( unsigned modelHash, Vector3 minimum, Vector3 maximum )
+	std::tuple<Vector3, Vector3> LUA_NATIVE_MISC_GET_MODEL_DIMENSIONS( Hash modelHash, Vector3 minimum, Vector3 maximum )
 	{
 		std::tuple<Vector3, Vector3> return_values;
 		MISC::GET_MODEL_DIMENSIONS(modelHash, &minimum, &maximum);
@@ -11874,13 +11869,13 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_MISC_IS_PROJECTILE_TYPE_WITHIN_DISTANCE( float x, float y, float z, unsigned projectileHash, float radius, bool ownedByPlayer )
+	bool LUA_NATIVE_MISC_IS_PROJECTILE_TYPE_WITHIN_DISTANCE( float x, float y, float z, Hash projectileHash, float radius, bool ownedByPlayer )
 	{
 		auto retval = (bool)MISC::IS_PROJECTILE_TYPE_WITHIN_DISTANCE(x, y, z, projectileHash, radius, ownedByPlayer);
 		return retval;
 	}
 
-	std::tuple<bool, Vector3> LUA_NATIVE_MISC_GET_COORDS_OF_PROJECTILE_TYPE_IN_AREA( float x1, float y1, float z1, float x2, float y2, float z2, unsigned projectileHash, Vector3 projectilePos, bool ownedByPlayer )
+	std::tuple<bool, Vector3> LUA_NATIVE_MISC_GET_COORDS_OF_PROJECTILE_TYPE_IN_AREA( float x1, float y1, float z1, float x2, float y2, float z2, Hash projectileHash, Vector3 projectilePos, bool ownedByPlayer )
 	{
 		std::tuple<bool, Vector3> return_values;
 		std::get<0>(return_values) = (bool)MISC::GET_COORDS_OF_PROJECTILE_TYPE_IN_AREA(x1, y1, z1, x2, y2, z2, projectileHash, &projectilePos, ownedByPlayer);
@@ -11889,7 +11884,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, Vector3> LUA_NATIVE_MISC_GET_COORDS_OF_PROJECTILE_TYPE_IN_ANGLED_AREA( float vecAngledAreaPoint1X, float vecAngledAreaPoint1Y, float vecAngledAreaPoint1Z, float vecAngledAreaPoint2X, float vecAngledAreaPoint2Y, float vecAngledAreaPoint2Z, float distanceOfOppositeFace, unsigned weaponType, Vector3 positionOut, bool bIsPlayer )
+	std::tuple<bool, Vector3> LUA_NATIVE_MISC_GET_COORDS_OF_PROJECTILE_TYPE_IN_ANGLED_AREA( float vecAngledAreaPoint1X, float vecAngledAreaPoint1Y, float vecAngledAreaPoint1Z, float vecAngledAreaPoint2X, float vecAngledAreaPoint2Y, float vecAngledAreaPoint2Z, float distanceOfOppositeFace, Hash weaponType, Vector3 positionOut, bool bIsPlayer )
 	{
 		std::tuple<bool, Vector3> return_values;
 		std::get<0>(return_values) = (bool)MISC::GET_COORDS_OF_PROJECTILE_TYPE_IN_ANGLED_AREA(vecAngledAreaPoint1X, vecAngledAreaPoint1Y, vecAngledAreaPoint1Z, vecAngledAreaPoint2X, vecAngledAreaPoint2Y, vecAngledAreaPoint2Z, distanceOfOppositeFace, weaponType, &positionOut, bIsPlayer);
@@ -11898,7 +11893,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, Vector3> LUA_NATIVE_MISC_GET_COORDS_OF_PROJECTILE_TYPE_WITHIN_DISTANCE( int ped, unsigned weaponHash, float distance, Vector3 outCoords, bool p4 )
+	std::tuple<bool, Vector3> LUA_NATIVE_MISC_GET_COORDS_OF_PROJECTILE_TYPE_WITHIN_DISTANCE( Ped ped, Hash weaponHash, float distance, Vector3 outCoords, bool p4 )
 	{
 		std::tuple<bool, Vector3> return_values;
 		std::get<0>(return_values) = (bool)MISC::GET_COORDS_OF_PROJECTILE_TYPE_WITHIN_DISTANCE(ped, weaponHash, distance, &outCoords, p4);
@@ -11907,7 +11902,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, Vector3, Object> LUA_NATIVE_MISC_GET_PROJECTILE_OF_PROJECTILE_TYPE_WITHIN_DISTANCE( int ped, unsigned weaponHash, float distance, Vector3 outCoords, Object outProjectile, bool p5 )
+	std::tuple<bool, Vector3, Object> LUA_NATIVE_MISC_GET_PROJECTILE_OF_PROJECTILE_TYPE_WITHIN_DISTANCE( Ped ped, Hash weaponHash, float distance, Vector3 outCoords, Object outProjectile, bool p5 )
 	{
 		std::tuple<bool, Vector3, Object> return_values;
 		std::get<0>(return_values) = (bool)MISC::GET_PROJECTILE_OF_PROJECTILE_TYPE_WITHIN_DISTANCE(ped, weaponHash, distance, &outCoords, &outProjectile, p5);
@@ -12133,13 +12128,13 @@ namespace lua::native
 		MISC::SET_THIS_SCRIPT_CAN_REMOVE_BLIPS_CREATED_BY_ANY_SCRIPT(toggle);
 	}
 
-	bool LUA_NATIVE_MISC_HAS_CHEAT_WITH_HASH_BEEN_ACTIVATED( unsigned hash, int amount )
+	bool LUA_NATIVE_MISC_HAS_CHEAT_WITH_HASH_BEEN_ACTIVATED( Hash hash, int amount )
 	{
 		auto retval = (bool)MISC::HAS_CHEAT_WITH_HASH_BEEN_ACTIVATED(hash, amount);
 		return retval;
 	}
 
-	bool LUA_NATIVE_MISC_HAS_PC_CHEAT_WITH_HASH_BEEN_ACTIVATED( unsigned hash )
+	bool LUA_NATIVE_MISC_HAS_PC_CHEAT_WITH_HASH_BEEN_ACTIVATED( Hash hash )
 	{
 		auto retval = (bool)MISC::HAS_PC_CHEAT_WITH_HASH_BEEN_ACTIVATED(hash);
 		return retval;
@@ -12316,7 +12311,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_MISC_CREATE_INCIDENT_WITH_ENTITY( int dispatchService, int ped, int numUnits, float radius, int outIncidentID, Any p5, Any p6 )
+	std::tuple<bool, int> LUA_NATIVE_MISC_CREATE_INCIDENT_WITH_ENTITY( int dispatchService, Ped ped, int numUnits, float radius, int outIncidentID, Any p5, Any p6 )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)MISC::CREATE_INCIDENT_WITH_ENTITY(dispatchService, ped, numUnits, radius, &outIncidentID, p5, p6);
@@ -12395,46 +12390,46 @@ namespace lua::native
 		MISC::REMOVE_POP_MULTIPLIER_SPHERE(id, p1);
 	}
 
-	void LUA_NATIVE_MISC_ENABLE_TENNIS_MODE( int ped, bool toggle, bool p2 )
+	void LUA_NATIVE_MISC_ENABLE_TENNIS_MODE( Ped ped, bool toggle, bool p2 )
 	{
 		MISC::ENABLE_TENNIS_MODE(ped, toggle, p2);
 	}
 
-	bool LUA_NATIVE_MISC_IS_TENNIS_MODE( int ped )
+	bool LUA_NATIVE_MISC_IS_TENNIS_MODE( Ped ped )
 	{
 		auto retval = (bool)MISC::IS_TENNIS_MODE(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_MISC_PLAY_TENNIS_SWING_ANIM( int ped, const char* animDict, const char* animName, float p3, float p4, bool p5 )
+	void LUA_NATIVE_MISC_PLAY_TENNIS_SWING_ANIM( Ped ped, const char* animDict, const char* animName, float p3, float p4, bool p5 )
 	{
 		MISC::PLAY_TENNIS_SWING_ANIM(ped, animDict, animName, p3, p4, p5);
 	}
 
-	bool LUA_NATIVE_MISC_GET_TENNIS_SWING_ANIM_COMPLETE( int ped )
+	bool LUA_NATIVE_MISC_GET_TENNIS_SWING_ANIM_COMPLETE( Ped ped )
 	{
 		auto retval = (bool)MISC::GET_TENNIS_SWING_ANIM_COMPLETE(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_MISC_GET_TENNIS_SWING_ANIM_CAN_BE_INTERRUPTED( int ped )
+	bool LUA_NATIVE_MISC_GET_TENNIS_SWING_ANIM_CAN_BE_INTERRUPTED( Ped ped )
 	{
 		auto retval = (bool)MISC::GET_TENNIS_SWING_ANIM_CAN_BE_INTERRUPTED(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_MISC_GET_TENNIS_SWING_ANIM_SWUNG( int ped )
+	bool LUA_NATIVE_MISC_GET_TENNIS_SWING_ANIM_SWUNG( Ped ped )
 	{
 		auto retval = (bool)MISC::GET_TENNIS_SWING_ANIM_SWUNG(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_MISC_PLAY_TENNIS_DIVE_ANIM( int ped, int p1, float p2, float p3, float p4, bool p5 )
+	void LUA_NATIVE_MISC_PLAY_TENNIS_DIVE_ANIM( Ped ped, int p1, float p2, float p3, float p4, bool p5 )
 	{
 		MISC::PLAY_TENNIS_DIVE_ANIM(ped, p1, p2, p3, p4, p5);
 	}
 
-	void LUA_NATIVE_MISC_SET_TENNIS_MOVE_NETWORK_SIGNAL_FLOAT( int ped, const char* p1, float p2 )
+	void LUA_NATIVE_MISC_SET_TENNIS_MOVE_NETWORK_SIGNAL_FLOAT( Ped ped, const char* p1, float p2 )
 	{
 		MISC::SET_TENNIS_MOVE_NETWORK_SIGNAL_FLOAT(ped, p1, p2);
 	}
@@ -12554,7 +12549,7 @@ namespace lua::native
 		MISC::NEXT_ONSCREEN_KEYBOARD_RESULT_WILL_DISPLAY_USING_THESE_FONTS(p0);
 	}
 
-	void LUA_NATIVE_MISC_ACTION_MANAGER_ENABLE_ACTION( unsigned hash, bool enable )
+	void LUA_NATIVE_MISC_ACTION_MANAGER_ENABLE_ACTION( Hash hash, bool enable )
 	{
 		MISC::ACTION_MANAGER_ENABLE_ACTION(hash, enable);
 	}
@@ -12570,32 +12565,32 @@ namespace lua::native
 		MISC::SUPRESS_RANDOM_EVENT_THIS_FRAME(eventType, suppress);
 	}
 
-	void LUA_NATIVE_MISC_SET_EXPLOSIVE_AMMO_THIS_FRAME( int player )
+	void LUA_NATIVE_MISC_SET_EXPLOSIVE_AMMO_THIS_FRAME( Player player )
 	{
 		MISC::SET_EXPLOSIVE_AMMO_THIS_FRAME(player);
 	}
 
-	void LUA_NATIVE_MISC_SET_FIRE_AMMO_THIS_FRAME( int player )
+	void LUA_NATIVE_MISC_SET_FIRE_AMMO_THIS_FRAME( Player player )
 	{
 		MISC::SET_FIRE_AMMO_THIS_FRAME(player);
 	}
 
-	void LUA_NATIVE_MISC_SET_EXPLOSIVE_MELEE_THIS_FRAME( int player )
+	void LUA_NATIVE_MISC_SET_EXPLOSIVE_MELEE_THIS_FRAME( Player player )
 	{
 		MISC::SET_EXPLOSIVE_MELEE_THIS_FRAME(player);
 	}
 
-	void LUA_NATIVE_MISC_SET_SUPER_JUMP_THIS_FRAME( int player )
+	void LUA_NATIVE_MISC_SET_SUPER_JUMP_THIS_FRAME( Player player )
 	{
 		MISC::SET_SUPER_JUMP_THIS_FRAME(player);
 	}
 
-	void LUA_NATIVE_MISC_SET_BEAST_JUMP_THIS_FRAME( int player )
+	void LUA_NATIVE_MISC_SET_BEAST_JUMP_THIS_FRAME( Player player )
 	{
 		MISC::SET_BEAST_JUMP_THIS_FRAME(player);
 	}
 
-	void LUA_NATIVE_MISC_SET_FORCED_JUMP_THIS_FRAME( int player )
+	void LUA_NATIVE_MISC_SET_FORCED_JUMP_THIS_FRAME( Player player )
 	{
 		MISC::SET_FORCED_JUMP_THIS_FRAME(player);
 	}
@@ -12637,12 +12632,12 @@ namespace lua::native
 		MISC::SCRIPT_RACE_SHUTDOWN();
 	}
 
-	void LUA_NATIVE_MISC_SCRIPT_RACE_PLAYER_HIT_CHECKPOINT( int player, Any p1, Any p2, Any p3 )
+	void LUA_NATIVE_MISC_SCRIPT_RACE_PLAYER_HIT_CHECKPOINT( Player player, Any p1, Any p2, Any p3 )
 	{
 		MISC::SCRIPT_RACE_PLAYER_HIT_CHECKPOINT(player, p1, p2, p3);
 	}
 
-	std::tuple<bool, int, int> LUA_NATIVE_MISC_SCRIPT_RACE_GET_PLAYER_SPLIT_TIME( int player, int p1, int p2 )
+	std::tuple<bool, int, int> LUA_NATIVE_MISC_SCRIPT_RACE_GET_PLAYER_SPLIT_TIME( Player player, int p1, int p2 )
 	{
 		std::tuple<bool, int, int> return_values;
 		std::get<0>(return_values) = (bool)MISC::SCRIPT_RACE_GET_PLAYER_SPLIT_TIME(player, &p1, &p2);
@@ -12767,12 +12762,12 @@ namespace lua::native
 		MISC::USE_ACTIVE_CAMERA_FOR_TIMESLICING_CENTRE();
 	}
 
-	void LUA_NATIVE_MISC_SET_CONTENT_ID_INDEX( unsigned contentId, int index )
+	void LUA_NATIVE_MISC_SET_CONTENT_ID_INDEX( Hash contentId, int index )
 	{
 		MISC::SET_CONTENT_ID_INDEX(contentId, index);
 	}
 
-	int LUA_NATIVE_MISC_GET_CONTENT_ID_INDEX( unsigned contentId )
+	int LUA_NATIVE_MISC_GET_CONTENT_ID_INDEX( Hash contentId )
 	{
 		auto retval = MISC::GET_CONTENT_ID_INDEX(contentId);
 		return retval;
@@ -12798,7 +12793,7 @@ namespace lua::native
 		MOBILE::SET_MOBILE_PHONE_ROTATION(rotX, rotY, rotZ, p3);
 	}
 
-	Vector3 LUA_NATIVE_MOBILE_GET_MOBILE_PHONE_ROTATION( Vector3 rotation, int p1 )
+	Vector3 LUA_NATIVE_MOBILE_GET_MOBILE_PHONE_ROTATION( Vector3 rotation, Vehicle p1 )
 	{
 		MOBILE::GET_MOBILE_PHONE_ROTATION(&rotation, p1);
 		return rotation;
@@ -12896,7 +12891,7 @@ namespace lua::native
 		MOBILE::CELL_CAM_SET_SELFIE_MODE_HEAD_PITCH_OFFSET(pitch);
 	}
 
-	bool LUA_NATIVE_MOBILE_CELL_CAM_IS_CHAR_VISIBLE_NO_FACE_CHECK( int entity )
+	bool LUA_NATIVE_MOBILE_CELL_CAM_IS_CHAR_VISIBLE_NO_FACE_CHECK( Entity entity )
 	{
 		auto retval = (bool)MOBILE::CELL_CAM_IS_CHAR_VISIBLE_NO_FACE_CHECK(entity);
 		return retval;
@@ -12974,7 +12969,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_MONEY_NETWORK_CASINO_CAN_BET( unsigned hash )
+	bool LUA_NATIVE_MONEY_NETWORK_CASINO_CAN_BET( Hash hash )
 	{
 		auto retval = (bool)MONEY::NETWORK_CASINO_CAN_BET(hash);
 		return retval;
@@ -13095,7 +13090,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_MONEY_NETWORK_EARN_FROM_IMPORT_EXPORT( int amount, unsigned modelHash )
+	void LUA_NATIVE_MONEY_NETWORK_EARN_FROM_IMPORT_EXPORT( int amount, Hash modelHash )
 	{
 		MONEY::NETWORK_EARN_FROM_IMPORT_EXPORT(amount, modelHash);
 	}
@@ -13105,7 +13100,7 @@ namespace lua::native
 		MONEY::NETWORK_EARN_FROM_HOLDUPS(amount);
 	}
 
-	void LUA_NATIVE_MONEY_NETWORK_EARN_FROM_PROPERTY( int amount, unsigned propertyName )
+	void LUA_NATIVE_MONEY_NETWORK_EARN_FROM_PROPERTY( int amount, Hash propertyName )
 	{
 		MONEY::NETWORK_EARN_FROM_PROPERTY(amount, propertyName);
 	}
@@ -13276,7 +13271,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_MONEY_NETWORK_BUY_ITEM( int amount, unsigned item, Any p2, Any p3, bool p4, const char* item_name, Any p6, Any p7, Any p8, bool p9 )
+	void LUA_NATIVE_MONEY_NETWORK_BUY_ITEM( int amount, Hash item, Any p2, Any p3, bool p4, const char* item_name, Any p6, Any p7, Any p8, bool p9 )
 	{
 		MONEY::NETWORK_BUY_ITEM(amount, item, p2, p3, p4, item_name, p6, p7, p8, p9);
 	}
@@ -13336,12 +13331,12 @@ namespace lua::native
 		MONEY::NETWORK_SPENT_AMMO_DROP(p0, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_MONEY_NETWORK_BUY_BOUNTY( int amount, int victim, bool p2, bool p3, Any p4 )
+	void LUA_NATIVE_MONEY_NETWORK_BUY_BOUNTY( int amount, Player victim, bool p2, bool p3, Any p4 )
 	{
 		MONEY::NETWORK_BUY_BOUNTY(amount, victim, p2, p3, p4);
 	}
 
-	void LUA_NATIVE_MONEY_NETWORK_BUY_PROPERTY( int cost, unsigned propertyName, bool p2, bool p3 )
+	void LUA_NATIVE_MONEY_NETWORK_BUY_PROPERTY( int cost, Hash propertyName, bool p2, bool p3 )
 	{
 		MONEY::NETWORK_BUY_PROPERTY(cost, propertyName, p2, p3);
 	}
@@ -13442,7 +13437,7 @@ namespace lua::native
 		MONEY::NETWORK_SPENT_ARREST_BAIL(p0, p1, p2);
 	}
 
-	Any LUA_NATIVE_MONEY_NETWORK_SPENT_PAY_VEHICLE_INSURANCE_PREMIUM( int amount, unsigned vehicleModel, Any gamerHandle, bool notBankrupt, bool hasTheMoney )
+	Any LUA_NATIVE_MONEY_NETWORK_SPENT_PAY_VEHICLE_INSURANCE_PREMIUM( int amount, Hash vehicleModel, Any gamerHandle, bool notBankrupt, bool hasTheMoney )
 	{
 		MONEY::NETWORK_SPENT_PAY_VEHICLE_INSURANCE_PREMIUM(amount, vehicleModel, &gamerHandle, notBankrupt, hasTheMoney);
 		return gamerHandle;
@@ -13552,7 +13547,7 @@ namespace lua::native
 		MONEY::NETWORK_SPENT_RENAME_ORGANIZATION(p0, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_MONEY_NETWORK_BUY_CONTRABAND_MISSION( int p0, int p1, unsigned p2, bool p3, bool p4 )
+	void LUA_NATIVE_MONEY_NETWORK_BUY_CONTRABAND_MISSION( int p0, int p1, Hash p2, bool p3, bool p4 )
 	{
 		MONEY::NETWORK_BUY_CONTRABAND_MISSION(p0, p1, p2, p3, p4);
 	}
@@ -13738,7 +13733,7 @@ namespace lua::native
 		MONEY::NETWORK_SPENT_UPRADE_BUNKER(p0, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_MONEY_NETWORK_EARN_FROM_SELL_BUNKER( int amount, unsigned bunkerHash )
+	void LUA_NATIVE_MONEY_NETWORK_EARN_FROM_SELL_BUNKER( int amount, Hash bunkerHash )
 	{
 		MONEY::NETWORK_EARN_FROM_SELL_BUNKER(amount, bunkerHash);
 	}
@@ -13803,7 +13798,7 @@ namespace lua::native
 		MONEY::NETWORK_SPEND_CASINO_HEIST_SKIP_MISSION(p0, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_MONEY_NETWORK_EARN_SELL_BASE( int amount, unsigned baseNameHash )
+	void LUA_NATIVE_MONEY_NETWORK_EARN_SELL_BASE( int amount, Hash baseNameHash )
 	{
 		MONEY::NETWORK_EARN_SELL_BASE(amount, baseNameHash);
 	}
@@ -13828,7 +13823,7 @@ namespace lua::native
 		MONEY::NETWORK_EARN_DAR_CHALLENGE(amount, p1);
 	}
 
-	void LUA_NATIVE_MONEY_NETWORK_EARN_DOOMSDAY_FINALE_BONUS( int amount, unsigned vehicleHash )
+	void LUA_NATIVE_MONEY_NETWORK_EARN_DOOMSDAY_FINALE_BONUS( int amount, Hash vehicleHash )
 	{
 		MONEY::NETWORK_EARN_DOOMSDAY_FINALE_BONUS(amount, vehicleHash);
 	}
@@ -13933,7 +13928,7 @@ namespace lua::native
 		MONEY::NETWORK_SPENT_RDR_HATCHET_BONUS(amount, p1, p2);
 	}
 
-	void LUA_NATIVE_MONEY_NETWORK_SPENT_NIGHTCLUB_ENTRY_FEE( int player, int amount, Any p1, bool p2, bool p3 )
+	void LUA_NATIVE_MONEY_NETWORK_SPENT_NIGHTCLUB_ENTRY_FEE( Player player, int amount, Any p1, bool p2, bool p3 )
 	{
 		MONEY::NETWORK_SPENT_NIGHTCLUB_ENTRY_FEE(player, amount, p1, p2, p3);
 	}
@@ -14085,7 +14080,7 @@ namespace lua::native
 		MONEY::NETWORK_EARN_CASINO_MISSION_PARTICIPATION(amount);
 	}
 
-	void LUA_NATIVE_MONEY_NETWORK_EARN_CASINO_AWARD( int amount, unsigned hash )
+	void LUA_NATIVE_MONEY_NETWORK_EARN_CASINO_AWARD( int amount, Hash hash )
 	{
 		MONEY::NETWORK_EARN_CASINO_AWARD(amount, hash);
 	}
@@ -14616,12 +14611,12 @@ namespace lua::native
 		MONEY::NETWORK_SPENT_SKIP_CARGO_SOURCE_SETUP_(amount, fromBank, fromBankAndWallet, cost);
 	}
 
-	void LUA_NATIVE_MONEY_NETWORK_SPENT_STEALTH_MODULE_( int amount, bool fromBank, bool fromBankAndWallet, unsigned p3 )
+	void LUA_NATIVE_MONEY_NETWORK_SPENT_STEALTH_MODULE_( int amount, bool fromBank, bool fromBankAndWallet, Hash p3 )
 	{
 		MONEY::NETWORK_SPENT_STEALTH_MODULE_(amount, fromBank, fromBankAndWallet, p3);
 	}
 
-	void LUA_NATIVE_MONEY_NETWORK_SPENT_MISSILE_JAMMER_( int amount, bool fromBank, bool fromBankAndWallet, unsigned p3 )
+	void LUA_NATIVE_MONEY_NETWORK_SPENT_MISSILE_JAMMER_( int amount, bool fromBank, bool fromBankAndWallet, Hash p3 )
 	{
 		MONEY::NETWORK_SPENT_MISSILE_JAMMER_(amount, fromBank, fromBankAndWallet, p3);
 	}
@@ -14752,13 +14747,13 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETSHOPPING_NET_GAMESERVER_CATALOG_ITEM_KEY_IS_VALID( unsigned hash )
+	bool LUA_NATIVE_NETSHOPPING_NET_GAMESERVER_CATALOG_ITEM_KEY_IS_VALID( Hash hash )
 	{
 		auto retval = (bool)NETSHOPPING::NET_GAMESERVER_CATALOG_ITEM_KEY_IS_VALID(hash);
 		return retval;
 	}
 
-	int LUA_NATIVE_NETSHOPPING_NET_GAMESERVER_GET_PRICE( unsigned itemHash, unsigned categoryHash, bool p2 )
+	int LUA_NATIVE_NETSHOPPING_NET_GAMESERVER_GET_PRICE( Hash itemHash, Hash categoryHash, bool p2 )
 	{
 		auto retval = NETSHOPPING::NET_GAMESERVER_GET_PRICE(itemHash, categoryHash, p2);
 		return retval;
@@ -14776,7 +14771,7 @@ namespace lua::native
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_NETSHOPPING_NET_GAMESERVER_GET_CATALOG_CLOUD_CRC(  )
+	Hash LUA_NATIVE_NETSHOPPING_NET_GAMESERVER_GET_CATALOG_CLOUD_CRC(  )
 	{
 		auto retval = NETSHOPPING::NET_GAMESERVER_GET_CATALOG_CLOUD_CRC();
 		return retval;
@@ -14888,7 +14883,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_NETSHOPPING_NET_GAMESERVER_BASKET_START( int transactionId, unsigned categoryHash, unsigned actionHash, int flags )
+	std::tuple<bool, int> LUA_NATIVE_NETSHOPPING_NET_GAMESERVER_BASKET_START( int transactionId, Hash categoryHash, Hash actionHash, int flags )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)NETSHOPPING::NET_GAMESERVER_BASKET_START(&transactionId, categoryHash, actionHash, flags);
@@ -14939,7 +14934,7 @@ namespace lua::native
 		return retval;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_NETSHOPPING_NET_GAMESERVER_BEGIN_SERVICE( int transactionId, unsigned categoryHash, unsigned itemHash, unsigned actionTypeHash, int value, int flags )
+	std::tuple<bool, int> LUA_NATIVE_NETSHOPPING_NET_GAMESERVER_BEGIN_SERVICE( int transactionId, Hash categoryHash, Hash itemHash, Hash actionTypeHash, int value, int flags )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)NETSHOPPING::NET_GAMESERVER_BEGIN_SERVICE(&transactionId, categoryHash, itemHash, actionTypeHash, value, flags);
@@ -14954,7 +14949,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETSHOPPING_NET_GAMESERVER_DELETE_CHARACTER( int slot, bool transfer, unsigned reason )
+	bool LUA_NATIVE_NETSHOPPING_NET_GAMESERVER_DELETE_CHARACTER( int slot, bool transfer, Hash reason )
 	{
 		auto retval = (bool)NETSHOPPING::NET_GAMESERVER_DELETE_CHARACTER(slot, transfer, reason);
 		return retval;
@@ -15092,7 +15087,7 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NETWORK_GET_HOST_PLAYER_INDEX(  )
+	Player LUA_NATIVE_NETWORK_NETWORK_GET_HOST_PLAYER_INDEX(  )
 	{
 		auto retval = NETWORK::NETWORK_GET_HOST_PLAYER_INDEX();
 		return retval;
@@ -15122,7 +15117,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_HAVE_COMMUNICATION_PRIVILEGES( int p0, int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_HAVE_COMMUNICATION_PRIVILEGES( int p0, Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_HAVE_COMMUNICATION_PRIVILEGES(p0, player);
 		return retval;
@@ -15250,7 +15245,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_TRANSITION_ADD_STAGE( unsigned hash, int p1, int p2, int state, int p4 )
+	bool LUA_NATIVE_NETWORK_NETWORK_TRANSITION_ADD_STAGE( Hash hash, int p1, int p2, int state, int p4 )
 	{
 		auto retval = (bool)NETWORK::NETWORK_TRANSITION_ADD_STAGE(hash, p1, p2, state, p4);
 		return retval;
@@ -15361,12 +15356,12 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_SESSION_KICK_PLAYER( int player )
+	void LUA_NATIVE_NETWORK_NETWORK_SESSION_KICK_PLAYER( Player player )
 	{
 		NETWORK::NETWORK_SESSION_KICK_PLAYER(player);
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_SESSION_GET_KICK_VOTE( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_SESSION_GET_KICK_VOTE( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_SESSION_GET_KICK_VOTE(player);
 		return retval;
@@ -16172,7 +16167,7 @@ namespace lua::native
 		NETWORK::NETWORK_TRANSITION_BLOCK_JOIN_REQUESTS(p0);
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_HAS_PLAYER_STARTED_TRANSITION( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_HAS_PLAYER_STARTED_TRANSITION( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_HAS_PLAYER_STARTED_TRANSITION(player);
 		return retval;
@@ -16184,7 +16179,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_JOIN_TRANSITION( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_JOIN_TRANSITION( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_JOIN_TRANSITION(player);
 		return retval;
@@ -16595,7 +16590,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_REMOTE_CHEATER_PLAYER_DETECTED( int player, int a, int b )
+	bool LUA_NATIVE_NETWORK_REMOTE_CHEATER_PLAYER_DETECTED( Player player, int a, int b )
 	{
 		auto retval = (bool)NETWORK::REMOTE_CHEATER_PLAYER_DETECTED(player, a, b);
 		return retval;
@@ -16610,12 +16605,12 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_ADD_INVALID_OBJECT_MODEL( unsigned modelHash )
+	void LUA_NATIVE_NETWORK_NETWORK_ADD_INVALID_OBJECT_MODEL( Hash modelHash )
 	{
 		NETWORK::NETWORK_ADD_INVALID_OBJECT_MODEL(modelHash);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_REMOVE_INVALID_OBJECT_MODEL( unsigned modelHash )
+	void LUA_NATIVE_NETWORK_NETWORK_REMOVE_INVALID_OBJECT_MODEL( Hash modelHash )
 	{
 		NETWORK::NETWORK_REMOVE_INVALID_OBJECT_MODEL(modelHash);
 	}
@@ -16625,7 +16620,7 @@ namespace lua::native
 		NETWORK::NETWORK_CLEAR_INVALID_OBJECT_MODELS();
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_APPLY_PED_SCAR_DATA( int ped, int p1 )
+	void LUA_NATIVE_NETWORK_NETWORK_APPLY_PED_SCAR_DATA( Ped ped, int p1 )
 	{
 		NETWORK::NETWORK_APPLY_PED_SCAR_DATA(ped, p1);
 	}
@@ -16698,7 +16693,7 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NETWORK_GET_PLAYER_INDEX( int player )
+	Player LUA_NATIVE_NETWORK_NETWORK_GET_PLAYER_INDEX( Player player )
 	{
 		auto retval = NETWORK::NETWORK_GET_PLAYER_INDEX(player);
 		return retval;
@@ -16710,7 +16705,7 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NETWORK_GET_PLAYER_INDEX_FROM_PED( int ped )
+	Player LUA_NATIVE_NETWORK_NETWORK_GET_PLAYER_INDEX_FROM_PED( Ped ped )
 	{
 		auto retval = NETWORK::NETWORK_GET_PLAYER_INDEX_FROM_PED(ped);
 		return retval;
@@ -16722,7 +16717,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_CONNECTED( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_CONNECTED( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_IS_PLAYER_CONNECTED(player);
 		return retval;
@@ -16740,13 +16735,13 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_ACTIVE( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_ACTIVE( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_IS_PLAYER_ACTIVE(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_A_PARTICIPANT( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_A_PARTICIPANT( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_IS_PLAYER_A_PARTICIPANT(player);
 		return retval;
@@ -16758,13 +16753,13 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NETWORK_GET_HOST_OF_THIS_SCRIPT(  )
+	Player LUA_NATIVE_NETWORK_NETWORK_GET_HOST_OF_THIS_SCRIPT(  )
 	{
 		auto retval = NETWORK::NETWORK_GET_HOST_OF_THIS_SCRIPT();
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NETWORK_GET_HOST_OF_SCRIPT( const char* scriptName, int instance_id, int position_hash )
+	Player LUA_NATIVE_NETWORK_NETWORK_GET_HOST_OF_SCRIPT( const char* scriptName, int instance_id, int position_hash )
 	{
 		auto retval = NETWORK::NETWORK_GET_HOST_OF_SCRIPT(scriptName, instance_id, position_hash);
 		return retval;
@@ -16781,7 +16776,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_IS_SCRIPT_ACTIVE_BY_HASH( unsigned scriptHash, int p1, bool p2, int p3 )
+	bool LUA_NATIVE_NETWORK_NETWORK_IS_SCRIPT_ACTIVE_BY_HASH( Hash scriptHash, int p1, bool p2, int p3 )
 	{
 		auto retval = (bool)NETWORK::NETWORK_IS_SCRIPT_ACTIVE_BY_HASH(scriptHash, p1, p2, p3);
 		return retval;
@@ -16805,13 +16800,13 @@ namespace lua::native
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_NETWORK_NETWORK_GET_POSITION_HASH_OF_THIS_SCRIPT(  )
+	Hash LUA_NATIVE_NETWORK_NETWORK_GET_POSITION_HASH_OF_THIS_SCRIPT(  )
 	{
 		auto retval = NETWORK::NETWORK_GET_POSITION_HASH_OF_THIS_SCRIPT();
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_A_PARTICIPANT_ON_SCRIPT( int player, const char* script, int instance_id )
+	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_A_PARTICIPANT_ON_SCRIPT( Player player, const char* script, int instance_id )
 	{
 		auto retval = (bool)NETWORK::NETWORK_IS_PLAYER_A_PARTICIPANT_ON_SCRIPT(player, script, instance_id);
 		return retval;
@@ -16827,7 +16822,7 @@ namespace lua::native
 		NETWORK::NETWORK_REQUEST_TO_BE_HOST_OF_THIS_SCRIPT();
 	}
 
-	int LUA_NATIVE_NETWORK_PARTICIPANT_ID(  )
+	Player LUA_NATIVE_NETWORK_PARTICIPANT_ID(  )
 	{
 		auto retval = NETWORK::PARTICIPANT_ID();
 		return retval;
@@ -16839,34 +16834,34 @@ namespace lua::native
 		return retval;
 	}
 
-	std::tuple<int, unsigned> LUA_NATIVE_NETWORK_NETWORK_GET_KILLER_OF_PLAYER( int player, unsigned weaponHash )
+	std::tuple<Player, Hash> LUA_NATIVE_NETWORK_NETWORK_GET_KILLER_OF_PLAYER( Player player, Hash weaponHash )
 	{
-		std::tuple<int, unsigned> return_values;
+		std::tuple<Player, Hash> return_values;
 		std::get<0>(return_values) = NETWORK::NETWORK_GET_KILLER_OF_PLAYER(player, &weaponHash);
 		std::get<1>(return_values) = weaponHash;
 
 		return return_values;
 	}
 
-	std::tuple<int, unsigned> LUA_NATIVE_NETWORK_NETWORK_GET_DESTROYER_OF_NETWORK_ID( int netId, unsigned weaponHash )
+	std::tuple<Player, Hash> LUA_NATIVE_NETWORK_NETWORK_GET_DESTROYER_OF_NETWORK_ID( int netId, Hash weaponHash )
 	{
-		std::tuple<int, unsigned> return_values;
+		std::tuple<Player, Hash> return_values;
 		std::get<0>(return_values) = NETWORK::NETWORK_GET_DESTROYER_OF_NETWORK_ID(netId, &weaponHash);
 		std::get<1>(return_values) = weaponHash;
 
 		return return_values;
 	}
 
-	std::tuple<int, unsigned> LUA_NATIVE_NETWORK_NETWORK_GET_DESTROYER_OF_ENTITY( int entity, unsigned weaponHash )
+	std::tuple<Player, Hash> LUA_NATIVE_NETWORK_NETWORK_GET_DESTROYER_OF_ENTITY( Entity entity, Hash weaponHash )
 	{
-		std::tuple<int, unsigned> return_values;
+		std::tuple<Player, Hash> return_values;
 		std::get<0>(return_values) = NETWORK::NETWORK_GET_DESTROYER_OF_ENTITY(entity, &weaponHash);
 		std::get<1>(return_values) = weaponHash;
 
 		return return_values;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_NETWORK_NETWORK_GET_ASSISTED_KILL_OF_ENTITY( int player, int entity, int p2 )
+	std::tuple<bool, int> LUA_NATIVE_NETWORK_NETWORK_GET_ASSISTED_KILL_OF_ENTITY( Player player, Entity entity, int p2 )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)NETWORK::NETWORK_GET_ASSISTED_KILL_OF_ENTITY(player, entity, &p2);
@@ -16875,7 +16870,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_NETWORK_NETWORK_GET_ASSISTED_DAMAGE_OF_ENTITY( int player, int entity, int p2 )
+	std::tuple<bool, int> LUA_NATIVE_NETWORK_NETWORK_GET_ASSISTED_DAMAGE_OF_ENTITY( Player player, Entity entity, int p2 )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)NETWORK::NETWORK_GET_ASSISTED_DAMAGE_OF_ENTITY(player, entity, &p2);
@@ -16884,9 +16879,9 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<int, unsigned> LUA_NATIVE_NETWORK_NETWORK_GET_ENTITY_KILLER_OF_PLAYER( int player, unsigned weaponHash )
+	std::tuple<Entity, Hash> LUA_NATIVE_NETWORK_NETWORK_GET_ENTITY_KILLER_OF_PLAYER( Player player, Hash weaponHash )
 	{
-		std::tuple<int, unsigned> return_values;
+		std::tuple<Entity, Hash> return_values;
 		std::get<0>(return_values) = NETWORK::NETWORK_GET_ENTITY_KILLER_OF_PLAYER(player, &weaponHash);
 		std::get<1>(return_values) = weaponHash;
 
@@ -16903,7 +16898,7 @@ namespace lua::native
 		NETWORK::NETWORK_SET_CURRENT_CHAT_OPTION(newChatOption);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_SET_CURRENT_SPAWN_LOCATION_OPTION( unsigned mpSettingSpawn )
+	void LUA_NATIVE_NETWORK_NETWORK_SET_CURRENT_SPAWN_LOCATION_OPTION( Hash mpSettingSpawn )
 	{
 		NETWORK::NETWORK_SET_CURRENT_SPAWN_LOCATION_OPTION(mpSettingSpawn);
 	}
@@ -16913,7 +16908,7 @@ namespace lua::native
 		NETWORK::NETWORK_SET_VEHICLE_DRIVEN_IN_TEST_DRIVE(toggle);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_SET_VEHICLE_DRIVEN_LOCATION( unsigned location )
+	void LUA_NATIVE_NETWORK_NETWORK_SET_VEHICLE_DRIVEN_LOCATION( Hash location )
 	{
 		NETWORK::NETWORK_SET_VEHICLE_DRIVEN_LOCATION(location);
 	}
@@ -16934,12 +16929,12 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_DISABLE_INVINCIBLE_FLASHING( int player, bool toggle )
+	void LUA_NATIVE_NETWORK_NETWORK_DISABLE_INVINCIBLE_FLASHING( Player player, bool toggle )
 	{
 		NETWORK::NETWORK_DISABLE_INVINCIBLE_FLASHING(player, toggle);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_PATCH_POST_CUTSCENE_HS4F_TUN_ENT( int ped )
+	void LUA_NATIVE_NETWORK_NETWORK_PATCH_POST_CUTSCENE_HS4F_TUN_ENT( Ped ped )
 	{
 		NETWORK::NETWORK_PATCH_POST_CUTSCENE_HS4F_TUN_ENT(ped);
 	}
@@ -16949,42 +16944,42 @@ namespace lua::native
 		NETWORK::NETWORK_SET_LOCAL_PLAYER_SYNC_LOOK_AT(toggle);
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_HAS_ENTITY_BEEN_REGISTERED_WITH_THIS_THREAD( int entity )
+	bool LUA_NATIVE_NETWORK_NETWORK_HAS_ENTITY_BEEN_REGISTERED_WITH_THIS_THREAD( Entity entity )
 	{
 		auto retval = (bool)NETWORK::NETWORK_HAS_ENTITY_BEEN_REGISTERED_WITH_THIS_THREAD(entity);
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NETWORK_GET_NETWORK_ID_FROM_ENTITY( int entity )
+	int LUA_NATIVE_NETWORK_NETWORK_GET_NETWORK_ID_FROM_ENTITY( Entity entity )
 	{
 		auto retval = NETWORK::NETWORK_GET_NETWORK_ID_FROM_ENTITY(entity);
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NETWORK_GET_ENTITY_FROM_NETWORK_ID( int netId )
+	Entity LUA_NATIVE_NETWORK_NETWORK_GET_ENTITY_FROM_NETWORK_ID( int netId )
 	{
 		auto retval = NETWORK::NETWORK_GET_ENTITY_FROM_NETWORK_ID(netId);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_GET_ENTITY_IS_NETWORKED( int entity )
+	bool LUA_NATIVE_NETWORK_NETWORK_GET_ENTITY_IS_NETWORKED( Entity entity )
 	{
 		auto retval = (bool)NETWORK::NETWORK_GET_ENTITY_IS_NETWORKED(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_GET_ENTITY_IS_LOCAL( int entity )
+	bool LUA_NATIVE_NETWORK_NETWORK_GET_ENTITY_IS_LOCAL( Entity entity )
 	{
 		auto retval = (bool)NETWORK::NETWORK_GET_ENTITY_IS_LOCAL(entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_REGISTER_ENTITY_AS_NETWORKED( int entity )
+	void LUA_NATIVE_NETWORK_NETWORK_REGISTER_ENTITY_AS_NETWORKED( Entity entity )
 	{
 		NETWORK::NETWORK_REGISTER_ENTITY_AS_NETWORKED(entity);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_UNREGISTER_NETWORKED_ENTITY( int entity )
+	void LUA_NATIVE_NETWORK_NETWORK_UNREGISTER_NETWORKED_ENTITY( Entity entity )
 	{
 		NETWORK::NETWORK_UNREGISTER_NETWORKED_ENTITY(entity);
 	}
@@ -17019,7 +17014,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_REQUEST_CONTROL_OF_ENTITY( int entity )
+	bool LUA_NATIVE_NETWORK_NETWORK_REQUEST_CONTROL_OF_ENTITY( Entity entity )
 	{
 		auto retval = (bool)NETWORK::NETWORK_REQUEST_CONTROL_OF_ENTITY(entity);
 		return retval;
@@ -17031,37 +17026,37 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_HAS_CONTROL_OF_ENTITY( int entity )
+	bool LUA_NATIVE_NETWORK_NETWORK_HAS_CONTROL_OF_ENTITY( Entity entity )
 	{
 		auto retval = (bool)NETWORK::NETWORK_HAS_CONTROL_OF_ENTITY(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_HAS_CONTROL_OF_PICKUP( int pickup )
+	bool LUA_NATIVE_NETWORK_NETWORK_HAS_CONTROL_OF_PICKUP( Pickup pickup )
 	{
 		auto retval = (bool)NETWORK::NETWORK_HAS_CONTROL_OF_PICKUP(pickup);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_HAS_CONTROL_OF_DOOR( unsigned doorHash )
+	bool LUA_NATIVE_NETWORK_NETWORK_HAS_CONTROL_OF_DOOR( Hash doorHash )
 	{
 		auto retval = (bool)NETWORK::NETWORK_HAS_CONTROL_OF_DOOR(doorHash);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_IS_DOOR_NETWORKED( unsigned doorHash )
+	bool LUA_NATIVE_NETWORK_NETWORK_IS_DOOR_NETWORKED( Hash doorHash )
 	{
 		auto retval = (bool)NETWORK::NETWORK_IS_DOOR_NETWORKED(doorHash);
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_VEH_TO_NET( int vehicle )
+	int LUA_NATIVE_NETWORK_VEH_TO_NET( Vehicle vehicle )
 	{
 		auto retval = NETWORK::VEH_TO_NET(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_PED_TO_NET( int ped )
+	int LUA_NATIVE_NETWORK_PED_TO_NET( Ped ped )
 	{
 		auto retval = NETWORK::PED_TO_NET(ped);
 		return retval;
@@ -17073,13 +17068,13 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NET_TO_VEH( int netHandle )
+	Vehicle LUA_NATIVE_NETWORK_NET_TO_VEH( int netHandle )
 	{
 		auto retval = NETWORK::NET_TO_VEH(netHandle);
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NET_TO_PED( int netHandle )
+	Ped LUA_NATIVE_NETWORK_NET_TO_PED( int netHandle )
 	{
 		auto retval = NETWORK::NET_TO_PED(netHandle);
 		return retval;
@@ -17091,7 +17086,7 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NET_TO_ENT( int netHandle )
+	Entity LUA_NATIVE_NETWORK_NET_TO_ENT( int netHandle )
 	{
 		auto retval = NETWORK::NET_TO_ENT(netHandle);
 		return retval;
@@ -17115,21 +17110,21 @@ namespace lua::native
 		return gamerHandle;
 	}
 
-	Any LUA_NATIVE_NETWORK_NETWORK_HANDLE_FROM_PLAYER( int player, Any gamerHandle, int gamerHandleSize )
+	Any LUA_NATIVE_NETWORK_NETWORK_HANDLE_FROM_PLAYER( Player player, Any gamerHandle, int gamerHandleSize )
 	{
 		NETWORK::NETWORK_HANDLE_FROM_PLAYER(player, &gamerHandle, gamerHandleSize);
 		return gamerHandle;
 	}
 
-	unsigned LUA_NATIVE_NETWORK_NETWORK_HASH_FROM_PLAYER_HANDLE( int player )
+	Hash LUA_NATIVE_NETWORK_NETWORK_HASH_FROM_PLAYER_HANDLE( Player player )
 	{
 		auto retval = NETWORK::NETWORK_HASH_FROM_PLAYER_HANDLE(player);
 		return retval;
 	}
 
-	std::tuple<unsigned, Any> LUA_NATIVE_NETWORK_NETWORK_HASH_FROM_GAMER_HANDLE( Any gamerHandle )
+	std::tuple<Hash, Any> LUA_NATIVE_NETWORK_NETWORK_HASH_FROM_GAMER_HANDLE( Any gamerHandle )
 	{
-		std::tuple<unsigned, Any> return_values;
+		std::tuple<Hash, Any> return_values;
 		std::get<0>(return_values) = NETWORK::NETWORK_HASH_FROM_GAMER_HANDLE(&gamerHandle);
 		std::get<1>(return_values) = gamerHandle;
 
@@ -17206,9 +17201,9 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<int, Any> LUA_NATIVE_NETWORK_NETWORK_GET_PLAYER_FROM_GAMER_HANDLE( Any gamerHandle )
+	std::tuple<Player, Any> LUA_NATIVE_NETWORK_NETWORK_GET_PLAYER_FROM_GAMER_HANDLE( Any gamerHandle )
 	{
-		std::tuple<int, Any> return_values;
+		std::tuple<Player, Any> return_values;
 		std::get<0>(return_values) = NETWORK::NETWORK_GET_PLAYER_FROM_GAMER_HANDLE(&gamerHandle);
 		std::get<1>(return_values) = gamerHandle;
 
@@ -17239,13 +17234,13 @@ namespace lua::native
 		return gamerHandle;
 	}
 
-	const char* LUA_NATIVE_NETWORK_NETWORK_PLAYER_GET_NAME( int player )
+	const char* LUA_NATIVE_NETWORK_NETWORK_PLAYER_GET_NAME( Player player )
 	{
 		auto retval = NETWORK::NETWORK_PLAYER_GET_NAME(player);
 		return retval;
 	}
 
-	std::tuple<const char*, int> LUA_NATIVE_NETWORK_NETWORK_PLAYER_GET_USERID( int player, int userID )
+	std::tuple<const char*, int> LUA_NATIVE_NETWORK_NETWORK_PLAYER_GET_USERID( Player player, int userID )
 	{
 		std::tuple<const char*, int> return_values;
 		std::get<0>(return_values) = NETWORK::NETWORK_PLAYER_GET_USERID(player, &userID);
@@ -17254,25 +17249,25 @@ namespace lua::native
 		return return_values;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_PLAYER_IS_ROCKSTAR_DEV( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_PLAYER_IS_ROCKSTAR_DEV( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_PLAYER_IS_ROCKSTAR_DEV(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_PLAYER_INDEX_IS_CHEATER( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_PLAYER_INDEX_IS_CHEATER( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_PLAYER_INDEX_IS_CHEATER(player);
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NETWORK_ENTITY_GET_OBJECT_ID( int entity )
+	int LUA_NATIVE_NETWORK_NETWORK_ENTITY_GET_OBJECT_ID( Entity entity )
 	{
 		auto retval = NETWORK::NETWORK_ENTITY_GET_OBJECT_ID(entity);
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NETWORK_GET_ENTITY_FROM_OBJECT_ID( Any p0 )
+	Entity LUA_NATIVE_NETWORK_NETWORK_GET_ENTITY_FROM_OBJECT_ID( Any p0 )
 	{
 		auto retval = NETWORK::NETWORK_GET_ENTITY_FROM_OBJECT_ID(p0);
 		return retval;
@@ -17379,7 +17374,7 @@ namespace lua::native
 		NETWORK::NETWORK_SET_PLAYER_IS_PASSIVE(toggle);
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_GET_PLAYER_OWNS_WAYPOINT( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_GET_PLAYER_OWNS_WAYPOINT( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_GET_PLAYER_OWNS_WAYPOINT(player);
 		return retval;
@@ -17569,43 +17564,43 @@ namespace lua::native
 		return return_values;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_TALKING( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_TALKING( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_IS_PLAYER_TALKING(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_PLAYER_HAS_HEADSET( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_PLAYER_HAS_HEADSET( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_PLAYER_HAS_HEADSET(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_MUTED_BY_ME( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_MUTED_BY_ME( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_IS_PLAYER_MUTED_BY_ME(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_AM_I_MUTED_BY_PLAYER( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_AM_I_MUTED_BY_PLAYER( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_AM_I_MUTED_BY_PLAYER(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_BLOCKED_BY_ME( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_BLOCKED_BY_ME( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_IS_PLAYER_BLOCKED_BY_ME(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_AM_I_BLOCKED_BY_PLAYER( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_AM_I_BLOCKED_BY_PLAYER( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_AM_I_BLOCKED_BY_PLAYER(player);
 		return retval;
 	}
 
-	float LUA_NATIVE_NETWORK_NETWORK_GET_PLAYER_LOUDNESS( int player )
+	float LUA_NATIVE_NETWORK_NETWORK_GET_PLAYER_LOUDNESS( Player player )
 	{
 		auto retval = NETWORK::NETWORK_GET_PLAYER_LOUDNESS(player);
 		return retval;
@@ -17683,12 +17678,12 @@ namespace lua::native
 		NETWORK::NETWORK_SET_IGNORE_SPECTATOR_CHAT_LIMITS_SAME_TEAM(toggle);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_OVERRIDE_CHAT_RESTRICTIONS( int player, bool toggle )
+	void LUA_NATIVE_NETWORK_NETWORK_OVERRIDE_CHAT_RESTRICTIONS( Player player, bool toggle )
 	{
 		NETWORK::NETWORK_OVERRIDE_CHAT_RESTRICTIONS(player, toggle);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_OVERRIDE_SEND_RESTRICTIONS( int player, bool toggle )
+	void LUA_NATIVE_NETWORK_NETWORK_OVERRIDE_SEND_RESTRICTIONS( Player player, bool toggle )
 	{
 		NETWORK::NETWORK_OVERRIDE_SEND_RESTRICTIONS(player, toggle);
 	}
@@ -17698,7 +17693,7 @@ namespace lua::native
 		NETWORK::NETWORK_OVERRIDE_SEND_RESTRICTIONS_ALL(toggle);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_OVERRIDE_RECEIVE_RESTRICTIONS( int player, bool toggle )
+	void LUA_NATIVE_NETWORK_NETWORK_OVERRIDE_RECEIVE_RESTRICTIONS( Player player, bool toggle )
 	{
 		NETWORK::NETWORK_OVERRIDE_RECEIVE_RESTRICTIONS(player, toggle);
 	}
@@ -17728,17 +17723,17 @@ namespace lua::native
 		NETWORK::NETWORK_CLEAR_VOICE_PROXIMITY_OVERRIDE();
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_ENABLE_VOICE_BANDWIDTH_RESTRICTION( int player )
+	void LUA_NATIVE_NETWORK_NETWORK_ENABLE_VOICE_BANDWIDTH_RESTRICTION( Player player )
 	{
 		NETWORK::NETWORK_ENABLE_VOICE_BANDWIDTH_RESTRICTION(player);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_DISABLE_VOICE_BANDWIDTH_RESTRICTION( int player )
+	void LUA_NATIVE_NETWORK_NETWORK_DISABLE_VOICE_BANDWIDTH_RESTRICTION( Player player )
 	{
 		NETWORK::NETWORK_DISABLE_VOICE_BANDWIDTH_RESTRICTION(player);
 	}
 
-	std::tuple<float, float> LUA_NATIVE_NETWORK_NETWORK_GET_MUTE_COUNT_FOR_PLAYER( int p0, float p1, float p2 )
+	std::tuple<float, float> LUA_NATIVE_NETWORK_NETWORK_GET_MUTE_COUNT_FOR_PLAYER( Player p0, float p1, float p2 )
 	{
 		std::tuple<float, float> return_values;
 		NETWORK::NETWORK_GET_MUTE_COUNT_FOR_PLAYER(p0, &p1, &p2);
@@ -17791,17 +17786,17 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_LEAVE_PED_BEHIND_BEFORE_WARP( int player, float x, float y, float z, bool p4, bool p5 )
+	void LUA_NATIVE_NETWORK_NETWORK_LEAVE_PED_BEHIND_BEFORE_WARP( Player player, float x, float y, float z, bool p4, bool p5 )
 	{
 		NETWORK::NETWORK_LEAVE_PED_BEHIND_BEFORE_WARP(player, x, y, z, p4, p5);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_LEAVE_PED_BEHIND_BEFORE_CUTSCENE( int player, bool p1 )
+	void LUA_NATIVE_NETWORK_NETWORK_LEAVE_PED_BEHIND_BEFORE_CUTSCENE( Player player, bool p1 )
 	{
 		NETWORK::NETWORK_LEAVE_PED_BEHIND_BEFORE_CUTSCENE(player, p1);
 	}
 
-	void LUA_NATIVE_NETWORK_REMOVE_ALL_STICKY_BOMBS_FROM_ENTITY( int entity, int ped )
+	void LUA_NATIVE_NETWORK_REMOVE_ALL_STICKY_BOMBS_FROM_ENTITY( Entity entity, Ped ped )
 	{
 		NETWORK::REMOVE_ALL_STICKY_BOMBS_FROM_ENTITY(entity, ped);
 	}
@@ -18043,7 +18038,7 @@ namespace lua::native
 		NETWORK::SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(netId, toggle);
 	}
 
-	void LUA_NATIVE_NETWORK_SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER( int netId, int player, bool toggle )
+	void LUA_NATIVE_NETWORK_SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER( int netId, Player player, bool toggle )
 	{
 		NETWORK::SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(netId, player, toggle);
 	}
@@ -18053,7 +18048,7 @@ namespace lua::native
 		NETWORK::SET_NETWORK_ID_CAN_BE_REASSIGNED(netId, toggle);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_SET_ENTITY_CAN_BLEND( int entity, bool toggle )
+	void LUA_NATIVE_NETWORK_NETWORK_SET_ENTITY_CAN_BLEND( Entity entity, bool toggle )
 	{
 		NETWORK::NETWORK_SET_ENTITY_CAN_BLEND(entity, toggle);
 	}
@@ -18063,7 +18058,7 @@ namespace lua::native
 		NETWORK::NETWORK_SET_OBJECT_CAN_BLEND_WHEN_FIXED(object, toggle);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_SET_ENTITY_ONLY_EXISTS_FOR_PARTICIPANTS( int entity, bool toggle )
+	void LUA_NATIVE_NETWORK_NETWORK_SET_ENTITY_ONLY_EXISTS_FOR_PARTICIPANTS( Entity entity, bool toggle )
 	{
 		NETWORK::NETWORK_SET_ENTITY_ONLY_EXISTS_FOR_PARTICIPANTS(entity, toggle);
 	}
@@ -18105,7 +18100,7 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_NETWORK_SET_REMOTE_PLAYER_VISIBLE_IN_CUTSCENE( int player, bool locallyVisible )
+	void LUA_NATIVE_NETWORK_SET_REMOTE_PLAYER_VISIBLE_IN_CUTSCENE( Player player, bool locallyVisible )
 	{
 		NETWORK::SET_REMOTE_PLAYER_VISIBLE_IN_CUTSCENE(player, locallyVisible);
 	}
@@ -18125,12 +18120,12 @@ namespace lua::native
 		NETWORK::SET_LOCAL_PLAYER_VISIBLE_LOCALLY(bIncludePlayersVehicle);
 	}
 
-	void LUA_NATIVE_NETWORK_SET_PLAYER_INVISIBLE_LOCALLY( int player, bool bIncludePlayersVehicle )
+	void LUA_NATIVE_NETWORK_SET_PLAYER_INVISIBLE_LOCALLY( Player player, bool bIncludePlayersVehicle )
 	{
 		NETWORK::SET_PLAYER_INVISIBLE_LOCALLY(player, bIncludePlayersVehicle);
 	}
 
-	void LUA_NATIVE_NETWORK_SET_PLAYER_VISIBLE_LOCALLY( int player, bool bIncludePlayersVehicle )
+	void LUA_NATIVE_NETWORK_SET_PLAYER_VISIBLE_LOCALLY( Player player, bool bIncludePlayersVehicle )
 	{
 		NETWORK::SET_PLAYER_VISIBLE_LOCALLY(player, bIncludePlayersVehicle);
 	}
@@ -18140,29 +18135,29 @@ namespace lua::native
 		NETWORK::FADE_OUT_LOCAL_PLAYER(p0);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_FADE_OUT_ENTITY( int entity, bool normal, bool slow )
+	void LUA_NATIVE_NETWORK_NETWORK_FADE_OUT_ENTITY( Entity entity, bool normal, bool slow )
 	{
 		NETWORK::NETWORK_FADE_OUT_ENTITY(entity, normal, slow);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_FADE_IN_ENTITY( int entity, bool state, Any p2 )
+	void LUA_NATIVE_NETWORK_NETWORK_FADE_IN_ENTITY( Entity entity, bool state, Any p2 )
 	{
 		NETWORK::NETWORK_FADE_IN_ENTITY(entity, state, p2);
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_FADING( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_FADING( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_IS_PLAYER_FADING(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_IS_ENTITY_FADING( int entity )
+	bool LUA_NATIVE_NETWORK_NETWORK_IS_ENTITY_FADING( Entity entity )
 	{
 		auto retval = (bool)NETWORK::NETWORK_IS_ENTITY_FADING(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_IS_PLAYER_IN_CUTSCENE( int player )
+	bool LUA_NATIVE_NETWORK_IS_PLAYER_IN_CUTSCENE( Player player )
 	{
 		auto retval = (bool)NETWORK::IS_PLAYER_IN_CUTSCENE(player);
 		return retval;
@@ -18173,12 +18168,12 @@ namespace lua::native
 		NETWORK::SET_ENTITY_VISIBLE_IN_CUTSCENE(p0, p1, p2);
 	}
 
-	void LUA_NATIVE_NETWORK_SET_ENTITY_LOCALLY_INVISIBLE( int entity )
+	void LUA_NATIVE_NETWORK_SET_ENTITY_LOCALLY_INVISIBLE( Entity entity )
 	{
 		NETWORK::SET_ENTITY_LOCALLY_INVISIBLE(entity);
 	}
 
-	void LUA_NATIVE_NETWORK_SET_ENTITY_LOCALLY_VISIBLE( int entity )
+	void LUA_NATIVE_NETWORK_SET_ENTITY_LOCALLY_VISIBLE( Entity entity )
 	{
 		NETWORK::SET_ENTITY_LOCALLY_VISIBLE(entity);
 	}
@@ -18194,13 +18189,13 @@ namespace lua::native
 		NETWORK::ACTIVATE_DAMAGE_TRACKER_ON_NETWORK_ID(netID, toggle);
 	}
 
-	bool LUA_NATIVE_NETWORK_IS_DAMAGE_TRACKER_ACTIVE_ON_PLAYER( int player )
+	bool LUA_NATIVE_NETWORK_IS_DAMAGE_TRACKER_ACTIVE_ON_PLAYER( Player player )
 	{
 		auto retval = (bool)NETWORK::IS_DAMAGE_TRACKER_ACTIVE_ON_PLAYER(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_NETWORK_ACTIVATE_DAMAGE_TRACKER_ON_PLAYER( int player, bool toggle )
+	void LUA_NATIVE_NETWORK_ACTIVATE_DAMAGE_TRACKER_ON_PLAYER( Player player, bool toggle )
 	{
 		NETWORK::ACTIVATE_DAMAGE_TRACKER_ON_PLAYER(player, toggle);
 	}
@@ -18441,12 +18436,12 @@ namespace lua::native
 		return timeStructure;
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_SET_IN_SPECTATOR_MODE( bool toggle, int playerPed )
+	void LUA_NATIVE_NETWORK_NETWORK_SET_IN_SPECTATOR_MODE( bool toggle, Ped playerPed )
 	{
 		NETWORK::NETWORK_SET_IN_SPECTATOR_MODE(toggle, playerPed);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_SET_IN_SPECTATOR_MODE_EXTENDED( bool toggle, int playerPed, bool p2 )
+	void LUA_NATIVE_NETWORK_NETWORK_SET_IN_SPECTATOR_MODE_EXTENDED( bool toggle, Ped playerPed, bool p2 )
 	{
 		NETWORK::NETWORK_SET_IN_SPECTATOR_MODE_EXTENDED(toggle, playerPed, p2);
 	}
@@ -18456,7 +18451,7 @@ namespace lua::native
 		NETWORK::NETWORK_SET_IN_FREE_CAM_MODE(toggle);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_SET_ANTAGONISTIC_TO_PLAYER( bool toggle, int player )
+	void LUA_NATIVE_NETWORK_NETWORK_SET_ANTAGONISTIC_TO_PLAYER( bool toggle, Player player )
 	{
 		NETWORK::NETWORK_SET_ANTAGONISTIC_TO_PLAYER(toggle, player);
 	}
@@ -18478,7 +18473,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_IN_MP_CUTSCENE( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_IN_MP_CUTSCENE( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_IS_PLAYER_IN_MP_CUTSCENE(player);
 		return retval;
@@ -18500,17 +18495,17 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_NETWORK_SET_NETWORK_VEHICLE_AS_GHOST( int vehicle, bool toggle )
+	void LUA_NATIVE_NETWORK_SET_NETWORK_VEHICLE_AS_GHOST( Vehicle vehicle, bool toggle )
 	{
 		NETWORK::SET_NETWORK_VEHICLE_AS_GHOST(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_NETWORK_SET_NETWORK_VEHICLE_MAX_POSITION_DELTA_MULTIPLIER( int vehicle, float multiplier )
+	void LUA_NATIVE_NETWORK_SET_NETWORK_VEHICLE_MAX_POSITION_DELTA_MULTIPLIER( Vehicle vehicle, float multiplier )
 	{
 		NETWORK::SET_NETWORK_VEHICLE_MAX_POSITION_DELTA_MULTIPLIER(vehicle, multiplier);
 	}
 
-	void LUA_NATIVE_NETWORK_SET_NETWORK_ENABLE_HIGH_SPEED_EDGE_FALL_DETECTION( int vehicle, bool toggle )
+	void LUA_NATIVE_NETWORK_SET_NETWORK_ENABLE_HIGH_SPEED_EDGE_FALL_DETECTION( Vehicle vehicle, bool toggle )
 	{
 		NETWORK::SET_NETWORK_ENABLE_HIGH_SPEED_EDGE_FALL_DETECTION(vehicle, toggle);
 	}
@@ -18520,7 +18515,7 @@ namespace lua::native
 		NETWORK::SET_LOCAL_PLAYER_AS_GHOST(toggle, p1);
 	}
 
-	bool LUA_NATIVE_NETWORK_IS_ENTITY_A_GHOST( int entity )
+	bool LUA_NATIVE_NETWORK_IS_ENTITY_A_GHOST( Entity entity )
 	{
 		auto retval = (bool)NETWORK::IS_ENTITY_A_GHOST(entity);
 		return retval;
@@ -18531,7 +18526,7 @@ namespace lua::native
 		NETWORK::SET_NON_PARTICIPANTS_OF_THIS_SCRIPT_AS_GHOSTS(p0);
 	}
 
-	void LUA_NATIVE_NETWORK_SET_REMOTE_PLAYER_AS_GHOST( int player, bool p1 )
+	void LUA_NATIVE_NETWORK_SET_REMOTE_PLAYER_AS_GHOST( Player player, bool p1 )
 	{
 		NETWORK::SET_REMOTE_PLAYER_AS_GHOST(player, p1);
 	}
@@ -18546,7 +18541,7 @@ namespace lua::native
 		NETWORK::RESET_GHOST_ALPHA();
 	}
 
-	void LUA_NATIVE_NETWORK_SET_ENTITY_GHOSTED_FOR_GHOST_PLAYERS( int entity, bool toggle )
+	void LUA_NATIVE_NETWORK_SET_ENTITY_GHOSTED_FOR_GHOST_PLAYERS( Entity entity, bool toggle )
 	{
 		NETWORK::SET_ENTITY_GHOSTED_FOR_GHOST_PLAYERS(entity, toggle);
 	}
@@ -18556,7 +18551,7 @@ namespace lua::native
 		NETWORK::SET_INVERT_GHOSTING(p0);
 	}
 
-	bool LUA_NATIVE_NETWORK_IS_ENTITY_IN_GHOST_COLLISION( int entity )
+	bool LUA_NATIVE_NETWORK_IS_ENTITY_IN_GHOST_COLLISION( Entity entity )
 	{
 		auto retval = (bool)NETWORK::IS_ENTITY_IN_GHOST_COLLISION(entity);
 		return retval;
@@ -18573,7 +18568,7 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_ADD_PED_TO_SYNCHRONISED_SCENE( int ped, int netScene, const char* animDict, const char* animnName, float speed, float speedMultiplier, int duration, int flag, float playbackRate, Any p9 )
+	void LUA_NATIVE_NETWORK_NETWORK_ADD_PED_TO_SYNCHRONISED_SCENE( Ped ped, int netScene, const char* animDict, const char* animnName, float speed, float speedMultiplier, int duration, int flag, float playbackRate, Any p9 )
 	{
 		NETWORK::NETWORK_ADD_PED_TO_SYNCHRONISED_SCENE(ped, netScene, animDict, animnName, speed, speedMultiplier, duration, flag, playbackRate, p9);
 	}
@@ -18583,12 +18578,12 @@ namespace lua::native
 		NETWORK::NETWORK_ADD_PED_TO_SYNCHRONISED_SCENE_WITH_IK(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_ADD_ENTITY_TO_SYNCHRONISED_SCENE( int entity, int netScene, const char* animDict, const char* animName, float speed, float speedMulitiplier, int flag )
+	void LUA_NATIVE_NETWORK_NETWORK_ADD_ENTITY_TO_SYNCHRONISED_SCENE( Entity entity, int netScene, const char* animDict, const char* animName, float speed, float speedMulitiplier, int flag )
 	{
 		NETWORK::NETWORK_ADD_ENTITY_TO_SYNCHRONISED_SCENE(entity, netScene, animDict, animName, speed, speedMulitiplier, flag);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_ADD_MAP_ENTITY_TO_SYNCHRONISED_SCENE( int netScene, unsigned modelHash, float x, float y, float z, float p5, const char* p6, float p7, float p8, int flags )
+	void LUA_NATIVE_NETWORK_NETWORK_ADD_MAP_ENTITY_TO_SYNCHRONISED_SCENE( int netScene, Hash modelHash, float x, float y, float z, float p5, const char* p6, float p7, float p8, int flags )
 	{
 		NETWORK::NETWORK_ADD_MAP_ENTITY_TO_SYNCHRONISED_SCENE(netScene, modelHash, x, y, z, p5, p6, p7, p8, flags);
 	}
@@ -18598,7 +18593,7 @@ namespace lua::native
 		NETWORK::NETWORK_ADD_SYNCHRONISED_SCENE_CAMERA(netScene, animDict, animName);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_ATTACH_SYNCHRONISED_SCENE_TO_ENTITY( int netScene, int entity, int bone )
+	void LUA_NATIVE_NETWORK_NETWORK_ATTACH_SYNCHRONISED_SCENE_TO_ENTITY( int netScene, Entity entity, int bone )
 	{
 		NETWORK::NETWORK_ATTACH_SYNCHRONISED_SCENE_TO_ENTITY(netScene, entity, bone);
 	}
@@ -18635,13 +18630,13 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_START_RESPAWN_SEARCH_FOR_PLAYER( int player, float x, float y, float z, float radius, float p5, float p6, float p7, int flags )
+	bool LUA_NATIVE_NETWORK_NETWORK_START_RESPAWN_SEARCH_FOR_PLAYER( Player player, float x, float y, float z, float radius, float p5, float p6, float p7, int flags )
 	{
 		auto retval = (bool)NETWORK::NETWORK_START_RESPAWN_SEARCH_FOR_PLAYER(player, x, y, z, radius, p5, p6, p7, flags);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_START_RESPAWN_SEARCH_IN_ANGLED_AREA_FOR_PLAYER( int player, float x1, float y1, float z1, float x2, float y2, float z2, float width, float p8, float p9, float p10, int flags )
+	bool LUA_NATIVE_NETWORK_NETWORK_START_RESPAWN_SEARCH_IN_ANGLED_AREA_FOR_PLAYER( Player player, float x1, float y1, float z1, float x2, float y2, float z2, float width, float p8, float p9, float p10, int flags )
 	{
 		auto retval = (bool)NETWORK::NETWORK_START_RESPAWN_SEARCH_IN_ANGLED_AREA_FOR_PLAYER(player, x1, y1, z1, x2, y2, z2, width, p8, p9, p10, flags);
 		return retval;
@@ -18710,13 +18705,13 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NETWORK_GET_PLAYER_TUTORIAL_SESSION_INSTANCE( int player )
+	int LUA_NATIVE_NETWORK_NETWORK_GET_PLAYER_TUTORIAL_SESSION_INSTANCE( Player player )
 	{
 		auto retval = NETWORK::NETWORK_GET_PLAYER_TUTORIAL_SESSION_INSTANCE(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_ARE_PLAYERS_IN_SAME_TUTORIAL_SESSION( int player, int index )
+	bool LUA_NATIVE_NETWORK_NETWORK_ARE_PLAYERS_IN_SAME_TUTORIAL_SESSION( Player player, int index )
 	{
 		auto retval = (bool)NETWORK::NETWORK_ARE_PLAYERS_IN_SAME_TUTORIAL_SESSION(player, index);
 		return retval;
@@ -18727,23 +18722,23 @@ namespace lua::native
 		NETWORK::NETWORK_BLOCK_PROXY_MIGRATION_BETWEEN_TUTORIAL_SESSIONS(p0);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_CONCEAL_PLAYER( int player, bool toggle, bool p2 )
+	void LUA_NATIVE_NETWORK_NETWORK_CONCEAL_PLAYER( Player player, bool toggle, bool p2 )
 	{
 		NETWORK::NETWORK_CONCEAL_PLAYER(player, toggle, p2);
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_CONCEALED( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_IS_PLAYER_CONCEALED( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_IS_PLAYER_CONCEALED(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_CONCEAL_ENTITY( int entity, bool toggle )
+	void LUA_NATIVE_NETWORK_NETWORK_CONCEAL_ENTITY( Entity entity, bool toggle )
 	{
 		NETWORK::NETWORK_CONCEAL_ENTITY(entity, toggle);
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_IS_ENTITY_CONCEALED( int entity )
+	bool LUA_NATIVE_NETWORK_NETWORK_IS_ENTITY_CONCEALED( Entity entity )
 	{
 		auto retval = (bool)NETWORK::NETWORK_IS_ENTITY_CONCEALED(entity);
 		return retval;
@@ -18892,7 +18887,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_DOES_TUNABLE_EXIST_HASH( unsigned tunableContext, unsigned tunableName )
+	bool LUA_NATIVE_NETWORK_NETWORK_DOES_TUNABLE_EXIST_HASH( Hash tunableContext, Hash tunableName )
 	{
 		auto retval = (bool)NETWORK::NETWORK_DOES_TUNABLE_EXIST_HASH(tunableContext, tunableName);
 		return retval;
@@ -18904,7 +18899,7 @@ namespace lua::native
 		return retval;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_NETWORK_NETWORK_ACCESS_TUNABLE_INT_HASH( unsigned tunableContext, unsigned tunableName, int value )
+	std::tuple<bool, int> LUA_NATIVE_NETWORK_NETWORK_ACCESS_TUNABLE_INT_HASH( Hash tunableContext, Hash tunableName, int value )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)NETWORK::NETWORK_ACCESS_TUNABLE_INT_HASH(tunableContext, tunableName, &value);
@@ -18913,7 +18908,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_NETWORK_NETWORK_ACCESS_TUNABLE_INT_MODIFICATION_DETECTION_REGISTRATION_HASH( unsigned contextHash, unsigned nameHash, int value )
+	std::tuple<bool, int> LUA_NATIVE_NETWORK_NETWORK_ACCESS_TUNABLE_INT_MODIFICATION_DETECTION_REGISTRATION_HASH( Hash contextHash, Hash nameHash, int value )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)NETWORK::NETWORK_ACCESS_TUNABLE_INT_MODIFICATION_DETECTION_REGISTRATION_HASH(contextHash, nameHash, &value);
@@ -18922,7 +18917,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, float> LUA_NATIVE_NETWORK_NETWORK_ACCESS_TUNABLE_FLOAT_HASH( unsigned tunableContext, unsigned tunableName, float value )
+	std::tuple<bool, float> LUA_NATIVE_NETWORK_NETWORK_ACCESS_TUNABLE_FLOAT_HASH( Hash tunableContext, Hash tunableName, float value )
 	{
 		std::tuple<bool, float> return_values;
 		std::get<0>(return_values) = (bool)NETWORK::NETWORK_ACCESS_TUNABLE_FLOAT_HASH(tunableContext, tunableName, &value);
@@ -18931,7 +18926,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, float> LUA_NATIVE_NETWORK_NETWORK_ACCESS_TUNABLE_FLOAT_MODIFICATION_DETECTION_REGISTRATION_HASH( unsigned contextHash, unsigned nameHash, float value )
+	std::tuple<bool, float> LUA_NATIVE_NETWORK_NETWORK_ACCESS_TUNABLE_FLOAT_MODIFICATION_DETECTION_REGISTRATION_HASH( Hash contextHash, Hash nameHash, float value )
 	{
 		std::tuple<bool, float> return_values;
 		std::get<0>(return_values) = (bool)NETWORK::NETWORK_ACCESS_TUNABLE_FLOAT_MODIFICATION_DETECTION_REGISTRATION_HASH(contextHash, nameHash, &value);
@@ -18940,13 +18935,13 @@ namespace lua::native
 		return return_values;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_ACCESS_TUNABLE_BOOL_HASH( unsigned tunableContext, unsigned tunableName )
+	bool LUA_NATIVE_NETWORK_NETWORK_ACCESS_TUNABLE_BOOL_HASH( Hash tunableContext, Hash tunableName )
 	{
 		auto retval = (bool)NETWORK::NETWORK_ACCESS_TUNABLE_BOOL_HASH(tunableContext, tunableName);
 		return retval;
 	}
 
-	std::tuple<bool, bool> LUA_NATIVE_NETWORK_NETWORK_ACCESS_TUNABLE_BOOL_MODIFICATION_DETECTION_REGISTRATION_HASH( unsigned contextHash, unsigned nameHash, bool value )
+	std::tuple<bool, bool> LUA_NATIVE_NETWORK_NETWORK_ACCESS_TUNABLE_BOOL_MODIFICATION_DETECTION_REGISTRATION_HASH( Hash contextHash, Hash nameHash, bool value )
 	{
 		std::tuple<bool, bool> return_values;
 		std::get<0>(return_values) = (bool)NETWORK::NETWORK_ACCESS_TUNABLE_BOOL_MODIFICATION_DETECTION_REGISTRATION_HASH(contextHash, nameHash, (BOOL*)&value);
@@ -18955,13 +18950,13 @@ namespace lua::native
 		return return_values;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_TRY_ACCESS_TUNABLE_BOOL_HASH( unsigned tunableContext, unsigned tunableName, bool defaultValue )
+	bool LUA_NATIVE_NETWORK_NETWORK_TRY_ACCESS_TUNABLE_BOOL_HASH( Hash tunableContext, Hash tunableName, bool defaultValue )
 	{
 		auto retval = (bool)NETWORK::NETWORK_TRY_ACCESS_TUNABLE_BOOL_HASH(tunableContext, tunableName, defaultValue);
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NETWORK_GET_CONTENT_MODIFIER_LIST_ID( unsigned contentHash )
+	int LUA_NATIVE_NETWORK_NETWORK_GET_CONTENT_MODIFIER_LIST_ID( Hash contentHash )
 	{
 		auto retval = NETWORK::NETWORK_GET_CONTENT_MODIFIER_LIST_ID(contentHash);
 		return retval;
@@ -18990,44 +18985,44 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_SET_ATTRIBUTE_DAMAGE_TO_PLAYER( int ped, int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_SET_ATTRIBUTE_DAMAGE_TO_PLAYER( Ped ped, Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_SET_ATTRIBUTE_DAMAGE_TO_PLAYER(ped, player);
 		return retval;
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_TRIGGER_DAMAGE_EVENT_FOR_ZERO_DAMAGE( int entity, bool toggle )
+	void LUA_NATIVE_NETWORK_NETWORK_TRIGGER_DAMAGE_EVENT_FOR_ZERO_DAMAGE( Entity entity, bool toggle )
 	{
 		NETWORK::NETWORK_TRIGGER_DAMAGE_EVENT_FOR_ZERO_DAMAGE(entity, toggle);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_TRIGGER_DAMAGE_EVENT_FOR_ZERO_WEAPON_HASH( int entity, bool toggle )
+	void LUA_NATIVE_NETWORK_NETWORK_TRIGGER_DAMAGE_EVENT_FOR_ZERO_WEAPON_HASH( Entity entity, bool toggle )
 	{
 		NETWORK::NETWORK_TRIGGER_DAMAGE_EVENT_FOR_ZERO_WEAPON_HASH(entity, toggle);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_SET_NO_LONGER_NEEDED( int entity, bool toggle )
+	void LUA_NATIVE_NETWORK_NETWORK_SET_NO_LONGER_NEEDED( Entity entity, bool toggle )
 	{
 		NETWORK::NETWORK_SET_NO_LONGER_NEEDED(entity, toggle);
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_EXPLODE_VEHICLE( int vehicle, bool isAudible, bool isInvisible, int netId )
+	bool LUA_NATIVE_NETWORK_NETWORK_EXPLODE_VEHICLE( Vehicle vehicle, bool isAudible, bool isInvisible, int netId )
 	{
 		auto retval = (bool)NETWORK::NETWORK_EXPLODE_VEHICLE(vehicle, isAudible, isInvisible, netId);
 		return retval;
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_EXPLODE_HELI( int vehicle, bool isAudible, bool isInvisible, int netId )
+	void LUA_NATIVE_NETWORK_NETWORK_EXPLODE_HELI( Vehicle vehicle, bool isAudible, bool isInvisible, int netId )
 	{
 		NETWORK::NETWORK_EXPLODE_HELI(vehicle, isAudible, isInvisible, netId);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_USE_LOGARITHMIC_BLENDING_THIS_FRAME( int entity )
+	void LUA_NATIVE_NETWORK_NETWORK_USE_LOGARITHMIC_BLENDING_THIS_FRAME( Entity entity )
 	{
 		NETWORK::NETWORK_USE_LOGARITHMIC_BLENDING_THIS_FRAME(entity);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_OVERRIDE_COORDS_AND_HEADING( int entity, float x, float y, float z, float heading )
+	void LUA_NATIVE_NETWORK_NETWORK_OVERRIDE_COORDS_AND_HEADING( Entity entity, float x, float y, float z, float heading )
 	{
 		NETWORK::NETWORK_OVERRIDE_COORDS_AND_HEADING(entity, x, y, z, heading);
 	}
@@ -19067,13 +19062,13 @@ namespace lua::native
 		NETWORK::NETWORK_CACHE_LOCAL_PLAYER_HEAD_BLEND_DATA();
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_HAS_CACHED_PLAYER_HEAD_BLEND_DATA( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_HAS_CACHED_PLAYER_HEAD_BLEND_DATA( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_HAS_CACHED_PLAYER_HEAD_BLEND_DATA(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_APPLY_CACHED_PLAYER_HEAD_BLEND_DATA( int ped, int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_APPLY_CACHED_PLAYER_HEAD_BLEND_DATA( Ped ped, Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_APPLY_CACHED_PLAYER_HEAD_BLEND_DATA(ped, player);
 		return retval;
@@ -19187,7 +19182,7 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_NETWORK_SET_LAST_VIEWED_SHOP_ITEM( unsigned p0, int p1, unsigned p2 )
+	void LUA_NATIVE_NETWORK_SET_LAST_VIEWED_SHOP_ITEM( Hash p0, int p1, Hash p2 )
 	{
 		NETWORK::SET_LAST_VIEWED_SHOP_ITEM(p0, p1, p2);
 	}
@@ -19480,7 +19475,7 @@ namespace lua::native
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_NETWORK_UGC_GET_CONTENT_HASH(  )
+	Hash LUA_NATIVE_NETWORK_UGC_GET_CONTENT_HASH(  )
 	{
 		auto retval = NETWORK::UGC_GET_CONTENT_HASH();
 		return retval;
@@ -19999,12 +19994,12 @@ namespace lua::native
 		NETWORK::NETWORK_DISABLE_LEAVE_REMOTE_PED_BEHIND(toggle);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_ALLOW_REMOTE_ATTACHMENT_MODIFICATION( int entity, bool toggle )
+	void LUA_NATIVE_NETWORK_NETWORK_ALLOW_REMOTE_ATTACHMENT_MODIFICATION( Entity entity, bool toggle )
 	{
 		NETWORK::NETWORK_ALLOW_REMOTE_ATTACHMENT_MODIFICATION(entity, toggle);
 	}
 
-	void LUA_NATIVE_NETWORK_NETWORK_SHOW_CHAT_RESTRICTION_MSC( int player )
+	void LUA_NATIVE_NETWORK_NETWORK_SHOW_CHAT_RESTRICTION_MSC( Player player )
 	{
 		NETWORK::NETWORK_SHOW_CHAT_RESTRICTION_MSC(player);
 	}
@@ -20025,43 +20020,43 @@ namespace lua::native
 		NETWORK::NETWORK_QUIT_MP_TO_DESKTOP();
 	}
 
-	bool LUA_NATIVE_NETWORK_NETWORK_IS_CONNECTED_VIA_RELAY( int player )
+	bool LUA_NATIVE_NETWORK_NETWORK_IS_CONNECTED_VIA_RELAY( Player player )
 	{
 		auto retval = (bool)NETWORK::NETWORK_IS_CONNECTED_VIA_RELAY(player);
 		return retval;
 	}
 
-	float LUA_NATIVE_NETWORK_NETWORK_GET_AVERAGE_LATENCY( int player )
+	float LUA_NATIVE_NETWORK_NETWORK_GET_AVERAGE_LATENCY( Player player )
 	{
 		auto retval = NETWORK::NETWORK_GET_AVERAGE_LATENCY(player);
 		return retval;
 	}
 
-	float LUA_NATIVE_NETWORK_NETWORK_GET_AVERAGE_PING( int player )
+	float LUA_NATIVE_NETWORK_NETWORK_GET_AVERAGE_PING( Player player )
 	{
 		auto retval = NETWORK::NETWORK_GET_AVERAGE_PING(player);
 		return retval;
 	}
 
-	float LUA_NATIVE_NETWORK_NETWORK_GET_AVERAGE_PACKET_LOSS( int player )
+	float LUA_NATIVE_NETWORK_NETWORK_GET_AVERAGE_PACKET_LOSS( Player player )
 	{
 		auto retval = NETWORK::NETWORK_GET_AVERAGE_PACKET_LOSS(player);
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NETWORK_GET_NUM_UNACKED_RELIABLES( int player )
+	int LUA_NATIVE_NETWORK_NETWORK_GET_NUM_UNACKED_RELIABLES( Player player )
 	{
 		auto retval = NETWORK::NETWORK_GET_NUM_UNACKED_RELIABLES(player);
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NETWORK_GET_UNRELIABLE_RESEND_COUNT( int player )
+	int LUA_NATIVE_NETWORK_NETWORK_GET_UNRELIABLE_RESEND_COUNT( Player player )
 	{
 		auto retval = NETWORK::NETWORK_GET_UNRELIABLE_RESEND_COUNT(player);
 		return retval;
 	}
 
-	int LUA_NATIVE_NETWORK_NETWORK_GET_HIGHEST_RELIABLE_RESEND_COUNT( int player )
+	int LUA_NATIVE_NETWORK_NETWORK_GET_HIGHEST_RELIABLE_RESEND_COUNT( Player player )
 	{
 		auto retval = NETWORK::NETWORK_GET_HIGHEST_RELIABLE_RESEND_COUNT(player);
 		return retval;
@@ -20072,27 +20067,27 @@ namespace lua::native
 		NETWORK::NETWORK_REPORT_CODE_TAMPER();
 	}
 
-	Vector3 LUA_NATIVE_NETWORK_NETWORK_GET_LAST_ENTITY_POS_RECEIVED_OVER_NETWORK( int entity )
+	Vector3 LUA_NATIVE_NETWORK_NETWORK_GET_LAST_ENTITY_POS_RECEIVED_OVER_NETWORK( Entity entity )
 	{
 		auto retval = NETWORK::NETWORK_GET_LAST_ENTITY_POS_RECEIVED_OVER_NETWORK(entity);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_NETWORK_NETWORK_GET_LAST_PLAYER_POS_RECEIVED_OVER_NETWORK( int player )
+	Vector3 LUA_NATIVE_NETWORK_NETWORK_GET_LAST_PLAYER_POS_RECEIVED_OVER_NETWORK( Player player )
 	{
 		auto retval = NETWORK::NETWORK_GET_LAST_PLAYER_POS_RECEIVED_OVER_NETWORK(player);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_NETWORK_NETWORK_GET_LAST_VEL_RECEIVED_OVER_NETWORK( int entity )
+	Vector3 LUA_NATIVE_NETWORK_NETWORK_GET_LAST_VEL_RECEIVED_OVER_NETWORK( Entity entity )
 	{
 		auto retval = NETWORK::NETWORK_GET_LAST_VEL_RECEIVED_OVER_NETWORK(entity);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_NETWORK_NETWORK_GET_PREDICTED_VELOCITY( int entity )
+	Vector3 LUA_NATIVE_NETWORK_NETWORK_GET_PREDICTED_VELOCITY( Entity entity, float maxSpeedToPredict )
 	{
-		auto retval = NETWORK::NETWORK_GET_PREDICTED_VELOCITY(entity);
+		auto retval = NETWORK::NETWORK_GET_PREDICTED_VELOCITY(entity, maxSpeedToPredict);
 		return retval;
 	}
 
@@ -20113,7 +20108,7 @@ namespace lua::native
 		return p0;
 	}
 
-	int LUA_NATIVE_NETWORK_NETWORK_GET_PLAYER_ACCOUNT_ID( int player )
+	int LUA_NATIVE_NETWORK_NETWORK_GET_PLAYER_ACCOUNT_ID( Player player )
 	{
 		auto retval = NETWORK::NETWORK_GET_PLAYER_ACCOUNT_ID(player);
 		return retval;
@@ -20124,13 +20119,13 @@ namespace lua::native
 		NETWORK::NETWORK_UGC_NAV(p0, p1);
 	}
 
-	Object LUA_NATIVE_OBJECT_CREATE_OBJECT( unsigned modelHash, float x, float y, float z, bool isNetwork, bool bScriptHostObj, bool dynamic )
+	Object LUA_NATIVE_OBJECT_CREATE_OBJECT( Hash modelHash, float x, float y, float z, bool isNetwork, bool bScriptHostObj, bool dynamic )
 	{
 		auto retval = OBJECT::CREATE_OBJECT(modelHash, x, y, z, isNetwork, bScriptHostObj, dynamic);
 		return retval;
 	}
 
-	Object LUA_NATIVE_OBJECT_CREATE_OBJECT_NO_OFFSET( unsigned modelHash, float x, float y, float z, bool isNetwork, bool bScriptHostObj, bool dynamic )
+	Object LUA_NATIVE_OBJECT_CREATE_OBJECT_NO_OFFSET( Hash modelHash, float x, float y, float z, bool isNetwork, bool bScriptHostObj, bool dynamic )
 	{
 		auto retval = OBJECT::CREATE_OBJECT_NO_OFFSET(modelHash, x, y, z, isNetwork, bScriptHostObj, dynamic);
 		return retval;
@@ -20176,7 +20171,7 @@ namespace lua::native
 		OBJECT::SET_OBJECT_FORCE_VEHICLES_TO_AVOID(object, toggle);
 	}
 
-	Object LUA_NATIVE_OBJECT_GET_CLOSEST_OBJECT_OF_TYPE( float x, float y, float z, float radius, unsigned modelHash, bool isMission, bool p6, bool p7 )
+	Object LUA_NATIVE_OBJECT_GET_CLOSEST_OBJECT_OF_TYPE( float x, float y, float z, float radius, Hash modelHash, bool isMission, bool p6, bool p7 )
 	{
 		auto retval = OBJECT::GET_CLOSEST_OBJECT_OF_TYPE(x, y, z, radius, modelHash, isMission, p6, p7);
 		return retval;
@@ -20188,13 +20183,13 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_OBJECT_HAS_CLOSEST_OBJECT_OF_TYPE_BEEN_BROKEN( float p0, float p1, float p2, float p3, unsigned modelHash, Any p5 )
+	bool LUA_NATIVE_OBJECT_HAS_CLOSEST_OBJECT_OF_TYPE_BEEN_BROKEN( float p0, float p1, float p2, float p3, Hash modelHash, Any p5 )
 	{
 		auto retval = (bool)OBJECT::HAS_CLOSEST_OBJECT_OF_TYPE_BEEN_BROKEN(p0, p1, p2, p3, modelHash, p5);
 		return retval;
 	}
 
-	bool LUA_NATIVE_OBJECT_HAS_CLOSEST_OBJECT_OF_TYPE_BEEN_COMPLETELY_DESTROYED( float x, float y, float z, float radius, unsigned modelHash, bool p5 )
+	bool LUA_NATIVE_OBJECT_HAS_CLOSEST_OBJECT_OF_TYPE_BEEN_COMPLETELY_DESTROYED( float x, float y, float z, float radius, Hash modelHash, bool p5 )
 	{
 		auto retval = (bool)OBJECT::HAS_CLOSEST_OBJECT_OF_TYPE_BEEN_COMPLETELY_DESTROYED(x, y, z, radius, modelHash, p5);
 		return retval;
@@ -20212,7 +20207,7 @@ namespace lua::native
 		return retval;
 	}
 
-	std::tuple<bool, Vector3, Vector3> LUA_NATIVE_OBJECT_GET_COORDS_AND_ROTATION_OF_CLOSEST_OBJECT_OF_TYPE( float x, float y, float z, float radius, unsigned modelHash, Vector3 outPosition, Vector3 outRotation, int rotationOrder )
+	std::tuple<bool, Vector3, Vector3> LUA_NATIVE_OBJECT_GET_COORDS_AND_ROTATION_OF_CLOSEST_OBJECT_OF_TYPE( float x, float y, float z, float radius, Hash modelHash, Vector3 outPosition, Vector3 outRotation, int rotationOrder )
 	{
 		std::tuple<bool, Vector3, Vector3> return_values;
 		std::get<0>(return_values) = (bool)OBJECT::GET_COORDS_AND_ROTATION_OF_CLOSEST_OBJECT_OF_TYPE(x, y, z, radius, modelHash, &outPosition, &outRotation, rotationOrder);
@@ -20222,12 +20217,12 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_OBJECT_SET_STATE_OF_CLOSEST_DOOR_OF_TYPE( unsigned type, float x, float y, float z, bool locked, float heading, bool p6 )
+	void LUA_NATIVE_OBJECT_SET_STATE_OF_CLOSEST_DOOR_OF_TYPE( Hash type, float x, float y, float z, bool locked, float heading, bool p6 )
 	{
 		OBJECT::SET_STATE_OF_CLOSEST_DOOR_OF_TYPE(type, x, y, z, locked, heading, p6);
 	}
 
-	std::tuple<bool, float> LUA_NATIVE_OBJECT_GET_STATE_OF_CLOSEST_DOOR_OF_TYPE( unsigned type, float x, float y, float z, bool locked, float heading )
+	std::tuple<bool, float> LUA_NATIVE_OBJECT_GET_STATE_OF_CLOSEST_DOOR_OF_TYPE( Hash type, float x, float y, float z, bool locked, float heading )
 	{
 		std::tuple<bool, float> return_values;
 		OBJECT::GET_STATE_OF_CLOSEST_DOOR_OF_TYPE(type, x, y, z, (BOOL*)&locked, &heading);
@@ -20237,7 +20232,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_OBJECT_SET_LOCKED_UNSTREAMED_IN_DOOR_OF_TYPE( unsigned modelHash, float x, float y, float z, bool locked, float xRotMult, float yRotMult, float zRotMult )
+	void LUA_NATIVE_OBJECT_SET_LOCKED_UNSTREAMED_IN_DOOR_OF_TYPE( Hash modelHash, float x, float y, float z, bool locked, float xRotMult, float yRotMult, float zRotMult )
 	{
 		OBJECT::SET_LOCKED_UNSTREAMED_IN_DOOR_OF_TYPE(modelHash, x, y, z, locked, xRotMult, yRotMult, zRotMult);
 	}
@@ -20247,82 +20242,82 @@ namespace lua::native
 		OBJECT::PLAY_OBJECT_AUTO_START_ANIM(p0);
 	}
 
-	void LUA_NATIVE_OBJECT_ADD_DOOR_TO_SYSTEM( unsigned doorHash, unsigned modelHash, float x, float y, float z, bool p5, bool scriptDoor, bool isLocal )
+	void LUA_NATIVE_OBJECT_ADD_DOOR_TO_SYSTEM( Hash doorHash, Hash modelHash, float x, float y, float z, bool p5, bool scriptDoor, bool isLocal )
 	{
 		OBJECT::ADD_DOOR_TO_SYSTEM(doorHash, modelHash, x, y, z, p5, scriptDoor, isLocal);
 	}
 
-	void LUA_NATIVE_OBJECT_REMOVE_DOOR_FROM_SYSTEM( unsigned doorHash, Any p1 )
+	void LUA_NATIVE_OBJECT_REMOVE_DOOR_FROM_SYSTEM( Hash doorHash, Any p1 )
 	{
 		OBJECT::REMOVE_DOOR_FROM_SYSTEM(doorHash, p1);
 	}
 
-	void LUA_NATIVE_OBJECT_DOOR_SYSTEM_SET_DOOR_STATE( unsigned doorHash, int state, bool requestDoor, bool forceUpdate )
+	void LUA_NATIVE_OBJECT_DOOR_SYSTEM_SET_DOOR_STATE( Hash doorHash, int state, bool requestDoor, bool forceUpdate )
 	{
 		OBJECT::DOOR_SYSTEM_SET_DOOR_STATE(doorHash, state, requestDoor, forceUpdate);
 	}
 
-	int LUA_NATIVE_OBJECT_DOOR_SYSTEM_GET_DOOR_STATE( unsigned doorHash )
+	int LUA_NATIVE_OBJECT_DOOR_SYSTEM_GET_DOOR_STATE( Hash doorHash )
 	{
 		auto retval = OBJECT::DOOR_SYSTEM_GET_DOOR_STATE(doorHash);
 		return retval;
 	}
 
-	int LUA_NATIVE_OBJECT_DOOR_SYSTEM_GET_DOOR_PENDING_STATE( unsigned doorHash )
+	int LUA_NATIVE_OBJECT_DOOR_SYSTEM_GET_DOOR_PENDING_STATE( Hash doorHash )
 	{
 		auto retval = OBJECT::DOOR_SYSTEM_GET_DOOR_PENDING_STATE(doorHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_OBJECT_DOOR_SYSTEM_SET_AUTOMATIC_RATE( unsigned doorHash, float rate, bool requestDoor, bool forceUpdate )
+	void LUA_NATIVE_OBJECT_DOOR_SYSTEM_SET_AUTOMATIC_RATE( Hash doorHash, float rate, bool requestDoor, bool forceUpdate )
 	{
 		OBJECT::DOOR_SYSTEM_SET_AUTOMATIC_RATE(doorHash, rate, requestDoor, forceUpdate);
 	}
 
-	void LUA_NATIVE_OBJECT_DOOR_SYSTEM_SET_AUTOMATIC_DISTANCE( unsigned doorHash, float distance, bool requestDoor, bool forceUpdate )
+	void LUA_NATIVE_OBJECT_DOOR_SYSTEM_SET_AUTOMATIC_DISTANCE( Hash doorHash, float distance, bool requestDoor, bool forceUpdate )
 	{
 		OBJECT::DOOR_SYSTEM_SET_AUTOMATIC_DISTANCE(doorHash, distance, requestDoor, forceUpdate);
 	}
 
-	void LUA_NATIVE_OBJECT_DOOR_SYSTEM_SET_OPEN_RATIO( unsigned doorHash, float ajar, bool requestDoor, bool forceUpdate )
+	void LUA_NATIVE_OBJECT_DOOR_SYSTEM_SET_OPEN_RATIO( Hash doorHash, float ajar, bool requestDoor, bool forceUpdate )
 	{
 		OBJECT::DOOR_SYSTEM_SET_OPEN_RATIO(doorHash, ajar, requestDoor, forceUpdate);
 	}
 
-	float LUA_NATIVE_OBJECT_DOOR_SYSTEM_GET_AUTOMATIC_DISTANCE( unsigned doorHash )
+	float LUA_NATIVE_OBJECT_DOOR_SYSTEM_GET_AUTOMATIC_DISTANCE( Hash doorHash )
 	{
 		auto retval = OBJECT::DOOR_SYSTEM_GET_AUTOMATIC_DISTANCE(doorHash);
 		return retval;
 	}
 
-	float LUA_NATIVE_OBJECT_DOOR_SYSTEM_GET_OPEN_RATIO( unsigned doorHash )
+	float LUA_NATIVE_OBJECT_DOOR_SYSTEM_GET_OPEN_RATIO( Hash doorHash )
 	{
 		auto retval = OBJECT::DOOR_SYSTEM_GET_OPEN_RATIO(doorHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_OBJECT_DOOR_SYSTEM_SET_SPRING_REMOVED( unsigned doorHash, bool removed, bool requestDoor, bool forceUpdate )
+	void LUA_NATIVE_OBJECT_DOOR_SYSTEM_SET_SPRING_REMOVED( Hash doorHash, bool removed, bool requestDoor, bool forceUpdate )
 	{
 		OBJECT::DOOR_SYSTEM_SET_SPRING_REMOVED(doorHash, removed, requestDoor, forceUpdate);
 	}
 
-	void LUA_NATIVE_OBJECT_DOOR_SYSTEM_SET_HOLD_OPEN( unsigned doorHash, bool toggle )
+	void LUA_NATIVE_OBJECT_DOOR_SYSTEM_SET_HOLD_OPEN( Hash doorHash, bool toggle )
 	{
 		OBJECT::DOOR_SYSTEM_SET_HOLD_OPEN(doorHash, toggle);
 	}
 
-	void LUA_NATIVE_OBJECT_DOOR_SYSTEM_SET_DOOR_OPEN_FOR_RACES( unsigned doorHash, bool p1 )
+	void LUA_NATIVE_OBJECT_DOOR_SYSTEM_SET_DOOR_OPEN_FOR_RACES( Hash doorHash, bool p1 )
 	{
 		OBJECT::DOOR_SYSTEM_SET_DOOR_OPEN_FOR_RACES(doorHash, p1);
 	}
 
-	bool LUA_NATIVE_OBJECT_IS_DOOR_REGISTERED_WITH_SYSTEM( unsigned doorHash )
+	bool LUA_NATIVE_OBJECT_IS_DOOR_REGISTERED_WITH_SYSTEM( Hash doorHash )
 	{
 		auto retval = (bool)OBJECT::IS_DOOR_REGISTERED_WITH_SYSTEM(doorHash);
 		return retval;
 	}
 
-	bool LUA_NATIVE_OBJECT_IS_DOOR_CLOSED( unsigned doorHash )
+	bool LUA_NATIVE_OBJECT_IS_DOOR_CLOSED( Hash doorHash )
 	{
 		auto retval = (bool)OBJECT::IS_DOOR_CLOSED(doorHash);
 		return retval;
@@ -20344,63 +20339,63 @@ namespace lua::native
 		return retval;
 	}
 
-	std::tuple<bool, unsigned> LUA_NATIVE_OBJECT_DOOR_SYSTEM_FIND_EXISTING_DOOR( float x, float y, float z, unsigned modelHash, unsigned outDoorHash )
+	std::tuple<bool, Hash> LUA_NATIVE_OBJECT_DOOR_SYSTEM_FIND_EXISTING_DOOR( float x, float y, float z, Hash modelHash, Hash outDoorHash )
 	{
-		std::tuple<bool, unsigned> return_values;
+		std::tuple<bool, Hash> return_values;
 		std::get<0>(return_values) = (bool)OBJECT::DOOR_SYSTEM_FIND_EXISTING_DOOR(x, y, z, modelHash, &outDoorHash);
 		std::get<1>(return_values) = outDoorHash;
 
 		return return_values;
 	}
 
-	bool LUA_NATIVE_OBJECT_IS_GARAGE_EMPTY( unsigned garageHash, bool p1, int p2 )
+	bool LUA_NATIVE_OBJECT_IS_GARAGE_EMPTY( Hash garageHash, bool p1, int p2 )
 	{
 		auto retval = (bool)OBJECT::IS_GARAGE_EMPTY(garageHash, p1, p2);
 		return retval;
 	}
 
-	bool LUA_NATIVE_OBJECT_IS_PLAYER_ENTIRELY_INSIDE_GARAGE( unsigned garageHash, int player, float p2, int p3 )
+	bool LUA_NATIVE_OBJECT_IS_PLAYER_ENTIRELY_INSIDE_GARAGE( Hash garageHash, Player player, float p2, int p3 )
 	{
 		auto retval = (bool)OBJECT::IS_PLAYER_ENTIRELY_INSIDE_GARAGE(garageHash, player, p2, p3);
 		return retval;
 	}
 
-	bool LUA_NATIVE_OBJECT_IS_PLAYER_PARTIALLY_INSIDE_GARAGE( unsigned garageHash, int player, int p2 )
+	bool LUA_NATIVE_OBJECT_IS_PLAYER_PARTIALLY_INSIDE_GARAGE( Hash garageHash, Player player, int p2 )
 	{
 		auto retval = (bool)OBJECT::IS_PLAYER_PARTIALLY_INSIDE_GARAGE(garageHash, player, p2);
 		return retval;
 	}
 
-	bool LUA_NATIVE_OBJECT_ARE_ENTITIES_ENTIRELY_INSIDE_GARAGE( unsigned garageHash, bool p1, bool p2, bool p3, Any p4 )
+	bool LUA_NATIVE_OBJECT_ARE_ENTITIES_ENTIRELY_INSIDE_GARAGE( Hash garageHash, bool p1, bool p2, bool p3, Any p4 )
 	{
 		auto retval = (bool)OBJECT::ARE_ENTITIES_ENTIRELY_INSIDE_GARAGE(garageHash, p1, p2, p3, p4);
 		return retval;
 	}
 
-	bool LUA_NATIVE_OBJECT_IS_ANY_ENTITY_ENTIRELY_INSIDE_GARAGE( unsigned garageHash, bool p1, bool p2, bool p3, Any p4 )
+	bool LUA_NATIVE_OBJECT_IS_ANY_ENTITY_ENTIRELY_INSIDE_GARAGE( Hash garageHash, bool p1, bool p2, bool p3, Any p4 )
 	{
 		auto retval = (bool)OBJECT::IS_ANY_ENTITY_ENTIRELY_INSIDE_GARAGE(garageHash, p1, p2, p3, p4);
 		return retval;
 	}
 
-	bool LUA_NATIVE_OBJECT_IS_OBJECT_ENTIRELY_INSIDE_GARAGE( unsigned garageHash, int entity, float p2, int p3 )
+	bool LUA_NATIVE_OBJECT_IS_OBJECT_ENTIRELY_INSIDE_GARAGE( Hash garageHash, Entity entity, float p2, int p3 )
 	{
 		auto retval = (bool)OBJECT::IS_OBJECT_ENTIRELY_INSIDE_GARAGE(garageHash, entity, p2, p3);
 		return retval;
 	}
 
-	bool LUA_NATIVE_OBJECT_IS_OBJECT_PARTIALLY_INSIDE_GARAGE( unsigned garageHash, int entity, int p2 )
+	bool LUA_NATIVE_OBJECT_IS_OBJECT_PARTIALLY_INSIDE_GARAGE( Hash garageHash, Entity entity, int p2 )
 	{
 		auto retval = (bool)OBJECT::IS_OBJECT_PARTIALLY_INSIDE_GARAGE(garageHash, entity, p2);
 		return retval;
 	}
 
-	void LUA_NATIVE_OBJECT_CLEAR_GARAGE( unsigned garageHash, bool isNetwork )
+	void LUA_NATIVE_OBJECT_CLEAR_GARAGE( Hash garageHash, bool isNetwork )
 	{
 		OBJECT::CLEAR_GARAGE(garageHash, isNetwork);
 	}
 
-	void LUA_NATIVE_OBJECT_CLEAR_OBJECTS_INSIDE_GARAGE( unsigned garageHash, bool vehicles, bool peds, bool objects, bool isNetwork )
+	void LUA_NATIVE_OBJECT_CLEAR_OBJECTS_INSIDE_GARAGE( Hash garageHash, bool vehicles, bool peds, bool objects, bool isNetwork )
 	{
 		OBJECT::CLEAR_OBJECTS_INSIDE_GARAGE(garageHash, vehicles, peds, objects, isNetwork);
 	}
@@ -20410,7 +20405,7 @@ namespace lua::native
 		OBJECT::DISABLE_TIDYING_UP_IN_GARAGE(id, toggle);
 	}
 
-	void LUA_NATIVE_OBJECT_ENABLE_SAVING_IN_GARAGE( unsigned garageHash, bool toggle )
+	void LUA_NATIVE_OBJECT_ENABLE_SAVING_IN_GARAGE( Hash garageHash, bool toggle )
 	{
 		OBJECT::ENABLE_SAVING_IN_GARAGE(garageHash, toggle);
 	}
@@ -20420,7 +20415,7 @@ namespace lua::native
 		OBJECT::CLOSE_SAFEHOUSE_GARAGES();
 	}
 
-	bool LUA_NATIVE_OBJECT_DOES_OBJECT_OF_TYPE_EXIST_AT_COORDS( float x, float y, float z, float radius, unsigned hash, bool p5 )
+	bool LUA_NATIVE_OBJECT_DOES_OBJECT_OF_TYPE_EXIST_AT_COORDS( float x, float y, float z, float radius, Hash hash, bool p5 )
 	{
 		auto retval = (bool)OBJECT::DOES_OBJECT_OF_TYPE_EXIST_AT_COORDS(x, y, z, radius, hash, p5);
 		return retval;
@@ -20459,7 +20454,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_OBJECT_IS_OBJECT_NEAR_POINT( unsigned objectHash, float x, float y, float z, float range )
+	bool LUA_NATIVE_OBJECT_IS_OBJECT_NEAR_POINT( Hash objectHash, float x, float y, float z, float range )
 	{
 		auto retval = (bool)OBJECT::IS_OBJECT_NEAR_POINT(objectHash, x, y, z, range);
 		return retval;
@@ -20545,13 +20540,13 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_OBJECT_CREATE_PICKUP( unsigned pickupHash, float posX, float posY, float posZ, int p4, int value, bool p6, unsigned modelHash )
+	Pickup LUA_NATIVE_OBJECT_CREATE_PICKUP( Hash pickupHash, float posX, float posY, float posZ, int p4, int value, bool p6, Hash modelHash )
 	{
 		auto retval = OBJECT::CREATE_PICKUP(pickupHash, posX, posY, posZ, p4, value, p6, modelHash);
 		return retval;
 	}
 
-	int LUA_NATIVE_OBJECT_CREATE_PICKUP_ROTATE( unsigned pickupHash, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, int flag, int amount, Any p9, bool p10, unsigned modelHash )
+	Pickup LUA_NATIVE_OBJECT_CREATE_PICKUP_ROTATE( Hash pickupHash, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, int flag, int amount, Any p9, bool p10, Hash modelHash )
 	{
 		auto retval = OBJECT::CREATE_PICKUP_ROTATE(pickupHash, posX, posY, posZ, rotX, rotY, rotZ, flag, amount, p9, p10, modelHash);
 		return retval;
@@ -20562,18 +20557,18 @@ namespace lua::native
 		OBJECT::FORCE_PICKUP_ROTATE_FACE_UP();
 	}
 
-	void LUA_NATIVE_OBJECT_SET_CUSTOM_PICKUP_WEAPON_HASH( unsigned pickupHash, int pickup )
+	void LUA_NATIVE_OBJECT_SET_CUSTOM_PICKUP_WEAPON_HASH( Hash pickupHash, Pickup pickup )
 	{
 		OBJECT::SET_CUSTOM_PICKUP_WEAPON_HASH(pickupHash, pickup);
 	}
 
-	Object LUA_NATIVE_OBJECT_CREATE_AMBIENT_PICKUP( unsigned pickupHash, float posX, float posY, float posZ, int flags, int value, unsigned modelHash, bool p7, bool p8 )
+	Object LUA_NATIVE_OBJECT_CREATE_AMBIENT_PICKUP( Hash pickupHash, float posX, float posY, float posZ, int flags, int value, Hash modelHash, bool p7, bool p8 )
 	{
 		auto retval = OBJECT::CREATE_AMBIENT_PICKUP(pickupHash, posX, posY, posZ, flags, value, modelHash, p7, p8);
 		return retval;
 	}
 
-	Object LUA_NATIVE_OBJECT_CREATE_NON_NETWORKED_AMBIENT_PICKUP( unsigned pickupHash, float posX, float posY, float posZ, int flags, int value, unsigned modelHash, bool p7, bool p8 )
+	Object LUA_NATIVE_OBJECT_CREATE_NON_NETWORKED_AMBIENT_PICKUP( Hash pickupHash, float posX, float posY, float posZ, int flags, int value, Hash modelHash, bool p7, bool p8 )
 	{
 		auto retval = OBJECT::CREATE_NON_NETWORKED_AMBIENT_PICKUP(pickupHash, posX, posY, posZ, flags, value, modelHash, p7, p8);
 		return retval;
@@ -20584,19 +20579,19 @@ namespace lua::native
 		OBJECT::BLOCK_PLAYERS_FOR_AMBIENT_PICKUP(p0, p1);
 	}
 
-	Object LUA_NATIVE_OBJECT_CREATE_PORTABLE_PICKUP( unsigned pickupHash, float x, float y, float z, bool placeOnGround, unsigned modelHash )
+	Object LUA_NATIVE_OBJECT_CREATE_PORTABLE_PICKUP( Hash pickupHash, float x, float y, float z, bool placeOnGround, Hash modelHash )
 	{
 		auto retval = OBJECT::CREATE_PORTABLE_PICKUP(pickupHash, x, y, z, placeOnGround, modelHash);
 		return retval;
 	}
 
-	Object LUA_NATIVE_OBJECT_CREATE_NON_NETWORKED_PORTABLE_PICKUP( unsigned pickupHash, float x, float y, float z, bool placeOnGround, unsigned modelHash )
+	Object LUA_NATIVE_OBJECT_CREATE_NON_NETWORKED_PORTABLE_PICKUP( Hash pickupHash, float x, float y, float z, bool placeOnGround, Hash modelHash )
 	{
 		auto retval = OBJECT::CREATE_NON_NETWORKED_PORTABLE_PICKUP(pickupHash, x, y, z, placeOnGround, modelHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_OBJECT_ATTACH_PORTABLE_PICKUP_TO_PED( Object pickupObject, int ped )
+	void LUA_NATIVE_OBJECT_ATTACH_PORTABLE_PICKUP_TO_PED( Object pickupObject, Ped ped )
 	{
 		OBJECT::ATTACH_PORTABLE_PICKUP_TO_PED(pickupObject, ped);
 	}
@@ -20616,7 +20611,7 @@ namespace lua::native
 		OBJECT::HIDE_PORTABLE_PICKUP_WHEN_DETACHED(pickupObject, toggle);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_MAX_NUM_PORTABLE_PICKUPS_CARRIED_BY_PLAYER( unsigned modelHash, int number )
+	void LUA_NATIVE_OBJECT_SET_MAX_NUM_PORTABLE_PICKUPS_CARRIED_BY_PLAYER( Hash modelHash, int number )
 	{
 		OBJECT::SET_MAX_NUM_PORTABLE_PICKUPS_CARRIED_BY_PLAYER(modelHash, number);
 	}
@@ -20642,7 +20637,7 @@ namespace lua::native
 		OBJECT::CLEAR_EXTENDED_PICKUP_PROBE_AREAS();
 	}
 
-	Vector3 LUA_NATIVE_OBJECT_GET_PICKUP_COORDS( int pickup )
+	Vector3 LUA_NATIVE_OBJECT_GET_PICKUP_COORDS( Pickup pickup )
 	{
 		auto retval = OBJECT::GET_PICKUP_COORDS(pickup);
 		return retval;
@@ -20653,28 +20648,28 @@ namespace lua::native
 		OBJECT::SUPPRESS_PICKUP_SOUND_FOR_PICKUP(p0, p1);
 	}
 
-	void LUA_NATIVE_OBJECT_REMOVE_ALL_PICKUPS_OF_TYPE( unsigned pickupHash )
+	void LUA_NATIVE_OBJECT_REMOVE_ALL_PICKUPS_OF_TYPE( Hash pickupHash )
 	{
 		OBJECT::REMOVE_ALL_PICKUPS_OF_TYPE(pickupHash);
 	}
 
-	bool LUA_NATIVE_OBJECT_HAS_PICKUP_BEEN_COLLECTED( int pickup )
+	bool LUA_NATIVE_OBJECT_HAS_PICKUP_BEEN_COLLECTED( Pickup pickup )
 	{
 		auto retval = (bool)OBJECT::HAS_PICKUP_BEEN_COLLECTED(pickup);
 		return retval;
 	}
 
-	void LUA_NATIVE_OBJECT_REMOVE_PICKUP( int pickup )
+	void LUA_NATIVE_OBJECT_REMOVE_PICKUP( Pickup pickup )
 	{
 		OBJECT::REMOVE_PICKUP(pickup);
 	}
 
-	void LUA_NATIVE_OBJECT_CREATE_MONEY_PICKUPS( float x, float y, float z, int value, int amount, unsigned model )
+	void LUA_NATIVE_OBJECT_CREATE_MONEY_PICKUPS( float x, float y, float z, int value, int amount, Hash model )
 	{
 		OBJECT::CREATE_MONEY_PICKUPS(x, y, z, value, amount, model);
 	}
 
-	bool LUA_NATIVE_OBJECT_DOES_PICKUP_EXIST( int pickup )
+	bool LUA_NATIVE_OBJECT_DOES_PICKUP_EXIST( Pickup pickup )
 	{
 		auto retval = (bool)OBJECT::DOES_PICKUP_EXIST(pickup);
 		return retval;
@@ -20686,7 +20681,7 @@ namespace lua::native
 		return retval;
 	}
 
-	Object LUA_NATIVE_OBJECT_GET_PICKUP_OBJECT( int pickup )
+	Object LUA_NATIVE_OBJECT_GET_PICKUP_OBJECT( Pickup pickup )
 	{
 		auto retval = OBJECT::GET_PICKUP_OBJECT(pickup);
 		return retval;
@@ -20704,13 +20699,13 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_OBJECT_DOES_PICKUP_OF_TYPE_EXIST_IN_AREA( unsigned pickupHash, float x, float y, float z, float radius )
+	bool LUA_NATIVE_OBJECT_DOES_PICKUP_OF_TYPE_EXIST_IN_AREA( Hash pickupHash, float x, float y, float z, float radius )
 	{
 		auto retval = (bool)OBJECT::DOES_PICKUP_OF_TYPE_EXIST_IN_AREA(pickupHash, x, y, z, radius);
 		return retval;
 	}
 
-	void LUA_NATIVE_OBJECT_SET_PICKUP_REGENERATION_TIME( int pickup, int duration )
+	void LUA_NATIVE_OBJECT_SET_PICKUP_REGENERATION_TIME( Pickup pickup, int duration )
 	{
 		OBJECT::SET_PICKUP_REGENERATION_TIME(pickup, duration);
 	}
@@ -20720,17 +20715,17 @@ namespace lua::native
 		OBJECT::FORCE_PICKUP_REGENERATE(p0);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_PLAYER_PERMITTED_TO_COLLECT_PICKUPS_OF_TYPE( int player, unsigned pickupHash, bool toggle )
+	void LUA_NATIVE_OBJECT_SET_PLAYER_PERMITTED_TO_COLLECT_PICKUPS_OF_TYPE( Player player, Hash pickupHash, bool toggle )
 	{
 		OBJECT::SET_PLAYER_PERMITTED_TO_COLLECT_PICKUPS_OF_TYPE(player, pickupHash, toggle);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_LOCAL_PLAYER_PERMITTED_TO_COLLECT_PICKUPS_WITH_MODEL( unsigned modelHash, bool toggle )
+	void LUA_NATIVE_OBJECT_SET_LOCAL_PLAYER_PERMITTED_TO_COLLECT_PICKUPS_WITH_MODEL( Hash modelHash, bool toggle )
 	{
 		OBJECT::SET_LOCAL_PLAYER_PERMITTED_TO_COLLECT_PICKUPS_WITH_MODEL(modelHash, toggle);
 	}
 
-	void LUA_NATIVE_OBJECT_ALLOW_ALL_PLAYERS_TO_COLLECT_PICKUPS_OF_TYPE( unsigned pickupHash )
+	void LUA_NATIVE_OBJECT_ALLOW_ALL_PLAYERS_TO_COLLECT_PICKUPS_OF_TYPE( Hash pickupHash )
 	{
 		OBJECT::ALLOW_ALL_PLAYERS_TO_COLLECT_PICKUPS_OF_TYPE(pickupHash);
 	}
@@ -20745,37 +20740,37 @@ namespace lua::native
 		OBJECT::PREVENT_COLLECTION_OF_PORTABLE_PICKUP(object, p1, p2);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_PICKUP_OBJECT_GLOW_WHEN_UNCOLLECTABLE( int pickup, bool toggle )
+	void LUA_NATIVE_OBJECT_SET_PICKUP_OBJECT_GLOW_WHEN_UNCOLLECTABLE( Pickup pickup, bool toggle )
 	{
 		OBJECT::SET_PICKUP_OBJECT_GLOW_WHEN_UNCOLLECTABLE(pickup, toggle);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_PICKUP_GLOW_OFFSET( int pickup, float p1 )
+	void LUA_NATIVE_OBJECT_SET_PICKUP_GLOW_OFFSET( Pickup pickup, float p1 )
 	{
 		OBJECT::SET_PICKUP_GLOW_OFFSET(pickup, p1);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_PICKUP_OBJECT_GLOW_OFFSET( int pickup, float p1, bool p2 )
+	void LUA_NATIVE_OBJECT_SET_PICKUP_OBJECT_GLOW_OFFSET( Pickup pickup, float p1, bool p2 )
 	{
 		OBJECT::SET_PICKUP_OBJECT_GLOW_OFFSET(pickup, p1, p2);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_OBJECT_GLOW_IN_SAME_TEAM( int pickup )
+	void LUA_NATIVE_OBJECT_SET_OBJECT_GLOW_IN_SAME_TEAM( Pickup pickup )
 	{
 		OBJECT::SET_OBJECT_GLOW_IN_SAME_TEAM(pickup);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_PICKUP_OBJECT_ARROW_MARKER( int pickup, bool toggle )
+	void LUA_NATIVE_OBJECT_SET_PICKUP_OBJECT_ARROW_MARKER( Pickup pickup, bool toggle )
 	{
 		OBJECT::SET_PICKUP_OBJECT_ARROW_MARKER(pickup, toggle);
 	}
 
-	void LUA_NATIVE_OBJECT_ALLOW_PICKUP_ARROW_MARKER_WHEN_UNCOLLECTABLE( int pickup, bool toggle )
+	void LUA_NATIVE_OBJECT_ALLOW_PICKUP_ARROW_MARKER_WHEN_UNCOLLECTABLE( Pickup pickup, bool toggle )
 	{
 		OBJECT::ALLOW_PICKUP_ARROW_MARKER_WHEN_UNCOLLECTABLE(pickup, toggle);
 	}
 
-	int LUA_NATIVE_OBJECT_GET_DEFAULT_AMMO_FOR_WEAPON_PICKUP( unsigned pickupHash )
+	int LUA_NATIVE_OBJECT_GET_DEFAULT_AMMO_FOR_WEAPON_PICKUP( Hash pickupHash )
 	{
 		auto retval = OBJECT::GET_DEFAULT_AMMO_FOR_WEAPON_PICKUP(pickupHash);
 		return retval;
@@ -20797,22 +20792,22 @@ namespace lua::native
 		OBJECT::SET_ONLY_ALLOW_AMMO_COLLECTION_WHEN_LOW(p0);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_PICKUP_UNCOLLECTABLE( int pickup, bool toggle )
+	void LUA_NATIVE_OBJECT_SET_PICKUP_UNCOLLECTABLE( Pickup pickup, bool toggle )
 	{
 		OBJECT::SET_PICKUP_UNCOLLECTABLE(pickup, toggle);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_PICKUP_TRANSPARENT_WHEN_UNCOLLECTABLE( int pickup, bool toggle )
+	void LUA_NATIVE_OBJECT_SET_PICKUP_TRANSPARENT_WHEN_UNCOLLECTABLE( Pickup pickup, bool toggle )
 	{
 		OBJECT::SET_PICKUP_TRANSPARENT_WHEN_UNCOLLECTABLE(pickup, toggle);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_PICKUP_HIDDEN_WHEN_UNCOLLECTABLE( int pickup, bool toggle )
+	void LUA_NATIVE_OBJECT_SET_PICKUP_HIDDEN_WHEN_UNCOLLECTABLE( Pickup pickup, bool toggle )
 	{
 		OBJECT::SET_PICKUP_HIDDEN_WHEN_UNCOLLECTABLE(pickup, toggle);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_PICKUP_OBJECT_TRANSPARENT_WHEN_UNCOLLECTABLE( int pickup, bool toggle )
+	void LUA_NATIVE_OBJECT_SET_PICKUP_OBJECT_TRANSPARENT_WHEN_UNCOLLECTABLE( Pickup pickup, bool toggle )
 	{
 		OBJECT::SET_PICKUP_OBJECT_TRANSPARENT_WHEN_UNCOLLECTABLE(pickup, toggle);
 	}
@@ -20822,22 +20817,22 @@ namespace lua::native
 		OBJECT::SET_PICKUP_OBJECT_ALPHA_WHEN_TRANSPARENT(p0);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_PORTABLE_PICKUP_PERSIST( int pickup, bool toggle )
+	void LUA_NATIVE_OBJECT_SET_PORTABLE_PICKUP_PERSIST( Pickup pickup, bool toggle )
 	{
 		OBJECT::SET_PORTABLE_PICKUP_PERSIST(pickup, toggle);
 	}
 
-	void LUA_NATIVE_OBJECT_ALLOW_PORTABLE_PICKUP_TO_MIGRATE_TO_NON_PARTICIPANTS( int pickup, bool toggle )
+	void LUA_NATIVE_OBJECT_ALLOW_PORTABLE_PICKUP_TO_MIGRATE_TO_NON_PARTICIPANTS( Pickup pickup, bool toggle )
 	{
 		OBJECT::ALLOW_PORTABLE_PICKUP_TO_MIGRATE_TO_NON_PARTICIPANTS(pickup, toggle);
 	}
 
-	void LUA_NATIVE_OBJECT_FORCE_ACTIVATE_PHYSICS_ON_UNFIXED_PICKUP( int pickup, bool toggle )
+	void LUA_NATIVE_OBJECT_FORCE_ACTIVATE_PHYSICS_ON_UNFIXED_PICKUP( Pickup pickup, bool toggle )
 	{
 		OBJECT::FORCE_ACTIVATE_PHYSICS_ON_UNFIXED_PICKUP(pickup, toggle);
 	}
 
-	void LUA_NATIVE_OBJECT_ALLOW_PICKUP_BY_NONE_PARTICIPANT( int pickup, bool toggle )
+	void LUA_NATIVE_OBJECT_ALLOW_PICKUP_BY_NONE_PARTICIPANT( Pickup pickup, bool toggle )
 	{
 		OBJECT::ALLOW_PICKUP_BY_NONE_PARTICIPANT(pickup, toggle);
 	}
@@ -20862,17 +20857,17 @@ namespace lua::native
 		OBJECT::RENDER_FAKE_PICKUP_GLOW(x, y, z, colorIndex);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_PICKUP_OBJECT_COLLECTABLE_IN_VEHICLE( int pickup )
+	void LUA_NATIVE_OBJECT_SET_PICKUP_OBJECT_COLLECTABLE_IN_VEHICLE( Pickup pickup )
 	{
 		OBJECT::SET_PICKUP_OBJECT_COLLECTABLE_IN_VEHICLE(pickup);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_PICKUP_TRACK_DAMAGE_EVENTS( int pickup, bool toggle )
+	void LUA_NATIVE_OBJECT_SET_PICKUP_TRACK_DAMAGE_EVENTS( Pickup pickup, bool toggle )
 	{
 		OBJECT::SET_PICKUP_TRACK_DAMAGE_EVENTS(pickup, toggle);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_ENTITY_FLAG_SUPPRESS_SHADOW( int entity, bool toggle )
+	void LUA_NATIVE_OBJECT_SET_ENTITY_FLAG_SUPPRESS_SHADOW( Entity entity, bool toggle )
 	{
 		OBJECT::SET_ENTITY_FLAG_SUPPRESS_SHADOW(entity, toggle);
 	}
@@ -20882,13 +20877,13 @@ namespace lua::native
 		OBJECT::SET_ENTITY_FLAG_RENDER_SMALL_SHADOW(object, toggle);
 	}
 
-	unsigned LUA_NATIVE_OBJECT_GET_WEAPON_TYPE_FROM_PICKUP_TYPE( unsigned pickupHash )
+	Hash LUA_NATIVE_OBJECT_GET_WEAPON_TYPE_FROM_PICKUP_TYPE( Hash pickupHash )
 	{
 		auto retval = OBJECT::GET_WEAPON_TYPE_FROM_PICKUP_TYPE(pickupHash);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_OBJECT_GET_PICKUP_TYPE_FROM_WEAPON_HASH( unsigned weaponHash )
+	Hash LUA_NATIVE_OBJECT_GET_PICKUP_TYPE_FROM_WEAPON_HASH( Hash weaponHash )
 	{
 		auto retval = OBJECT::GET_PICKUP_TYPE_FROM_WEAPON_HASH(weaponHash);
 		return retval;
@@ -20911,7 +20906,7 @@ namespace lua::native
 		OBJECT::SET_OBJECT_TINT_INDEX(object, textureVariation);
 	}
 
-	bool LUA_NATIVE_OBJECT_SET_TINT_INDEX_CLOSEST_BUILDING_OF_TYPE( float x, float y, float z, float radius, unsigned modelHash, int textureVariation )
+	bool LUA_NATIVE_OBJECT_SET_TINT_INDEX_CLOSEST_BUILDING_OF_TYPE( float x, float y, float z, float radius, Hash modelHash, int textureVariation )
 	{
 		auto retval = (bool)OBJECT::SET_TINT_INDEX_CLOSEST_BUILDING_OF_TYPE(x, y, z, radius, modelHash, textureVariation);
 		return retval;
@@ -20949,7 +20944,7 @@ namespace lua::native
 		OBJECT::SET_OBJECT_SPEED_BOOST_DURATION(object, duration);
 	}
 
-	unsigned LUA_NATIVE_OBJECT_CONVERT_OLD_PICKUP_TYPE_TO_NEW( unsigned pickupHash )
+	Hash LUA_NATIVE_OBJECT_CONVERT_OLD_PICKUP_TYPE_TO_NEW( Hash pickupHash )
 	{
 		auto retval = OBJECT::CONVERT_OLD_PICKUP_TYPE_TO_NEW(pickupHash);
 		return retval;
@@ -20970,7 +20965,7 @@ namespace lua::native
 		OBJECT::SET_DISABLE_COLLISIONS_BETWEEN_CARS_AND_CAR_PARACHUTE(p0);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_PROJECTILES_SHOULD_EXPLODE_ON_CONTACT( int entity, Any p1 )
+	void LUA_NATIVE_OBJECT_SET_PROJECTILES_SHOULD_EXPLODE_ON_CONTACT( Entity entity, Any p1 )
 	{
 		OBJECT::SET_PROJECTILES_SHOULD_EXPLODE_ON_CONTACT(entity, p1);
 	}
@@ -20980,7 +20975,7 @@ namespace lua::native
 		OBJECT::SET_DRIVE_ARTICULATED_JOINT(object, toggle, p2);
 	}
 
-	void LUA_NATIVE_OBJECT_SET_DRIVE_ARTICULATED_JOINT_WITH_INFLICTOR( Object object, bool toggle, int p2, int ped )
+	void LUA_NATIVE_OBJECT_SET_DRIVE_ARTICULATED_JOINT_WITH_INFLICTOR( Object object, bool toggle, int p2, Ped ped )
 	{
 		OBJECT::SET_DRIVE_ARTICULATED_JOINT_WITH_INFLICTOR(object, toggle, p2, ped);
 	}
@@ -21507,9 +21502,9 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<unsigned, unsigned> LUA_NATIVE_PATHFIND_GET_STREET_NAME_AT_COORD( float x, float y, float z, unsigned streetName, unsigned crossingRoad )
+	std::tuple<Hash, Hash> LUA_NATIVE_PATHFIND_GET_STREET_NAME_AT_COORD( float x, float y, float z, Hash streetName, Hash crossingRoad )
 	{
-		std::tuple<unsigned, unsigned> return_values;
+		std::tuple<Hash, Hash> return_values;
 		PATHFIND::GET_STREET_NAME_AT_COORD(x, y, z, &streetName, &crossingRoad);
 		std::get<0>(return_values) = streetName;
 		std::get<1>(return_values) = crossingRoad;
@@ -21582,7 +21577,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	bool LUA_NATIVE_PATHFIND_IS_POINT_ON_ROAD( float x, float y, float z, int vehicle )
+	bool LUA_NATIVE_PATHFIND_IS_POINT_ON_ROAD( float x, float y, float z, Vehicle vehicle )
 	{
 		auto retval = (bool)PATHFIND::IS_POINT_ON_ROAD(x, y, z, vehicle);
 		return retval;
@@ -21695,53 +21690,53 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_CREATE_PED( int pedType, unsigned modelHash, float x, float y, float z, float heading, bool isNetwork, bool bScriptHostPed )
+	Ped LUA_NATIVE_PED_CREATE_PED( int pedType, Hash modelHash, float x, float y, float z, float heading, bool isNetwork, bool bScriptHostPed )
 	{
 		auto retval = PED::CREATE_PED(pedType, modelHash, x, y, z, heading, isNetwork, bScriptHostPed);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_DELETE_PED( int ped )
+	Ped LUA_NATIVE_PED_DELETE_PED( Ped ped )
 	{
 		PED::DELETE_PED(&ped);
 		return ped;
 	}
 
-	int LUA_NATIVE_PED_CLONE_PED( int ped, bool isNetwork, bool bScriptHostPed, bool copyHeadBlendFlag )
+	Ped LUA_NATIVE_PED_CLONE_PED( Ped ped, bool isNetwork, bool bScriptHostPed, bool copyHeadBlendFlag )
 	{
 		auto retval = PED::CLONE_PED(ped, isNetwork, bScriptHostPed, copyHeadBlendFlag);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_CLONE_PED_ALT( int ped, bool isNetwork, bool bScriptHostPed, bool copyHeadBlendFlag, bool p4 )
+	Ped LUA_NATIVE_PED_CLONE_PED_ALT( Ped ped, bool isNetwork, bool bScriptHostPed, bool copyHeadBlendFlag, bool p4 )
 	{
 		auto retval = PED::CLONE_PED_ALT(ped, isNetwork, bScriptHostPed, copyHeadBlendFlag, p4);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_CLONE_PED_TO_TARGET( int ped, int targetPed )
+	void LUA_NATIVE_PED_CLONE_PED_TO_TARGET( Ped ped, Ped targetPed )
 	{
 		PED::CLONE_PED_TO_TARGET(ped, targetPed);
 	}
 
-	void LUA_NATIVE_PED_CLONE_PED_TO_TARGET_ALT( int ped, int targetPed, bool p2 )
+	void LUA_NATIVE_PED_CLONE_PED_TO_TARGET_ALT( Ped ped, Ped targetPed, bool p2 )
 	{
 		PED::CLONE_PED_TO_TARGET_ALT(ped, targetPed, p2);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_VEHICLE( int ped, int vehicle, bool atGetIn )
+	bool LUA_NATIVE_PED_IS_PED_IN_VEHICLE( Ped ped, Vehicle vehicle, bool atGetIn )
 	{
 		auto retval = (bool)PED::IS_PED_IN_VEHICLE(ped, vehicle, atGetIn);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_MODEL( int ped, unsigned modelHash )
+	bool LUA_NATIVE_PED_IS_PED_IN_MODEL( Ped ped, Hash modelHash )
 	{
 		auto retval = (bool)PED::IS_PED_IN_MODEL(ped, modelHash);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_ANY_VEHICLE( int ped, bool atGetIn )
+	bool LUA_NATIVE_PED_IS_PED_IN_ANY_VEHICLE( Ped ped, bool atGetIn )
 	{
 		auto retval = (bool)PED::IS_PED_IN_ANY_VEHICLE(ped, atGetIn);
 		return retval;
@@ -21753,89 +21748,89 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_INJURED( int ped )
+	bool LUA_NATIVE_PED_IS_PED_INJURED( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_INJURED(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_HURT( int ped )
+	bool LUA_NATIVE_PED_IS_PED_HURT( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_HURT(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_FATALLY_INJURED( int ped )
+	bool LUA_NATIVE_PED_IS_PED_FATALLY_INJURED( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_FATALLY_INJURED(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_DEAD_OR_DYING( int ped, bool p1 )
+	bool LUA_NATIVE_PED_IS_PED_DEAD_OR_DYING( Ped ped, bool p1 )
 	{
 		auto retval = (bool)PED::IS_PED_DEAD_OR_DYING(ped, p1);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_CONVERSATION_PED_DEAD( int ped )
+	bool LUA_NATIVE_PED_IS_CONVERSATION_PED_DEAD( Ped ped )
 	{
 		auto retval = (bool)PED::IS_CONVERSATION_PED_DEAD(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_AIMING_FROM_COVER( int ped )
+	bool LUA_NATIVE_PED_IS_PED_AIMING_FROM_COVER( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_AIMING_FROM_COVER(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_RELOADING( int ped )
+	bool LUA_NATIVE_PED_IS_PED_RELOADING( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_RELOADING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_A_PLAYER( int ped )
+	bool LUA_NATIVE_PED_IS_PED_A_PLAYER( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_A_PLAYER(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_CREATE_PED_INSIDE_VEHICLE( int vehicle, int pedType, unsigned modelHash, int seat, bool isNetwork, bool bScriptHostPed )
+	Ped LUA_NATIVE_PED_CREATE_PED_INSIDE_VEHICLE( Vehicle vehicle, int pedType, Hash modelHash, int seat, bool isNetwork, bool bScriptHostPed )
 	{
 		auto retval = PED::CREATE_PED_INSIDE_VEHICLE(vehicle, pedType, modelHash, seat, isNetwork, bScriptHostPed);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_DESIRED_HEADING( int ped, float heading )
+	void LUA_NATIVE_PED_SET_PED_DESIRED_HEADING( Ped ped, float heading )
 	{
 		PED::SET_PED_DESIRED_HEADING(ped, heading);
 	}
 
-	void LUA_NATIVE_PED_FORCE_ALL_HEADING_VALUES_TO_ALIGN( int ped )
+	void LUA_NATIVE_PED_FORCE_ALL_HEADING_VALUES_TO_ALIGN( Ped ped )
 	{
 		PED::FORCE_ALL_HEADING_VALUES_TO_ALIGN(ped);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_FACING_PED( int ped, int otherPed, float angle )
+	bool LUA_NATIVE_PED_IS_PED_FACING_PED( Ped ped, Ped otherPed, float angle )
 	{
 		auto retval = (bool)PED::IS_PED_FACING_PED(ped, otherPed, angle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_MELEE_COMBAT( int ped )
+	bool LUA_NATIVE_PED_IS_PED_IN_MELEE_COMBAT( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_IN_MELEE_COMBAT(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_STOPPED( int ped )
+	bool LUA_NATIVE_PED_IS_PED_STOPPED( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_STOPPED(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_SHOOTING_IN_AREA( int ped, float x1, float y1, float z1, float x2, float y2, float z2, bool p7, bool p8 )
+	bool LUA_NATIVE_PED_IS_PED_SHOOTING_IN_AREA( Ped ped, float x1, float y1, float z1, float x2, float y2, float z2, bool p7, bool p8 )
 	{
 		auto retval = (bool)PED::IS_PED_SHOOTING_IN_AREA(ped, x1, y1, z1, x2, y2, z2, p7, p8);
 		return retval;
@@ -21847,18 +21842,18 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_SHOOTING( int ped )
+	bool LUA_NATIVE_PED_IS_PED_SHOOTING( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_SHOOTING(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_ACCURACY( int ped, int accuracy )
+	void LUA_NATIVE_PED_SET_PED_ACCURACY( Ped ped, int accuracy )
 	{
 		PED::SET_PED_ACCURACY(ped, accuracy);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_ACCURACY( int ped )
+	int LUA_NATIVE_PED_GET_PED_ACCURACY( Ped ped )
 	{
 		auto retval = PED::GET_PED_ACCURACY(ped);
 		return retval;
@@ -21869,39 +21864,39 @@ namespace lua::native
 		PED::SET_AMBIENT_LAW_PED_ACCURACY_MODIFIER(multiplier);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_MODEL( int ped, unsigned modelHash )
+	bool LUA_NATIVE_PED_IS_PED_MODEL( Ped ped, Hash modelHash )
 	{
 		auto retval = (bool)PED::IS_PED_MODEL(ped, modelHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_EXPLODE_PED_HEAD( int ped, unsigned weaponHash )
+	void LUA_NATIVE_PED_EXPLODE_PED_HEAD( Ped ped, Hash weaponHash )
 	{
 		PED::EXPLODE_PED_HEAD(ped, weaponHash);
 	}
 
-	int LUA_NATIVE_PED_REMOVE_PED_ELEGANTLY( int ped )
+	Ped LUA_NATIVE_PED_REMOVE_PED_ELEGANTLY( Ped ped )
 	{
 		PED::REMOVE_PED_ELEGANTLY(&ped);
 		return ped;
 	}
 
-	void LUA_NATIVE_PED_ADD_ARMOUR_TO_PED( int ped, int amount )
+	void LUA_NATIVE_PED_ADD_ARMOUR_TO_PED( Ped ped, int amount )
 	{
 		PED::ADD_ARMOUR_TO_PED(ped, amount);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_ARMOUR( int ped, int amount )
+	void LUA_NATIVE_PED_SET_PED_ARMOUR( Ped ped, int amount )
 	{
 		PED::SET_PED_ARMOUR(ped, amount);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_INTO_VEHICLE( int ped, int vehicle, int seatIndex )
+	void LUA_NATIVE_PED_SET_PED_INTO_VEHICLE( Ped ped, Vehicle vehicle, int seatIndex )
 	{
 		PED::SET_PED_INTO_VEHICLE(ped, vehicle, seatIndex);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_ALLOW_VEHICLES_OVERRIDE( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_ALLOW_VEHICLES_OVERRIDE( Ped ped, bool toggle )
 	{
 		PED::SET_PED_ALLOW_VEHICLES_OVERRIDE(ped, toggle);
 	}
@@ -21912,13 +21907,13 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_CREATE_RANDOM_PED( float posX, float posY, float posZ )
+	Ped LUA_NATIVE_PED_CREATE_RANDOM_PED( float posX, float posY, float posZ )
 	{
 		auto retval = PED::CREATE_RANDOM_PED(posX, posY, posZ);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_CREATE_RANDOM_PED_AS_DRIVER( int vehicle, bool returnHandle )
+	Ped LUA_NATIVE_PED_CREATE_RANDOM_PED_AS_DRIVER( Vehicle vehicle, bool returnHandle )
 	{
 		auto retval = PED::CREATE_RANDOM_PED_AS_DRIVER(vehicle, returnHandle);
 		return retval;
@@ -21936,12 +21931,12 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_MOVE_ANIMS_BLEND_OUT( int ped )
+	void LUA_NATIVE_PED_SET_PED_MOVE_ANIMS_BLEND_OUT( Ped ped )
 	{
 		PED::SET_PED_MOVE_ANIMS_BLEND_OUT(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_BE_DRAGGED_OUT( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_BE_DRAGGED_OUT( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_BE_DRAGGED_OUT(ped, toggle);
 	}
@@ -21951,25 +21946,25 @@ namespace lua::native
 		PED::SET_PED_ALLOW_HURT_COMBAT_FOR_ALL_MISSION_PEDS(toggle);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_MALE( int ped )
+	bool LUA_NATIVE_PED_IS_PED_MALE( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_MALE(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_HUMAN( int ped )
+	bool LUA_NATIVE_PED_IS_PED_HUMAN( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_HUMAN(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_VEHICLE_PED_IS_IN( int ped, bool includeEntering )
+	Vehicle LUA_NATIVE_PED_GET_VEHICLE_PED_IS_IN( Ped ped, bool includeEntering )
 	{
 		auto retval = PED::GET_VEHICLE_PED_IS_IN(ped, includeEntering);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_RESET_PED_LAST_VEHICLE( int ped )
+	void LUA_NATIVE_PED_RESET_PED_LAST_VEHICLE( Ped ped )
 	{
 		PED::RESET_PED_LAST_VEHICLE(ped);
 	}
@@ -22009,36 +22004,36 @@ namespace lua::native
 		PED::INSTANTLY_FILL_PED_POPULATION();
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_ON_MOUNT( int ped )
+	bool LUA_NATIVE_PED_IS_PED_ON_MOUNT( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_ON_MOUNT(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_MOUNT( int ped )
+	Ped LUA_NATIVE_PED_GET_MOUNT( Ped ped )
 	{
 		auto retval = PED::GET_MOUNT(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_ON_VEHICLE( int ped )
+	bool LUA_NATIVE_PED_IS_PED_ON_VEHICLE( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_ON_VEHICLE(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_ON_SPECIFIC_VEHICLE( int ped, int vehicle )
+	bool LUA_NATIVE_PED_IS_PED_ON_SPECIFIC_VEHICLE( Ped ped, Vehicle vehicle )
 	{
 		auto retval = (bool)PED::IS_PED_ON_SPECIFIC_VEHICLE(ped, vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_MONEY( int ped, int amount )
+	void LUA_NATIVE_PED_SET_PED_MONEY( Ped ped, int amount )
 	{
 		PED::SET_PED_MONEY(ped, amount);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_MONEY( int ped )
+	int LUA_NATIVE_PED_GET_PED_MONEY( Ped ped )
 	{
 		auto retval = PED::GET_PED_MONEY(ped);
 		return retval;
@@ -22059,115 +22054,115 @@ namespace lua::native
 		PED::SET_BLOCKING_OF_NON_TEMPORARY_EVENTS_FOR_AMBIENT_PEDS_THIS_FRAME(p0);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_SUFFERS_CRITICAL_HITS( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_SUFFERS_CRITICAL_HITS( Ped ped, bool toggle )
 	{
 		PED::SET_PED_SUFFERS_CRITICAL_HITS(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_UPPER_BODY_DAMAGE_ONLY( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_UPPER_BODY_DAMAGE_ONLY( Ped ped, bool toggle )
 	{
 		PED::SET_PED_UPPER_BODY_DAMAGE_ONLY(ped, toggle);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_SITTING_IN_VEHICLE( int ped, int vehicle )
+	bool LUA_NATIVE_PED_IS_PED_SITTING_IN_VEHICLE( Ped ped, Vehicle vehicle )
 	{
 		auto retval = (bool)PED::IS_PED_SITTING_IN_VEHICLE(ped, vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_SITTING_IN_ANY_VEHICLE( int ped )
+	bool LUA_NATIVE_PED_IS_PED_SITTING_IN_ANY_VEHICLE( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_SITTING_IN_ANY_VEHICLE(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_ON_FOOT( int ped )
+	bool LUA_NATIVE_PED_IS_PED_ON_FOOT( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_ON_FOOT(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_ON_ANY_BIKE( int ped )
+	bool LUA_NATIVE_PED_IS_PED_ON_ANY_BIKE( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_ON_ANY_BIKE(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_PLANTING_BOMB( int ped )
+	bool LUA_NATIVE_PED_IS_PED_PLANTING_BOMB( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_PLANTING_BOMB(ped);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_PED_GET_DEAD_PED_PICKUP_COORDS( int ped, float p1, float p2 )
+	Vector3 LUA_NATIVE_PED_GET_DEAD_PED_PICKUP_COORDS( Ped ped, float p1, float p2 )
 	{
 		auto retval = PED::GET_DEAD_PED_PICKUP_COORDS(ped, p1, p2);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_ANY_BOAT( int ped )
+	bool LUA_NATIVE_PED_IS_PED_IN_ANY_BOAT( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_IN_ANY_BOAT(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_ANY_SUB( int ped )
+	bool LUA_NATIVE_PED_IS_PED_IN_ANY_SUB( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_IN_ANY_SUB(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_ANY_HELI( int ped )
+	bool LUA_NATIVE_PED_IS_PED_IN_ANY_HELI( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_IN_ANY_HELI(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_ANY_PLANE( int ped )
+	bool LUA_NATIVE_PED_IS_PED_IN_ANY_PLANE( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_IN_ANY_PLANE(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_FLYING_VEHICLE( int ped )
+	bool LUA_NATIVE_PED_IS_PED_IN_FLYING_VEHICLE( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_IN_FLYING_VEHICLE(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_DIES_IN_WATER( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_DIES_IN_WATER( Ped ped, bool toggle )
 	{
 		PED::SET_PED_DIES_IN_WATER(ped, toggle);
 	}
 
-	bool LUA_NATIVE_PED_GET_PED_DIES_IN_WATER( int ped )
+	bool LUA_NATIVE_PED_GET_PED_DIES_IN_WATER( Ped ped )
 	{
 		auto retval = (bool)PED::GET_PED_DIES_IN_WATER(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_DIES_IN_SINKING_VEHICLE( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_DIES_IN_SINKING_VEHICLE( Ped ped, bool toggle )
 	{
 		PED::SET_PED_DIES_IN_SINKING_VEHICLE(ped, toggle);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_ARMOUR( int ped )
+	int LUA_NATIVE_PED_GET_PED_ARMOUR( Ped ped )
 	{
 		auto retval = PED::GET_PED_ARMOUR(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_STAY_IN_VEHICLE_WHEN_JACKED( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_STAY_IN_VEHICLE_WHEN_JACKED( Ped ped, bool toggle )
 	{
 		PED::SET_PED_STAY_IN_VEHICLE_WHEN_JACKED(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_BE_SHOT_IN_VEHICLE( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_BE_SHOT_IN_VEHICLE( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_BE_SHOT_IN_VEHICLE(ped, toggle);
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_PED_GET_PED_LAST_DAMAGE_BONE( int ped, int outBone )
+	std::tuple<bool, int> LUA_NATIVE_PED_GET_PED_LAST_DAMAGE_BONE( Ped ped, int outBone )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)PED::GET_PED_LAST_DAMAGE_BONE(ped, &outBone);
@@ -22176,7 +22171,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_LAST_DAMAGE_BONE( int ped )
+	void LUA_NATIVE_PED_CLEAR_PED_LAST_DAMAGE_BONE( Ped ped )
 	{
 		PED::CLEAR_PED_LAST_DAMAGE_BONE(ped);
 	}
@@ -22201,60 +22196,60 @@ namespace lua::native
 		PED::RESET_AI_MELEE_WEAPON_DAMAGE_MODIFIER();
 	}
 
-	void LUA_NATIVE_PED_SET_TREAT_AS_AMBIENT_PED_FOR_DRIVER_LOCKON( int ped, bool p1 )
+	void LUA_NATIVE_PED_SET_TREAT_AS_AMBIENT_PED_FOR_DRIVER_LOCKON( Ped ped, bool p1 )
 	{
 		PED::SET_TREAT_AS_AMBIENT_PED_FOR_DRIVER_LOCKON(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_BE_TARGETTED( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_BE_TARGETTED( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_BE_TARGETTED(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_BE_TARGETTED_BY_TEAM( int ped, int team, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_BE_TARGETTED_BY_TEAM( Ped ped, int team, bool toggle )
 	{
 		PED::SET_PED_CAN_BE_TARGETTED_BY_TEAM(ped, team, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_BE_TARGETTED_BY_PLAYER( int ped, int player, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_BE_TARGETTED_BY_PLAYER( Ped ped, Player player, bool toggle )
 	{
 		PED::SET_PED_CAN_BE_TARGETTED_BY_PLAYER(ped, player, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_ALLOW_LOCKON_TO_PED_IF_FRIENDLY( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_ALLOW_LOCKON_TO_PED_IF_FRIENDLY( Ped ped, bool toggle )
 	{
 		PED::SET_ALLOW_LOCKON_TO_PED_IF_FRIENDLY(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_USE_CAMERA_HEADING_FOR_DESIRED_DIRECTION_LOCK_ON_TEST( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_USE_CAMERA_HEADING_FOR_DESIRED_DIRECTION_LOCK_ON_TEST( Ped ped, bool toggle )
 	{
 		PED::SET_USE_CAMERA_HEADING_FOR_DESIRED_DIRECTION_LOCK_ON_TEST(ped, toggle);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_ANY_POLICE_VEHICLE( int ped )
+	bool LUA_NATIVE_PED_IS_PED_IN_ANY_POLICE_VEHICLE( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_IN_ANY_POLICE_VEHICLE(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_FORCE_PED_TO_OPEN_PARACHUTE( int ped )
+	void LUA_NATIVE_PED_FORCE_PED_TO_OPEN_PARACHUTE( Ped ped )
 	{
 		PED::FORCE_PED_TO_OPEN_PARACHUTE(ped);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_PARACHUTE_FREE_FALL( int ped )
+	bool LUA_NATIVE_PED_IS_PED_IN_PARACHUTE_FREE_FALL( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_IN_PARACHUTE_FREE_FALL(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_FALLING( int ped )
+	bool LUA_NATIVE_PED_IS_PED_FALLING( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_FALLING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_JUMPING( int ped )
+	bool LUA_NATIVE_PED_IS_PED_JUMPING( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_JUMPING(ped);
 		return retval;
@@ -22272,93 +22267,93 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_CLIMBING( int ped )
+	bool LUA_NATIVE_PED_IS_PED_CLIMBING( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_CLIMBING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_VAULTING( int ped )
+	bool LUA_NATIVE_PED_IS_PED_VAULTING( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_VAULTING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_DIVING( int ped )
+	bool LUA_NATIVE_PED_IS_PED_DIVING( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_DIVING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_JUMPING_OUT_OF_VEHICLE( int ped )
+	bool LUA_NATIVE_PED_IS_PED_JUMPING_OUT_OF_VEHICLE( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_JUMPING_OUT_OF_VEHICLE(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_OPENING_DOOR( int ped )
+	bool LUA_NATIVE_PED_IS_PED_OPENING_DOOR( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_OPENING_DOOR(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_PED_PARACHUTE_STATE( int ped )
+	int LUA_NATIVE_PED_GET_PED_PARACHUTE_STATE( Ped ped )
 	{
 		auto retval = PED::GET_PED_PARACHUTE_STATE(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_PED_PARACHUTE_LANDING_TYPE( int ped )
+	int LUA_NATIVE_PED_GET_PED_PARACHUTE_LANDING_TYPE( Ped ped )
 	{
 		auto retval = PED::GET_PED_PARACHUTE_LANDING_TYPE(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_PARACHUTE_TINT_INDEX( int ped, int tintIndex )
+	void LUA_NATIVE_PED_SET_PED_PARACHUTE_TINT_INDEX( Ped ped, int tintIndex )
 	{
 		PED::SET_PED_PARACHUTE_TINT_INDEX(ped, tintIndex);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_PARACHUTE_TINT_INDEX( int ped, int outTintIndex )
+	int LUA_NATIVE_PED_GET_PED_PARACHUTE_TINT_INDEX( Ped ped, int outTintIndex )
 	{
 		PED::GET_PED_PARACHUTE_TINT_INDEX(ped, &outTintIndex);
 		return outTintIndex;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_RESERVE_PARACHUTE_TINT_INDEX( int ped, Any p1 )
+	void LUA_NATIVE_PED_SET_PED_RESERVE_PARACHUTE_TINT_INDEX( Ped ped, Any p1 )
 	{
 		PED::SET_PED_RESERVE_PARACHUTE_TINT_INDEX(ped, p1);
 	}
 
-	Object LUA_NATIVE_PED_CREATE_PARACHUTE_BAG_OBJECT( int ped, bool p1, bool p2 )
+	Object LUA_NATIVE_PED_CREATE_PARACHUTE_BAG_OBJECT( Ped ped, bool p1, bool p2 )
 	{
 		auto retval = PED::CREATE_PARACHUTE_BAG_OBJECT(ped, p1, p2);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_DUCKING( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_DUCKING( Ped ped, bool toggle )
 	{
 		PED::SET_PED_DUCKING(ped, toggle);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_DUCKING( int ped )
+	bool LUA_NATIVE_PED_IS_PED_DUCKING( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_DUCKING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_ANY_TAXI( int ped )
+	bool LUA_NATIVE_PED_IS_PED_IN_ANY_TAXI( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_IN_ANY_TAXI(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_ID_RANGE( int ped, float value )
+	void LUA_NATIVE_PED_SET_PED_ID_RANGE( Ped ped, float value )
 	{
 		PED::SET_PED_ID_RANGE(ped, value);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_HIGHLY_PERCEPTIVE( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_HIGHLY_PERCEPTIVE( Ped ped, bool toggle )
 	{
 		PED::SET_PED_HIGHLY_PERCEPTIVE(ped, toggle);
 	}
@@ -22368,68 +22363,68 @@ namespace lua::native
 		PED::SET_COP_PERCEPTION_OVERRIDES(seeingRange, seeingRangePeripheral, hearingRange, visualFieldMinAzimuthAngle, visualFieldMaxAzimuthAngle, fieldOfGazeMaxAngle, p6);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_INJURED_ON_GROUND_BEHAVIOUR( int ped, float p1 )
+	void LUA_NATIVE_PED_SET_PED_INJURED_ON_GROUND_BEHAVIOUR( Ped ped, float p1 )
 	{
 		PED::SET_PED_INJURED_ON_GROUND_BEHAVIOUR(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_DISABLE_PED_INJURED_ON_GROUND_BEHAVIOUR( int ped )
+	void LUA_NATIVE_PED_DISABLE_PED_INJURED_ON_GROUND_BEHAVIOUR( Ped ped )
 	{
 		PED::DISABLE_PED_INJURED_ON_GROUND_BEHAVIOUR(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_SEEING_RANGE( int ped, float value )
+	void LUA_NATIVE_PED_SET_PED_SEEING_RANGE( Ped ped, float value )
 	{
 		PED::SET_PED_SEEING_RANGE(ped, value);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_HEARING_RANGE( int ped, float value )
+	void LUA_NATIVE_PED_SET_PED_HEARING_RANGE( Ped ped, float value )
 	{
 		PED::SET_PED_HEARING_RANGE(ped, value);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_VISUAL_FIELD_MIN_ANGLE( int ped, float value )
+	void LUA_NATIVE_PED_SET_PED_VISUAL_FIELD_MIN_ANGLE( Ped ped, float value )
 	{
 		PED::SET_PED_VISUAL_FIELD_MIN_ANGLE(ped, value);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_VISUAL_FIELD_MAX_ANGLE( int ped, float value )
+	void LUA_NATIVE_PED_SET_PED_VISUAL_FIELD_MAX_ANGLE( Ped ped, float value )
 	{
 		PED::SET_PED_VISUAL_FIELD_MAX_ANGLE(ped, value);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_VISUAL_FIELD_MIN_ELEVATION_ANGLE( int ped, float angle )
+	void LUA_NATIVE_PED_SET_PED_VISUAL_FIELD_MIN_ELEVATION_ANGLE( Ped ped, float angle )
 	{
 		PED::SET_PED_VISUAL_FIELD_MIN_ELEVATION_ANGLE(ped, angle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_VISUAL_FIELD_MAX_ELEVATION_ANGLE( int ped, float angle )
+	void LUA_NATIVE_PED_SET_PED_VISUAL_FIELD_MAX_ELEVATION_ANGLE( Ped ped, float angle )
 	{
 		PED::SET_PED_VISUAL_FIELD_MAX_ELEVATION_ANGLE(ped, angle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_VISUAL_FIELD_PERIPHERAL_RANGE( int ped, float range )
+	void LUA_NATIVE_PED_SET_PED_VISUAL_FIELD_PERIPHERAL_RANGE( Ped ped, float range )
 	{
 		PED::SET_PED_VISUAL_FIELD_PERIPHERAL_RANGE(ped, range);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_VISUAL_FIELD_CENTER_ANGLE( int ped, float angle )
+	void LUA_NATIVE_PED_SET_PED_VISUAL_FIELD_CENTER_ANGLE( Ped ped, float angle )
 	{
 		PED::SET_PED_VISUAL_FIELD_CENTER_ANGLE(ped, angle);
 	}
 
-	float LUA_NATIVE_PED_GET_PED_VISUAL_FIELD_CENTER_ANGLE( int ped )
+	float LUA_NATIVE_PED_GET_PED_VISUAL_FIELD_CENTER_ANGLE( Ped ped )
 	{
 		auto retval = PED::GET_PED_VISUAL_FIELD_CENTER_ANGLE(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_STEALTH_MOVEMENT( int ped, bool p1, const char* action )
+	void LUA_NATIVE_PED_SET_PED_STEALTH_MOVEMENT( Ped ped, bool p1, const char* action )
 	{
 		PED::SET_PED_STEALTH_MOVEMENT(ped, p1, action);
 	}
 
-	bool LUA_NATIVE_PED_GET_PED_STEALTH_MOVEMENT( int ped )
+	bool LUA_NATIVE_PED_GET_PED_STEALTH_MOVEMENT( Ped ped )
 	{
 		auto retval = (bool)PED::GET_PED_STEALTH_MOVEMENT(ped);
 		return retval;
@@ -22441,17 +22436,17 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_AS_GROUP_LEADER( int ped, int groupId )
+	void LUA_NATIVE_PED_SET_PED_AS_GROUP_LEADER( Ped ped, int groupId )
 	{
 		PED::SET_PED_AS_GROUP_LEADER(ped, groupId);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_AS_GROUP_MEMBER( int ped, int groupId )
+	void LUA_NATIVE_PED_SET_PED_AS_GROUP_MEMBER( Ped ped, int groupId )
 	{
 		PED::SET_PED_AS_GROUP_MEMBER(ped, groupId);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_TELEPORT_TO_GROUP_LEADER( int pedHandle, int groupHandle, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_TELEPORT_TO_GROUP_LEADER( Ped pedHandle, int groupHandle, bool toggle )
 	{
 		PED::SET_PED_CAN_TELEPORT_TO_GROUP_LEADER(pedHandle, groupHandle, toggle);
 	}
@@ -22461,18 +22456,18 @@ namespace lua::native
 		PED::REMOVE_GROUP(groupId);
 	}
 
-	void LUA_NATIVE_PED_REMOVE_PED_FROM_GROUP( int ped )
+	void LUA_NATIVE_PED_REMOVE_PED_FROM_GROUP( Ped ped )
 	{
 		PED::REMOVE_PED_FROM_GROUP(ped);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_GROUP_MEMBER( int ped, int groupId )
+	bool LUA_NATIVE_PED_IS_PED_GROUP_MEMBER( Ped ped, int groupId )
 	{
 		auto retval = (bool)PED::IS_PED_GROUP_MEMBER(ped, groupId);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_HANGING_ON_TO_VEHICLE( int ped )
+	bool LUA_NATIVE_PED_IS_PED_HANGING_ON_TO_VEHICLE( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_HANGING_ON_TO_VEHICLE(ped);
 		return retval;
@@ -22483,240 +22478,240 @@ namespace lua::native
 		PED::SET_GROUP_SEPARATION_RANGE(groupHandle, separationRange);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_MIN_GROUND_TIME_FOR_STUNGUN( int ped, int ms )
+	void LUA_NATIVE_PED_SET_PED_MIN_GROUND_TIME_FOR_STUNGUN( Ped ped, int ms )
 	{
 		PED::SET_PED_MIN_GROUND_TIME_FOR_STUNGUN(ped, ms);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_PRONE( int ped )
+	bool LUA_NATIVE_PED_IS_PED_PRONE( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_PRONE(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_COMBAT( int ped, int target )
+	bool LUA_NATIVE_PED_IS_PED_IN_COMBAT( Ped ped, Ped target )
 	{
 		auto retval = (bool)PED::IS_PED_IN_COMBAT(ped, target);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_PED_TARGET_FROM_COMBAT_PED( int ped, Any p1 )
+	Entity LUA_NATIVE_PED_GET_PED_TARGET_FROM_COMBAT_PED( Ped ped, Any p1 )
 	{
 		auto retval = PED::GET_PED_TARGET_FROM_COMBAT_PED(ped, p1);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_CAN_PED_IN_COMBAT_SEE_TARGET( int ped, int target )
+	bool LUA_NATIVE_PED_CAN_PED_IN_COMBAT_SEE_TARGET( Ped ped, Ped target )
 	{
 		auto retval = (bool)PED::CAN_PED_IN_COMBAT_SEE_TARGET(ped, target);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_DOING_DRIVEBY( int ped )
+	bool LUA_NATIVE_PED_IS_PED_DOING_DRIVEBY( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_DOING_DRIVEBY(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_JACKING( int ped )
+	bool LUA_NATIVE_PED_IS_PED_JACKING( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_JACKING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_BEING_JACKED( int ped )
+	bool LUA_NATIVE_PED_IS_PED_BEING_JACKED( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_BEING_JACKED(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_BEING_STUNNED( int ped, int p1 )
+	bool LUA_NATIVE_PED_IS_PED_BEING_STUNNED( Ped ped, int p1 )
 	{
 		auto retval = (bool)PED::IS_PED_BEING_STUNNED(ped, p1);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_PEDS_JACKER( int ped )
+	Ped LUA_NATIVE_PED_GET_PEDS_JACKER( Ped ped )
 	{
 		auto retval = PED::GET_PEDS_JACKER(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_JACK_TARGET( int ped )
+	Ped LUA_NATIVE_PED_GET_JACK_TARGET( Ped ped )
 	{
 		auto retval = PED::GET_JACK_TARGET(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_FLEEING( int ped )
+	bool LUA_NATIVE_PED_IS_PED_FLEEING( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_FLEEING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_COVER( int ped, bool exceptUseWeapon )
+	bool LUA_NATIVE_PED_IS_PED_IN_COVER( Ped ped, bool exceptUseWeapon )
 	{
 		auto retval = (bool)PED::IS_PED_IN_COVER(ped, exceptUseWeapon);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_COVER_FACING_LEFT( int ped )
+	bool LUA_NATIVE_PED_IS_PED_IN_COVER_FACING_LEFT( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_IN_COVER_FACING_LEFT(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_HIGH_COVER( int ped )
+	bool LUA_NATIVE_PED_IS_PED_IN_HIGH_COVER( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_IN_HIGH_COVER(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_GOING_INTO_COVER( int ped )
+	bool LUA_NATIVE_PED_IS_PED_GOING_INTO_COVER( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_GOING_INTO_COVER(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_SET_PED_PINNED_DOWN( int ped, bool pinned, int i )
+	bool LUA_NATIVE_PED_SET_PED_PINNED_DOWN( Ped ped, bool pinned, int i )
 	{
 		auto retval = (bool)PED::SET_PED_PINNED_DOWN(ped, pinned, i);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_SEAT_PED_IS_TRYING_TO_ENTER( int ped )
+	int LUA_NATIVE_PED_GET_SEAT_PED_IS_TRYING_TO_ENTER( Ped ped )
 	{
 		auto retval = PED::GET_SEAT_PED_IS_TRYING_TO_ENTER(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_VEHICLE_PED_IS_TRYING_TO_ENTER( int ped )
+	Vehicle LUA_NATIVE_PED_GET_VEHICLE_PED_IS_TRYING_TO_ENTER( Ped ped )
 	{
 		auto retval = PED::GET_VEHICLE_PED_IS_TRYING_TO_ENTER(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_PED_SOURCE_OF_DEATH( int ped )
+	Entity LUA_NATIVE_PED_GET_PED_SOURCE_OF_DEATH( Ped ped )
 	{
 		auto retval = PED::GET_PED_SOURCE_OF_DEATH(ped);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_PED_GET_PED_CAUSE_OF_DEATH( int ped )
+	Hash LUA_NATIVE_PED_GET_PED_CAUSE_OF_DEATH( Ped ped )
 	{
 		auto retval = PED::GET_PED_CAUSE_OF_DEATH(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_PED_TIME_OF_DEATH( int ped )
+	int LUA_NATIVE_PED_GET_PED_TIME_OF_DEATH( Ped ped )
 	{
 		auto retval = PED::GET_PED_TIME_OF_DEATH(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_COUNT_PEDS_IN_COMBAT_WITH_TARGET( int ped )
+	int LUA_NATIVE_PED_COUNT_PEDS_IN_COMBAT_WITH_TARGET( Ped ped )
 	{
 		auto retval = PED::COUNT_PEDS_IN_COMBAT_WITH_TARGET(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_COUNT_PEDS_IN_COMBAT_WITH_TARGET_WITHIN_RADIUS( int ped, float x, float y, float z, float radius )
+	int LUA_NATIVE_PED_COUNT_PEDS_IN_COMBAT_WITH_TARGET_WITHIN_RADIUS( Ped ped, float x, float y, float z, float radius )
 	{
 		auto retval = PED::COUNT_PEDS_IN_COMBAT_WITH_TARGET_WITHIN_RADIUS(ped, x, y, z, radius);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_RELATIONSHIP_GROUP_DEFAULT_HASH( int ped, unsigned hash )
+	void LUA_NATIVE_PED_SET_PED_RELATIONSHIP_GROUP_DEFAULT_HASH( Ped ped, Hash hash )
 	{
 		PED::SET_PED_RELATIONSHIP_GROUP_DEFAULT_HASH(ped, hash);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_RELATIONSHIP_GROUP_HASH( int ped, unsigned hash )
+	void LUA_NATIVE_PED_SET_PED_RELATIONSHIP_GROUP_HASH( Ped ped, Hash hash )
 	{
 		PED::SET_PED_RELATIONSHIP_GROUP_HASH(ped, hash);
 	}
 
-	void LUA_NATIVE_PED_SET_RELATIONSHIP_BETWEEN_GROUPS( int relationship, unsigned group1, unsigned group2 )
+	void LUA_NATIVE_PED_SET_RELATIONSHIP_BETWEEN_GROUPS( int relationship, Hash group1, Hash group2 )
 	{
 		PED::SET_RELATIONSHIP_BETWEEN_GROUPS(relationship, group1, group2);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_RELATIONSHIP_BETWEEN_GROUPS( int relationship, unsigned group1, unsigned group2 )
+	void LUA_NATIVE_PED_CLEAR_RELATIONSHIP_BETWEEN_GROUPS( int relationship, Hash group1, Hash group2 )
 	{
 		PED::CLEAR_RELATIONSHIP_BETWEEN_GROUPS(relationship, group1, group2);
 	}
 
-	std::tuple<bool, unsigned> LUA_NATIVE_PED_ADD_RELATIONSHIP_GROUP( const char* name, unsigned groupHash )
+	std::tuple<bool, Hash> LUA_NATIVE_PED_ADD_RELATIONSHIP_GROUP( const char* name, Hash groupHash )
 	{
-		std::tuple<bool, unsigned> return_values;
+		std::tuple<bool, Hash> return_values;
 		std::get<0>(return_values) = (bool)PED::ADD_RELATIONSHIP_GROUP(name, &groupHash);
 		std::get<1>(return_values) = groupHash;
 
 		return return_values;
 	}
 
-	void LUA_NATIVE_PED_REMOVE_RELATIONSHIP_GROUP( unsigned groupHash )
+	void LUA_NATIVE_PED_REMOVE_RELATIONSHIP_GROUP( Hash groupHash )
 	{
 		PED::REMOVE_RELATIONSHIP_GROUP(groupHash);
 	}
 
-	bool LUA_NATIVE_PED_DOES_RELATIONSHIP_GROUP_EXIST( unsigned groupHash )
+	bool LUA_NATIVE_PED_DOES_RELATIONSHIP_GROUP_EXIST( Hash groupHash )
 	{
 		auto retval = (bool)PED::DOES_RELATIONSHIP_GROUP_EXIST(groupHash);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_RELATIONSHIP_BETWEEN_PEDS( int ped1, int ped2 )
+	int LUA_NATIVE_PED_GET_RELATIONSHIP_BETWEEN_PEDS( Ped ped1, Ped ped2 )
 	{
 		auto retval = PED::GET_RELATIONSHIP_BETWEEN_PEDS(ped1, ped2);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_PED_GET_PED_RELATIONSHIP_GROUP_DEFAULT_HASH( int ped )
+	Hash LUA_NATIVE_PED_GET_PED_RELATIONSHIP_GROUP_DEFAULT_HASH( Ped ped )
 	{
 		auto retval = PED::GET_PED_RELATIONSHIP_GROUP_DEFAULT_HASH(ped);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_PED_GET_PED_RELATIONSHIP_GROUP_HASH( int ped )
+	Hash LUA_NATIVE_PED_GET_PED_RELATIONSHIP_GROUP_HASH( Ped ped )
 	{
 		auto retval = PED::GET_PED_RELATIONSHIP_GROUP_HASH(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_RELATIONSHIP_BETWEEN_GROUPS( unsigned group1, unsigned group2 )
+	int LUA_NATIVE_PED_GET_RELATIONSHIP_BETWEEN_GROUPS( Hash group1, Hash group2 )
 	{
 		auto retval = PED::GET_RELATIONSHIP_BETWEEN_GROUPS(group1, group2);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_RELATIONSHIP_GROUP_AFFECTS_WANTED_LEVEL( unsigned group, bool p1 )
+	void LUA_NATIVE_PED_SET_RELATIONSHIP_GROUP_AFFECTS_WANTED_LEVEL( Hash group, bool p1 )
 	{
 		PED::SET_RELATIONSHIP_GROUP_AFFECTS_WANTED_LEVEL(group, p1);
 	}
 
-	void LUA_NATIVE_PED_TELL_GROUP_PEDS_IN_AREA_TO_ATTACK( int ped, Any p1, float p2, unsigned hash, Any p4, Any p5 )
+	void LUA_NATIVE_PED_TELL_GROUP_PEDS_IN_AREA_TO_ATTACK( Ped ped, Any p1, float p2, Hash hash, Any p4, Any p5 )
 	{
 		PED::TELL_GROUP_PEDS_IN_AREA_TO_ATTACK(ped, p1, p2, hash, p4, p5);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_BE_TARGETED_WITHOUT_LOS( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_BE_TARGETED_WITHOUT_LOS( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_BE_TARGETED_WITHOUT_LOS(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_TO_INFORM_RESPECTED_FRIENDS( int ped, float radius, int maxFriends )
+	void LUA_NATIVE_PED_SET_PED_TO_INFORM_RESPECTED_FRIENDS( Ped ped, float radius, int maxFriends )
 	{
 		PED::SET_PED_TO_INFORM_RESPECTED_FRIENDS(ped, radius, maxFriends);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_RESPONDING_TO_EVENT( int ped, Any event )
+	bool LUA_NATIVE_PED_IS_PED_RESPONDING_TO_EVENT( Ped ped, Any event )
 	{
 		auto retval = (bool)PED::IS_PED_RESPONDING_TO_EVENT(ped, event);
 		return retval;
 	}
 
-	std::tuple<bool, Any> LUA_NATIVE_PED_GET_POS_FROM_FIRED_EVENT( int ped, int eventType, Any outData )
+	std::tuple<bool, Any> LUA_NATIVE_PED_GET_POS_FROM_FIRED_EVENT( Ped ped, int eventType, Any outData )
 	{
 		std::tuple<bool, Any> return_values;
 		std::get<0>(return_values) = (bool)PED::GET_POS_FROM_FIRED_EVENT(ped, eventType, &outData);
@@ -22725,22 +22720,22 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_FIRING_PATTERN( int ped, unsigned patternHash )
+	void LUA_NATIVE_PED_SET_PED_FIRING_PATTERN( Ped ped, Hash patternHash )
 	{
 		PED::SET_PED_FIRING_PATTERN(ped, patternHash);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_SHOOT_RATE( int ped, int shootRate )
+	void LUA_NATIVE_PED_SET_PED_SHOOT_RATE( Ped ped, int shootRate )
 	{
 		PED::SET_PED_SHOOT_RATE(ped, shootRate);
 	}
 
-	void LUA_NATIVE_PED_SET_COMBAT_FLOAT( int ped, int combatType, float p2 )
+	void LUA_NATIVE_PED_SET_COMBAT_FLOAT( Ped ped, int combatType, float p2 )
 	{
 		PED::SET_COMBAT_FLOAT(ped, combatType, p2);
 	}
 
-	float LUA_NATIVE_PED_GET_COMBAT_FLOAT( int ped, int p1 )
+	float LUA_NATIVE_PED_GET_COMBAT_FLOAT( Ped ped, int p1 )
 	{
 		auto retval = PED::GET_COMBAT_FLOAT(ped, p1);
 		return retval;
@@ -22762,19 +22757,19 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_PED_GROUP_INDEX( int ped )
+	int LUA_NATIVE_PED_GET_PED_GROUP_INDEX( Ped ped )
 	{
 		auto retval = PED::GET_PED_GROUP_INDEX(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_GROUP( int ped )
+	bool LUA_NATIVE_PED_IS_PED_IN_GROUP( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_IN_GROUP(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_PLAYER_PED_IS_FOLLOWING( int ped )
+	Player LUA_NATIVE_PED_GET_PLAYER_PED_IS_FOLLOWING( Ped ped )
 	{
 		auto retval = PED::GET_PLAYER_PED_IS_FOLLOWING(ped);
 		return retval;
@@ -22795,51 +22790,51 @@ namespace lua::native
 		PED::RESET_GROUP_FORMATION_DEFAULT_SPACING(groupHandle);
 	}
 
-	int LUA_NATIVE_PED_GET_VEHICLE_PED_IS_USING( int ped )
+	Vehicle LUA_NATIVE_PED_GET_VEHICLE_PED_IS_USING( Ped ped )
 	{
 		auto retval = PED::GET_VEHICLE_PED_IS_USING(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_VEHICLE_PED_IS_ENTERING( int ped )
+	Vehicle LUA_NATIVE_PED_GET_VEHICLE_PED_IS_ENTERING( Ped ped )
 	{
 		auto retval = PED::GET_VEHICLE_PED_IS_ENTERING(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_GRAVITY( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_GRAVITY( Ped ped, bool toggle )
 	{
 		PED::SET_PED_GRAVITY(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_APPLY_DAMAGE_TO_PED( int ped, int damageAmount, bool p2, Any p3 )
+	void LUA_NATIVE_PED_APPLY_DAMAGE_TO_PED( Ped ped, int damageAmount, bool p2, Any p3 )
 	{
 		PED::APPLY_DAMAGE_TO_PED(ped, damageAmount, p2, p3);
 	}
 
-	int LUA_NATIVE_PED_GET_TIME_PED_DAMAGED_BY_WEAPON( int ped, unsigned weaponHash )
+	int LUA_NATIVE_PED_GET_TIME_PED_DAMAGED_BY_WEAPON( Ped ped, Hash weaponHash )
 	{
 		auto retval = PED::GET_TIME_PED_DAMAGED_BY_WEAPON(ped, weaponHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_ALLOWED_TO_DUCK( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_ALLOWED_TO_DUCK( Ped ped, bool toggle )
 	{
 		PED::SET_PED_ALLOWED_TO_DUCK(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_NEVER_LEAVES_GROUP( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_NEVER_LEAVES_GROUP( Ped ped, bool toggle )
 	{
 		PED::SET_PED_NEVER_LEAVES_GROUP(ped, toggle);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_TYPE( int ped )
+	int LUA_NATIVE_PED_GET_PED_TYPE( Ped ped )
 	{
 		auto retval = PED::GET_PED_TYPE(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_AS_COP( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_AS_COP( Ped ped, bool toggle )
 	{
 		PED::SET_PED_AS_COP(ped, toggle);
 	}
@@ -22849,38 +22844,38 @@ namespace lua::native
 		PED::SET_PED_HEALTH_PENDING_LAST_DAMAGE_EVENT_OVERRIDE_FLAG(toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_MAX_HEALTH( int ped, int value )
+	void LUA_NATIVE_PED_SET_PED_MAX_HEALTH( Ped ped, int value )
 	{
 		PED::SET_PED_MAX_HEALTH(ped, value);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_MAX_HEALTH( int ped )
+	int LUA_NATIVE_PED_GET_PED_MAX_HEALTH( Ped ped )
 	{
 		auto retval = PED::GET_PED_MAX_HEALTH(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_MAX_TIME_IN_WATER( int ped, float value )
+	void LUA_NATIVE_PED_SET_PED_MAX_TIME_IN_WATER( Ped ped, float value )
 	{
 		PED::SET_PED_MAX_TIME_IN_WATER(ped, value);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_MAX_TIME_UNDERWATER( int ped, float value )
+	void LUA_NATIVE_PED_SET_PED_MAX_TIME_UNDERWATER( Ped ped, float value )
 	{
 		PED::SET_PED_MAX_TIME_UNDERWATER(ped, value);
 	}
 
-	void LUA_NATIVE_PED_SET_CORPSE_RAGDOLL_FRICTION( int ped, float p1 )
+	void LUA_NATIVE_PED_SET_CORPSE_RAGDOLL_FRICTION( Ped ped, float p1 )
 	{
 		PED::SET_CORPSE_RAGDOLL_FRICTION(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_VEHICLE_FORCED_SEAT_USAGE( int ped, int vehicle, int seatIndex, int flags, Any p4 )
+	void LUA_NATIVE_PED_SET_PED_VEHICLE_FORCED_SEAT_USAGE( Ped ped, Vehicle vehicle, int seatIndex, int flags, Any p4 )
 	{
 		PED::SET_PED_VEHICLE_FORCED_SEAT_USAGE(ped, vehicle, seatIndex, flags, p4);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_ALL_PED_VEHICLE_FORCED_SEAT_USAGE( int ped )
+	void LUA_NATIVE_PED_CLEAR_ALL_PED_VEHICLE_FORCED_SEAT_USAGE( Ped ped )
 	{
 		PED::CLEAR_ALL_PED_VEHICLE_FORCED_SEAT_USAGE(ped);
 	}
@@ -22890,67 +22885,67 @@ namespace lua::native
 		PED::SET_PED_CAN_BE_KNOCKED_OFF_BIKE(p0, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE( int ped, int state )
+	void LUA_NATIVE_PED_SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE( Ped ped, int state )
 	{
 		PED::SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE(ped, state);
 	}
 
-	bool LUA_NATIVE_PED_CAN_KNOCK_PED_OFF_VEHICLE( int ped )
+	bool LUA_NATIVE_PED_CAN_KNOCK_PED_OFF_VEHICLE( Ped ped )
 	{
 		auto retval = (bool)PED::CAN_KNOCK_PED_OFF_VEHICLE(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_KNOCK_PED_OFF_VEHICLE( int ped )
+	void LUA_NATIVE_PED_KNOCK_PED_OFF_VEHICLE( Ped ped )
 	{
 		PED::KNOCK_PED_OFF_VEHICLE(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_COORDS_NO_GANG( int ped, float posX, float posY, float posZ )
+	void LUA_NATIVE_PED_SET_PED_COORDS_NO_GANG( Ped ped, float posX, float posY, float posZ )
 	{
 		PED::SET_PED_COORDS_NO_GANG(ped, posX, posY, posZ);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_AS_GROUP_MEMBER( int groupID, int memberNumber )
+	Ped LUA_NATIVE_PED_GET_PED_AS_GROUP_MEMBER( int groupID, int memberNumber )
 	{
 		auto retval = PED::GET_PED_AS_GROUP_MEMBER(groupID, memberNumber);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_PED_AS_GROUP_LEADER( int groupID )
+	Ped LUA_NATIVE_PED_GET_PED_AS_GROUP_LEADER( int groupID )
 	{
 		auto retval = PED::GET_PED_AS_GROUP_LEADER(groupID);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_KEEP_TASK( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_KEEP_TASK( Ped ped, bool toggle )
 	{
 		PED::SET_PED_KEEP_TASK(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_ALLOW_MINOR_REACTIONS_AS_MISSION_PED( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_ALLOW_MINOR_REACTIONS_AS_MISSION_PED( Ped ped, bool toggle )
 	{
 		PED::SET_PED_ALLOW_MINOR_REACTIONS_AS_MISSION_PED(ped, toggle);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_SWIMMING( int ped )
+	bool LUA_NATIVE_PED_IS_PED_SWIMMING( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_SWIMMING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_SWIMMING_UNDER_WATER( int ped )
+	bool LUA_NATIVE_PED_IS_PED_SWIMMING_UNDER_WATER( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_SWIMMING_UNDER_WATER(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_COORDS_KEEP_VEHICLE( int ped, float posX, float posY, float posZ )
+	void LUA_NATIVE_PED_SET_PED_COORDS_KEEP_VEHICLE( Ped ped, float posX, float posY, float posZ )
 	{
 		PED::SET_PED_COORDS_KEEP_VEHICLE(ped, posX, posY, posZ);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_DIES_IN_VEHICLE( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_DIES_IN_VEHICLE( Ped ped, bool toggle )
 	{
 		PED::SET_PED_DIES_IN_VEHICLE(ped, toggle);
 	}
@@ -22976,162 +22971,162 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_AS_ENEMY( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_AS_ENEMY( Ped ped, bool toggle )
 	{
 		PED::SET_PED_AS_ENEMY(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_SMASH_GLASS( int ped, bool p1, bool p2 )
+	void LUA_NATIVE_PED_SET_PED_CAN_SMASH_GLASS( Ped ped, bool p1, bool p2 )
 	{
 		PED::SET_PED_CAN_SMASH_GLASS(ped, p1, p2);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_IN_ANY_TRAIN( int ped )
+	bool LUA_NATIVE_PED_IS_PED_IN_ANY_TRAIN( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_IN_ANY_TRAIN(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_GETTING_INTO_A_VEHICLE( int ped )
+	bool LUA_NATIVE_PED_IS_PED_GETTING_INTO_A_VEHICLE( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_GETTING_INTO_A_VEHICLE(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_TRYING_TO_ENTER_A_LOCKED_VEHICLE( int ped )
+	bool LUA_NATIVE_PED_IS_PED_TRYING_TO_ENTER_A_LOCKED_VEHICLE( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_TRYING_TO_ENTER_A_LOCKED_VEHICLE(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_ENABLE_HANDCUFFS( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_ENABLE_HANDCUFFS( Ped ped, bool toggle )
 	{
 		PED::SET_ENABLE_HANDCUFFS(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_ENABLE_BOUND_ANKLES( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_ENABLE_BOUND_ANKLES( Ped ped, bool toggle )
 	{
 		PED::SET_ENABLE_BOUND_ANKLES(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_ENABLE_SCUBA( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_ENABLE_SCUBA( Ped ped, bool toggle )
 	{
 		PED::SET_ENABLE_SCUBA(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_CAN_ATTACK_FRIENDLY( int ped, bool toggle, bool p2 )
+	void LUA_NATIVE_PED_SET_CAN_ATTACK_FRIENDLY( Ped ped, bool toggle, bool p2 )
 	{
 		PED::SET_CAN_ATTACK_FRIENDLY(ped, toggle, p2);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_ALERTNESS( int ped )
+	int LUA_NATIVE_PED_GET_PED_ALERTNESS( Ped ped )
 	{
 		auto retval = PED::GET_PED_ALERTNESS(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_ALERTNESS( int ped, int value )
+	void LUA_NATIVE_PED_SET_PED_ALERTNESS( Ped ped, int value )
 	{
 		PED::SET_PED_ALERTNESS(ped, value);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_GET_OUT_UPSIDE_DOWN_VEHICLE( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_GET_OUT_UPSIDE_DOWN_VEHICLE( Ped ped, bool toggle )
 	{
 		PED::SET_PED_GET_OUT_UPSIDE_DOWN_VEHICLE(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_MOVEMENT_CLIPSET( int ped, const char* clipSet, float transitionSpeed )
+	void LUA_NATIVE_PED_SET_PED_MOVEMENT_CLIPSET( Ped ped, const char* clipSet, float transitionSpeed )
 	{
 		PED::SET_PED_MOVEMENT_CLIPSET(ped, clipSet, transitionSpeed);
 	}
 
-	void LUA_NATIVE_PED_RESET_PED_MOVEMENT_CLIPSET( int ped, float p1 )
+	void LUA_NATIVE_PED_RESET_PED_MOVEMENT_CLIPSET( Ped ped, float p1 )
 	{
 		PED::RESET_PED_MOVEMENT_CLIPSET(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_STRAFE_CLIPSET( int ped, const char* clipSet )
+	void LUA_NATIVE_PED_SET_PED_STRAFE_CLIPSET( Ped ped, const char* clipSet )
 	{
 		PED::SET_PED_STRAFE_CLIPSET(ped, clipSet);
 	}
 
-	void LUA_NATIVE_PED_RESET_PED_STRAFE_CLIPSET( int ped )
+	void LUA_NATIVE_PED_RESET_PED_STRAFE_CLIPSET( Ped ped )
 	{
 		PED::RESET_PED_STRAFE_CLIPSET(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_WEAPON_MOVEMENT_CLIPSET( int ped, const char* clipSet )
+	void LUA_NATIVE_PED_SET_PED_WEAPON_MOVEMENT_CLIPSET( Ped ped, const char* clipSet )
 	{
 		PED::SET_PED_WEAPON_MOVEMENT_CLIPSET(ped, clipSet);
 	}
 
-	void LUA_NATIVE_PED_RESET_PED_WEAPON_MOVEMENT_CLIPSET( int ped )
+	void LUA_NATIVE_PED_RESET_PED_WEAPON_MOVEMENT_CLIPSET( Ped ped )
 	{
 		PED::RESET_PED_WEAPON_MOVEMENT_CLIPSET(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_DRIVE_BY_CLIPSET_OVERRIDE( int ped, const char* clipset )
+	void LUA_NATIVE_PED_SET_PED_DRIVE_BY_CLIPSET_OVERRIDE( Ped ped, const char* clipset )
 	{
 		PED::SET_PED_DRIVE_BY_CLIPSET_OVERRIDE(ped, clipset);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_DRIVE_BY_CLIPSET_OVERRIDE( int ped )
+	void LUA_NATIVE_PED_CLEAR_PED_DRIVE_BY_CLIPSET_OVERRIDE( Ped ped )
 	{
 		PED::CLEAR_PED_DRIVE_BY_CLIPSET_OVERRIDE(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_MOTION_IN_COVER_CLIPSET_OVERRIDE( int ped, const char* p1 )
+	void LUA_NATIVE_PED_SET_PED_MOTION_IN_COVER_CLIPSET_OVERRIDE( Ped ped, const char* p1 )
 	{
 		PED::SET_PED_MOTION_IN_COVER_CLIPSET_OVERRIDE(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_MOTION_IN_COVER_CLIPSET_OVERRIDE( int ped )
+	void LUA_NATIVE_PED_CLEAR_PED_MOTION_IN_COVER_CLIPSET_OVERRIDE( Ped ped )
 	{
 		PED::CLEAR_PED_MOTION_IN_COVER_CLIPSET_OVERRIDE(ped);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_FALL_UPPER_BODY_CLIPSET_OVERRIDE( int ped )
+	void LUA_NATIVE_PED_CLEAR_PED_FALL_UPPER_BODY_CLIPSET_OVERRIDE( Ped ped )
 	{
 		PED::CLEAR_PED_FALL_UPPER_BODY_CLIPSET_OVERRIDE(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_IN_VEHICLE_CONTEXT( int ped, unsigned context )
+	void LUA_NATIVE_PED_SET_PED_IN_VEHICLE_CONTEXT( Ped ped, Hash context )
 	{
 		PED::SET_PED_IN_VEHICLE_CONTEXT(ped, context);
 	}
 
-	void LUA_NATIVE_PED_RESET_PED_IN_VEHICLE_CONTEXT( int ped )
+	void LUA_NATIVE_PED_RESET_PED_IN_VEHICLE_CONTEXT( Ped ped )
 	{
 		PED::RESET_PED_IN_VEHICLE_CONTEXT(ped);
 	}
 
-	bool LUA_NATIVE_PED_IS_SCRIPTED_SCENARIO_PED_USING_CONDITIONAL_ANIM( int ped, const char* animDict, const char* anim )
+	bool LUA_NATIVE_PED_IS_SCRIPTED_SCENARIO_PED_USING_CONDITIONAL_ANIM( Ped ped, const char* animDict, const char* anim )
 	{
 		auto retval = (bool)PED::IS_SCRIPTED_SCENARIO_PED_USING_CONDITIONAL_ANIM(ped, animDict, anim);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_ALTERNATE_WALK_ANIM( int ped, const char* animDict, const char* animName, float p3, bool p4 )
+	void LUA_NATIVE_PED_SET_PED_ALTERNATE_WALK_ANIM( Ped ped, const char* animDict, const char* animName, float p3, bool p4 )
 	{
 		PED::SET_PED_ALTERNATE_WALK_ANIM(ped, animDict, animName, p3, p4);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_ALTERNATE_WALK_ANIM( int ped, float p1 )
+	void LUA_NATIVE_PED_CLEAR_PED_ALTERNATE_WALK_ANIM( Ped ped, float p1 )
 	{
 		PED::CLEAR_PED_ALTERNATE_WALK_ANIM(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_ALTERNATE_MOVEMENT_ANIM( int ped, int stance, const char* animDictionary, const char* animationName, float p4, bool p5 )
+	void LUA_NATIVE_PED_SET_PED_ALTERNATE_MOVEMENT_ANIM( Ped ped, int stance, const char* animDictionary, const char* animationName, float p4, bool p5 )
 	{
 		PED::SET_PED_ALTERNATE_MOVEMENT_ANIM(ped, stance, animDictionary, animationName, p4, p5);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_ALTERNATE_MOVEMENT_ANIM( int ped, int stance, float p2 )
+	void LUA_NATIVE_PED_CLEAR_PED_ALTERNATE_MOVEMENT_ANIM( Ped ped, int stance, float p2 )
 	{
 		PED::CLEAR_PED_ALTERNATE_MOVEMENT_ANIM(ped, stance, p2);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_GESTURE_GROUP( int ped, const char* animGroupGesture )
+	void LUA_NATIVE_PED_SET_PED_GESTURE_GROUP( Ped ped, const char* animGroupGesture )
 	{
 		PED::SET_PED_GESTURE_GROUP(ped, animGroupGesture);
 	}
@@ -23148,43 +23143,43 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_PED_DRAWABLE_VARIATION( int ped, int componentId )
+	int LUA_NATIVE_PED_GET_PED_DRAWABLE_VARIATION( Ped ped, int componentId )
 	{
 		auto retval = PED::GET_PED_DRAWABLE_VARIATION(ped, componentId);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_NUMBER_OF_PED_DRAWABLE_VARIATIONS( int ped, int componentId )
+	int LUA_NATIVE_PED_GET_NUMBER_OF_PED_DRAWABLE_VARIATIONS( Ped ped, int componentId )
 	{
 		auto retval = PED::GET_NUMBER_OF_PED_DRAWABLE_VARIATIONS(ped, componentId);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_PED_TEXTURE_VARIATION( int ped, int componentId )
+	int LUA_NATIVE_PED_GET_PED_TEXTURE_VARIATION( Ped ped, int componentId )
 	{
 		auto retval = PED::GET_PED_TEXTURE_VARIATION(ped, componentId);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_NUMBER_OF_PED_TEXTURE_VARIATIONS( int ped, int componentId, int drawableId )
+	int LUA_NATIVE_PED_GET_NUMBER_OF_PED_TEXTURE_VARIATIONS( Ped ped, int componentId, int drawableId )
 	{
 		auto retval = PED::GET_NUMBER_OF_PED_TEXTURE_VARIATIONS(ped, componentId, drawableId);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_NUMBER_OF_PED_PROP_DRAWABLE_VARIATIONS( int ped, int propId )
+	int LUA_NATIVE_PED_GET_NUMBER_OF_PED_PROP_DRAWABLE_VARIATIONS( Ped ped, int propId )
 	{
 		auto retval = PED::GET_NUMBER_OF_PED_PROP_DRAWABLE_VARIATIONS(ped, propId);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_NUMBER_OF_PED_PROP_TEXTURE_VARIATIONS( int ped, int propId, int drawableId )
+	int LUA_NATIVE_PED_GET_NUMBER_OF_PED_PROP_TEXTURE_VARIATIONS( Ped ped, int propId, int drawableId )
 	{
 		auto retval = PED::GET_NUMBER_OF_PED_PROP_TEXTURE_VARIATIONS(ped, propId, drawableId);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_PED_PALETTE_VARIATION( int ped, int componentId )
+	int LUA_NATIVE_PED_GET_PED_PALETTE_VARIATION( Ped ped, int componentId )
 	{
 		auto retval = PED::GET_PED_PALETTE_VARIATION(ped, componentId);
 		return retval;
@@ -23212,43 +23207,43 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_COMPONENT_VARIATION_VALID( int ped, int componentId, int drawableId, int textureId )
+	bool LUA_NATIVE_PED_IS_PED_COMPONENT_VARIATION_VALID( Ped ped, int componentId, int drawableId, int textureId )
 	{
 		auto retval = (bool)PED::IS_PED_COMPONENT_VARIATION_VALID(ped, componentId, drawableId, textureId);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_COMPONENT_VARIATION( int ped, int componentId, int drawableId, int textureId, int paletteId )
+	void LUA_NATIVE_PED_SET_PED_COMPONENT_VARIATION( Ped ped, int componentId, int drawableId, int textureId, int paletteId )
 	{
 		PED::SET_PED_COMPONENT_VARIATION(ped, componentId, drawableId, textureId, paletteId);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_RANDOM_COMPONENT_VARIATION( int ped, int p1 )
+	void LUA_NATIVE_PED_SET_PED_RANDOM_COMPONENT_VARIATION( Ped ped, int p1 )
 	{
 		PED::SET_PED_RANDOM_COMPONENT_VARIATION(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_RANDOM_PROPS( int ped )
+	void LUA_NATIVE_PED_SET_PED_RANDOM_PROPS( Ped ped )
 	{
 		PED::SET_PED_RANDOM_PROPS(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_DEFAULT_COMPONENT_VARIATION( int ped )
+	void LUA_NATIVE_PED_SET_PED_DEFAULT_COMPONENT_VARIATION( Ped ped )
 	{
 		PED::SET_PED_DEFAULT_COMPONENT_VARIATION(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_BLEND_FROM_PARENTS( int ped, Any p1, Any p2, float p3, float p4 )
+	void LUA_NATIVE_PED_SET_PED_BLEND_FROM_PARENTS( Ped ped, Any p1, Any p2, float p3, float p4 )
 	{
 		PED::SET_PED_BLEND_FROM_PARENTS(ped, p1, p2, p3, p4);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_HEAD_BLEND_DATA( int ped, int shapeFirstID, int shapeSecondID, int shapeThirdID, int skinFirstID, int skinSecondID, int skinThirdID, float shapeMix, float skinMix, float thirdMix, bool isParent )
+	void LUA_NATIVE_PED_SET_PED_HEAD_BLEND_DATA( Ped ped, int shapeFirstID, int shapeSecondID, int shapeThirdID, int skinFirstID, int skinSecondID, int skinThirdID, float shapeMix, float skinMix, float thirdMix, bool isParent )
 	{
 		PED::SET_PED_HEAD_BLEND_DATA(ped, shapeFirstID, shapeSecondID, shapeThirdID, skinFirstID, skinSecondID, skinThirdID, shapeMix, skinMix, thirdMix, isParent);
 	}
 
-	std::tuple<bool, Any> LUA_NATIVE_PED_GET_PED_HEAD_BLEND_DATA( int ped, Any headBlendData )
+	std::tuple<bool, Any> LUA_NATIVE_PED_GET_PED_HEAD_BLEND_DATA( Ped ped, Any headBlendData )
 	{
 		std::tuple<bool, Any> return_values;
 		std::get<0>(return_values) = (bool)PED::GET_PED_HEAD_BLEND_DATA(ped, &headBlendData);
@@ -23257,28 +23252,28 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_PED_UPDATE_PED_HEAD_BLEND_DATA( int ped, float shapeMix, float skinMix, float thirdMix )
+	void LUA_NATIVE_PED_UPDATE_PED_HEAD_BLEND_DATA( Ped ped, float shapeMix, float skinMix, float thirdMix )
 	{
 		PED::UPDATE_PED_HEAD_BLEND_DATA(ped, shapeMix, skinMix, thirdMix);
 	}
 
-	void LUA_NATIVE_PED_SET_HEAD_BLEND_EYE_COLOR( int ped, int index )
+	void LUA_NATIVE_PED_SET_HEAD_BLEND_EYE_COLOR( Ped ped, int index )
 	{
 		PED::SET_HEAD_BLEND_EYE_COLOR(ped, index);
 	}
 
-	int LUA_NATIVE_PED_GET_HEAD_BLEND_EYE_COLOR( int ped )
+	int LUA_NATIVE_PED_GET_HEAD_BLEND_EYE_COLOR( Ped ped )
 	{
 		auto retval = PED::GET_HEAD_BLEND_EYE_COLOR(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_HEAD_OVERLAY( int ped, int overlayID, int index, float opacity )
+	void LUA_NATIVE_PED_SET_PED_HEAD_OVERLAY( Ped ped, int overlayID, int index, float opacity )
 	{
 		PED::SET_PED_HEAD_OVERLAY(ped, overlayID, index, opacity);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_HEAD_OVERLAY( int ped, int overlayID )
+	int LUA_NATIVE_PED_GET_PED_HEAD_OVERLAY( Ped ped, int overlayID )
 	{
 		auto retval = PED::GET_PED_HEAD_OVERLAY(ped, overlayID);
 		return retval;
@@ -23290,12 +23285,12 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_HEAD_OVERLAY_TINT( int ped, int overlayID, int colorType, int colorID, int secondColorID )
+	void LUA_NATIVE_PED_SET_PED_HEAD_OVERLAY_TINT( Ped ped, int overlayID, int colorType, int colorID, int secondColorID )
 	{
 		PED::SET_PED_HEAD_OVERLAY_TINT(ped, overlayID, colorType, colorID, secondColorID);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_HAIR_TINT( int ped, int colorID, int highlightColorID )
+	void LUA_NATIVE_PED_SET_PED_HAIR_TINT( Ped ped, int colorID, int highlightColorID )
 	{
 		PED::SET_PED_HAIR_TINT(ped, colorID, highlightColorID);
 	}
@@ -23388,34 +23383,34 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_TINT_INDEX_FOR_LAST_GEN_HAIR_TEXTURE( unsigned modelHash, int drawableId, int textureId )
+	int LUA_NATIVE_PED_GET_TINT_INDEX_FOR_LAST_GEN_HAIR_TEXTURE( Hash modelHash, int drawableId, int textureId )
 	{
 		auto retval = PED::GET_TINT_INDEX_FOR_LAST_GEN_HAIR_TEXTURE(modelHash, drawableId, textureId);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_MICRO_MORPH( int ped, int index, float scale )
+	void LUA_NATIVE_PED_SET_PED_MICRO_MORPH( Ped ped, int index, float scale )
 	{
 		PED::SET_PED_MICRO_MORPH(ped, index, scale);
 	}
 
-	bool LUA_NATIVE_PED_HAS_PED_HEAD_BLEND_FINISHED( int ped )
+	bool LUA_NATIVE_PED_HAS_PED_HEAD_BLEND_FINISHED( Ped ped )
 	{
 		auto retval = (bool)PED::HAS_PED_HEAD_BLEND_FINISHED(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_FINALIZE_HEAD_BLEND( int ped )
+	void LUA_NATIVE_PED_FINALIZE_HEAD_BLEND( Ped ped )
 	{
 		PED::FINALIZE_HEAD_BLEND(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_HEAD_BLEND_PALETTE_COLOR( int ped, int r, int g, int b, int id )
+	void LUA_NATIVE_PED_SET_HEAD_BLEND_PALETTE_COLOR( Ped ped, int r, int g, int b, int id )
 	{
 		PED::SET_HEAD_BLEND_PALETTE_COLOR(ped, r, g, b, id);
 	}
 
-	void LUA_NATIVE_PED_DISABLE_HEAD_BLEND_PALETTE_COLOR( int ped )
+	void LUA_NATIVE_PED_DISABLE_HEAD_BLEND_PALETTE_COLOR( Ped ped )
 	{
 		PED::DISABLE_HEAD_BLEND_PALETTE_COLOR(ped);
 	}
@@ -23432,88 +23427,88 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_SET_PED_PRELOAD_VARIATION_DATA( int ped, int slot, int drawableId, int textureId )
+	int LUA_NATIVE_PED_SET_PED_PRELOAD_VARIATION_DATA( Ped ped, int slot, int drawableId, int textureId )
 	{
 		auto retval = PED::SET_PED_PRELOAD_VARIATION_DATA(ped, slot, drawableId, textureId);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_HAS_PED_PRELOAD_VARIATION_DATA_FINISHED( int ped )
+	bool LUA_NATIVE_PED_HAS_PED_PRELOAD_VARIATION_DATA_FINISHED( Ped ped )
 	{
 		auto retval = (bool)PED::HAS_PED_PRELOAD_VARIATION_DATA_FINISHED(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_RELEASE_PED_PRELOAD_VARIATION_DATA( int ped )
+	void LUA_NATIVE_PED_RELEASE_PED_PRELOAD_VARIATION_DATA( Ped ped )
 	{
 		PED::RELEASE_PED_PRELOAD_VARIATION_DATA(ped);
 	}
 
-	int LUA_NATIVE_PED_SET_PED_PRELOAD_PROP_DATA( int ped, int componentId, int drawableId, int TextureId )
+	int LUA_NATIVE_PED_SET_PED_PRELOAD_PROP_DATA( Ped ped, int componentId, int drawableId, int TextureId )
 	{
 		auto retval = PED::SET_PED_PRELOAD_PROP_DATA(ped, componentId, drawableId, TextureId);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_HAS_PED_PRELOAD_PROP_DATA_FINISHED( int ped )
+	bool LUA_NATIVE_PED_HAS_PED_PRELOAD_PROP_DATA_FINISHED( Ped ped )
 	{
 		auto retval = (bool)PED::HAS_PED_PRELOAD_PROP_DATA_FINISHED(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_RELEASE_PED_PRELOAD_PROP_DATA( int ped )
+	void LUA_NATIVE_PED_RELEASE_PED_PRELOAD_PROP_DATA( Ped ped )
 	{
 		PED::RELEASE_PED_PRELOAD_PROP_DATA(ped);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_PROP_INDEX( int ped, int componentId, Any p2 )
+	int LUA_NATIVE_PED_GET_PED_PROP_INDEX( Ped ped, int componentId, Any p2 )
 	{
 		auto retval = PED::GET_PED_PROP_INDEX(ped, componentId, p2);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_PROP_INDEX( int ped, int componentId, int drawableId, int TextureId, bool attach, Any p5 )
+	void LUA_NATIVE_PED_SET_PED_PROP_INDEX( Ped ped, int componentId, int drawableId, int TextureId, bool attach, Any p5 )
 	{
 		PED::SET_PED_PROP_INDEX(ped, componentId, drawableId, TextureId, attach, p5);
 	}
 
-	void LUA_NATIVE_PED_KNOCK_OFF_PED_PROP( int ped, bool p1, bool p2, bool p3, bool p4 )
+	void LUA_NATIVE_PED_KNOCK_OFF_PED_PROP( Ped ped, bool p1, bool p2, bool p3, bool p4 )
 	{
 		PED::KNOCK_OFF_PED_PROP(ped, p1, p2, p3, p4);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_PROP( int ped, int propId, Any p2 )
+	void LUA_NATIVE_PED_CLEAR_PED_PROP( Ped ped, int propId, Any p2 )
 	{
 		PED::CLEAR_PED_PROP(ped, propId, p2);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_ALL_PED_PROPS( int ped, Any p1 )
+	void LUA_NATIVE_PED_CLEAR_ALL_PED_PROPS( Ped ped, Any p1 )
 	{
 		PED::CLEAR_ALL_PED_PROPS(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_DROP_AMBIENT_PROP( int ped )
+	void LUA_NATIVE_PED_DROP_AMBIENT_PROP( Ped ped )
 	{
 		PED::DROP_AMBIENT_PROP(ped);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_PROP_TEXTURE_INDEX( int ped, int componentId )
+	int LUA_NATIVE_PED_GET_PED_PROP_TEXTURE_INDEX( Ped ped, int componentId )
 	{
 		auto retval = PED::GET_PED_PROP_TEXTURE_INDEX(ped, componentId);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_PARACHUTE_PACK_VARIATION( int ped )
+	void LUA_NATIVE_PED_CLEAR_PED_PARACHUTE_PACK_VARIATION( Ped ped )
 	{
 		PED::CLEAR_PED_PARACHUTE_PACK_VARIATION(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_SCUBA_GEAR_VARIATION( int ped )
+	void LUA_NATIVE_PED_SET_PED_SCUBA_GEAR_VARIATION( Ped ped )
 	{
 		PED::SET_PED_SCUBA_GEAR_VARIATION(ped);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_SCUBA_GEAR_VARIATION( int ped )
+	void LUA_NATIVE_PED_CLEAR_PED_SCUBA_GEAR_VARIATION( Ped ped )
 	{
 		PED::CLEAR_PED_SCUBA_GEAR_VARIATION(ped);
 	}
@@ -23524,35 +23519,35 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS( Ped ped, bool toggle )
 	{
 		PED::SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_BOUNDS_ORIENTATION( int ped, float p1, float p2, float x, float y, float z )
+	void LUA_NATIVE_PED_SET_PED_BOUNDS_ORIENTATION( Ped ped, float p1, float p2, float x, float y, float z )
 	{
 		PED::SET_PED_BOUNDS_ORIENTATION(ped, p1, p2, x, y, z);
 	}
 
-	void LUA_NATIVE_PED_REGISTER_TARGET( int ped, int target )
+	void LUA_NATIVE_PED_REGISTER_TARGET( Ped ped, Ped target )
 	{
 		PED::REGISTER_TARGET(ped, target);
 	}
 
-	void LUA_NATIVE_PED_REGISTER_HATED_TARGETS_AROUND_PED( int ped, float radius )
+	void LUA_NATIVE_PED_REGISTER_HATED_TARGETS_AROUND_PED( Ped ped, float radius )
 	{
 		PED::REGISTER_HATED_TARGETS_AROUND_PED(ped, radius);
 	}
 
-	int LUA_NATIVE_PED_GET_RANDOM_PED_AT_COORD( float x, float y, float z, float xRadius, float yRadius, float zRadius, int pedType )
+	Ped LUA_NATIVE_PED_GET_RANDOM_PED_AT_COORD( float x, float y, float z, float xRadius, float yRadius, float zRadius, int pedType )
 	{
 		auto retval = PED::GET_RANDOM_PED_AT_COORD(x, y, z, xRadius, yRadius, zRadius, pedType);
 		return retval;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_PED_GET_CLOSEST_PED( float x, float y, float z, float radius, bool p4, bool p5, int outPed, bool p7, bool p8, int pedType )
+	std::tuple<bool, Ped> LUA_NATIVE_PED_GET_CLOSEST_PED( float x, float y, float z, float radius, bool p4, bool p5, Ped outPed, bool p7, bool p8, int pedType )
 	{
-		std::tuple<bool, int> return_values;
+		std::tuple<bool, Ped> return_values;
 		std::get<0>(return_values) = (bool)PED::GET_CLOSEST_PED(x, y, z, radius, p4, p5, &outPed, p7, p8, pedType);
 		std::get<1>(return_values) = outPed;
 
@@ -23564,327 +23559,327 @@ namespace lua::native
 		PED::SET_SCENARIO_PEDS_TO_BE_RETURNED_BY_NEXT_COMMAND(value);
 	}
 
-	bool LUA_NATIVE_PED_GET_CAN_PED_BE_GRABBED_BY_SCRIPT( int ped, bool p1, bool p2, bool p3, bool p4, bool p5, bool p6, bool p7, Any p8 )
+	bool LUA_NATIVE_PED_GET_CAN_PED_BE_GRABBED_BY_SCRIPT( Ped ped, bool p1, bool p2, bool p3, bool p4, bool p5, bool p6, bool p7, Any p8 )
 	{
 		auto retval = (bool)PED::GET_CAN_PED_BE_GRABBED_BY_SCRIPT(ped, p1, p2, p3, p4, p5, p6, p7, p8);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_DRIVER_RACING_MODIFIER( int driver, float modifier )
+	void LUA_NATIVE_PED_SET_DRIVER_RACING_MODIFIER( Ped driver, float modifier )
 	{
 		PED::SET_DRIVER_RACING_MODIFIER(driver, modifier);
 	}
 
-	void LUA_NATIVE_PED_SET_DRIVER_ABILITY( int driver, float ability )
+	void LUA_NATIVE_PED_SET_DRIVER_ABILITY( Ped driver, float ability )
 	{
 		PED::SET_DRIVER_ABILITY(driver, ability);
 	}
 
-	void LUA_NATIVE_PED_SET_DRIVER_AGGRESSIVENESS( int driver, float aggressiveness )
+	void LUA_NATIVE_PED_SET_DRIVER_AGGRESSIVENESS( Ped driver, float aggressiveness )
 	{
 		PED::SET_DRIVER_AGGRESSIVENESS(driver, aggressiveness);
 	}
 
-	bool LUA_NATIVE_PED_CAN_PED_RAGDOLL( int ped )
+	bool LUA_NATIVE_PED_CAN_PED_RAGDOLL( Ped ped )
 	{
 		auto retval = (bool)PED::CAN_PED_RAGDOLL(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_SET_PED_TO_RAGDOLL( int ped, int time1, int time2, int ragdollType, bool p4, bool p5, bool p6 )
+	bool LUA_NATIVE_PED_SET_PED_TO_RAGDOLL( Ped ped, int time1, int time2, int ragdollType, bool p4, bool p5, bool p6 )
 	{
 		auto retval = (bool)PED::SET_PED_TO_RAGDOLL(ped, time1, time2, ragdollType, p4, p5, p6);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_SET_PED_TO_RAGDOLL_WITH_FALL( int ped, int time, int p2, int ragdollType, float x, float y, float z, float velocity, float p8, float p9, float p10, float p11, float p12, float p13 )
+	bool LUA_NATIVE_PED_SET_PED_TO_RAGDOLL_WITH_FALL( Ped ped, int time, int p2, int ragdollType, float x, float y, float z, float velocity, float p8, float p9, float p10, float p11, float p12, float p13 )
 	{
 		auto retval = (bool)PED::SET_PED_TO_RAGDOLL_WITH_FALL(ped, time, p2, ragdollType, x, y, z, velocity, p8, p9, p10, p11, p12, p13);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_RAGDOLL_ON_COLLISION( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_RAGDOLL_ON_COLLISION( Ped ped, bool toggle )
 	{
 		PED::SET_PED_RAGDOLL_ON_COLLISION(ped, toggle);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_RAGDOLL( int ped )
+	bool LUA_NATIVE_PED_IS_PED_RAGDOLL( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_RAGDOLL(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_RUNNING_RAGDOLL_TASK( int ped )
+	bool LUA_NATIVE_PED_IS_PED_RUNNING_RAGDOLL_TASK( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_RUNNING_RAGDOLL_TASK(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_RAGDOLL_FORCE_FALL( int ped )
+	void LUA_NATIVE_PED_SET_PED_RAGDOLL_FORCE_FALL( Ped ped )
 	{
 		PED::SET_PED_RAGDOLL_FORCE_FALL(ped);
 	}
 
-	void LUA_NATIVE_PED_RESET_PED_RAGDOLL_TIMER( int ped )
+	void LUA_NATIVE_PED_RESET_PED_RAGDOLL_TIMER( Ped ped )
 	{
 		PED::RESET_PED_RAGDOLL_TIMER(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_RAGDOLL( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_RAGDOLL( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_RAGDOLL(ped, toggle);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_RUNNING_MELEE_TASK( int ped )
+	bool LUA_NATIVE_PED_IS_PED_RUNNING_MELEE_TASK( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_RUNNING_MELEE_TASK(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_RUNNING_MOBILE_PHONE_TASK( int ped )
+	bool LUA_NATIVE_PED_IS_PED_RUNNING_MOBILE_PHONE_TASK( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_RUNNING_MOBILE_PHONE_TASK(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_MOBILE_PHONE_TO_PED_EAR( int ped )
+	bool LUA_NATIVE_PED_IS_MOBILE_PHONE_TO_PED_EAR( Ped ped )
 	{
 		auto retval = (bool)PED::IS_MOBILE_PHONE_TO_PED_EAR(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_RAGDOLL_BLOCKING_FLAGS( int ped, int blockingFlag )
+	void LUA_NATIVE_PED_SET_RAGDOLL_BLOCKING_FLAGS( Ped ped, int blockingFlag )
 	{
 		PED::SET_RAGDOLL_BLOCKING_FLAGS(ped, blockingFlag);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_RAGDOLL_BLOCKING_FLAGS( int ped, int blockingFlag )
+	void LUA_NATIVE_PED_CLEAR_RAGDOLL_BLOCKING_FLAGS( Ped ped, int blockingFlag )
 	{
 		PED::CLEAR_RAGDOLL_BLOCKING_FLAGS(ped, blockingFlag);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_ANGLED_DEFENSIVE_AREA( int ped, float p1, float p2, float p3, float p4, float p5, float p6, float p7, bool p8, bool p9 )
+	void LUA_NATIVE_PED_SET_PED_ANGLED_DEFENSIVE_AREA( Ped ped, float p1, float p2, float p3, float p4, float p5, float p6, float p7, bool p8, bool p9 )
 	{
 		PED::SET_PED_ANGLED_DEFENSIVE_AREA(ped, p1, p2, p3, p4, p5, p6, p7, p8, p9);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_SPHERE_DEFENSIVE_AREA( int ped, float x, float y, float z, float radius, bool p5, bool p6 )
+	void LUA_NATIVE_PED_SET_PED_SPHERE_DEFENSIVE_AREA( Ped ped, float x, float y, float z, float radius, bool p5, bool p6 )
 	{
 		PED::SET_PED_SPHERE_DEFENSIVE_AREA(ped, x, y, z, radius, p5, p6);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_DEFENSIVE_SPHERE_ATTACHED_TO_PED( int ped, int target, float xOffset, float yOffset, float zOffset, float radius, bool p6 )
+	void LUA_NATIVE_PED_SET_PED_DEFENSIVE_SPHERE_ATTACHED_TO_PED( Ped ped, Ped target, float xOffset, float yOffset, float zOffset, float radius, bool p6 )
 	{
 		PED::SET_PED_DEFENSIVE_SPHERE_ATTACHED_TO_PED(ped, target, xOffset, yOffset, zOffset, radius, p6);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_DEFENSIVE_SPHERE_ATTACHED_TO_VEHICLE( int ped, int target, float xOffset, float yOffset, float zOffset, float radius, bool p6 )
+	void LUA_NATIVE_PED_SET_PED_DEFENSIVE_SPHERE_ATTACHED_TO_VEHICLE( Ped ped, Vehicle target, float xOffset, float yOffset, float zOffset, float radius, bool p6 )
 	{
 		PED::SET_PED_DEFENSIVE_SPHERE_ATTACHED_TO_VEHICLE(ped, target, xOffset, yOffset, zOffset, radius, p6);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_DEFENSIVE_AREA_ATTACHED_TO_PED( int ped, int attachPed, float p2, float p3, float p4, float p5, float p6, float p7, float p8, bool p9, bool p10 )
+	void LUA_NATIVE_PED_SET_PED_DEFENSIVE_AREA_ATTACHED_TO_PED( Ped ped, Ped attachPed, float p2, float p3, float p4, float p5, float p6, float p7, float p8, bool p9, bool p10 )
 	{
 		PED::SET_PED_DEFENSIVE_AREA_ATTACHED_TO_PED(ped, attachPed, p2, p3, p4, p5, p6, p7, p8, p9, p10);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_DEFENSIVE_AREA_DIRECTION( int ped, float p1, float p2, float p3, bool p4 )
+	void LUA_NATIVE_PED_SET_PED_DEFENSIVE_AREA_DIRECTION( Ped ped, float p1, float p2, float p3, bool p4 )
 	{
 		PED::SET_PED_DEFENSIVE_AREA_DIRECTION(ped, p1, p2, p3, p4);
 	}
 
-	void LUA_NATIVE_PED_REMOVE_PED_DEFENSIVE_AREA( int ped, bool toggle )
+	void LUA_NATIVE_PED_REMOVE_PED_DEFENSIVE_AREA( Ped ped, bool toggle )
 	{
 		PED::REMOVE_PED_DEFENSIVE_AREA(ped, toggle);
 	}
 
-	Vector3 LUA_NATIVE_PED_GET_PED_DEFENSIVE_AREA_POSITION( int ped, bool p1 )
+	Vector3 LUA_NATIVE_PED_GET_PED_DEFENSIVE_AREA_POSITION( Ped ped, bool p1 )
 	{
 		auto retval = PED::GET_PED_DEFENSIVE_AREA_POSITION(ped, p1);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_DEFENSIVE_AREA_ACTIVE( int ped, bool p1 )
+	bool LUA_NATIVE_PED_IS_PED_DEFENSIVE_AREA_ACTIVE( Ped ped, bool p1 )
 	{
 		auto retval = (bool)PED::IS_PED_DEFENSIVE_AREA_ACTIVE(ped, p1);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_PREFERRED_COVER_SET( int ped, Any itemSet )
+	void LUA_NATIVE_PED_SET_PED_PREFERRED_COVER_SET( Ped ped, Any itemSet )
 	{
 		PED::SET_PED_PREFERRED_COVER_SET(ped, itemSet);
 	}
 
-	void LUA_NATIVE_PED_REMOVE_PED_PREFERRED_COVER_SET( int ped )
+	void LUA_NATIVE_PED_REMOVE_PED_PREFERRED_COVER_SET( Ped ped )
 	{
 		PED::REMOVE_PED_PREFERRED_COVER_SET(ped);
 	}
 
-	void LUA_NATIVE_PED_REVIVE_INJURED_PED( int ped )
+	void LUA_NATIVE_PED_REVIVE_INJURED_PED( Ped ped )
 	{
 		PED::REVIVE_INJURED_PED(ped);
 	}
 
-	void LUA_NATIVE_PED_RESURRECT_PED( int ped )
+	void LUA_NATIVE_PED_RESURRECT_PED( Ped ped )
 	{
 		PED::RESURRECT_PED(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_NAME_DEBUG( int ped, const char* name )
+	void LUA_NATIVE_PED_SET_PED_NAME_DEBUG( Ped ped, const char* name )
 	{
 		PED::SET_PED_NAME_DEBUG(ped, name);
 	}
 
-	Vector3 LUA_NATIVE_PED_GET_PED_EXTRACTED_DISPLACEMENT( int ped, bool worldSpace )
+	Vector3 LUA_NATIVE_PED_GET_PED_EXTRACTED_DISPLACEMENT( Ped ped, bool worldSpace )
 	{
 		auto retval = PED::GET_PED_EXTRACTED_DISPLACEMENT(ped, worldSpace);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_DIES_WHEN_INJURED( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_DIES_WHEN_INJURED( Ped ped, bool toggle )
 	{
 		PED::SET_PED_DIES_WHEN_INJURED(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_ENABLE_WEAPON_BLOCKING( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_ENABLE_WEAPON_BLOCKING( Ped ped, bool toggle )
 	{
 		PED::SET_PED_ENABLE_WEAPON_BLOCKING(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SPECIAL_FUNCTION_DO_NOT_USE( int ped, bool p1 )
+	void LUA_NATIVE_PED_SPECIAL_FUNCTION_DO_NOT_USE( Ped ped, bool p1 )
 	{
 		PED::SPECIAL_FUNCTION_DO_NOT_USE(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_RESET_PED_VISIBLE_DAMAGE( int ped )
+	void LUA_NATIVE_PED_RESET_PED_VISIBLE_DAMAGE( Ped ped )
 	{
 		PED::RESET_PED_VISIBLE_DAMAGE(ped);
 	}
 
-	void LUA_NATIVE_PED_APPLY_PED_BLOOD_DAMAGE_BY_ZONE( int ped, Any p1, float p2, float p3, Any p4 )
+	void LUA_NATIVE_PED_APPLY_PED_BLOOD_DAMAGE_BY_ZONE( Ped ped, Any p1, float p2, float p3, Any p4 )
 	{
 		PED::APPLY_PED_BLOOD_DAMAGE_BY_ZONE(ped, p1, p2, p3, p4);
 	}
 
-	void LUA_NATIVE_PED_APPLY_PED_BLOOD( int ped, int boneIndex, float xRot, float yRot, float zRot, const char* woundType )
+	void LUA_NATIVE_PED_APPLY_PED_BLOOD( Ped ped, int boneIndex, float xRot, float yRot, float zRot, const char* woundType )
 	{
 		PED::APPLY_PED_BLOOD(ped, boneIndex, xRot, yRot, zRot, woundType);
 	}
 
-	void LUA_NATIVE_PED_APPLY_PED_BLOOD_BY_ZONE( int ped, int p1, float p2, float p3, const char* p4 )
+	void LUA_NATIVE_PED_APPLY_PED_BLOOD_BY_ZONE( Ped ped, int p1, float p2, float p3, const char* p4 )
 	{
 		PED::APPLY_PED_BLOOD_BY_ZONE(ped, p1, p2, p3, p4);
 	}
 
-	void LUA_NATIVE_PED_APPLY_PED_BLOOD_SPECIFIC( int ped, int p1, float p2, float p3, float p4, float p5, int p6, float p7, const char* p8 )
+	void LUA_NATIVE_PED_APPLY_PED_BLOOD_SPECIFIC( Ped ped, int p1, float p2, float p3, float p4, float p5, int p6, float p7, const char* p8 )
 	{
 		PED::APPLY_PED_BLOOD_SPECIFIC(ped, p1, p2, p3, p4, p5, p6, p7, p8);
 	}
 
-	void LUA_NATIVE_PED_APPLY_PED_DAMAGE_DECAL( int ped, int damageZone, float xOffset, float yOffset, float heading, float scale, float alpha, int variation, bool fadeIn, const char* decalName )
+	void LUA_NATIVE_PED_APPLY_PED_DAMAGE_DECAL( Ped ped, int damageZone, float xOffset, float yOffset, float heading, float scale, float alpha, int variation, bool fadeIn, const char* decalName )
 	{
 		PED::APPLY_PED_DAMAGE_DECAL(ped, damageZone, xOffset, yOffset, heading, scale, alpha, variation, fadeIn, decalName);
 	}
 
-	void LUA_NATIVE_PED_APPLY_PED_DAMAGE_PACK( int ped, const char* damagePack, float damage, float mult )
+	void LUA_NATIVE_PED_APPLY_PED_DAMAGE_PACK( Ped ped, const char* damagePack, float damage, float mult )
 	{
 		PED::APPLY_PED_DAMAGE_PACK(ped, damagePack, damage, mult);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_BLOOD_DAMAGE( int ped )
+	void LUA_NATIVE_PED_CLEAR_PED_BLOOD_DAMAGE( Ped ped )
 	{
 		PED::CLEAR_PED_BLOOD_DAMAGE(ped);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_BLOOD_DAMAGE_BY_ZONE( int ped, int p1 )
+	void LUA_NATIVE_PED_CLEAR_PED_BLOOD_DAMAGE_BY_ZONE( Ped ped, int p1 )
 	{
 		PED::CLEAR_PED_BLOOD_DAMAGE_BY_ZONE(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_HIDE_PED_BLOOD_DAMAGE_BY_ZONE( int ped, Any p1, bool p2 )
+	void LUA_NATIVE_PED_HIDE_PED_BLOOD_DAMAGE_BY_ZONE( Ped ped, Any p1, bool p2 )
 	{
 		PED::HIDE_PED_BLOOD_DAMAGE_BY_ZONE(ped, p1, p2);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_DAMAGE_DECAL_BY_ZONE( int ped, int p1, const char* p2 )
+	void LUA_NATIVE_PED_CLEAR_PED_DAMAGE_DECAL_BY_ZONE( Ped ped, int p1, const char* p2 )
 	{
 		PED::CLEAR_PED_DAMAGE_DECAL_BY_ZONE(ped, p1, p2);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_DECORATIONS_STATE( int ped )
+	int LUA_NATIVE_PED_GET_PED_DECORATIONS_STATE( Ped ped )
 	{
 		auto retval = PED::GET_PED_DECORATIONS_STATE(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_MARK_PED_DECORATIONS_AS_CLONED_FROM_LOCAL_PLAYER( int ped, bool p1 )
+	void LUA_NATIVE_PED_MARK_PED_DECORATIONS_AS_CLONED_FROM_LOCAL_PLAYER( Ped ped, bool p1 )
 	{
 		PED::MARK_PED_DECORATIONS_AS_CLONED_FROM_LOCAL_PLAYER(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_WETNESS( int ped )
+	void LUA_NATIVE_PED_CLEAR_PED_WETNESS( Ped ped )
 	{
 		PED::CLEAR_PED_WETNESS(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_WETNESS_HEIGHT( int ped, float height )
+	void LUA_NATIVE_PED_SET_PED_WETNESS_HEIGHT( Ped ped, float height )
 	{
 		PED::SET_PED_WETNESS_HEIGHT(ped, height);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_WETNESS_ENABLED_THIS_FRAME( int ped )
+	void LUA_NATIVE_PED_SET_PED_WETNESS_ENABLED_THIS_FRAME( Ped ped )
 	{
 		PED::SET_PED_WETNESS_ENABLED_THIS_FRAME(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_WETNESS( int ped, float wetLevel )
+	void LUA_NATIVE_PED_SET_PED_WETNESS( Ped ped, float wetLevel )
 	{
 		PED::SET_PED_WETNESS(ped, wetLevel);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_ENV_DIRT( int ped )
+	void LUA_NATIVE_PED_CLEAR_PED_ENV_DIRT( Ped ped )
 	{
 		PED::CLEAR_PED_ENV_DIRT(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_SWEAT( int ped, float sweat )
+	void LUA_NATIVE_PED_SET_PED_SWEAT( Ped ped, float sweat )
 	{
 		PED::SET_PED_SWEAT(ped, sweat);
 	}
 
-	void LUA_NATIVE_PED_ADD_PED_DECORATION_FROM_HASHES( int ped, unsigned collection, unsigned overlay )
+	void LUA_NATIVE_PED_ADD_PED_DECORATION_FROM_HASHES( Ped ped, Hash collection, Hash overlay )
 	{
 		PED::ADD_PED_DECORATION_FROM_HASHES(ped, collection, overlay);
 	}
 
-	void LUA_NATIVE_PED_ADD_PED_DECORATION_FROM_HASHES_IN_CORONA( int ped, unsigned collection, unsigned overlay )
+	void LUA_NATIVE_PED_ADD_PED_DECORATION_FROM_HASHES_IN_CORONA( Ped ped, Hash collection, Hash overlay )
 	{
 		PED::ADD_PED_DECORATION_FROM_HASHES_IN_CORONA(ped, collection, overlay);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_DECORATION_ZONE_FROM_HASHES( unsigned collection, unsigned overlay )
+	int LUA_NATIVE_PED_GET_PED_DECORATION_ZONE_FROM_HASHES( Hash collection, Hash overlay )
 	{
 		auto retval = PED::GET_PED_DECORATION_ZONE_FROM_HASHES(collection, overlay);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_DECORATIONS( int ped )
+	void LUA_NATIVE_PED_CLEAR_PED_DECORATIONS( Ped ped )
 	{
 		PED::CLEAR_PED_DECORATIONS(ped);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_DECORATIONS_LEAVE_SCARS( int ped )
+	void LUA_NATIVE_PED_CLEAR_PED_DECORATIONS_LEAVE_SCARS( Ped ped )
 	{
 		PED::CLEAR_PED_DECORATIONS_LEAVE_SCARS(ped);
 	}
 
-	bool LUA_NATIVE_PED_WAS_PED_SKELETON_UPDATED( int ped )
+	bool LUA_NATIVE_PED_WAS_PED_SKELETON_UPDATED( Ped ped )
 	{
 		auto retval = (bool)PED::WAS_PED_SKELETON_UPDATED(ped);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_PED_GET_PED_BONE_COORDS( int ped, int boneId, float offsetX, float offsetY, float offsetZ )
+	Vector3 LUA_NATIVE_PED_GET_PED_BONE_COORDS( Ped ped, int boneId, float offsetX, float offsetY, float offsetZ )
 	{
 		auto retval = PED::GET_PED_BONE_COORDS(ped, boneId, offsetX, offsetY, offsetZ);
 		return retval;
@@ -23895,7 +23890,7 @@ namespace lua::native
 		PED::CREATE_NM_MESSAGE(startImmediately, messageId);
 	}
 
-	void LUA_NATIVE_PED_GIVE_PED_NM_MESSAGE( int ped )
+	void LUA_NATIVE_PED_GIVE_PED_NM_MESSAGE( Ped ped )
 	{
 		PED::GIVE_PED_NM_MESSAGE(ped);
 	}
@@ -23927,13 +23922,13 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_USING_SCENARIO( int ped, const char* scenario )
+	bool LUA_NATIVE_PED_IS_PED_USING_SCENARIO( Ped ped, const char* scenario )
 	{
 		auto retval = (bool)PED::IS_PED_USING_SCENARIO(ped, scenario);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_USING_ANY_SCENARIO( int ped )
+	bool LUA_NATIVE_PED_IS_PED_USING_ANY_SCENARIO( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_USING_ANY_SCENARIO(ped);
 		return retval;
@@ -23945,7 +23940,7 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_TOGGLE_SCENARIO_PED_COWER_IN_PLACE( int ped, bool toggle )
+	void LUA_NATIVE_PED_TOGGLE_SCENARIO_PED_COWER_IN_PLACE( Ped ped, bool toggle )
 	{
 		PED::TOGGLE_SCENARIO_PED_COWER_IN_PLACE(ped, toggle);
 	}
@@ -23962,23 +23957,23 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_SHOULD_PLAY_NORMAL_SCENARIO_EXIT( int ped )
+	void LUA_NATIVE_PED_SET_PED_SHOULD_PLAY_NORMAL_SCENARIO_EXIT( Ped ped )
 	{
 		PED::SET_PED_SHOULD_PLAY_NORMAL_SCENARIO_EXIT(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_SHOULD_PLAY_IMMEDIATE_SCENARIO_EXIT( int ped )
+	void LUA_NATIVE_PED_SET_PED_SHOULD_PLAY_IMMEDIATE_SCENARIO_EXIT( Ped ped )
 	{
 		PED::SET_PED_SHOULD_PLAY_IMMEDIATE_SCENARIO_EXIT(ped);
 	}
 
-	bool LUA_NATIVE_PED_SET_PED_SHOULD_PLAY_FLEE_SCENARIO_EXIT( int ped, Any p1, Any p2, Any p3 )
+	bool LUA_NATIVE_PED_SET_PED_SHOULD_PLAY_FLEE_SCENARIO_EXIT( Ped ped, Any p1, Any p2, Any p3 )
 	{
 		auto retval = (bool)PED::SET_PED_SHOULD_PLAY_FLEE_SCENARIO_EXIT(ped, p1, p2, p3);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_SHOULD_IGNORE_SCENARIO_EXIT_COLLISION_CHECKS( int ped, bool p1 )
+	void LUA_NATIVE_PED_SET_PED_SHOULD_IGNORE_SCENARIO_EXIT_COLLISION_CHECKS( Ped ped, bool p1 )
 	{
 		PED::SET_PED_SHOULD_IGNORE_SCENARIO_EXIT_COLLISION_CHECKS(ped, p1);
 	}
@@ -23999,109 +23994,109 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_RESET_FACIAL_IDLE_ANIM( int ped )
+	void LUA_NATIVE_PED_RESET_FACIAL_IDLE_ANIM( Ped ped )
 	{
 		PED::RESET_FACIAL_IDLE_ANIM(ped);
 	}
 
-	void LUA_NATIVE_PED_PLAY_FACIAL_ANIM( int ped, const char* animName, const char* animDict )
+	void LUA_NATIVE_PED_PLAY_FACIAL_ANIM( Ped ped, const char* animName, const char* animDict )
 	{
 		PED::PLAY_FACIAL_ANIM(ped, animName, animDict);
 	}
 
-	void LUA_NATIVE_PED_SET_FACIAL_CLIPSET( int ped, const char* animDict )
+	void LUA_NATIVE_PED_SET_FACIAL_CLIPSET( Ped ped, const char* animDict )
 	{
 		PED::SET_FACIAL_CLIPSET(ped, animDict);
 	}
 
-	void LUA_NATIVE_PED_SET_FACIAL_IDLE_ANIM_OVERRIDE( int ped, const char* animName, const char* animDict )
+	void LUA_NATIVE_PED_SET_FACIAL_IDLE_ANIM_OVERRIDE( Ped ped, const char* animName, const char* animDict )
 	{
 		PED::SET_FACIAL_IDLE_ANIM_OVERRIDE(ped, animName, animDict);
 	}
 
-	void LUA_NATIVE_PED_CLEAR_FACIAL_IDLE_ANIM_OVERRIDE( int ped )
+	void LUA_NATIVE_PED_CLEAR_FACIAL_IDLE_ANIM_OVERRIDE( Ped ped )
 	{
 		PED::CLEAR_FACIAL_IDLE_ANIM_OVERRIDE(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_PLAY_GESTURE_ANIMS( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_PLAY_GESTURE_ANIMS( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_PLAY_GESTURE_ANIMS(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_PLAY_VISEME_ANIMS( int ped, bool toggle, bool p2 )
+	void LUA_NATIVE_PED_SET_PED_CAN_PLAY_VISEME_ANIMS( Ped ped, bool toggle, bool p2 )
 	{
 		PED::SET_PED_CAN_PLAY_VISEME_ANIMS(ped, toggle, p2);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_IS_IGNORED_BY_AUTO_OPEN_DOORS( int ped, bool p1 )
+	void LUA_NATIVE_PED_SET_PED_IS_IGNORED_BY_AUTO_OPEN_DOORS( Ped ped, bool p1 )
 	{
 		PED::SET_PED_IS_IGNORED_BY_AUTO_OPEN_DOORS(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_PLAY_AMBIENT_ANIMS( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_PLAY_AMBIENT_ANIMS( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_PLAY_AMBIENT_ANIMS(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_PLAY_AMBIENT_BASE_ANIMS( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_PLAY_AMBIENT_BASE_ANIMS( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_PLAY_AMBIENT_BASE_ANIMS(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_TRIGGER_IDLE_ANIMATION_ON_PED( int ped )
+	void LUA_NATIVE_PED_TRIGGER_IDLE_ANIMATION_ON_PED( Ped ped )
 	{
 		PED::TRIGGER_IDLE_ANIMATION_ON_PED(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_ARM_IK( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_ARM_IK( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_ARM_IK(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_HEAD_IK( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_HEAD_IK( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_HEAD_IK(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_LEG_IK( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_LEG_IK( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_LEG_IK(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_TORSO_IK( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_TORSO_IK( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_TORSO_IK(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_TORSO_REACT_IK( int ped, bool p1 )
+	void LUA_NATIVE_PED_SET_PED_CAN_TORSO_REACT_IK( Ped ped, bool p1 )
 	{
 		PED::SET_PED_CAN_TORSO_REACT_IK(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_TORSO_VEHICLE_IK( int ped, bool p1 )
+	void LUA_NATIVE_PED_SET_PED_CAN_TORSO_VEHICLE_IK( Ped ped, bool p1 )
 	{
 		PED::SET_PED_CAN_TORSO_VEHICLE_IK(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_USE_AUTO_CONVERSATION_LOOKAT( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_USE_AUTO_CONVERSATION_LOOKAT( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_USE_AUTO_CONVERSATION_LOOKAT(ped, toggle);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_HEADTRACKING_PED( int ped1, int ped2 )
+	bool LUA_NATIVE_PED_IS_PED_HEADTRACKING_PED( Ped ped1, Ped ped2 )
 	{
 		auto retval = (bool)PED::IS_PED_HEADTRACKING_PED(ped1, ped2);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_HEADTRACKING_ENTITY( int ped, int entity )
+	bool LUA_NATIVE_PED_IS_PED_HEADTRACKING_ENTITY( Ped ped, Entity entity )
 	{
 		auto retval = (bool)PED::IS_PED_HEADTRACKING_ENTITY(ped, entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_PRIMARY_LOOKAT( int ped, int lookAt )
+	void LUA_NATIVE_PED_SET_PED_PRIMARY_LOOKAT( Ped ped, Ped lookAt )
 	{
 		PED::SET_PED_PRIMARY_LOOKAT(ped, lookAt);
 	}
@@ -24121,53 +24116,53 @@ namespace lua::native
 		PED::SET_PED_CLOTH_PRONE(p0, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CONFIG_FLAG( int ped, int flagId, bool value )
+	void LUA_NATIVE_PED_SET_PED_CONFIG_FLAG( Ped ped, int flagId, bool value )
 	{
 		PED::SET_PED_CONFIG_FLAG(ped, flagId, value);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_RESET_FLAG( int ped, int flagId, bool doReset )
+	void LUA_NATIVE_PED_SET_PED_RESET_FLAG( Ped ped, int flagId, bool doReset )
 	{
 		PED::SET_PED_RESET_FLAG(ped, flagId, doReset);
 	}
 
-	bool LUA_NATIVE_PED_GET_PED_CONFIG_FLAG( int ped, int flagId, bool p2 )
+	bool LUA_NATIVE_PED_GET_PED_CONFIG_FLAG( Ped ped, int flagId, bool p2 )
 	{
 		auto retval = (bool)PED::GET_PED_CONFIG_FLAG(ped, flagId, p2);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_GET_PED_RESET_FLAG( int ped, int flagId )
+	bool LUA_NATIVE_PED_GET_PED_RESET_FLAG( Ped ped, int flagId )
 	{
 		auto retval = (bool)PED::GET_PED_RESET_FLAG(ped, flagId);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_GROUP_MEMBER_PASSENGER_INDEX( int ped, int index )
+	void LUA_NATIVE_PED_SET_PED_GROUP_MEMBER_PASSENGER_INDEX( Ped ped, int index )
 	{
 		PED::SET_PED_GROUP_MEMBER_PASSENGER_INDEX(ped, index);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_EVASIVE_DIVE( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_EVASIVE_DIVE( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_EVASIVE_DIVE(ped, toggle);
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_PED_IS_PED_EVASIVE_DIVING( int ped, int evadingEntity )
+	std::tuple<bool, Entity> LUA_NATIVE_PED_IS_PED_EVASIVE_DIVING( Ped ped, Entity evadingEntity )
 	{
-		std::tuple<bool, int> return_values;
+		std::tuple<bool, Entity> return_values;
 		std::get<0>(return_values) = (bool)PED::IS_PED_EVASIVE_DIVING(ped, &evadingEntity);
 		std::get<1>(return_values) = evadingEntity;
 
 		return return_values;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_SHOOTS_AT_COORD( int ped, float x, float y, float z, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_SHOOTS_AT_COORD( Ped ped, float x, float y, float z, bool toggle )
 	{
 		PED::SET_PED_SHOOTS_AT_COORD(ped, x, y, z, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_MODEL_IS_SUPPRESSED( unsigned modelHash, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_MODEL_IS_SUPPRESSED( Hash modelHash, bool toggle )
 	{
 		PED::SET_PED_MODEL_IS_SUPPRESSED(modelHash, toggle);
 	}
@@ -24177,17 +24172,17 @@ namespace lua::native
 		PED::STOP_ANY_PED_MODEL_BEING_SUPPRESSED();
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_BE_TARGETED_WHEN_INJURED( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_BE_TARGETED_WHEN_INJURED( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_BE_TARGETED_WHEN_INJURED(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_GENERATES_DEAD_BODY_EVENTS( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_GENERATES_DEAD_BODY_EVENTS( Ped ped, bool toggle )
 	{
 		PED::SET_PED_GENERATES_DEAD_BODY_EVENTS(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_BLOCK_PED_FROM_GENERATING_DEAD_BODY_EVENTS_WHEN_DEAD( int ped, bool toggle )
+	void LUA_NATIVE_PED_BLOCK_PED_FROM_GENERATING_DEAD_BODY_EVENTS_WHEN_DEAD( Ped ped, bool toggle )
 	{
 		PED::BLOCK_PED_FROM_GENERATING_DEAD_BODY_EVENTS_WHEN_DEAD(ped, toggle);
 	}
@@ -24197,76 +24192,76 @@ namespace lua::native
 		PED::SET_PED_WILL_ONLY_ATTACK_WANTED_PLAYER(p0, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_RAGDOLL_FROM_PLAYER_IMPACT( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_RAGDOLL_FROM_PLAYER_IMPACT( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_RAGDOLL_FROM_PLAYER_IMPACT(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_GIVE_PED_HELMET( int ped, bool cannotRemove, int helmetFlag, int textureIndex )
+	void LUA_NATIVE_PED_GIVE_PED_HELMET( Ped ped, bool cannotRemove, int helmetFlag, int textureIndex )
 	{
 		PED::GIVE_PED_HELMET(ped, cannotRemove, helmetFlag, textureIndex);
 	}
 
-	void LUA_NATIVE_PED_REMOVE_PED_HELMET( int ped, bool instantly )
+	void LUA_NATIVE_PED_REMOVE_PED_HELMET( Ped ped, bool instantly )
 	{
 		PED::REMOVE_PED_HELMET(ped, instantly);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_TAKING_OFF_HELMET( int ped )
+	bool LUA_NATIVE_PED_IS_PED_TAKING_OFF_HELMET( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_TAKING_OFF_HELMET(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_HELMET( int ped, bool canWearHelmet )
+	void LUA_NATIVE_PED_SET_PED_HELMET( Ped ped, bool canWearHelmet )
 	{
 		PED::SET_PED_HELMET(ped, canWearHelmet);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_HELMET_FLAG( int ped, int helmetFlag )
+	void LUA_NATIVE_PED_SET_PED_HELMET_FLAG( Ped ped, int helmetFlag )
 	{
 		PED::SET_PED_HELMET_FLAG(ped, helmetFlag);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_HELMET_PROP_INDEX( int ped, int propIndex, bool p2 )
+	void LUA_NATIVE_PED_SET_PED_HELMET_PROP_INDEX( Ped ped, int propIndex, bool p2 )
 	{
 		PED::SET_PED_HELMET_PROP_INDEX(ped, propIndex, p2);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_HELMET_VISOR_PROP_INDICES( int ped, bool p1, int p2, int p3 )
+	void LUA_NATIVE_PED_SET_PED_HELMET_VISOR_PROP_INDICES( Ped ped, bool p1, int p2, int p3 )
 	{
 		PED::SET_PED_HELMET_VISOR_PROP_INDICES(ped, p1, p2, p3);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_HELMET_VISOR_UP( int ped )
+	bool LUA_NATIVE_PED_IS_PED_HELMET_VISOR_UP( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_HELMET_VISOR_UP(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_HELMET_TEXTURE_INDEX( int ped, int textureIndex )
+	void LUA_NATIVE_PED_SET_PED_HELMET_TEXTURE_INDEX( Ped ped, int textureIndex )
 	{
 		PED::SET_PED_HELMET_TEXTURE_INDEX(ped, textureIndex);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_WEARING_HELMET( int ped )
+	bool LUA_NATIVE_PED_IS_PED_WEARING_HELMET( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_WEARING_HELMET(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_CLEAR_PED_STORED_HAT_PROP( int ped )
+	void LUA_NATIVE_PED_CLEAR_PED_STORED_HAT_PROP( Ped ped )
 	{
 		PED::CLEAR_PED_STORED_HAT_PROP(ped);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_HELMET_STORED_HAT_PROP_INDEX( int ped )
+	int LUA_NATIVE_PED_GET_PED_HELMET_STORED_HAT_PROP_INDEX( Ped ped )
 	{
 		auto retval = PED::GET_PED_HELMET_STORED_HAT_PROP_INDEX(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_PED_HELMET_STORED_HAT_TEX_INDEX( int ped )
+	int LUA_NATIVE_PED_GET_PED_HELMET_STORED_HAT_TEX_INDEX( Ped ped )
 	{
 		auto retval = PED::GET_PED_HELMET_STORED_HAT_TEX_INDEX(ped);
 		return retval;
@@ -24278,172 +24273,172 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_TO_LOAD_COVER( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_TO_LOAD_COVER( Ped ped, bool toggle )
 	{
 		PED::SET_PED_TO_LOAD_COVER(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_COWER_IN_COVER( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_COWER_IN_COVER( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_COWER_IN_COVER(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_PEEK_IN_COVER( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_PEEK_IN_COVER( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_PEEK_IN_COVER(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_PLAYS_HEAD_ON_HORN_ANIM_WHEN_DIES_IN_VEHICLE( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_PLAYS_HEAD_ON_HORN_ANIM_WHEN_DIES_IN_VEHICLE( Ped ped, bool toggle )
 	{
 		PED::SET_PED_PLAYS_HEAD_ON_HORN_ANIM_WHEN_DIES_IN_VEHICLE(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_LEG_IK_MODE( int ped, int mode )
+	void LUA_NATIVE_PED_SET_PED_LEG_IK_MODE( Ped ped, int mode )
 	{
 		PED::SET_PED_LEG_IK_MODE(ped, mode);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_MOTION_BLUR( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_MOTION_BLUR( Ped ped, bool toggle )
 	{
 		PED::SET_PED_MOTION_BLUR(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_SWITCH_WEAPON( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_SWITCH_WEAPON( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_SWITCH_WEAPON(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_DIES_INSTANTLY_IN_WATER( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_DIES_INSTANTLY_IN_WATER( Ped ped, bool toggle )
 	{
 		PED::SET_PED_DIES_INSTANTLY_IN_WATER(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_LADDER_CLIMB_INPUT_STATE( int ped, int p1 )
+	void LUA_NATIVE_PED_SET_LADDER_CLIMB_INPUT_STATE( Ped ped, int p1 )
 	{
 		PED::SET_LADDER_CLIMB_INPUT_STATE(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_STOP_PED_WEAPON_FIRING_WHEN_DROPPED( int ped )
+	void LUA_NATIVE_PED_STOP_PED_WEAPON_FIRING_WHEN_DROPPED( Ped ped )
 	{
 		PED::STOP_PED_WEAPON_FIRING_WHEN_DROPPED(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_SCRIPTED_ANIM_SEAT_OFFSET( int ped, float p1 )
+	void LUA_NATIVE_PED_SET_SCRIPTED_ANIM_SEAT_OFFSET( Ped ped, float p1 )
 	{
 		PED::SET_SCRIPTED_ANIM_SEAT_OFFSET(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_COMBAT_MOVEMENT( int ped, int combatMovement )
+	void LUA_NATIVE_PED_SET_PED_COMBAT_MOVEMENT( Ped ped, int combatMovement )
 	{
 		PED::SET_PED_COMBAT_MOVEMENT(ped, combatMovement);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_COMBAT_MOVEMENT( int ped )
+	int LUA_NATIVE_PED_GET_PED_COMBAT_MOVEMENT( Ped ped )
 	{
 		auto retval = PED::GET_PED_COMBAT_MOVEMENT(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_COMBAT_ABILITY( int ped, int abilityLevel )
+	void LUA_NATIVE_PED_SET_PED_COMBAT_ABILITY( Ped ped, int abilityLevel )
 	{
 		PED::SET_PED_COMBAT_ABILITY(ped, abilityLevel);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_COMBAT_RANGE( int ped, int combatRange )
+	void LUA_NATIVE_PED_SET_PED_COMBAT_RANGE( Ped ped, int combatRange )
 	{
 		PED::SET_PED_COMBAT_RANGE(ped, combatRange);
 	}
 
-	int LUA_NATIVE_PED_GET_PED_COMBAT_RANGE( int ped )
+	int LUA_NATIVE_PED_GET_PED_COMBAT_RANGE( Ped ped )
 	{
 		auto retval = PED::GET_PED_COMBAT_RANGE(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_COMBAT_ATTRIBUTES( int ped, int attributeId, bool enabled )
+	void LUA_NATIVE_PED_SET_PED_COMBAT_ATTRIBUTES( Ped ped, int attributeId, bool enabled )
 	{
 		PED::SET_PED_COMBAT_ATTRIBUTES(ped, attributeId, enabled);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_TARGET_LOSS_RESPONSE( int ped, int responseType )
+	void LUA_NATIVE_PED_SET_PED_TARGET_LOSS_RESPONSE( Ped ped, int responseType )
 	{
 		PED::SET_PED_TARGET_LOSS_RESPONSE(ped, responseType);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_PERFORMING_MELEE_ACTION( int ped )
+	bool LUA_NATIVE_PED_IS_PED_PERFORMING_MELEE_ACTION( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_PERFORMING_MELEE_ACTION(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_PERFORMING_STEALTH_KILL( int ped )
+	bool LUA_NATIVE_PED_IS_PED_PERFORMING_STEALTH_KILL( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_PERFORMING_STEALTH_KILL(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_PERFORMING_A_COUNTER_ATTACK( int ped )
+	bool LUA_NATIVE_PED_IS_PED_PERFORMING_A_COUNTER_ATTACK( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_PERFORMING_A_COUNTER_ATTACK(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_BEING_STEALTH_KILLED( int ped )
+	bool LUA_NATIVE_PED_IS_PED_BEING_STEALTH_KILLED( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_BEING_STEALTH_KILLED(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_MELEE_TARGET_FOR_PED( int ped )
+	Ped LUA_NATIVE_PED_GET_MELEE_TARGET_FOR_PED( Ped ped )
 	{
 		auto retval = PED::GET_MELEE_TARGET_FOR_PED(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_WAS_PED_KILLED_BY_STEALTH( int ped )
+	bool LUA_NATIVE_PED_WAS_PED_KILLED_BY_STEALTH( Ped ped )
 	{
 		auto retval = (bool)PED::WAS_PED_KILLED_BY_STEALTH(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_WAS_PED_KILLED_BY_TAKEDOWN( int ped )
+	bool LUA_NATIVE_PED_WAS_PED_KILLED_BY_TAKEDOWN( Ped ped )
 	{
 		auto retval = (bool)PED::WAS_PED_KILLED_BY_TAKEDOWN(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_WAS_PED_KNOCKED_OUT( int ped )
+	bool LUA_NATIVE_PED_WAS_PED_KNOCKED_OUT( Ped ped )
 	{
 		auto retval = (bool)PED::WAS_PED_KNOCKED_OUT(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_FLEE_ATTRIBUTES( int ped, int attributeFlags, bool enable )
+	void LUA_NATIVE_PED_SET_PED_FLEE_ATTRIBUTES( Ped ped, int attributeFlags, bool enable )
 	{
 		PED::SET_PED_FLEE_ATTRIBUTES(ped, attributeFlags, enable);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_COWER_HASH( int ped, const char* p1 )
+	void LUA_NATIVE_PED_SET_PED_COWER_HASH( Ped ped, const char* p1 )
 	{
 		PED::SET_PED_COWER_HASH(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_STEERS_AROUND_DEAD_BODIES( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_STEERS_AROUND_DEAD_BODIES( Ped ped, bool toggle )
 	{
 		PED::SET_PED_STEERS_AROUND_DEAD_BODIES(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_STEERS_AROUND_PEDS( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_STEERS_AROUND_PEDS( Ped ped, bool toggle )
 	{
 		PED::SET_PED_STEERS_AROUND_PEDS(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_STEERS_AROUND_OBJECTS( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_STEERS_AROUND_OBJECTS( Ped ped, bool toggle )
 	{
 		PED::SET_PED_STEERS_AROUND_OBJECTS(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_STEERS_AROUND_VEHICLES( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_STEERS_AROUND_VEHICLES( Ped ped, bool toggle )
 	{
 		PED::SET_PED_STEERS_AROUND_VEHICLES(ped, toggle);
 	}
@@ -24453,12 +24448,12 @@ namespace lua::native
 		PED::SET_PED_IS_AVOIDED_BY_OTHERS(p0, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_INCREASED_AVOIDANCE_RADIUS( int ped )
+	void LUA_NATIVE_PED_SET_PED_INCREASED_AVOIDANCE_RADIUS( Ped ped )
 	{
 		PED::SET_PED_INCREASED_AVOIDANCE_RADIUS(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_BLOCKS_PATHING_WHEN_DEAD( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_BLOCKS_PATHING_WHEN_DEAD( Ped ped, bool toggle )
 	{
 		PED::SET_PED_BLOCKS_PATHING_WHEN_DEAD(ped, toggle);
 	}
@@ -24474,68 +24469,68 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_FORCE_PED_AI_AND_ANIMATION_UPDATE( int ped, bool p1, bool p2 )
+	void LUA_NATIVE_PED_FORCE_PED_AI_AND_ANIMATION_UPDATE( Ped ped, bool p1, bool p2 )
 	{
 		PED::FORCE_PED_AI_AND_ANIMATION_UPDATE(ped, p1, p2);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_HEADING_TOWARDS_POSITION( int ped, float x, float y, float z, float p4 )
+	bool LUA_NATIVE_PED_IS_PED_HEADING_TOWARDS_POSITION( Ped ped, float x, float y, float z, float p4 )
 	{
 		auto retval = (bool)PED::IS_PED_HEADING_TOWARDS_POSITION(ped, x, y, z, p4);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_REQUEST_PED_VISIBILITY_TRACKING( int ped )
+	void LUA_NATIVE_PED_REQUEST_PED_VISIBILITY_TRACKING( Ped ped )
 	{
 		PED::REQUEST_PED_VISIBILITY_TRACKING(ped);
 	}
 
-	void LUA_NATIVE_PED_REQUEST_PED_VEHICLE_VISIBILITY_TRACKING( int ped, bool p1 )
+	void LUA_NATIVE_PED_REQUEST_PED_VEHICLE_VISIBILITY_TRACKING( Ped ped, bool p1 )
 	{
 		PED::REQUEST_PED_VEHICLE_VISIBILITY_TRACKING(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_REQUEST_PED_RESTRICTED_VEHICLE_VISIBILITY_TRACKING( int ped, bool p1 )
+	void LUA_NATIVE_PED_REQUEST_PED_RESTRICTED_VEHICLE_VISIBILITY_TRACKING( Ped ped, bool p1 )
 	{
 		PED::REQUEST_PED_RESTRICTED_VEHICLE_VISIBILITY_TRACKING(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_REQUEST_PED_USE_SMALL_BBOX_VISIBILITY_TRACKING( int ped, bool p1 )
+	void LUA_NATIVE_PED_REQUEST_PED_USE_SMALL_BBOX_VISIBILITY_TRACKING( Ped ped, bool p1 )
 	{
 		PED::REQUEST_PED_USE_SMALL_BBOX_VISIBILITY_TRACKING(ped, p1);
 	}
 
-	bool LUA_NATIVE_PED_IS_TRACKED_PED_VISIBLE( int ped )
+	bool LUA_NATIVE_PED_IS_TRACKED_PED_VISIBLE( Ped ped )
 	{
 		auto retval = (bool)PED::IS_TRACKED_PED_VISIBLE(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_TRACKED_PED_PIXELCOUNT( int ped )
+	int LUA_NATIVE_PED_GET_TRACKED_PED_PIXELCOUNT( Ped ped )
 	{
 		auto retval = PED::GET_TRACKED_PED_PIXELCOUNT(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_TRACKED( int ped )
+	bool LUA_NATIVE_PED_IS_PED_TRACKED( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_TRACKED(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_HAS_PED_RECEIVED_EVENT( int ped, int eventId )
+	bool LUA_NATIVE_PED_HAS_PED_RECEIVED_EVENT( Ped ped, int eventId )
 	{
 		auto retval = (bool)PED::HAS_PED_RECEIVED_EVENT(ped, eventId);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_CAN_PED_SEE_HATED_PED( int ped1, int ped2 )
+	bool LUA_NATIVE_PED_CAN_PED_SEE_HATED_PED( Ped ped1, Ped ped2 )
 	{
 		auto retval = (bool)PED::CAN_PED_SEE_HATED_PED(ped1, ped2);
 		return retval;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_PED_CAN_PED_SHUFFLE_TO_OR_FROM_TURRET_SEAT( int ped, int p1 )
+	std::tuple<bool, int> LUA_NATIVE_PED_CAN_PED_SHUFFLE_TO_OR_FROM_TURRET_SEAT( Ped ped, int p1 )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)PED::CAN_PED_SHUFFLE_TO_OR_FROM_TURRET_SEAT(ped, &p1);
@@ -24544,7 +24539,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_PED_CAN_PED_SHUFFLE_TO_OR_FROM_EXTRA_SEAT( int ped, int p1 )
+	std::tuple<bool, int> LUA_NATIVE_PED_CAN_PED_SHUFFLE_TO_OR_FROM_EXTRA_SEAT( Ped ped, int p1 )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)PED::CAN_PED_SHUFFLE_TO_OR_FROM_EXTRA_SEAT(ped, &p1);
@@ -24553,62 +24548,62 @@ namespace lua::native
 		return return_values;
 	}
 
-	int LUA_NATIVE_PED_GET_PED_BONE_INDEX( int ped, int boneId )
+	int LUA_NATIVE_PED_GET_PED_BONE_INDEX( Ped ped, int boneId )
 	{
 		auto retval = PED::GET_PED_BONE_INDEX(ped, boneId);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_GET_PED_RAGDOLL_BONE_INDEX( int ped, int bone )
+	int LUA_NATIVE_PED_GET_PED_RAGDOLL_BONE_INDEX( Ped ped, int bone )
 	{
 		auto retval = PED::GET_PED_RAGDOLL_BONE_INDEX(ped, bone);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_ENVEFF_SCALE( int ped, float value )
+	void LUA_NATIVE_PED_SET_PED_ENVEFF_SCALE( Ped ped, float value )
 	{
 		PED::SET_PED_ENVEFF_SCALE(ped, value);
 	}
 
-	float LUA_NATIVE_PED_GET_PED_ENVEFF_SCALE( int ped )
+	float LUA_NATIVE_PED_GET_PED_ENVEFF_SCALE( Ped ped )
 	{
 		auto retval = PED::GET_PED_ENVEFF_SCALE(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_ENABLE_PED_ENVEFF_SCALE( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_ENABLE_PED_ENVEFF_SCALE( Ped ped, bool toggle )
 	{
 		PED::SET_ENABLE_PED_ENVEFF_SCALE(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_ENVEFF_CPV_ADD( int ped, float p1 )
+	void LUA_NATIVE_PED_SET_PED_ENVEFF_CPV_ADD( Ped ped, float p1 )
 	{
 		PED::SET_PED_ENVEFF_CPV_ADD(ped, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_ENVEFF_COLOR_MODULATOR( int ped, int p1, int p2, int p3 )
+	void LUA_NATIVE_PED_SET_PED_ENVEFF_COLOR_MODULATOR( Ped ped, int p1, int p2, int p3 )
 	{
 		PED::SET_PED_ENVEFF_COLOR_MODULATOR(ped, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_EMISSIVE_SCALE( int ped, float intensity )
+	void LUA_NATIVE_PED_SET_PED_EMISSIVE_SCALE( Ped ped, float intensity )
 	{
 		PED::SET_PED_EMISSIVE_SCALE(ped, intensity);
 	}
 
-	float LUA_NATIVE_PED_GET_PED_EMISSIVE_SCALE( int ped )
+	float LUA_NATIVE_PED_GET_PED_EMISSIVE_SCALE( Ped ped )
 	{
 		auto retval = PED::GET_PED_EMISSIVE_SCALE(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_SHADER_READY( int ped )
+	bool LUA_NATIVE_PED_IS_PED_SHADER_READY( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_SHADER_READY(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_ENABLE_CREW_EMBLEM( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_ENABLE_CREW_EMBLEM( Ped ped, bool toggle )
 	{
 		PED::SET_PED_ENABLE_CREW_EMBLEM(ped, toggle);
 	}
@@ -24618,12 +24613,12 @@ namespace lua::native
 		PED::REQUEST_RAGDOLL_BOUNDS_UPDATE(p0, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_AO_BLOB_RENDERING( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_AO_BLOB_RENDERING( Ped ped, bool toggle )
 	{
 		PED::SET_PED_AO_BLOB_RENDERING(ped, toggle);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_SHELTERED( int ped )
+	bool LUA_NATIVE_PED_IS_PED_SHELTERED( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_SHELTERED(ped);
 		return retval;
@@ -24635,7 +24630,7 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_CREATE_SYNCHRONIZED_SCENE_AT_MAP_OBJECT( float x, float y, float z, float radius, unsigned object )
+	int LUA_NATIVE_PED_CREATE_SYNCHRONIZED_SCENE_AT_MAP_OBJECT( float x, float y, float z, float radius, Hash object )
 	{
 		auto retval = PED::CREATE_SYNCHRONIZED_SCENE_AT_MAP_OBJECT(x, y, z, radius, object);
 		return retval;
@@ -24696,7 +24691,7 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_ATTACH_SYNCHRONIZED_SCENE_TO_ENTITY( int sceneID, int entity, int boneIndex )
+	void LUA_NATIVE_PED_ATTACH_SYNCHRONIZED_SCENE_TO_ENTITY( int sceneID, Entity entity, int boneIndex )
 	{
 		PED::ATTACH_SYNCHRONIZED_SCENE_TO_ENTITY(sceneID, entity, boneIndex);
 	}
@@ -24711,13 +24706,13 @@ namespace lua::native
 		PED::TAKE_OWNERSHIP_OF_SYNCHRONIZED_SCENE(scene);
 	}
 
-	bool LUA_NATIVE_PED_FORCE_PED_MOTION_STATE( int ped, unsigned motionStateHash, bool p2, int p3, bool p4 )
+	bool LUA_NATIVE_PED_FORCE_PED_MOTION_STATE( Ped ped, Hash motionStateHash, bool p2, int p3, bool p4 )
 	{
 		auto retval = (bool)PED::FORCE_PED_MOTION_STATE(ped, motionStateHash, p2, p3, p4);
 		return retval;
 	}
 
-	std::tuple<bool, float, float> LUA_NATIVE_PED_GET_PED_CURRENT_MOVE_BLEND_RATIO( int ped, float speedX, float speedY )
+	std::tuple<bool, float, float> LUA_NATIVE_PED_GET_PED_CURRENT_MOVE_BLEND_RATIO( Ped ped, float speedX, float speedY )
 	{
 		std::tuple<bool, float, float> return_values;
 		std::get<0>(return_values) = (bool)PED::GET_PED_CURRENT_MOVE_BLEND_RATIO(ped, &speedX, &speedY);
@@ -24727,33 +24722,33 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_MAX_MOVE_BLEND_RATIO( int ped, float value )
+	void LUA_NATIVE_PED_SET_PED_MAX_MOVE_BLEND_RATIO( Ped ped, float value )
 	{
 		PED::SET_PED_MAX_MOVE_BLEND_RATIO(ped, value);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_MIN_MOVE_BLEND_RATIO( int ped, float value )
+	void LUA_NATIVE_PED_SET_PED_MIN_MOVE_BLEND_RATIO( Ped ped, float value )
 	{
 		PED::SET_PED_MIN_MOVE_BLEND_RATIO(ped, value);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_MOVE_RATE_OVERRIDE( int ped, float value )
+	void LUA_NATIVE_PED_SET_PED_MOVE_RATE_OVERRIDE( Ped ped, float value )
 	{
 		PED::SET_PED_MOVE_RATE_OVERRIDE(ped, value);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_MOVE_RATE_IN_WATER_OVERRIDE( int ped, float p1 )
+	void LUA_NATIVE_PED_SET_PED_MOVE_RATE_IN_WATER_OVERRIDE( Ped ped, float p1 )
 	{
 		PED::SET_PED_MOVE_RATE_IN_WATER_OVERRIDE(ped, p1);
 	}
 
-	bool LUA_NATIVE_PED_PED_HAS_SEXINESS_FLAG_SET( int ped, int sexinessFlag )
+	bool LUA_NATIVE_PED_PED_HAS_SEXINESS_FLAG_SET( Ped ped, int sexinessFlag )
 	{
 		auto retval = (bool)PED::PED_HAS_SEXINESS_FLAG_SET(ped, sexinessFlag);
 		return retval;
 	}
 
-	std::tuple<int, Any> LUA_NATIVE_PED_GET_PED_NEARBY_VEHICLES( int ped, Any sizeAndVehs )
+	std::tuple<int, Any> LUA_NATIVE_PED_GET_PED_NEARBY_VEHICLES( Ped ped, Any sizeAndVehs )
 	{
 		std::tuple<int, Any> return_values;
 		std::get<0>(return_values) = PED::GET_PED_NEARBY_VEHICLES(ped, &sizeAndVehs);
@@ -24762,7 +24757,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<int, Any> LUA_NATIVE_PED_GET_PED_NEARBY_PEDS( int ped, Any sizeAndPeds, int ignore )
+	std::tuple<int, Any> LUA_NATIVE_PED_GET_PED_NEARBY_PEDS( Ped ped, Any sizeAndPeds, int ignore )
 	{
 		std::tuple<int, Any> return_values;
 		std::get<0>(return_values) = PED::GET_PED_NEARBY_PEDS(ped, &sizeAndPeds, ignore);
@@ -24771,46 +24766,46 @@ namespace lua::native
 		return return_values;
 	}
 
-	bool LUA_NATIVE_PED_HAVE_ALL_STREAMING_REQUESTS_COMPLETED( int ped )
+	bool LUA_NATIVE_PED_HAVE_ALL_STREAMING_REQUESTS_COMPLETED( Ped ped )
 	{
 		auto retval = (bool)PED::HAVE_ALL_STREAMING_REQUESTS_COMPLETED(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_USING_ACTION_MODE( int ped )
+	bool LUA_NATIVE_PED_IS_PED_USING_ACTION_MODE( Ped ped )
 	{
 		auto retval = (bool)PED::IS_PED_USING_ACTION_MODE(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_USING_ACTION_MODE( int ped, bool p1, int p2, const char* action )
+	void LUA_NATIVE_PED_SET_PED_USING_ACTION_MODE( Ped ped, bool p1, int p2, const char* action )
 	{
 		PED::SET_PED_USING_ACTION_MODE(ped, p1, p2, action);
 	}
 
-	void LUA_NATIVE_PED_SET_MOVEMENT_MODE_OVERRIDE( int ped, const char* name )
+	void LUA_NATIVE_PED_SET_MOVEMENT_MODE_OVERRIDE( Ped ped, const char* name )
 	{
 		PED::SET_MOVEMENT_MODE_OVERRIDE(ped, name);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAPSULE( int ped, float value )
+	void LUA_NATIVE_PED_SET_PED_CAPSULE( Ped ped, float value )
 	{
 		PED::SET_PED_CAPSULE(ped, value);
 	}
 
-	int LUA_NATIVE_PED_REGISTER_PEDHEADSHOT( int ped )
+	int LUA_NATIVE_PED_REGISTER_PEDHEADSHOT( Ped ped )
 	{
 		auto retval = PED::REGISTER_PEDHEADSHOT(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_REGISTER_PEDHEADSHOT_HIRES( int ped )
+	int LUA_NATIVE_PED_REGISTER_PEDHEADSHOT_HIRES( Ped ped )
 	{
 		auto retval = PED::REGISTER_PEDHEADSHOT_HIRES(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_PED_REGISTER_PEDHEADSHOT_TRANSPARENT( int ped )
+	int LUA_NATIVE_PED_REGISTER_PEDHEADSHOT_TRANSPARENT( Ped ped )
 	{
 		auto retval = PED::REGISTER_PEDHEADSHOT_TRANSPARENT(ped);
 		return retval;
@@ -24868,12 +24863,12 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_HEATSCALE_OVERRIDE( int ped, float heatScale )
+	void LUA_NATIVE_PED_SET_PED_HEATSCALE_OVERRIDE( Ped ped, float heatScale )
 	{
 		PED::SET_PED_HEATSCALE_OVERRIDE(ped, heatScale);
 	}
 
-	void LUA_NATIVE_PED_DISABLE_PED_HEATSCALE_OVERRIDE( int ped )
+	void LUA_NATIVE_PED_DISABLE_PED_HEATSCALE_OVERRIDE( Ped ped )
 	{
 		PED::DISABLE_PED_HEATSCALE_OVERRIDE(ped);
 	}
@@ -24934,12 +24929,12 @@ namespace lua::native
 		return p1;
 	}
 
-	void LUA_NATIVE_PED_SET_IK_TARGET( int ped, int ikIndex, int entityLookAt, int boneLookAt, float offsetX, float offsetY, float offsetZ, Any p7, int blendInDuration, int blendOutDuration )
+	void LUA_NATIVE_PED_SET_IK_TARGET( Ped ped, int ikIndex, Entity entityLookAt, int boneLookAt, float offsetX, float offsetY, float offsetZ, Any p7, int blendInDuration, int blendOutDuration )
 	{
 		PED::SET_IK_TARGET(ped, ikIndex, entityLookAt, boneLookAt, offsetX, offsetY, offsetZ, p7, blendInDuration, blendOutDuration);
 	}
 
-	void LUA_NATIVE_PED_FORCE_INSTANT_LEG_IK_SETUP( int ped )
+	void LUA_NATIVE_PED_FORCE_INSTANT_LEG_IK_SETUP( Ped ped )
 	{
 		PED::FORCE_INSTANT_LEG_IK_SETUP(ped);
 	}
@@ -24976,38 +24971,38 @@ namespace lua::native
 		PED::REMOVE_STEALTH_MODE_ASSET(asset);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_LOD_MULTIPLIER( int ped, float multiplier )
+	void LUA_NATIVE_PED_SET_PED_LOD_MULTIPLIER( Ped ped, float multiplier )
 	{
 		PED::SET_PED_LOD_MULTIPLIER(ped, multiplier);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_LOSE_PROPS_ON_DAMAGE( int ped, bool toggle, int p2 )
+	void LUA_NATIVE_PED_SET_PED_CAN_LOSE_PROPS_ON_DAMAGE( Ped ped, bool toggle, int p2 )
 	{
 		PED::SET_PED_CAN_LOSE_PROPS_ON_DAMAGE(ped, toggle, p2);
 	}
 
-	void LUA_NATIVE_PED_SET_FORCE_FOOTSTEP_UPDATE( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_FORCE_FOOTSTEP_UPDATE( Ped ped, bool toggle )
 	{
 		PED::SET_FORCE_FOOTSTEP_UPDATE(ped, toggle);
 	}
 
-	void LUA_NATIVE_PED_SET_FORCE_STEP_TYPE( int ped, bool p1, int type, int p3 )
+	void LUA_NATIVE_PED_SET_FORCE_STEP_TYPE( Ped ped, bool p1, int type, int p3 )
 	{
 		PED::SET_FORCE_STEP_TYPE(ped, p1, type, p3);
 	}
 
-	bool LUA_NATIVE_PED_IS_ANY_HOSTILE_PED_NEAR_POINT( int ped, float x, float y, float z, float radius )
+	bool LUA_NATIVE_PED_IS_ANY_HOSTILE_PED_NEAR_POINT( Ped ped, float x, float y, float z, float radius )
 	{
 		auto retval = (bool)PED::IS_ANY_HOSTILE_PED_NEAR_POINT(ped, x, y, z, radius);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_SET_PED_CAN_PLAY_IN_CAR_IDLES( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_PED_CAN_PLAY_IN_CAR_IDLES( Ped ped, bool toggle )
 	{
 		PED::SET_PED_CAN_PLAY_IN_CAR_IDLES(ped, toggle);
 	}
 
-	bool LUA_NATIVE_PED_IS_TARGET_PED_IN_PERCEPTION_AREA( int ped, int targetPed, float p2, float p3, float p4, float p5 )
+	bool LUA_NATIVE_PED_IS_TARGET_PED_IN_PERCEPTION_AREA( Ped ped, Ped targetPed, float p2, float p3, float p4, float p5 )
 	{
 		auto retval = (bool)PED::IS_TARGET_PED_IN_PERCEPTION_AREA(ped, targetPed, p2, p3, p4, p5);
 		return retval;
@@ -25018,12 +25013,12 @@ namespace lua::native
 		PED::SET_POP_CONTROL_SPHERE_THIS_FRAME(x, y, z, min, max);
 	}
 
-	void LUA_NATIVE_PED_FORCE_ZERO_MASS_IN_COLLISIONS( int ped )
+	void LUA_NATIVE_PED_FORCE_ZERO_MASS_IN_COLLISIONS( Ped ped )
 	{
 		PED::FORCE_ZERO_MASS_IN_COLLISIONS(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_DISABLE_HIGH_FALL_DEATH( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_DISABLE_HIGH_FALL_DEATH( Ped ped, bool toggle )
 	{
 		PED::SET_DISABLE_HIGH_FALL_DEATH(ped, toggle);
 	}
@@ -25033,12 +25028,12 @@ namespace lua::native
 		PED::SET_PED_PHONE_PALETTE_IDX(p0, p1);
 	}
 
-	void LUA_NATIVE_PED_SET_PED_STEER_BIAS( int ped, float value )
+	void LUA_NATIVE_PED_SET_PED_STEER_BIAS( Ped ped, float value )
 	{
 		PED::SET_PED_STEER_BIAS(ped, value);
 	}
 
-	bool LUA_NATIVE_PED_IS_PED_SWITCHING_WEAPON( int Ped )
+	bool LUA_NATIVE_PED_IS_PED_SWITCHING_WEAPON( Ped Ped )
 	{
 		auto retval = (bool)PED::IS_PED_SWITCHING_WEAPON(Ped);
 		return retval;
@@ -25049,28 +25044,28 @@ namespace lua::native
 		PED::SET_PED_TREATED_AS_FRIENDLY(p0, p1, p2);
 	}
 
-	void LUA_NATIVE_PED_SET_DISABLE_PED_MAP_COLLISION( int ped )
+	void LUA_NATIVE_PED_SET_DISABLE_PED_MAP_COLLISION( Ped ped )
 	{
 		PED::SET_DISABLE_PED_MAP_COLLISION(ped);
 	}
 
-	void LUA_NATIVE_PED_ENABLE_MP_LIGHT( int ped, bool toggle )
+	void LUA_NATIVE_PED_ENABLE_MP_LIGHT( Ped ped, bool toggle )
 	{
 		PED::ENABLE_MP_LIGHT(ped, toggle);
 	}
 
-	bool LUA_NATIVE_PED_GET_MP_LIGHT_ENABLED( int ped )
+	bool LUA_NATIVE_PED_GET_MP_LIGHT_ENABLED( Ped ped )
 	{
 		auto retval = (bool)PED::GET_MP_LIGHT_ENABLED(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PED_CLEAR_COVER_POINT_FOR_PED( int ped )
+	void LUA_NATIVE_PED_CLEAR_COVER_POINT_FOR_PED( Ped ped )
 	{
 		PED::CLEAR_COVER_POINT_FOR_PED(ped);
 	}
 
-	void LUA_NATIVE_PED_SET_ALLOW_STUNT_JUMP_CAMERA( int ped, bool toggle )
+	void LUA_NATIVE_PED_SET_ALLOW_STUNT_JUMP_CAMERA( Ped ped, bool toggle )
 	{
 		PED::SET_ALLOW_STUNT_JUMP_CAMERA(ped, toggle);
 	}
@@ -25137,7 +25132,7 @@ namespace lua::native
 		return retval;
 	}
 
-	std::tuple<Any, Any> LUA_NATIVE_PHYSICS_ATTACH_ENTITIES_TO_ROPE( int ropeId, int ent1, int ent2, float ent1_x, float ent1_y, float ent1_z, float ent2_x, float ent2_y, float ent2_z, float length, bool p10, bool p11, Any p12, Any p13 )
+	std::tuple<Any, Any> LUA_NATIVE_PHYSICS_ATTACH_ENTITIES_TO_ROPE( int ropeId, Entity ent1, Entity ent2, float ent1_x, float ent1_y, float ent1_z, float ent2_x, float ent2_y, float ent2_z, float length, bool p10, bool p11, Any p12, Any p13 )
 	{
 		std::tuple<Any, Any> return_values;
 		PHYSICS::ATTACH_ENTITIES_TO_ROPE(ropeId, ent1, ent2, ent1_x, ent1_y, ent1_z, ent2_x, ent2_y, ent2_z, length, p10, p11, &p12, &p13);
@@ -25147,12 +25142,12 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_PHYSICS_ATTACH_ROPE_TO_ENTITY( int ropeId, int entity, float x, float y, float z, bool p5 )
+	void LUA_NATIVE_PHYSICS_ATTACH_ROPE_TO_ENTITY( int ropeId, Entity entity, float x, float y, float z, bool p5 )
 	{
 		PHYSICS::ATTACH_ROPE_TO_ENTITY(ropeId, entity, x, y, z, p5);
 	}
 
-	void LUA_NATIVE_PHYSICS_DETACH_ROPE_FROM_ENTITY( int ropeId, int entity )
+	void LUA_NATIVE_PHYSICS_DETACH_ROPE_FROM_ENTITY( int ropeId, Entity entity )
 	{
 		PHYSICS::DETACH_ROPE_FROM_ENTITY(ropeId, entity);
 	}
@@ -25276,33 +25271,33 @@ namespace lua::native
 		PHYSICS::APPLY_IMPULSE_TO_CLOTH(posX, posY, posZ, vecX, vecY, vecZ, impulse);
 	}
 
-	void LUA_NATIVE_PHYSICS_SET_DAMPING( int entity, int vertex, float value )
+	void LUA_NATIVE_PHYSICS_SET_DAMPING( Entity entity, int vertex, float value )
 	{
 		PHYSICS::SET_DAMPING(entity, vertex, value);
 	}
 
-	void LUA_NATIVE_PHYSICS_ACTIVATE_PHYSICS( int entity )
+	void LUA_NATIVE_PHYSICS_ACTIVATE_PHYSICS( Entity entity )
 	{
 		PHYSICS::ACTIVATE_PHYSICS(entity);
 	}
 
-	void LUA_NATIVE_PHYSICS_SET_CGOFFSET( int entity, float x, float y, float z )
+	void LUA_NATIVE_PHYSICS_SET_CGOFFSET( Entity entity, float x, float y, float z )
 	{
 		PHYSICS::SET_CGOFFSET(entity, x, y, z);
 	}
 
-	Vector3 LUA_NATIVE_PHYSICS_GET_CGOFFSET( int entity )
+	Vector3 LUA_NATIVE_PHYSICS_GET_CGOFFSET( Entity entity )
 	{
 		auto retval = PHYSICS::GET_CGOFFSET(entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_PHYSICS_SET_CG_AT_BOUNDCENTER( int entity )
+	void LUA_NATIVE_PHYSICS_SET_CG_AT_BOUNDCENTER( Entity entity )
 	{
 		PHYSICS::SET_CG_AT_BOUNDCENTER(entity);
 	}
 
-	void LUA_NATIVE_PHYSICS_BREAK_ENTITY_GLASS( int entity, float p1, float p2, float p3, float p4, float p5, float p6, float p7, float p8, Any p9, bool p10 )
+	void LUA_NATIVE_PHYSICS_BREAK_ENTITY_GLASS( Entity entity, float p1, float p2, float p3, float p4, float p5, float p6, float p7, float p8, Any p9, bool p10 )
 	{
 		PHYSICS::BREAK_ENTITY_GLASS(entity, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10);
 	}
@@ -25328,7 +25323,7 @@ namespace lua::native
 		PHYSICS::SET_DISABLE_FRAG_DAMAGE(object, toggle);
 	}
 
-	void LUA_NATIVE_PHYSICS_SET_USE_KINEMATIC_PHYSICS( int entity, bool toggle )
+	void LUA_NATIVE_PHYSICS_SET_USE_KINEMATIC_PHYSICS( Entity entity, bool toggle )
 	{
 		PHYSICS::SET_USE_KINEMATIC_PHYSICS(entity, toggle);
 	}
@@ -25343,29 +25338,29 @@ namespace lua::native
 		PHYSICS::SET_IN_ARENA_MODE(toggle);
 	}
 
-	int LUA_NATIVE_PLAYER_GET_PLAYER_PED( int player )
+	Ped LUA_NATIVE_PLAYER_GET_PLAYER_PED( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_PED(player);
 		return retval;
 	}
 
-	int LUA_NATIVE_PLAYER_GET_PLAYER_PED_SCRIPT_INDEX( int player )
+	Ped LUA_NATIVE_PLAYER_GET_PLAYER_PED_SCRIPT_INDEX( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_MODEL( int player, unsigned model )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_MODEL( Player player, Hash model )
 	{
 		PLAYER::SET_PLAYER_MODEL(player, model);
 	}
 
-	void LUA_NATIVE_PLAYER_CHANGE_PLAYER_PED( int player, int ped, bool p2, bool resetDamage )
+	void LUA_NATIVE_PLAYER_CHANGE_PLAYER_PED( Player player, Ped ped, bool p2, bool resetDamage )
 	{
 		PLAYER::CHANGE_PLAYER_PED(player, ped, p2, resetDamage);
 	}
 
-	std::tuple<int, int, int> LUA_NATIVE_PLAYER_GET_PLAYER_RGB_COLOUR( int player, int r, int g, int b )
+	std::tuple<int, int, int> LUA_NATIVE_PLAYER_GET_PLAYER_RGB_COLOUR( Player player, int r, int g, int b )
 	{
 		std::tuple<int, int, int> return_values;
 		PLAYER::GET_PLAYER_RGB_COLOUR(player, &r, &g, &b);
@@ -25382,13 +25377,13 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_PLAYER_GET_PLAYER_TEAM( int player )
+	int LUA_NATIVE_PLAYER_GET_PLAYER_TEAM( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_TEAM(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_TEAM( int player, int team )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_TEAM( Player player, int team )
 	{
 		PLAYER::SET_PLAYER_TEAM(player, team);
 	}
@@ -25399,25 +25394,25 @@ namespace lua::native
 		return retval;
 	}
 
-	const char* LUA_NATIVE_PLAYER_GET_PLAYER_NAME( int player )
+	const char* LUA_NATIVE_PLAYER_GET_PLAYER_NAME( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_NAME(player);
 		return retval;
 	}
 
-	float LUA_NATIVE_PLAYER_GET_WANTED_LEVEL_RADIUS( int player )
+	float LUA_NATIVE_PLAYER_GET_WANTED_LEVEL_RADIUS( Player player )
 	{
 		auto retval = PLAYER::GET_WANTED_LEVEL_RADIUS(player);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_PLAYER_GET_PLAYER_WANTED_CENTRE_POSITION( int player )
+	Vector3 LUA_NATIVE_PLAYER_GET_PLAYER_WANTED_CENTRE_POSITION( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_WANTED_CENTRE_POSITION(player);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_PLAYER_SET_PLAYER_WANTED_CENTRE_POSITION( int player, Vector3 position, bool p2, bool p3 )
+	Vector3 LUA_NATIVE_PLAYER_SET_PLAYER_WANTED_CENTRE_POSITION( Player player, Vector3 position, bool p2, bool p3 )
 	{
 		PLAYER::SET_PLAYER_WANTED_CENTRE_POSITION(player, &position, p2, p3);
 		return position;
@@ -25429,73 +25424,73 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_WANTED_LEVEL( int player, int wantedLevel, bool disableNoMission )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_WANTED_LEVEL( Player player, int wantedLevel, bool disableNoMission )
 	{
 		PLAYER::SET_PLAYER_WANTED_LEVEL(player, wantedLevel, disableNoMission);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_WANTED_LEVEL_NO_DROP( int player, int wantedLevel, bool p2 )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_WANTED_LEVEL_NO_DROP( Player player, int wantedLevel, bool p2 )
 	{
 		PLAYER::SET_PLAYER_WANTED_LEVEL_NO_DROP(player, wantedLevel, p2);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_WANTED_LEVEL_NOW( int player, bool p1 )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_WANTED_LEVEL_NOW( Player player, bool p1 )
 	{
 		PLAYER::SET_PLAYER_WANTED_LEVEL_NOW(player, p1);
 	}
 
-	bool LUA_NATIVE_PLAYER_ARE_PLAYER_FLASHING_STARS_ABOUT_TO_DROP( int player )
+	bool LUA_NATIVE_PLAYER_ARE_PLAYER_FLASHING_STARS_ABOUT_TO_DROP( Player player )
 	{
 		auto retval = (bool)PLAYER::ARE_PLAYER_FLASHING_STARS_ABOUT_TO_DROP(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_ARE_PLAYER_STARS_GREYED_OUT( int player )
+	bool LUA_NATIVE_PLAYER_ARE_PLAYER_STARS_GREYED_OUT( Player player )
 	{
 		auto retval = (bool)PLAYER::ARE_PLAYER_STARS_GREYED_OUT(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_WANTED_AND_HAS_BEEN_SEEN_BY_COPS( int player )
+	bool LUA_NATIVE_PLAYER_IS_WANTED_AND_HAS_BEEN_SEEN_BY_COPS( Player player )
 	{
 		auto retval = (bool)PLAYER::IS_WANTED_AND_HAS_BEEN_SEEN_BY_COPS(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_DISPATCH_COPS_FOR_PLAYER( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_DISPATCH_COPS_FOR_PLAYER( Player player, bool toggle )
 	{
 		PLAYER::SET_DISPATCH_COPS_FOR_PLAYER(player, toggle);
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_WANTED_LEVEL_GREATER( int player, int wantedLevel )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_WANTED_LEVEL_GREATER( Player player, int wantedLevel )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_WANTED_LEVEL_GREATER(player, wantedLevel);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_CLEAR_PLAYER_WANTED_LEVEL( int player )
+	void LUA_NATIVE_PLAYER_CLEAR_PLAYER_WANTED_LEVEL( Player player )
 	{
 		PLAYER::CLEAR_PLAYER_WANTED_LEVEL(player);
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_DEAD( int player )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_DEAD( Player player )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_DEAD(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_PRESSING_HORN( int player )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_PRESSING_HORN( Player player )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_PRESSING_HORN(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_CONTROL( int player, bool bHasControl, int flags )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_CONTROL( Player player, bool bHasControl, int flags )
 	{
 		PLAYER::SET_PLAYER_CONTROL(player, bHasControl, flags);
 	}
 
-	int LUA_NATIVE_PLAYER_GET_PLAYER_WANTED_LEVEL( int player )
+	int LUA_NATIVE_PLAYER_GET_PLAYER_WANTED_LEVEL( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_WANTED_LEVEL(player);
 		return retval;
@@ -25511,48 +25506,48 @@ namespace lua::native
 		PLAYER::SET_POLICE_RADAR_BLIPS(toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_POLICE_IGNORE_PLAYER( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_POLICE_IGNORE_PLAYER( Player player, bool toggle )
 	{
 		PLAYER::SET_POLICE_IGNORE_PLAYER(player, toggle);
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_PLAYING( int player )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_PLAYING( Player player )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_PLAYING(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_EVERYONE_IGNORE_PLAYER( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_EVERYONE_IGNORE_PLAYER( Player player, bool toggle )
 	{
 		PLAYER::SET_EVERYONE_IGNORE_PLAYER(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_ALL_RANDOM_PEDS_FLEE( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_ALL_RANDOM_PEDS_FLEE( Player player, bool toggle )
 	{
 		PLAYER::SET_ALL_RANDOM_PEDS_FLEE(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_ALL_RANDOM_PEDS_FLEE_THIS_FRAME( int player )
+	void LUA_NATIVE_PLAYER_SET_ALL_RANDOM_PEDS_FLEE_THIS_FRAME( Player player )
 	{
 		PLAYER::SET_ALL_RANDOM_PEDS_FLEE_THIS_FRAME(player);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_ALL_NEUTRAL_RANDOM_PEDS_FLEE( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_ALL_NEUTRAL_RANDOM_PEDS_FLEE( Player player, bool toggle )
 	{
 		PLAYER::SET_ALL_NEUTRAL_RANDOM_PEDS_FLEE(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_ALL_NEUTRAL_RANDOM_PEDS_FLEE_THIS_FRAME( int player )
+	void LUA_NATIVE_PLAYER_SET_ALL_NEUTRAL_RANDOM_PEDS_FLEE_THIS_FRAME( Player player )
 	{
 		PLAYER::SET_ALL_NEUTRAL_RANDOM_PEDS_FLEE_THIS_FRAME(player);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_LAW_PEDS_CAN_ATTACK_NON_WANTED_PLAYER_THIS_FRAME( int player )
+	void LUA_NATIVE_PLAYER_SET_LAW_PEDS_CAN_ATTACK_NON_WANTED_PLAYER_THIS_FRAME( Player player )
 	{
 		PLAYER::SET_LAW_PEDS_CAN_ATTACK_NON_WANTED_PLAYER_THIS_FRAME(player);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_IGNORE_LOW_PRIORITY_SHOCKING_EVENTS( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_IGNORE_LOW_PRIORITY_SHOCKING_EVENTS( Player player, bool toggle )
 	{
 		PLAYER::SET_IGNORE_LOW_PRIORITY_SHOCKING_EVENTS(player, toggle);
 	}
@@ -25562,12 +25557,12 @@ namespace lua::native
 		PLAYER::SET_WANTED_LEVEL_MULTIPLIER(multiplier);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_WANTED_LEVEL_DIFFICULTY( int player, float difficulty )
+	void LUA_NATIVE_PLAYER_SET_WANTED_LEVEL_DIFFICULTY( Player player, float difficulty )
 	{
 		PLAYER::SET_WANTED_LEVEL_DIFFICULTY(player, difficulty);
 	}
 
-	void LUA_NATIVE_PLAYER_RESET_WANTED_LEVEL_DIFFICULTY( int player )
+	void LUA_NATIVE_PLAYER_RESET_WANTED_LEVEL_DIFFICULTY( Player player )
 	{
 		PLAYER::RESET_WANTED_LEVEL_DIFFICULTY(player);
 	}
@@ -25578,12 +25573,12 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_WANTED_LEVEL_HIDDEN_ESCAPE_TIME( int player, int wantedLevel, int lossTime )
+	void LUA_NATIVE_PLAYER_SET_WANTED_LEVEL_HIDDEN_ESCAPE_TIME( Player player, int wantedLevel, int lossTime )
 	{
 		PLAYER::SET_WANTED_LEVEL_HIDDEN_ESCAPE_TIME(player, wantedLevel, lossTime);
 	}
 
-	void LUA_NATIVE_PLAYER_RESET_WANTED_LEVEL_HIDDEN_ESCAPE_TIME( int player )
+	void LUA_NATIVE_PLAYER_RESET_WANTED_LEVEL_HIDDEN_ESCAPE_TIME( Player player )
 	{
 		PLAYER::RESET_WANTED_LEVEL_HIDDEN_ESCAPE_TIME(player);
 	}
@@ -25593,42 +25588,42 @@ namespace lua::native
 		PLAYER::START_FIRING_AMNESTY(duration);
 	}
 
-	void LUA_NATIVE_PLAYER_REPORT_CRIME( int player, int crimeType, int wantedLvlThresh )
+	void LUA_NATIVE_PLAYER_REPORT_CRIME( Player player, int crimeType, int wantedLvlThresh )
 	{
 		PLAYER::REPORT_CRIME(player, crimeType, wantedLvlThresh);
 	}
 
-	void LUA_NATIVE_PLAYER_SUPPRESS_CRIME_THIS_FRAME( int player, int crimeType )
+	void LUA_NATIVE_PLAYER_SUPPRESS_CRIME_THIS_FRAME( Player player, int crimeType )
 	{
 		PLAYER::SUPPRESS_CRIME_THIS_FRAME(player, crimeType);
 	}
 
-	void LUA_NATIVE_PLAYER_UPDATE_WANTED_POSITION_THIS_FRAME( int player )
+	void LUA_NATIVE_PLAYER_UPDATE_WANTED_POSITION_THIS_FRAME( Player player )
 	{
 		PLAYER::UPDATE_WANTED_POSITION_THIS_FRAME(player);
 	}
 
-	void LUA_NATIVE_PLAYER_SUPPRESS_LOSING_WANTED_LEVEL_IF_HIDDEN_THIS_FRAME( int player )
+	void LUA_NATIVE_PLAYER_SUPPRESS_LOSING_WANTED_LEVEL_IF_HIDDEN_THIS_FRAME( Player player )
 	{
 		PLAYER::SUPPRESS_LOSING_WANTED_LEVEL_IF_HIDDEN_THIS_FRAME(player);
 	}
 
-	void LUA_NATIVE_PLAYER_ALLOW_EVASION_HUD_IF_DISABLING_HIDDEN_EVASION_THIS_FRAME( int player, Any p1 )
+	void LUA_NATIVE_PLAYER_ALLOW_EVASION_HUD_IF_DISABLING_HIDDEN_EVASION_THIS_FRAME( Player player, Any p1 )
 	{
 		PLAYER::ALLOW_EVASION_HUD_IF_DISABLING_HIDDEN_EVASION_THIS_FRAME(player, p1);
 	}
 
-	void LUA_NATIVE_PLAYER_FORCE_START_HIDDEN_EVASION( int player )
+	void LUA_NATIVE_PLAYER_FORCE_START_HIDDEN_EVASION( Player player )
 	{
 		PLAYER::FORCE_START_HIDDEN_EVASION(player);
 	}
 
-	void LUA_NATIVE_PLAYER_SUPPRESS_WITNESSES_CALLING_POLICE_THIS_FRAME( int player )
+	void LUA_NATIVE_PLAYER_SUPPRESS_WITNESSES_CALLING_POLICE_THIS_FRAME( Player player )
 	{
 		PLAYER::SUPPRESS_WITNESSES_CALLING_POLICE_THIS_FRAME(player);
 	}
 
-	void LUA_NATIVE_PLAYER_REPORT_POLICE_SPOTTED_PLAYER( int player )
+	void LUA_NATIVE_PLAYER_REPORT_POLICE_SPOTTED_PLAYER( Player player )
 	{
 		PLAYER::REPORT_POLICE_SPOTTED_PLAYER(player);
 	}
@@ -25643,70 +25638,70 @@ namespace lua::native
 		PLAYER::RESET_LAW_RESPONSE_DELAY_OVERRIDE();
 	}
 
-	bool LUA_NATIVE_PLAYER_CAN_PLAYER_START_MISSION( int player )
+	bool LUA_NATIVE_PLAYER_CAN_PLAYER_START_MISSION( Player player )
 	{
 		auto retval = (bool)PLAYER::CAN_PLAYER_START_MISSION(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_READY_FOR_CUTSCENE( int player )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_READY_FOR_CUTSCENE( Player player )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_READY_FOR_CUTSCENE(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_TARGETTING_ENTITY( int player, int entity )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_TARGETTING_ENTITY( Player player, Entity entity )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_TARGETTING_ENTITY(player, entity);
 		return retval;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_PLAYER_GET_PLAYER_TARGET_ENTITY( int player, int entity )
+	std::tuple<bool, Entity> LUA_NATIVE_PLAYER_GET_PLAYER_TARGET_ENTITY( Player player, Entity entity )
 	{
-		std::tuple<bool, int> return_values;
+		std::tuple<bool, Entity> return_values;
 		std::get<0>(return_values) = (bool)PLAYER::GET_PLAYER_TARGET_ENTITY(player, &entity);
 		std::get<1>(return_values) = entity;
 
 		return return_values;
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_FREE_AIMING( int player )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_FREE_AIMING( Player player )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_FREE_AIMING(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_FREE_AIMING_AT_ENTITY( int player, int entity )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_FREE_AIMING_AT_ENTITY( Player player, Entity entity )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_FREE_AIMING_AT_ENTITY(player, entity);
 		return retval;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_PLAYER_GET_ENTITY_PLAYER_IS_FREE_AIMING_AT( int player, int entity )
+	std::tuple<bool, Entity> LUA_NATIVE_PLAYER_GET_ENTITY_PLAYER_IS_FREE_AIMING_AT( Player player, Entity entity )
 	{
-		std::tuple<bool, int> return_values;
+		std::tuple<bool, Entity> return_values;
 		std::get<0>(return_values) = (bool)PLAYER::GET_ENTITY_PLAYER_IS_FREE_AIMING_AT(player, &entity);
 		std::get<1>(return_values) = entity;
 
 		return return_values;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_LOCKON_RANGE_OVERRIDE( int player, float range )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_LOCKON_RANGE_OVERRIDE( Player player, float range )
 	{
 		PLAYER::SET_PLAYER_LOCKON_RANGE_OVERRIDE(player, range);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_CAN_DO_DRIVE_BY( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_CAN_DO_DRIVE_BY( Player player, bool toggle )
 	{
 		PLAYER::SET_PLAYER_CAN_DO_DRIVE_BY(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_CAN_BE_HASSLED_BY_GANGS( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_CAN_BE_HASSLED_BY_GANGS( Player player, bool toggle )
 	{
 		PLAYER::SET_PLAYER_CAN_BE_HASSLED_BY_GANGS(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_CAN_USE_COVER( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_CAN_USE_COVER( Player player, bool toggle )
 	{
 		PLAYER::SET_PLAYER_CAN_USE_COVER(player, toggle);
 	}
@@ -25717,64 +25712,64 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_TARGETTING_ANYTHING( int player )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_TARGETTING_ANYTHING( Player player )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_TARGETTING_ANYTHING(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_SPRINT( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_SPRINT( Player player, bool toggle )
 	{
 		PLAYER::SET_PLAYER_SPRINT(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_RESET_PLAYER_STAMINA( int player )
+	void LUA_NATIVE_PLAYER_RESET_PLAYER_STAMINA( Player player )
 	{
 		PLAYER::RESET_PLAYER_STAMINA(player);
 	}
 
-	void LUA_NATIVE_PLAYER_RESTORE_PLAYER_STAMINA( int player, float p1 )
+	void LUA_NATIVE_PLAYER_RESTORE_PLAYER_STAMINA( Player player, float p1 )
 	{
 		PLAYER::RESTORE_PLAYER_STAMINA(player, p1);
 	}
 
-	float LUA_NATIVE_PLAYER_GET_PLAYER_SPRINT_STAMINA_REMAINING( int player )
+	float LUA_NATIVE_PLAYER_GET_PLAYER_SPRINT_STAMINA_REMAINING( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_SPRINT_STAMINA_REMAINING(player);
 		return retval;
 	}
 
-	float LUA_NATIVE_PLAYER_GET_PLAYER_SPRINT_TIME_REMAINING( int player )
+	float LUA_NATIVE_PLAYER_GET_PLAYER_SPRINT_TIME_REMAINING( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_SPRINT_TIME_REMAINING(player);
 		return retval;
 	}
 
-	float LUA_NATIVE_PLAYER_GET_PLAYER_UNDERWATER_TIME_REMAINING( int player )
+	float LUA_NATIVE_PLAYER_GET_PLAYER_UNDERWATER_TIME_REMAINING( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_UNDERWATER_TIME_REMAINING(player);
 		return retval;
 	}
 
-	float LUA_NATIVE_PLAYER_SET_PLAYER_UNDERWATER_BREATH_PERCENT_REMAINING( int player, float time )
+	float LUA_NATIVE_PLAYER_SET_PLAYER_UNDERWATER_BREATH_PERCENT_REMAINING( Player player, float time )
 	{
 		auto retval = PLAYER::SET_PLAYER_UNDERWATER_BREATH_PERCENT_REMAINING(player, time);
 		return retval;
 	}
 
-	int LUA_NATIVE_PLAYER_GET_PLAYER_GROUP( int player )
+	int LUA_NATIVE_PLAYER_GET_PLAYER_GROUP( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_GROUP(player);
 		return retval;
 	}
 
-	int LUA_NATIVE_PLAYER_GET_PLAYER_MAX_ARMOUR( int player )
+	int LUA_NATIVE_PLAYER_GET_PLAYER_MAX_ARMOUR( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_MAX_ARMOUR(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_CONTROL_ON( int player )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_CONTROL_ON( Player player )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_CONTROL_ON(player);
 		return retval;
@@ -25786,42 +25781,42 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_SCRIPT_CONTROL_ON( int player )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_SCRIPT_CONTROL_ON( Player player )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_SCRIPT_CONTROL_ON(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_CLIMBING( int player )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_CLIMBING( Player player )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_CLIMBING(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_BEING_ARRESTED( int player, bool atArresting )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_BEING_ARRESTED( Player player, bool atArresting )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_BEING_ARRESTED(player, atArresting);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_RESET_PLAYER_ARREST_STATE( int player )
+	void LUA_NATIVE_PLAYER_RESET_PLAYER_ARREST_STATE( Player player )
 	{
 		PLAYER::RESET_PLAYER_ARREST_STATE(player);
 	}
 
-	int LUA_NATIVE_PLAYER_GET_PLAYERS_LAST_VEHICLE(  )
+	Vehicle LUA_NATIVE_PLAYER_GET_PLAYERS_LAST_VEHICLE(  )
 	{
 		auto retval = PLAYER::GET_PLAYERS_LAST_VEHICLE();
 		return retval;
 	}
 
-	int LUA_NATIVE_PLAYER_GET_PLAYER_INDEX(  )
+	Player LUA_NATIVE_PLAYER_GET_PLAYER_INDEX(  )
 	{
 		auto retval = PLAYER::GET_PLAYER_INDEX();
 		return retval;
 	}
 
-	int LUA_NATIVE_PLAYER_INT_TO_PLAYERINDEX( int value )
+	Player LUA_NATIVE_PLAYER_INT_TO_PLAYERINDEX( int value )
 	{
 		auto retval = PLAYER::INT_TO_PLAYERINDEX(value);
 		return retval;
@@ -25833,43 +25828,43 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_PLAYER_GET_TIME_SINCE_PLAYER_HIT_VEHICLE( int player )
+	int LUA_NATIVE_PLAYER_GET_TIME_SINCE_PLAYER_HIT_VEHICLE( Player player )
 	{
 		auto retval = PLAYER::GET_TIME_SINCE_PLAYER_HIT_VEHICLE(player);
 		return retval;
 	}
 
-	int LUA_NATIVE_PLAYER_GET_TIME_SINCE_PLAYER_HIT_PED( int player )
+	int LUA_NATIVE_PLAYER_GET_TIME_SINCE_PLAYER_HIT_PED( Player player )
 	{
 		auto retval = PLAYER::GET_TIME_SINCE_PLAYER_HIT_PED(player);
 		return retval;
 	}
 
-	int LUA_NATIVE_PLAYER_GET_TIME_SINCE_PLAYER_DROVE_ON_PAVEMENT( int player )
+	int LUA_NATIVE_PLAYER_GET_TIME_SINCE_PLAYER_DROVE_ON_PAVEMENT( Player player )
 	{
 		auto retval = PLAYER::GET_TIME_SINCE_PLAYER_DROVE_ON_PAVEMENT(player);
 		return retval;
 	}
 
-	int LUA_NATIVE_PLAYER_GET_TIME_SINCE_PLAYER_DROVE_AGAINST_TRAFFIC( int player )
+	int LUA_NATIVE_PLAYER_GET_TIME_SINCE_PLAYER_DROVE_AGAINST_TRAFFIC( Player player )
 	{
 		auto retval = PLAYER::GET_TIME_SINCE_PLAYER_DROVE_AGAINST_TRAFFIC(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_FREE_FOR_AMBIENT_TASK( int player )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_FREE_FOR_AMBIENT_TASK( Player player )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_FREE_FOR_AMBIENT_TASK(player);
 		return retval;
 	}
 
-	int LUA_NATIVE_PLAYER_PLAYER_ID(  )
+	Player LUA_NATIVE_PLAYER_PLAYER_ID(  )
 	{
 		auto retval = PLAYER::PLAYER_ID();
 		return retval;
 	}
 
-	int LUA_NATIVE_PLAYER_PLAYER_PED_ID(  )
+	Ped LUA_NATIVE_PLAYER_PLAYER_PED_ID(  )
 	{
 		auto retval = PLAYER::PLAYER_PED_ID();
 		return retval;
@@ -25908,12 +25903,12 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_MAY_ONLY_ENTER_THIS_VEHICLE( int player, int vehicle )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_MAY_ONLY_ENTER_THIS_VEHICLE( Player player, Vehicle vehicle )
 	{
 		PLAYER::SET_PLAYER_MAY_ONLY_ENTER_THIS_VEHICLE(player, vehicle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_MAY_NOT_ENTER_ANY_VEHICLE( int player )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_MAY_NOT_ENTER_ANY_VEHICLE( Player player )
 	{
 		PLAYER::SET_PLAYER_MAY_NOT_ENTER_ANY_VEHICLE(player);
 	}
@@ -25965,44 +25960,44 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_INVINCIBLE( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_INVINCIBLE( Player player, bool toggle )
 	{
 		PLAYER::SET_PLAYER_INVINCIBLE(player, toggle);
 	}
 
-	bool LUA_NATIVE_PLAYER_GET_PLAYER_INVINCIBLE( int player )
+	bool LUA_NATIVE_PLAYER_GET_PLAYER_INVINCIBLE( Player player )
 	{
 		auto retval = (bool)PLAYER::GET_PLAYER_INVINCIBLE(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_GET_PLAYER_DEBUG_INVINCIBLE( int player )
+	bool LUA_NATIVE_PLAYER_GET_PLAYER_DEBUG_INVINCIBLE( Player player )
 	{
 		auto retval = (bool)PLAYER::GET_PLAYER_DEBUG_INVINCIBLE(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_INVINCIBLE_BUT_HAS_REACTIONS( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_INVINCIBLE_BUT_HAS_REACTIONS( Player player, bool toggle )
 	{
 		PLAYER::SET_PLAYER_INVINCIBLE_BUT_HAS_REACTIONS(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_CAN_COLLECT_DROPPED_MONEY( int player, bool p1 )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_CAN_COLLECT_DROPPED_MONEY( Player player, bool p1 )
 	{
 		PLAYER::SET_PLAYER_CAN_COLLECT_DROPPED_MONEY(player, p1);
 	}
 
-	void LUA_NATIVE_PLAYER_REMOVE_PLAYER_HELMET( int player, bool p2 )
+	void LUA_NATIVE_PLAYER_REMOVE_PLAYER_HELMET( Player player, bool p2 )
 	{
 		PLAYER::REMOVE_PLAYER_HELMET(player, p2);
 	}
 
-	void LUA_NATIVE_PLAYER_GIVE_PLAYER_RAGDOLL_CONTROL( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_GIVE_PLAYER_RAGDOLL_CONTROL( Player player, bool toggle )
 	{
 		PLAYER::GIVE_PLAYER_RAGDOLL_CONTROL(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_LOCKON( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_LOCKON( Player player, bool toggle )
 	{
 		PLAYER::SET_PLAYER_LOCKON(player, toggle);
 	}
@@ -26029,39 +26024,39 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_CLEAR_PLAYER_HAS_DAMAGED_AT_LEAST_ONE_PED( int player )
+	void LUA_NATIVE_PLAYER_CLEAR_PLAYER_HAS_DAMAGED_AT_LEAST_ONE_PED( Player player )
 	{
 		PLAYER::CLEAR_PLAYER_HAS_DAMAGED_AT_LEAST_ONE_PED(player);
 	}
 
-	bool LUA_NATIVE_PLAYER_HAS_PLAYER_DAMAGED_AT_LEAST_ONE_PED( int player )
+	bool LUA_NATIVE_PLAYER_HAS_PLAYER_DAMAGED_AT_LEAST_ONE_PED( Player player )
 	{
 		auto retval = (bool)PLAYER::HAS_PLAYER_DAMAGED_AT_LEAST_ONE_PED(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_CLEAR_PLAYER_HAS_DAMAGED_AT_LEAST_ONE_NON_ANIMAL_PED( int player )
+	void LUA_NATIVE_PLAYER_CLEAR_PLAYER_HAS_DAMAGED_AT_LEAST_ONE_NON_ANIMAL_PED( Player player )
 	{
 		PLAYER::CLEAR_PLAYER_HAS_DAMAGED_AT_LEAST_ONE_NON_ANIMAL_PED(player);
 	}
 
-	bool LUA_NATIVE_PLAYER_HAS_PLAYER_DAMAGED_AT_LEAST_ONE_NON_ANIMAL_PED( int player )
+	bool LUA_NATIVE_PLAYER_HAS_PLAYER_DAMAGED_AT_LEAST_ONE_NON_ANIMAL_PED( Player player )
 	{
 		auto retval = (bool)PLAYER::HAS_PLAYER_DAMAGED_AT_LEAST_ONE_NON_ANIMAL_PED(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_AIR_DRAG_MULTIPLIER_FOR_PLAYERS_VEHICLE( int player, float multiplier )
+	void LUA_NATIVE_PLAYER_SET_AIR_DRAG_MULTIPLIER_FOR_PLAYERS_VEHICLE( Player player, float multiplier )
 	{
 		PLAYER::SET_AIR_DRAG_MULTIPLIER_FOR_PLAYERS_VEHICLE(player, multiplier);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_SWIM_MULTIPLIER_FOR_PLAYER( int player, float multiplier )
+	void LUA_NATIVE_PLAYER_SET_SWIM_MULTIPLIER_FOR_PLAYER( Player player, float multiplier )
 	{
 		PLAYER::SET_SWIM_MULTIPLIER_FOR_PLAYER(player, multiplier);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_RUN_SPRINT_MULTIPLIER_FOR_PLAYER( int player, float multiplier )
+	void LUA_NATIVE_PLAYER_SET_RUN_SPRINT_MULTIPLIER_FOR_PLAYER( Player player, float multiplier )
 	{
 		PLAYER::SET_RUN_SPRINT_MULTIPLIER_FOR_PLAYER(player, multiplier);
 	}
@@ -26088,22 +26083,22 @@ namespace lua::native
 		PLAYER::ASSISTED_MOVEMENT_FLUSH_ROUTE();
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_FORCED_AIM( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_FORCED_AIM( Player player, bool toggle )
 	{
 		PLAYER::SET_PLAYER_FORCED_AIM(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_FORCED_ZOOM( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_FORCED_ZOOM( Player player, bool toggle )
 	{
 		PLAYER::SET_PLAYER_FORCED_ZOOM(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_FORCE_SKIP_AIM_INTRO( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_FORCE_SKIP_AIM_INTRO( Player player, bool toggle )
 	{
 		PLAYER::SET_PLAYER_FORCE_SKIP_AIM_INTRO(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_DISABLE_PLAYER_FIRING( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_DISABLE_PLAYER_FIRING( Player player, bool toggle )
 	{
 		PLAYER::DISABLE_PLAYER_FIRING(player, toggle);
 	}
@@ -26113,125 +26108,125 @@ namespace lua::native
 		PLAYER::DISABLE_PLAYER_THROW_GRENADE_WHILE_USING_GUN();
 	}
 
-	void LUA_NATIVE_PLAYER_SET_DISABLE_AMBIENT_MELEE_MOVE( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_DISABLE_AMBIENT_MELEE_MOVE( Player player, bool toggle )
 	{
 		PLAYER::SET_DISABLE_AMBIENT_MELEE_MOVE(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_MAX_ARMOUR( int player, int value )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_MAX_ARMOUR( Player player, int value )
 	{
 		PLAYER::SET_PLAYER_MAX_ARMOUR(player, value);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_ACTIVATE( int player, int p1 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_ACTIVATE( Player player, int p1 )
 	{
 		PLAYER::SPECIAL_ABILITY_ACTIVATE(player, p1);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_SPECIAL_ABILITY_MP( int player, int p1, Any p2 )
+	void LUA_NATIVE_PLAYER_SET_SPECIAL_ABILITY_MP( Player player, int p1, Any p2 )
 	{
 		PLAYER::SET_SPECIAL_ABILITY_MP(player, p1, p2);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_DEACTIVATE_MP( int player, int p1 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_DEACTIVATE_MP( Player player, int p1 )
 	{
 		PLAYER::SPECIAL_ABILITY_DEACTIVATE_MP(player, p1);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_DEACTIVATE( int player, Any p1 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_DEACTIVATE( Player player, Any p1 )
 	{
 		PLAYER::SPECIAL_ABILITY_DEACTIVATE(player, p1);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_DEACTIVATE_FAST( int player, Any p1 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_DEACTIVATE_FAST( Player player, Any p1 )
 	{
 		PLAYER::SPECIAL_ABILITY_DEACTIVATE_FAST(player, p1);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_RESET( int player, Any p1 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_RESET( Player player, Any p1 )
 	{
 		PLAYER::SPECIAL_ABILITY_RESET(player, p1);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_CHARGE_ON_MISSION_FAILED( int player, Any p1 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_CHARGE_ON_MISSION_FAILED( Player player, Any p1 )
 	{
 		PLAYER::SPECIAL_ABILITY_CHARGE_ON_MISSION_FAILED(player, p1);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_CHARGE_SMALL( int player, bool p1, bool p2, Any p3 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_CHARGE_SMALL( Player player, bool p1, bool p2, Any p3 )
 	{
 		PLAYER::SPECIAL_ABILITY_CHARGE_SMALL(player, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_CHARGE_MEDIUM( int player, bool p1, bool p2, Any p3 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_CHARGE_MEDIUM( Player player, bool p1, bool p2, Any p3 )
 	{
 		PLAYER::SPECIAL_ABILITY_CHARGE_MEDIUM(player, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_CHARGE_LARGE( int player, bool p1, bool p2, Any p3 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_CHARGE_LARGE( Player player, bool p1, bool p2, Any p3 )
 	{
 		PLAYER::SPECIAL_ABILITY_CHARGE_LARGE(player, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_CHARGE_CONTINUOUS( int player, int p1, Any p2 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_CHARGE_CONTINUOUS( Player player, Ped p1, Any p2 )
 	{
 		PLAYER::SPECIAL_ABILITY_CHARGE_CONTINUOUS(player, p1, p2);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_CHARGE_ABSOLUTE( int player, int p1, bool p2, Any p3 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_CHARGE_ABSOLUTE( Player player, int p1, bool p2, Any p3 )
 	{
 		PLAYER::SPECIAL_ABILITY_CHARGE_ABSOLUTE(player, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_CHARGE_NORMALIZED( int player, float normalizedValue, bool p2, Any p3 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_CHARGE_NORMALIZED( Player player, float normalizedValue, bool p2, Any p3 )
 	{
 		PLAYER::SPECIAL_ABILITY_CHARGE_NORMALIZED(player, normalizedValue, p2, p3);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_FILL_METER( int player, bool p1, Any p2 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_FILL_METER( Player player, bool p1, Any p2 )
 	{
 		PLAYER::SPECIAL_ABILITY_FILL_METER(player, p1, p2);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_DEPLETE_METER( int player, bool p1, Any p2 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_DEPLETE_METER( Player player, bool p1, Any p2 )
 	{
 		PLAYER::SPECIAL_ABILITY_DEPLETE_METER(player, p1, p2);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_LOCK( unsigned playerModel, Any p1 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_LOCK( Hash playerModel, Any p1 )
 	{
 		PLAYER::SPECIAL_ABILITY_LOCK(playerModel, p1);
 	}
 
-	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_UNLOCK( unsigned playerModel, Any p1 )
+	void LUA_NATIVE_PLAYER_SPECIAL_ABILITY_UNLOCK( Hash playerModel, Any p1 )
 	{
 		PLAYER::SPECIAL_ABILITY_UNLOCK(playerModel, p1);
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_SPECIAL_ABILITY_UNLOCKED( unsigned playerModel )
+	bool LUA_NATIVE_PLAYER_IS_SPECIAL_ABILITY_UNLOCKED( Hash playerModel )
 	{
 		auto retval = (bool)PLAYER::IS_SPECIAL_ABILITY_UNLOCKED(playerModel);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_SPECIAL_ABILITY_ACTIVE( int player, Any p1 )
+	bool LUA_NATIVE_PLAYER_IS_SPECIAL_ABILITY_ACTIVE( Player player, Any p1 )
 	{
 		auto retval = (bool)PLAYER::IS_SPECIAL_ABILITY_ACTIVE(player, p1);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_SPECIAL_ABILITY_METER_FULL( int player, Any p1 )
+	bool LUA_NATIVE_PLAYER_IS_SPECIAL_ABILITY_METER_FULL( Player player, Any p1 )
 	{
 		auto retval = (bool)PLAYER::IS_SPECIAL_ABILITY_METER_FULL(player, p1);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_ENABLE_SPECIAL_ABILITY( int player, bool toggle, Any p2 )
+	void LUA_NATIVE_PLAYER_ENABLE_SPECIAL_ABILITY( Player player, bool toggle, Any p2 )
 	{
 		PLAYER::ENABLE_SPECIAL_ABILITY(player, toggle, p2);
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_SPECIAL_ABILITY_ENABLED( int player, Any p1 )
+	bool LUA_NATIVE_PLAYER_IS_SPECIAL_ABILITY_ENABLED( Player player, Any p1 )
 	{
 		auto retval = (bool)PLAYER::IS_SPECIAL_ABILITY_ENABLED(player, p1);
 		return retval;
@@ -26242,35 +26237,35 @@ namespace lua::native
 		PLAYER::SET_SPECIAL_ABILITY_MULTIPLIER(multiplier);
 	}
 
-	void LUA_NATIVE_PLAYER_UPDATE_SPECIAL_ABILITY_FROM_STAT( int player, Any p1 )
+	void LUA_NATIVE_PLAYER_UPDATE_SPECIAL_ABILITY_FROM_STAT( Player player, Any p1 )
 	{
 		PLAYER::UPDATE_SPECIAL_ABILITY_FROM_STAT(player, p1);
 	}
 
-	bool LUA_NATIVE_PLAYER_GET_IS_PLAYER_DRIVING_ON_HIGHWAY( int player )
+	bool LUA_NATIVE_PLAYER_GET_IS_PLAYER_DRIVING_ON_HIGHWAY( Player player )
 	{
 		auto retval = (bool)PLAYER::GET_IS_PLAYER_DRIVING_ON_HIGHWAY(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_GET_IS_PLAYER_DRIVING_WRECKLESS( int player, int p1 )
+	bool LUA_NATIVE_PLAYER_GET_IS_PLAYER_DRIVING_WRECKLESS( Player player, int p1 )
 	{
 		auto retval = (bool)PLAYER::GET_IS_PLAYER_DRIVING_WRECKLESS(player, p1);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_GET_IS_MOPPING_AREA_FREE_IN_FRONT_OF_PLAYER( int player, float p1 )
+	bool LUA_NATIVE_PLAYER_GET_IS_MOPPING_AREA_FREE_IN_FRONT_OF_PLAYER( Player player, float p1 )
 	{
 		auto retval = (bool)PLAYER::GET_IS_MOPPING_AREA_FREE_IN_FRONT_OF_PLAYER(player, p1);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_START_PLAYER_TELEPORT( int player, float x, float y, float z, float heading, bool p5, bool findCollisionLand, bool p7 )
+	void LUA_NATIVE_PLAYER_START_PLAYER_TELEPORT( Player player, float x, float y, float z, float heading, bool p5, bool findCollisionLand, bool p7 )
 	{
 		PLAYER::START_PLAYER_TELEPORT(player, x, y, z, heading, p5, findCollisionLand, p7);
 	}
 
-	bool LUA_NATIVE_PLAYER_UPDATE_PLAYER_TELEPORT( int player )
+	bool LUA_NATIVE_PLAYER_UPDATE_PLAYER_TELEPORT( Player player )
 	{
 		auto retval = (bool)PLAYER::UPDATE_PLAYER_TELEPORT(player);
 		return retval;
@@ -26287,143 +26282,143 @@ namespace lua::native
 		return retval;
 	}
 
-	float LUA_NATIVE_PLAYER_GET_PLAYER_CURRENT_STEALTH_NOISE( int player )
+	float LUA_NATIVE_PLAYER_GET_PLAYER_CURRENT_STEALTH_NOISE( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_CURRENT_STEALTH_NOISE(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_HEALTH_RECHARGE_MULTIPLIER( int player, float regenRate )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_HEALTH_RECHARGE_MULTIPLIER( Player player, float regenRate )
 	{
 		PLAYER::SET_PLAYER_HEALTH_RECHARGE_MULTIPLIER(player, regenRate);
 	}
 
-	float LUA_NATIVE_PLAYER_GET_PLAYER_HEALTH_RECHARGE_MAX_PERCENT( int player )
+	float LUA_NATIVE_PLAYER_GET_PLAYER_HEALTH_RECHARGE_MAX_PERCENT( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_HEALTH_RECHARGE_MAX_PERCENT(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_HEALTH_RECHARGE_MAX_PERCENT( int player, float limit )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_HEALTH_RECHARGE_MAX_PERCENT( Player player, float limit )
 	{
 		PLAYER::SET_PLAYER_HEALTH_RECHARGE_MAX_PERCENT(player, limit);
 	}
 
-	void LUA_NATIVE_PLAYER_DISABLE_PLAYER_HEALTH_RECHARGE( int player )
+	void LUA_NATIVE_PLAYER_DISABLE_PLAYER_HEALTH_RECHARGE( Player player )
 	{
 		PLAYER::DISABLE_PLAYER_HEALTH_RECHARGE(player);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_FALL_DISTANCE_TO_TRIGGER_RAGDOLL_OVERRIDE( int player, float p1 )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_FALL_DISTANCE_TO_TRIGGER_RAGDOLL_OVERRIDE( Player player, float p1 )
 	{
 		PLAYER::SET_PLAYER_FALL_DISTANCE_TO_TRIGGER_RAGDOLL_OVERRIDE(player, p1);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_WEAPON_DAMAGE_MODIFIER( int player, float modifier )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_WEAPON_DAMAGE_MODIFIER( Player player, float modifier )
 	{
 		PLAYER::SET_PLAYER_WEAPON_DAMAGE_MODIFIER(player, modifier);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_WEAPON_DEFENSE_MODIFIER( int player, float modifier )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_WEAPON_DEFENSE_MODIFIER( Player player, float modifier )
 	{
 		PLAYER::SET_PLAYER_WEAPON_DEFENSE_MODIFIER(player, modifier);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_WEAPON_MINIGUN_DEFENSE_MODIFIER( int player, float modifier )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_WEAPON_MINIGUN_DEFENSE_MODIFIER( Player player, float modifier )
 	{
 		PLAYER::SET_PLAYER_WEAPON_MINIGUN_DEFENSE_MODIFIER(player, modifier);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_MELEE_WEAPON_DAMAGE_MODIFIER( int player, float modifier, bool p2 )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_MELEE_WEAPON_DAMAGE_MODIFIER( Player player, float modifier, bool p2 )
 	{
 		PLAYER::SET_PLAYER_MELEE_WEAPON_DAMAGE_MODIFIER(player, modifier, p2);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_MELEE_WEAPON_DEFENSE_MODIFIER( int player, float modifier )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_MELEE_WEAPON_DEFENSE_MODIFIER( Player player, float modifier )
 	{
 		PLAYER::SET_PLAYER_MELEE_WEAPON_DEFENSE_MODIFIER(player, modifier);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_VEHICLE_DAMAGE_MODIFIER( int player, float modifier )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_VEHICLE_DAMAGE_MODIFIER( Player player, float modifier )
 	{
 		PLAYER::SET_PLAYER_VEHICLE_DAMAGE_MODIFIER(player, modifier);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_VEHICLE_DEFENSE_MODIFIER( int player, float modifier )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_VEHICLE_DEFENSE_MODIFIER( Player player, float modifier )
 	{
 		PLAYER::SET_PLAYER_VEHICLE_DEFENSE_MODIFIER(player, modifier);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_MAX_EXPLOSIVE_DAMAGE( int player, float p1 )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_MAX_EXPLOSIVE_DAMAGE( Player player, float p1 )
 	{
 		PLAYER::SET_PLAYER_MAX_EXPLOSIVE_DAMAGE(player, p1);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_EXPLOSIVE_DAMAGE_MODIFIER( int player, Any p1 )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_EXPLOSIVE_DAMAGE_MODIFIER( Player player, Any p1 )
 	{
 		PLAYER::SET_PLAYER_EXPLOSIVE_DAMAGE_MODIFIER(player, p1);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_WEAPON_TAKEDOWN_DEFENSE_MODIFIER( int player, float p1 )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_WEAPON_TAKEDOWN_DEFENSE_MODIFIER( Player player, float p1 )
 	{
 		PLAYER::SET_PLAYER_WEAPON_TAKEDOWN_DEFENSE_MODIFIER(player, p1);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_PARACHUTE_TINT_INDEX( int player, int tintIndex )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_PARACHUTE_TINT_INDEX( Player player, int tintIndex )
 	{
 		PLAYER::SET_PLAYER_PARACHUTE_TINT_INDEX(player, tintIndex);
 	}
 
-	int LUA_NATIVE_PLAYER_GET_PLAYER_PARACHUTE_TINT_INDEX( int player, int tintIndex )
+	int LUA_NATIVE_PLAYER_GET_PLAYER_PARACHUTE_TINT_INDEX( Player player, int tintIndex )
 	{
 		PLAYER::GET_PLAYER_PARACHUTE_TINT_INDEX(player, &tintIndex);
 		return tintIndex;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_RESERVE_PARACHUTE_TINT_INDEX( int player, int index )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_RESERVE_PARACHUTE_TINT_INDEX( Player player, int index )
 	{
 		PLAYER::SET_PLAYER_RESERVE_PARACHUTE_TINT_INDEX(player, index);
 	}
 
-	int LUA_NATIVE_PLAYER_GET_PLAYER_RESERVE_PARACHUTE_TINT_INDEX( int player, int index )
+	int LUA_NATIVE_PLAYER_GET_PLAYER_RESERVE_PARACHUTE_TINT_INDEX( Player player, int index )
 	{
 		PLAYER::GET_PLAYER_RESERVE_PARACHUTE_TINT_INDEX(player, &index);
 		return index;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_PARACHUTE_PACK_TINT_INDEX( int player, int tintIndex )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_PARACHUTE_PACK_TINT_INDEX( Player player, int tintIndex )
 	{
 		PLAYER::SET_PLAYER_PARACHUTE_PACK_TINT_INDEX(player, tintIndex);
 	}
 
-	int LUA_NATIVE_PLAYER_GET_PLAYER_PARACHUTE_PACK_TINT_INDEX( int player, int tintIndex )
+	int LUA_NATIVE_PLAYER_GET_PLAYER_PARACHUTE_PACK_TINT_INDEX( Player player, int tintIndex )
 	{
 		PLAYER::GET_PLAYER_PARACHUTE_PACK_TINT_INDEX(player, &tintIndex);
 		return tintIndex;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_HAS_RESERVE_PARACHUTE( int player )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_HAS_RESERVE_PARACHUTE( Player player )
 	{
 		PLAYER::SET_PLAYER_HAS_RESERVE_PARACHUTE(player);
 	}
 
-	bool LUA_NATIVE_PLAYER_GET_PLAYER_HAS_RESERVE_PARACHUTE( int player )
+	bool LUA_NATIVE_PLAYER_GET_PLAYER_HAS_RESERVE_PARACHUTE( Player player )
 	{
 		auto retval = (bool)PLAYER::GET_PLAYER_HAS_RESERVE_PARACHUTE(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_CAN_LEAVE_PARACHUTE_SMOKE_TRAIL( int player, bool enabled )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_CAN_LEAVE_PARACHUTE_SMOKE_TRAIL( Player player, bool enabled )
 	{
 		PLAYER::SET_PLAYER_CAN_LEAVE_PARACHUTE_SMOKE_TRAIL(player, enabled);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_PARACHUTE_SMOKE_TRAIL_COLOR( int player, int r, int g, int b )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_PARACHUTE_SMOKE_TRAIL_COLOR( Player player, int r, int g, int b )
 	{
 		PLAYER::SET_PLAYER_PARACHUTE_SMOKE_TRAIL_COLOR(player, r, g, b);
 	}
 
-	std::tuple<int, int, int> LUA_NATIVE_PLAYER_GET_PLAYER_PARACHUTE_SMOKE_TRAIL_COLOR( int player, int r, int g, int b )
+	std::tuple<int, int, int> LUA_NATIVE_PLAYER_GET_PLAYER_PARACHUTE_SMOKE_TRAIL_COLOR( Player player, int r, int g, int b )
 	{
 		std::tuple<int, int, int> return_values;
 		PLAYER::GET_PLAYER_PARACHUTE_SMOKE_TRAIL_COLOR(player, &r, &g, &b);
@@ -26434,69 +26429,69 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_PHONE_PALETTE_IDX( int player, int flags )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_PHONE_PALETTE_IDX( Player player, int flags )
 	{
 		PLAYER::SET_PLAYER_PHONE_PALETTE_IDX(player, flags);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_NOISE_MULTIPLIER( int player, float multiplier )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_NOISE_MULTIPLIER( Player player, float multiplier )
 	{
 		PLAYER::SET_PLAYER_NOISE_MULTIPLIER(player, multiplier);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_SNEAKING_NOISE_MULTIPLIER( int player, float multiplier )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_SNEAKING_NOISE_MULTIPLIER( Player player, float multiplier )
 	{
 		PLAYER::SET_PLAYER_SNEAKING_NOISE_MULTIPLIER(player, multiplier);
 	}
 
-	bool LUA_NATIVE_PLAYER_CAN_PED_HEAR_PLAYER( int player, int ped )
+	bool LUA_NATIVE_PLAYER_CAN_PED_HEAR_PLAYER( Player player, Ped ped )
 	{
 		auto retval = (bool)PLAYER::CAN_PED_HEAR_PLAYER(player, ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SIMULATE_PLAYER_INPUT_GAIT( int player, float amount, int gaitType, float speed, bool p4, bool p5, Any p6 )
+	void LUA_NATIVE_PLAYER_SIMULATE_PLAYER_INPUT_GAIT( Player player, float amount, int gaitType, float speed, bool p4, bool p5, Any p6 )
 	{
 		PLAYER::SIMULATE_PLAYER_INPUT_GAIT(player, amount, gaitType, speed, p4, p5, p6);
 	}
 
-	void LUA_NATIVE_PLAYER_RESET_PLAYER_INPUT_GAIT( int player )
+	void LUA_NATIVE_PLAYER_RESET_PLAYER_INPUT_GAIT( Player player )
 	{
 		PLAYER::RESET_PLAYER_INPUT_GAIT(player);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_AUTO_GIVE_PARACHUTE_WHEN_ENTER_PLANE( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_AUTO_GIVE_PARACHUTE_WHEN_ENTER_PLANE( Player player, bool toggle )
 	{
 		PLAYER::SET_AUTO_GIVE_PARACHUTE_WHEN_ENTER_PLANE(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_AUTO_GIVE_SCUBA_GEAR_WHEN_EXIT_VEHICLE( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_AUTO_GIVE_SCUBA_GEAR_WHEN_EXIT_VEHICLE( Player player, bool toggle )
 	{
 		PLAYER::SET_AUTO_GIVE_SCUBA_GEAR_WHEN_EXIT_VEHICLE(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_STEALTH_PERCEPTION_MODIFIER( int player, float value )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_STEALTH_PERCEPTION_MODIFIER( Player player, float value )
 	{
 		PLAYER::SET_PLAYER_STEALTH_PERCEPTION_MODIFIER(player, value);
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_REMOTE_PLAYER_IN_NON_CLONED_VEHICLE( int player )
+	bool LUA_NATIVE_PLAYER_IS_REMOTE_PLAYER_IN_NON_CLONED_VEHICLE( Player player )
 	{
 		auto retval = (bool)PLAYER::IS_REMOTE_PLAYER_IN_NON_CLONED_VEHICLE(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_INCREASE_PLAYER_JUMP_SUPPRESSION_RANGE( int player )
+	void LUA_NATIVE_PLAYER_INCREASE_PLAYER_JUMP_SUPPRESSION_RANGE( Player player )
 	{
 		PLAYER::INCREASE_PLAYER_JUMP_SUPPRESSION_RANGE(player);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_SIMULATE_AIMING( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_SIMULATE_AIMING( Player player, bool toggle )
 	{
 		PLAYER::SET_PLAYER_SIMULATE_AIMING(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_CLOTH_PIN_FRAMES( int player, int p1 )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_CLOTH_PIN_FRAMES( Player player, int p1 )
 	{
 		PLAYER::SET_PLAYER_CLOTH_PIN_FRAMES(player, p1);
 	}
@@ -26521,19 +26516,19 @@ namespace lua::native
 		PLAYER::PLAYER_DETACH_VIRTUAL_BOUND();
 	}
 
-	bool LUA_NATIVE_PLAYER_HAS_PLAYER_BEEN_SPOTTED_IN_STOLEN_VEHICLE( int player )
+	bool LUA_NATIVE_PLAYER_HAS_PLAYER_BEEN_SPOTTED_IN_STOLEN_VEHICLE( Player player )
 	{
 		auto retval = (bool)PLAYER::HAS_PLAYER_BEEN_SPOTTED_IN_STOLEN_VEHICLE(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_BATTLE_AWARE( int player )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_BATTLE_AWARE( Player player )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_BATTLE_AWARE(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_GET_PLAYER_RECEIVED_BATTLE_EVENT_RECENTLY( int player, int p1, bool p2 )
+	bool LUA_NATIVE_PLAYER_GET_PLAYER_RECEIVED_BATTLE_EVENT_RECENTLY( Player player, int p1, bool p2 )
 	{
 		auto retval = (bool)PLAYER::GET_PLAYER_RECEIVED_BATTLE_EVENT_RECENTLY(player, p1, p2);
 		return retval;
@@ -26549,76 +26544,76 @@ namespace lua::native
 		PLAYER::RESET_WORLD_BOUNDARY_FOR_PLAYER();
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_RIDING_TRAIN( int player )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_RIDING_TRAIN( Player player )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_RIDING_TRAIN(player);
 		return retval;
 	}
 
-	bool LUA_NATIVE_PLAYER_HAS_PLAYER_LEFT_THE_WORLD( int player )
+	bool LUA_NATIVE_PLAYER_HAS_PLAYER_LEFT_THE_WORLD( Player player )
 	{
 		auto retval = (bool)PLAYER::HAS_PLAYER_LEFT_THE_WORLD(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_LEAVE_PED_BEHIND( int player, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_LEAVE_PED_BEHIND( Player player, bool toggle )
 	{
 		PLAYER::SET_PLAYER_LEAVE_PED_BEHIND(player, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_PARACHUTE_VARIATION_OVERRIDE( int player, int p1, Any p2, Any p3, bool p4 )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_PARACHUTE_VARIATION_OVERRIDE( Player player, int p1, Any p2, Any p3, bool p4 )
 	{
 		PLAYER::SET_PLAYER_PARACHUTE_VARIATION_OVERRIDE(player, p1, p2, p3, p4);
 	}
 
-	void LUA_NATIVE_PLAYER_CLEAR_PLAYER_PARACHUTE_VARIATION_OVERRIDE( int player )
+	void LUA_NATIVE_PLAYER_CLEAR_PLAYER_PARACHUTE_VARIATION_OVERRIDE( Player player )
 	{
 		PLAYER::CLEAR_PLAYER_PARACHUTE_VARIATION_OVERRIDE(player);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_PARACHUTE_MODEL_OVERRIDE( int player, unsigned model )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_PARACHUTE_MODEL_OVERRIDE( Player player, Hash model )
 	{
 		PLAYER::SET_PLAYER_PARACHUTE_MODEL_OVERRIDE(player, model);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE( int player, unsigned model )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE( Player player, Hash model )
 	{
 		PLAYER::SET_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE(player, model);
 	}
 
-	unsigned LUA_NATIVE_PLAYER_GET_PLAYER_PARACHUTE_MODEL_OVERRIDE( int player )
+	Hash LUA_NATIVE_PLAYER_GET_PLAYER_PARACHUTE_MODEL_OVERRIDE( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_PARACHUTE_MODEL_OVERRIDE(player);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_PLAYER_GET_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE( int player )
+	Hash LUA_NATIVE_PLAYER_GET_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_CLEAR_PLAYER_PARACHUTE_MODEL_OVERRIDE( int player )
+	void LUA_NATIVE_PLAYER_CLEAR_PLAYER_PARACHUTE_MODEL_OVERRIDE( Player player )
 	{
 		PLAYER::CLEAR_PLAYER_PARACHUTE_MODEL_OVERRIDE(player);
 	}
 
-	void LUA_NATIVE_PLAYER_CLEAR_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE( int player )
+	void LUA_NATIVE_PLAYER_CLEAR_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE( Player player )
 	{
 		PLAYER::CLEAR_PLAYER_RESERVE_PARACHUTE_MODEL_OVERRIDE(player);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE( int player, unsigned model )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE( Player player, Hash model )
 	{
 		PLAYER::SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(player, model);
 	}
 
-	void LUA_NATIVE_PLAYER_CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE( int player )
+	void LUA_NATIVE_PLAYER_CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE( Player player )
 	{
 		PLAYER::CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE(player);
 	}
 
-	void LUA_NATIVE_PLAYER_DISABLE_PLAYER_VEHICLE_REWARDS( int player )
+	void LUA_NATIVE_PLAYER_DISABLE_PLAYER_VEHICLE_REWARDS( Player player )
 	{
 		PLAYER::DISABLE_PLAYER_VEHICLE_REWARDS(player);
 	}
@@ -26628,34 +26623,34 @@ namespace lua::native
 		PLAYER::SET_PLAYER_SPECTATED_VEHICLE_RADIO_OVERRIDE(p0);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_BLUETOOTH_STATE( int player, bool state )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_BLUETOOTH_STATE( Player player, bool state )
 	{
 		PLAYER::SET_PLAYER_BLUETOOTH_STATE(player, state);
 	}
 
-	bool LUA_NATIVE_PLAYER_IS_PLAYER_BLUETOOTH_ENABLE( int player )
+	bool LUA_NATIVE_PLAYER_IS_PLAYER_BLUETOOTH_ENABLE( Player player )
 	{
 		auto retval = (bool)PLAYER::IS_PLAYER_BLUETOOTH_ENABLE(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_DISABLE_CAMERA_VIEW_MODE_CYCLE( int player )
+	void LUA_NATIVE_PLAYER_DISABLE_CAMERA_VIEW_MODE_CYCLE( Player player )
 	{
 		PLAYER::DISABLE_CAMERA_VIEW_MODE_CYCLE(player);
 	}
 
-	int LUA_NATIVE_PLAYER_GET_PLAYER_FAKE_WANTED_LEVEL( int player )
+	int LUA_NATIVE_PLAYER_GET_PLAYER_FAKE_WANTED_LEVEL( Player player )
 	{
 		auto retval = PLAYER::GET_PLAYER_FAKE_WANTED_LEVEL(player);
 		return retval;
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_CAN_DAMAGE_PLAYER( int player1, int player2, bool toggle )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_CAN_DAMAGE_PLAYER( Player player1, Player player2, bool toggle )
 	{
 		PLAYER::SET_PLAYER_CAN_DAMAGE_PLAYER(player1, player2, toggle);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_APPLY_WAYPOINT_OF_PLAYER( int player, int hudColor )
+	void LUA_NATIVE_PLAYER_SET_APPLY_WAYPOINT_OF_PLAYER( Player player, int hudColor )
 	{
 		PLAYER::SET_APPLY_WAYPOINT_OF_PLAYER(player, hudColor);
 	}
@@ -26676,17 +26671,17 @@ namespace lua::native
 		PLAYER::SET_PLAYER_HOMING_DISABLED_FOR_ALL_VEHICLE_WEAPONS(p0, p1);
 	}
 
-	void LUA_NATIVE_PLAYER_ADD_PLAYER_TARGETABLE_ENTITY( int player, int entity )
+	void LUA_NATIVE_PLAYER_ADD_PLAYER_TARGETABLE_ENTITY( Player player, Entity entity )
 	{
 		PLAYER::ADD_PLAYER_TARGETABLE_ENTITY(player, entity);
 	}
 
-	void LUA_NATIVE_PLAYER_REMOVE_PLAYER_TARGETABLE_ENTITY( int player, int entity )
+	void LUA_NATIVE_PLAYER_REMOVE_PLAYER_TARGETABLE_ENTITY( Player player, Entity entity )
 	{
 		PLAYER::REMOVE_PLAYER_TARGETABLE_ENTITY(player, entity);
 	}
 
-	void LUA_NATIVE_PLAYER_SET_PLAYER_PREVIOUS_VARIATION_DATA( int player, int p1, int p2, Any p3, Any p4, Any p5 )
+	void LUA_NATIVE_PLAYER_SET_PLAYER_PREVIOUS_VARIATION_DATA( Player player, int p1, int p2, Any p3, Any p4, Any p5 )
 	{
 		PLAYER::SET_PLAYER_PREVIOUS_VARIATION_DATA(player, p1, p2, p3, p4, p5);
 	}
@@ -26889,23 +26884,23 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_SCRIPT_REQUEST_SCRIPT_WITH_NAME_HASH( unsigned scriptHash )
+	void LUA_NATIVE_SCRIPT_REQUEST_SCRIPT_WITH_NAME_HASH( Hash scriptHash )
 	{
 		SCRIPT::REQUEST_SCRIPT_WITH_NAME_HASH(scriptHash);
 	}
 
-	void LUA_NATIVE_SCRIPT_SET_SCRIPT_WITH_NAME_HASH_AS_NO_LONGER_NEEDED( unsigned scriptHash )
+	void LUA_NATIVE_SCRIPT_SET_SCRIPT_WITH_NAME_HASH_AS_NO_LONGER_NEEDED( Hash scriptHash )
 	{
 		SCRIPT::SET_SCRIPT_WITH_NAME_HASH_AS_NO_LONGER_NEEDED(scriptHash);
 	}
 
-	bool LUA_NATIVE_SCRIPT_HAS_SCRIPT_WITH_NAME_HASH_LOADED( unsigned scriptHash )
+	bool LUA_NATIVE_SCRIPT_HAS_SCRIPT_WITH_NAME_HASH_LOADED( Hash scriptHash )
 	{
 		auto retval = (bool)SCRIPT::HAS_SCRIPT_WITH_NAME_HASH_LOADED(scriptHash);
 		return retval;
 	}
 
-	bool LUA_NATIVE_SCRIPT_DOES_SCRIPT_WITH_NAME_HASH_EXIST( unsigned scriptHash )
+	bool LUA_NATIVE_SCRIPT_DOES_SCRIPT_WITH_NAME_HASH_EXIST( Hash scriptHash )
 	{
 		auto retval = (bool)SCRIPT::DOES_SCRIPT_WITH_NAME_HASH_EXIST(scriptHash);
 		return retval;
@@ -26950,7 +26945,7 @@ namespace lua::native
 		SCRIPT::TERMINATE_THIS_THREAD();
 	}
 
-	int LUA_NATIVE_SCRIPT_GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH( unsigned scriptHash )
+	int LUA_NATIVE_SCRIPT_GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH( Hash scriptHash )
 	{
 		auto retval = SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(scriptHash);
 		return retval;
@@ -26962,7 +26957,7 @@ namespace lua::native
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_SCRIPT_GET_HASH_OF_THIS_SCRIPT_NAME(  )
+	Hash LUA_NATIVE_SCRIPT_GET_HASH_OF_THIS_SCRIPT_NAME(  )
 	{
 		auto retval = SCRIPT::GET_HASH_OF_THIS_SCRIPT_NAME();
 		return retval;
@@ -27033,12 +27028,12 @@ namespace lua::native
 		SCRIPT::BG_SET_EXITFLAG_RESPONSE();
 	}
 
-	void LUA_NATIVE_SCRIPT_BG_START_CONTEXT_HASH( unsigned contextHash )
+	void LUA_NATIVE_SCRIPT_BG_START_CONTEXT_HASH( Hash contextHash )
 	{
 		SCRIPT::BG_START_CONTEXT_HASH(contextHash);
 	}
 
-	void LUA_NATIVE_SCRIPT_BG_END_CONTEXT_HASH( unsigned contextHash )
+	void LUA_NATIVE_SCRIPT_BG_END_CONTEXT_HASH( Hash contextHash )
 	{
 		SCRIPT::BG_END_CONTEXT_HASH(contextHash);
 	}
@@ -27065,7 +27060,7 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_SCRIPT_BG_GET_SCRIPT_ID_FROM_NAME_HASH( unsigned p0 )
+	int LUA_NATIVE_SCRIPT_BG_GET_SCRIPT_ID_FROM_NAME_HASH( Hash p0 )
 	{
 		auto retval = SCRIPT::BG_GET_SCRIPT_ID_FROM_NAME_HASH(p0);
 		return retval;
@@ -27094,49 +27089,49 @@ namespace lua::native
 		SECURITY::FORCE_CHECK_SCRIPT_VARIABLES();
 	}
 
-	int LUA_NATIVE_SHAPETEST_START_SHAPE_TEST_LOS_PROBE( float x1, float y1, float z1, float x2, float y2, float z2, int flags, int entity, int p8 )
+	int LUA_NATIVE_SHAPETEST_START_SHAPE_TEST_LOS_PROBE( float x1, float y1, float z1, float x2, float y2, float z2, int flags, Entity entity, int p8 )
 	{
 		auto retval = SHAPETEST::START_SHAPE_TEST_LOS_PROBE(x1, y1, z1, x2, y2, z2, flags, entity, p8);
 		return retval;
 	}
 
-	int LUA_NATIVE_SHAPETEST_START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE( float x1, float y1, float z1, float x2, float y2, float z2, int flags, int entity, int p8 )
+	int LUA_NATIVE_SHAPETEST_START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE( float x1, float y1, float z1, float x2, float y2, float z2, int flags, Entity entity, int p8 )
 	{
 		auto retval = SHAPETEST::START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE(x1, y1, z1, x2, y2, z2, flags, entity, p8);
 		return retval;
 	}
 
-	int LUA_NATIVE_SHAPETEST_START_SHAPE_TEST_BOUNDING_BOX( int entity, int flags1, int flags2 )
+	int LUA_NATIVE_SHAPETEST_START_SHAPE_TEST_BOUNDING_BOX( Entity entity, int flags1, int flags2 )
 	{
 		auto retval = SHAPETEST::START_SHAPE_TEST_BOUNDING_BOX(entity, flags1, flags2);
 		return retval;
 	}
 
-	int LUA_NATIVE_SHAPETEST_START_SHAPE_TEST_BOX( float x, float y, float z, float dimX, float dimY, float dimZ, float rotX, float rotY, float rotZ, Any p9, int flags, int entity, Any p12 )
+	int LUA_NATIVE_SHAPETEST_START_SHAPE_TEST_BOX( float x, float y, float z, float dimX, float dimY, float dimZ, float rotX, float rotY, float rotZ, Any p9, int flags, Entity entity, Any p12 )
 	{
 		auto retval = SHAPETEST::START_SHAPE_TEST_BOX(x, y, z, dimX, dimY, dimZ, rotX, rotY, rotZ, p9, flags, entity, p12);
 		return retval;
 	}
 
-	int LUA_NATIVE_SHAPETEST_START_SHAPE_TEST_BOUND( int entity, int flags1, int flags2 )
+	int LUA_NATIVE_SHAPETEST_START_SHAPE_TEST_BOUND( Entity entity, int flags1, int flags2 )
 	{
 		auto retval = SHAPETEST::START_SHAPE_TEST_BOUND(entity, flags1, flags2);
 		return retval;
 	}
 
-	int LUA_NATIVE_SHAPETEST_START_SHAPE_TEST_CAPSULE( float x1, float y1, float z1, float x2, float y2, float z2, float radius, int flags, int entity, int p9 )
+	int LUA_NATIVE_SHAPETEST_START_SHAPE_TEST_CAPSULE( float x1, float y1, float z1, float x2, float y2, float z2, float radius, int flags, Entity entity, int p9 )
 	{
 		auto retval = SHAPETEST::START_SHAPE_TEST_CAPSULE(x1, y1, z1, x2, y2, z2, radius, flags, entity, p9);
 		return retval;
 	}
 
-	int LUA_NATIVE_SHAPETEST_START_SHAPE_TEST_SWEPT_SPHERE( float x1, float y1, float z1, float x2, float y2, float z2, float radius, int flags, int entity, Any p9 )
+	int LUA_NATIVE_SHAPETEST_START_SHAPE_TEST_SWEPT_SPHERE( float x1, float y1, float z1, float x2, float y2, float z2, float radius, int flags, Entity entity, Any p9 )
 	{
 		auto retval = SHAPETEST::START_SHAPE_TEST_SWEPT_SPHERE(x1, y1, z1, x2, y2, z2, radius, flags, entity, p9);
 		return retval;
 	}
 
-	std::tuple<int, Vector3, Vector3> LUA_NATIVE_SHAPETEST_START_SHAPE_TEST_MOUSE_CURSOR_LOS_PROBE( Vector3 pVec1, Vector3 pVec2, int flag, int entity, int flag2 )
+	std::tuple<int, Vector3, Vector3> LUA_NATIVE_SHAPETEST_START_SHAPE_TEST_MOUSE_CURSOR_LOS_PROBE( Vector3 pVec1, Vector3 pVec2, int flag, Entity entity, int flag2 )
 	{
 		std::tuple<int, Vector3, Vector3> return_values;
 		std::get<0>(return_values) = SHAPETEST::START_SHAPE_TEST_MOUSE_CURSOR_LOS_PROBE(&pVec1, &pVec2, flag, entity, flag2);
@@ -27146,9 +27141,9 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<int, bool, Vector3, Vector3, int> LUA_NATIVE_SHAPETEST_GET_SHAPE_TEST_RESULT( int shapeTestHandle, bool hit, Vector3 endCoords, Vector3 surfaceNormal, int entityHit )
+	std::tuple<int, bool, Vector3, Vector3, Entity> LUA_NATIVE_SHAPETEST_GET_SHAPE_TEST_RESULT( int shapeTestHandle, bool hit, Vector3 endCoords, Vector3 surfaceNormal, Entity entityHit )
 	{
-		std::tuple<int, bool, Vector3, Vector3, int> return_values;
+		std::tuple<int, bool, Vector3, Vector3, Entity> return_values;
 		std::get<0>(return_values) = SHAPETEST::GET_SHAPE_TEST_RESULT(shapeTestHandle, (BOOL*)&hit, &endCoords, &surfaceNormal, &entityHit);
 		std::get<1>(return_values) = hit;
 		std::get<2>(return_values) = endCoords;
@@ -27158,9 +27153,9 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<int, bool, Vector3, Vector3, unsigned, int> LUA_NATIVE_SHAPETEST_GET_SHAPE_TEST_RESULT_INCLUDING_MATERIAL( int shapeTestHandle, bool hit, Vector3 endCoords, Vector3 surfaceNormal, unsigned materialHash, int entityHit )
+	std::tuple<int, bool, Vector3, Vector3, Hash, Entity> LUA_NATIVE_SHAPETEST_GET_SHAPE_TEST_RESULT_INCLUDING_MATERIAL( int shapeTestHandle, bool hit, Vector3 endCoords, Vector3 surfaceNormal, Hash materialHash, Entity entityHit )
 	{
-		std::tuple<int, bool, Vector3, Vector3, unsigned, int> return_values;
+		std::tuple<int, bool, Vector3, Vector3, Hash, Entity> return_values;
 		std::get<0>(return_values) = SHAPETEST::GET_SHAPE_TEST_RESULT_INCLUDING_MATERIAL(shapeTestHandle, (BOOL*)&hit, &endCoords, &surfaceNormal, &materialHash, &entityHit);
 		std::get<1>(return_values) = hit;
 		std::get<2>(return_values) = endCoords;
@@ -27171,7 +27166,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_SHAPETEST_RELEASE_SCRIPT_GUID_FROM_ENTITY( int entityHit )
+	void LUA_NATIVE_SHAPETEST_RELEASE_SCRIPT_GUID_FROM_ENTITY( Entity entityHit )
 	{
 		SHAPETEST::RELEASE_SCRIPT_GUID_FROM_ENTITY(entityHit);
 	}
@@ -27182,7 +27177,7 @@ namespace lua::native
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_SOCIALCLUB_SC_INBOX_GET_MESSAGE_TYPE_AT_INDEX( int msgIndex )
+	Hash LUA_NATIVE_SOCIALCLUB_SC_INBOX_GET_MESSAGE_TYPE_AT_INDEX( int msgIndex )
 	{
 		auto retval = SOCIALCLUB::SC_INBOX_GET_MESSAGE_TYPE_AT_INDEX(msgIndex);
 		return retval;
@@ -27346,19 +27341,19 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_SOCIALCLUB_SC_PRESENCE_ATTR_SET_INT( unsigned attrHash, int value )
+	bool LUA_NATIVE_SOCIALCLUB_SC_PRESENCE_ATTR_SET_INT( Hash attrHash, int value )
 	{
 		auto retval = (bool)SOCIALCLUB::SC_PRESENCE_ATTR_SET_INT(attrHash, value);
 		return retval;
 	}
 
-	bool LUA_NATIVE_SOCIALCLUB_SC_PRESENCE_ATTR_SET_FLOAT( unsigned attrHash, float value )
+	bool LUA_NATIVE_SOCIALCLUB_SC_PRESENCE_ATTR_SET_FLOAT( Hash attrHash, float value )
 	{
 		auto retval = (bool)SOCIALCLUB::SC_PRESENCE_ATTR_SET_FLOAT(attrHash, value);
 		return retval;
 	}
 
-	bool LUA_NATIVE_SOCIALCLUB_SC_PRESENCE_ATTR_SET_STRING( unsigned attrHash, const char* value )
+	bool LUA_NATIVE_SOCIALCLUB_SC_PRESENCE_ATTR_SET_STRING( Hash attrHash, const char* value )
 	{
 		auto retval = (bool)SOCIALCLUB::SC_PRESENCE_ATTR_SET_STRING(attrHash, value);
 		return retval;
@@ -27863,37 +27858,37 @@ namespace lua::native
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_STATS_GET_STAT_HASH_FOR_CHARACTER_STAT_( int dataType, int statIndex, int charSlot )
+	Hash LUA_NATIVE_STATS_GET_STAT_HASH_FOR_CHARACTER_STAT_( int dataType, int statIndex, int charSlot )
 	{
 		auto retval = STATS::GET_STAT_HASH_FOR_CHARACTER_STAT_(dataType, statIndex, charSlot);
 		return retval;
 	}
 
-	bool LUA_NATIVE_STATS_STAT_SET_INT( unsigned statName, int value, bool save )
+	bool LUA_NATIVE_STATS_STAT_SET_INT( Hash statName, int value, bool save )
 	{
 		auto retval = (bool)STATS::STAT_SET_INT(statName, value, save);
 		return retval;
 	}
 
-	bool LUA_NATIVE_STATS_STAT_SET_FLOAT( unsigned statName, float value, bool save )
+	bool LUA_NATIVE_STATS_STAT_SET_FLOAT( Hash statName, float value, bool save )
 	{
 		auto retval = (bool)STATS::STAT_SET_FLOAT(statName, value, save);
 		return retval;
 	}
 
-	bool LUA_NATIVE_STATS_STAT_SET_BOOL( unsigned statName, bool value, bool save )
+	bool LUA_NATIVE_STATS_STAT_SET_BOOL( Hash statName, bool value, bool save )
 	{
 		auto retval = (bool)STATS::STAT_SET_BOOL(statName, value, save);
 		return retval;
 	}
 
-	bool LUA_NATIVE_STATS_STAT_SET_GXT_LABEL( unsigned statName, const char* value, bool save )
+	bool LUA_NATIVE_STATS_STAT_SET_GXT_LABEL( Hash statName, const char* value, bool save )
 	{
 		auto retval = (bool)STATS::STAT_SET_GXT_LABEL(statName, value, save);
 		return retval;
 	}
 
-	std::tuple<bool, Any> LUA_NATIVE_STATS_STAT_SET_DATE( unsigned statName, Any value, int numFields, bool save )
+	std::tuple<bool, Any> LUA_NATIVE_STATS_STAT_SET_DATE( Hash statName, Any value, int numFields, bool save )
 	{
 		std::tuple<bool, Any> return_values;
 		std::get<0>(return_values) = (bool)STATS::STAT_SET_DATE(statName, &value, numFields, save);
@@ -27902,37 +27897,37 @@ namespace lua::native
 		return return_values;
 	}
 
-	bool LUA_NATIVE_STATS_STAT_SET_STRING( unsigned statName, const char* value, bool save )
+	bool LUA_NATIVE_STATS_STAT_SET_STRING( Hash statName, const char* value, bool save )
 	{
 		auto retval = (bool)STATS::STAT_SET_STRING(statName, value, save);
 		return retval;
 	}
 
-	bool LUA_NATIVE_STATS_STAT_SET_POS( unsigned statName, float x, float y, float z, bool save )
+	bool LUA_NATIVE_STATS_STAT_SET_POS( Hash statName, float x, float y, float z, bool save )
 	{
 		auto retval = (bool)STATS::STAT_SET_POS(statName, x, y, z, save);
 		return retval;
 	}
 
-	bool LUA_NATIVE_STATS_STAT_SET_MASKED_INT( unsigned statName, int p1, int p2, int p3, bool save )
+	bool LUA_NATIVE_STATS_STAT_SET_MASKED_INT( Hash statName, int p1, int p2, int p3, bool save )
 	{
 		auto retval = (bool)STATS::STAT_SET_MASKED_INT(statName, p1, p2, p3, save);
 		return retval;
 	}
 
-	bool LUA_NATIVE_STATS_STAT_SET_USER_ID( unsigned statName, const char* value, bool save )
+	bool LUA_NATIVE_STATS_STAT_SET_USER_ID( Hash statName, const char* value, bool save )
 	{
 		auto retval = (bool)STATS::STAT_SET_USER_ID(statName, value, save);
 		return retval;
 	}
 
-	bool LUA_NATIVE_STATS_STAT_SET_CURRENT_POSIX_TIME( unsigned statName, bool p1 )
+	bool LUA_NATIVE_STATS_STAT_SET_CURRENT_POSIX_TIME( Hash statName, bool p1 )
 	{
 		auto retval = (bool)STATS::STAT_SET_CURRENT_POSIX_TIME(statName, p1);
 		return retval;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_STATS_STAT_GET_INT( unsigned statHash, int outValue, int p2 )
+	std::tuple<bool, int> LUA_NATIVE_STATS_STAT_GET_INT( Hash statHash, int outValue, int p2 )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)STATS::STAT_GET_INT(statHash, &outValue, p2);
@@ -27941,7 +27936,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, float> LUA_NATIVE_STATS_STAT_GET_FLOAT( unsigned statHash, float outValue, Any p2 )
+	std::tuple<bool, float> LUA_NATIVE_STATS_STAT_GET_FLOAT( Hash statHash, float outValue, Any p2 )
 	{
 		std::tuple<bool, float> return_values;
 		std::get<0>(return_values) = (bool)STATS::STAT_GET_FLOAT(statHash, &outValue, p2);
@@ -27950,7 +27945,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, bool> LUA_NATIVE_STATS_STAT_GET_BOOL( unsigned statHash, bool outValue, Any p2 )
+	std::tuple<bool, bool> LUA_NATIVE_STATS_STAT_GET_BOOL( Hash statHash, bool outValue, Any p2 )
 	{
 		std::tuple<bool, bool> return_values;
 		std::get<0>(return_values) = (bool)STATS::STAT_GET_BOOL(statHash, (BOOL*)&outValue, p2);
@@ -27959,7 +27954,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, Any> LUA_NATIVE_STATS_STAT_GET_DATE( unsigned statHash, Any outValue, int numFields, Any p3 )
+	std::tuple<bool, Any> LUA_NATIVE_STATS_STAT_GET_DATE( Hash statHash, Any outValue, int numFields, Any p3 )
 	{
 		std::tuple<bool, Any> return_values;
 		std::get<0>(return_values) = (bool)STATS::STAT_GET_DATE(statHash, &outValue, numFields, p3);
@@ -27968,13 +27963,13 @@ namespace lua::native
 		return return_values;
 	}
 
-	const char* LUA_NATIVE_STATS_STAT_GET_STRING( unsigned statHash, int p1 )
+	const char* LUA_NATIVE_STATS_STAT_GET_STRING( Hash statHash, int p1 )
 	{
 		auto retval = STATS::STAT_GET_STRING(statHash, p1);
 		return retval;
 	}
 
-	std::tuple<bool, float, float, float> LUA_NATIVE_STATS_STAT_GET_POS( unsigned statName, float outX, float outY, float outZ, Any p4 )
+	std::tuple<bool, float, float, float> LUA_NATIVE_STATS_STAT_GET_POS( Hash statName, float outX, float outY, float outZ, Any p4 )
 	{
 		std::tuple<bool, float, float, float> return_values;
 		std::get<0>(return_values) = (bool)STATS::STAT_GET_POS(statName, &outX, &outY, &outZ, p4);
@@ -27985,7 +27980,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_STATS_STAT_GET_MASKED_INT( unsigned statHash, int outValue, int p2, int p3, Any p4 )
+	std::tuple<bool, int> LUA_NATIVE_STATS_STAT_GET_MASKED_INT( Hash statHash, int outValue, int p2, int p3, Any p4 )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)STATS::STAT_GET_MASKED_INT(statHash, &outValue, p2, p3, p4);
@@ -27994,25 +27989,25 @@ namespace lua::native
 		return return_values;
 	}
 
-	const char* LUA_NATIVE_STATS_STAT_GET_USER_ID( unsigned statHash )
+	const char* LUA_NATIVE_STATS_STAT_GET_USER_ID( Hash statHash )
 	{
 		auto retval = STATS::STAT_GET_USER_ID(statHash);
 		return retval;
 	}
 
-	const char* LUA_NATIVE_STATS_STAT_GET_LICENSE_PLATE( unsigned statName )
+	const char* LUA_NATIVE_STATS_STAT_GET_LICENSE_PLATE( Hash statName )
 	{
 		auto retval = STATS::STAT_GET_LICENSE_PLATE(statName);
 		return retval;
 	}
 
-	bool LUA_NATIVE_STATS_STAT_SET_LICENSE_PLATE( unsigned statName, const char* str )
+	bool LUA_NATIVE_STATS_STAT_SET_LICENSE_PLATE( Hash statName, const char* str )
 	{
 		auto retval = (bool)STATS::STAT_SET_LICENSE_PLATE(statName, str);
 		return retval;
 	}
 
-	void LUA_NATIVE_STATS_STAT_INCREMENT( unsigned statName, float value )
+	void LUA_NATIVE_STATS_STAT_INCREMENT( Hash statName, float value )
 	{
 		STATS::STAT_INCREMENT(statName, value);
 	}
@@ -28029,7 +28024,7 @@ namespace lua::native
 		return retval;
 	}
 
-	std::tuple<bool, float> LUA_NATIVE_STATS_STAT_COMMUNITY_GET_HISTORY( unsigned statName, int p1, float outValue )
+	std::tuple<bool, float> LUA_NATIVE_STATS_STAT_COMMUNITY_GET_HISTORY( Hash statName, int p1, float outValue )
 	{
 		std::tuple<bool, float> return_values;
 		std::get<0>(return_values) = (bool)STATS::STAT_COMMUNITY_GET_HISTORY(statName, p1, &outValue);
@@ -28048,25 +28043,25 @@ namespace lua::native
 		STATS::STAT_LOCAL_RESET_ALL_ONLINE_CHARACTER_STATS(p0);
 	}
 
-	int LUA_NATIVE_STATS_STAT_GET_NUMBER_OF_DAYS( unsigned statName )
+	int LUA_NATIVE_STATS_STAT_GET_NUMBER_OF_DAYS( Hash statName )
 	{
 		auto retval = STATS::STAT_GET_NUMBER_OF_DAYS(statName);
 		return retval;
 	}
 
-	int LUA_NATIVE_STATS_STAT_GET_NUMBER_OF_HOURS( unsigned statName )
+	int LUA_NATIVE_STATS_STAT_GET_NUMBER_OF_HOURS( Hash statName )
 	{
 		auto retval = STATS::STAT_GET_NUMBER_OF_HOURS(statName);
 		return retval;
 	}
 
-	int LUA_NATIVE_STATS_STAT_GET_NUMBER_OF_MINUTES( unsigned statName )
+	int LUA_NATIVE_STATS_STAT_GET_NUMBER_OF_MINUTES( Hash statName )
 	{
 		auto retval = STATS::STAT_GET_NUMBER_OF_MINUTES(statName);
 		return retval;
 	}
 
-	int LUA_NATIVE_STATS_STAT_GET_NUMBER_OF_SECONDS( unsigned statName )
+	int LUA_NATIVE_STATS_STAT_GET_NUMBER_OF_SECONDS( Hash statName )
 	{
 		auto retval = STATS::STAT_GET_NUMBER_OF_SECONDS(statName);
 		return retval;
@@ -28088,19 +28083,19 @@ namespace lua::native
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_STATS_GET_PACKED_INT_STAT_KEY( int index, bool spStat, bool charStat, int character )
+	Hash LUA_NATIVE_STATS_GET_PACKED_INT_STAT_KEY( int index, bool spStat, bool charStat, int character )
 	{
 		auto retval = STATS::GET_PACKED_INT_STAT_KEY(index, spStat, charStat, character);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_STATS_GET_PACKED_TU_INT_STAT_KEY( int index, bool spStat, bool charStat, int character )
+	Hash LUA_NATIVE_STATS_GET_PACKED_TU_INT_STAT_KEY( int index, bool spStat, bool charStat, int character )
 	{
 		auto retval = STATS::GET_PACKED_TU_INT_STAT_KEY(index, spStat, charStat, character);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_STATS_GET_PACKED_NG_INT_STAT_KEY( int index, bool spStat, bool charStat, int character, const char* section )
+	Hash LUA_NATIVE_STATS_GET_PACKED_NG_INT_STAT_KEY( int index, bool spStat, bool charStat, int character, const char* section )
 	{
 		auto retval = STATS::GET_PACKED_NG_INT_STAT_KEY(index, spStat, charStat, character, section);
 		return retval;
@@ -28143,7 +28138,7 @@ namespace lua::native
 		STATS::PLAYSTATS_NPC_INVITE(p0);
 	}
 
-	void LUA_NATIVE_STATS_PLAYSTATS_AWARD_XP( int amount, unsigned type, unsigned category )
+	void LUA_NATIVE_STATS_PLAYSTATS_AWARD_XP( int amount, Hash type, Hash category )
 	{
 		STATS::PLAYSTATS_AWARD_XP(amount, type, category);
 	}
@@ -28188,12 +28183,12 @@ namespace lua::native
 		STATS::PLAYSTATS_RANDOM_MISSION_DONE(name, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_STATS_PLAYSTATS_ROS_BET( int amount, int act, int player, float cm )
+	void LUA_NATIVE_STATS_PLAYSTATS_ROS_BET( int amount, int act, Player player, float cm )
 	{
 		STATS::PLAYSTATS_ROS_BET(amount, act, player, cm);
 	}
 
-	void LUA_NATIVE_STATS_PLAYSTATS_RACE_CHECKPOINT( int p0, Any p1, int p2, int p3, Any p4 )
+	void LUA_NATIVE_STATS_PLAYSTATS_RACE_CHECKPOINT( Vehicle p0, Any p1, int p2, int p3, Any p4 )
 	{
 		STATS::PLAYSTATS_RACE_CHECKPOINT(p0, p1, p2, p3, p4);
 	}
@@ -28248,7 +28243,7 @@ namespace lua::native
 		STATS::PLAYSTATS_ACQUIRED_HIDDEN_PACKAGE(p0);
 	}
 
-	void LUA_NATIVE_STATS_PLAYSTATS_WEBSITE_VISITED( unsigned scaleformHash, int p1 )
+	void LUA_NATIVE_STATS_PLAYSTATS_WEBSITE_VISITED( Hash scaleformHash, int p1 )
 	{
 		STATS::PLAYSTATS_WEBSITE_VISITED(scaleformHash, p1);
 	}
@@ -28263,17 +28258,17 @@ namespace lua::native
 		STATS::PLAYSTATS_ODDJOB_DONE(totalTimeMs, p1, p2);
 	}
 
-	void LUA_NATIVE_STATS_PLAYSTATS_PROP_CHANGE( int p0, int p1, int p2, int p3 )
+	void LUA_NATIVE_STATS_PLAYSTATS_PROP_CHANGE( Ped p0, int p1, int p2, int p3 )
 	{
 		STATS::PLAYSTATS_PROP_CHANGE(p0, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_STATS_PLAYSTATS_CLOTH_CHANGE( int p0, Any p1, Any p2, Any p3, Any p4 )
+	void LUA_NATIVE_STATS_PLAYSTATS_CLOTH_CHANGE( Ped p0, Any p1, Any p2, Any p3, Any p4 )
 	{
 		STATS::PLAYSTATS_CLOTH_CHANGE(p0, p1, p2, p3, p4);
 	}
 
-	void LUA_NATIVE_STATS_PLAYSTATS_WEAPON_MODE_CHANGE( unsigned weaponHash, unsigned componentHashTo, unsigned componentHashFrom )
+	void LUA_NATIVE_STATS_PLAYSTATS_WEAPON_MODE_CHANGE( Hash weaponHash, Hash componentHashTo, Hash componentHashFrom )
 	{
 		STATS::PLAYSTATS_WEAPON_MODE_CHANGE(weaponHash, componentHashTo, componentHashFrom);
 	}
@@ -28346,7 +28341,7 @@ namespace lua::native
 		STATS::PLAYSTATS_SET_JOIN_TYPE(joinType);
 	}
 
-	void LUA_NATIVE_STATS_PLAYSTATS_HEIST_SAVE_CHEAT( unsigned hash, int p1 )
+	void LUA_NATIVE_STATS_PLAYSTATS_HEIST_SAVE_CHEAT( Hash hash, int p1 )
 	{
 		STATS::PLAYSTATS_HEIST_SAVE_CHEAT(hash, p1);
 	}
@@ -28362,7 +28357,7 @@ namespace lua::native
 		STATS::PLAYSTATS_AWARD_BAD_SPORT(id);
 	}
 
-	void LUA_NATIVE_STATS_PLAYSTATS_PEGASUS_AS_PERSONAL_AIRCRAFT( unsigned modelHash )
+	void LUA_NATIVE_STATS_PLAYSTATS_PEGASUS_AS_PERSONAL_AIRCRAFT( Hash modelHash )
 	{
 		STATS::PLAYSTATS_PEGASUS_AS_PERSONAL_AIRCRAFT(modelHash);
 	}
@@ -28680,17 +28675,17 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_STATS_PRESENCE_EVENT_UPDATESTAT_INT( unsigned statHash, int value, int p2 )
+	void LUA_NATIVE_STATS_PRESENCE_EVENT_UPDATESTAT_INT( Hash statHash, int value, int p2 )
 	{
 		STATS::PRESENCE_EVENT_UPDATESTAT_INT(statHash, value, p2);
 	}
 
-	void LUA_NATIVE_STATS_PRESENCE_EVENT_UPDATESTAT_FLOAT( unsigned statHash, float value, int p2 )
+	void LUA_NATIVE_STATS_PRESENCE_EVENT_UPDATESTAT_FLOAT( Hash statHash, float value, int p2 )
 	{
 		STATS::PRESENCE_EVENT_UPDATESTAT_FLOAT(statHash, value, p2);
 	}
 
-	void LUA_NATIVE_STATS_PRESENCE_EVENT_UPDATESTAT_INT_WITH_STRING( unsigned statHash, int value, int p2, const char* string )
+	void LUA_NATIVE_STATS_PRESENCE_EVENT_UPDATESTAT_INT_WITH_STRING( Hash statHash, int value, int p2, const char* string )
 	{
 		STATS::PRESENCE_EVENT_UPDATESTAT_INT_WITH_STRING(statHash, value, p2, string);
 	}
@@ -28836,7 +28831,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_STATS_STAT_SAVE_MIGRATION_CONSUME_CONTENT( unsigned contentId, const char* srcPlatform, const char* srcGamerHandle )
+	bool LUA_NATIVE_STATS_STAT_SAVE_MIGRATION_CONSUME_CONTENT( Hash contentId, const char* srcPlatform, const char* srcGamerHandle )
 	{
 		auto retval = (bool)STATS::STAT_SAVE_MIGRATION_CONSUME_CONTENT(contentId, srcPlatform, srcGamerHandle);
 		return retval;
@@ -29134,7 +29129,7 @@ namespace lua::native
 		STATS::HIRED_LIMO(p0, p1);
 	}
 
-	void LUA_NATIVE_STATS_ORDER_BOSS_VEHICLE( Any p0, Any p1, unsigned vehicleHash )
+	void LUA_NATIVE_STATS_ORDER_BOSS_VEHICLE( Any p0, Any p1, Hash vehicleHash )
 	{
 		STATS::ORDER_BOSS_VEHICLE(p0, p1, vehicleHash);
 	}
@@ -29348,7 +29343,7 @@ namespace lua::native
 		STATS::PLAYSTATS_SWITCH_PASSIVE_MODE(p0, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_STATS_PLAYSTATS_COLLECTIBLE_PICKED_UP( int p0, unsigned objectHash, Any p2, Any p3, int moneyAmount, int rpAmount, int chipsAmount, Any p7, int p8, Any p9, Any p10 )
+	void LUA_NATIVE_STATS_PLAYSTATS_COLLECTIBLE_PICKED_UP( int p0, Hash objectHash, Any p2, Any p3, int moneyAmount, int rpAmount, int chipsAmount, Any p7, int p8, Any p9, Any p10 )
 	{
 		STATS::PLAYSTATS_COLLECTIBLE_PICKED_UP(p0, objectHash, p2, p3, moneyAmount, rpAmount, chipsAmount, p7, p8, p9, p10);
 	}
@@ -29554,7 +29549,7 @@ namespace lua::native
 		STATS::PLAYSTATS_CARCLUB_CHALLENGE(p0, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_STATS_PLAYSTATS_CARCLUB_PRIZE( int p0, unsigned vehicleModel )
+	void LUA_NATIVE_STATS_PLAYSTATS_CARCLUB_PRIZE( int p0, Hash vehicleModel )
 	{
 		STATS::PLAYSTATS_CARCLUB_PRIZE(p0, vehicleModel);
 	}
@@ -29614,7 +29609,7 @@ namespace lua::native
 		STATS::PLAYSTATS_ATTRITION_STAGE_END_(p0);
 	}
 
-	void LUA_NATIVE_STATS_PLAYSTATS_SHOWROOM_NAV_( Any p0, Any p1, unsigned entity )
+	void LUA_NATIVE_STATS_PLAYSTATS_SHOWROOM_NAV_( Any p0, Any p1, Hash entity )
 	{
 		STATS::PLAYSTATS_SHOWROOM_NAV_(p0, p1, entity);
 	}
@@ -29652,51 +29647,51 @@ namespace lua::native
 		STREAMING::SET_INTERIOR_ACTIVE(interiorID, toggle);
 	}
 
-	void LUA_NATIVE_STREAMING_REQUEST_MODEL( unsigned model )
+	void LUA_NATIVE_STREAMING_REQUEST_MODEL( Hash model )
 	{
 		STREAMING::REQUEST_MODEL(model);
 	}
 
-	void LUA_NATIVE_STREAMING_REQUEST_MENU_PED_MODEL( unsigned model )
+	void LUA_NATIVE_STREAMING_REQUEST_MENU_PED_MODEL( Hash model )
 	{
 		STREAMING::REQUEST_MENU_PED_MODEL(model);
 	}
 
-	bool LUA_NATIVE_STREAMING_HAS_MODEL_LOADED( unsigned model )
+	bool LUA_NATIVE_STREAMING_HAS_MODEL_LOADED( Hash model )
 	{
 		auto retval = (bool)STREAMING::HAS_MODEL_LOADED(model);
 		return retval;
 	}
 
-	void LUA_NATIVE_STREAMING_REQUEST_MODELS_IN_ROOM( int interior, const char* roomName )
+	void LUA_NATIVE_STREAMING_REQUEST_MODELS_IN_ROOM( Interior interior, const char* roomName )
 	{
 		STREAMING::REQUEST_MODELS_IN_ROOM(interior, roomName);
 	}
 
-	void LUA_NATIVE_STREAMING_SET_MODEL_AS_NO_LONGER_NEEDED( unsigned model )
+	void LUA_NATIVE_STREAMING_SET_MODEL_AS_NO_LONGER_NEEDED( Hash model )
 	{
 		STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(model);
 	}
 
-	bool LUA_NATIVE_STREAMING_IS_MODEL_IN_CDIMAGE( unsigned model )
+	bool LUA_NATIVE_STREAMING_IS_MODEL_IN_CDIMAGE( Hash model )
 	{
 		auto retval = (bool)STREAMING::IS_MODEL_IN_CDIMAGE(model);
 		return retval;
 	}
 
-	bool LUA_NATIVE_STREAMING_IS_MODEL_VALID( unsigned model )
+	bool LUA_NATIVE_STREAMING_IS_MODEL_VALID( Hash model )
 	{
 		auto retval = (bool)STREAMING::IS_MODEL_VALID(model);
 		return retval;
 	}
 
-	bool LUA_NATIVE_STREAMING_IS_MODEL_A_PED( unsigned model )
+	bool LUA_NATIVE_STREAMING_IS_MODEL_A_PED( Hash model )
 	{
 		auto retval = (bool)STREAMING::IS_MODEL_A_PED(model);
 		return retval;
 	}
 
-	bool LUA_NATIVE_STREAMING_IS_MODEL_A_VEHICLE( unsigned model )
+	bool LUA_NATIVE_STREAMING_IS_MODEL_A_VEHICLE( Hash model )
 	{
 		auto retval = (bool)STREAMING::IS_MODEL_A_VEHICLE(model);
 		return retval;
@@ -29707,12 +29702,12 @@ namespace lua::native
 		STREAMING::REQUEST_COLLISION_AT_COORD(x, y, z);
 	}
 
-	void LUA_NATIVE_STREAMING_REQUEST_COLLISION_FOR_MODEL( unsigned model )
+	void LUA_NATIVE_STREAMING_REQUEST_COLLISION_FOR_MODEL( Hash model )
 	{
 		STREAMING::REQUEST_COLLISION_FOR_MODEL(model);
 	}
 
-	bool LUA_NATIVE_STREAMING_HAS_COLLISION_FOR_MODEL_LOADED( unsigned model )
+	bool LUA_NATIVE_STREAMING_HAS_COLLISION_FOR_MODEL_LOADED( Hash model )
 	{
 		auto retval = (bool)STREAMING::HAS_COLLISION_FOR_MODEL_LOADED(model);
 		return retval;
@@ -29887,18 +29882,18 @@ namespace lua::native
 		STREAMING::SET_FOCUS_POS_AND_VEL(x, y, z, offsetX, offsetY, offsetZ);
 	}
 
-	void LUA_NATIVE_STREAMING_SET_FOCUS_ENTITY( int entity )
+	void LUA_NATIVE_STREAMING_SET_FOCUS_ENTITY( Entity entity )
 	{
 		STREAMING::SET_FOCUS_ENTITY(entity);
 	}
 
-	bool LUA_NATIVE_STREAMING_IS_ENTITY_FOCUS( int entity )
+	bool LUA_NATIVE_STREAMING_IS_ENTITY_FOCUS( Entity entity )
 	{
 		auto retval = (bool)STREAMING::IS_ENTITY_FOCUS(entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_STREAMING_SET_RESTORE_FOCUS_ENTITY( int p0 )
+	void LUA_NATIVE_STREAMING_SET_RESTORE_FOCUS_ENTITY( Entity p0 )
 	{
 		STREAMING::SET_RESTORE_FOCUS_ENTITY(p0);
 	}
@@ -29989,7 +29984,7 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_STREAMING_START_PLAYER_SWITCH( int from, int to, int flags, int switchType )
+	void LUA_NATIVE_STREAMING_START_PLAYER_SWITCH( Ped from, Ped to, int flags, int switchType )
 	{
 		STREAMING::START_PLAYER_SWITCH(from, to, flags, switchType);
 	}
@@ -30086,12 +30081,12 @@ namespace lua::native
 		STREAMING::DISABLE_SWITCH_OUTRO_FX();
 	}
 
-	void LUA_NATIVE_STREAMING_SWITCH_TO_MULTI_FIRSTPART( int ped, int flags, int switchType )
+	void LUA_NATIVE_STREAMING_SWITCH_TO_MULTI_FIRSTPART( Ped ped, int flags, int switchType )
 	{
 		STREAMING::SWITCH_TO_MULTI_FIRSTPART(ped, flags, switchType);
 	}
 
-	void LUA_NATIVE_STREAMING_SWITCH_TO_MULTI_SECONDPART( int ped )
+	void LUA_NATIVE_STREAMING_SWITCH_TO_MULTI_SECONDPART( Ped ped )
 	{
 		STREAMING::SWITCH_TO_MULTI_SECONDPART(ped);
 	}
@@ -30249,13 +30244,13 @@ namespace lua::native
 		STREAMING::SHUTDOWN_CREATOR_BUDGET();
 	}
 
-	bool LUA_NATIVE_STREAMING_ADD_MODEL_TO_CREATOR_BUDGET( unsigned modelHash )
+	bool LUA_NATIVE_STREAMING_ADD_MODEL_TO_CREATOR_BUDGET( Hash modelHash )
 	{
 		auto retval = (bool)STREAMING::ADD_MODEL_TO_CREATOR_BUDGET(modelHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_STREAMING_REMOVE_MODEL_FROM_CREATOR_BUDGET( unsigned modelHash )
+	void LUA_NATIVE_STREAMING_REMOVE_MODEL_FROM_CREATOR_BUDGET( Hash modelHash )
 	{
 		STREAMING::REMOVE_MODEL_FROM_CREATOR_BUDGET(modelHash);
 	}
@@ -30271,117 +30266,117 @@ namespace lua::native
 		STREAMING::SET_ISLAND_ENABLED(name, toggle);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PAUSE( int ped, int ms )
+	void LUA_NATIVE_TASK_TASK_PAUSE( Ped ped, int ms )
 	{
 		TASK::TASK_PAUSE(ped, ms);
 	}
 
-	void LUA_NATIVE_TASK_TASK_STAND_STILL( int ped, int time )
+	void LUA_NATIVE_TASK_TASK_STAND_STILL( Ped ped, int time )
 	{
 		TASK::TASK_STAND_STILL(ped, time);
 	}
 
-	void LUA_NATIVE_TASK_TASK_JUMP( int ped, bool usePlayerLaunchForce, bool doSuperJump, bool useFullSuperJumpForce )
+	void LUA_NATIVE_TASK_TASK_JUMP( Ped ped, bool usePlayerLaunchForce, bool doSuperJump, bool useFullSuperJumpForce )
 	{
 		TASK::TASK_JUMP(ped, usePlayerLaunchForce, doSuperJump, useFullSuperJumpForce);
 	}
 
-	void LUA_NATIVE_TASK_TASK_COWER( int ped, int duration )
+	void LUA_NATIVE_TASK_TASK_COWER( Ped ped, int duration )
 	{
 		TASK::TASK_COWER(ped, duration);
 	}
 
-	void LUA_NATIVE_TASK_TASK_HANDS_UP( int ped, int duration, int facingPed, int timeToFacePed, int flags )
+	void LUA_NATIVE_TASK_TASK_HANDS_UP( Ped ped, int duration, Ped facingPed, int timeToFacePed, int flags )
 	{
 		TASK::TASK_HANDS_UP(ped, duration, facingPed, timeToFacePed, flags);
 	}
 
-	void LUA_NATIVE_TASK_UPDATE_TASK_HANDS_UP_DURATION( int ped, int duration )
+	void LUA_NATIVE_TASK_UPDATE_TASK_HANDS_UP_DURATION( Ped ped, int duration )
 	{
 		TASK::UPDATE_TASK_HANDS_UP_DURATION(ped, duration);
 	}
 
-	void LUA_NATIVE_TASK_TASK_OPEN_VEHICLE_DOOR( int ped, int vehicle, int timeOut, int seat, float speed )
+	void LUA_NATIVE_TASK_TASK_OPEN_VEHICLE_DOOR( Ped ped, Vehicle vehicle, int timeOut, int seat, float speed )
 	{
 		TASK::TASK_OPEN_VEHICLE_DOOR(ped, vehicle, timeOut, seat, speed);
 	}
 
-	void LUA_NATIVE_TASK_TASK_ENTER_VEHICLE( int ped, int vehicle, int timeout, int seat, float speed, int flag, const char* overrideEntryClipsetName )
+	void LUA_NATIVE_TASK_TASK_ENTER_VEHICLE( Ped ped, Vehicle vehicle, int timeout, int seat, float speed, int flag, const char* overrideEntryClipsetName )
 	{
 		TASK::TASK_ENTER_VEHICLE(ped, vehicle, timeout, seat, speed, flag, overrideEntryClipsetName);
 	}
 
-	void LUA_NATIVE_TASK_TASK_LEAVE_VEHICLE( int ped, int vehicle, int flags )
+	void LUA_NATIVE_TASK_TASK_LEAVE_VEHICLE( Ped ped, Vehicle vehicle, int flags )
 	{
 		TASK::TASK_LEAVE_VEHICLE(ped, vehicle, flags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GET_OFF_BOAT( int ped, int boat )
+	void LUA_NATIVE_TASK_TASK_GET_OFF_BOAT( Ped ped, Vehicle boat )
 	{
 		TASK::TASK_GET_OFF_BOAT(ped, boat);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SKY_DIVE( int ped, bool instant )
+	void LUA_NATIVE_TASK_TASK_SKY_DIVE( Ped ped, bool instant )
 	{
 		TASK::TASK_SKY_DIVE(ped, instant);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PARACHUTE( int ped, bool giveParachuteItem, bool instant )
+	void LUA_NATIVE_TASK_TASK_PARACHUTE( Ped ped, bool giveParachuteItem, bool instant )
 	{
 		TASK::TASK_PARACHUTE(ped, giveParachuteItem, instant);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PARACHUTE_TO_TARGET( int ped, float x, float y, float z )
+	void LUA_NATIVE_TASK_TASK_PARACHUTE_TO_TARGET( Ped ped, float x, float y, float z )
 	{
 		TASK::TASK_PARACHUTE_TO_TARGET(ped, x, y, z);
 	}
 
-	void LUA_NATIVE_TASK_SET_PARACHUTE_TASK_TARGET( int ped, float x, float y, float z )
+	void LUA_NATIVE_TASK_SET_PARACHUTE_TASK_TARGET( Ped ped, float x, float y, float z )
 	{
 		TASK::SET_PARACHUTE_TASK_TARGET(ped, x, y, z);
 	}
 
-	void LUA_NATIVE_TASK_SET_PARACHUTE_TASK_THRUST( int ped, float thrust )
+	void LUA_NATIVE_TASK_SET_PARACHUTE_TASK_THRUST( Ped ped, float thrust )
 	{
 		TASK::SET_PARACHUTE_TASK_THRUST(ped, thrust);
 	}
 
-	void LUA_NATIVE_TASK_TASK_RAPPEL_FROM_HELI( int ped, float minHeightAboveGround )
+	void LUA_NATIVE_TASK_TASK_RAPPEL_FROM_HELI( Ped ped, float minHeightAboveGround )
 	{
 		TASK::TASK_RAPPEL_FROM_HELI(ped, minHeightAboveGround);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_DRIVE_TO_COORD( int ped, int vehicle, float x, float y, float z, float speed, Any p6, unsigned vehicleModel, int drivingMode, float stopRange, float straightLineDistance )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_DRIVE_TO_COORD( Ped ped, Vehicle vehicle, float x, float y, float z, float speed, Any p6, Hash vehicleModel, int drivingMode, float stopRange, float straightLineDistance )
 	{
 		TASK::TASK_VEHICLE_DRIVE_TO_COORD(ped, vehicle, x, y, z, speed, p6, vehicleModel, drivingMode, stopRange, straightLineDistance);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_DRIVE_TO_COORD_LONGRANGE( int ped, int vehicle, float x, float y, float z, float speed, int driveMode, float stopRange )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_DRIVE_TO_COORD_LONGRANGE( Ped ped, Vehicle vehicle, float x, float y, float z, float speed, int driveMode, float stopRange )
 	{
 		TASK::TASK_VEHICLE_DRIVE_TO_COORD_LONGRANGE(ped, vehicle, x, y, z, speed, driveMode, stopRange);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_DRIVE_WANDER( int ped, int vehicle, float speed, int drivingStyle )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_DRIVE_WANDER( Ped ped, Vehicle vehicle, float speed, int drivingStyle )
 	{
 		TASK::TASK_VEHICLE_DRIVE_WANDER(ped, vehicle, speed, drivingStyle);
 	}
 
-	void LUA_NATIVE_TASK_TASK_FOLLOW_TO_OFFSET_OF_ENTITY( int ped, int entity, float offsetX, float offsetY, float offsetZ, float movementSpeed, int timeout, float stoppingRange, bool persistFollowing )
+	void LUA_NATIVE_TASK_TASK_FOLLOW_TO_OFFSET_OF_ENTITY( Ped ped, Entity entity, float offsetX, float offsetY, float offsetZ, float movementSpeed, int timeout, float stoppingRange, bool persistFollowing )
 	{
 		TASK::TASK_FOLLOW_TO_OFFSET_OF_ENTITY(ped, entity, offsetX, offsetY, offsetZ, movementSpeed, timeout, stoppingRange, persistFollowing);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GO_STRAIGHT_TO_COORD( int ped, float x, float y, float z, float speed, int timeout, float targetHeading, float distanceToSlide )
+	void LUA_NATIVE_TASK_TASK_GO_STRAIGHT_TO_COORD( Ped ped, float x, float y, float z, float speed, int timeout, float targetHeading, float distanceToSlide )
 	{
 		TASK::TASK_GO_STRAIGHT_TO_COORD(ped, x, y, z, speed, timeout, targetHeading, distanceToSlide);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GO_STRAIGHT_TO_COORD_RELATIVE_TO_ENTITY( int ped, int entity, float x, float y, float z, float moveBlendRatio, int time )
+	void LUA_NATIVE_TASK_TASK_GO_STRAIGHT_TO_COORD_RELATIVE_TO_ENTITY( Ped ped, Entity entity, float x, float y, float z, float moveBlendRatio, int time )
 	{
 		TASK::TASK_GO_STRAIGHT_TO_COORD_RELATIVE_TO_ENTITY(ped, entity, x, y, z, moveBlendRatio, time);
 	}
 
-	void LUA_NATIVE_TASK_TASK_ACHIEVE_HEADING( int ped, float heading, int timeout )
+	void LUA_NATIVE_TASK_TASK_ACHIEVE_HEADING( Ped ped, float heading, int timeout )
 	{
 		TASK::TASK_ACHIEVE_HEADING(ped, heading, timeout);
 	}
@@ -30396,107 +30391,107 @@ namespace lua::native
 		TASK::TASK_EXTEND_ROUTE(x, y, z);
 	}
 
-	void LUA_NATIVE_TASK_TASK_FOLLOW_POINT_ROUTE( int ped, float speed, int mode )
+	void LUA_NATIVE_TASK_TASK_FOLLOW_POINT_ROUTE( Ped ped, float speed, int mode )
 	{
 		TASK::TASK_FOLLOW_POINT_ROUTE(ped, speed, mode);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GO_TO_ENTITY( int entity, int target, int duration, float distance, float moveBlendRatio, float slowDownDistance, int flags )
+	void LUA_NATIVE_TASK_TASK_GO_TO_ENTITY( Entity entity, Entity target, int duration, float distance, float moveBlendRatio, float slowDownDistance, int flags )
 	{
 		TASK::TASK_GO_TO_ENTITY(entity, target, duration, distance, moveBlendRatio, slowDownDistance, flags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SMART_FLEE_COORD( int ped, float x, float y, float z, float distance, int time, bool preferPavements, bool quitIfOutOfRange )
+	void LUA_NATIVE_TASK_TASK_SMART_FLEE_COORD( Ped ped, float x, float y, float z, float distance, int time, bool preferPavements, bool quitIfOutOfRange )
 	{
 		TASK::TASK_SMART_FLEE_COORD(ped, x, y, z, distance, time, preferPavements, quitIfOutOfRange);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SMART_FLEE_PED( int ped, int fleeTarget, float safeDistance, int fleeTime, bool preferPavements, bool updateToNearestHatedPed )
+	void LUA_NATIVE_TASK_TASK_SMART_FLEE_PED( Ped ped, Ped fleeTarget, float safeDistance, int fleeTime, bool preferPavements, bool updateToNearestHatedPed )
 	{
 		TASK::TASK_SMART_FLEE_PED(ped, fleeTarget, safeDistance, fleeTime, preferPavements, updateToNearestHatedPed);
 	}
 
-	void LUA_NATIVE_TASK_TASK_REACT_AND_FLEE_PED( int ped, int fleeTarget )
+	void LUA_NATIVE_TASK_TASK_REACT_AND_FLEE_PED( Ped ped, Ped fleeTarget )
 	{
 		TASK::TASK_REACT_AND_FLEE_PED(ped, fleeTarget);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SHOCKING_EVENT_REACT( int ped, int eventHandle )
+	void LUA_NATIVE_TASK_TASK_SHOCKING_EVENT_REACT( Ped ped, int eventHandle )
 	{
 		TASK::TASK_SHOCKING_EVENT_REACT(ped, eventHandle);
 	}
 
-	void LUA_NATIVE_TASK_TASK_WANDER_IN_AREA( int ped, float x, float y, float z, float radius, float minimalLength, float timeBetweenWalks )
+	void LUA_NATIVE_TASK_TASK_WANDER_IN_AREA( Ped ped, float x, float y, float z, float radius, float minimalLength, float timeBetweenWalks )
 	{
 		TASK::TASK_WANDER_IN_AREA(ped, x, y, z, radius, minimalLength, timeBetweenWalks);
 	}
 
-	void LUA_NATIVE_TASK_TASK_WANDER_STANDARD( int ped, float heading, int flags )
+	void LUA_NATIVE_TASK_TASK_WANDER_STANDARD( Ped ped, float heading, int flags )
 	{
 		TASK::TASK_WANDER_STANDARD(ped, heading, flags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_WANDER_SPECIFIC( int ped, const char* conditionalAnimGroupStr, const char* conditionalAnimStr, float heading )
+	void LUA_NATIVE_TASK_TASK_WANDER_SPECIFIC( Ped ped, const char* conditionalAnimGroupStr, const char* conditionalAnimStr, float heading )
 	{
 		TASK::TASK_WANDER_SPECIFIC(ped, conditionalAnimGroupStr, conditionalAnimStr, heading);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_PARK( int ped, int vehicle, float x, float y, float z, float heading, int mode, float radius, bool keepEngineOn )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_PARK( Ped ped, Vehicle vehicle, float x, float y, float z, float heading, int mode, float radius, bool keepEngineOn )
 	{
 		TASK::TASK_VEHICLE_PARK(ped, vehicle, x, y, z, heading, mode, radius, keepEngineOn);
 	}
 
-	void LUA_NATIVE_TASK_TASK_STEALTH_KILL( int killer, int target, unsigned stealthKillActionResultHash, float desiredMoveBlendRatio, int stealthFlags )
+	void LUA_NATIVE_TASK_TASK_STEALTH_KILL( Ped killer, Ped target, Hash stealthKillActionResultHash, float desiredMoveBlendRatio, int stealthFlags )
 	{
 		TASK::TASK_STEALTH_KILL(killer, target, stealthKillActionResultHash, desiredMoveBlendRatio, stealthFlags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PLANT_BOMB( int ped, float x, float y, float z, float heading )
+	void LUA_NATIVE_TASK_TASK_PLANT_BOMB( Ped ped, float x, float y, float z, float heading )
 	{
 		TASK::TASK_PLANT_BOMB(ped, x, y, z, heading);
 	}
 
-	void LUA_NATIVE_TASK_TASK_FOLLOW_NAV_MESH_TO_COORD( int ped, float x, float y, float z, float moveBlendRatio, int time, float targetRadius, int flags, float targetHeading )
+	void LUA_NATIVE_TASK_TASK_FOLLOW_NAV_MESH_TO_COORD( Ped ped, float x, float y, float z, float moveBlendRatio, int time, float targetRadius, int flags, float targetHeading )
 	{
 		TASK::TASK_FOLLOW_NAV_MESH_TO_COORD(ped, x, y, z, moveBlendRatio, time, targetRadius, flags, targetHeading);
 	}
 
-	void LUA_NATIVE_TASK_TASK_FOLLOW_NAV_MESH_TO_COORD_ADVANCED( int ped, float x, float y, float z, float moveBlendRatio, int time, float targetRadius, int flags, float slideToCoordHeading, float maxSlopeNavigable, float clampMaxSearchDistance, float targetHeading )
+	void LUA_NATIVE_TASK_TASK_FOLLOW_NAV_MESH_TO_COORD_ADVANCED( Ped ped, float x, float y, float z, float moveBlendRatio, int time, float targetRadius, int flags, float slideToCoordHeading, float maxSlopeNavigable, float clampMaxSearchDistance, float targetHeading )
 	{
 		TASK::TASK_FOLLOW_NAV_MESH_TO_COORD_ADVANCED(ped, x, y, z, moveBlendRatio, time, targetRadius, flags, slideToCoordHeading, maxSlopeNavigable, clampMaxSearchDistance, targetHeading);
 	}
 
-	void LUA_NATIVE_TASK_SET_PED_PATH_CAN_USE_CLIMBOVERS( int ped, bool Toggle )
+	void LUA_NATIVE_TASK_SET_PED_PATH_CAN_USE_CLIMBOVERS( Ped ped, bool Toggle )
 	{
 		TASK::SET_PED_PATH_CAN_USE_CLIMBOVERS(ped, Toggle);
 	}
 
-	void LUA_NATIVE_TASK_SET_PED_PATH_CAN_USE_LADDERS( int ped, bool Toggle )
+	void LUA_NATIVE_TASK_SET_PED_PATH_CAN_USE_LADDERS( Ped ped, bool Toggle )
 	{
 		TASK::SET_PED_PATH_CAN_USE_LADDERS(ped, Toggle);
 	}
 
-	void LUA_NATIVE_TASK_SET_PED_PATH_CAN_DROP_FROM_HEIGHT( int ped, bool Toggle )
+	void LUA_NATIVE_TASK_SET_PED_PATH_CAN_DROP_FROM_HEIGHT( Ped ped, bool Toggle )
 	{
 		TASK::SET_PED_PATH_CAN_DROP_FROM_HEIGHT(ped, Toggle);
 	}
 
-	void LUA_NATIVE_TASK_SET_PED_PATH_CLIMB_COST_MODIFIER( int ped, float modifier )
+	void LUA_NATIVE_TASK_SET_PED_PATH_CLIMB_COST_MODIFIER( Ped ped, float modifier )
 	{
 		TASK::SET_PED_PATH_CLIMB_COST_MODIFIER(ped, modifier);
 	}
 
-	void LUA_NATIVE_TASK_SET_PED_PATH_MAY_ENTER_WATER( int ped, bool mayEnterWater )
+	void LUA_NATIVE_TASK_SET_PED_PATH_MAY_ENTER_WATER( Ped ped, bool mayEnterWater )
 	{
 		TASK::SET_PED_PATH_MAY_ENTER_WATER(ped, mayEnterWater);
 	}
 
-	void LUA_NATIVE_TASK_SET_PED_PATH_PREFER_TO_AVOID_WATER( int ped, bool avoidWater )
+	void LUA_NATIVE_TASK_SET_PED_PATH_PREFER_TO_AVOID_WATER( Ped ped, bool avoidWater )
 	{
 		TASK::SET_PED_PATH_PREFER_TO_AVOID_WATER(ped, avoidWater);
 	}
 
-	void LUA_NATIVE_TASK_SET_PED_PATH_AVOID_FIRE( int ped, bool avoidFire )
+	void LUA_NATIVE_TASK_SET_PED_PATH_AVOID_FIRE( Ped ped, bool avoidFire )
 	{
 		TASK::SET_PED_PATH_AVOID_FIRE(ped, avoidFire);
 	}
@@ -30506,7 +30501,7 @@ namespace lua::native
 		TASK::SET_GLOBAL_MIN_BIRD_FLIGHT_HEIGHT(height);
 	}
 
-	std::tuple<int, float, bool> LUA_NATIVE_TASK_GET_NAVMESH_ROUTE_DISTANCE_REMAINING( int ped, float distanceRemaining, bool isPathReady )
+	std::tuple<int, float, bool> LUA_NATIVE_TASK_GET_NAVMESH_ROUTE_DISTANCE_REMAINING( Ped ped, float distanceRemaining, bool isPathReady )
 	{
 		std::tuple<int, float, bool> return_values;
 		std::get<0>(return_values) = TASK::GET_NAVMESH_ROUTE_DISTANCE_REMAINING(ped, &distanceRemaining, (BOOL*)&isPathReady);
@@ -30516,49 +30511,49 @@ namespace lua::native
 		return return_values;
 	}
 
-	int LUA_NATIVE_TASK_GET_NAVMESH_ROUTE_RESULT( int ped )
+	int LUA_NATIVE_TASK_GET_NAVMESH_ROUTE_RESULT( Ped ped )
 	{
 		auto retval = TASK::GET_NAVMESH_ROUTE_RESULT(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_IS_CONTROLLED_VEHICLE_UNABLE_TO_GET_TO_ROAD( int ped )
+	bool LUA_NATIVE_TASK_IS_CONTROLLED_VEHICLE_UNABLE_TO_GET_TO_ROAD( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_CONTROLLED_VEHICLE_UNABLE_TO_GET_TO_ROAD(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_TASK_GO_TO_COORD_ANY_MEANS( int ped, float x, float y, float z, float moveBlendRatio, int vehicle, bool useLongRangeVehiclePathing, int drivingFlags, float maxRangeToShootTargets )
+	void LUA_NATIVE_TASK_TASK_GO_TO_COORD_ANY_MEANS( Ped ped, float x, float y, float z, float moveBlendRatio, Vehicle vehicle, bool useLongRangeVehiclePathing, int drivingFlags, float maxRangeToShootTargets )
 	{
 		TASK::TASK_GO_TO_COORD_ANY_MEANS(ped, x, y, z, moveBlendRatio, vehicle, useLongRangeVehiclePathing, drivingFlags, maxRangeToShootTargets);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GO_TO_COORD_ANY_MEANS_EXTRA_PARAMS( int ped, float x, float y, float z, float moveBlendRatio, int vehicle, bool useLongRangeVehiclePathing, int drivingFlags, float maxRangeToShootTargets, float extraVehToTargetDistToPreferVehicle, float driveStraightLineDistance, int extraFlags, float warpTimerMS )
+	void LUA_NATIVE_TASK_TASK_GO_TO_COORD_ANY_MEANS_EXTRA_PARAMS( Ped ped, float x, float y, float z, float moveBlendRatio, Vehicle vehicle, bool useLongRangeVehiclePathing, int drivingFlags, float maxRangeToShootTargets, float extraVehToTargetDistToPreferVehicle, float driveStraightLineDistance, int extraFlags, float warpTimerMS )
 	{
 		TASK::TASK_GO_TO_COORD_ANY_MEANS_EXTRA_PARAMS(ped, x, y, z, moveBlendRatio, vehicle, useLongRangeVehiclePathing, drivingFlags, maxRangeToShootTargets, extraVehToTargetDistToPreferVehicle, driveStraightLineDistance, extraFlags, warpTimerMS);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GO_TO_COORD_ANY_MEANS_EXTRA_PARAMS_WITH_CRUISE_SPEED( int ped, float x, float y, float z, float moveBlendRatio, int vehicle, bool useLongRangeVehiclePathing, int drivingFlags, float maxRangeToShootTargets, float extraVehToTargetDistToPreferVehicle, float driveStraightLineDistance, int extraFlags, float cruiseSpeed, float targetArriveDist )
+	void LUA_NATIVE_TASK_TASK_GO_TO_COORD_ANY_MEANS_EXTRA_PARAMS_WITH_CRUISE_SPEED( Ped ped, float x, float y, float z, float moveBlendRatio, Vehicle vehicle, bool useLongRangeVehiclePathing, int drivingFlags, float maxRangeToShootTargets, float extraVehToTargetDistToPreferVehicle, float driveStraightLineDistance, int extraFlags, float cruiseSpeed, float targetArriveDist )
 	{
 		TASK::TASK_GO_TO_COORD_ANY_MEANS_EXTRA_PARAMS_WITH_CRUISE_SPEED(ped, x, y, z, moveBlendRatio, vehicle, useLongRangeVehiclePathing, drivingFlags, maxRangeToShootTargets, extraVehToTargetDistToPreferVehicle, driveStraightLineDistance, extraFlags, cruiseSpeed, targetArriveDist);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PLAY_ANIM( int ped, const char* animDictionary, const char* animationName, float blendInSpeed, float blendOutSpeed, int duration, int flag, float playbackRate, bool lockX, bool lockY, bool lockZ )
+	void LUA_NATIVE_TASK_TASK_PLAY_ANIM( Ped ped, const char* animDictionary, const char* animationName, float blendInSpeed, float blendOutSpeed, int duration, int flag, float playbackRate, bool lockX, bool lockY, bool lockZ )
 	{
 		TASK::TASK_PLAY_ANIM(ped, animDictionary, animationName, blendInSpeed, blendOutSpeed, duration, flag, playbackRate, lockX, lockY, lockZ);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PLAY_ANIM_ADVANCED( int ped, const char* animDict, const char* animName, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float animEnterSpeed, float animExitSpeed, int duration, Any flag, float animTime, int rotOrder, int ikFlags )
+	void LUA_NATIVE_TASK_TASK_PLAY_ANIM_ADVANCED( Ped ped, const char* animDict, const char* animName, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float animEnterSpeed, float animExitSpeed, int duration, Any flag, float animTime, int rotOrder, int ikFlags )
 	{
 		TASK::TASK_PLAY_ANIM_ADVANCED(ped, animDict, animName, posX, posY, posZ, rotX, rotY, rotZ, animEnterSpeed, animExitSpeed, duration, flag, animTime, rotOrder, ikFlags);
 	}
 
-	void LUA_NATIVE_TASK_STOP_ANIM_TASK( int entity, const char* animDictionary, const char* animationName, float blendDelta )
+	void LUA_NATIVE_TASK_STOP_ANIM_TASK( Entity entity, const char* animDictionary, const char* animationName, float blendDelta )
 	{
 		TASK::STOP_ANIM_TASK(entity, animDictionary, animationName, blendDelta);
 	}
 
-	std::tuple<int, int, int> LUA_NATIVE_TASK_TASK_SCRIPTED_ANIMATION( int ped, int priorityLowData, int priorityMidData, int priorityHighData, float blendInDelta, float blendOutDelta )
+	std::tuple<int, int, int> LUA_NATIVE_TASK_TASK_SCRIPTED_ANIMATION( Ped ped, int priorityLowData, int priorityMidData, int priorityHighData, float blendInDelta, float blendOutDelta )
 	{
 		std::tuple<int, int, int> return_values;
 		TASK::TASK_SCRIPTED_ANIMATION(ped, &priorityLowData, &priorityMidData, &priorityHighData, blendInDelta, blendOutDelta);
@@ -30569,7 +30564,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<int, int, int> LUA_NATIVE_TASK_PLAY_ENTITY_SCRIPTED_ANIM( int entity, int priorityLowData, int priorityMidData, int priorityHighData, float blendInDelta, float blendOutDelta )
+	std::tuple<int, int, int> LUA_NATIVE_TASK_PLAY_ENTITY_SCRIPTED_ANIM( Entity entity, int priorityLowData, int priorityMidData, int priorityHighData, float blendInDelta, float blendOutDelta )
 	{
 		std::tuple<int, int, int> return_values;
 		TASK::PLAY_ENTITY_SCRIPTED_ANIM(entity, &priorityLowData, &priorityMidData, &priorityHighData, blendInDelta, blendOutDelta);
@@ -30580,75 +30575,75 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_TASK_STOP_ANIM_PLAYBACK( int entity, int priority, bool secondary )
+	void LUA_NATIVE_TASK_STOP_ANIM_PLAYBACK( Entity entity, int priority, bool secondary )
 	{
 		TASK::STOP_ANIM_PLAYBACK(entity, priority, secondary);
 	}
 
-	void LUA_NATIVE_TASK_SET_ANIM_WEIGHT( int entity, float weight, int priority, int index, bool secondary )
+	void LUA_NATIVE_TASK_SET_ANIM_WEIGHT( Entity entity, float weight, int priority, int index, bool secondary )
 	{
 		TASK::SET_ANIM_WEIGHT(entity, weight, priority, index, secondary);
 	}
 
-	void LUA_NATIVE_TASK_SET_ANIM_PHASE( int entity, float phase, int priority, bool secondary )
+	void LUA_NATIVE_TASK_SET_ANIM_PHASE( Entity entity, float phase, int priority, bool secondary )
 	{
 		TASK::SET_ANIM_PHASE(entity, phase, priority, secondary);
 	}
 
-	void LUA_NATIVE_TASK_SET_ANIM_RATE( int entity, float rate, int priority, bool secondary )
+	void LUA_NATIVE_TASK_SET_ANIM_RATE( Entity entity, float rate, int priority, bool secondary )
 	{
 		TASK::SET_ANIM_RATE(entity, rate, priority, secondary);
 	}
 
-	void LUA_NATIVE_TASK_SET_ANIM_LOOPED( int entity, bool looped, int priority, bool secondary )
+	void LUA_NATIVE_TASK_SET_ANIM_LOOPED( Entity entity, bool looped, int priority, bool secondary )
 	{
 		TASK::SET_ANIM_LOOPED(entity, looped, priority, secondary);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PLAY_PHONE_GESTURE_ANIMATION( int ped, const char* animDict, const char* animation, const char* boneMaskType, float blendInDuration, float blendOutDuration, bool isLooping, bool holdLastFrame )
+	void LUA_NATIVE_TASK_TASK_PLAY_PHONE_GESTURE_ANIMATION( Ped ped, const char* animDict, const char* animation, const char* boneMaskType, float blendInDuration, float blendOutDuration, bool isLooping, bool holdLastFrame )
 	{
 		TASK::TASK_PLAY_PHONE_GESTURE_ANIMATION(ped, animDict, animation, boneMaskType, blendInDuration, blendOutDuration, isLooping, holdLastFrame);
 	}
 
-	void LUA_NATIVE_TASK_TASK_STOP_PHONE_GESTURE_ANIMATION( int ped, float blendOutOverride )
+	void LUA_NATIVE_TASK_TASK_STOP_PHONE_GESTURE_ANIMATION( Ped ped, float blendOutOverride )
 	{
 		TASK::TASK_STOP_PHONE_GESTURE_ANIMATION(ped, blendOutOverride);
 	}
 
-	bool LUA_NATIVE_TASK_IS_PLAYING_PHONE_GESTURE_ANIM( int ped )
+	bool LUA_NATIVE_TASK_IS_PLAYING_PHONE_GESTURE_ANIM( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_PLAYING_PHONE_GESTURE_ANIM(ped);
 		return retval;
 	}
 
-	float LUA_NATIVE_TASK_GET_PHONE_GESTURE_ANIM_CURRENT_TIME( int ped )
+	float LUA_NATIVE_TASK_GET_PHONE_GESTURE_ANIM_CURRENT_TIME( Ped ped )
 	{
 		auto retval = TASK::GET_PHONE_GESTURE_ANIM_CURRENT_TIME(ped);
 		return retval;
 	}
 
-	float LUA_NATIVE_TASK_GET_PHONE_GESTURE_ANIM_TOTAL_TIME( int ped )
+	float LUA_NATIVE_TASK_GET_PHONE_GESTURE_ANIM_TOTAL_TIME( Ped ped )
 	{
 		auto retval = TASK::GET_PHONE_GESTURE_ANIM_TOTAL_TIME(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_PLAY_ANIM( int vehicle, const char* animationSet, const char* animationName )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_PLAY_ANIM( Vehicle vehicle, const char* animationSet, const char* animationName )
 	{
 		TASK::TASK_VEHICLE_PLAY_ANIM(vehicle, animationSet, animationName);
 	}
 
-	void LUA_NATIVE_TASK_TASK_LOOK_AT_COORD( int entity, float x, float y, float z, int duration, int flags, int priority )
+	void LUA_NATIVE_TASK_TASK_LOOK_AT_COORD( Entity entity, float x, float y, float z, int duration, int flags, int priority )
 	{
 		TASK::TASK_LOOK_AT_COORD(entity, x, y, z, duration, flags, priority);
 	}
 
-	void LUA_NATIVE_TASK_TASK_LOOK_AT_ENTITY( int ped, int lookAt, int duration, int flags, int priority )
+	void LUA_NATIVE_TASK_TASK_LOOK_AT_ENTITY( Ped ped, Entity lookAt, int duration, int flags, int priority )
 	{
 		TASK::TASK_LOOK_AT_ENTITY(ped, lookAt, duration, flags, priority);
 	}
 
-	void LUA_NATIVE_TASK_TASK_CLEAR_LOOK_AT( int ped )
+	void LUA_NATIVE_TASK_TASK_CLEAR_LOOK_AT( Ped ped )
 	{
 		TASK::TASK_CLEAR_LOOK_AT(ped);
 	}
@@ -30664,12 +30659,12 @@ namespace lua::native
 		TASK::CLOSE_SEQUENCE_TASK(taskSequenceId);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PERFORM_SEQUENCE( int ped, int taskSequenceId )
+	void LUA_NATIVE_TASK_TASK_PERFORM_SEQUENCE( Ped ped, int taskSequenceId )
 	{
 		TASK::TASK_PERFORM_SEQUENCE(ped, taskSequenceId);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PERFORM_SEQUENCE_LOCALLY( int ped, int taskSequenceId )
+	void LUA_NATIVE_TASK_TASK_PERFORM_SEQUENCE_LOCALLY( Ped ped, int taskSequenceId )
 	{
 		TASK::TASK_PERFORM_SEQUENCE_LOCALLY(ped, taskSequenceId);
 	}
@@ -30685,46 +30680,46 @@ namespace lua::native
 		TASK::SET_SEQUENCE_TO_REPEAT(taskSequenceId, repeat);
 	}
 
-	int LUA_NATIVE_TASK_GET_SEQUENCE_PROGRESS( int ped )
+	int LUA_NATIVE_TASK_GET_SEQUENCE_PROGRESS( Ped ped )
 	{
 		auto retval = TASK::GET_SEQUENCE_PROGRESS(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_GET_IS_TASK_ACTIVE( int ped, int taskIndex )
+	bool LUA_NATIVE_TASK_GET_IS_TASK_ACTIVE( Ped ped, int taskIndex )
 	{
 		auto retval = (bool)TASK::GET_IS_TASK_ACTIVE(ped, taskIndex);
 		return retval;
 	}
 
-	int LUA_NATIVE_TASK_GET_SCRIPT_TASK_STATUS( int ped, unsigned taskHash )
+	int LUA_NATIVE_TASK_GET_SCRIPT_TASK_STATUS( Ped ped, Hash taskHash )
 	{
 		auto retval = TASK::GET_SCRIPT_TASK_STATUS(ped, taskHash);
 		return retval;
 	}
 
-	int LUA_NATIVE_TASK_GET_ACTIVE_VEHICLE_MISSION_TYPE( int vehicle )
+	int LUA_NATIVE_TASK_GET_ACTIVE_VEHICLE_MISSION_TYPE( Vehicle vehicle )
 	{
 		auto retval = TASK::GET_ACTIVE_VEHICLE_MISSION_TYPE(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_TASK_LEAVE_ANY_VEHICLE( int ped, int delayTime, int flags )
+	void LUA_NATIVE_TASK_TASK_LEAVE_ANY_VEHICLE( Ped ped, int delayTime, int flags )
 	{
 		TASK::TASK_LEAVE_ANY_VEHICLE(ped, delayTime, flags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_AIM_GUN_SCRIPTED( int ped, unsigned scriptTask, bool disableBlockingClip, bool instantBlendToAim )
+	void LUA_NATIVE_TASK_TASK_AIM_GUN_SCRIPTED( Ped ped, Hash scriptTask, bool disableBlockingClip, bool instantBlendToAim )
 	{
 		TASK::TASK_AIM_GUN_SCRIPTED(ped, scriptTask, disableBlockingClip, instantBlendToAim);
 	}
 
-	void LUA_NATIVE_TASK_TASK_AIM_GUN_SCRIPTED_WITH_TARGET( int ped, int target, float x, float y, float z, int gunTaskType, bool disableBlockingClip, bool forceAim )
+	void LUA_NATIVE_TASK_TASK_AIM_GUN_SCRIPTED_WITH_TARGET( Ped ped, Ped target, float x, float y, float z, int gunTaskType, bool disableBlockingClip, bool forceAim )
 	{
 		TASK::TASK_AIM_GUN_SCRIPTED_WITH_TARGET(ped, target, x, y, z, gunTaskType, disableBlockingClip, forceAim);
 	}
 
-	void LUA_NATIVE_TASK_UPDATE_TASK_AIM_GUN_SCRIPTED_TARGET( int ped, int target, float x, float y, float z, bool disableBlockingClip )
+	void LUA_NATIVE_TASK_UPDATE_TASK_AIM_GUN_SCRIPTED_TARGET( Ped ped, Ped target, float x, float y, float z, bool disableBlockingClip )
 	{
 		TASK::UPDATE_TASK_AIM_GUN_SCRIPTED_TARGET(ped, target, x, y, z, disableBlockingClip);
 	}
@@ -30735,266 +30730,266 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_TASK_AIM_GUN_AT_ENTITY( int ped, int entity, int duration, bool instantBlendToAim )
+	void LUA_NATIVE_TASK_TASK_AIM_GUN_AT_ENTITY( Ped ped, Entity entity, int duration, bool instantBlendToAim )
 	{
 		TASK::TASK_AIM_GUN_AT_ENTITY(ped, entity, duration, instantBlendToAim);
 	}
 
-	void LUA_NATIVE_TASK_TASK_TURN_PED_TO_FACE_ENTITY( int ped, int entity, int duration )
+	void LUA_NATIVE_TASK_TASK_TURN_PED_TO_FACE_ENTITY( Ped ped, Entity entity, int duration )
 	{
 		TASK::TASK_TURN_PED_TO_FACE_ENTITY(ped, entity, duration);
 	}
 
-	void LUA_NATIVE_TASK_TASK_AIM_GUN_AT_COORD( int ped, float x, float y, float z, int time, bool instantBlendToAim, bool playAnimIntro )
+	void LUA_NATIVE_TASK_TASK_AIM_GUN_AT_COORD( Ped ped, float x, float y, float z, int time, bool instantBlendToAim, bool playAnimIntro )
 	{
 		TASK::TASK_AIM_GUN_AT_COORD(ped, x, y, z, time, instantBlendToAim, playAnimIntro);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SHOOT_AT_COORD( int ped, float x, float y, float z, int duration, unsigned firingPattern )
+	void LUA_NATIVE_TASK_TASK_SHOOT_AT_COORD( Ped ped, float x, float y, float z, int duration, Hash firingPattern )
 	{
 		TASK::TASK_SHOOT_AT_COORD(ped, x, y, z, duration, firingPattern);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SHUFFLE_TO_NEXT_VEHICLE_SEAT( int ped, int vehicle, bool useAlternateShuffle )
+	void LUA_NATIVE_TASK_TASK_SHUFFLE_TO_NEXT_VEHICLE_SEAT( Ped ped, Vehicle vehicle, bool useAlternateShuffle )
 	{
 		TASK::TASK_SHUFFLE_TO_NEXT_VEHICLE_SEAT(ped, vehicle, useAlternateShuffle);
 	}
 
-	void LUA_NATIVE_TASK_CLEAR_PED_TASKS( int ped )
+	void LUA_NATIVE_TASK_CLEAR_PED_TASKS( Ped ped )
 	{
 		TASK::CLEAR_PED_TASKS(ped);
 	}
 
-	void LUA_NATIVE_TASK_CLEAR_PED_SECONDARY_TASK( int ped )
+	void LUA_NATIVE_TASK_CLEAR_PED_SECONDARY_TASK( Ped ped )
 	{
 		TASK::CLEAR_PED_SECONDARY_TASK(ped);
 	}
 
-	void LUA_NATIVE_TASK_TASK_EVERYONE_LEAVE_VEHICLE( int vehicle )
+	void LUA_NATIVE_TASK_TASK_EVERYONE_LEAVE_VEHICLE( Vehicle vehicle )
 	{
 		TASK::TASK_EVERYONE_LEAVE_VEHICLE(vehicle);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GOTO_ENTITY_OFFSET( int ped, int entity, int time, float seekRadius, float seekAngleDeg, float moveBlendRatio, int gotoEntityOffsetFlags )
+	void LUA_NATIVE_TASK_TASK_GOTO_ENTITY_OFFSET( Ped ped, Entity entity, int time, float seekRadius, float seekAngleDeg, float moveBlendRatio, int gotoEntityOffsetFlags )
 	{
 		TASK::TASK_GOTO_ENTITY_OFFSET(ped, entity, time, seekRadius, seekAngleDeg, moveBlendRatio, gotoEntityOffsetFlags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GOTO_ENTITY_OFFSET_XY( int ped, int entity, int duration, float targetRadius, float offsetX, float offsetY, float moveBlendRatio, int gotoEntityOffsetFlags )
+	void LUA_NATIVE_TASK_TASK_GOTO_ENTITY_OFFSET_XY( Ped ped, Entity entity, int duration, float targetRadius, float offsetX, float offsetY, float moveBlendRatio, int gotoEntityOffsetFlags )
 	{
 		TASK::TASK_GOTO_ENTITY_OFFSET_XY(ped, entity, duration, targetRadius, offsetX, offsetY, moveBlendRatio, gotoEntityOffsetFlags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_TURN_PED_TO_FACE_COORD( int ped, float x, float y, float z, int duration )
+	void LUA_NATIVE_TASK_TASK_TURN_PED_TO_FACE_COORD( Ped ped, float x, float y, float z, int duration )
 	{
 		TASK::TASK_TURN_PED_TO_FACE_COORD(ped, x, y, z, duration);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_TEMP_ACTION( int driver, int vehicle, int action, int time )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_TEMP_ACTION( Ped driver, Vehicle vehicle, int action, int time )
 	{
 		TASK::TASK_VEHICLE_TEMP_ACTION(driver, vehicle, action, time);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_MISSION( int driver, int vehicle, int vehicleTarget, int missionType, float cruiseSpeed, int drivingStyle, float targetReached, float straightLineDistance, bool DriveAgainstTraffic )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_MISSION( Ped driver, Vehicle vehicle, Vehicle vehicleTarget, int missionType, float cruiseSpeed, int drivingStyle, float targetReached, float straightLineDistance, bool DriveAgainstTraffic )
 	{
 		TASK::TASK_VEHICLE_MISSION(driver, vehicle, vehicleTarget, missionType, cruiseSpeed, drivingStyle, targetReached, straightLineDistance, DriveAgainstTraffic);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_MISSION_PED_TARGET( int ped, int vehicle, int pedTarget, int missionType, float maxSpeed, int drivingStyle, float minDistance, float straightLineDistance, bool DriveAgainstTraffic )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_MISSION_PED_TARGET( Ped ped, Vehicle vehicle, Ped pedTarget, int missionType, float maxSpeed, int drivingStyle, float minDistance, float straightLineDistance, bool DriveAgainstTraffic )
 	{
 		TASK::TASK_VEHICLE_MISSION_PED_TARGET(ped, vehicle, pedTarget, missionType, maxSpeed, drivingStyle, minDistance, straightLineDistance, DriveAgainstTraffic);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_MISSION_COORS_TARGET( int ped, int vehicle, float x, float y, float z, int mission, float cruiseSpeed, int drivingStyle, float targetReached, float straightLineDistance, bool DriveAgainstTraffic )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_MISSION_COORS_TARGET( Ped ped, Vehicle vehicle, float x, float y, float z, int mission, float cruiseSpeed, int drivingStyle, float targetReached, float straightLineDistance, bool DriveAgainstTraffic )
 	{
 		TASK::TASK_VEHICLE_MISSION_COORS_TARGET(ped, vehicle, x, y, z, mission, cruiseSpeed, drivingStyle, targetReached, straightLineDistance, DriveAgainstTraffic);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_ESCORT( int ped, int vehicle, int targetVehicle, int mode, float speed, int drivingStyle, float minDistance, int minHeightAboveTerrain, float noRoadsDistance )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_ESCORT( Ped ped, Vehicle vehicle, Vehicle targetVehicle, int mode, float speed, int drivingStyle, float minDistance, int minHeightAboveTerrain, float noRoadsDistance )
 	{
 		TASK::TASK_VEHICLE_ESCORT(ped, vehicle, targetVehicle, mode, speed, drivingStyle, minDistance, minHeightAboveTerrain, noRoadsDistance);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_FOLLOW( int driver, int vehicle, int targetEntity, float speed, int drivingStyle, int minDistance )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_FOLLOW( Ped driver, Vehicle vehicle, Entity targetEntity, float speed, int drivingStyle, int minDistance )
 	{
 		TASK::TASK_VEHICLE_FOLLOW(driver, vehicle, targetEntity, speed, drivingStyle, minDistance);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_CHASE( int driver, int targetEnt )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_CHASE( Ped driver, Entity targetEnt )
 	{
 		TASK::TASK_VEHICLE_CHASE(driver, targetEnt);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_HELI_PROTECT( int pilot, int vehicle, int entityToFollow, float targetSpeed, int drivingFlags, float radius, int altitude, int heliFlags )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_HELI_PROTECT( Ped pilot, Vehicle vehicle, Entity entityToFollow, float targetSpeed, int drivingFlags, float radius, int altitude, int heliFlags )
 	{
 		TASK::TASK_VEHICLE_HELI_PROTECT(pilot, vehicle, entityToFollow, targetSpeed, drivingFlags, radius, altitude, heliFlags);
 	}
 
-	void LUA_NATIVE_TASK_SET_TASK_VEHICLE_CHASE_BEHAVIOR_FLAG( int ped, int flag, bool set )
+	void LUA_NATIVE_TASK_SET_TASK_VEHICLE_CHASE_BEHAVIOR_FLAG( Ped ped, int flag, bool set )
 	{
 		TASK::SET_TASK_VEHICLE_CHASE_BEHAVIOR_FLAG(ped, flag, set);
 	}
 
-	void LUA_NATIVE_TASK_SET_TASK_VEHICLE_CHASE_IDEAL_PURSUIT_DISTANCE( int ped, float distance )
+	void LUA_NATIVE_TASK_SET_TASK_VEHICLE_CHASE_IDEAL_PURSUIT_DISTANCE( Ped ped, float distance )
 	{
 		TASK::SET_TASK_VEHICLE_CHASE_IDEAL_PURSUIT_DISTANCE(ped, distance);
 	}
 
-	void LUA_NATIVE_TASK_TASK_HELI_CHASE( int pilot, int entityToFollow, float x, float y, float z )
+	void LUA_NATIVE_TASK_TASK_HELI_CHASE( Ped pilot, Entity entityToFollow, float x, float y, float z )
 	{
 		TASK::TASK_HELI_CHASE(pilot, entityToFollow, x, y, z);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PLANE_CHASE( int pilot, int entityToFollow, float x, float y, float z )
+	void LUA_NATIVE_TASK_TASK_PLANE_CHASE( Ped pilot, Entity entityToFollow, float x, float y, float z )
 	{
 		TASK::TASK_PLANE_CHASE(pilot, entityToFollow, x, y, z);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PLANE_LAND( int pilot, int plane, float runwayStartX, float runwayStartY, float runwayStartZ, float runwayEndX, float runwayEndY, float runwayEndZ )
+	void LUA_NATIVE_TASK_TASK_PLANE_LAND( Ped pilot, Vehicle plane, float runwayStartX, float runwayStartY, float runwayStartZ, float runwayEndX, float runwayEndY, float runwayEndZ )
 	{
 		TASK::TASK_PLANE_LAND(pilot, plane, runwayStartX, runwayStartY, runwayStartZ, runwayEndX, runwayEndY, runwayEndZ);
 	}
 
-	void LUA_NATIVE_TASK_CLEAR_DEFAULT_PRIMARY_TASK( int ped )
+	void LUA_NATIVE_TASK_CLEAR_DEFAULT_PRIMARY_TASK( Ped ped )
 	{
 		TASK::CLEAR_DEFAULT_PRIMARY_TASK(ped);
 	}
 
-	void LUA_NATIVE_TASK_CLEAR_PRIMARY_VEHICLE_TASK( int vehicle )
+	void LUA_NATIVE_TASK_CLEAR_PRIMARY_VEHICLE_TASK( Vehicle vehicle )
 	{
 		TASK::CLEAR_PRIMARY_VEHICLE_TASK(vehicle);
 	}
 
-	void LUA_NATIVE_TASK_CLEAR_VEHICLE_CRASH_TASK( int vehicle )
+	void LUA_NATIVE_TASK_CLEAR_VEHICLE_CRASH_TASK( Vehicle vehicle )
 	{
 		TASK::CLEAR_VEHICLE_CRASH_TASK(vehicle);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PLANE_GOTO_PRECISE_VTOL( int ped, int vehicle, float x, float y, float z, int flightHeight, int minHeightAboveTerrain, bool useDesiredOrientation, float desiredOrientation, bool autopilot )
+	void LUA_NATIVE_TASK_TASK_PLANE_GOTO_PRECISE_VTOL( Ped ped, Vehicle vehicle, float x, float y, float z, int flightHeight, int minHeightAboveTerrain, bool useDesiredOrientation, float desiredOrientation, bool autopilot )
 	{
 		TASK::TASK_PLANE_GOTO_PRECISE_VTOL(ped, vehicle, x, y, z, flightHeight, minHeightAboveTerrain, useDesiredOrientation, desiredOrientation, autopilot);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SUBMARINE_GOTO_AND_STOP( int ped, int submarine, float x, float y, float z, bool autopilot )
+	void LUA_NATIVE_TASK_TASK_SUBMARINE_GOTO_AND_STOP( Ped ped, Vehicle submarine, float x, float y, float z, bool autopilot )
 	{
 		TASK::TASK_SUBMARINE_GOTO_AND_STOP(ped, submarine, x, y, z, autopilot);
 	}
 
-	void LUA_NATIVE_TASK_TASK_HELI_MISSION( int pilot, int aircraft, int targetVehicle, int targetPed, float destinationX, float destinationY, float destinationZ, int missionFlag, float maxSpeed, float radius, float targetHeading, int maxHeight, int minHeight, float slowDownDistance, int behaviorFlags )
+	void LUA_NATIVE_TASK_TASK_HELI_MISSION( Ped pilot, Vehicle aircraft, Vehicle targetVehicle, Ped targetPed, float destinationX, float destinationY, float destinationZ, int missionFlag, float maxSpeed, float radius, float targetHeading, int maxHeight, int minHeight, float slowDownDistance, int behaviorFlags )
 	{
 		TASK::TASK_HELI_MISSION(pilot, aircraft, targetVehicle, targetPed, destinationX, destinationY, destinationZ, missionFlag, maxSpeed, radius, targetHeading, maxHeight, minHeight, slowDownDistance, behaviorFlags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_HELI_ESCORT_HELI( int pilot, int heli1, int heli2, float offsetX, float offsetY, float offsetZ )
+	void LUA_NATIVE_TASK_TASK_HELI_ESCORT_HELI( Ped pilot, Vehicle heli1, Vehicle heli2, float offsetX, float offsetY, float offsetZ )
 	{
 		TASK::TASK_HELI_ESCORT_HELI(pilot, heli1, heli2, offsetX, offsetY, offsetZ);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PLANE_MISSION( int pilot, int aircraft, int targetVehicle, int targetPed, float destinationX, float destinationY, float destinationZ, int missionFlag, float angularDrag, float targetReached, float targetHeading, float maxZ, float minZ, bool precise )
+	void LUA_NATIVE_TASK_TASK_PLANE_MISSION( Ped pilot, Vehicle aircraft, Vehicle targetVehicle, Ped targetPed, float destinationX, float destinationY, float destinationZ, int missionFlag, float angularDrag, float targetReached, float targetHeading, float maxZ, float minZ, bool precise )
 	{
 		TASK::TASK_PLANE_MISSION(pilot, aircraft, targetVehicle, targetPed, destinationX, destinationY, destinationZ, missionFlag, angularDrag, targetReached, targetHeading, maxZ, minZ, precise);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PLANE_TAXI( int pilot, int aircraft, float x, float y, float z, float cruiseSpeed, float targetReached )
+	void LUA_NATIVE_TASK_TASK_PLANE_TAXI( Ped pilot, Vehicle aircraft, float x, float y, float z, float cruiseSpeed, float targetReached )
 	{
 		TASK::TASK_PLANE_TAXI(pilot, aircraft, x, y, z, cruiseSpeed, targetReached);
 	}
 
-	void LUA_NATIVE_TASK_TASK_BOAT_MISSION( int pedDriver, int vehicle, int targetVehicle, int targetPed, float x, float y, float z, int mission, float maxSpeed, int drivingStyle, float targetReached, Any boatFlags )
+	void LUA_NATIVE_TASK_TASK_BOAT_MISSION( Ped pedDriver, Vehicle vehicle, Vehicle targetVehicle, Ped targetPed, float x, float y, float z, int mission, float maxSpeed, int drivingStyle, float targetReached, Any boatFlags )
 	{
 		TASK::TASK_BOAT_MISSION(pedDriver, vehicle, targetVehicle, targetPed, x, y, z, mission, maxSpeed, drivingStyle, targetReached, boatFlags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_DRIVE_BY( int driverPed, int targetPed, int targetVehicle, float targetX, float targetY, float targetZ, float distanceToShoot, int pedAccuracy, bool pushUnderneathDrivingTaskIfDriving, unsigned firingPattern )
+	void LUA_NATIVE_TASK_TASK_DRIVE_BY( Ped driverPed, Ped targetPed, Vehicle targetVehicle, float targetX, float targetY, float targetZ, float distanceToShoot, int pedAccuracy, bool pushUnderneathDrivingTaskIfDriving, Hash firingPattern )
 	{
 		TASK::TASK_DRIVE_BY(driverPed, targetPed, targetVehicle, targetX, targetY, targetZ, distanceToShoot, pedAccuracy, pushUnderneathDrivingTaskIfDriving, firingPattern);
 	}
 
-	void LUA_NATIVE_TASK_SET_DRIVEBY_TASK_TARGET( int shootingPed, int targetPed, int targetVehicle, float x, float y, float z )
+	void LUA_NATIVE_TASK_SET_DRIVEBY_TASK_TARGET( Ped shootingPed, Ped targetPed, Vehicle targetVehicle, float x, float y, float z )
 	{
 		TASK::SET_DRIVEBY_TASK_TARGET(shootingPed, targetPed, targetVehicle, x, y, z);
 	}
 
-	void LUA_NATIVE_TASK_CLEAR_DRIVEBY_TASK_UNDERNEATH_DRIVING_TASK( int ped )
+	void LUA_NATIVE_TASK_CLEAR_DRIVEBY_TASK_UNDERNEATH_DRIVING_TASK( Ped ped )
 	{
 		TASK::CLEAR_DRIVEBY_TASK_UNDERNEATH_DRIVING_TASK(ped);
 	}
 
-	bool LUA_NATIVE_TASK_IS_DRIVEBY_TASK_UNDERNEATH_DRIVING_TASK( int ped )
+	bool LUA_NATIVE_TASK_IS_DRIVEBY_TASK_UNDERNEATH_DRIVING_TASK( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_DRIVEBY_TASK_UNDERNEATH_DRIVING_TASK(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_CONTROL_MOUNTED_WEAPON( int ped )
+	bool LUA_NATIVE_TASK_CONTROL_MOUNTED_WEAPON( Ped ped )
 	{
 		auto retval = (bool)TASK::CONTROL_MOUNTED_WEAPON(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_SET_MOUNTED_WEAPON_TARGET( int shootingPed, int targetPed, int targetVehicle, float x, float y, float z, int taskMode, bool ignoreTargetVehDeadCheck )
+	void LUA_NATIVE_TASK_SET_MOUNTED_WEAPON_TARGET( Ped shootingPed, Ped targetPed, Vehicle targetVehicle, float x, float y, float z, int taskMode, bool ignoreTargetVehDeadCheck )
 	{
 		TASK::SET_MOUNTED_WEAPON_TARGET(shootingPed, targetPed, targetVehicle, x, y, z, taskMode, ignoreTargetVehDeadCheck);
 	}
 
-	bool LUA_NATIVE_TASK_IS_MOUNTED_WEAPON_TASK_UNDERNEATH_DRIVING_TASK( int ped )
+	bool LUA_NATIVE_TASK_IS_MOUNTED_WEAPON_TASK_UNDERNEATH_DRIVING_TASK( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_MOUNTED_WEAPON_TASK_UNDERNEATH_DRIVING_TASK(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_TASK_USE_MOBILE_PHONE( int ped, bool usePhone, int desiredPhoneMode )
+	void LUA_NATIVE_TASK_TASK_USE_MOBILE_PHONE( Ped ped, bool usePhone, int desiredPhoneMode )
 	{
 		TASK::TASK_USE_MOBILE_PHONE(ped, usePhone, desiredPhoneMode);
 	}
 
-	void LUA_NATIVE_TASK_TASK_USE_MOBILE_PHONE_TIMED( int ped, int duration )
+	void LUA_NATIVE_TASK_TASK_USE_MOBILE_PHONE_TIMED( Ped ped, int duration )
 	{
 		TASK::TASK_USE_MOBILE_PHONE_TIMED(ped, duration);
 	}
 
-	void LUA_NATIVE_TASK_TASK_CHAT_TO_PED( int ped, int target, int flags, float goToLocationX, float goToLocationY, float goToLocationZ, float headingDegs, float idleTime )
+	void LUA_NATIVE_TASK_TASK_CHAT_TO_PED( Ped ped, Ped target, int flags, float goToLocationX, float goToLocationY, float goToLocationZ, float headingDegs, float idleTime )
 	{
 		TASK::TASK_CHAT_TO_PED(ped, target, flags, goToLocationX, goToLocationY, goToLocationZ, headingDegs, idleTime);
 	}
 
-	void LUA_NATIVE_TASK_TASK_WARP_PED_INTO_VEHICLE( int ped, int vehicle, int seat )
+	void LUA_NATIVE_TASK_TASK_WARP_PED_INTO_VEHICLE( Ped ped, Vehicle vehicle, int seat )
 	{
 		TASK::TASK_WARP_PED_INTO_VEHICLE(ped, vehicle, seat);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SHOOT_AT_ENTITY( int entity, int target, int duration, unsigned firingPattern )
+	void LUA_NATIVE_TASK_TASK_SHOOT_AT_ENTITY( Entity entity, Entity target, int duration, Hash firingPattern )
 	{
 		TASK::TASK_SHOOT_AT_ENTITY(entity, target, duration, firingPattern);
 	}
 
-	void LUA_NATIVE_TASK_TASK_CLIMB( int ped, bool usePlayerLaunchForce )
+	void LUA_NATIVE_TASK_TASK_CLIMB( Ped ped, bool usePlayerLaunchForce )
 	{
 		TASK::TASK_CLIMB(ped, usePlayerLaunchForce);
 	}
 
-	void LUA_NATIVE_TASK_TASK_CLIMB_LADDER( int ped, bool fast )
+	void LUA_NATIVE_TASK_TASK_CLIMB_LADDER( Ped ped, bool fast )
 	{
 		TASK::TASK_CLIMB_LADDER(ped, fast);
 	}
 
-	void LUA_NATIVE_TASK_TASK_RAPPEL_DOWN_WALL_USING_CLIPSET_OVERRIDE( int ped, float x1, float y1, float z1, float x2, float y2, float z2, float minZ, int ropeHandle, const char* clipSet, Any p10 )
+	void LUA_NATIVE_TASK_TASK_RAPPEL_DOWN_WALL_USING_CLIPSET_OVERRIDE( Ped ped, float x1, float y1, float z1, float x2, float y2, float z2, float minZ, int ropeHandle, const char* clipSet, Any p10 )
 	{
 		TASK::TASK_RAPPEL_DOWN_WALL_USING_CLIPSET_OVERRIDE(ped, x1, y1, z1, x2, y2, z2, minZ, ropeHandle, clipSet, p10);
 	}
 
-	int LUA_NATIVE_TASK_GET_TASK_RAPPEL_DOWN_WALL_STATE( int ped )
+	int LUA_NATIVE_TASK_GET_TASK_RAPPEL_DOWN_WALL_STATE( Ped ped )
 	{
 		auto retval = TASK::GET_TASK_RAPPEL_DOWN_WALL_STATE(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_CLEAR_PED_TASKS_IMMEDIATELY( int ped )
+	void LUA_NATIVE_TASK_CLEAR_PED_TASKS_IMMEDIATELY( Ped ped )
 	{
 		TASK::CLEAR_PED_TASKS_IMMEDIATELY(ped);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PERFORM_SEQUENCE_FROM_PROGRESS( int ped, int taskIndex, int progress1, int progress2 )
+	void LUA_NATIVE_TASK_TASK_PERFORM_SEQUENCE_FROM_PROGRESS( Ped ped, int taskIndex, int progress1, int progress2 )
 	{
 		TASK::TASK_PERFORM_SEQUENCE_FROM_PROGRESS(ped, taskIndex, progress1, progress2);
 	}
@@ -31004,54 +30999,54 @@ namespace lua::native
 		TASK::SET_NEXT_DESIRED_MOVE_STATE(nextMoveState);
 	}
 
-	void LUA_NATIVE_TASK_SET_PED_DESIRED_MOVE_BLEND_RATIO( int ped, float newMoveBlendRatio )
+	void LUA_NATIVE_TASK_SET_PED_DESIRED_MOVE_BLEND_RATIO( Ped ped, float newMoveBlendRatio )
 	{
 		TASK::SET_PED_DESIRED_MOVE_BLEND_RATIO(ped, newMoveBlendRatio);
 	}
 
-	float LUA_NATIVE_TASK_GET_PED_DESIRED_MOVE_BLEND_RATIO( int ped )
+	float LUA_NATIVE_TASK_GET_PED_DESIRED_MOVE_BLEND_RATIO( Ped ped )
 	{
 		auto retval = TASK::GET_PED_DESIRED_MOVE_BLEND_RATIO(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_TASK_GOTO_ENTITY_AIMING( int ped, int target, float distanceToStopAt, float StartAimingDist )
+	void LUA_NATIVE_TASK_TASK_GOTO_ENTITY_AIMING( Ped ped, Entity target, float distanceToStopAt, float StartAimingDist )
 	{
 		TASK::TASK_GOTO_ENTITY_AIMING(ped, target, distanceToStopAt, StartAimingDist);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SET_DECISION_MAKER( int ped, unsigned decisionMakerId )
+	void LUA_NATIVE_TASK_TASK_SET_DECISION_MAKER( Ped ped, Hash decisionMakerId )
 	{
 		TASK::TASK_SET_DECISION_MAKER(ped, decisionMakerId);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SET_SPHERE_DEFENSIVE_AREA( int ped, float x, float y, float z, float radius )
+	void LUA_NATIVE_TASK_TASK_SET_SPHERE_DEFENSIVE_AREA( Ped ped, float x, float y, float z, float radius )
 	{
 		TASK::TASK_SET_SPHERE_DEFENSIVE_AREA(ped, x, y, z, radius);
 	}
 
-	void LUA_NATIVE_TASK_TASK_CLEAR_DEFENSIVE_AREA( int ped )
+	void LUA_NATIVE_TASK_TASK_CLEAR_DEFENSIVE_AREA( Ped ped )
 	{
 		TASK::TASK_CLEAR_DEFENSIVE_AREA(ped);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PED_SLIDE_TO_COORD( int ped, float x, float y, float z, float heading, float speed )
+	void LUA_NATIVE_TASK_TASK_PED_SLIDE_TO_COORD( Ped ped, float x, float y, float z, float heading, float speed )
 	{
 		TASK::TASK_PED_SLIDE_TO_COORD(ped, x, y, z, heading, speed);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PED_SLIDE_TO_COORD_HDG_RATE( int ped, float x, float y, float z, float heading, float speed, float headingChangeRate )
+	void LUA_NATIVE_TASK_TASK_PED_SLIDE_TO_COORD_HDG_RATE( Ped ped, float x, float y, float z, float heading, float speed, float headingChangeRate )
 	{
 		TASK::TASK_PED_SLIDE_TO_COORD_HDG_RATE(ped, x, y, z, heading, speed, headingChangeRate);
 	}
 
-	int LUA_NATIVE_TASK_ADD_COVER_POINT( float x, float y, float z, float direction, int usage, int height, int arc, bool isPriority )
+	ScrHandle LUA_NATIVE_TASK_ADD_COVER_POINT( float x, float y, float z, float direction, int usage, int height, int arc, bool isPriority )
 	{
 		auto retval = TASK::ADD_COVER_POINT(x, y, z, direction, usage, height, arc, isPriority);
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_REMOVE_COVER_POINT( int coverpoint )
+	void LUA_NATIVE_TASK_REMOVE_COVER_POINT( ScrHandle coverpoint )
 	{
 		TASK::REMOVE_COVER_POINT(coverpoint);
 	}
@@ -31062,7 +31057,7 @@ namespace lua::native
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_TASK_GET_SCRIPTED_COVER_POINT_COORDS( int coverpoint )
+	Vector3 LUA_NATIVE_TASK_GET_SCRIPTED_COVER_POINT_COORDS( ScrHandle coverpoint )
 	{
 		auto retval = TASK::GET_SCRIPTED_COVER_POINT_COORDS(coverpoint);
 		return retval;
@@ -31073,92 +31068,92 @@ namespace lua::native
 		TASK::ADD_SCRIPTED_COVER_AREA(x, y, z, radius);
 	}
 
-	void LUA_NATIVE_TASK_TASK_COMBAT_PED( int ped, int targetPed, int combatFlags, int threatResponseFlags )
+	void LUA_NATIVE_TASK_TASK_COMBAT_PED( Ped ped, Ped targetPed, int combatFlags, int threatResponseFlags )
 	{
 		TASK::TASK_COMBAT_PED(ped, targetPed, combatFlags, threatResponseFlags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_COMBAT_PED_TIMED( int ped, int target, int time, int flags )
+	void LUA_NATIVE_TASK_TASK_COMBAT_PED_TIMED( Ped ped, Ped target, int time, int flags )
 	{
 		TASK::TASK_COMBAT_PED_TIMED(ped, target, time, flags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SEEK_COVER_FROM_POS( int ped, float x, float y, float z, int duration, bool allowPeekingAndFiring )
+	void LUA_NATIVE_TASK_TASK_SEEK_COVER_FROM_POS( Ped ped, float x, float y, float z, int duration, bool allowPeekingAndFiring )
 	{
 		TASK::TASK_SEEK_COVER_FROM_POS(ped, x, y, z, duration, allowPeekingAndFiring);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SEEK_COVER_FROM_PED( int ped, int target, int duration, bool allowPeekingAndFiring )
+	void LUA_NATIVE_TASK_TASK_SEEK_COVER_FROM_PED( Ped ped, Ped target, int duration, bool allowPeekingAndFiring )
 	{
 		TASK::TASK_SEEK_COVER_FROM_PED(ped, target, duration, allowPeekingAndFiring);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SEEK_COVER_TO_COVER_POINT( int ped, int coverpoint, float x, float y, float z, int time, bool allowPeekingAndFiring )
+	void LUA_NATIVE_TASK_TASK_SEEK_COVER_TO_COVER_POINT( Ped ped, ScrHandle coverpoint, float x, float y, float z, int time, bool allowPeekingAndFiring )
 	{
 		TASK::TASK_SEEK_COVER_TO_COVER_POINT(ped, coverpoint, x, y, z, time, allowPeekingAndFiring);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SEEK_COVER_TO_COORDS( int ped, float x1, float y1, float z1, float x2, float y2, float z2, int timeout, bool shortRoute )
+	void LUA_NATIVE_TASK_TASK_SEEK_COVER_TO_COORDS( Ped ped, float x1, float y1, float z1, float x2, float y2, float z2, int timeout, bool shortRoute )
 	{
 		TASK::TASK_SEEK_COVER_TO_COORDS(ped, x1, y1, z1, x2, y2, z2, timeout, shortRoute);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PUT_PED_DIRECTLY_INTO_COVER( int ped, float x, float y, float z, int time, bool allowPeekingAndFiring, float blendInDuration, bool forceInitialFacingDirection, bool forceFaceLeft, int identifier, bool doEntry )
+	void LUA_NATIVE_TASK_TASK_PUT_PED_DIRECTLY_INTO_COVER( Ped ped, float x, float y, float z, int time, bool allowPeekingAndFiring, float blendInDuration, bool forceInitialFacingDirection, bool forceFaceLeft, int identifier, bool doEntry )
 	{
 		TASK::TASK_PUT_PED_DIRECTLY_INTO_COVER(ped, x, y, z, time, allowPeekingAndFiring, blendInDuration, forceInitialFacingDirection, forceFaceLeft, identifier, doEntry);
 	}
 
-	void LUA_NATIVE_TASK_TASK_WARP_PED_DIRECTLY_INTO_COVER( int ped, int time, bool allowPeekingAndFiring, bool forceInitialFacingDirection, bool forceFaceLeft, int identifier )
+	void LUA_NATIVE_TASK_TASK_WARP_PED_DIRECTLY_INTO_COVER( Ped ped, int time, bool allowPeekingAndFiring, bool forceInitialFacingDirection, bool forceFaceLeft, int identifier )
 	{
 		TASK::TASK_WARP_PED_DIRECTLY_INTO_COVER(ped, time, allowPeekingAndFiring, forceInitialFacingDirection, forceFaceLeft, identifier);
 	}
 
-	void LUA_NATIVE_TASK_TASK_EXIT_COVER( int ped, int exitType, float x, float y, float z )
+	void LUA_NATIVE_TASK_TASK_EXIT_COVER( Ped ped, int exitType, float x, float y, float z )
 	{
 		TASK::TASK_EXIT_COVER(ped, exitType, x, y, z);
 	}
 
-	void LUA_NATIVE_TASK_TASK_PUT_PED_DIRECTLY_INTO_MELEE( int ped, int meleeTarget, float blendInDuration, float timeInMelee, float strafePhaseSync, int aiCombatFlags )
+	void LUA_NATIVE_TASK_TASK_PUT_PED_DIRECTLY_INTO_MELEE( Ped ped, Ped meleeTarget, float blendInDuration, float timeInMelee, float strafePhaseSync, int aiCombatFlags )
 	{
 		TASK::TASK_PUT_PED_DIRECTLY_INTO_MELEE(ped, meleeTarget, blendInDuration, timeInMelee, strafePhaseSync, aiCombatFlags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_TOGGLE_DUCK( int ped, int toggleType )
+	void LUA_NATIVE_TASK_TASK_TOGGLE_DUCK( Ped ped, int toggleType )
 	{
 		TASK::TASK_TOGGLE_DUCK(ped, toggleType);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GUARD_CURRENT_POSITION( int ped, float maxPatrolProximity, float defensiveAreaRadius, bool setDefensiveArea )
+	void LUA_NATIVE_TASK_TASK_GUARD_CURRENT_POSITION( Ped ped, float maxPatrolProximity, float defensiveAreaRadius, bool setDefensiveArea )
 	{
 		TASK::TASK_GUARD_CURRENT_POSITION(ped, maxPatrolProximity, defensiveAreaRadius, setDefensiveArea);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GUARD_ASSIGNED_DEFENSIVE_AREA( int ped, float x, float y, float z, float heading, float maxPatrolProximity, int timer )
+	void LUA_NATIVE_TASK_TASK_GUARD_ASSIGNED_DEFENSIVE_AREA( Ped ped, float x, float y, float z, float heading, float maxPatrolProximity, int timer )
 	{
 		TASK::TASK_GUARD_ASSIGNED_DEFENSIVE_AREA(ped, x, y, z, heading, maxPatrolProximity, timer);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GUARD_SPHERE_DEFENSIVE_AREA( int ped, float defendPositionX, float defendPositionY, float defendPositionZ, float heading, float maxPatrolProximity, int time, float x, float y, float z, float defensiveAreaRadius )
+	void LUA_NATIVE_TASK_TASK_GUARD_SPHERE_DEFENSIVE_AREA( Ped ped, float defendPositionX, float defendPositionY, float defendPositionZ, float heading, float maxPatrolProximity, int time, float x, float y, float z, float defensiveAreaRadius )
 	{
 		TASK::TASK_GUARD_SPHERE_DEFENSIVE_AREA(ped, defendPositionX, defendPositionY, defendPositionZ, heading, maxPatrolProximity, time, x, y, z, defensiveAreaRadius);
 	}
 
-	void LUA_NATIVE_TASK_TASK_STAND_GUARD( int ped, float x, float y, float z, float heading, const char* scenarioName )
+	void LUA_NATIVE_TASK_TASK_STAND_GUARD( Ped ped, float x, float y, float z, float heading, const char* scenarioName )
 	{
 		TASK::TASK_STAND_GUARD(ped, x, y, z, heading, scenarioName);
 	}
 
-	void LUA_NATIVE_TASK_SET_DRIVE_TASK_CRUISE_SPEED( int driver, float cruiseSpeed )
+	void LUA_NATIVE_TASK_SET_DRIVE_TASK_CRUISE_SPEED( Ped driver, float cruiseSpeed )
 	{
 		TASK::SET_DRIVE_TASK_CRUISE_SPEED(driver, cruiseSpeed);
 	}
 
-	void LUA_NATIVE_TASK_SET_DRIVE_TASK_MAX_CRUISE_SPEED( int ped, float speed )
+	void LUA_NATIVE_TASK_SET_DRIVE_TASK_MAX_CRUISE_SPEED( Ped ped, float speed )
 	{
 		TASK::SET_DRIVE_TASK_MAX_CRUISE_SPEED(ped, speed);
 	}
 
-	void LUA_NATIVE_TASK_SET_DRIVE_TASK_DRIVING_STYLE( int ped, int drivingStyle )
+	void LUA_NATIVE_TASK_SET_DRIVE_TASK_DRIVING_STYLE( Ped ped, int drivingStyle )
 	{
 		TASK::SET_DRIVE_TASK_DRIVING_STYLE(ped, drivingStyle);
 	}
@@ -31183,32 +31178,32 @@ namespace lua::native
 		TASK::REMOVE_SPECIFIC_COVER_BLOCKING_AREAS(startX, startY, startZ, endX, endY, endZ, blockObjects, blockVehicles, blockMap, blockPlayer);
 	}
 
-	void LUA_NATIVE_TASK_TASK_START_SCENARIO_IN_PLACE( int ped, const char* scenarioName, int unkDelay, bool playEnterAnim )
+	void LUA_NATIVE_TASK_TASK_START_SCENARIO_IN_PLACE( Ped ped, const char* scenarioName, int unkDelay, bool playEnterAnim )
 	{
 		TASK::TASK_START_SCENARIO_IN_PLACE(ped, scenarioName, unkDelay, playEnterAnim);
 	}
 
-	void LUA_NATIVE_TASK_TASK_START_SCENARIO_AT_POSITION( int ped, const char* scenarioName, float x, float y, float z, float heading, int duration, bool sittingScenario, bool teleport )
+	void LUA_NATIVE_TASK_TASK_START_SCENARIO_AT_POSITION( Ped ped, const char* scenarioName, float x, float y, float z, float heading, int duration, bool sittingScenario, bool teleport )
 	{
 		TASK::TASK_START_SCENARIO_AT_POSITION(ped, scenarioName, x, y, z, heading, duration, sittingScenario, teleport);
 	}
 
-	void LUA_NATIVE_TASK_TASK_USE_NEAREST_SCENARIO_TO_COORD( int ped, float x, float y, float z, float distance, int duration )
+	void LUA_NATIVE_TASK_TASK_USE_NEAREST_SCENARIO_TO_COORD( Ped ped, float x, float y, float z, float distance, int duration )
 	{
 		TASK::TASK_USE_NEAREST_SCENARIO_TO_COORD(ped, x, y, z, distance, duration);
 	}
 
-	void LUA_NATIVE_TASK_TASK_USE_NEAREST_SCENARIO_TO_COORD_WARP( int ped, float x, float y, float z, float radius, int timeToLeave )
+	void LUA_NATIVE_TASK_TASK_USE_NEAREST_SCENARIO_TO_COORD_WARP( Ped ped, float x, float y, float z, float radius, int timeToLeave )
 	{
 		TASK::TASK_USE_NEAREST_SCENARIO_TO_COORD_WARP(ped, x, y, z, radius, timeToLeave);
 	}
 
-	void LUA_NATIVE_TASK_TASK_USE_NEAREST_SCENARIO_CHAIN_TO_COORD( int ped, float x, float y, float z, float maxRange, int timeToLeave )
+	void LUA_NATIVE_TASK_TASK_USE_NEAREST_SCENARIO_CHAIN_TO_COORD( Ped ped, float x, float y, float z, float maxRange, int timeToLeave )
 	{
 		TASK::TASK_USE_NEAREST_SCENARIO_CHAIN_TO_COORD(ped, x, y, z, maxRange, timeToLeave);
 	}
 
-	void LUA_NATIVE_TASK_TASK_USE_NEAREST_SCENARIO_CHAIN_TO_COORD_WARP( int ped, float x, float y, float z, float radius, int timeToLeave )
+	void LUA_NATIVE_TASK_TASK_USE_NEAREST_SCENARIO_CHAIN_TO_COORD_WARP( Ped ped, float x, float y, float z, float radius, int timeToLeave )
 	{
 		TASK::TASK_USE_NEAREST_SCENARIO_CHAIN_TO_COORD_WARP(ped, x, y, z, radius, timeToLeave);
 	}
@@ -31231,13 +31226,13 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_PED_HAS_USE_SCENARIO_TASK( int ped )
+	bool LUA_NATIVE_TASK_PED_HAS_USE_SCENARIO_TASK( Ped ped )
 	{
 		auto retval = (bool)TASK::PED_HAS_USE_SCENARIO_TASK(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_PLAY_ANIM_ON_RUNNING_SCENARIO( int ped, const char* animDict, const char* animName )
+	void LUA_NATIVE_TASK_PLAY_ANIM_ON_RUNNING_SCENARIO( Ped ped, const char* animDict, const char* animName )
 	{
 		TASK::PLAY_ANIM_ON_RUNNING_SCENARIO(ped, animDict, animName);
 	}
@@ -31290,65 +31285,65 @@ namespace lua::native
 		TASK::RESET_SCENARIO_TYPES_ENABLED();
 	}
 
-	bool LUA_NATIVE_TASK_IS_PED_ACTIVE_IN_SCENARIO( int ped )
+	bool LUA_NATIVE_TASK_IS_PED_ACTIVE_IN_SCENARIO( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_PED_ACTIVE_IN_SCENARIO(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_IS_PED_PLAYING_BASE_CLIP_IN_SCENARIO( int ped )
+	bool LUA_NATIVE_TASK_IS_PED_PLAYING_BASE_CLIP_IN_SCENARIO( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_PED_PLAYING_BASE_CLIP_IN_SCENARIO(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_SET_PED_CAN_PLAY_AMBIENT_IDLES( int ped, bool blockIdleClips, bool removeIdleClipIfPlaying )
+	void LUA_NATIVE_TASK_SET_PED_CAN_PLAY_AMBIENT_IDLES( Ped ped, bool blockIdleClips, bool removeIdleClipIfPlaying )
 	{
 		TASK::SET_PED_CAN_PLAY_AMBIENT_IDLES(ped, blockIdleClips, removeIdleClipIfPlaying);
 	}
 
-	void LUA_NATIVE_TASK_TASK_COMBAT_HATED_TARGETS_IN_AREA( int ped, float x, float y, float z, float radius, int combatFlags )
+	void LUA_NATIVE_TASK_TASK_COMBAT_HATED_TARGETS_IN_AREA( Ped ped, float x, float y, float z, float radius, int combatFlags )
 	{
 		TASK::TASK_COMBAT_HATED_TARGETS_IN_AREA(ped, x, y, z, radius, combatFlags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_COMBAT_HATED_TARGETS_AROUND_PED( int ped, float radius, int combatFlags )
+	void LUA_NATIVE_TASK_TASK_COMBAT_HATED_TARGETS_AROUND_PED( Ped ped, float radius, int combatFlags )
 	{
 		TASK::TASK_COMBAT_HATED_TARGETS_AROUND_PED(ped, radius, combatFlags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_COMBAT_HATED_TARGETS_AROUND_PED_TIMED( int ped, float radius, int time, int combatFlags )
+	void LUA_NATIVE_TASK_TASK_COMBAT_HATED_TARGETS_AROUND_PED_TIMED( Ped ped, float radius, int time, int combatFlags )
 	{
 		TASK::TASK_COMBAT_HATED_TARGETS_AROUND_PED_TIMED(ped, radius, time, combatFlags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_THROW_PROJECTILE( int ped, float x, float y, float z, int ignoreCollisionEntityIndex, bool createInvincibleProjectile )
+	void LUA_NATIVE_TASK_TASK_THROW_PROJECTILE( Ped ped, float x, float y, float z, int ignoreCollisionEntityIndex, bool createInvincibleProjectile )
 	{
 		TASK::TASK_THROW_PROJECTILE(ped, x, y, z, ignoreCollisionEntityIndex, createInvincibleProjectile);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SWAP_WEAPON( int ped, bool drawWeapon )
+	void LUA_NATIVE_TASK_TASK_SWAP_WEAPON( Ped ped, bool drawWeapon )
 	{
 		TASK::TASK_SWAP_WEAPON(ped, drawWeapon);
 	}
 
-	void LUA_NATIVE_TASK_TASK_RELOAD_WEAPON( int ped, bool drawWeapon )
+	void LUA_NATIVE_TASK_TASK_RELOAD_WEAPON( Ped ped, bool drawWeapon )
 	{
 		TASK::TASK_RELOAD_WEAPON(ped, drawWeapon);
 	}
 
-	bool LUA_NATIVE_TASK_IS_PED_GETTING_UP( int ped )
+	bool LUA_NATIVE_TASK_IS_PED_GETTING_UP( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_PED_GETTING_UP(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_TASK_WRITHE( int ped, int target, int minFireLoops, int startState, bool forceShootOnGround, int shootFromGroundTimer )
+	void LUA_NATIVE_TASK_TASK_WRITHE( Ped ped, Ped target, int minFireLoops, int startState, bool forceShootOnGround, int shootFromGroundTimer )
 	{
 		TASK::TASK_WRITHE(ped, target, minFireLoops, startState, forceShootOnGround, shootFromGroundTimer);
 	}
 
-	bool LUA_NATIVE_TASK_IS_PED_IN_WRITHE( int ped )
+	bool LUA_NATIVE_TASK_IS_PED_IN_WRITHE( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_PED_IN_WRITHE(ped);
 		return retval;
@@ -31384,7 +31379,7 @@ namespace lua::native
 		TASK::DELETE_PATROL_ROUTE(patrolRoute);
 	}
 
-	std::tuple<bool, int, int> LUA_NATIVE_TASK_GET_PATROL_TASK_INFO( int ped, int timeLeftAtNode, int nodeId )
+	std::tuple<bool, int, int> LUA_NATIVE_TASK_GET_PATROL_TASK_INFO( Ped ped, int timeLeftAtNode, int nodeId )
 	{
 		std::tuple<bool, int, int> return_values;
 		std::get<0>(return_values) = (bool)TASK::GET_PATROL_TASK_INFO(ped, &timeLeftAtNode, &nodeId);
@@ -31394,77 +31389,77 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_TASK_TASK_PATROL( int ped, const char* patrolRouteName, int alertState, bool canChatToPeds, bool useHeadLookAt )
+	void LUA_NATIVE_TASK_TASK_PATROL( Ped ped, const char* patrolRouteName, int alertState, bool canChatToPeds, bool useHeadLookAt )
 	{
 		TASK::TASK_PATROL(ped, patrolRouteName, alertState, canChatToPeds, useHeadLookAt);
 	}
 
-	void LUA_NATIVE_TASK_TASK_STAY_IN_COVER( int ped )
+	void LUA_NATIVE_TASK_TASK_STAY_IN_COVER( Ped ped )
 	{
 		TASK::TASK_STAY_IN_COVER(ped);
 	}
 
-	void LUA_NATIVE_TASK_ADD_VEHICLE_SUBTASK_ATTACK_COORD( int ped, float x, float y, float z )
+	void LUA_NATIVE_TASK_ADD_VEHICLE_SUBTASK_ATTACK_COORD( Ped ped, float x, float y, float z )
 	{
 		TASK::ADD_VEHICLE_SUBTASK_ATTACK_COORD(ped, x, y, z);
 	}
 
-	void LUA_NATIVE_TASK_ADD_VEHICLE_SUBTASK_ATTACK_PED( int ped, int target )
+	void LUA_NATIVE_TASK_ADD_VEHICLE_SUBTASK_ATTACK_PED( Ped ped, Ped target )
 	{
 		TASK::ADD_VEHICLE_SUBTASK_ATTACK_PED(ped, target);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_SHOOT_AT_PED( int ped, int target, float fireTolerance )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_SHOOT_AT_PED( Ped ped, Ped target, float fireTolerance )
 	{
 		TASK::TASK_VEHICLE_SHOOT_AT_PED(ped, target, fireTolerance);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_AIM_AT_PED( int ped, int target )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_AIM_AT_PED( Ped ped, Ped target )
 	{
 		TASK::TASK_VEHICLE_AIM_AT_PED(ped, target);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_SHOOT_AT_COORD( int ped, float x, float y, float z, float fireTolerance )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_SHOOT_AT_COORD( Ped ped, float x, float y, float z, float fireTolerance )
 	{
 		TASK::TASK_VEHICLE_SHOOT_AT_COORD(ped, x, y, z, fireTolerance);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_AIM_AT_COORD( int ped, float x, float y, float z )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_AIM_AT_COORD( Ped ped, float x, float y, float z )
 	{
 		TASK::TASK_VEHICLE_AIM_AT_COORD(ped, x, y, z);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_GOTO_NAVMESH( int ped, int vehicle, float x, float y, float z, float speed, int behaviorFlag, float stoppingRange )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_GOTO_NAVMESH( Ped ped, Vehicle vehicle, float x, float y, float z, float speed, int behaviorFlag, float stoppingRange )
 	{
 		TASK::TASK_VEHICLE_GOTO_NAVMESH(ped, vehicle, x, y, z, speed, behaviorFlag, stoppingRange);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GO_TO_COORD_WHILE_AIMING_AT_COORD( int ped, float x, float y, float z, float aimAtX, float aimAtY, float aimAtZ, float moveBlendRatio, bool shoot, float targetRadius, float slowDistance, bool useNavMesh, int navFlags, bool instantBlendToAim, unsigned firingPattern )
+	void LUA_NATIVE_TASK_TASK_GO_TO_COORD_WHILE_AIMING_AT_COORD( Ped ped, float x, float y, float z, float aimAtX, float aimAtY, float aimAtZ, float moveBlendRatio, bool shoot, float targetRadius, float slowDistance, bool useNavMesh, int navFlags, bool instantBlendToAim, Hash firingPattern )
 	{
 		TASK::TASK_GO_TO_COORD_WHILE_AIMING_AT_COORD(ped, x, y, z, aimAtX, aimAtY, aimAtZ, moveBlendRatio, shoot, targetRadius, slowDistance, useNavMesh, navFlags, instantBlendToAim, firingPattern);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GO_TO_COORD_WHILE_AIMING_AT_ENTITY( int ped, float x, float y, float z, int aimAtID, float moveBlendRatio, bool shoot, float targetRadius, float slowDistance, bool useNavMesh, int navFlags, bool instantBlendToAim, unsigned firingPattern, int time )
+	void LUA_NATIVE_TASK_TASK_GO_TO_COORD_WHILE_AIMING_AT_ENTITY( Ped ped, float x, float y, float z, Entity aimAtID, float moveBlendRatio, bool shoot, float targetRadius, float slowDistance, bool useNavMesh, int navFlags, bool instantBlendToAim, Hash firingPattern, int time )
 	{
 		TASK::TASK_GO_TO_COORD_WHILE_AIMING_AT_ENTITY(ped, x, y, z, aimAtID, moveBlendRatio, shoot, targetRadius, slowDistance, useNavMesh, navFlags, instantBlendToAim, firingPattern, time);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GO_TO_COORD_AND_AIM_AT_HATED_ENTITIES_NEAR_COORD( int pedHandle, float goToLocationX, float goToLocationY, float goToLocationZ, float focusLocationX, float focusLocationY, float focusLocationZ, float speed, bool shootAtEnemies, float distanceToStopAt, float noRoadsDistance, bool useNavMesh, int navFlags, int taskFlags, unsigned firingPattern )
+	void LUA_NATIVE_TASK_TASK_GO_TO_COORD_AND_AIM_AT_HATED_ENTITIES_NEAR_COORD( Ped pedHandle, float goToLocationX, float goToLocationY, float goToLocationZ, float focusLocationX, float focusLocationY, float focusLocationZ, float speed, bool shootAtEnemies, float distanceToStopAt, float noRoadsDistance, bool useNavMesh, int navFlags, int taskFlags, Hash firingPattern )
 	{
 		TASK::TASK_GO_TO_COORD_AND_AIM_AT_HATED_ENTITIES_NEAR_COORD(pedHandle, goToLocationX, goToLocationY, goToLocationZ, focusLocationX, focusLocationY, focusLocationZ, speed, shootAtEnemies, distanceToStopAt, noRoadsDistance, useNavMesh, navFlags, taskFlags, firingPattern);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GO_TO_ENTITY_WHILE_AIMING_AT_COORD( int ped, int entity, float aimX, float aimY, float aimZ, float moveBlendRatio, bool shoot, float targetRadius, float slowDistance, bool useNavMesh, bool instantBlendToAim, unsigned firingPattern )
+	void LUA_NATIVE_TASK_TASK_GO_TO_ENTITY_WHILE_AIMING_AT_COORD( Ped ped, Entity entity, float aimX, float aimY, float aimZ, float moveBlendRatio, bool shoot, float targetRadius, float slowDistance, bool useNavMesh, bool instantBlendToAim, Hash firingPattern )
 	{
 		TASK::TASK_GO_TO_ENTITY_WHILE_AIMING_AT_COORD(ped, entity, aimX, aimY, aimZ, moveBlendRatio, shoot, targetRadius, slowDistance, useNavMesh, instantBlendToAim, firingPattern);
 	}
 
-	void LUA_NATIVE_TASK_TASK_GO_TO_ENTITY_WHILE_AIMING_AT_ENTITY( int ped, int entityToWalkTo, int entityToAimAt, float speed, bool shootatEntity, float targetRadius, float slowDistance, bool useNavMesh, bool instantBlendToAim, unsigned firingPattern )
+	void LUA_NATIVE_TASK_TASK_GO_TO_ENTITY_WHILE_AIMING_AT_ENTITY( Ped ped, Entity entityToWalkTo, Entity entityToAimAt, float speed, bool shootatEntity, float targetRadius, float slowDistance, bool useNavMesh, bool instantBlendToAim, Hash firingPattern )
 	{
 		TASK::TASK_GO_TO_ENTITY_WHILE_AIMING_AT_ENTITY(ped, entityToWalkTo, entityToAimAt, speed, shootatEntity, targetRadius, slowDistance, useNavMesh, instantBlendToAim, firingPattern);
 	}
 
-	void LUA_NATIVE_TASK_SET_HIGH_FALL_TASK( int ped, int minTime, int maxTime, int entryType )
+	void LUA_NATIVE_TASK_SET_HIGH_FALL_TASK( Ped ped, int minTime, int maxTime, int entryType )
 	{
 		TASK::SET_HIGH_FALL_TASK(ped, minTime, maxTime, entryType);
 	}
@@ -31518,18 +31513,18 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_TASK_TASK_FOLLOW_WAYPOINT_RECORDING( int ped, const char* name, int p2, int p3, int p4 )
+	void LUA_NATIVE_TASK_TASK_FOLLOW_WAYPOINT_RECORDING( Ped ped, const char* name, int p2, int p3, int p4 )
 	{
 		TASK::TASK_FOLLOW_WAYPOINT_RECORDING(ped, name, p2, p3, p4);
 	}
 
-	bool LUA_NATIVE_TASK_IS_WAYPOINT_PLAYBACK_GOING_ON_FOR_PED( int ped )
+	bool LUA_NATIVE_TASK_IS_WAYPOINT_PLAYBACK_GOING_ON_FOR_PED( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_WAYPOINT_PLAYBACK_GOING_ON_FOR_PED(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_TASK_GET_PED_WAYPOINT_PROGRESS( int ped )
+	int LUA_NATIVE_TASK_GET_PED_WAYPOINT_PROGRESS( Ped ped )
 	{
 		auto retval = TASK::GET_PED_WAYPOINT_PROGRESS(ped);
 		return retval;
@@ -31541,7 +31536,7 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_SET_PED_WAYPOINT_ROUTE_OFFSET( int ped, float x, float y, float z )
+	bool LUA_NATIVE_TASK_SET_PED_WAYPOINT_ROUTE_OFFSET( Ped ped, float x, float y, float z )
 	{
 		auto retval = (bool)TASK::SET_PED_WAYPOINT_ROUTE_OFFSET(ped, x, y, z);
 		return retval;
@@ -31584,27 +31579,27 @@ namespace lua::native
 		TASK::USE_WAYPOINT_RECORDING_AS_ASSISTED_MOVEMENT_ROUTE(name, p1, p2, p3);
 	}
 
-	void LUA_NATIVE_TASK_WAYPOINT_PLAYBACK_START_AIMING_AT_PED( int ped, int target, bool p2 )
+	void LUA_NATIVE_TASK_WAYPOINT_PLAYBACK_START_AIMING_AT_PED( Ped ped, Ped target, bool p2 )
 	{
 		TASK::WAYPOINT_PLAYBACK_START_AIMING_AT_PED(ped, target, p2);
 	}
 
-	void LUA_NATIVE_TASK_WAYPOINT_PLAYBACK_START_AIMING_AT_COORD( int ped, float x, float y, float z, bool p4 )
+	void LUA_NATIVE_TASK_WAYPOINT_PLAYBACK_START_AIMING_AT_COORD( Ped ped, float x, float y, float z, bool p4 )
 	{
 		TASK::WAYPOINT_PLAYBACK_START_AIMING_AT_COORD(ped, x, y, z, p4);
 	}
 
-	void LUA_NATIVE_TASK_WAYPOINT_PLAYBACK_START_SHOOTING_AT_PED( int ped, int ped2, bool p2, bool p3 )
+	void LUA_NATIVE_TASK_WAYPOINT_PLAYBACK_START_SHOOTING_AT_PED( Ped ped, Ped ped2, bool p2, bool p3 )
 	{
 		TASK::WAYPOINT_PLAYBACK_START_SHOOTING_AT_PED(ped, ped2, p2, p3);
 	}
 
-	void LUA_NATIVE_TASK_WAYPOINT_PLAYBACK_START_SHOOTING_AT_COORD( int ped, float x, float y, float z, bool p4, unsigned firingPattern )
+	void LUA_NATIVE_TASK_WAYPOINT_PLAYBACK_START_SHOOTING_AT_COORD( Ped ped, float x, float y, float z, bool p4, Hash firingPattern )
 	{
 		TASK::WAYPOINT_PLAYBACK_START_SHOOTING_AT_COORD(ped, x, y, z, p4, firingPattern);
 	}
 
-	void LUA_NATIVE_TASK_WAYPOINT_PLAYBACK_STOP_AIMING_OR_SHOOTING( int ped )
+	void LUA_NATIVE_TASK_WAYPOINT_PLAYBACK_STOP_AIMING_OR_SHOOTING( Ped ped )
 	{
 		TASK::WAYPOINT_PLAYBACK_STOP_AIMING_OR_SHOOTING(ped);
 	}
@@ -31635,300 +31630,300 @@ namespace lua::native
 		TASK::ASSISTED_MOVEMENT_OVERRIDE_LOAD_DISTANCE_THIS_FRAME(dist);
 	}
 
-	void LUA_NATIVE_TASK_TASK_VEHICLE_FOLLOW_WAYPOINT_RECORDING( int ped, int vehicle, const char* WPRecording, int p3, int p4, int p5, int p6, float p7, bool p8, float p9 )
+	void LUA_NATIVE_TASK_TASK_VEHICLE_FOLLOW_WAYPOINT_RECORDING( Ped ped, Vehicle vehicle, const char* WPRecording, int p3, int p4, int p5, int p6, float p7, bool p8, float p9 )
 	{
 		TASK::TASK_VEHICLE_FOLLOW_WAYPOINT_RECORDING(ped, vehicle, WPRecording, p3, p4, p5, p6, p7, p8, p9);
 	}
 
-	bool LUA_NATIVE_TASK_IS_WAYPOINT_PLAYBACK_GOING_ON_FOR_VEHICLE( int vehicle )
+	bool LUA_NATIVE_TASK_IS_WAYPOINT_PLAYBACK_GOING_ON_FOR_VEHICLE( Vehicle vehicle )
 	{
 		auto retval = (bool)TASK::IS_WAYPOINT_PLAYBACK_GOING_ON_FOR_VEHICLE(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_TASK_GET_VEHICLE_WAYPOINT_PROGRESS( int vehicle )
+	int LUA_NATIVE_TASK_GET_VEHICLE_WAYPOINT_PROGRESS( Vehicle vehicle )
 	{
 		auto retval = TASK::GET_VEHICLE_WAYPOINT_PROGRESS(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_TASK_GET_VEHICLE_WAYPOINT_TARGET_POINT( int vehicle )
+	int LUA_NATIVE_TASK_GET_VEHICLE_WAYPOINT_TARGET_POINT( Vehicle vehicle )
 	{
 		auto retval = TASK::GET_VEHICLE_WAYPOINT_TARGET_POINT(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_VEHICLE_WAYPOINT_PLAYBACK_PAUSE( int vehicle )
+	void LUA_NATIVE_TASK_VEHICLE_WAYPOINT_PLAYBACK_PAUSE( Vehicle vehicle )
 	{
 		TASK::VEHICLE_WAYPOINT_PLAYBACK_PAUSE(vehicle);
 	}
 
-	void LUA_NATIVE_TASK_VEHICLE_WAYPOINT_PLAYBACK_RESUME( int vehicle )
+	void LUA_NATIVE_TASK_VEHICLE_WAYPOINT_PLAYBACK_RESUME( Vehicle vehicle )
 	{
 		TASK::VEHICLE_WAYPOINT_PLAYBACK_RESUME(vehicle);
 	}
 
-	void LUA_NATIVE_TASK_VEHICLE_WAYPOINT_PLAYBACK_USE_DEFAULT_SPEED( int vehicle )
+	void LUA_NATIVE_TASK_VEHICLE_WAYPOINT_PLAYBACK_USE_DEFAULT_SPEED( Vehicle vehicle )
 	{
 		TASK::VEHICLE_WAYPOINT_PLAYBACK_USE_DEFAULT_SPEED(vehicle);
 	}
 
-	void LUA_NATIVE_TASK_VEHICLE_WAYPOINT_PLAYBACK_OVERRIDE_SPEED( int vehicle, float speed )
+	void LUA_NATIVE_TASK_VEHICLE_WAYPOINT_PLAYBACK_OVERRIDE_SPEED( Vehicle vehicle, float speed )
 	{
 		TASK::VEHICLE_WAYPOINT_PLAYBACK_OVERRIDE_SPEED(vehicle, speed);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS( int ped, bool toggle )
+	void LUA_NATIVE_TASK_TASK_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS( Ped ped, bool toggle )
 	{
 		TASK::TASK_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped, toggle);
 	}
 
-	void LUA_NATIVE_TASK_TASK_FORCE_MOTION_STATE( int ped, unsigned state, bool forceRestart )
+	void LUA_NATIVE_TASK_TASK_FORCE_MOTION_STATE( Ped ped, Hash state, bool forceRestart )
 	{
 		TASK::TASK_FORCE_MOTION_STATE(ped, state, forceRestart);
 	}
 
-	void LUA_NATIVE_TASK_TASK_MOVE_NETWORK_BY_NAME( int ped, const char* task, float multiplier, bool allowOverrideCloneUpdate, const char* animDict, int flags )
+	void LUA_NATIVE_TASK_TASK_MOVE_NETWORK_BY_NAME( Ped ped, const char* task, float multiplier, bool allowOverrideCloneUpdate, const char* animDict, int flags )
 	{
 		TASK::TASK_MOVE_NETWORK_BY_NAME(ped, task, multiplier, allowOverrideCloneUpdate, animDict, flags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_MOVE_NETWORK_ADVANCED_BY_NAME( int ped, const char* network, float x, float y, float z, float rotX, float rotY, float rotZ, int rotOrder, float blendDuration, bool allowOverrideCloneUpdate, const char* animDict, int flags )
+	void LUA_NATIVE_TASK_TASK_MOVE_NETWORK_ADVANCED_BY_NAME( Ped ped, const char* network, float x, float y, float z, float rotX, float rotY, float rotZ, int rotOrder, float blendDuration, bool allowOverrideCloneUpdate, const char* animDict, int flags )
 	{
 		TASK::TASK_MOVE_NETWORK_ADVANCED_BY_NAME(ped, network, x, y, z, rotX, rotY, rotZ, rotOrder, blendDuration, allowOverrideCloneUpdate, animDict, flags);
 	}
 
-	int LUA_NATIVE_TASK_TASK_MOVE_NETWORK_BY_NAME_WITH_INIT_PARAMS( int ped, const char* network, int initialParameters, float blendDuration, bool allowOverrideCloneUpdate, const char* animDict, int flags )
+	int LUA_NATIVE_TASK_TASK_MOVE_NETWORK_BY_NAME_WITH_INIT_PARAMS( Ped ped, const char* network, int initialParameters, float blendDuration, bool allowOverrideCloneUpdate, const char* animDict, int flags )
 	{
 		TASK::TASK_MOVE_NETWORK_BY_NAME_WITH_INIT_PARAMS(ped, network, &initialParameters, blendDuration, allowOverrideCloneUpdate, animDict, flags);
 		return initialParameters;
 	}
 
-	int LUA_NATIVE_TASK_TASK_MOVE_NETWORK_ADVANCED_BY_NAME_WITH_INIT_PARAMS( int ped, const char* network, int initialParameters, float x, float y, float z, float rotX, float rotY, float rotZ, int rotOrder, float blendDuration, bool allowOverrideCloneUpdate, const char* dictionary, int flags )
+	int LUA_NATIVE_TASK_TASK_MOVE_NETWORK_ADVANCED_BY_NAME_WITH_INIT_PARAMS( Ped ped, const char* network, int initialParameters, float x, float y, float z, float rotX, float rotY, float rotZ, int rotOrder, float blendDuration, bool allowOverrideCloneUpdate, const char* dictionary, int flags )
 	{
 		TASK::TASK_MOVE_NETWORK_ADVANCED_BY_NAME_WITH_INIT_PARAMS(ped, network, &initialParameters, x, y, z, rotX, rotY, rotZ, rotOrder, blendDuration, allowOverrideCloneUpdate, dictionary, flags);
 		return initialParameters;
 	}
 
-	bool LUA_NATIVE_TASK_IS_TASK_MOVE_NETWORK_ACTIVE( int ped )
+	bool LUA_NATIVE_TASK_IS_TASK_MOVE_NETWORK_ACTIVE( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_TASK_MOVE_NETWORK_ACTIVE(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_IS_TASK_MOVE_NETWORK_READY_FOR_TRANSITION( int ped )
+	bool LUA_NATIVE_TASK_IS_TASK_MOVE_NETWORK_READY_FOR_TRANSITION( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_TASK_MOVE_NETWORK_READY_FOR_TRANSITION(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_REQUEST_TASK_MOVE_NETWORK_STATE_TRANSITION( int ped, const char* name )
+	bool LUA_NATIVE_TASK_REQUEST_TASK_MOVE_NETWORK_STATE_TRANSITION( Ped ped, const char* name )
 	{
 		auto retval = (bool)TASK::REQUEST_TASK_MOVE_NETWORK_STATE_TRANSITION(ped, name);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_SET_EXPECTED_CLONE_NEXT_TASK_MOVE_NETWORK_STATE( int ped, const char* state )
+	bool LUA_NATIVE_TASK_SET_EXPECTED_CLONE_NEXT_TASK_MOVE_NETWORK_STATE( Ped ped, const char* state )
 	{
 		auto retval = (bool)TASK::SET_EXPECTED_CLONE_NEXT_TASK_MOVE_NETWORK_STATE(ped, state);
 		return retval;
 	}
 
-	const char* LUA_NATIVE_TASK_GET_TASK_MOVE_NETWORK_STATE( int ped )
+	const char* LUA_NATIVE_TASK_GET_TASK_MOVE_NETWORK_STATE( Ped ped )
 	{
 		auto retval = TASK::GET_TASK_MOVE_NETWORK_STATE(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_SET_TASK_MOVE_NETWORK_ANIM_SET( int ped, unsigned clipSet, unsigned variableClipSet )
+	void LUA_NATIVE_TASK_SET_TASK_MOVE_NETWORK_ANIM_SET( Ped ped, Hash clipSet, Hash variableClipSet )
 	{
 		TASK::SET_TASK_MOVE_NETWORK_ANIM_SET(ped, clipSet, variableClipSet);
 	}
 
-	void LUA_NATIVE_TASK_SET_TASK_MOVE_NETWORK_SIGNAL_FLOAT( int ped, const char* signalName, float value )
+	void LUA_NATIVE_TASK_SET_TASK_MOVE_NETWORK_SIGNAL_FLOAT( Ped ped, const char* signalName, float value )
 	{
 		TASK::SET_TASK_MOVE_NETWORK_SIGNAL_FLOAT(ped, signalName, value);
 	}
 
-	void LUA_NATIVE_TASK_SET_TASK_MOVE_NETWORK_SIGNAL_LOCAL_FLOAT( int ped, const char* signalName, float value )
+	void LUA_NATIVE_TASK_SET_TASK_MOVE_NETWORK_SIGNAL_LOCAL_FLOAT( Ped ped, const char* signalName, float value )
 	{
 		TASK::SET_TASK_MOVE_NETWORK_SIGNAL_LOCAL_FLOAT(ped, signalName, value);
 	}
 
-	void LUA_NATIVE_TASK_SET_TASK_MOVE_NETWORK_SIGNAL_FLOAT_LERP_RATE( int ped, const char* signalName, float value )
+	void LUA_NATIVE_TASK_SET_TASK_MOVE_NETWORK_SIGNAL_FLOAT_LERP_RATE( Ped ped, const char* signalName, float value )
 	{
 		TASK::SET_TASK_MOVE_NETWORK_SIGNAL_FLOAT_LERP_RATE(ped, signalName, value);
 	}
 
-	void LUA_NATIVE_TASK_SET_TASK_MOVE_NETWORK_SIGNAL_BOOL( int ped, const char* signalName, bool value )
+	void LUA_NATIVE_TASK_SET_TASK_MOVE_NETWORK_SIGNAL_BOOL( Ped ped, const char* signalName, bool value )
 	{
 		TASK::SET_TASK_MOVE_NETWORK_SIGNAL_BOOL(ped, signalName, value);
 	}
 
-	float LUA_NATIVE_TASK_GET_TASK_MOVE_NETWORK_SIGNAL_FLOAT( int ped, const char* signalName )
+	float LUA_NATIVE_TASK_GET_TASK_MOVE_NETWORK_SIGNAL_FLOAT( Ped ped, const char* signalName )
 	{
 		auto retval = TASK::GET_TASK_MOVE_NETWORK_SIGNAL_FLOAT(ped, signalName);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_GET_TASK_MOVE_NETWORK_SIGNAL_BOOL( int ped, const char* signalName )
+	bool LUA_NATIVE_TASK_GET_TASK_MOVE_NETWORK_SIGNAL_BOOL( Ped ped, const char* signalName )
 	{
 		auto retval = (bool)TASK::GET_TASK_MOVE_NETWORK_SIGNAL_BOOL(ped, signalName);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_GET_TASK_MOVE_NETWORK_EVENT( int ped, const char* eventName )
+	bool LUA_NATIVE_TASK_GET_TASK_MOVE_NETWORK_EVENT( Ped ped, const char* eventName )
 	{
 		auto retval = (bool)TASK::GET_TASK_MOVE_NETWORK_EVENT(ped, eventName);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_SET_TASK_MOVE_NETWORK_ENABLE_COLLISION_ON_NETWORK_CLONE_WHEN_FIXED( int ped, bool enable )
+	bool LUA_NATIVE_TASK_SET_TASK_MOVE_NETWORK_ENABLE_COLLISION_ON_NETWORK_CLONE_WHEN_FIXED( Ped ped, bool enable )
 	{
 		auto retval = (bool)TASK::SET_TASK_MOVE_NETWORK_ENABLE_COLLISION_ON_NETWORK_CLONE_WHEN_FIXED(ped, enable);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_IS_MOVE_BLEND_RATIO_STILL( int ped )
+	bool LUA_NATIVE_TASK_IS_MOVE_BLEND_RATIO_STILL( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_MOVE_BLEND_RATIO_STILL(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_IS_MOVE_BLEND_RATIO_WALKING( int ped )
+	bool LUA_NATIVE_TASK_IS_MOVE_BLEND_RATIO_WALKING( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_MOVE_BLEND_RATIO_WALKING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_IS_MOVE_BLEND_RATIO_RUNNING( int ped )
+	bool LUA_NATIVE_TASK_IS_MOVE_BLEND_RATIO_RUNNING( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_MOVE_BLEND_RATIO_RUNNING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_IS_MOVE_BLEND_RATIO_SPRINTING( int ped )
+	bool LUA_NATIVE_TASK_IS_MOVE_BLEND_RATIO_SPRINTING( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_MOVE_BLEND_RATIO_SPRINTING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_IS_PED_STILL( int ped )
+	bool LUA_NATIVE_TASK_IS_PED_STILL( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_PED_STILL(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_IS_PED_WALKING( int ped )
+	bool LUA_NATIVE_TASK_IS_PED_WALKING( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_PED_WALKING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_IS_PED_RUNNING( int ped )
+	bool LUA_NATIVE_TASK_IS_PED_RUNNING( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_PED_RUNNING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_IS_PED_SPRINTING( int ped )
+	bool LUA_NATIVE_TASK_IS_PED_SPRINTING( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_PED_SPRINTING(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_IS_PED_STRAFING( int ped )
+	bool LUA_NATIVE_TASK_IS_PED_STRAFING( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_PED_STRAFING(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_TASK_SYNCHRONIZED_SCENE( int ped, int scene, const char* animDictionary, const char* animationName, float blendIn, float blendOut, int flags, int ragdollBlockingFlags, float moverBlendDelta, int ikFlags )
+	void LUA_NATIVE_TASK_TASK_SYNCHRONIZED_SCENE( Ped ped, int scene, const char* animDictionary, const char* animationName, float blendIn, float blendOut, int flags, int ragdollBlockingFlags, float moverBlendDelta, int ikFlags )
 	{
 		TASK::TASK_SYNCHRONIZED_SCENE(ped, scene, animDictionary, animationName, blendIn, blendOut, flags, ragdollBlockingFlags, moverBlendDelta, ikFlags);
 	}
 
-	void LUA_NATIVE_TASK_TASK_AGITATED_ACTION_CONFRONT_RESPONSE( int ped, int ped2 )
+	void LUA_NATIVE_TASK_TASK_AGITATED_ACTION_CONFRONT_RESPONSE( Ped ped, Ped ped2 )
 	{
 		TASK::TASK_AGITATED_ACTION_CONFRONT_RESPONSE(ped, ped2);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SWEEP_AIM_ENTITY( int ped, const char* animDict, const char* lowAnimName, const char* medAnimName, const char* hiAnimName, int runtime, int targetEntity, float turnRate, float blendInDuration )
+	void LUA_NATIVE_TASK_TASK_SWEEP_AIM_ENTITY( Ped ped, const char* animDict, const char* lowAnimName, const char* medAnimName, const char* hiAnimName, int runtime, Entity targetEntity, float turnRate, float blendInDuration )
 	{
 		TASK::TASK_SWEEP_AIM_ENTITY(ped, animDict, lowAnimName, medAnimName, hiAnimName, runtime, targetEntity, turnRate, blendInDuration);
 	}
 
-	void LUA_NATIVE_TASK_UPDATE_TASK_SWEEP_AIM_ENTITY( int ped, int entity )
+	void LUA_NATIVE_TASK_UPDATE_TASK_SWEEP_AIM_ENTITY( Ped ped, Entity entity )
 	{
 		TASK::UPDATE_TASK_SWEEP_AIM_ENTITY(ped, entity);
 	}
 
-	void LUA_NATIVE_TASK_TASK_SWEEP_AIM_POSITION( int ped, const char* animDict, const char* lowAnimName, const char* medAnimName, const char* hiAnimName, int runtime, float x, float y, float z, float turnRate, float blendInDuration )
+	void LUA_NATIVE_TASK_TASK_SWEEP_AIM_POSITION( Ped ped, const char* animDict, const char* lowAnimName, const char* medAnimName, const char* hiAnimName, int runtime, float x, float y, float z, float turnRate, float blendInDuration )
 	{
 		TASK::TASK_SWEEP_AIM_POSITION(ped, animDict, lowAnimName, medAnimName, hiAnimName, runtime, x, y, z, turnRate, blendInDuration);
 	}
 
-	void LUA_NATIVE_TASK_UPDATE_TASK_SWEEP_AIM_POSITION( int ped, float x, float y, float z )
+	void LUA_NATIVE_TASK_UPDATE_TASK_SWEEP_AIM_POSITION( Ped ped, float x, float y, float z )
 	{
 		TASK::UPDATE_TASK_SWEEP_AIM_POSITION(ped, x, y, z);
 	}
 
-	void LUA_NATIVE_TASK_TASK_ARREST_PED( int ped, int target )
+	void LUA_NATIVE_TASK_TASK_ARREST_PED( Ped ped, Ped target )
 	{
 		TASK::TASK_ARREST_PED(ped, target);
 	}
 
-	bool LUA_NATIVE_TASK_IS_PED_RUNNING_ARREST_TASK( int ped )
+	bool LUA_NATIVE_TASK_IS_PED_RUNNING_ARREST_TASK( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_PED_RUNNING_ARREST_TASK(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_TASK_IS_PED_BEING_ARRESTED( int ped )
+	bool LUA_NATIVE_TASK_IS_PED_BEING_ARRESTED( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_PED_BEING_ARRESTED(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_TASK_UNCUFF_PED( int ped )
+	void LUA_NATIVE_TASK_UNCUFF_PED( Ped ped )
 	{
 		TASK::UNCUFF_PED(ped);
 	}
 
-	bool LUA_NATIVE_TASK_IS_PED_CUFFED( int ped )
+	bool LUA_NATIVE_TASK_IS_PED_CUFFED( Ped ped )
 	{
 		auto retval = (bool)TASK::IS_PED_CUFFED(ped);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_CREATE_VEHICLE( unsigned modelHash, float x, float y, float z, float heading, bool isNetwork, bool bScriptHostVeh, bool p7 )
+	Vehicle LUA_NATIVE_VEHICLE_CREATE_VEHICLE( Hash modelHash, float x, float y, float z, float heading, bool isNetwork, bool bScriptHostVeh, bool p7 )
 	{
 		auto retval = VEHICLE::CREATE_VEHICLE(modelHash, x, y, z, heading, isNetwork, bScriptHostVeh, p7);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_DELETE_VEHICLE( int vehicle )
+	Vehicle LUA_NATIVE_VEHICLE_DELETE_VEHICLE( Vehicle vehicle )
 	{
 		VEHICLE::DELETE_VEHICLE(&vehicle);
 		return vehicle;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ALLOW_HOMING_MISSLE_LOCKON( int vehicle, bool toggle, bool p2 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ALLOW_HOMING_MISSLE_LOCKON( Vehicle vehicle, bool toggle, bool p2 )
 	{
 		VEHICLE::SET_VEHICLE_ALLOW_HOMING_MISSLE_LOCKON(vehicle, toggle, p2);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ALLOW_HOMING_MISSLE_LOCKON_SYNCED( int vehicle, bool canBeLockedOn, bool p2 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ALLOW_HOMING_MISSLE_LOCKON_SYNCED( Vehicle vehicle, bool canBeLockedOn, bool p2 )
 	{
 		VEHICLE::SET_VEHICLE_ALLOW_HOMING_MISSLE_LOCKON_SYNCED(vehicle, canBeLockedOn, p2);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ALLOW_NO_PASSENGERS_LOCKON( int veh, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ALLOW_NO_PASSENGERS_LOCKON( Vehicle veh, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_ALLOW_NO_PASSENGERS_LOCKON(veh, toggle);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_HOMING_LOCKON_STATE( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_HOMING_LOCKON_STATE( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_HOMING_LOCKON_STATE(vehicle);
 		return retval;
@@ -31945,7 +31940,7 @@ namespace lua::native
 		VEHICLE::SET_VEHICLE_HOMING_LOCKEDONTO_STATE(p0, p1);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_MODEL( int vehicle, unsigned model )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_MODEL( Vehicle vehicle, Hash model )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_MODEL(vehicle, model);
 		return retval;
@@ -31957,7 +31952,7 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_CREATE_SCRIPT_VEHICLE_GENERATOR( float x, float y, float z, float heading, float p4, float p5, unsigned modelHash, int p7, int p8, int p9, int p10, bool p11, bool p12, bool p13, bool p14, bool p15, int p16 )
+	int LUA_NATIVE_VEHICLE_CREATE_SCRIPT_VEHICLE_GENERATOR( float x, float y, float z, float heading, float p4, float p5, Hash modelHash, int p7, int p8, int p9, int p10, bool p11, bool p12, bool p13, bool p14, bool p15, int p16 )
 	{
 		auto retval = VEHICLE::CREATE_SCRIPT_VEHICLE_GENERATOR(x, y, z, heading, p4, p5, modelHash, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16);
 		return retval;
@@ -31998,71 +31993,71 @@ namespace lua::native
 		VEHICLE::CLEAR_VEHICLE_GENERATOR_AREA_OF_INTEREST();
 	}
 
-	bool LUA_NATIVE_VEHICLE_SET_VEHICLE_ON_GROUND_PROPERLY( int vehicle, float p1 )
+	bool LUA_NATIVE_VEHICLE_SET_VEHICLE_ON_GROUND_PROPERLY( Vehicle vehicle, float p1 )
 	{
 		auto retval = (bool)VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(vehicle, p1);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_SET_VEHICLE_USE_CUTSCENE_WHEEL_COMPRESSION( int p0, bool p1, bool p2, bool p3 )
+	bool LUA_NATIVE_VEHICLE_SET_VEHICLE_USE_CUTSCENE_WHEEL_COMPRESSION( Vehicle p0, bool p1, bool p2, bool p3 )
 	{
 		auto retval = (bool)VEHICLE::SET_VEHICLE_USE_CUTSCENE_WHEEL_COMPRESSION(p0, p1, p2, p3);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_STUCK_ON_ROOF( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_STUCK_ON_ROOF( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_STUCK_ON_ROOF(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_ADD_VEHICLE_UPSIDEDOWN_CHECK( int vehicle )
+	void LUA_NATIVE_VEHICLE_ADD_VEHICLE_UPSIDEDOWN_CHECK( Vehicle vehicle )
 	{
 		VEHICLE::ADD_VEHICLE_UPSIDEDOWN_CHECK(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_REMOVE_VEHICLE_UPSIDEDOWN_CHECK( int vehicle )
+	void LUA_NATIVE_VEHICLE_REMOVE_VEHICLE_UPSIDEDOWN_CHECK( Vehicle vehicle )
 	{
 		VEHICLE::REMOVE_VEHICLE_UPSIDEDOWN_CHECK(vehicle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_STOPPED( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_STOPPED( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_STOPPED(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_NUMBER_OF_PASSENGERS( int vehicle, bool includeDriver, bool includeDeadOccupants )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_NUMBER_OF_PASSENGERS( Vehicle vehicle, bool includeDriver, bool includeDeadOccupants )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_NUMBER_OF_PASSENGERS(vehicle, includeDriver, includeDeadOccupants);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MAX_NUMBER_OF_PASSENGERS( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MAX_NUMBER_OF_PASSENGERS( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MAX_NUMBER_OF_PASSENGERS(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_NUMBER_OF_SEATS( unsigned modelHash )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_NUMBER_OF_SEATS( Hash modelHash )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MODEL_NUMBER_OF_SEATS(modelHash);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_SEAT_WARP_ONLY( int vehicle, int seatIndex )
+	bool LUA_NATIVE_VEHICLE_IS_SEAT_WARP_ONLY( Vehicle vehicle, int seatIndex )
 	{
 		auto retval = (bool)VEHICLE::IS_SEAT_WARP_ONLY(vehicle, seatIndex);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_TURRET_SEAT( int vehicle, int seatIndex )
+	bool LUA_NATIVE_VEHICLE_IS_TURRET_SEAT( Vehicle vehicle, int seatIndex )
 	{
 		auto retval = (bool)VEHICLE::IS_TURRET_SEAT(vehicle, seatIndex);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_DOES_VEHICLE_ALLOW_RAPPEL( int vehicle )
+	bool LUA_NATIVE_VEHICLE_DOES_VEHICLE_ALLOW_RAPPEL( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::DOES_VEHICLE_ALLOW_RAPPEL(vehicle);
 		return retval;
@@ -32103,73 +32098,73 @@ namespace lua::native
 		VEHICLE::SET_NUMBER_OF_PARKED_VEHICLES(value);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOORS_LOCKED( int vehicle, int doorLockStatus )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOORS_LOCKED( Vehicle vehicle, int doorLockStatus )
 	{
 		VEHICLE::SET_VEHICLE_DOORS_LOCKED(vehicle, doorLockStatus);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_INDIVIDUAL_DOORS_LOCKED( int vehicle, int doorId, int doorLockStatus )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_INDIVIDUAL_DOORS_LOCKED( Vehicle vehicle, int doorId, int doorLockStatus )
 	{
 		VEHICLE::SET_VEHICLE_INDIVIDUAL_DOORS_LOCKED(vehicle, doorId, doorLockStatus);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HAS_MUTED_SIRENS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HAS_MUTED_SIRENS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_HAS_MUTED_SIRENS(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOORS_LOCKED_FOR_PLAYER( int vehicle, int player, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOORS_LOCKED_FOR_PLAYER( Vehicle vehicle, Player player, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_DOORS_LOCKED_FOR_PLAYER(vehicle, player, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_DOORS_LOCKED_FOR_PLAYER( int vehicle, int player )
+	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_DOORS_LOCKED_FOR_PLAYER( Vehicle vehicle, Player player )
 	{
 		auto retval = (bool)VEHICLE::GET_VEHICLE_DOORS_LOCKED_FOR_PLAYER(vehicle, player);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_DOORS_LOCKED_FOR_ALL_PLAYERS(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOORS_LOCKED_FOR_NON_SCRIPT_PLAYERS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOORS_LOCKED_FOR_NON_SCRIPT_PLAYERS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_DOORS_LOCKED_FOR_NON_SCRIPT_PLAYERS(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOORS_LOCKED_FOR_TEAM( int vehicle, int team, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOORS_LOCKED_FOR_TEAM( Vehicle vehicle, int team, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_DOORS_LOCKED_FOR_TEAM(vehicle, team, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOORS_LOCKED_FOR_ALL_TEAMS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOORS_LOCKED_FOR_ALL_TEAMS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_DOORS_LOCKED_FOR_ALL_TEAMS(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DONT_TERMINATE_TASK_WHEN_ACHIEVED( int vehicle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DONT_TERMINATE_TASK_WHEN_ACHIEVED( Vehicle vehicle )
 	{
 		VEHICLE::SET_VEHICLE_DONT_TERMINATE_TASK_WHEN_ACHIEVED(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_EXPLODE_VEHICLE( int vehicle, bool isAudible, bool isInvisible )
+	void LUA_NATIVE_VEHICLE_EXPLODE_VEHICLE( Vehicle vehicle, bool isAudible, bool isInvisible )
 	{
 		VEHICLE::EXPLODE_VEHICLE(vehicle, isAudible, isInvisible);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_OUT_OF_CONTROL( int vehicle, bool killDriver, bool explodeOnImpact )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_OUT_OF_CONTROL( Vehicle vehicle, bool killDriver, bool explodeOnImpact )
 	{
 		VEHICLE::SET_VEHICLE_OUT_OF_CONTROL(vehicle, killDriver, explodeOnImpact);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TIMED_EXPLOSION( int vehicle, int ped, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TIMED_EXPLOSION( Vehicle vehicle, Ped ped, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_TIMED_EXPLOSION(vehicle, ped, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_ADD_VEHICLE_PHONE_EXPLOSIVE_DEVICE( int vehicle )
+	void LUA_NATIVE_VEHICLE_ADD_VEHICLE_PHONE_EXPLOSIVE_DEVICE( Vehicle vehicle )
 	{
 		VEHICLE::ADD_VEHICLE_PHONE_EXPLOSIVE_DEVICE(vehicle);
 	}
@@ -32190,50 +32185,50 @@ namespace lua::native
 		VEHICLE::DETONATE_VEHICLE_PHONE_EXPLOSIVE_DEVICE();
 	}
 
-	bool LUA_NATIVE_VEHICLE_HAVE_VEHICLE_REAR_DOORS_BEEN_BLOWN_OPEN_BY_STICKYBOMB( int vehicle )
+	bool LUA_NATIVE_VEHICLE_HAVE_VEHICLE_REAR_DOORS_BEEN_BLOWN_OPEN_BY_STICKYBOMB( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::HAVE_VEHICLE_REAR_DOORS_BEEN_BLOWN_OPEN_BY_STICKYBOMB(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_TAXI_LIGHTS( int vehicle, bool state )
+	void LUA_NATIVE_VEHICLE_SET_TAXI_LIGHTS( Vehicle vehicle, bool state )
 	{
 		VEHICLE::SET_TAXI_LIGHTS(vehicle, state);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_TAXI_LIGHT_ON( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_TAXI_LIGHT_ON( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_TAXI_LIGHT_ON(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_IN_GARAGE_AREA( const char* garageName, int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_IN_GARAGE_AREA( const char* garageName, Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_IN_GARAGE_AREA(garageName, vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_COLOURS( int vehicle, int colorPrimary, int colorSecondary )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_COLOURS( Vehicle vehicle, int colorPrimary, int colorSecondary )
 	{
 		VEHICLE::SET_VEHICLE_COLOURS(vehicle, colorPrimary, colorSecondary);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FULLBEAM( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FULLBEAM( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_FULLBEAM(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_IS_RACING( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_IS_RACING( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_IS_RACING(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CUSTOM_PRIMARY_COLOUR( int vehicle, int r, int g, int b )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CUSTOM_PRIMARY_COLOUR( Vehicle vehicle, int r, int g, int b )
 	{
 		VEHICLE::SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vehicle, r, g, b);
 	}
 
-	std::tuple<int, int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_CUSTOM_PRIMARY_COLOUR( int vehicle, int r, int g, int b )
+	std::tuple<int, int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_CUSTOM_PRIMARY_COLOUR( Vehicle vehicle, int r, int g, int b )
 	{
 		std::tuple<int, int, int> return_values;
 		VEHICLE::GET_VEHICLE_CUSTOM_PRIMARY_COLOUR(vehicle, &r, &g, &b);
@@ -32244,23 +32239,23 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_VEHICLE_CLEAR_VEHICLE_CUSTOM_PRIMARY_COLOUR( int vehicle )
+	void LUA_NATIVE_VEHICLE_CLEAR_VEHICLE_CUSTOM_PRIMARY_COLOUR( Vehicle vehicle )
 	{
 		VEHICLE::CLEAR_VEHICLE_CUSTOM_PRIMARY_COLOUR(vehicle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_IS_VEHICLE_PRIMARY_COLOUR_CUSTOM( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_IS_VEHICLE_PRIMARY_COLOUR_CUSTOM( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_IS_VEHICLE_PRIMARY_COLOUR_CUSTOM(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CUSTOM_SECONDARY_COLOUR( int vehicle, int r, int g, int b )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CUSTOM_SECONDARY_COLOUR( Vehicle vehicle, int r, int g, int b )
 	{
 		VEHICLE::SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vehicle, r, g, b);
 	}
 
-	std::tuple<int, int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_CUSTOM_SECONDARY_COLOUR( int vehicle, int r, int g, int b )
+	std::tuple<int, int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_CUSTOM_SECONDARY_COLOUR( Vehicle vehicle, int r, int g, int b )
 	{
 		std::tuple<int, int, int> return_values;
 		VEHICLE::GET_VEHICLE_CUSTOM_SECONDARY_COLOUR(vehicle, &r, &g, &b);
@@ -32271,44 +32266,44 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_VEHICLE_CLEAR_VEHICLE_CUSTOM_SECONDARY_COLOUR( int vehicle )
+	void LUA_NATIVE_VEHICLE_CLEAR_VEHICLE_CUSTOM_SECONDARY_COLOUR( Vehicle vehicle )
 	{
 		VEHICLE::CLEAR_VEHICLE_CUSTOM_SECONDARY_COLOUR(vehicle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_IS_VEHICLE_SECONDARY_COLOUR_CUSTOM( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_IS_VEHICLE_SECONDARY_COLOUR_CUSTOM( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_IS_VEHICLE_SECONDARY_COLOUR_CUSTOM(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ENVEFF_SCALE( int vehicle, float fade )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ENVEFF_SCALE( Vehicle vehicle, float fade )
 	{
 		VEHICLE::SET_VEHICLE_ENVEFF_SCALE(vehicle, fade);
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_ENVEFF_SCALE( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_ENVEFF_SCALE( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_ENVEFF_SCALE(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CAN_RESPRAY_VEHICLE( int vehicle, bool state )
+	void LUA_NATIVE_VEHICLE_SET_CAN_RESPRAY_VEHICLE( Vehicle vehicle, bool state )
 	{
 		VEHICLE::SET_CAN_RESPRAY_VEHICLE(vehicle, state);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_GOON_BOSS_VEHICLE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_GOON_BOSS_VEHICLE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_GOON_BOSS_VEHICLE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_OPEN_REAR_DOORS_ON_EXPLOSION( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_OPEN_REAR_DOORS_ON_EXPLOSION( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_OPEN_REAR_DOORS_ON_EXPLOSION(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_FORCE_SUBMARINE_SURFACE_MODE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_FORCE_SUBMARINE_SURFACE_MODE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::FORCE_SUBMARINE_SURFACE_MODE(vehicle, toggle);
 	}
@@ -32318,18 +32313,18 @@ namespace lua::native
 		VEHICLE::FORCE_SUBMARINE_NEURTAL_BUOYANCY(p0, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_SUBMARINE_CRUSH_DEPTHS( int vehicle, bool p1, float depth1, float depth2, float depth3 )
+	void LUA_NATIVE_VEHICLE_SET_SUBMARINE_CRUSH_DEPTHS( Vehicle vehicle, bool p1, float depth1, float depth2, float depth3 )
 	{
 		VEHICLE::SET_SUBMARINE_CRUSH_DEPTHS(vehicle, p1, depth1, depth2, depth3);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_SUBMARINE_IS_UNDER_DESIGN_DEPTH( int submarine )
+	bool LUA_NATIVE_VEHICLE_GET_SUBMARINE_IS_UNDER_DESIGN_DEPTH( Vehicle submarine )
 	{
 		auto retval = (bool)VEHICLE::GET_SUBMARINE_IS_UNDER_DESIGN_DEPTH(submarine);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_SUBMARINE_NUMBER_OF_AIR_LEAKS( int submarine )
+	int LUA_NATIVE_VEHICLE_GET_SUBMARINE_NUMBER_OF_AIR_LEAKS( Vehicle submarine )
 	{
 		auto retval = VEHICLE::GET_SUBMARINE_NUMBER_OF_AIR_LEAKS(submarine);
 		return retval;
@@ -32340,87 +32335,87 @@ namespace lua::native
 		VEHICLE::SET_BOAT_IGNORE_LAND_PROBES(p0, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_BOUNDS_AFFECT_WATER_PROBES_( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_BOUNDS_AFFECT_WATER_PROBES_( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_BOUNDS_AFFECT_WATER_PROBES_(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_BOAT_ANCHOR( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_BOAT_ANCHOR( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_BOAT_ANCHOR(vehicle, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_CAN_ANCHOR_BOAT_HERE( int vehicle )
+	bool LUA_NATIVE_VEHICLE_CAN_ANCHOR_BOAT_HERE( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::CAN_ANCHOR_BOAT_HERE(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_CAN_ANCHOR_BOAT_HERE_IGNORE_PLAYERS( int vehicle )
+	bool LUA_NATIVE_VEHICLE_CAN_ANCHOR_BOAT_HERE_IGNORE_PLAYERS( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::CAN_ANCHOR_BOAT_HERE_IGNORE_PLAYERS(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_BOAT_REMAINS_ANCHORED_WHILE_PLAYER_IS_DRIVER( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_BOAT_REMAINS_ANCHORED_WHILE_PLAYER_IS_DRIVER( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_BOAT_REMAINS_ANCHORED_WHILE_PLAYER_IS_DRIVER(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_FORCE_LOW_LOD_ANCHOR_MODE( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_FORCE_LOW_LOD_ANCHOR_MODE( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_FORCE_LOW_LOD_ANCHOR_MODE(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_BOAT_LOW_LOD_ANCHOR_DISTANCE( int vehicle, float value )
+	void LUA_NATIVE_VEHICLE_SET_BOAT_LOW_LOD_ANCHOR_DISTANCE( Vehicle vehicle, float value )
 	{
 		VEHICLE::SET_BOAT_LOW_LOD_ANCHOR_DISTANCE(vehicle, value);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_BOAT_ANCHORED( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_BOAT_ANCHORED( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_BOAT_ANCHORED(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_BOAT_SINKS_WHEN_WRECKED( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_BOAT_SINKS_WHEN_WRECKED( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_BOAT_SINKS_WHEN_WRECKED(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_BOAT_WRECKED( int vehicle )
+	void LUA_NATIVE_VEHICLE_SET_BOAT_WRECKED( Vehicle vehicle )
 	{
 		VEHICLE::SET_BOAT_WRECKED(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_SIREN( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_SIREN( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_SIREN(vehicle, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_SIREN_ON( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_SIREN_ON( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_SIREN_ON(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_SIREN_AUDIO_ON( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_SIREN_AUDIO_ON( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_SIREN_AUDIO_ON(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_STRONG( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_STRONG( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_STRONG(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_REMOVE_VEHICLE_STUCK_CHECK( int vehicle )
+	void LUA_NATIVE_VEHICLE_REMOVE_VEHICLE_STUCK_CHECK( Vehicle vehicle )
 	{
 		VEHICLE::REMOVE_VEHICLE_STUCK_CHECK(vehicle);
 	}
 
-	std::tuple<int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_COLOURS( int vehicle, int colorPrimary, int colorSecondary )
+	std::tuple<int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_COLOURS( Vehicle vehicle, int colorPrimary, int colorSecondary )
 	{
 		std::tuple<int, int> return_values;
 		VEHICLE::GET_VEHICLE_COLOURS(vehicle, &colorPrimary, &colorSecondary);
@@ -32430,25 +32425,25 @@ namespace lua::native
 		return return_values;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_SEAT_FREE( int vehicle, int seatIndex, bool isTaskRunning )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_SEAT_FREE( Vehicle vehicle, int seatIndex, bool isTaskRunning )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_SEAT_FREE(vehicle, seatIndex, isTaskRunning);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_PED_IN_VEHICLE_SEAT( int vehicle, int seatIndex, bool p2 )
+	Ped LUA_NATIVE_VEHICLE_GET_PED_IN_VEHICLE_SEAT( Vehicle vehicle, int seatIndex, bool p2 )
 	{
 		auto retval = VEHICLE::GET_PED_IN_VEHICLE_SEAT(vehicle, seatIndex, p2);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_LAST_PED_IN_VEHICLE_SEAT( int vehicle, int seatIndex )
+	Ped LUA_NATIVE_VEHICLE_GET_LAST_PED_IN_VEHICLE_SEAT( Vehicle vehicle, int seatIndex )
 	{
 		auto retval = VEHICLE::GET_LAST_PED_IN_VEHICLE_SEAT(vehicle, seatIndex);
 		return retval;
 	}
 
-	std::tuple<bool, bool, bool> LUA_NATIVE_VEHICLE_GET_VEHICLE_LIGHTS_STATE( int vehicle, bool lightsOn, bool highbeamsOn )
+	std::tuple<bool, bool, bool> LUA_NATIVE_VEHICLE_GET_VEHICLE_LIGHTS_STATE( Vehicle vehicle, bool lightsOn, bool highbeamsOn )
 	{
 		std::tuple<bool, bool, bool> return_values;
 		std::get<0>(return_values) = (bool)VEHICLE::GET_VEHICLE_LIGHTS_STATE(vehicle, (BOOL*)&lightsOn, (BOOL*)&highbeamsOn);
@@ -32458,33 +32453,33 @@ namespace lua::native
 		return return_values;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_TYRE_BURST( int vehicle, int wheelID, bool completely )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_TYRE_BURST( Vehicle vehicle, int wheelID, bool completely )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_TYRE_BURST(vehicle, wheelID, completely);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FORWARD_SPEED( int vehicle, float speed )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FORWARD_SPEED( Vehicle vehicle, float speed )
 	{
 		VEHICLE::SET_VEHICLE_FORWARD_SPEED(vehicle, speed);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FORWARD_SPEED_XY( int vehicle, float speed )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FORWARD_SPEED_XY( Vehicle vehicle, float speed )
 	{
 		VEHICLE::SET_VEHICLE_FORWARD_SPEED_XY(vehicle, speed);
 	}
 
-	void LUA_NATIVE_VEHICLE_BRING_VEHICLE_TO_HALT( int vehicle, float distance, int duration, bool p3 )
+	void LUA_NATIVE_VEHICLE_BRING_VEHICLE_TO_HALT( Vehicle vehicle, float distance, int duration, bool p3 )
 	{
 		VEHICLE::BRING_VEHICLE_TO_HALT(vehicle, distance, duration, p3);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_STEER_FOR_BUILDINGS( int vehicle, Any p1 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_STEER_FOR_BUILDINGS( Vehicle vehicle, Any p1 )
 	{
 		VEHICLE::SET_VEHICLE_STEER_FOR_BUILDINGS(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAUSES_SWERVING( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAUSES_SWERVING( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_CAUSES_SWERVING(vehicle, toggle);
 	}
@@ -32494,124 +32489,124 @@ namespace lua::native
 		VEHICLE::SET_IGNORE_PLANES_SMALL_PITCH_CHANGE(p0, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_STOP_BRINGING_VEHICLE_TO_HALT( int vehicle )
+	void LUA_NATIVE_VEHICLE_STOP_BRINGING_VEHICLE_TO_HALT( Vehicle vehicle )
 	{
 		VEHICLE::STOP_BRINGING_VEHICLE_TO_HALT(vehicle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_BEING_BROUGHT_TO_HALT( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_BEING_BROUGHT_TO_HALT( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_BEING_BROUGHT_TO_HALT(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_LOWER_FORKLIFT_FORKS( int forklift )
+	void LUA_NATIVE_VEHICLE_LOWER_FORKLIFT_FORKS( Vehicle forklift )
 	{
 		VEHICLE::LOWER_FORKLIFT_FORKS(forklift);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_FORKLIFT_FORK_HEIGHT( int vehicle, float height )
+	void LUA_NATIVE_VEHICLE_SET_FORKLIFT_FORK_HEIGHT( Vehicle vehicle, float height )
 	{
 		VEHICLE::SET_FORKLIFT_FORK_HEIGHT(vehicle, height);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_ENTITY_ATTACHED_TO_HANDLER_FRAME( int vehicle, int entity )
+	bool LUA_NATIVE_VEHICLE_IS_ENTITY_ATTACHED_TO_HANDLER_FRAME( Vehicle vehicle, Entity entity )
 	{
 		auto retval = (bool)VEHICLE::IS_ENTITY_ATTACHED_TO_HANDLER_FRAME(vehicle, entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_ANY_ENTITY_ATTACHED_TO_HANDLER_FRAME( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_ANY_ENTITY_ATTACHED_TO_HANDLER_FRAME( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_ANY_ENTITY_ATTACHED_TO_HANDLER_FRAME(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_FIND_HANDLER_VEHICLE_CONTAINER_IS_ATTACHED_TO( int entity )
+	Vehicle LUA_NATIVE_VEHICLE_FIND_HANDLER_VEHICLE_CONTAINER_IS_ATTACHED_TO( Entity entity )
 	{
 		auto retval = VEHICLE::FIND_HANDLER_VEHICLE_CONTAINER_IS_ATTACHED_TO(entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_HANDLER_FRAME_LINED_UP_WITH_CONTAINER( int vehicle, int entity )
+	bool LUA_NATIVE_VEHICLE_IS_HANDLER_FRAME_LINED_UP_WITH_CONTAINER( Vehicle vehicle, Entity entity )
 	{
 		auto retval = (bool)VEHICLE::IS_HANDLER_FRAME_LINED_UP_WITH_CONTAINER(vehicle, entity);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_ATTACH_CONTAINER_TO_HANDLER_FRAME_WHEN_LINED_UP( int vehicle, int entity )
+	void LUA_NATIVE_VEHICLE_ATTACH_CONTAINER_TO_HANDLER_FRAME_WHEN_LINED_UP( Vehicle vehicle, Entity entity )
 	{
 		VEHICLE::ATTACH_CONTAINER_TO_HANDLER_FRAME_WHEN_LINED_UP(vehicle, entity);
 	}
 
-	void LUA_NATIVE_VEHICLE_DETACH_CONTAINER_FROM_HANDLER_FRAME( int vehicle )
+	void LUA_NATIVE_VEHICLE_DETACH_CONTAINER_FROM_HANDLER_FRAME( Vehicle vehicle )
 	{
 		VEHICLE::DETACH_CONTAINER_FROM_HANDLER_FRAME(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DISABLE_HEIGHT_MAP_AVOIDANCE( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DISABLE_HEIGHT_MAP_AVOIDANCE( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_VEHICLE_DISABLE_HEIGHT_MAP_AVOIDANCE(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_BOAT_DISABLE_AVOIDANCE( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_BOAT_DISABLE_AVOIDANCE( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_BOAT_DISABLE_AVOIDANCE(vehicle, p1);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_HELI_LANDING_AREA_BLOCKED( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_HELI_LANDING_AREA_BLOCKED( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_HELI_LANDING_AREA_BLOCKED(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_SHORT_SLOWDOWN_FOR_LANDING( int vehicle )
+	void LUA_NATIVE_VEHICLE_SET_SHORT_SLOWDOWN_FOR_LANDING( Vehicle vehicle )
 	{
 		VEHICLE::SET_SHORT_SLOWDOWN_FOR_LANDING(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_HELI_TURBULENCE_SCALAR( int vehicle, float p1 )
+	void LUA_NATIVE_VEHICLE_SET_HELI_TURBULENCE_SCALAR( Vehicle vehicle, float p1 )
 	{
 		VEHICLE::SET_HELI_TURBULENCE_SCALAR(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CAR_BOOT_OPEN( int vehicle )
+	void LUA_NATIVE_VEHICLE_SET_CAR_BOOT_OPEN( Vehicle vehicle )
 	{
 		VEHICLE::SET_CAR_BOOT_OPEN(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TYRE_BURST( int vehicle, int index, bool onRim, float p3 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TYRE_BURST( Vehicle vehicle, int index, bool onRim, float p3 )
 	{
 		VEHICLE::SET_VEHICLE_TYRE_BURST(vehicle, index, onRim, p3);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOORS_SHUT( int vehicle, bool closeInstantly )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOORS_SHUT( Vehicle vehicle, bool closeInstantly )
 	{
 		VEHICLE::SET_VEHICLE_DOORS_SHUT(vehicle, closeInstantly);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TYRES_CAN_BURST( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TYRES_CAN_BURST( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_TYRES_CAN_BURST(vehicle, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_TYRES_CAN_BURST( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_TYRES_CAN_BURST( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_VEHICLE_TYRES_CAN_BURST(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WHEELS_CAN_BREAK( int vehicle, bool enabled )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WHEELS_CAN_BREAK( Vehicle vehicle, bool enabled )
 	{
 		VEHICLE::SET_VEHICLE_WHEELS_CAN_BREAK(vehicle, enabled);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOOR_OPEN( int vehicle, int doorId, bool loose, bool openInstantly )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOOR_OPEN( Vehicle vehicle, int doorId, bool loose, bool openInstantly )
 	{
 		VEHICLE::SET_VEHICLE_DOOR_OPEN(vehicle, doorId, loose, openInstantly);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOOR_AUTO_LOCK( int vehicle, int doorId, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOOR_AUTO_LOCK( Vehicle vehicle, int doorId, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_DOOR_AUTO_LOCK(vehicle, doorId, toggle);
 	}
@@ -32621,144 +32616,144 @@ namespace lua::native
 		VEHICLE::SET_FLEEING_VEHICLES_USE_SWITCHED_OFF_NODES(p0);
 	}
 
-	void LUA_NATIVE_VEHICLE_REMOVE_VEHICLE_WINDOW( int vehicle, int windowIndex )
+	void LUA_NATIVE_VEHICLE_REMOVE_VEHICLE_WINDOW( Vehicle vehicle, int windowIndex )
 	{
 		VEHICLE::REMOVE_VEHICLE_WINDOW(vehicle, windowIndex);
 	}
 
-	void LUA_NATIVE_VEHICLE_ROLL_DOWN_WINDOWS( int vehicle )
+	void LUA_NATIVE_VEHICLE_ROLL_DOWN_WINDOWS( Vehicle vehicle )
 	{
 		VEHICLE::ROLL_DOWN_WINDOWS(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_ROLL_DOWN_WINDOW( int vehicle, int windowIndex )
+	void LUA_NATIVE_VEHICLE_ROLL_DOWN_WINDOW( Vehicle vehicle, int windowIndex )
 	{
 		VEHICLE::ROLL_DOWN_WINDOW(vehicle, windowIndex);
 	}
 
-	void LUA_NATIVE_VEHICLE_ROLL_UP_WINDOW( int vehicle, int windowIndex )
+	void LUA_NATIVE_VEHICLE_ROLL_UP_WINDOW( Vehicle vehicle, int windowIndex )
 	{
 		VEHICLE::ROLL_UP_WINDOW(vehicle, windowIndex);
 	}
 
-	void LUA_NATIVE_VEHICLE_SMASH_VEHICLE_WINDOW( int vehicle, int windowIndex )
+	void LUA_NATIVE_VEHICLE_SMASH_VEHICLE_WINDOW( Vehicle vehicle, int windowIndex )
 	{
 		VEHICLE::SMASH_VEHICLE_WINDOW(vehicle, windowIndex);
 	}
 
-	void LUA_NATIVE_VEHICLE_FIX_VEHICLE_WINDOW( int vehicle, int windowIndex )
+	void LUA_NATIVE_VEHICLE_FIX_VEHICLE_WINDOW( Vehicle vehicle, int windowIndex )
 	{
 		VEHICLE::FIX_VEHICLE_WINDOW(vehicle, windowIndex);
 	}
 
-	void LUA_NATIVE_VEHICLE_POP_OUT_VEHICLE_WINDSCREEN( int vehicle )
+	void LUA_NATIVE_VEHICLE_POP_OUT_VEHICLE_WINDSCREEN( Vehicle vehicle )
 	{
 		VEHICLE::POP_OUT_VEHICLE_WINDSCREEN(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_POP_OFF_VEHICLE_ROOF_WITH_IMPULSE( int vehicle, float x, float y, float z )
+	void LUA_NATIVE_VEHICLE_POP_OFF_VEHICLE_ROOF_WITH_IMPULSE( Vehicle vehicle, float x, float y, float z )
 	{
 		VEHICLE::POP_OFF_VEHICLE_ROOF_WITH_IMPULSE(vehicle, x, y, z);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_LIGHTS( int vehicle, int state )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_LIGHTS( Vehicle vehicle, int state )
 	{
 		VEHICLE::SET_VEHICLE_LIGHTS(vehicle, state);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_USE_PLAYER_LIGHT_SETTINGS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_USE_PLAYER_LIGHT_SETTINGS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_USE_PLAYER_LIGHT_SETTINGS(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HEADLIGHT_SHADOWS( int vehicle, int p1 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HEADLIGHT_SHADOWS( Vehicle vehicle, int p1 )
 	{
 		VEHICLE::SET_VEHICLE_HEADLIGHT_SHADOWS(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ALARM( int vehicle, bool state )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ALARM( Vehicle vehicle, bool state )
 	{
 		VEHICLE::SET_VEHICLE_ALARM(vehicle, state);
 	}
 
-	void LUA_NATIVE_VEHICLE_START_VEHICLE_ALARM( int vehicle )
+	void LUA_NATIVE_VEHICLE_START_VEHICLE_ALARM( Vehicle vehicle )
 	{
 		VEHICLE::START_VEHICLE_ALARM(vehicle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_ALARM_ACTIVATED( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_ALARM_ACTIVATED( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_ALARM_ACTIVATED(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_INTERIORLIGHT( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_INTERIORLIGHT( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_INTERIORLIGHT(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FORCE_INTERIORLIGHT( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FORCE_INTERIORLIGHT( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_FORCE_INTERIORLIGHT(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_LIGHT_MULTIPLIER( int vehicle, float multiplier )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_LIGHT_MULTIPLIER( Vehicle vehicle, float multiplier )
 	{
 		VEHICLE::SET_VEHICLE_LIGHT_MULTIPLIER(vehicle, multiplier);
 	}
 
-	void LUA_NATIVE_VEHICLE_ATTACH_VEHICLE_TO_TRAILER( int vehicle, int trailer, float radius )
+	void LUA_NATIVE_VEHICLE_ATTACH_VEHICLE_TO_TRAILER( Vehicle vehicle, Vehicle trailer, float radius )
 	{
 		VEHICLE::ATTACH_VEHICLE_TO_TRAILER(vehicle, trailer, radius);
 	}
 
-	void LUA_NATIVE_VEHICLE_ATTACH_VEHICLE_ON_TO_TRAILER( int vehicle, int trailer, float offsetX, float offsetY, float offsetZ, float coordsX, float coordsY, float coordsZ, float rotationX, float rotationY, float rotationZ, float disableCollisions )
+	void LUA_NATIVE_VEHICLE_ATTACH_VEHICLE_ON_TO_TRAILER( Vehicle vehicle, Vehicle trailer, float offsetX, float offsetY, float offsetZ, float coordsX, float coordsY, float coordsZ, float rotationX, float rotationY, float rotationZ, float disableCollisions )
 	{
 		VEHICLE::ATTACH_VEHICLE_ON_TO_TRAILER(vehicle, trailer, offsetX, offsetY, offsetZ, coordsX, coordsY, coordsZ, rotationX, rotationY, rotationZ, disableCollisions);
 	}
 
-	void LUA_NATIVE_VEHICLE_STABILISE_ENTITY_ATTACHED_TO_HELI( int vehicle, int entity, float p2 )
+	void LUA_NATIVE_VEHICLE_STABILISE_ENTITY_ATTACHED_TO_HELI( Vehicle vehicle, Entity entity, float p2 )
 	{
 		VEHICLE::STABILISE_ENTITY_ATTACHED_TO_HELI(vehicle, entity, p2);
 	}
 
-	void LUA_NATIVE_VEHICLE_DETACH_VEHICLE_FROM_TRAILER( int vehicle )
+	void LUA_NATIVE_VEHICLE_DETACH_VEHICLE_FROM_TRAILER( Vehicle vehicle )
 	{
 		VEHICLE::DETACH_VEHICLE_FROM_TRAILER(vehicle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_ATTACHED_TO_TRAILER( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_ATTACHED_TO_TRAILER( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_ATTACHED_TO_TRAILER(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_TRAILER_INVERSE_MASS_SCALE( int vehicle, float p1 )
+	void LUA_NATIVE_VEHICLE_SET_TRAILER_INVERSE_MASS_SCALE( Vehicle vehicle, float p1 )
 	{
 		VEHICLE::SET_TRAILER_INVERSE_MASS_SCALE(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_TRAILER_LEGS_RAISED( int vehicle )
+	void LUA_NATIVE_VEHICLE_SET_TRAILER_LEGS_RAISED( Vehicle vehicle )
 	{
 		VEHICLE::SET_TRAILER_LEGS_RAISED(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_TRAILER_LEGS_LOWERED( int vehicle )
+	void LUA_NATIVE_VEHICLE_SET_TRAILER_LEGS_LOWERED( Vehicle vehicle )
 	{
 		VEHICLE::SET_TRAILER_LEGS_LOWERED(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TYRE_FIXED( int vehicle, int tyreIndex )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TYRE_FIXED( Vehicle vehicle, int tyreIndex )
 	{
 		VEHICLE::SET_VEHICLE_TYRE_FIXED(vehicle, tyreIndex);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NUMBER_PLATE_TEXT( int vehicle, const char* plateText )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NUMBER_PLATE_TEXT( Vehicle vehicle, const char* plateText )
 	{
 		VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT(vehicle, plateText);
 	}
 
-	const char* LUA_NATIVE_VEHICLE_GET_VEHICLE_NUMBER_PLATE_TEXT( int vehicle )
+	const char* LUA_NATIVE_VEHICLE_GET_VEHICLE_NUMBER_PLATE_TEXT( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_NUMBER_PLATE_TEXT(vehicle);
 		return retval;
@@ -32770,12 +32765,12 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX( int vehicle, int plateIndex )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX( Vehicle vehicle, int plateIndex )
 	{
 		VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(vehicle, plateIndex);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_NUMBER_PLATE_TEXT_INDEX( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_NUMBER_PLATE_TEXT_INDEX( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(vehicle);
 		return retval;
@@ -32786,7 +32781,7 @@ namespace lua::native
 		VEHICLE::SET_RANDOM_TRAINS(toggle);
 	}
 
-	int LUA_NATIVE_VEHICLE_CREATE_MISSION_TRAIN( int variation, float x, float y, float z, bool direction, Any p5, Any p6 )
+	Vehicle LUA_NATIVE_VEHICLE_CREATE_MISSION_TRAIN( int variation, float x, float y, float z, bool direction, Any p5, Any p6 )
 	{
 		auto retval = VEHICLE::CREATE_MISSION_TRAIN(variation, x, y, z, direction, p5, p6);
 		return retval;
@@ -32812,12 +32807,12 @@ namespace lua::native
 		VEHICLE::DELETE_ALL_TRAINS();
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_TRAIN_SPEED( int train, float speed )
+	void LUA_NATIVE_VEHICLE_SET_TRAIN_SPEED( Vehicle train, float speed )
 	{
 		VEHICLE::SET_TRAIN_SPEED(train, speed);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_TRAIN_CRUISE_SPEED( int train, float speed )
+	void LUA_NATIVE_VEHICLE_SET_TRAIN_CRUISE_SPEED( Vehicle train, float speed )
 	{
 		VEHICLE::SET_TRAIN_CRUISE_SPEED(train, speed);
 	}
@@ -32837,7 +32832,7 @@ namespace lua::native
 		VEHICLE::SET_GARBAGE_TRUCKS(toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_DOES_VEHICLE_HAVE_STUCK_VEHICLE_CHECK( int vehicle )
+	bool LUA_NATIVE_VEHICLE_DOES_VEHICLE_HAVE_STUCK_VEHICLE_CHECK( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::DOES_VEHICLE_HAVE_STUCK_VEHICLE_CHECK(vehicle);
 		return retval;
@@ -32901,117 +32896,117 @@ namespace lua::native
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_POSITION_IN_RECORDING( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_POSITION_IN_RECORDING( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_POSITION_IN_RECORDING(vehicle);
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_TIME_POSITION_IN_RECORDING( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_TIME_POSITION_IN_RECORDING( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_TIME_POSITION_IN_RECORDING(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_START_PLAYBACK_RECORDED_VEHICLE( int vehicle, int recording, const char* script, bool p3 )
+	void LUA_NATIVE_VEHICLE_START_PLAYBACK_RECORDED_VEHICLE( Vehicle vehicle, int recording, const char* script, bool p3 )
 	{
 		VEHICLE::START_PLAYBACK_RECORDED_VEHICLE(vehicle, recording, script, p3);
 	}
 
-	void LUA_NATIVE_VEHICLE_START_PLAYBACK_RECORDED_VEHICLE_WITH_FLAGS( int vehicle, int recording, const char* script, int flags, int time, int drivingStyle )
+	void LUA_NATIVE_VEHICLE_START_PLAYBACK_RECORDED_VEHICLE_WITH_FLAGS( Vehicle vehicle, int recording, const char* script, int flags, int time, int drivingStyle )
 	{
 		VEHICLE::START_PLAYBACK_RECORDED_VEHICLE_WITH_FLAGS(vehicle, recording, script, flags, time, drivingStyle);
 	}
 
-	void LUA_NATIVE_VEHICLE_FORCE_PLAYBACK_RECORDED_VEHICLE_UPDATE( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_FORCE_PLAYBACK_RECORDED_VEHICLE_UPDATE( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::FORCE_PLAYBACK_RECORDED_VEHICLE_UPDATE(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_STOP_PLAYBACK_RECORDED_VEHICLE( int vehicle )
+	void LUA_NATIVE_VEHICLE_STOP_PLAYBACK_RECORDED_VEHICLE( Vehicle vehicle )
 	{
 		VEHICLE::STOP_PLAYBACK_RECORDED_VEHICLE(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_PAUSE_PLAYBACK_RECORDED_VEHICLE( int vehicle )
+	void LUA_NATIVE_VEHICLE_PAUSE_PLAYBACK_RECORDED_VEHICLE( Vehicle vehicle )
 	{
 		VEHICLE::PAUSE_PLAYBACK_RECORDED_VEHICLE(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_UNPAUSE_PLAYBACK_RECORDED_VEHICLE( int vehicle )
+	void LUA_NATIVE_VEHICLE_UNPAUSE_PLAYBACK_RECORDED_VEHICLE( Vehicle vehicle )
 	{
 		VEHICLE::UNPAUSE_PLAYBACK_RECORDED_VEHICLE(vehicle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_PLAYBACK_GOING_ON_FOR_VEHICLE( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_PLAYBACK_GOING_ON_FOR_VEHICLE( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_PLAYBACK_GOING_ON_FOR_VEHICLE(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_PLAYBACK_USING_AI_GOING_ON_FOR_VEHICLE( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_PLAYBACK_USING_AI_GOING_ON_FOR_VEHICLE( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_PLAYBACK_USING_AI_GOING_ON_FOR_VEHICLE(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_CURRENT_PLAYBACK_FOR_VEHICLE( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_CURRENT_PLAYBACK_FOR_VEHICLE( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_CURRENT_PLAYBACK_FOR_VEHICLE(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SKIP_TO_END_AND_STOP_PLAYBACK_RECORDED_VEHICLE( int vehicle )
+	void LUA_NATIVE_VEHICLE_SKIP_TO_END_AND_STOP_PLAYBACK_RECORDED_VEHICLE( Vehicle vehicle )
 	{
 		VEHICLE::SKIP_TO_END_AND_STOP_PLAYBACK_RECORDED_VEHICLE(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_PLAYBACK_SPEED( int vehicle, float speed )
+	void LUA_NATIVE_VEHICLE_SET_PLAYBACK_SPEED( Vehicle vehicle, float speed )
 	{
 		VEHICLE::SET_PLAYBACK_SPEED(vehicle, speed);
 	}
 
-	void LUA_NATIVE_VEHICLE_START_PLAYBACK_RECORDED_VEHICLE_USING_AI( int vehicle, int recording, const char* script, float speed, int drivingStyle )
+	void LUA_NATIVE_VEHICLE_START_PLAYBACK_RECORDED_VEHICLE_USING_AI( Vehicle vehicle, int recording, const char* script, float speed, int drivingStyle )
 	{
 		VEHICLE::START_PLAYBACK_RECORDED_VEHICLE_USING_AI(vehicle, recording, script, speed, drivingStyle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SKIP_TIME_IN_PLAYBACK_RECORDED_VEHICLE( int vehicle, float time )
+	void LUA_NATIVE_VEHICLE_SKIP_TIME_IN_PLAYBACK_RECORDED_VEHICLE( Vehicle vehicle, float time )
 	{
 		VEHICLE::SKIP_TIME_IN_PLAYBACK_RECORDED_VEHICLE(vehicle, time);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_PLAYBACK_TO_USE_AI( int vehicle, int drivingStyle )
+	void LUA_NATIVE_VEHICLE_SET_PLAYBACK_TO_USE_AI( Vehicle vehicle, int drivingStyle )
 	{
 		VEHICLE::SET_PLAYBACK_TO_USE_AI(vehicle, drivingStyle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_PLAYBACK_TO_USE_AI_TRY_TO_REVERT_BACK_LATER( int vehicle, int time, int drivingStyle, bool p3 )
+	void LUA_NATIVE_VEHICLE_SET_PLAYBACK_TO_USE_AI_TRY_TO_REVERT_BACK_LATER( Vehicle vehicle, int time, int drivingStyle, bool p3 )
 	{
 		VEHICLE::SET_PLAYBACK_TO_USE_AI_TRY_TO_REVERT_BACK_LATER(vehicle, time, drivingStyle, p3);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_ADDITIONAL_ROTATION_FOR_RECORDED_VEHICLE_PLAYBACK( int vehicle, float x, float y, float z, Any p4 )
+	void LUA_NATIVE_VEHICLE_SET_ADDITIONAL_ROTATION_FOR_RECORDED_VEHICLE_PLAYBACK( Vehicle vehicle, float x, float y, float z, Any p4 )
 	{
 		VEHICLE::SET_ADDITIONAL_ROTATION_FOR_RECORDED_VEHICLE_PLAYBACK(vehicle, x, y, z, p4);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_POSITION_OFFSET_FOR_RECORDED_VEHICLE_PLAYBACK( int vehicle, float x, float y, float z )
+	void LUA_NATIVE_VEHICLE_SET_POSITION_OFFSET_FOR_RECORDED_VEHICLE_PLAYBACK( Vehicle vehicle, float x, float y, float z )
 	{
 		VEHICLE::SET_POSITION_OFFSET_FOR_RECORDED_VEHICLE_PLAYBACK(vehicle, x, y, z);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_GLOBAL_POSITION_OFFSET_FOR_RECORDED_VEHICLE_PLAYBACK( int vehicle, float x, float y, float z )
+	void LUA_NATIVE_VEHICLE_SET_GLOBAL_POSITION_OFFSET_FOR_RECORDED_VEHICLE_PLAYBACK( Vehicle vehicle, float x, float y, float z )
 	{
 		VEHICLE::SET_GLOBAL_POSITION_OFFSET_FOR_RECORDED_VEHICLE_PLAYBACK(vehicle, x, y, z);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_SHOULD_LERP_FROM_AI_TO_FULL_RECORDING( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_SHOULD_LERP_FROM_AI_TO_FULL_RECORDING( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_SHOULD_LERP_FROM_AI_TO_FULL_RECORDING(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_EXPLODE_VEHICLE_IN_CUTSCENE( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_EXPLODE_VEHICLE_IN_CUTSCENE( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::EXPLODE_VEHICLE_IN_CUTSCENE(vehicle, p1);
 	}
@@ -33021,166 +33016,166 @@ namespace lua::native
 		VEHICLE::ADD_VEHICLE_STUCK_CHECK_WITH_WARP(p0, p1, p2, p3, p4, p5, p6);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_MODEL_IS_SUPPRESSED( unsigned model, bool suppressed )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_MODEL_IS_SUPPRESSED( Hash model, bool suppressed )
 	{
 		VEHICLE::SET_VEHICLE_MODEL_IS_SUPPRESSED(model, suppressed);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_RANDOM_VEHICLE_IN_SPHERE( float x, float y, float z, float radius, unsigned modelHash, int flags )
+	Vehicle LUA_NATIVE_VEHICLE_GET_RANDOM_VEHICLE_IN_SPHERE( float x, float y, float z, float radius, Hash modelHash, int flags )
 	{
 		auto retval = VEHICLE::GET_RANDOM_VEHICLE_IN_SPHERE(x, y, z, radius, modelHash, flags);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_RANDOM_VEHICLE_FRONT_BUMPER_IN_SPHERE( float p0, float p1, float p2, float p3, int p4, int p5, int p6 )
+	Vehicle LUA_NATIVE_VEHICLE_GET_RANDOM_VEHICLE_FRONT_BUMPER_IN_SPHERE( float p0, float p1, float p2, float p3, int p4, int p5, int p6 )
 	{
 		auto retval = VEHICLE::GET_RANDOM_VEHICLE_FRONT_BUMPER_IN_SPHERE(p0, p1, p2, p3, p4, p5, p6);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_RANDOM_VEHICLE_BACK_BUMPER_IN_SPHERE( float p0, float p1, float p2, float p3, int p4, int p5, int p6 )
+	Vehicle LUA_NATIVE_VEHICLE_GET_RANDOM_VEHICLE_BACK_BUMPER_IN_SPHERE( float p0, float p1, float p2, float p3, int p4, int p5, int p6 )
 	{
 		auto retval = VEHICLE::GET_RANDOM_VEHICLE_BACK_BUMPER_IN_SPHERE(p0, p1, p2, p3, p4, p5, p6);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_CLOSEST_VEHICLE( float x, float y, float z, float radius, unsigned modelHash, int flags )
+	Vehicle LUA_NATIVE_VEHICLE_GET_CLOSEST_VEHICLE( float x, float y, float z, float radius, Hash modelHash, int flags )
 	{
 		auto retval = VEHICLE::GET_CLOSEST_VEHICLE(x, y, z, radius, modelHash, flags);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_TRAIN_CARRIAGE( int train, int trailerNumber )
+	Vehicle LUA_NATIVE_VEHICLE_GET_TRAIN_CARRIAGE( Vehicle train, int trailerNumber )
 	{
 		auto retval = VEHICLE::GET_TRAIN_CARRIAGE(train, trailerNumber);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_MISSION_TRAIN( int train )
+	bool LUA_NATIVE_VEHICLE_IS_MISSION_TRAIN( Vehicle train )
 	{
 		auto retval = (bool)VEHICLE::IS_MISSION_TRAIN(train);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_DELETE_MISSION_TRAIN( int train )
+	Vehicle LUA_NATIVE_VEHICLE_DELETE_MISSION_TRAIN( Vehicle train )
 	{
 		VEHICLE::DELETE_MISSION_TRAIN(&train);
 		return train;
 	}
 
-	int LUA_NATIVE_VEHICLE_SET_MISSION_TRAIN_AS_NO_LONGER_NEEDED( int train, bool p1 )
+	Vehicle LUA_NATIVE_VEHICLE_SET_MISSION_TRAIN_AS_NO_LONGER_NEEDED( Vehicle train, bool p1 )
 	{
 		VEHICLE::SET_MISSION_TRAIN_AS_NO_LONGER_NEEDED(&train, p1);
 		return train;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_MISSION_TRAIN_COORDS( int train, float x, float y, float z )
+	void LUA_NATIVE_VEHICLE_SET_MISSION_TRAIN_COORDS( Vehicle train, float x, float y, float z )
 	{
 		VEHICLE::SET_MISSION_TRAIN_COORDS(train, x, y, z);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_BOAT( unsigned model )
+	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_BOAT( Hash model )
 	{
 		auto retval = (bool)VEHICLE::IS_THIS_MODEL_A_BOAT(model);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_JETSKI( unsigned model )
+	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_JETSKI( Hash model )
 	{
 		auto retval = (bool)VEHICLE::IS_THIS_MODEL_A_JETSKI(model);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_PLANE( unsigned model )
+	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_PLANE( Hash model )
 	{
 		auto retval = (bool)VEHICLE::IS_THIS_MODEL_A_PLANE(model);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_HELI( unsigned model )
+	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_HELI( Hash model )
 	{
 		auto retval = (bool)VEHICLE::IS_THIS_MODEL_A_HELI(model);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_CAR( unsigned model )
+	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_CAR( Hash model )
 	{
 		auto retval = (bool)VEHICLE::IS_THIS_MODEL_A_CAR(model);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_TRAIN( unsigned model )
+	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_TRAIN( Hash model )
 	{
 		auto retval = (bool)VEHICLE::IS_THIS_MODEL_A_TRAIN(model);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_BIKE( unsigned model )
+	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_BIKE( Hash model )
 	{
 		auto retval = (bool)VEHICLE::IS_THIS_MODEL_A_BIKE(model);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_BICYCLE( unsigned model )
+	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_BICYCLE( Hash model )
 	{
 		auto retval = (bool)VEHICLE::IS_THIS_MODEL_A_BICYCLE(model);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_QUADBIKE( unsigned model )
+	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_A_QUADBIKE( Hash model )
 	{
 		auto retval = (bool)VEHICLE::IS_THIS_MODEL_A_QUADBIKE(model);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_AN_AMPHIBIOUS_CAR( unsigned model )
+	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_AN_AMPHIBIOUS_CAR( Hash model )
 	{
 		auto retval = (bool)VEHICLE::IS_THIS_MODEL_AN_AMPHIBIOUS_CAR(model);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_AN_AMPHIBIOUS_QUADBIKE( unsigned model )
+	bool LUA_NATIVE_VEHICLE_IS_THIS_MODEL_AN_AMPHIBIOUS_QUADBIKE( Hash model )
 	{
 		auto retval = (bool)VEHICLE::IS_THIS_MODEL_AN_AMPHIBIOUS_QUADBIKE(model);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_HELI_BLADES_FULL_SPEED( int vehicle )
+	void LUA_NATIVE_VEHICLE_SET_HELI_BLADES_FULL_SPEED( Vehicle vehicle )
 	{
 		VEHICLE::SET_HELI_BLADES_FULL_SPEED(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_HELI_BLADES_SPEED( int vehicle, float speed )
+	void LUA_NATIVE_VEHICLE_SET_HELI_BLADES_SPEED( Vehicle vehicle, float speed )
 	{
 		VEHICLE::SET_HELI_BLADES_SPEED(vehicle, speed);
 	}
 
-	void LUA_NATIVE_VEHICLE_FORCE_SUB_THROTTLE_FOR_TIME( int vehicle, float p1, float p2 )
+	void LUA_NATIVE_VEHICLE_FORCE_SUB_THROTTLE_FOR_TIME( Vehicle vehicle, float p1, float p2 )
 	{
 		VEHICLE::FORCE_SUB_THROTTLE_FOR_TIME(vehicle, p1, p2);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_BE_TARGETTED( int vehicle, bool state )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_BE_TARGETTED( Vehicle vehicle, bool state )
 	{
 		VEHICLE::SET_VEHICLE_CAN_BE_TARGETTED(vehicle, state);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DONT_ALLOW_PLAYER_TO_ENTER_VEHICLE_IF_LOCKED_FOR_PLAYER( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_DONT_ALLOW_PLAYER_TO_ENTER_VEHICLE_IF_LOCKED_FOR_PLAYER( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_DONT_ALLOW_PLAYER_TO_ENTER_VEHICLE_IF_LOCKED_FOR_PLAYER(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED( int vehicle, bool state )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED( Vehicle vehicle, bool state )
 	{
 		VEHICLE::SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(vehicle, state);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HAS_UNBREAKABLE_LIGHTS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HAS_UNBREAKABLE_LIGHTS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_HAS_UNBREAKABLE_LIGHTS(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_RESPECTS_LOCKS_WHEN_HAS_DRIVER( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_RESPECTS_LOCKS_WHEN_HAS_DRIVER( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_VEHICLE_RESPECTS_LOCKS_WHEN_HAS_DRIVER(vehicle, p1);
 	}
@@ -33190,82 +33185,82 @@ namespace lua::native
 		VEHICLE::SET_VEHICLE_CAN_EJECT_PASSENGERS_IF_LOCKED(p0, p1);
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_DIRT_LEVEL( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_DIRT_LEVEL( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_DIRT_LEVEL(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DIRT_LEVEL( int vehicle, float dirtLevel )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DIRT_LEVEL( Vehicle vehicle, float dirtLevel )
 	{
 		VEHICLE::SET_VEHICLE_DIRT_LEVEL(vehicle, dirtLevel);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_DOES_VEHICLE_HAVE_DAMAGE_DECALS( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_DOES_VEHICLE_HAVE_DAMAGE_DECALS( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_DOES_VEHICLE_HAVE_DAMAGE_DECALS(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_DOOR_FULLY_OPEN( int vehicle, int doorId )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_DOOR_FULLY_OPEN( Vehicle vehicle, int doorId )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_DOOR_FULLY_OPEN(vehicle, doorId);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ENGINE_ON( int vehicle, bool value, bool instantly, bool disableAutoStart )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ENGINE_ON( Vehicle vehicle, bool value, bool instantly, bool disableAutoStart )
 	{
 		VEHICLE::SET_VEHICLE_ENGINE_ON(vehicle, value, instantly, disableAutoStart);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_UNDRIVEABLE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_UNDRIVEABLE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_UNDRIVEABLE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_PROVIDES_COVER( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_PROVIDES_COVER( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_PROVIDES_COVER(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOOR_CONTROL( int vehicle, int doorId, int speed, float angle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOOR_CONTROL( Vehicle vehicle, int doorId, int speed, float angle )
 	{
 		VEHICLE::SET_VEHICLE_DOOR_CONTROL(vehicle, doorId, speed, angle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOOR_LATCHED( int vehicle, int doorId, bool p2, bool p3, bool p4 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOOR_LATCHED( Vehicle vehicle, int doorId, bool p2, bool p3, bool p4 )
 	{
 		VEHICLE::SET_VEHICLE_DOOR_LATCHED(vehicle, doorId, p2, p3, p4);
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_DOOR_ANGLE_RATIO( int vehicle, int doorId )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_DOOR_ANGLE_RATIO( Vehicle vehicle, int doorId )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_DOOR_ANGLE_RATIO(vehicle, doorId);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_PED_USING_VEHICLE_DOOR( int vehicle, int doord )
+	Ped LUA_NATIVE_VEHICLE_GET_PED_USING_VEHICLE_DOOR( Vehicle vehicle, int doord )
 	{
 		auto retval = VEHICLE::GET_PED_USING_VEHICLE_DOOR(vehicle, doord);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOOR_SHUT( int vehicle, int doorId, bool closeInstantly )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOOR_SHUT( Vehicle vehicle, int doorId, bool closeInstantly )
 	{
 		VEHICLE::SET_VEHICLE_DOOR_SHUT(vehicle, doorId, closeInstantly);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOOR_BROKEN( int vehicle, int doorId, bool deleteDoor )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DOOR_BROKEN( Vehicle vehicle, int doorId, bool deleteDoor )
 	{
 		VEHICLE::SET_VEHICLE_DOOR_BROKEN(vehicle, doorId, deleteDoor);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_BREAK( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_BREAK( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_CAN_BREAK(vehicle, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_DOES_VEHICLE_HAVE_ROOF( int vehicle )
+	bool LUA_NATIVE_VEHICLE_DOES_VEHICLE_HAVE_ROOF( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::DOES_VEHICLE_HAVE_ROOF(vehicle);
 		return retval;
@@ -33286,68 +33281,68 @@ namespace lua::native
 		VEHICLE::SET_CARJACK_MISSION_REMOVAL_PARAMETERS(p0, p1);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_BIG_VEHICLE( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_BIG_VEHICLE( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_BIG_VEHICLE(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_NUMBER_OF_VEHICLE_COLOURS( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_NUMBER_OF_VEHICLE_COLOURS( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_NUMBER_OF_VEHICLE_COLOURS(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_COLOUR_COMBINATION( int vehicle, int colorCombination )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_COLOUR_COMBINATION( Vehicle vehicle, int colorCombination )
 	{
 		VEHICLE::SET_VEHICLE_COLOUR_COMBINATION(vehicle, colorCombination);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_COLOUR_COMBINATION( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_COLOUR_COMBINATION( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_COLOUR_COMBINATION(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_XENON_LIGHT_COLOR_INDEX( int vehicle, int colorIndex )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_XENON_LIGHT_COLOR_INDEX( Vehicle vehicle, int colorIndex )
 	{
 		VEHICLE::SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vehicle, colorIndex);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_XENON_LIGHT_COLOR_INDEX( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_XENON_LIGHT_COLOR_INDEX( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_IS_CONSIDERED_BY_PLAYER( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_IS_CONSIDERED_BY_PLAYER( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_IS_CONSIDERED_BY_PLAYER(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WILL_FORCE_OTHER_VEHICLES_TO_STOP( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WILL_FORCE_OTHER_VEHICLES_TO_STOP( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_WILL_FORCE_OTHER_VEHICLES_TO_STOP(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ACT_AS_IF_HAS_SIREN_ON( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ACT_AS_IF_HAS_SIREN_ON( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_VEHICLE_ACT_AS_IF_HAS_SIREN_ON(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_USE_MORE_RESTRICTIVE_SPAWN_CHECKS( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_USE_MORE_RESTRICTIVE_SPAWN_CHECKS( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_VEHICLE_USE_MORE_RESTRICTIVE_SPAWN_CHECKS(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_MAY_BE_USED_BY_GOTO_POINT_ANY_MEANS( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_MAY_BE_USED_BY_GOTO_POINT_ANY_MEANS( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_VEHICLE_MAY_BE_USED_BY_GOTO_POINT_ANY_MEANS(vehicle, p1);
 	}
 
-	std::tuple<unsigned, int> LUA_NATIVE_VEHICLE_GET_RANDOM_VEHICLE_MODEL_IN_MEMORY( bool p0, unsigned modelHash, int successIndicator )
+	std::tuple<Hash, int> LUA_NATIVE_VEHICLE_GET_RANDOM_VEHICLE_MODEL_IN_MEMORY( bool p0, Hash modelHash, int successIndicator )
 	{
-		std::tuple<unsigned, int> return_values;
+		std::tuple<Hash, int> return_values;
 		VEHICLE::GET_RANDOM_VEHICLE_MODEL_IN_MEMORY(p0, &modelHash, &successIndicator);
 		std::get<0>(return_values) = modelHash;
 		std::get<1>(return_values) = successIndicator;
@@ -33355,36 +33350,36 @@ namespace lua::native
 		return return_values;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_DOOR_LOCK_STATUS( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_DOOR_LOCK_STATUS( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_DOOR_LOCK_STATUS(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_INDIVIDUAL_DOOR_LOCK_STATUS( int vehicle, int doorId )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_INDIVIDUAL_DOOR_LOCK_STATUS( Vehicle vehicle, int doorId )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_INDIVIDUAL_DOOR_LOCK_STATUS(vehicle, doorId);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_DOOR_DAMAGED( int veh, int doorID )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_DOOR_DAMAGED( Vehicle veh, int doorID )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_DOOR_DAMAGED(veh, doorID);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF( int vehicle, int doorId, bool isBreakable )
+	void LUA_NATIVE_VEHICLE_SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF( Vehicle vehicle, int doorId, bool isBreakable )
 	{
 		VEHICLE::SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(vehicle, doorId, isBreakable);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_BUMPER_BOUNCING( int vehicle, bool frontBumper )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_BUMPER_BOUNCING( Vehicle vehicle, bool frontBumper )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_BUMPER_BOUNCING(vehicle, frontBumper);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_BUMPER_BROKEN_OFF( int vehicle, bool frontBumper )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_BUMPER_BROKEN_OFF( Vehicle vehicle, bool frontBumper )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_BUMPER_BROKEN_OFF(vehicle, frontBumper);
 		return retval;
@@ -33396,41 +33391,41 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_ON_ALL_WHEELS( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_ON_ALL_WHEELS( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_ON_ALL_WHEELS(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_VALUE( unsigned vehicleModel )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_VALUE( Hash vehicleModel )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MODEL_VALUE(vehicleModel);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_VEHICLE_GET_VEHICLE_LAYOUT_HASH( int vehicle )
+	Hash LUA_NATIVE_VEHICLE_GET_VEHICLE_LAYOUT_HASH( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_LAYOUT_HASH(vehicle);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_VEHICLE_GET_IN_VEHICLE_CLIPSET_HASH_FOR_SEAT( int vehicle, int p1 )
+	Hash LUA_NATIVE_VEHICLE_GET_IN_VEHICLE_CLIPSET_HASH_FOR_SEAT( Vehicle vehicle, int p1 )
 	{
 		auto retval = VEHICLE::GET_IN_VEHICLE_CLIPSET_HASH_FOR_SEAT(vehicle, p1);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_RENDER_TRAIN_AS_DERAILED( int train, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_RENDER_TRAIN_AS_DERAILED( Vehicle train, bool toggle )
 	{
 		VEHICLE::SET_RENDER_TRAIN_AS_DERAILED(train, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXTRA_COLOURS( int vehicle, int pearlescentColor, int wheelColor )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXTRA_COLOURS( Vehicle vehicle, int pearlescentColor, int wheelColor )
 	{
 		VEHICLE::SET_VEHICLE_EXTRA_COLOURS(vehicle, pearlescentColor, wheelColor);
 	}
 
-	std::tuple<int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_EXTRA_COLOURS( int vehicle, int pearlescentColor, int wheelColor )
+	std::tuple<int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_EXTRA_COLOURS( Vehicle vehicle, int pearlescentColor, int wheelColor )
 	{
 		std::tuple<int, int> return_values;
 		VEHICLE::GET_VEHICLE_EXTRA_COLOURS(vehicle, &pearlescentColor, &wheelColor);
@@ -33440,23 +33435,23 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXTRA_COLOUR_5( int vehicle, int color )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXTRA_COLOUR_5( Vehicle vehicle, int color )
 	{
 		VEHICLE::SET_VEHICLE_EXTRA_COLOUR_5(vehicle, color);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_EXTRA_COLOUR_5( int vehicle, int color )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_EXTRA_COLOUR_5( Vehicle vehicle, int color )
 	{
 		VEHICLE::GET_VEHICLE_EXTRA_COLOUR_5(vehicle, &color);
 		return color;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXTRA_COLOUR_6( int vehicle, int color )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXTRA_COLOUR_6( Vehicle vehicle, int color )
 	{
 		VEHICLE::SET_VEHICLE_EXTRA_COLOUR_6(vehicle, color);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_EXTRA_COLOUR_6( int vehicle, int color )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_EXTRA_COLOUR_6( Vehicle vehicle, int color )
 	{
 		VEHICLE::GET_VEHICLE_EXTRA_COLOUR_6(vehicle, &color);
 		return color;
@@ -33467,57 +33462,57 @@ namespace lua::native
 		VEHICLE::STOP_ALL_GARAGE_ACTIVITY();
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FIXED( int vehicle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FIXED( Vehicle vehicle )
 	{
 		VEHICLE::SET_VEHICLE_FIXED(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DEFORMATION_FIXED( int vehicle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DEFORMATION_FIXED( Vehicle vehicle )
 	{
 		VEHICLE::SET_VEHICLE_DEFORMATION_FIXED(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_ENGINE_MISSFIRE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_ENGINE_MISSFIRE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_CAN_ENGINE_MISSFIRE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_LEAK_OIL( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_LEAK_OIL( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_CAN_LEAK_OIL(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_LEAK_PETROL( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_LEAK_PETROL( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_CAN_LEAK_PETROL(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DISABLE_VEHICLE_PETROL_TANK_FIRES( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_DISABLE_VEHICLE_PETROL_TANK_FIRES( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_DISABLE_VEHICLE_PETROL_TANK_FIRES(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DISABLE_VEHICLE_PETROL_TANK_DAMAGE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_DISABLE_VEHICLE_PETROL_TANK_DAMAGE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_DISABLE_VEHICLE_PETROL_TANK_DAMAGE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DISABLE_VEHICLE_ENGINE_FIRES( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_DISABLE_VEHICLE_ENGINE_FIRES( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_DISABLE_VEHICLE_ENGINE_FIRES(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_LIMIT_SPEED_WHEN_PLAYER_INACTIVE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_LIMIT_SPEED_WHEN_PLAYER_INACTIVE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_LIMIT_SPEED_WHEN_PLAYER_INACTIVE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_STOP_INSTANTLY_WHEN_PLAYER_INACTIVE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_STOP_INSTANTLY_WHEN_PLAYER_INACTIVE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_STOP_INSTANTLY_WHEN_PLAYER_INACTIVE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DISABLE_PRETEND_OCCUPANTS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_DISABLE_PRETEND_OCCUPANTS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_DISABLE_PRETEND_OCCUPANTS(vehicle, toggle);
 	}
@@ -33527,325 +33522,325 @@ namespace lua::native
 		VEHICLE::REMOVE_VEHICLES_FROM_GENERATORS_IN_AREA(x1, y1, z1, x2, y2, z2, p6);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_STEER_BIAS( int vehicle, float value )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_STEER_BIAS( Vehicle vehicle, float value )
 	{
 		VEHICLE::SET_VEHICLE_STEER_BIAS(vehicle, value);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_EXTRA_TURNED_ON( int vehicle, int extraId )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_EXTRA_TURNED_ON( Vehicle vehicle, int extraId )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_EXTRA_TURNED_ON(vehicle, extraId);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXTRA( int vehicle, int extraId, bool disable )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXTRA( Vehicle vehicle, int extraId, bool disable )
 	{
 		VEHICLE::SET_VEHICLE_EXTRA(vehicle, extraId, disable);
 	}
 
-	bool LUA_NATIVE_VEHICLE_DOES_EXTRA_EXIST( int vehicle, int extraId )
+	bool LUA_NATIVE_VEHICLE_DOES_EXTRA_EXIST( Vehicle vehicle, int extraId )
 	{
 		auto retval = (bool)VEHICLE::DOES_EXTRA_EXIST(vehicle, extraId);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_EXTRA_BROKEN_OFF( int vehicle, int extraId )
+	bool LUA_NATIVE_VEHICLE_IS_EXTRA_BROKEN_OFF( Vehicle vehicle, int extraId )
 	{
 		auto retval = (bool)VEHICLE::IS_EXTRA_BROKEN_OFF(vehicle, extraId);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CONVERTIBLE_ROOF( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_CONVERTIBLE_ROOF( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_CONVERTIBLE_ROOF(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_LOWER_CONVERTIBLE_ROOF( int vehicle, bool instantlyLower )
+	void LUA_NATIVE_VEHICLE_LOWER_CONVERTIBLE_ROOF( Vehicle vehicle, bool instantlyLower )
 	{
 		VEHICLE::LOWER_CONVERTIBLE_ROOF(vehicle, instantlyLower);
 	}
 
-	void LUA_NATIVE_VEHICLE_RAISE_CONVERTIBLE_ROOF( int vehicle, bool instantlyRaise )
+	void LUA_NATIVE_VEHICLE_RAISE_CONVERTIBLE_ROOF( Vehicle vehicle, bool instantlyRaise )
 	{
 		VEHICLE::RAISE_CONVERTIBLE_ROOF(vehicle, instantlyRaise);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_CONVERTIBLE_ROOF_STATE( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_CONVERTIBLE_ROOF_STATE( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_CONVERTIBLE_ROOF_STATE(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_A_CONVERTIBLE( int vehicle, bool p1 )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_A_CONVERTIBLE( Vehicle vehicle, bool p1 )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_A_CONVERTIBLE(vehicle, p1);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_TRANSFORM_TO_SUBMARINE( int vehicle, bool noAnimation )
+	bool LUA_NATIVE_VEHICLE_TRANSFORM_TO_SUBMARINE( Vehicle vehicle, bool noAnimation )
 	{
 		auto retval = (bool)VEHICLE::TRANSFORM_TO_SUBMARINE(vehicle, noAnimation);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_TRANSFORM_TO_CAR( int vehicle, bool noAnimation )
+	void LUA_NATIVE_VEHICLE_TRANSFORM_TO_CAR( Vehicle vehicle, bool noAnimation )
 	{
 		VEHICLE::TRANSFORM_TO_CAR(vehicle, noAnimation);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_IN_SUBMARINE_MODE( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_IN_SUBMARINE_MODE( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_IN_SUBMARINE_MODE(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_STOPPED_AT_TRAFFIC_LIGHTS( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_STOPPED_AT_TRAFFIC_LIGHTS( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_STOPPED_AT_TRAFFIC_LIGHTS(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DAMAGE( int vehicle, float xOffset, float yOffset, float zOffset, float damage, float radius, bool focusOnModel )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DAMAGE( Vehicle vehicle, float xOffset, float yOffset, float zOffset, float damage, float radius, bool focusOnModel )
 	{
 		VEHICLE::SET_VEHICLE_DAMAGE(vehicle, xOffset, yOffset, zOffset, damage, radius, focusOnModel);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_OCCUPANTS_TAKE_EXPLOSIVE_DAMAGE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_OCCUPANTS_TAKE_EXPLOSIVE_DAMAGE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_OCCUPANTS_TAKE_EXPLOSIVE_DAMAGE(vehicle, toggle);
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_ENGINE_HEALTH( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_ENGINE_HEALTH( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_ENGINE_HEALTH(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ENGINE_HEALTH( int vehicle, float health )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ENGINE_HEALTH( Vehicle vehicle, float health )
 	{
 		VEHICLE::SET_VEHICLE_ENGINE_HEALTH(vehicle, health);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_PLANE_ENGINE_HEALTH( int vehicle, float health )
+	void LUA_NATIVE_VEHICLE_SET_PLANE_ENGINE_HEALTH( Vehicle vehicle, float health )
 	{
 		VEHICLE::SET_PLANE_ENGINE_HEALTH(vehicle, health);
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_PETROL_TANK_HEALTH( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_PETROL_TANK_HEALTH( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_PETROL_TANK_HEALTH(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_PETROL_TANK_HEALTH( int vehicle, float health )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_PETROL_TANK_HEALTH( Vehicle vehicle, float health )
 	{
 		VEHICLE::SET_VEHICLE_PETROL_TANK_HEALTH(vehicle, health);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_STUCK_TIMER_UP( int vehicle, int p1, int ms )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_STUCK_TIMER_UP( Vehicle vehicle, int p1, int ms )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_STUCK_TIMER_UP(vehicle, p1, ms);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_RESET_VEHICLE_STUCK_TIMER( int vehicle, int nullAttributes )
+	void LUA_NATIVE_VEHICLE_RESET_VEHICLE_STUCK_TIMER( Vehicle vehicle, int nullAttributes )
 	{
 		VEHICLE::RESET_VEHICLE_STUCK_TIMER(vehicle, nullAttributes);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_DRIVEABLE( int vehicle, bool isOnFireCheck )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_DRIVEABLE( Vehicle vehicle, bool isOnFireCheck )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_DRIVEABLE(vehicle, isOnFireCheck);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HAS_BEEN_OWNED_BY_PLAYER( int vehicle, bool owned )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HAS_BEEN_OWNED_BY_PLAYER( Vehicle vehicle, bool owned )
 	{
 		VEHICLE::SET_VEHICLE_HAS_BEEN_OWNED_BY_PLAYER(vehicle, owned);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NEEDS_TO_BE_HOTWIRED( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NEEDS_TO_BE_HOTWIRED( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_NEEDS_TO_BE_HOTWIRED(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BLIP_THROTTLE_RANDOMLY( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BLIP_THROTTLE_RANDOMLY( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_VEHICLE_BLIP_THROTTLE_RANDOMLY(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_POLICE_FOCUS_WILL_TRACK_VEHICLE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_POLICE_FOCUS_WILL_TRACK_VEHICLE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_POLICE_FOCUS_WILL_TRACK_VEHICLE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_START_VEHICLE_HORN( int vehicle, int duration, unsigned mode, bool forever )
+	void LUA_NATIVE_VEHICLE_START_VEHICLE_HORN( Vehicle vehicle, int duration, Hash mode, bool forever )
 	{
 		VEHICLE::START_VEHICLE_HORN(vehicle, duration, mode, forever);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_IN_CAR_MOD_SHOP( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_IN_CAR_MOD_SHOP( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_IN_CAR_MOD_SHOP(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HAS_STRONG_AXLES( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HAS_STRONG_AXLES( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_HAS_STRONG_AXLES(vehicle, toggle);
 	}
 
-	const char* LUA_NATIVE_VEHICLE_GET_DISPLAY_NAME_FROM_VEHICLE_MODEL( unsigned modelHash )
+	const char* LUA_NATIVE_VEHICLE_GET_DISPLAY_NAME_FROM_VEHICLE_MODEL( Hash modelHash )
 	{
 		auto retval = VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(modelHash);
 		return retval;
 	}
 
-	const char* LUA_NATIVE_VEHICLE_GET_MAKE_NAME_FROM_VEHICLE_MODEL( unsigned modelHash )
+	const char* LUA_NATIVE_VEHICLE_GET_MAKE_NAME_FROM_VEHICLE_MODEL( Hash modelHash )
 	{
 		auto retval = VEHICLE::GET_MAKE_NAME_FROM_VEHICLE_MODEL(modelHash);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_VEHICLE_GET_VEHICLE_DEFORMATION_AT_POS( int vehicle, float offsetX, float offsetY, float offsetZ )
+	Vector3 LUA_NATIVE_VEHICLE_GET_VEHICLE_DEFORMATION_AT_POS( Vehicle vehicle, float offsetX, float offsetY, float offsetZ )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_DEFORMATION_AT_POS(vehicle, offsetX, offsetY, offsetZ);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_LIVERY( int vehicle, int livery )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_LIVERY( Vehicle vehicle, int livery )
 	{
 		VEHICLE::SET_VEHICLE_LIVERY(vehicle, livery);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_LIVERY( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_LIVERY( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_LIVERY(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_LIVERY_COUNT( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_LIVERY_COUNT( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_LIVERY_COUNT(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_LIVERY2( int vehicle, int livery )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_LIVERY2( Vehicle vehicle, int livery )
 	{
 		VEHICLE::SET_VEHICLE_LIVERY2(vehicle, livery);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_LIVERY2( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_LIVERY2( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_LIVERY2(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_LIVERY2_COUNT( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_LIVERY2_COUNT( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_LIVERY2_COUNT(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_WINDOW_INTACT( int vehicle, int windowIndex )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_WINDOW_INTACT( Vehicle vehicle, int windowIndex )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_WINDOW_INTACT(vehicle, windowIndex);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_ARE_ALL_VEHICLE_WINDOWS_INTACT( int vehicle )
+	bool LUA_NATIVE_VEHICLE_ARE_ALL_VEHICLE_WINDOWS_INTACT( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::ARE_ALL_VEHICLE_WINDOWS_INTACT(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_ARE_ANY_VEHICLE_SEATS_FREE( int vehicle )
+	bool LUA_NATIVE_VEHICLE_ARE_ANY_VEHICLE_SEATS_FREE( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::ARE_ANY_VEHICLE_SEATS_FREE(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_RESET_VEHICLE_WHEELS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_RESET_VEHICLE_WHEELS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::RESET_VEHICLE_WHEELS(vehicle, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_HELI_PART_BROKEN( int vehicle, bool p1, bool p2, bool p3 )
+	bool LUA_NATIVE_VEHICLE_IS_HELI_PART_BROKEN( Vehicle vehicle, bool p1, bool p2, bool p3 )
 	{
 		auto retval = (bool)VEHICLE::IS_HELI_PART_BROKEN(vehicle, p1, p2, p3);
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_HELI_MAIN_ROTOR_HEALTH( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_HELI_MAIN_ROTOR_HEALTH( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_HELI_MAIN_ROTOR_HEALTH(vehicle);
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_HELI_TAIL_ROTOR_HEALTH( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_HELI_TAIL_ROTOR_HEALTH( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_HELI_TAIL_ROTOR_HEALTH(vehicle);
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_HELI_TAIL_BOOM_HEALTH( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_HELI_TAIL_BOOM_HEALTH( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_HELI_TAIL_BOOM_HEALTH(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_HELI_MAIN_ROTOR_HEALTH( int vehicle, float health )
+	void LUA_NATIVE_VEHICLE_SET_HELI_MAIN_ROTOR_HEALTH( Vehicle vehicle, float health )
 	{
 		VEHICLE::SET_HELI_MAIN_ROTOR_HEALTH(vehicle, health);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_HELI_TAIL_ROTOR_HEALTH( int vehicle, float health )
+	void LUA_NATIVE_VEHICLE_SET_HELI_TAIL_ROTOR_HEALTH( Vehicle vehicle, float health )
 	{
 		VEHICLE::SET_HELI_TAIL_ROTOR_HEALTH(vehicle, health);
 	}
 
-	bool LUA_NATIVE_VEHICLE_SET_HELI_TAIL_BOOM_CAN_BREAK_OFF( int vehicle, bool toggle )
+	bool LUA_NATIVE_VEHICLE_SET_HELI_TAIL_BOOM_CAN_BREAK_OFF( Vehicle vehicle, bool toggle )
 	{
 		auto retval = (bool)VEHICLE::SET_HELI_TAIL_BOOM_CAN_BREAK_OFF(vehicle, toggle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NAME_DEBUG( int vehicle, const char* name )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NAME_DEBUG( Vehicle vehicle, const char* name )
 	{
 		VEHICLE::SET_VEHICLE_NAME_DEBUG(vehicle, name);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXPLODES_ON_HIGH_EXPLOSION_DAMAGE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXPLODES_ON_HIGH_EXPLOSION_DAMAGE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_EXPLODES_ON_HIGH_EXPLOSION_DAMAGE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXPLODES_ON_EXPLOSION_DAMAGE_AT_ZERO_BODY_HEALTH( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXPLODES_ON_EXPLOSION_DAMAGE_AT_ZERO_BODY_HEALTH( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_EXPLODES_ON_EXPLOSION_DAMAGE_AT_ZERO_BODY_HEALTH(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_ALLOW_VEHICLE_EXPLODES_ON_CONTACT( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_ALLOW_VEHICLE_EXPLODES_ON_CONTACT( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_ALLOW_VEHICLE_EXPLODES_ON_CONTACT(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DISABLE_TOWING( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DISABLE_TOWING( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_DISABLE_TOWING(vehicle, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_HAS_LANDING_GEAR( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_HAS_LANDING_GEAR( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_VEHICLE_HAS_LANDING_GEAR(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_CONTROL_LANDING_GEAR( int vehicle, int state )
+	void LUA_NATIVE_VEHICLE_CONTROL_LANDING_GEAR( Vehicle vehicle, int state )
 	{
 		VEHICLE::CONTROL_LANDING_GEAR(vehicle, state);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_LANDING_GEAR_STATE( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_LANDING_GEAR_STATE( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_LANDING_GEAR_STATE(vehicle);
 		return retval;
@@ -33857,23 +33852,23 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_REQUEST_VEHICLE_HIGH_DETAIL_MODEL( int vehicle )
+	void LUA_NATIVE_VEHICLE_REQUEST_VEHICLE_HIGH_DETAIL_MODEL( Vehicle vehicle )
 	{
 		VEHICLE::REQUEST_VEHICLE_HIGH_DETAIL_MODEL(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_REMOVE_VEHICLE_HIGH_DETAIL_MODEL( int vehicle )
+	void LUA_NATIVE_VEHICLE_REMOVE_VEHICLE_HIGH_DETAIL_MODEL( Vehicle vehicle )
 	{
 		VEHICLE::REMOVE_VEHICLE_HIGH_DETAIL_MODEL(vehicle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_HIGH_DETAIL( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_HIGH_DETAIL( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_HIGH_DETAIL(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_REQUEST_VEHICLE_ASSET( unsigned vehicleHash, int vehicleAsset )
+	void LUA_NATIVE_VEHICLE_REQUEST_VEHICLE_ASSET( Hash vehicleHash, int vehicleAsset )
 	{
 		VEHICLE::REQUEST_VEHICLE_ASSET(vehicleHash, vehicleAsset);
 	}
@@ -33889,92 +33884,92 @@ namespace lua::native
 		VEHICLE::REMOVE_VEHICLE_ASSET(vehicleAsset);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TOW_TRUCK_ARM_POSITION( int vehicle, float position )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TOW_TRUCK_ARM_POSITION( Vehicle vehicle, float position )
 	{
 		VEHICLE::SET_VEHICLE_TOW_TRUCK_ARM_POSITION(vehicle, position);
 	}
 
-	void LUA_NATIVE_VEHICLE_ATTACH_VEHICLE_TO_TOW_TRUCK( int towTruck, int vehicle, bool rear, float hookOffsetX, float hookOffsetY, float hookOffsetZ )
+	void LUA_NATIVE_VEHICLE_ATTACH_VEHICLE_TO_TOW_TRUCK( Vehicle towTruck, Vehicle vehicle, bool rear, float hookOffsetX, float hookOffsetY, float hookOffsetZ )
 	{
 		VEHICLE::ATTACH_VEHICLE_TO_TOW_TRUCK(towTruck, vehicle, rear, hookOffsetX, hookOffsetY, hookOffsetZ);
 	}
 
-	void LUA_NATIVE_VEHICLE_DETACH_VEHICLE_FROM_TOW_TRUCK( int towTruck, int vehicle )
+	void LUA_NATIVE_VEHICLE_DETACH_VEHICLE_FROM_TOW_TRUCK( Vehicle towTruck, Vehicle vehicle )
 	{
 		VEHICLE::DETACH_VEHICLE_FROM_TOW_TRUCK(towTruck, vehicle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_DETACH_VEHICLE_FROM_ANY_TOW_TRUCK( int vehicle )
+	bool LUA_NATIVE_VEHICLE_DETACH_VEHICLE_FROM_ANY_TOW_TRUCK( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::DETACH_VEHICLE_FROM_ANY_TOW_TRUCK(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_ATTACHED_TO_TOW_TRUCK( int towTruck, int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_ATTACHED_TO_TOW_TRUCK( Vehicle towTruck, Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_ATTACHED_TO_TOW_TRUCK(towTruck, vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_ENTITY_ATTACHED_TO_TOW_TRUCK( int towTruck )
+	Entity LUA_NATIVE_VEHICLE_GET_ENTITY_ATTACHED_TO_TOW_TRUCK( Vehicle towTruck )
 	{
 		auto retval = VEHICLE::GET_ENTITY_ATTACHED_TO_TOW_TRUCK(towTruck);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_SET_VEHICLE_AUTOMATICALLY_ATTACHES( int vehicle, bool p1, Any p2 )
+	Entity LUA_NATIVE_VEHICLE_SET_VEHICLE_AUTOMATICALLY_ATTACHES( Vehicle vehicle, bool p1, Any p2 )
 	{
 		auto retval = VEHICLE::SET_VEHICLE_AUTOMATICALLY_ATTACHES(vehicle, p1, p2);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BULLDOZER_ARM_POSITION( int vehicle, float position, bool p2 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BULLDOZER_ARM_POSITION( Vehicle vehicle, float position, bool p2 )
 	{
 		VEHICLE::SET_VEHICLE_BULLDOZER_ARM_POSITION(vehicle, position, p2);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TANK_TURRET_POSITION( int vehicle, float position, bool p2 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TANK_TURRET_POSITION( Vehicle vehicle, float position, bool p2 )
 	{
 		VEHICLE::SET_VEHICLE_TANK_TURRET_POSITION(vehicle, position, p2);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TURRET_TARGET( int vehicle, bool p1, float x, float y, float z, bool p5 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TURRET_TARGET( Vehicle vehicle, bool p1, float x, float y, float z, bool p5 )
 	{
 		VEHICLE::SET_VEHICLE_TURRET_TARGET(vehicle, p1, x, y, z, p5);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TANK_STATIONARY( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TANK_STATIONARY( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_VEHICLE_TANK_STATIONARY(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TURRET_SPEED_THIS_FRAME( int vehicle, float speed )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TURRET_SPEED_THIS_FRAME( Vehicle vehicle, float speed )
 	{
 		VEHICLE::SET_VEHICLE_TURRET_SPEED_THIS_FRAME(vehicle, speed);
 	}
 
-	void LUA_NATIVE_VEHICLE_DISABLE_VEHICLE_TURRET_MOVEMENT_THIS_FRAME( int vehicle )
+	void LUA_NATIVE_VEHICLE_DISABLE_VEHICLE_TURRET_MOVEMENT_THIS_FRAME( Vehicle vehicle )
 	{
 		VEHICLE::DISABLE_VEHICLE_TURRET_MOVEMENT_THIS_FRAME(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FLIGHT_NOZZLE_POSITION( int vehicle, float angleRatio )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FLIGHT_NOZZLE_POSITION( Vehicle vehicle, float angleRatio )
 	{
 		VEHICLE::SET_VEHICLE_FLIGHT_NOZZLE_POSITION(vehicle, angleRatio);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FLIGHT_NOZZLE_POSITION_IMMEDIATE( int vehicle, float angle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FLIGHT_NOZZLE_POSITION_IMMEDIATE( Vehicle vehicle, float angle )
 	{
 		VEHICLE::SET_VEHICLE_FLIGHT_NOZZLE_POSITION_IMMEDIATE(vehicle, angle);
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_FLIGHT_NOZZLE_POSITION( int plane )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_FLIGHT_NOZZLE_POSITION( Vehicle plane )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_FLIGHT_NOZZLE_POSITION(plane);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DISABLE_VERTICAL_FLIGHT_MODE_TRANSITION( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_DISABLE_VERTICAL_FLIGHT_MODE_TRANSITION( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_DISABLE_VERTICAL_FLIGHT_MODE_TRANSITION(vehicle, toggle);
 	}
@@ -33989,48 +33984,48 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BURNOUT( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BURNOUT( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_BURNOUT(vehicle, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_IN_BURNOUT( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_IN_BURNOUT( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_IN_BURNOUT(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_REDUCE_GRIP( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_REDUCE_GRIP( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_REDUCE_GRIP(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_REDUCE_GRIP_LEVEL( int vehicle, int val )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_REDUCE_GRIP_LEVEL( Vehicle vehicle, int val )
 	{
 		VEHICLE::SET_VEHICLE_REDUCE_GRIP_LEVEL(vehicle, val);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_INDICATOR_LIGHTS( int vehicle, int turnSignal, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_INDICATOR_LIGHTS( Vehicle vehicle, int turnSignal, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_INDICATOR_LIGHTS(vehicle, turnSignal, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BRAKE_LIGHTS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BRAKE_LIGHTS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_BRAKE_LIGHTS(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TAIL_LIGHTS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TAIL_LIGHTS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_TAIL_LIGHTS(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HANDBRAKE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HANDBRAKE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_HANDBRAKE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BRAKE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BRAKE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_BRAKE(vehicle, toggle);
 	}
@@ -34056,103 +34051,103 @@ namespace lua::native
 		VEHICLE::NETWORK_CAP_EMPTY_CROWDING_VEHICLES_REMOVAL(p0);
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_TRAILER_VEHICLE( int vehicle, int trailer )
+	std::tuple<bool, Vehicle> LUA_NATIVE_VEHICLE_GET_VEHICLE_TRAILER_VEHICLE( Vehicle vehicle, Vehicle trailer )
 	{
-		std::tuple<bool, int> return_values;
+		std::tuple<bool, Vehicle> return_values;
 		std::get<0>(return_values) = (bool)VEHICLE::GET_VEHICLE_TRAILER_VEHICLE(vehicle, &trailer);
 		std::get<1>(return_values) = trailer;
 
 		return return_values;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_TRAILER_PARENT_VEHICLE_( int trailer )
+	Vehicle LUA_NATIVE_VEHICLE_GET_VEHICLE_TRAILER_PARENT_VEHICLE_( Vehicle trailer )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_TRAILER_PARENT_VEHICLE_(trailer);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_USES_LARGE_REAR_RAMP( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_USES_LARGE_REAR_RAMP( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_USES_LARGE_REAR_RAMP(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_RUDDER_BROKEN( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_RUDDER_BROKEN( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_RUDDER_BROKEN(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CONVERTIBLE_ROOF_LATCH_STATE( int vehicle, bool state )
+	void LUA_NATIVE_VEHICLE_SET_CONVERTIBLE_ROOF_LATCH_STATE( Vehicle vehicle, bool state )
 	{
 		VEHICLE::SET_CONVERTIBLE_ROOF_LATCH_STATE(vehicle, state);
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_ESTIMATED_MAX_SPEED( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_ESTIMATED_MAX_SPEED( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_ESTIMATED_MAX_SPEED(vehicle);
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MAX_BRAKING( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MAX_BRAKING( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MAX_BRAKING(vehicle);
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MAX_TRACTION( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MAX_TRACTION( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MAX_TRACTION(vehicle);
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_ACCELERATION( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_ACCELERATION( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_ACCELERATION(vehicle);
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED( unsigned modelHash )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED( Hash modelHash )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MODEL_ESTIMATED_MAX_SPEED(modelHash);
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_MAX_BRAKING( unsigned modelHash )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_MAX_BRAKING( Hash modelHash )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MODEL_MAX_BRAKING(modelHash);
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_MAX_BRAKING_MAX_MODS( unsigned modelHash )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_MAX_BRAKING_MAX_MODS( Hash modelHash )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MODEL_MAX_BRAKING_MAX_MODS(modelHash);
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_MAX_TRACTION( unsigned modelHash )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_MAX_TRACTION( Hash modelHash )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MODEL_MAX_TRACTION(modelHash);
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_ACCELERATION( unsigned modelHash )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_ACCELERATION( Hash modelHash )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MODEL_ACCELERATION(modelHash);
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_ACCELERATION_MAX_MODS( unsigned modelHash )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_MODEL_ACCELERATION_MAX_MODS( Hash modelHash )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MODEL_ACCELERATION_MAX_MODS(modelHash);
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_FLYING_VEHICLE_MODEL_AGILITY( unsigned modelHash )
+	float LUA_NATIVE_VEHICLE_GET_FLYING_VEHICLE_MODEL_AGILITY( Hash modelHash )
 	{
 		auto retval = VEHICLE::GET_FLYING_VEHICLE_MODEL_AGILITY(modelHash);
 		return retval;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_BOAT_VEHICLE_MODEL_AGILITY( unsigned modelHash )
+	float LUA_NATIVE_VEHICLE_GET_BOAT_VEHICLE_MODEL_AGILITY( Hash modelHash )
 	{
 		auto retval = VEHICLE::GET_BOAT_VEHICLE_MODEL_AGILITY(modelHash);
 		return retval;
@@ -34200,87 +34195,87 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_OPEN_BOMB_BAY_DOORS( int vehicle )
+	void LUA_NATIVE_VEHICLE_OPEN_BOMB_BAY_DOORS( Vehicle vehicle )
 	{
 		VEHICLE::OPEN_BOMB_BAY_DOORS(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_CLOSE_BOMB_BAY_DOORS( int vehicle )
+	void LUA_NATIVE_VEHICLE_CLOSE_BOMB_BAY_DOORS( Vehicle vehicle )
 	{
 		VEHICLE::CLOSE_BOMB_BAY_DOORS(vehicle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_ARE_BOMB_BAY_DOORS_OPEN( int aircraft )
+	bool LUA_NATIVE_VEHICLE_GET_ARE_BOMB_BAY_DOORS_OPEN( Vehicle aircraft )
 	{
 		auto retval = (bool)VEHICLE::GET_ARE_BOMB_BAY_DOORS_OPEN(aircraft);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_SEARCHLIGHT_ON( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_SEARCHLIGHT_ON( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_SEARCHLIGHT_ON(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_SEARCHLIGHT( int heli, bool toggle, bool canBeUsedByAI )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_SEARCHLIGHT( Vehicle heli, bool toggle, bool canBeUsedByAI )
 	{
 		VEHICLE::SET_VEHICLE_SEARCHLIGHT(heli, toggle, canBeUsedByAI);
 	}
 
-	bool LUA_NATIVE_VEHICLE_DOES_VEHICLE_HAVE_SEARCHLIGHT( int vehicle )
+	bool LUA_NATIVE_VEHICLE_DOES_VEHICLE_HAVE_SEARCHLIGHT( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::DOES_VEHICLE_HAVE_SEARCHLIGHT(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_ENTRY_POINT_FOR_SEAT_CLEAR( int ped, int vehicle, int seatIndex, bool side, bool onEnter )
+	bool LUA_NATIVE_VEHICLE_IS_ENTRY_POINT_FOR_SEAT_CLEAR( Ped ped, Vehicle vehicle, int seatIndex, bool side, bool onEnter )
 	{
 		auto retval = (bool)VEHICLE::IS_ENTRY_POINT_FOR_SEAT_CLEAR(ped, vehicle, seatIndex, side, onEnter);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_VEHICLE_GET_ENTRY_POINT_POSITION( int vehicle, int doorId )
+	Vector3 LUA_NATIVE_VEHICLE_GET_ENTRY_POINT_POSITION( Vehicle vehicle, int doorId )
 	{
 		auto retval = VEHICLE::GET_ENTRY_POINT_POSITION(vehicle, doorId);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_CAN_SHUFFLE_SEAT( int vehicle, int seatIndex )
+	bool LUA_NATIVE_VEHICLE_CAN_SHUFFLE_SEAT( Vehicle vehicle, int seatIndex )
 	{
 		auto retval = (bool)VEHICLE::CAN_SHUFFLE_SEAT(vehicle, seatIndex);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_NUM_MOD_KITS( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_NUM_MOD_KITS( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_NUM_MOD_KITS(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_MOD_KIT( int vehicle, int modKit )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_MOD_KIT( Vehicle vehicle, int modKit )
 	{
 		VEHICLE::SET_VEHICLE_MOD_KIT(vehicle, modKit);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_KIT( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_KIT( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MOD_KIT(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_KIT_TYPE( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_KIT_TYPE( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MOD_KIT_TYPE(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_WHEEL_TYPE( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_WHEEL_TYPE( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_WHEEL_TYPE(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WHEEL_TYPE( int vehicle, int WheelType )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WHEEL_TYPE( Vehicle vehicle, int WheelType )
 	{
 		VEHICLE::SET_VEHICLE_WHEEL_TYPE(vehicle, WheelType);
 	}
@@ -34291,17 +34286,17 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_MOD_COLOR_1( int vehicle, int paintType, int color, int pearlescentColor )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_MOD_COLOR_1( Vehicle vehicle, int paintType, int color, int pearlescentColor )
 	{
 		VEHICLE::SET_VEHICLE_MOD_COLOR_1(vehicle, paintType, color, pearlescentColor);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_MOD_COLOR_2( int vehicle, int paintType, int color )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_MOD_COLOR_2( Vehicle vehicle, int paintType, int color )
 	{
 		VEHICLE::SET_VEHICLE_MOD_COLOR_2(vehicle, paintType, color);
 	}
 
-	std::tuple<int, int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_COLOR_1( int vehicle, int paintType, int color, int pearlescentColor )
+	std::tuple<int, int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_COLOR_1( Vehicle vehicle, int paintType, int color, int pearlescentColor )
 	{
 		std::tuple<int, int, int> return_values;
 		VEHICLE::GET_VEHICLE_MOD_COLOR_1(vehicle, &paintType, &color, &pearlescentColor);
@@ -34312,7 +34307,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_COLOR_2( int vehicle, int paintType, int color )
+	std::tuple<int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_COLOR_2( Vehicle vehicle, int paintType, int color )
 	{
 		std::tuple<int, int> return_values;
 		VEHICLE::GET_VEHICLE_MOD_COLOR_2(vehicle, &paintType, &color);
@@ -34322,121 +34317,121 @@ namespace lua::native
 		return return_values;
 	}
 
-	const char* LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_COLOR_1_NAME( int vehicle, bool p1 )
+	const char* LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_COLOR_1_NAME( Vehicle vehicle, bool p1 )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MOD_COLOR_1_NAME(vehicle, p1);
 		return retval;
 	}
 
-	const char* LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_COLOR_2_NAME( int vehicle )
+	const char* LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_COLOR_2_NAME( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MOD_COLOR_2_NAME(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_HAVE_VEHICLE_MODS_STREAMED_IN( int vehicle )
+	bool LUA_NATIVE_VEHICLE_HAVE_VEHICLE_MODS_STREAMED_IN( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::HAVE_VEHICLE_MODS_STREAMED_IN(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_MOD_GEN9_EXCLUSIVE( int vehicle, int modType, int modIndex )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_MOD_GEN9_EXCLUSIVE( Vehicle vehicle, int modType, int modIndex )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_MOD_GEN9_EXCLUSIVE(vehicle, modType, modIndex);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_MOD( int vehicle, int modType, int modIndex, bool customTires )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_MOD( Vehicle vehicle, int modType, int modIndex, bool customTires )
 	{
 		VEHICLE::SET_VEHICLE_MOD(vehicle, modType, modIndex, customTires);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD( int vehicle, int modType )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD( Vehicle vehicle, int modType )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MOD(vehicle, modType);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_VARIATION( int vehicle, int modType )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_VARIATION( Vehicle vehicle, int modType )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MOD_VARIATION(vehicle, modType);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_NUM_VEHICLE_MODS( int vehicle, int modType )
+	int LUA_NATIVE_VEHICLE_GET_NUM_VEHICLE_MODS( Vehicle vehicle, int modType )
 	{
 		auto retval = VEHICLE::GET_NUM_VEHICLE_MODS(vehicle, modType);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_REMOVE_VEHICLE_MOD( int vehicle, int modType )
+	void LUA_NATIVE_VEHICLE_REMOVE_VEHICLE_MOD( Vehicle vehicle, int modType )
 	{
 		VEHICLE::REMOVE_VEHICLE_MOD(vehicle, modType);
 	}
 
-	void LUA_NATIVE_VEHICLE_TOGGLE_VEHICLE_MOD( int vehicle, int modType, bool toggle )
+	void LUA_NATIVE_VEHICLE_TOGGLE_VEHICLE_MOD( Vehicle vehicle, int modType, bool toggle )
 	{
 		VEHICLE::TOGGLE_VEHICLE_MOD(vehicle, modType, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_TOGGLE_MOD_ON( int vehicle, int modType )
+	bool LUA_NATIVE_VEHICLE_IS_TOGGLE_MOD_ON( Vehicle vehicle, int modType )
 	{
 		auto retval = (bool)VEHICLE::IS_TOGGLE_MOD_ON(vehicle, modType);
 		return retval;
 	}
 
-	const char* LUA_NATIVE_VEHICLE_GET_MOD_TEXT_LABEL( int vehicle, int modType, int modValue )
+	const char* LUA_NATIVE_VEHICLE_GET_MOD_TEXT_LABEL( Vehicle vehicle, int modType, int modValue )
 	{
 		auto retval = VEHICLE::GET_MOD_TEXT_LABEL(vehicle, modType, modValue);
 		return retval;
 	}
 
-	const char* LUA_NATIVE_VEHICLE_GET_MOD_SLOT_NAME( int vehicle, int modType )
+	const char* LUA_NATIVE_VEHICLE_GET_MOD_SLOT_NAME( Vehicle vehicle, int modType )
 	{
 		auto retval = VEHICLE::GET_MOD_SLOT_NAME(vehicle, modType);
 		return retval;
 	}
 
-	const char* LUA_NATIVE_VEHICLE_GET_LIVERY_NAME( int vehicle, int liveryIndex )
+	const char* LUA_NATIVE_VEHICLE_GET_LIVERY_NAME( Vehicle vehicle, int liveryIndex )
 	{
 		auto retval = VEHICLE::GET_LIVERY_NAME(vehicle, liveryIndex);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_MODIFIER_VALUE( int vehicle, int modType, int modIndex )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_MODIFIER_VALUE( Vehicle vehicle, int modType, int modIndex )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MOD_MODIFIER_VALUE(vehicle, modType, modIndex);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_IDENTIFIER_HASH( int vehicle, int modType, int modIndex )
+	Hash LUA_NATIVE_VEHICLE_GET_VEHICLE_MOD_IDENTIFIER_HASH( Vehicle vehicle, int modType, int modIndex )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_MOD_IDENTIFIER_HASH(vehicle, modType, modIndex);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_PRELOAD_VEHICLE_MOD( int vehicle, int modType, int modIndex )
+	void LUA_NATIVE_VEHICLE_PRELOAD_VEHICLE_MOD( Vehicle vehicle, int modType, int modIndex )
 	{
 		VEHICLE::PRELOAD_VEHICLE_MOD(vehicle, modType, modIndex);
 	}
 
-	bool LUA_NATIVE_VEHICLE_HAS_PRELOAD_MODS_FINISHED( int vehicle )
+	bool LUA_NATIVE_VEHICLE_HAS_PRELOAD_MODS_FINISHED( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::HAS_PRELOAD_MODS_FINISHED(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_RELEASE_PRELOAD_MODS( int vehicle )
+	void LUA_NATIVE_VEHICLE_RELEASE_PRELOAD_MODS( Vehicle vehicle )
 	{
 		VEHICLE::RELEASE_PRELOAD_MODS(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TYRE_SMOKE_COLOR( int vehicle, int r, int g, int b )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_TYRE_SMOKE_COLOR( Vehicle vehicle, int r, int g, int b )
 	{
 		VEHICLE::SET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, r, g, b);
 	}
 
-	std::tuple<int, int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_TYRE_SMOKE_COLOR( int vehicle, int r, int g, int b )
+	std::tuple<int, int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_TYRE_SMOKE_COLOR( Vehicle vehicle, int r, int g, int b )
 	{
 		std::tuple<int, int, int> return_values;
 		VEHICLE::GET_VEHICLE_TYRE_SMOKE_COLOR(vehicle, &r, &g, &b);
@@ -34447,12 +34442,12 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WINDOW_TINT( int vehicle, int tint )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WINDOW_TINT( Vehicle vehicle, int tint )
 	{
 		VEHICLE::SET_VEHICLE_WINDOW_TINT(vehicle, tint);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_WINDOW_TINT( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_WINDOW_TINT( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_WINDOW_TINT(vehicle);
 		return retval;
@@ -34464,7 +34459,7 @@ namespace lua::native
 		return retval;
 	}
 
-	std::tuple<int, int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_COLOR( int vehicle, int r, int g, int b )
+	std::tuple<int, int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_COLOR( Vehicle vehicle, int r, int g, int b )
 	{
 		std::tuple<int, int, int> return_values;
 		VEHICLE::GET_VEHICLE_COLOR(vehicle, &r, &g, &b);
@@ -34475,62 +34470,62 @@ namespace lua::native
 		return return_values;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_COLOURS_WHICH_CAN_BE_SET( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_COLOURS_WHICH_CAN_BE_SET( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_COLOURS_WHICH_CAN_BE_SET(vehicle);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_VEHICLE_GET_VEHICLE_CAUSE_OF_DESTRUCTION( int vehicle )
+	Hash LUA_NATIVE_VEHICLE_GET_VEHICLE_CAUSE_OF_DESTRUCTION( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_CAUSE_OF_DESTRUCTION(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_OVERRIDE_PLANE_DAMAGE_THREHSOLD( int vehicle, float health )
+	void LUA_NATIVE_VEHICLE_OVERRIDE_PLANE_DAMAGE_THREHSOLD( Vehicle vehicle, float health )
 	{
 		VEHICLE::OVERRIDE_PLANE_DAMAGE_THREHSOLD(vehicle, health);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_IS_LEFT_VEHICLE_HEADLIGHT_DAMAGED( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_IS_LEFT_VEHICLE_HEADLIGHT_DAMAGED( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_IS_LEFT_VEHICLE_HEADLIGHT_DAMAGED(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_IS_RIGHT_VEHICLE_HEADLIGHT_DAMAGED( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_IS_RIGHT_VEHICLE_HEADLIGHT_DAMAGED( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_IS_RIGHT_VEHICLE_HEADLIGHT_DAMAGED(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_BOTH_VEHICLE_HEADLIGHTS_DAMAGED( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_BOTH_VEHICLE_HEADLIGHTS_DAMAGED( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_BOTH_VEHICLE_HEADLIGHTS_DAMAGED(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_MODIFY_VEHICLE_TOP_SPEED( int vehicle, float value )
+	void LUA_NATIVE_VEHICLE_MODIFY_VEHICLE_TOP_SPEED( Vehicle vehicle, float value )
 	{
 		VEHICLE::MODIFY_VEHICLE_TOP_SPEED(vehicle, value);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_MAX_SPEED( int vehicle, float speed )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_MAX_SPEED( Vehicle vehicle, float speed )
 	{
 		VEHICLE::SET_VEHICLE_MAX_SPEED(vehicle, speed);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_STAYS_FROZEN_WHEN_CLEANED_UP( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_STAYS_FROZEN_WHEN_CLEANED_UP( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_STAYS_FROZEN_WHEN_CLEANED_UP(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ACT_AS_IF_HIGH_SPEED_FOR_FRAG_SMASHING( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ACT_AS_IF_HIGH_SPEED_FOR_FRAG_SMASHING( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_VEHICLE_ACT_AS_IF_HIGH_SPEED_FOR_FRAG_SMASHING(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_PEDS_CAN_FALL_OFF_THIS_VEHICLE_FROM_LARGE_FALL_DAMAGE( int vehicle, bool toggle, float p2 )
+	void LUA_NATIVE_VEHICLE_SET_PEDS_CAN_FALL_OFF_THIS_VEHICLE_FROM_LARGE_FALL_DAMAGE( Vehicle vehicle, bool toggle, float p2 )
 	{
 		VEHICLE::SET_PEDS_CAN_FALL_OFF_THIS_VEHICLE_FROM_LARGE_FALL_DAMAGE(vehicle, toggle, p2);
 	}
@@ -34546,13 +34541,13 @@ namespace lua::native
 		VEHICLE::REMOVE_VEHICLE_COMBAT_AVOIDANCE_AREA(p0);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_ANY_PED_RAPPELLING_FROM_HELI( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_ANY_PED_RAPPELLING_FROM_HELI( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_ANY_PED_RAPPELLING_FROM_HELI(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CHEAT_POWER_INCREASE( int vehicle, float value )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CHEAT_POWER_INCREASE( Vehicle vehicle, float value )
 	{
 		VEHICLE::SET_VEHICLE_CHEAT_POWER_INCREASE(vehicle, value);
 	}
@@ -34562,69 +34557,69 @@ namespace lua::native
 		VEHICLE::SET_VEHICLE_INFLUENCES_WANTED_LEVEL(p0, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_IS_WANTED( int vehicle, bool state )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_IS_WANTED( Vehicle vehicle, bool state )
 	{
 		VEHICLE::SET_VEHICLE_IS_WANTED(vehicle, state);
 	}
 
-	void LUA_NATIVE_VEHICLE_SWING_BOAT_BOOM_TO_RATIO( int vehicle, float ratio )
+	void LUA_NATIVE_VEHICLE_SWING_BOAT_BOOM_TO_RATIO( Vehicle vehicle, float ratio )
 	{
 		VEHICLE::SWING_BOAT_BOOM_TO_RATIO(vehicle, ratio);
 	}
 
-	void LUA_NATIVE_VEHICLE_SWING_BOAT_BOOM_FREELY( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SWING_BOAT_BOOM_FREELY( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SWING_BOAT_BOOM_FREELY(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_ALLOW_BOAT_BOOM_TO_ANIMATE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_ALLOW_BOAT_BOOM_TO_ANIMATE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::ALLOW_BOAT_BOOM_TO_ANIMATE(vehicle, toggle);
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_BOAT_BOOM_POSITION_RATIO( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_BOAT_BOOM_POSITION_RATIO( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_BOAT_BOOM_POSITION_RATIO(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_DISABLE_PLANE_AILERON( int vehicle, bool p1, bool p2 )
+	void LUA_NATIVE_VEHICLE_DISABLE_PLANE_AILERON( Vehicle vehicle, bool p1, bool p2 )
 	{
 		VEHICLE::DISABLE_PLANE_AILERON(vehicle, p1, p2);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_IS_VEHICLE_ENGINE_RUNNING( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_IS_VEHICLE_ENGINE_RUNNING( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_IS_VEHICLE_ENGINE_RUNNING(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_USE_ALTERNATE_HANDLING( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_USE_ALTERNATE_HANDLING( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_USE_ALTERNATE_HANDLING(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_BIKE_ON_STAND( int vehicle, float x, float y )
+	void LUA_NATIVE_VEHICLE_SET_BIKE_ON_STAND( Vehicle vehicle, float x, float y )
 	{
 		VEHICLE::SET_BIKE_ON_STAND(vehicle, x, y);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NOT_STEALABLE_AMBIENTLY( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NOT_STEALABLE_AMBIENTLY( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_VEHICLE_NOT_STEALABLE_AMBIENTLY(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_LOCK_DOORS_WHEN_NO_LONGER_NEEDED( int vehicle )
+	void LUA_NATIVE_VEHICLE_LOCK_DOORS_WHEN_NO_LONGER_NEEDED( Vehicle vehicle )
 	{
 		VEHICLE::LOCK_DOORS_WHEN_NO_LONGER_NEEDED(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_LAST_DRIVEN_VEHICLE( int vehicle )
+	void LUA_NATIVE_VEHICLE_SET_LAST_DRIVEN_VEHICLE( Vehicle vehicle )
 	{
 		VEHICLE::SET_LAST_DRIVEN_VEHICLE(vehicle);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_LAST_DRIVEN_VEHICLE(  )
+	Vehicle LUA_NATIVE_VEHICLE_GET_LAST_DRIVEN_VEHICLE(  )
 	{
 		auto retval = VEHICLE::GET_LAST_DRIVEN_VEHICLE();
 		return retval;
@@ -34635,33 +34630,33 @@ namespace lua::native
 		VEHICLE::CLEAR_LAST_DRIVEN_VEHICLE();
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HAS_BEEN_DRIVEN_FLAG( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HAS_BEEN_DRIVEN_FLAG( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_HAS_BEEN_DRIVEN_FLAG(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_TASK_VEHICLE_GOTO_PLANE_MIN_HEIGHT_ABOVE_TERRAIN( int plane, int height )
+	void LUA_NATIVE_VEHICLE_SET_TASK_VEHICLE_GOTO_PLANE_MIN_HEIGHT_ABOVE_TERRAIN( Vehicle plane, int height )
 	{
 		VEHICLE::SET_TASK_VEHICLE_GOTO_PLANE_MIN_HEIGHT_ABOVE_TERRAIN(plane, height);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_LOD_MULTIPLIER( int vehicle, float multiplier )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_LOD_MULTIPLIER( Vehicle vehicle, float multiplier )
 	{
 		VEHICLE::SET_VEHICLE_LOD_MULTIPLIER(vehicle, multiplier);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_SAVE_IN_GARAGE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_SAVE_IN_GARAGE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_CAN_SAVE_IN_GARAGE(vehicle, toggle);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_NUM_OF_BROKEN_OFF_PARTS( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_NUM_OF_BROKEN_OFF_PARTS( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_NUM_OF_BROKEN_OFF_PARTS(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_NUM_OF_BROKEN_LOOSEN_PARTS( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_NUM_OF_BROKEN_LOOSEN_PARTS( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_NUM_OF_BROKEN_LOOSEN_PARTS(vehicle);
 		return retval;
@@ -34672,12 +34667,12 @@ namespace lua::native
 		VEHICLE::SET_FORCE_VEHICLE_ENGINE_DAMAGE_BY_BULLET(p0, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_GENERATES_ENGINE_SHOCKING_EVENTS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_GENERATES_ENGINE_SHOCKING_EVENTS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_GENERATES_ENGINE_SHOCKING_EVENTS(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_COPY_VEHICLE_DAMAGES( int sourceVehicle, int targetVehicle )
+	void LUA_NATIVE_VEHICLE_COPY_VEHICLE_DAMAGES( Vehicle sourceVehicle, Vehicle targetVehicle )
 	{
 		VEHICLE::COPY_VEHICLE_DAMAGES(sourceVehicle, targetVehicle);
 	}
@@ -34692,48 +34687,48 @@ namespace lua::native
 		VEHICLE::SET_LIGHTS_CUTOFF_DISTANCE_TWEAK(distance);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_SHOOT_AT_TARGET( int driver, int entity, float xTarget, float yTarget, float zTarget )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_SHOOT_AT_TARGET( Ped driver, Entity entity, float xTarget, float yTarget, float zTarget )
 	{
 		VEHICLE::SET_VEHICLE_SHOOT_AT_TARGET(driver, entity, xTarget, yTarget, zTarget);
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_LOCK_ON_TARGET( int vehicle, int entity )
+	std::tuple<bool, Entity> LUA_NATIVE_VEHICLE_GET_VEHICLE_LOCK_ON_TARGET( Vehicle vehicle, Entity entity )
 	{
-		std::tuple<bool, int> return_values;
+		std::tuple<bool, Entity> return_values;
 		std::get<0>(return_values) = (bool)VEHICLE::GET_VEHICLE_LOCK_ON_TARGET(vehicle, &entity);
 		std::get<1>(return_values) = entity;
 
 		return return_values;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_FORCE_HD_VEHICLE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_FORCE_HD_VEHICLE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_FORCE_HD_VEHICLE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CUSTOM_PATH_NODE_STREAMING_RADIUS( int vehicle, float p1 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CUSTOM_PATH_NODE_STREAMING_RADIUS( Vehicle vehicle, float p1 )
 	{
 		VEHICLE::SET_VEHICLE_CUSTOM_PATH_NODE_STREAMING_RADIUS(vehicle, p1);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_PLATE_TYPE( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_PLATE_TYPE( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_PLATE_TYPE(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_TRACK_VEHICLE_VISIBILITY( int vehicle )
+	void LUA_NATIVE_VEHICLE_TRACK_VEHICLE_VISIBILITY( Vehicle vehicle )
 	{
 		VEHICLE::TRACK_VEHICLE_VISIBILITY(vehicle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_VISIBLE( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_VISIBLE( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_VISIBLE(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_GRAVITY( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_GRAVITY( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_GRAVITY(vehicle, toggle);
 	}
@@ -34748,135 +34743,135 @@ namespace lua::native
 		VEHICLE::SET_VEHICLE_SLIPSTREAMING_SHOULD_TIME_OUT(toggle);
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_CURRENT_TIME_IN_SLIP_STREAM( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_CURRENT_TIME_IN_SLIP_STREAM( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_CURRENT_TIME_IN_SLIP_STREAM(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_PRODUCING_SLIP_STREAM( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_PRODUCING_SLIP_STREAM( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_PRODUCING_SLIP_STREAM(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_INACTIVE_DURING_PLAYBACK( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_INACTIVE_DURING_PLAYBACK( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_INACTIVE_DURING_PLAYBACK(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ACTIVE_DURING_PLAYBACK( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ACTIVE_DURING_PLAYBACK( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_ACTIVE_DURING_PLAYBACK(vehicle, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_SPRAYABLE( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_SPRAYABLE( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_SPRAYABLE(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ENGINE_CAN_DEGRADE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ENGINE_CAN_DEGRADE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_ENGINE_CAN_DEGRADE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_DISABLE_VEHCILE_DYNAMIC_AMBIENT_SCALES( int vehicle, int p1, int p2 )
+	void LUA_NATIVE_VEHICLE_DISABLE_VEHCILE_DYNAMIC_AMBIENT_SCALES( Vehicle vehicle, int p1, int p2 )
 	{
 		VEHICLE::DISABLE_VEHCILE_DYNAMIC_AMBIENT_SCALES(vehicle, p1, p2);
 	}
 
-	void LUA_NATIVE_VEHICLE_ENABLE_VEHICLE_DYNAMIC_AMBIENT_SCALES( int vehicle )
+	void LUA_NATIVE_VEHICLE_ENABLE_VEHICLE_DYNAMIC_AMBIENT_SCALES( Vehicle vehicle )
 	{
 		VEHICLE::ENABLE_VEHICLE_DYNAMIC_AMBIENT_SCALES(vehicle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_PLANE_LANDING_GEAR_INTACT( int plane )
+	bool LUA_NATIVE_VEHICLE_IS_PLANE_LANDING_GEAR_INTACT( Vehicle plane )
 	{
 		auto retval = (bool)VEHICLE::IS_PLANE_LANDING_GEAR_INTACT(plane);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_ARE_PLANE_PROPELLERS_INTACT( int plane )
+	bool LUA_NATIVE_VEHICLE_ARE_PLANE_PROPELLERS_INTACT( Vehicle plane )
 	{
 		auto retval = (bool)VEHICLE::ARE_PLANE_PROPELLERS_INTACT(plane);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_SET_PLANE_PROPELLER_HEALTH( int plane, float health )
+	bool LUA_NATIVE_VEHICLE_SET_PLANE_PROPELLER_HEALTH( Vehicle plane, float health )
 	{
 		auto retval = (bool)VEHICLE::SET_PLANE_PROPELLER_HEALTH(plane, health);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_DEFORM_WHEELS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_DEFORM_WHEELS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_CAN_DEFORM_WHEELS(vehicle, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_STOLEN( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_STOLEN( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_STOLEN(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_IS_STOLEN( int vehicle, bool isStolen )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_IS_STOLEN( Vehicle vehicle, bool isStolen )
 	{
 		VEHICLE::SET_VEHICLE_IS_STOLEN(vehicle, isStolen);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_PLANE_TURBULENCE_MULTIPLIER( int vehicle, float multiplier )
+	void LUA_NATIVE_VEHICLE_SET_PLANE_TURBULENCE_MULTIPLIER( Vehicle vehicle, float multiplier )
 	{
 		VEHICLE::SET_PLANE_TURBULENCE_MULTIPLIER(vehicle, multiplier);
 	}
 
-	bool LUA_NATIVE_VEHICLE_ARE_WINGS_OF_PLANE_INTACT( int plane )
+	bool LUA_NATIVE_VEHICLE_ARE_WINGS_OF_PLANE_INTACT( Vehicle plane )
 	{
 		auto retval = (bool)VEHICLE::ARE_WINGS_OF_PLANE_INTACT(plane);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_ALLOW_AMBIENT_VEHICLES_TO_AVOID_ADVERSE_CONDITIONS( int vehicle )
+	void LUA_NATIVE_VEHICLE_ALLOW_AMBIENT_VEHICLES_TO_AVOID_ADVERSE_CONDITIONS( Vehicle vehicle )
 	{
 		VEHICLE::ALLOW_AMBIENT_VEHICLES_TO_AVOID_ADVERSE_CONDITIONS(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_DETACH_VEHICLE_FROM_CARGOBOB( int vehicle, int cargobob )
+	void LUA_NATIVE_VEHICLE_DETACH_VEHICLE_FROM_CARGOBOB( Vehicle vehicle, Vehicle cargobob )
 	{
 		VEHICLE::DETACH_VEHICLE_FROM_CARGOBOB(vehicle, cargobob);
 	}
 
-	bool LUA_NATIVE_VEHICLE_DETACH_VEHICLE_FROM_ANY_CARGOBOB( int vehicle )
+	bool LUA_NATIVE_VEHICLE_DETACH_VEHICLE_FROM_ANY_CARGOBOB( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::DETACH_VEHICLE_FROM_ANY_CARGOBOB(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_DETACH_ENTITY_FROM_CARGOBOB( int cargobob, int entity )
+	bool LUA_NATIVE_VEHICLE_DETACH_ENTITY_FROM_CARGOBOB( Vehicle cargobob, Entity entity )
 	{
 		auto retval = (bool)VEHICLE::DETACH_ENTITY_FROM_CARGOBOB(cargobob, entity);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_ATTACHED_TO_CARGOBOB( int cargobob, int vehicleAttached )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_ATTACHED_TO_CARGOBOB( Vehicle cargobob, Vehicle vehicleAttached )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_ATTACHED_TO_CARGOBOB(cargobob, vehicleAttached);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_ATTACHED_TO_CARGOBOB( int cargobob )
+	Vehicle LUA_NATIVE_VEHICLE_GET_VEHICLE_ATTACHED_TO_CARGOBOB( Vehicle cargobob )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_ATTACHED_TO_CARGOBOB(cargobob);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_ENTITY_ATTACHED_TO_CARGOBOB( Any p0 )
+	Entity LUA_NATIVE_VEHICLE_GET_ENTITY_ATTACHED_TO_CARGOBOB( Any p0 )
 	{
 		auto retval = VEHICLE::GET_ENTITY_ATTACHED_TO_CARGOBOB(p0);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_ATTACH_VEHICLE_TO_CARGOBOB( int vehicle, int cargobob, int p2, float x, float y, float z )
+	void LUA_NATIVE_VEHICLE_ATTACH_VEHICLE_TO_CARGOBOB( Vehicle vehicle, Vehicle cargobob, int p2, float x, float y, float z )
 	{
 		VEHICLE::ATTACH_VEHICLE_TO_CARGOBOB(vehicle, cargobob, p2, x, y, z);
 	}
@@ -34886,7 +34881,7 @@ namespace lua::native
 		VEHICLE::ATTACH_ENTITY_TO_CARGOBOB(p0, p1, p2, p3, p4, p5);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_FORCE_DONT_DETACH_VEHICLE( int cargobob, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_FORCE_DONT_DETACH_VEHICLE( Vehicle cargobob, bool toggle )
 	{
 		VEHICLE::SET_CARGOBOB_FORCE_DONT_DETACH_VEHICLE(cargobob, toggle);
 	}
@@ -34902,29 +34897,29 @@ namespace lua::native
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_VEHICLE_GET_ATTACHED_PICK_UP_HOOK_POSITION( int cargobob )
+	Vector3 LUA_NATIVE_VEHICLE_GET_ATTACHED_PICK_UP_HOOK_POSITION( Vehicle cargobob )
 	{
 		auto retval = VEHICLE::GET_ATTACHED_PICK_UP_HOOK_POSITION(cargobob);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_DOES_CARGOBOB_HAVE_PICK_UP_ROPE( int cargobob )
+	bool LUA_NATIVE_VEHICLE_DOES_CARGOBOB_HAVE_PICK_UP_ROPE( Vehicle cargobob )
 	{
 		auto retval = (bool)VEHICLE::DOES_CARGOBOB_HAVE_PICK_UP_ROPE(cargobob);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_CREATE_PICK_UP_ROPE_FOR_CARGOBOB( int cargobob, int state )
+	void LUA_NATIVE_VEHICLE_CREATE_PICK_UP_ROPE_FOR_CARGOBOB( Vehicle cargobob, int state )
 	{
 		VEHICLE::CREATE_PICK_UP_ROPE_FOR_CARGOBOB(cargobob, state);
 	}
 
-	void LUA_NATIVE_VEHICLE_REMOVE_PICK_UP_ROPE_FOR_CARGOBOB( int cargobob )
+	void LUA_NATIVE_VEHICLE_REMOVE_PICK_UP_ROPE_FOR_CARGOBOB( Vehicle cargobob )
 	{
 		VEHICLE::REMOVE_PICK_UP_ROPE_FOR_CARGOBOB(cargobob);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_PICKUP_ROPE_LENGTH_FOR_CARGOBOB( int cargobob, float length1, float length2, bool p3 )
+	void LUA_NATIVE_VEHICLE_SET_PICKUP_ROPE_LENGTH_FOR_CARGOBOB( Vehicle cargobob, float length1, float length2, bool p3 )
 	{
 		VEHICLE::SET_PICKUP_ROPE_LENGTH_FOR_CARGOBOB(cargobob, length1, length2, p3);
 	}
@@ -34944,142 +34939,142 @@ namespace lua::native
 		VEHICLE::SET_CARGOBOB_PICKUP_ROPE_TYPE(p0, p1);
 	}
 
-	bool LUA_NATIVE_VEHICLE_DOES_CARGOBOB_HAVE_PICKUP_MAGNET( int cargobob )
+	bool LUA_NATIVE_VEHICLE_DOES_CARGOBOB_HAVE_PICKUP_MAGNET( Vehicle cargobob )
 	{
 		auto retval = (bool)VEHICLE::DOES_CARGOBOB_HAVE_PICKUP_MAGNET(cargobob);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_ACTIVE( int cargobob, bool isActive )
+	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_ACTIVE( Vehicle cargobob, bool isActive )
 	{
 		VEHICLE::SET_CARGOBOB_PICKUP_MAGNET_ACTIVE(cargobob, isActive);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_STRENGTH( int cargobob, float strength )
+	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_STRENGTH( Vehicle cargobob, float strength )
 	{
 		VEHICLE::SET_CARGOBOB_PICKUP_MAGNET_STRENGTH(cargobob, strength);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_FALLOFF( int cargobob, float p1 )
+	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_FALLOFF( Vehicle cargobob, float p1 )
 	{
 		VEHICLE::SET_CARGOBOB_PICKUP_MAGNET_FALLOFF(cargobob, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_REDUCED_STRENGTH( int cargobob, float p1 )
+	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_REDUCED_STRENGTH( Vehicle cargobob, float p1 )
 	{
 		VEHICLE::SET_CARGOBOB_PICKUP_MAGNET_REDUCED_STRENGTH(cargobob, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_REDUCED_FALLOFF( int cargobob, float p1 )
+	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_REDUCED_FALLOFF( Vehicle cargobob, float p1 )
 	{
 		VEHICLE::SET_CARGOBOB_PICKUP_MAGNET_REDUCED_FALLOFF(cargobob, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_PULL_STRENGTH( int cargobob, float p1 )
+	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_PULL_STRENGTH( Vehicle cargobob, float p1 )
 	{
 		VEHICLE::SET_CARGOBOB_PICKUP_MAGNET_PULL_STRENGTH(cargobob, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_PULL_ROPE_LENGTH( int vehicle, float p1 )
+	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_PULL_ROPE_LENGTH( Vehicle vehicle, float p1 )
 	{
 		VEHICLE::SET_CARGOBOB_PICKUP_MAGNET_PULL_ROPE_LENGTH(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_SET_TARGETED_MODE( int vehicle, int cargobob )
+	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_SET_TARGETED_MODE( Vehicle vehicle, Vehicle cargobob )
 	{
 		VEHICLE::SET_CARGOBOB_PICKUP_MAGNET_SET_TARGETED_MODE(vehicle, cargobob);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_SET_AMBIENT_MODE( int vehicle, bool p1, bool p2 )
+	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_SET_AMBIENT_MODE( Vehicle vehicle, bool p1, bool p2 )
 	{
 		VEHICLE::SET_CARGOBOB_PICKUP_MAGNET_SET_AMBIENT_MODE(vehicle, p1, p2);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_ENSURE_PICKUP_ENTITY_UPRIGHT( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_CARGOBOB_PICKUP_MAGNET_ENSURE_PICKUP_ENTITY_UPRIGHT( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_CARGOBOB_PICKUP_MAGNET_ENSURE_PICKUP_ENTITY_UPRIGHT(vehicle, p1);
 	}
 
-	bool LUA_NATIVE_VEHICLE_DOES_VEHICLE_HAVE_WEAPONS( int vehicle )
+	bool LUA_NATIVE_VEHICLE_DOES_VEHICLE_HAVE_WEAPONS( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::DOES_VEHICLE_HAVE_WEAPONS(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WILL_TELL_OTHERS_TO_HURRY( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WILL_TELL_OTHERS_TO_HURRY( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_VEHICLE_WILL_TELL_OTHERS_TO_HURRY(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_DISABLE_VEHICLE_WEAPON( bool disabled, unsigned weaponHash, int vehicle, int owner )
+	void LUA_NATIVE_VEHICLE_DISABLE_VEHICLE_WEAPON( bool disabled, Hash weaponHash, Vehicle vehicle, Ped owner )
 	{
 		VEHICLE::DISABLE_VEHICLE_WEAPON(disabled, weaponHash, vehicle, owner);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_WEAPON_DISABLED( unsigned weaponHash, int vehicle, int owner )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_WEAPON_DISABLED( Hash weaponHash, Vehicle vehicle, Ped owner )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_WEAPON_DISABLED(weaponHash, vehicle, owner);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_USED_FOR_PILOT_SCHOOL( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_USED_FOR_PILOT_SCHOOL( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_USED_FOR_PILOT_SCHOOL(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ACTIVE_FOR_PED_NAVIGATION( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_ACTIVE_FOR_PED_NAVIGATION( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_ACTIVE_FOR_PED_NAVIGATION(vehicle, toggle);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_CLASS( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_CLASS( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_CLASS(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_CLASS_FROM_NAME( unsigned modelHash )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_CLASS_FROM_NAME( Hash modelHash )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_CLASS_FROM_NAME(modelHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_PLAYERS_LAST_VEHICLE( int vehicle )
+	void LUA_NATIVE_VEHICLE_SET_PLAYERS_LAST_VEHICLE( Vehicle vehicle )
 	{
 		VEHICLE::SET_PLAYERS_LAST_VEHICLE(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_BE_USED_BY_FLEEING_PEDS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CAN_BE_USED_BY_FLEEING_PEDS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_CAN_BE_USED_BY_FLEEING_PEDS(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_AIRCRAFT_PILOT_SKILL_NOISE_SCALAR( int vehicle, float p1 )
+	void LUA_NATIVE_VEHICLE_SET_AIRCRAFT_PILOT_SKILL_NOISE_SCALAR( Vehicle vehicle, float p1 )
 	{
 		VEHICLE::SET_AIRCRAFT_PILOT_SKILL_NOISE_SCALAR(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DROPS_MONEY_WHEN_BLOWN_UP( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DROPS_MONEY_WHEN_BLOWN_UP( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_DROPS_MONEY_WHEN_BLOWN_UP(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_KEEP_ENGINE_ON_WHEN_ABANDONED( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_KEEP_ENGINE_ON_WHEN_ABANDONED( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_KEEP_ENGINE_ON_WHEN_ABANDONED(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_IMPATIENCE_TIMER( int vehicle, Any p1 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_IMPATIENCE_TIMER( Vehicle vehicle, Any p1 )
 	{
 		VEHICLE::SET_VEHICLE_IMPATIENCE_TIMER(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HANDLING_OVERRIDE( int vehicle, unsigned hash )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_HANDLING_OVERRIDE( Vehicle vehicle, Hash hash )
 	{
 		VEHICLE::SET_VEHICLE_HANDLING_OVERRIDE(vehicle, hash);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXTENDED_REMOVAL_RANGE( int vehicle, int range )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXTENDED_REMOVAL_RANGE( Vehicle vehicle, int range )
 	{
 		VEHICLE::SET_VEHICLE_EXTENDED_REMOVAL_RANGE(vehicle, range);
 	}
@@ -35089,59 +35084,59 @@ namespace lua::native
 		VEHICLE::SET_VEHICLE_STEERING_BIAS_SCALAR(p0, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_HELI_CONTROL_LAGGING_RATE_SCALAR( int helicopter, float multiplier )
+	void LUA_NATIVE_VEHICLE_SET_HELI_CONTROL_LAGGING_RATE_SCALAR( Vehicle helicopter, float multiplier )
 	{
 		VEHICLE::SET_HELI_CONTROL_LAGGING_RATE_SCALAR(helicopter, multiplier);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FRICTION_OVERRIDE( int vehicle, float friction )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FRICTION_OVERRIDE( Vehicle vehicle, float friction )
 	{
 		VEHICLE::SET_VEHICLE_FRICTION_OVERRIDE(vehicle, friction);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WHEELS_CAN_BREAK_OFF_WHEN_BLOW_UP( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WHEELS_CAN_BREAK_OFF_WHEN_BLOW_UP( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_WHEELS_CAN_BREAK_OFF_WHEN_BLOW_UP(vehicle, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_ARE_PLANE_CONTROL_PANELS_INTACT( int vehicle, bool p1 )
+	bool LUA_NATIVE_VEHICLE_ARE_PLANE_CONTROL_PANELS_INTACT( Vehicle vehicle, bool p1 )
 	{
 		auto retval = (bool)VEHICLE::ARE_PLANE_CONTROL_PANELS_INTACT(vehicle, p1);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CEILING_HEIGHT( int vehicle, float height )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_CEILING_HEIGHT( Vehicle vehicle, float height )
 	{
 		VEHICLE::SET_VEHICLE_CEILING_HEIGHT(vehicle, height);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NO_EXPLOSION_DAMAGE_FROM_DRIVER( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NO_EXPLOSION_DAMAGE_FROM_DRIVER( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_NO_EXPLOSION_DAMAGE_FROM_DRIVER(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_CLEAR_VEHICLE_ROUTE_HISTORY( int vehicle )
+	void LUA_NATIVE_VEHICLE_CLEAR_VEHICLE_ROUTE_HISTORY( Vehicle vehicle )
 	{
 		VEHICLE::CLEAR_VEHICLE_ROUTE_HISTORY(vehicle);
 	}
 
-	int LUA_NATIVE_VEHICLE_DOES_VEHICLE_EXIST_WITH_DECORATOR( const char* decorator )
+	Vehicle LUA_NATIVE_VEHICLE_DOES_VEHICLE_EXIST_WITH_DECORATOR( const char* decorator )
 	{
 		auto retval = VEHICLE::DOES_VEHICLE_EXIST_WITH_DECORATOR(decorator);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_AI_CAN_USE_EXCLUSIVE_SEATS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_AI_CAN_USE_EXCLUSIVE_SEATS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_AI_CAN_USE_EXCLUSIVE_SEATS(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXCLUSIVE_DRIVER( int vehicle, int ped, int index )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_EXCLUSIVE_DRIVER( Vehicle vehicle, Ped ped, int index )
 	{
 		VEHICLE::SET_VEHICLE_EXCLUSIVE_DRIVER(vehicle, ped, index);
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_VEHICLE_IS_PED_EXCLUSIVE_DRIVER_OF_VEHICLE( int ped, int vehicle, int outIndex )
+	std::tuple<bool, int> LUA_NATIVE_VEHICLE_IS_PED_EXCLUSIVE_DRIVER_OF_VEHICLE( Ped ped, Vehicle vehicle, int outIndex )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)VEHICLE::IS_PED_EXCLUSIVE_DRIVER_OF_VEHICLE(ped, vehicle, &outIndex);
@@ -35150,32 +35145,32 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_VEHICLE_DISABLE_INDIVIDUAL_PLANE_PROPELLER( int vehicle, int propeller )
+	void LUA_NATIVE_VEHICLE_DISABLE_INDIVIDUAL_PLANE_PROPELLER( Vehicle vehicle, int propeller )
 	{
 		VEHICLE::DISABLE_INDIVIDUAL_PLANE_PROPELLER(vehicle, propeller);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FORCE_AFTERBURNER( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_FORCE_AFTERBURNER( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_FORCE_AFTERBURNER(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DONT_PROCESS_VEHICLE_GLASS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_DONT_PROCESS_VEHICLE_GLASS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_DONT_PROCESS_VEHICLE_GLASS(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DISABLE_WANTED_CONES_RESPONSE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_DISABLE_WANTED_CONES_RESPONSE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_DISABLE_WANTED_CONES_RESPONSE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_USE_DESIRED_Z_CRUISE_SPEED_FOR_LANDING( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_USE_DESIRED_Z_CRUISE_SPEED_FOR_LANDING( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_USE_DESIRED_Z_CRUISE_SPEED_FOR_LANDING(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_ARRIVE_DISTANCE_OVERRIDE_FOR_VEHICLE_PERSUIT_ATTACK( int vehicle, float p1 )
+	void LUA_NATIVE_VEHICLE_SET_ARRIVE_DISTANCE_OVERRIDE_FOR_VEHICLE_PERSUIT_ATTACK( Vehicle vehicle, float p1 )
 	{
 		VEHICLE::SET_ARRIVE_DISTANCE_OVERRIDE_FOR_VEHICLE_PERSUIT_ATTACK(vehicle, p1);
 	}
@@ -35190,17 +35185,17 @@ namespace lua::native
 		VEHICLE::SET_DISTANT_CARS_ENABLED(toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NEON_COLOUR( int vehicle, int r, int g, int b )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NEON_COLOUR( Vehicle vehicle, int r, int g, int b )
 	{
 		VEHICLE::SET_VEHICLE_NEON_COLOUR(vehicle, r, g, b);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NEON_INDEX_COLOUR( int vehicle, int index )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NEON_INDEX_COLOUR( Vehicle vehicle, int index )
 	{
 		VEHICLE::SET_VEHICLE_NEON_INDEX_COLOUR(vehicle, index);
 	}
 
-	std::tuple<int, int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_NEON_COLOUR( int vehicle, int r, int g, int b )
+	std::tuple<int, int, int> LUA_NATIVE_VEHICLE_GET_VEHICLE_NEON_COLOUR( Vehicle vehicle, int r, int g, int b )
 	{
 		std::tuple<int, int, int> return_values;
 		VEHICLE::GET_VEHICLE_NEON_COLOUR(vehicle, &r, &g, &b);
@@ -35211,12 +35206,12 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NEON_ENABLED( int vehicle, int index, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_NEON_ENABLED( Vehicle vehicle, int index, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_NEON_ENABLED(vehicle, index, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_NEON_ENABLED( int vehicle, int index )
+	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_NEON_ENABLED( Vehicle vehicle, int index )
 	{
 		auto retval = (bool)VEHICLE::GET_VEHICLE_NEON_ENABLED(vehicle, index);
 		return retval;
@@ -35227,33 +35222,33 @@ namespace lua::native
 		VEHICLE::SET_AMBIENT_VEHICLE_NEON_ENABLED(p0);
 	}
 
-	void LUA_NATIVE_VEHICLE_SUPPRESS_NEONS_ON_VEHICLE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SUPPRESS_NEONS_ON_VEHICLE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SUPPRESS_NEONS_ON_VEHICLE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DISABLE_SUPERDUMMY( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_DISABLE_SUPERDUMMY( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_DISABLE_SUPERDUMMY(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_REQUEST_VEHICLE_DIAL( int vehicle )
+	void LUA_NATIVE_VEHICLE_REQUEST_VEHICLE_DIAL( Vehicle vehicle )
 	{
 		VEHICLE::REQUEST_VEHICLE_DIAL(vehicle);
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_BODY_HEALTH( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_BODY_HEALTH( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_BODY_HEALTH(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BODY_HEALTH( int vehicle, float value )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BODY_HEALTH( Vehicle vehicle, float value )
 	{
 		VEHICLE::SET_VEHICLE_BODY_HEALTH(vehicle, value);
 	}
 
-	std::tuple<Vector3, Vector3> LUA_NATIVE_VEHICLE_GET_VEHICLE_SIZE( int vehicle, Vector3 out1, Vector3 out2 )
+	std::tuple<Vector3, Vector3> LUA_NATIVE_VEHICLE_GET_VEHICLE_SIZE( Vehicle vehicle, Vector3 out1, Vector3 out2 )
 	{
 		std::tuple<Vector3, Vector3> return_values;
 		VEHICLE::GET_VEHICLE_SIZE(vehicle, &out1, &out2);
@@ -35263,7 +35258,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_FAKE_SUSPENSION_LOWERING_AMOUNT( int vehicle )
+	float LUA_NATIVE_VEHICLE_GET_FAKE_SUSPENSION_LOWERING_AMOUNT( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_FAKE_SUSPENSION_LOWERING_AMOUNT(vehicle);
 		return retval;
@@ -35274,56 +35269,56 @@ namespace lua::native
 		VEHICLE::SET_CAR_HIGH_SPEED_BUMP_SEVERITY_MULTIPLIER(multiplier);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_NUMBER_OF_VEHICLE_DOORS( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_NUMBER_OF_VEHICLE_DOORS( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_NUMBER_OF_VEHICLE_DOORS(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_HYDRAULICS_CONTROL( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_HYDRAULICS_CONTROL( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_HYDRAULICS_CONTROL(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CAN_ADJUST_GROUND_CLEARANCE( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_CAN_ADJUST_GROUND_CLEARANCE( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_CAN_ADJUST_GROUND_CLEARANCE(vehicle, p1);
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_VEHICLE_HEALTH_PERCENTAGE( int vehicle, float maxEngineHealth, float maxPetrolTankHealth, float maxBodyHealth, float maxMainRotorHealth, float maxTailRotorHealth, float maxUnkHealth )
+	float LUA_NATIVE_VEHICLE_GET_VEHICLE_HEALTH_PERCENTAGE( Vehicle vehicle, float maxEngineHealth, float maxPetrolTankHealth, float maxBodyHealth, float maxMainRotorHealth, float maxTailRotorHealth, float maxUnkHealth )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_HEALTH_PERCENTAGE(vehicle, maxEngineHealth, maxPetrolTankHealth, maxBodyHealth, maxMainRotorHealth, maxTailRotorHealth, maxUnkHealth);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_IS_MERCENARY( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_IS_MERCENARY( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_VEHICLE_IS_MERCENARY(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BROKEN_PARTS_DONT_AFFECT_AI_HANDLING( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BROKEN_PARTS_DONT_AFFECT_AI_HANDLING( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_VEHICLE_BROKEN_PARTS_DONT_AFFECT_AI_HANDLING(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_KERS_ALLOWED( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_KERS_ALLOWED( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_KERS_ALLOWED(vehicle, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_HAS_KERS( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_HAS_KERS( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_VEHICLE_HAS_KERS(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_PLANE_RESIST_TO_EXPLOSION( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_PLANE_RESIST_TO_EXPLOSION( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_PLANE_RESIST_TO_EXPLOSION(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_HELI_RESIST_TO_EXPLOSION( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_HELI_RESIST_TO_EXPLOSION( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_HELI_RESIST_TO_EXPLOSION(vehicle, toggle);
 	}
@@ -35333,28 +35328,28 @@ namespace lua::native
 		VEHICLE::SET_DISABLE_BMX_EXTRA_TRICK_FORCES(p0);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_HYDRAULIC_SUSPENSION_RAISE_FACTOR( int vehicle, int wheelId, float value )
+	void LUA_NATIVE_VEHICLE_SET_HYDRAULIC_SUSPENSION_RAISE_FACTOR( Vehicle vehicle, int wheelId, float value )
 	{
 		VEHICLE::SET_HYDRAULIC_SUSPENSION_RAISE_FACTOR(vehicle, wheelId, value);
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_HYDRAULIC_SUSPENSION_RAISE_FACTOR( int vehicle, int wheelId )
+	float LUA_NATIVE_VEHICLE_GET_HYDRAULIC_SUSPENSION_RAISE_FACTOR( Vehicle vehicle, int wheelId )
 	{
 		auto retval = VEHICLE::GET_HYDRAULIC_SUSPENSION_RAISE_FACTOR(vehicle, wheelId);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CAN_USE_HYDRAULICS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_CAN_USE_HYDRAULICS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_CAN_USE_HYDRAULICS(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_HYDRAULIC_VEHICLE_STATE( int vehicle, int state )
+	void LUA_NATIVE_VEHICLE_SET_HYDRAULIC_VEHICLE_STATE( Vehicle vehicle, int state )
 	{
 		VEHICLE::SET_HYDRAULIC_VEHICLE_STATE(vehicle, state);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_HYDRAULIC_WHEEL_STATE( int vehicle, int wheelId, int state, float value, Any p4 )
+	void LUA_NATIVE_VEHICLE_SET_HYDRAULIC_WHEEL_STATE( Vehicle vehicle, int wheelId, int state, float value, Any p4 )
 	{
 		VEHICLE::SET_HYDRAULIC_WHEEL_STATE(vehicle, wheelId, state, value, p4);
 	}
@@ -35365,7 +35360,7 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_CLEAR_VEHICLE_PETROLTANK_FIRE_CULPRIT( int vehicle )
+	void LUA_NATIVE_VEHICLE_CLEAR_VEHICLE_PETROLTANK_FIRE_CULPRIT( Vehicle vehicle )
 	{
 		VEHICLE::CLEAR_VEHICLE_PETROLTANK_FIRE_CULPRIT(vehicle);
 	}
@@ -35381,13 +35376,13 @@ namespace lua::native
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_SET_VEHICLE_DAMAGE_SCALE( int vehicle, float p1 )
+	bool LUA_NATIVE_VEHICLE_SET_VEHICLE_DAMAGE_SCALE( Vehicle vehicle, float p1 )
 	{
 		auto retval = (bool)VEHICLE::SET_VEHICLE_DAMAGE_SCALE(vehicle, p1);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_SET_VEHICLE_WEAPON_DAMAGE_SCALE( int vehicle, float multiplier )
+	bool LUA_NATIVE_VEHICLE_SET_VEHICLE_WEAPON_DAMAGE_SCALE( Vehicle vehicle, float multiplier )
 	{
 		auto retval = (bool)VEHICLE::SET_VEHICLE_WEAPON_DAMAGE_SCALE(vehicle, multiplier);
 		return retval;
@@ -35404,12 +35399,12 @@ namespace lua::native
 		VEHICLE::SET_VEHICLE_USES_MP_PLAYER_DAMAGE_MULTIPLIER(p0, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_BIKE_EASY_TO_LAND( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_BIKE_EASY_TO_LAND( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_BIKE_EASY_TO_LAND(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_INVERT_VEHICLE_CONTROLS( int vehicle, bool state )
+	void LUA_NATIVE_VEHICLE_SET_INVERT_VEHICLE_CONTROLS( Vehicle vehicle, bool state )
 	{
 		VEHICLE::SET_INVERT_VEHICLE_CONTROLS(vehicle, state);
 	}
@@ -35424,7 +35419,7 @@ namespace lua::native
 		VEHICLE::SET_SLOW_DOWN_EFFECT_DISABLED(disabled);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_FORMATION_LEADER( int vehicle, float x, float y, float z, float p4 )
+	void LUA_NATIVE_VEHICLE_SET_FORMATION_LEADER( Vehicle vehicle, float x, float y, float z, float p4 )
 	{
 		VEHICLE::SET_FORMATION_LEADER(vehicle, x, y, z, p4);
 	}
@@ -35434,7 +35429,7 @@ namespace lua::native
 		VEHICLE::RESET_FORMATION_LEADER();
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_IS_BOAT_CAPSIZED( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_IS_BOAT_CAPSIZED( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_IS_BOAT_CAPSIZED(vehicle);
 		return retval;
@@ -35445,112 +35440,112 @@ namespace lua::native
 		VEHICLE::SET_ALLOW_RAMMING_SOOP_OR_RAMP(p0, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_SCRIPT_RAMP_IMPULSE_SCALE( int vehicle, float impulseScale )
+	void LUA_NATIVE_VEHICLE_SET_SCRIPT_RAMP_IMPULSE_SCALE( Vehicle vehicle, float impulseScale )
 	{
 		VEHICLE::SET_SCRIPT_RAMP_IMPULSE_SCALE(vehicle, impulseScale);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_IS_DOOR_VALID( int vehicle, int doorId )
+	bool LUA_NATIVE_VEHICLE_GET_IS_DOOR_VALID( Vehicle vehicle, int doorId )
 	{
 		auto retval = (bool)VEHICLE::GET_IS_DOOR_VALID(vehicle, doorId);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_SCRIPT_ROCKET_BOOST_RECHARGE_TIME( int vehicle, float seconds )
+	void LUA_NATIVE_VEHICLE_SET_SCRIPT_ROCKET_BOOST_RECHARGE_TIME( Vehicle vehicle, float seconds )
 	{
 		VEHICLE::SET_SCRIPT_ROCKET_BOOST_RECHARGE_TIME(vehicle, seconds);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_HAS_ROCKET_BOOST( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_HAS_ROCKET_BOOST( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_HAS_ROCKET_BOOST(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_ROCKET_BOOST_ACTIVE( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_ROCKET_BOOST_ACTIVE( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_ROCKET_BOOST_ACTIVE(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_ROCKET_BOOST_ACTIVE( int vehicle, bool active )
+	void LUA_NATIVE_VEHICLE_SET_ROCKET_BOOST_ACTIVE( Vehicle vehicle, bool active )
 	{
 		VEHICLE::SET_ROCKET_BOOST_ACTIVE(vehicle, active);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_HAS_RETRACTABLE_WHEELS( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_HAS_RETRACTABLE_WHEELS( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_HAS_RETRACTABLE_WHEELS(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_IS_WHEELS_RETRACTED( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_IS_WHEELS_RETRACTED( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_IS_WHEELS_RETRACTED(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_WHEELS_EXTENDED_INSTANTLY( int vehicle )
+	void LUA_NATIVE_VEHICLE_SET_WHEELS_EXTENDED_INSTANTLY( Vehicle vehicle )
 	{
 		VEHICLE::SET_WHEELS_EXTENDED_INSTANTLY(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_WHEELS_RETRACTED_INSTANTLY( int vehicle )
+	void LUA_NATIVE_VEHICLE_SET_WHEELS_RETRACTED_INSTANTLY( Vehicle vehicle )
 	{
 		VEHICLE::SET_WHEELS_RETRACTED_INSTANTLY(vehicle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_CAR_HAS_JUMP( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_CAR_HAS_JUMP( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_CAR_HAS_JUMP(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_USE_HIGHER_CAR_JUMP( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_USE_HIGHER_CAR_JUMP( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_USE_HIGHER_CAR_JUMP(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CLEAR_FREEZE_WAITING_ON_COLLISION_ONCE_PLAYER_ENTERS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_CLEAR_FREEZE_WAITING_ON_COLLISION_ONCE_PLAYER_ENTERS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_CLEAR_FREEZE_WAITING_ON_COLLISION_ONCE_PLAYER_ENTERS(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WEAPON_RESTRICTED_AMMO( int vehicle, int weaponIndex, int capacity )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WEAPON_RESTRICTED_AMMO( Vehicle vehicle, int weaponIndex, int capacity )
 	{
 		VEHICLE::SET_VEHICLE_WEAPON_RESTRICTED_AMMO(vehicle, weaponIndex, capacity);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_WEAPON_RESTRICTED_AMMO( int vehicle, int weaponIndex )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_WEAPON_RESTRICTED_AMMO( Vehicle vehicle, int weaponIndex )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_WEAPON_RESTRICTED_AMMO(vehicle, weaponIndex);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_HAS_PARACHUTE( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_HAS_PARACHUTE( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_VEHICLE_HAS_PARACHUTE(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_CAN_DEPLOY_PARACHUTE( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_VEHICLE_CAN_DEPLOY_PARACHUTE( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_VEHICLE_CAN_DEPLOY_PARACHUTE(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_VEHICLE_START_PARACHUTING( int vehicle, bool active )
+	void LUA_NATIVE_VEHICLE_VEHICLE_START_PARACHUTING( Vehicle vehicle, bool active )
 	{
 		VEHICLE::VEHICLE_START_PARACHUTING(vehicle, active);
 	}
 
-	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_PARACHUTE_DEPLOYED( int vehicle )
+	bool LUA_NATIVE_VEHICLE_IS_VEHICLE_PARACHUTE_DEPLOYED( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::IS_VEHICLE_PARACHUTE_DEPLOYED(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_VEHICLE_SET_RAMP_AND_RAMMING_CARS_TAKE_DAMAGE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_VEHICLE_SET_RAMP_AND_RAMMING_CARS_TAKE_DAMAGE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::VEHICLE_SET_RAMP_AND_RAMMING_CARS_TAKE_DAMAGE(vehicle, toggle);
 	}
@@ -35570,7 +35565,7 @@ namespace lua::native
 		VEHICLE::VEHICLE_SET_JET_WASH_FORCE_ENABLED(p0);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WEAPON_CAN_TARGET_OBJECTS( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_WEAPON_CAN_TARGET_OBJECTS( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_VEHICLE_WEAPON_CAN_TARGET_OBJECTS(vehicle, toggle);
 	}
@@ -35580,12 +35575,12 @@ namespace lua::native
 		VEHICLE::SET_VEHICLE_USE_BOOST_BUTTON_FOR_WHEEL_RETRACT(toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_VEHICLE_SET_PARACHUTE_MODEL_OVERRIDE( int vehicle, unsigned modelHash )
+	void LUA_NATIVE_VEHICLE_VEHICLE_SET_PARACHUTE_MODEL_OVERRIDE( Vehicle vehicle, Hash modelHash )
 	{
 		VEHICLE::VEHICLE_SET_PARACHUTE_MODEL_OVERRIDE(vehicle, modelHash);
 	}
 
-	void LUA_NATIVE_VEHICLE_VEHICLE_SET_PARACHUTE_MODEL_TINT_INDEX( int vehicle, int textureVariation )
+	void LUA_NATIVE_VEHICLE_VEHICLE_SET_PARACHUTE_MODEL_TINT_INDEX( Vehicle vehicle, int textureVariation )
 	{
 		VEHICLE::VEHICLE_SET_PARACHUTE_MODEL_TINT_INDEX(vehicle, textureVariation);
 	}
@@ -35627,7 +35622,7 @@ namespace lua::native
 		VEHICLE::SET_OVERRIDE_VEHICLE_DOOR_TORQUE(p0, p1, p2);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_WHEELIE_ENABLED( int vehicle, bool enabled )
+	void LUA_NATIVE_VEHICLE_SET_WHEELIE_ENABLED( Vehicle vehicle, bool enabled )
 	{
 		VEHICLE::SET_WHEELIE_ENABLED(vehicle, enabled);
 	}
@@ -35637,7 +35632,7 @@ namespace lua::native
 		VEHICLE::SET_DISABLE_HELI_EXPLODE_FROM_BODY_DAMAGE(p0, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DISABLE_EXPLODE_FROM_BODY_DAMAGE_ON_COLLISION( int vehicle, float value )
+	void LUA_NATIVE_VEHICLE_SET_DISABLE_EXPLODE_FROM_BODY_DAMAGE_ON_COLLISION( Vehicle vehicle, float value )
 	{
 		VEHICLE::SET_DISABLE_EXPLODE_FROM_BODY_DAMAGE_ON_COLLISION(vehicle, value);
 	}
@@ -35647,22 +35642,22 @@ namespace lua::native
 		VEHICLE::SET_TRAILER_ATTACHMENT_ENABLED(p0, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_ROCKET_BOOST_FILL( int vehicle, float percentage )
+	void LUA_NATIVE_VEHICLE_SET_ROCKET_BOOST_FILL( Vehicle vehicle, float percentage )
 	{
 		VEHICLE::SET_ROCKET_BOOST_FILL(vehicle, percentage);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_GLIDER_ACTIVE( int vehicle, bool state )
+	void LUA_NATIVE_VEHICLE_SET_GLIDER_ACTIVE( Vehicle vehicle, bool state )
 	{
 		VEHICLE::SET_GLIDER_ACTIVE(vehicle, state);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_SHOULD_RESET_TURRET_IN_SCRIPTED_CAMERAS( int vehicle, bool shouldReset )
+	void LUA_NATIVE_VEHICLE_SET_SHOULD_RESET_TURRET_IN_SCRIPTED_CAMERAS( Vehicle vehicle, bool shouldReset )
 	{
 		VEHICLE::SET_SHOULD_RESET_TURRET_IN_SCRIPTED_CAMERAS(vehicle, shouldReset);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DISABLE_COLLISION_UPON_CREATION( int vehicle, bool disable )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DISABLE_COLLISION_UPON_CREATION( Vehicle vehicle, bool disable )
 	{
 		VEHICLE::SET_VEHICLE_DISABLE_COLLISION_UPON_CREATION(vehicle, disable);
 	}
@@ -35672,154 +35667,154 @@ namespace lua::native
 		VEHICLE::SET_GROUND_EFFECT_REDUCES_DRAG(toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DISABLE_MAP_COLLISION( int vehicle )
+	void LUA_NATIVE_VEHICLE_SET_DISABLE_MAP_COLLISION( Vehicle vehicle )
 	{
 		VEHICLE::SET_DISABLE_MAP_COLLISION(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DISABLE_PED_STAND_ON_TOP( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_DISABLE_PED_STAND_ON_TOP( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_DISABLE_PED_STAND_ON_TOP(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DAMAGE_SCALES( int vehicle, Any p1, Any p2, Any p3, Any p4 )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_DAMAGE_SCALES( Vehicle vehicle, Any p1, Any p2, Any p3, Any p4 )
 	{
 		VEHICLE::SET_VEHICLE_DAMAGE_SCALES(vehicle, p1, p2, p3, p4);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_PLANE_SECTION_DAMAGE_SCALE( int vehicle, Any p1, Any p2 )
+	void LUA_NATIVE_VEHICLE_SET_PLANE_SECTION_DAMAGE_SCALE( Vehicle vehicle, Any p1, Any p2 )
 	{
 		VEHICLE::SET_PLANE_SECTION_DAMAGE_SCALE(vehicle, p1, p2);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_HELI_CAN_PICKUP_ENTITY_THAT_HAS_PICK_UP_DISABLED( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_HELI_CAN_PICKUP_ENTITY_THAT_HAS_PICK_UP_DISABLED( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_HELI_CAN_PICKUP_ENTITY_THAT_HAS_PICK_UP_DISABLED(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BOMB_AMMO( int vehicle, int bombCount )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_BOMB_AMMO( Vehicle vehicle, int bombCount )
 	{
 		VEHICLE::SET_VEHICLE_BOMB_AMMO(vehicle, bombCount);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_BOMB_AMMO( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_BOMB_AMMO( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_BOMB_AMMO(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_VEHICLE_COUNTERMEASURE_AMMO( int vehicle, int counterMeasureCount )
+	void LUA_NATIVE_VEHICLE_SET_VEHICLE_COUNTERMEASURE_AMMO( Vehicle vehicle, int counterMeasureCount )
 	{
 		VEHICLE::SET_VEHICLE_COUNTERMEASURE_AMMO(vehicle, counterMeasureCount);
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_VEHICLE_COUNTERMEASURE_AMMO( int vehicle )
+	int LUA_NATIVE_VEHICLE_GET_VEHICLE_COUNTERMEASURE_AMMO( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_VEHICLE_COUNTERMEASURE_AMMO(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_HELI_COMBAT_OFFSET( int vehicle, float x, float y, float z )
+	void LUA_NATIVE_VEHICLE_SET_HELI_COMBAT_OFFSET( Vehicle vehicle, float x, float y, float z )
 	{
 		VEHICLE::SET_HELI_COMBAT_OFFSET(vehicle, x, y, z);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_CAN_VEHICLE_BE_PLACED_HERE( int vehicle, float x, float y, float z, float rotX, float rotY, float rotZ, int p7, Any p8 )
+	bool LUA_NATIVE_VEHICLE_GET_CAN_VEHICLE_BE_PLACED_HERE( Vehicle vehicle, float x, float y, float z, float rotX, float rotY, float rotZ, int p7, Any p8 )
 	{
 		auto retval = (bool)VEHICLE::GET_CAN_VEHICLE_BE_PLACED_HERE(vehicle, x, y, z, rotX, rotY, rotZ, p7, p8);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DISABLE_AUTOMATIC_CRASH_TASK( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_DISABLE_AUTOMATIC_CRASH_TASK( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_DISABLE_AUTOMATIC_CRASH_TASK(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_SPECIAL_FLIGHT_MODE_RATIO( int vehicle, float ratio )
+	void LUA_NATIVE_VEHICLE_SET_SPECIAL_FLIGHT_MODE_RATIO( Vehicle vehicle, float ratio )
 	{
 		VEHICLE::SET_SPECIAL_FLIGHT_MODE_RATIO(vehicle, ratio);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_SPECIAL_FLIGHT_MODE_TARGET_RATIO( int vehicle, float targetRatio )
+	void LUA_NATIVE_VEHICLE_SET_SPECIAL_FLIGHT_MODE_TARGET_RATIO( Vehicle vehicle, float targetRatio )
 	{
 		VEHICLE::SET_SPECIAL_FLIGHT_MODE_TARGET_RATIO(vehicle, targetRatio);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_SPECIAL_FLIGHT_MODE_ALLOWED( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_SPECIAL_FLIGHT_MODE_ALLOWED( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_SPECIAL_FLIGHT_MODE_ALLOWED(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DISABLE_HOVER_MODE_FLIGHT( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_DISABLE_HOVER_MODE_FLIGHT( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_DISABLE_HOVER_MODE_FLIGHT(vehicle, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_OUTRIGGERS_DEPLOYED( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_OUTRIGGERS_DEPLOYED( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_OUTRIGGERS_DEPLOYED(vehicle);
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_VEHICLE_FIND_SPAWN_COORDINATES_FOR_HELI( int ped )
+	Vector3 LUA_NATIVE_VEHICLE_FIND_SPAWN_COORDINATES_FOR_HELI( Ped ped )
 	{
 		auto retval = VEHICLE::FIND_SPAWN_COORDINATES_FOR_HELI(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DEPLOY_FOLDING_WINGS( int vehicle, bool deploy, bool p2 )
+	void LUA_NATIVE_VEHICLE_SET_DEPLOY_FOLDING_WINGS( Vehicle vehicle, bool deploy, bool p2 )
 	{
 		VEHICLE::SET_DEPLOY_FOLDING_WINGS(vehicle, deploy, p2);
 	}
 
-	bool LUA_NATIVE_VEHICLE_ARE_FOLDING_WINGS_DEPLOYED( int vehicle )
+	bool LUA_NATIVE_VEHICLE_ARE_FOLDING_WINGS_DEPLOYED( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::ARE_FOLDING_WINGS_DEPLOYED(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DEPLOY_MISSILE_BAYS_( int vehicle, bool deploy )
+	void LUA_NATIVE_VEHICLE_SET_DEPLOY_MISSILE_BAYS_( Vehicle vehicle, bool deploy )
 	{
 		VEHICLE::SET_DEPLOY_MISSILE_BAYS_(vehicle, deploy);
 	}
 
-	bool LUA_NATIVE_VEHICLE_ARE_MISSILE_BAYS_DEPLOYED_( int vehicle )
+	bool LUA_NATIVE_VEHICLE_ARE_MISSILE_BAYS_DEPLOYED_( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::ARE_MISSILE_BAYS_DEPLOYED_(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DIP_STRAIGHT_DOWN_WHEN_CRASHING_PLANE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_DIP_STRAIGHT_DOWN_WHEN_CRASHING_PLANE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_DIP_STRAIGHT_DOWN_WHEN_CRASHING_PLANE(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_TURRET_HIDDEN( int vehicle, int index, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_TURRET_HIDDEN( Vehicle vehicle, int index, bool toggle )
 	{
 		VEHICLE::SET_TURRET_HIDDEN(vehicle, index, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_HOVER_MODE_WING_RATIO( int vehicle, float ratio )
+	void LUA_NATIVE_VEHICLE_SET_HOVER_MODE_WING_RATIO( Vehicle vehicle, float ratio )
 	{
 		VEHICLE::SET_HOVER_MODE_WING_RATIO(vehicle, ratio);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DISABLE_TURRET_MOVEMENT( int vehicle, int turretId )
+	void LUA_NATIVE_VEHICLE_SET_DISABLE_TURRET_MOVEMENT( Vehicle vehicle, int turretId )
 	{
 		VEHICLE::SET_DISABLE_TURRET_MOVEMENT(vehicle, turretId);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_FORCE_FIX_LINK_MATRICES( int vehicle )
+	void LUA_NATIVE_VEHICLE_SET_FORCE_FIX_LINK_MATRICES( Vehicle vehicle )
 	{
 		VEHICLE::SET_FORCE_FIX_LINK_MATRICES(vehicle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_TRANSFORM_RATE_FOR_ANIMATION( int vehicle, float transformRate )
+	void LUA_NATIVE_VEHICLE_SET_TRANSFORM_RATE_FOR_ANIMATION( Vehicle vehicle, float transformRate )
 	{
 		VEHICLE::SET_TRANSFORM_RATE_FOR_ANIMATION(vehicle, transformRate);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_TRANSFORM_TO_SUBMARINE_USES_ALTERNATE_INPUT( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_TRANSFORM_TO_SUBMARINE_USES_ALTERNATE_INPUT( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_TRANSFORM_TO_SUBMARINE_USES_ALTERNATE_INPUT(vehicle, toggle);
 	}
@@ -35839,19 +35834,19 @@ namespace lua::native
 		VEHICLE::SET_VEHICLE_SHUNT_ON_STICK(toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_IS_VEHICLE_SHUNTING( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_IS_VEHICLE_SHUNTING( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_IS_VEHICLE_SHUNTING(vehicle);
 		return retval;
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_HAS_VEHICLE_BEEN_HIT_BY_SHUNT( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_HAS_VEHICLE_BEEN_HIT_BY_SHUNT( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_HAS_VEHICLE_BEEN_HIT_BY_SHUNT(vehicle);
 		return retval;
 	}
 
-	int LUA_NATIVE_VEHICLE_GET_LAST_SHUNT_VEHICLE( int vehicle )
+	Vehicle LUA_NATIVE_VEHICLE_GET_LAST_SHUNT_VEHICLE( Vehicle vehicle )
 	{
 		auto retval = VEHICLE::GET_LAST_SHUNT_VEHICLE(vehicle);
 		return retval;
@@ -35862,12 +35857,12 @@ namespace lua::native
 		VEHICLE::SET_DISABLE_VEHICLE_EXPLOSIONS_DAMAGE(toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_OVERRIDE_NITROUS_LEVEL( int vehicle, bool toggle, float level, float power, float rechargeTime, bool disableSound )
+	void LUA_NATIVE_VEHICLE_SET_OVERRIDE_NITROUS_LEVEL( Vehicle vehicle, bool toggle, float level, float power, float rechargeTime, bool disableSound )
 	{
 		VEHICLE::SET_OVERRIDE_NITROUS_LEVEL(vehicle, toggle, level, power, rechargeTime, disableSound);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_INCREASE_WHEEL_CRUSH_DAMAGE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_INCREASE_WHEEL_CRUSH_DAMAGE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_INCREASE_WHEEL_CRUSH_DAMAGE(vehicle, toggle);
 	}
@@ -35882,18 +35877,18 @@ namespace lua::native
 		VEHICLE::SET_USE_DOUBLE_CLICK_FOR_CAR_JUMP(toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_DOES_VEHICLE_HAVE_TOMBSTONE( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_DOES_VEHICLE_HAVE_TOMBSTONE( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_DOES_VEHICLE_HAVE_TOMBSTONE(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_HIDE_TOMBSTONE( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_HIDE_TOMBSTONE( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::HIDE_TOMBSTONE(vehicle, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_IS_VEHICLE_DISABLED_BY_EMP( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_IS_VEHICLE_DISABLED_BY_EMP( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_IS_VEHICLE_DISABLED_BY_EMP(vehicle);
 		return retval;
@@ -35904,65 +35899,65 @@ namespace lua::native
 		VEHICLE::SET_DISABLE_RETRACTING_WEAPON_BLADES(toggle);
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_TYRE_HEALTH( int vehicle, int wheelIndex )
+	float LUA_NATIVE_VEHICLE_GET_TYRE_HEALTH( Vehicle vehicle, int wheelIndex )
 	{
 		auto retval = VEHICLE::GET_TYRE_HEALTH(vehicle, wheelIndex);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_TYRE_HEALTH( int vehicle, int wheelIndex, float health )
+	void LUA_NATIVE_VEHICLE_SET_TYRE_HEALTH( Vehicle vehicle, int wheelIndex, float health )
 	{
 		VEHICLE::SET_TYRE_HEALTH(vehicle, wheelIndex, health);
 	}
 
-	float LUA_NATIVE_VEHICLE_GET_TYRE_WEAR_RATE( int vehicle, int wheelIndex )
+	float LUA_NATIVE_VEHICLE_GET_TYRE_WEAR_RATE( Vehicle vehicle, int wheelIndex )
 	{
 		auto retval = VEHICLE::GET_TYRE_WEAR_RATE(vehicle, wheelIndex);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_TYRE_WEAR_RATE( int vehicle, int wheelIndex, float multiplier )
+	void LUA_NATIVE_VEHICLE_SET_TYRE_WEAR_RATE( Vehicle vehicle, int wheelIndex, float multiplier )
 	{
 		VEHICLE::SET_TYRE_WEAR_RATE(vehicle, wheelIndex, multiplier);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_TYRE_WEAR_RATE_SCALE( int vehicle, int wheelIndex, float multiplier )
+	void LUA_NATIVE_VEHICLE_SET_TYRE_WEAR_RATE_SCALE( Vehicle vehicle, int wheelIndex, float multiplier )
 	{
 		VEHICLE::SET_TYRE_WEAR_RATE_SCALE(vehicle, wheelIndex, multiplier);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_TYRE_MAXIMUM_GRIP_DIFFERENCE_DUE_TO_WEAR_RATE( int vehicle, int wheelIndex, float multiplier )
+	void LUA_NATIVE_VEHICLE_SET_TYRE_MAXIMUM_GRIP_DIFFERENCE_DUE_TO_WEAR_RATE( Vehicle vehicle, int wheelIndex, float multiplier )
 	{
 		VEHICLE::SET_TYRE_MAXIMUM_GRIP_DIFFERENCE_DUE_TO_WEAR_RATE(vehicle, wheelIndex, multiplier);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_AIRCRAFT_IGNORE_HIGHTMAP_OPTIMISATION( int vehicle, int p1 )
+	void LUA_NATIVE_VEHICLE_SET_AIRCRAFT_IGNORE_HIGHTMAP_OPTIMISATION( Vehicle vehicle, int p1 )
 	{
 		VEHICLE::SET_AIRCRAFT_IGNORE_HIGHTMAP_OPTIMISATION(vehicle, p1);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_REDUCED_SUSPENSION_FORCE( int vehicle, bool enable )
+	void LUA_NATIVE_VEHICLE_SET_REDUCED_SUSPENSION_FORCE( Vehicle vehicle, bool enable )
 	{
 		VEHICLE::SET_REDUCED_SUSPENSION_FORCE(vehicle, enable);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_DRIFT_TYRES( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_SET_DRIFT_TYRES( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::SET_DRIFT_TYRES(vehicle, toggle);
 	}
 
-	bool LUA_NATIVE_VEHICLE_GET_DRIFT_TYRES_SET( int vehicle )
+	bool LUA_NATIVE_VEHICLE_GET_DRIFT_TYRES_SET( Vehicle vehicle )
 	{
 		auto retval = (bool)VEHICLE::GET_DRIFT_TYRES_SET(vehicle);
 		return retval;
 	}
 
-	void LUA_NATIVE_VEHICLE_NETWORK_USE_HIGH_PRECISION_TRAIN_BLENDING( int vehicle, bool toggle )
+	void LUA_NATIVE_VEHICLE_NETWORK_USE_HIGH_PRECISION_TRAIN_BLENDING( Vehicle vehicle, bool toggle )
 	{
 		VEHICLE::NETWORK_USE_HIGH_PRECISION_TRAIN_BLENDING(vehicle, toggle);
 	}
 
-	void LUA_NATIVE_VEHICLE_SET_CHECK_FOR_ENOUGH_ROOM_FOR_PED( int vehicle, bool p1 )
+	void LUA_NATIVE_VEHICLE_SET_CHECK_FOR_ENOUGH_ROOM_FOR_PED( Vehicle vehicle, bool p1 )
 	{
 		VEHICLE::SET_CHECK_FOR_ENOUGH_ROOM_FOR_PED(vehicle, p1);
 	}
@@ -36054,140 +36049,140 @@ namespace lua::native
 		WEAPON::ENABLE_LASER_SIGHT_RENDERING(toggle);
 	}
 
-	unsigned LUA_NATIVE_WEAPON_GET_WEAPON_COMPONENT_TYPE_MODEL( unsigned componentHash )
+	Hash LUA_NATIVE_WEAPON_GET_WEAPON_COMPONENT_TYPE_MODEL( Hash componentHash )
 	{
 		auto retval = WEAPON::GET_WEAPON_COMPONENT_TYPE_MODEL(componentHash);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_WEAPON_GET_WEAPONTYPE_MODEL( unsigned weaponHash )
+	Hash LUA_NATIVE_WEAPON_GET_WEAPONTYPE_MODEL( Hash weaponHash )
 	{
 		auto retval = WEAPON::GET_WEAPONTYPE_MODEL(weaponHash);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_WEAPON_GET_WEAPONTYPE_SLOT( unsigned weaponHash )
+	Hash LUA_NATIVE_WEAPON_GET_WEAPONTYPE_SLOT( Hash weaponHash )
 	{
 		auto retval = WEAPON::GET_WEAPONTYPE_SLOT(weaponHash);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_WEAPON_GET_WEAPONTYPE_GROUP( unsigned weaponHash )
+	Hash LUA_NATIVE_WEAPON_GET_WEAPONTYPE_GROUP( Hash weaponHash )
 	{
 		auto retval = WEAPON::GET_WEAPONTYPE_GROUP(weaponHash);
 		return retval;
 	}
 
-	int LUA_NATIVE_WEAPON_GET_WEAPON_COMPONENT_VARIANT_EXTRA_COUNT( unsigned componentHash )
+	int LUA_NATIVE_WEAPON_GET_WEAPON_COMPONENT_VARIANT_EXTRA_COUNT( Hash componentHash )
 	{
 		auto retval = WEAPON::GET_WEAPON_COMPONENT_VARIANT_EXTRA_COUNT(componentHash);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_WEAPON_GET_WEAPON_COMPONENT_VARIANT_EXTRA_MODEL( unsigned componentHash, int extraComponentIndex )
+	Hash LUA_NATIVE_WEAPON_GET_WEAPON_COMPONENT_VARIANT_EXTRA_MODEL( Hash componentHash, int extraComponentIndex )
 	{
 		auto retval = WEAPON::GET_WEAPON_COMPONENT_VARIANT_EXTRA_MODEL(componentHash, extraComponentIndex);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_SET_CURRENT_PED_WEAPON( int ped, unsigned weaponHash, bool bForceInHand )
+	void LUA_NATIVE_WEAPON_SET_CURRENT_PED_WEAPON( Ped ped, Hash weaponHash, bool bForceInHand )
 	{
 		WEAPON::SET_CURRENT_PED_WEAPON(ped, weaponHash, bForceInHand);
 	}
 
-	std::tuple<bool, unsigned> LUA_NATIVE_WEAPON_GET_CURRENT_PED_WEAPON( int ped, unsigned weaponHash, bool p2 )
+	std::tuple<bool, Hash> LUA_NATIVE_WEAPON_GET_CURRENT_PED_WEAPON( Ped ped, Hash weaponHash, bool p2 )
 	{
-		std::tuple<bool, unsigned> return_values;
+		std::tuple<bool, Hash> return_values;
 		std::get<0>(return_values) = (bool)WEAPON::GET_CURRENT_PED_WEAPON(ped, &weaponHash, p2);
 		std::get<1>(return_values) = weaponHash;
 
 		return return_values;
 	}
 
-	int LUA_NATIVE_WEAPON_GET_CURRENT_PED_WEAPON_ENTITY_INDEX( int ped, Any p1 )
+	Entity LUA_NATIVE_WEAPON_GET_CURRENT_PED_WEAPON_ENTITY_INDEX( Ped ped, Any p1 )
 	{
 		auto retval = WEAPON::GET_CURRENT_PED_WEAPON_ENTITY_INDEX(ped, p1);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_WEAPON_GET_BEST_PED_WEAPON( int ped, bool p1 )
+	Hash LUA_NATIVE_WEAPON_GET_BEST_PED_WEAPON( Ped ped, bool p1 )
 	{
 		auto retval = WEAPON::GET_BEST_PED_WEAPON(ped, p1);
 		return retval;
 	}
 
-	bool LUA_NATIVE_WEAPON_SET_CURRENT_PED_VEHICLE_WEAPON( int ped, unsigned weaponHash )
+	bool LUA_NATIVE_WEAPON_SET_CURRENT_PED_VEHICLE_WEAPON( Ped ped, Hash weaponHash )
 	{
 		auto retval = (bool)WEAPON::SET_CURRENT_PED_VEHICLE_WEAPON(ped, weaponHash);
 		return retval;
 	}
 
-	std::tuple<bool, unsigned> LUA_NATIVE_WEAPON_GET_CURRENT_PED_VEHICLE_WEAPON( int ped, unsigned weaponHash )
+	std::tuple<bool, Hash> LUA_NATIVE_WEAPON_GET_CURRENT_PED_VEHICLE_WEAPON( Ped ped, Hash weaponHash )
 	{
-		std::tuple<bool, unsigned> return_values;
+		std::tuple<bool, Hash> return_values;
 		std::get<0>(return_values) = (bool)WEAPON::GET_CURRENT_PED_VEHICLE_WEAPON(ped, &weaponHash);
 		std::get<1>(return_values) = weaponHash;
 
 		return return_values;
 	}
 
-	void LUA_NATIVE_WEAPON_SET_PED_CYCLE_VEHICLE_WEAPONS_ONLY( int ped )
+	void LUA_NATIVE_WEAPON_SET_PED_CYCLE_VEHICLE_WEAPONS_ONLY( Ped ped )
 	{
 		WEAPON::SET_PED_CYCLE_VEHICLE_WEAPONS_ONLY(ped);
 	}
 
-	bool LUA_NATIVE_WEAPON_IS_PED_ARMED( int ped, int typeFlags )
+	bool LUA_NATIVE_WEAPON_IS_PED_ARMED( Ped ped, int typeFlags )
 	{
 		auto retval = (bool)WEAPON::IS_PED_ARMED(ped, typeFlags);
 		return retval;
 	}
 
-	bool LUA_NATIVE_WEAPON_IS_WEAPON_VALID( unsigned weaponHash )
+	bool LUA_NATIVE_WEAPON_IS_WEAPON_VALID( Hash weaponHash )
 	{
 		auto retval = (bool)WEAPON::IS_WEAPON_VALID(weaponHash);
 		return retval;
 	}
 
-	bool LUA_NATIVE_WEAPON_HAS_PED_GOT_WEAPON( int ped, unsigned weaponHash, bool p2 )
+	bool LUA_NATIVE_WEAPON_HAS_PED_GOT_WEAPON( Ped ped, Hash weaponHash, bool p2 )
 	{
 		auto retval = (bool)WEAPON::HAS_PED_GOT_WEAPON(ped, weaponHash, p2);
 		return retval;
 	}
 
-	bool LUA_NATIVE_WEAPON_IS_PED_WEAPON_READY_TO_SHOOT( int ped )
+	bool LUA_NATIVE_WEAPON_IS_PED_WEAPON_READY_TO_SHOOT( Ped ped )
 	{
 		auto retval = (bool)WEAPON::IS_PED_WEAPON_READY_TO_SHOOT(ped);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_WEAPON_GET_PED_WEAPONTYPE_IN_SLOT( int ped, unsigned weaponSlot )
+	Hash LUA_NATIVE_WEAPON_GET_PED_WEAPONTYPE_IN_SLOT( Ped ped, Hash weaponSlot )
 	{
 		auto retval = WEAPON::GET_PED_WEAPONTYPE_IN_SLOT(ped, weaponSlot);
 		return retval;
 	}
 
-	int LUA_NATIVE_WEAPON_GET_AMMO_IN_PED_WEAPON( int ped, unsigned weaponhash )
+	int LUA_NATIVE_WEAPON_GET_AMMO_IN_PED_WEAPON( Ped ped, Hash weaponhash )
 	{
 		auto retval = WEAPON::GET_AMMO_IN_PED_WEAPON(ped, weaponhash);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_ADD_AMMO_TO_PED( int ped, unsigned weaponHash, int ammo )
+	void LUA_NATIVE_WEAPON_ADD_AMMO_TO_PED( Ped ped, Hash weaponHash, int ammo )
 	{
 		WEAPON::ADD_AMMO_TO_PED(ped, weaponHash, ammo);
 	}
 
-	void LUA_NATIVE_WEAPON_SET_PED_AMMO( int ped, unsigned weaponHash, int ammo, bool p3 )
+	void LUA_NATIVE_WEAPON_SET_PED_AMMO( Ped ped, Hash weaponHash, int ammo, bool p3 )
 	{
 		WEAPON::SET_PED_AMMO(ped, weaponHash, ammo, p3);
 	}
 
-	void LUA_NATIVE_WEAPON_SET_PED_INFINITE_AMMO( int ped, bool toggle, unsigned weaponHash )
+	void LUA_NATIVE_WEAPON_SET_PED_INFINITE_AMMO( Ped ped, bool toggle, Hash weaponHash )
 	{
 		WEAPON::SET_PED_INFINITE_AMMO(ped, toggle, weaponHash);
 	}
 
-	void LUA_NATIVE_WEAPON_SET_PED_INFINITE_AMMO_CLIP( int ped, bool toggle )
+	void LUA_NATIVE_WEAPON_SET_PED_INFINITE_AMMO_CLIP( Ped ped, bool toggle )
 	{
 		WEAPON::SET_PED_INFINITE_AMMO_CLIP(ped, toggle);
 	}
@@ -36197,80 +36192,80 @@ namespace lua::native
 		WEAPON::SET_PED_STUN_GUN_FINITE_AMMO(p0, p1);
 	}
 
-	void LUA_NATIVE_WEAPON_GIVE_WEAPON_TO_PED( int ped, unsigned weaponHash, int ammoCount, bool isHidden, bool bForceInHand )
+	void LUA_NATIVE_WEAPON_GIVE_WEAPON_TO_PED( Ped ped, Hash weaponHash, int ammoCount, bool isHidden, bool bForceInHand )
 	{
 		WEAPON::GIVE_WEAPON_TO_PED(ped, weaponHash, ammoCount, isHidden, bForceInHand);
 	}
 
-	void LUA_NATIVE_WEAPON_GIVE_DELAYED_WEAPON_TO_PED( int ped, unsigned weaponHash, int ammoCount, bool bForceInHand )
+	void LUA_NATIVE_WEAPON_GIVE_DELAYED_WEAPON_TO_PED( Ped ped, Hash weaponHash, int ammoCount, bool bForceInHand )
 	{
 		WEAPON::GIVE_DELAYED_WEAPON_TO_PED(ped, weaponHash, ammoCount, bForceInHand);
 	}
 
-	void LUA_NATIVE_WEAPON_REMOVE_ALL_PED_WEAPONS( int ped, bool p1 )
+	void LUA_NATIVE_WEAPON_REMOVE_ALL_PED_WEAPONS( Ped ped, bool p1 )
 	{
 		WEAPON::REMOVE_ALL_PED_WEAPONS(ped, p1);
 	}
 
-	void LUA_NATIVE_WEAPON_REMOVE_WEAPON_FROM_PED( int ped, unsigned weaponHash )
+	void LUA_NATIVE_WEAPON_REMOVE_WEAPON_FROM_PED( Ped ped, Hash weaponHash )
 	{
 		WEAPON::REMOVE_WEAPON_FROM_PED(ped, weaponHash);
 	}
 
-	void LUA_NATIVE_WEAPON_HIDE_PED_WEAPON_FOR_SCRIPTED_CUTSCENE( int ped, bool toggle )
+	void LUA_NATIVE_WEAPON_HIDE_PED_WEAPON_FOR_SCRIPTED_CUTSCENE( Ped ped, bool toggle )
 	{
 		WEAPON::HIDE_PED_WEAPON_FOR_SCRIPTED_CUTSCENE(ped, toggle);
 	}
 
-	void LUA_NATIVE_WEAPON_SET_PED_CURRENT_WEAPON_VISIBLE( int ped, bool visible, bool deselectWeapon, bool p3, bool p4 )
+	void LUA_NATIVE_WEAPON_SET_PED_CURRENT_WEAPON_VISIBLE( Ped ped, bool visible, bool deselectWeapon, bool p3, bool p4 )
 	{
 		WEAPON::SET_PED_CURRENT_WEAPON_VISIBLE(ped, visible, deselectWeapon, p3, p4);
 	}
 
-	void LUA_NATIVE_WEAPON_SET_PED_DROPS_WEAPONS_WHEN_DEAD( int ped, bool toggle )
+	void LUA_NATIVE_WEAPON_SET_PED_DROPS_WEAPONS_WHEN_DEAD( Ped ped, bool toggle )
 	{
 		WEAPON::SET_PED_DROPS_WEAPONS_WHEN_DEAD(ped, toggle);
 	}
 
-	bool LUA_NATIVE_WEAPON_HAS_PED_BEEN_DAMAGED_BY_WEAPON( int ped, unsigned weaponHash, int weaponType )
+	bool LUA_NATIVE_WEAPON_HAS_PED_BEEN_DAMAGED_BY_WEAPON( Ped ped, Hash weaponHash, int weaponType )
 	{
 		auto retval = (bool)WEAPON::HAS_PED_BEEN_DAMAGED_BY_WEAPON(ped, weaponHash, weaponType);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_CLEAR_PED_LAST_WEAPON_DAMAGE( int ped )
+	void LUA_NATIVE_WEAPON_CLEAR_PED_LAST_WEAPON_DAMAGE( Ped ped )
 	{
 		WEAPON::CLEAR_PED_LAST_WEAPON_DAMAGE(ped);
 	}
 
-	bool LUA_NATIVE_WEAPON_HAS_ENTITY_BEEN_DAMAGED_BY_WEAPON( int entity, unsigned weaponHash, int weaponType )
+	bool LUA_NATIVE_WEAPON_HAS_ENTITY_BEEN_DAMAGED_BY_WEAPON( Entity entity, Hash weaponHash, int weaponType )
 	{
 		auto retval = (bool)WEAPON::HAS_ENTITY_BEEN_DAMAGED_BY_WEAPON(entity, weaponHash, weaponType);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_CLEAR_ENTITY_LAST_WEAPON_DAMAGE( int entity )
+	void LUA_NATIVE_WEAPON_CLEAR_ENTITY_LAST_WEAPON_DAMAGE( Entity entity )
 	{
 		WEAPON::CLEAR_ENTITY_LAST_WEAPON_DAMAGE(entity);
 	}
 
-	void LUA_NATIVE_WEAPON_SET_PED_DROPS_WEAPON( int ped )
+	void LUA_NATIVE_WEAPON_SET_PED_DROPS_WEAPON( Ped ped )
 	{
 		WEAPON::SET_PED_DROPS_WEAPON(ped);
 	}
 
-	void LUA_NATIVE_WEAPON_SET_PED_DROPS_INVENTORY_WEAPON( int ped, unsigned weaponHash, float xOffset, float yOffset, float zOffset, int ammoCount )
+	void LUA_NATIVE_WEAPON_SET_PED_DROPS_INVENTORY_WEAPON( Ped ped, Hash weaponHash, float xOffset, float yOffset, float zOffset, int ammoCount )
 	{
 		WEAPON::SET_PED_DROPS_INVENTORY_WEAPON(ped, weaponHash, xOffset, yOffset, zOffset, ammoCount);
 	}
 
-	int LUA_NATIVE_WEAPON_GET_MAX_AMMO_IN_CLIP( int ped, unsigned weaponHash, bool p2 )
+	int LUA_NATIVE_WEAPON_GET_MAX_AMMO_IN_CLIP( Ped ped, Hash weaponHash, bool p2 )
 	{
 		auto retval = WEAPON::GET_MAX_AMMO_IN_CLIP(ped, weaponHash, p2);
 		return retval;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_WEAPON_GET_AMMO_IN_CLIP( int ped, unsigned weaponHash, int ammo )
+	std::tuple<bool, int> LUA_NATIVE_WEAPON_GET_AMMO_IN_CLIP( Ped ped, Hash weaponHash, int ammo )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)WEAPON::GET_AMMO_IN_CLIP(ped, weaponHash, &ammo);
@@ -36279,13 +36274,13 @@ namespace lua::native
 		return return_values;
 	}
 
-	bool LUA_NATIVE_WEAPON_SET_AMMO_IN_CLIP( int ped, unsigned weaponHash, int ammo )
+	bool LUA_NATIVE_WEAPON_SET_AMMO_IN_CLIP( Ped ped, Hash weaponHash, int ammo )
 	{
 		auto retval = (bool)WEAPON::SET_AMMO_IN_CLIP(ped, weaponHash, ammo);
 		return retval;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_WEAPON_GET_MAX_AMMO( int ped, unsigned weaponHash, int ammo )
+	std::tuple<bool, int> LUA_NATIVE_WEAPON_GET_MAX_AMMO( Ped ped, Hash weaponHash, int ammo )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)WEAPON::GET_MAX_AMMO(ped, weaponHash, &ammo);
@@ -36294,7 +36289,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, int> LUA_NATIVE_WEAPON_GET_MAX_AMMO_BY_TYPE( int ped, unsigned ammoTypeHash, int ammo )
+	std::tuple<bool, int> LUA_NATIVE_WEAPON_GET_MAX_AMMO_BY_TYPE( Ped ped, Hash ammoTypeHash, int ammo )
 	{
 		std::tuple<bool, int> return_values;
 		std::get<0>(return_values) = (bool)WEAPON::GET_MAX_AMMO_BY_TYPE(ped, ammoTypeHash, &ammo);
@@ -36303,23 +36298,23 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_WEAPON_ADD_PED_AMMO_BY_TYPE( int ped, unsigned ammoTypeHash, int ammo )
+	void LUA_NATIVE_WEAPON_ADD_PED_AMMO_BY_TYPE( Ped ped, Hash ammoTypeHash, int ammo )
 	{
 		WEAPON::ADD_PED_AMMO_BY_TYPE(ped, ammoTypeHash, ammo);
 	}
 
-	void LUA_NATIVE_WEAPON_SET_PED_AMMO_BY_TYPE( int ped, unsigned ammoTypeHash, int ammo )
+	void LUA_NATIVE_WEAPON_SET_PED_AMMO_BY_TYPE( Ped ped, Hash ammoTypeHash, int ammo )
 	{
 		WEAPON::SET_PED_AMMO_BY_TYPE(ped, ammoTypeHash, ammo);
 	}
 
-	int LUA_NATIVE_WEAPON_GET_PED_AMMO_BY_TYPE( int ped, unsigned ammoTypeHash )
+	int LUA_NATIVE_WEAPON_GET_PED_AMMO_BY_TYPE( Ped ped, Hash ammoTypeHash )
 	{
 		auto retval = WEAPON::GET_PED_AMMO_BY_TYPE(ped, ammoTypeHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_SET_PED_AMMO_TO_DROP( int ped, int p1 )
+	void LUA_NATIVE_WEAPON_SET_PED_AMMO_TO_DROP( Ped ped, int p1 )
 	{
 		WEAPON::SET_PED_AMMO_TO_DROP(ped, p1);
 	}
@@ -36329,19 +36324,19 @@ namespace lua::native
 		WEAPON::SET_PICKUP_AMMO_AMOUNT_SCALER(p0);
 	}
 
-	unsigned LUA_NATIVE_WEAPON_GET_PED_AMMO_TYPE_FROM_WEAPON( int ped, unsigned weaponHash )
+	Hash LUA_NATIVE_WEAPON_GET_PED_AMMO_TYPE_FROM_WEAPON( Ped ped, Hash weaponHash )
 	{
 		auto retval = WEAPON::GET_PED_AMMO_TYPE_FROM_WEAPON(ped, weaponHash);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_WEAPON_GET_PED_ORIGINAL_AMMO_TYPE_FROM_WEAPON( int ped, unsigned weaponHash )
+	Hash LUA_NATIVE_WEAPON_GET_PED_ORIGINAL_AMMO_TYPE_FROM_WEAPON( Ped ped, Hash weaponHash )
 	{
 		auto retval = WEAPON::GET_PED_ORIGINAL_AMMO_TYPE_FROM_WEAPON(ped, weaponHash);
 		return retval;
 	}
 
-	std::tuple<bool, Vector3> LUA_NATIVE_WEAPON_GET_PED_LAST_WEAPON_IMPACT_COORD( int ped, Vector3 coords )
+	std::tuple<bool, Vector3> LUA_NATIVE_WEAPON_GET_PED_LAST_WEAPON_IMPACT_COORD( Ped ped, Vector3 coords )
 	{
 		std::tuple<bool, Vector3> return_values;
 		std::get<0>(return_values) = (bool)WEAPON::GET_PED_LAST_WEAPON_IMPACT_COORD(ped, &coords);
@@ -36350,151 +36345,151 @@ namespace lua::native
 		return return_values;
 	}
 
-	void LUA_NATIVE_WEAPON_SET_PED_GADGET( int ped, unsigned gadgetHash, bool p2 )
+	void LUA_NATIVE_WEAPON_SET_PED_GADGET( Ped ped, Hash gadgetHash, bool p2 )
 	{
 		WEAPON::SET_PED_GADGET(ped, gadgetHash, p2);
 	}
 
-	bool LUA_NATIVE_WEAPON_GET_IS_PED_GADGET_EQUIPPED( int ped, unsigned gadgetHash )
+	bool LUA_NATIVE_WEAPON_GET_IS_PED_GADGET_EQUIPPED( Ped ped, Hash gadgetHash )
 	{
 		auto retval = (bool)WEAPON::GET_IS_PED_GADGET_EQUIPPED(ped, gadgetHash);
 		return retval;
 	}
 
-	unsigned LUA_NATIVE_WEAPON_GET_SELECTED_PED_WEAPON( int ped )
+	Hash LUA_NATIVE_WEAPON_GET_SELECTED_PED_WEAPON( Ped ped )
 	{
 		auto retval = WEAPON::GET_SELECTED_PED_WEAPON(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_EXPLODE_PROJECTILES( int ped, unsigned weaponHash, bool p2 )
+	void LUA_NATIVE_WEAPON_EXPLODE_PROJECTILES( Ped ped, Hash weaponHash, bool p2 )
 	{
 		WEAPON::EXPLODE_PROJECTILES(ped, weaponHash, p2);
 	}
 
-	void LUA_NATIVE_WEAPON_REMOVE_ALL_PROJECTILES_OF_TYPE( unsigned weaponHash, bool explode )
+	void LUA_NATIVE_WEAPON_REMOVE_ALL_PROJECTILES_OF_TYPE( Hash weaponHash, bool explode )
 	{
 		WEAPON::REMOVE_ALL_PROJECTILES_OF_TYPE(weaponHash, explode);
 	}
 
-	float LUA_NATIVE_WEAPON_GET_LOCKON_DISTANCE_OF_CURRENT_PED_WEAPON( int ped )
+	float LUA_NATIVE_WEAPON_GET_LOCKON_DISTANCE_OF_CURRENT_PED_WEAPON( Ped ped )
 	{
 		auto retval = WEAPON::GET_LOCKON_DISTANCE_OF_CURRENT_PED_WEAPON(ped);
 		return retval;
 	}
 
-	float LUA_NATIVE_WEAPON_GET_MAX_RANGE_OF_CURRENT_PED_WEAPON( int ped )
+	float LUA_NATIVE_WEAPON_GET_MAX_RANGE_OF_CURRENT_PED_WEAPON( Ped ped )
 	{
 		auto retval = WEAPON::GET_MAX_RANGE_OF_CURRENT_PED_WEAPON(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_WEAPON_HAS_VEHICLE_GOT_PROJECTILE_ATTACHED( int driver, int vehicle, unsigned weaponHash, Any p3 )
+	bool LUA_NATIVE_WEAPON_HAS_VEHICLE_GOT_PROJECTILE_ATTACHED( Ped driver, Vehicle vehicle, Hash weaponHash, Any p3 )
 	{
 		auto retval = (bool)WEAPON::HAS_VEHICLE_GOT_PROJECTILE_ATTACHED(driver, vehicle, weaponHash, p3);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_GIVE_WEAPON_COMPONENT_TO_PED( int ped, unsigned weaponHash, unsigned componentHash )
+	void LUA_NATIVE_WEAPON_GIVE_WEAPON_COMPONENT_TO_PED( Ped ped, Hash weaponHash, Hash componentHash )
 	{
 		WEAPON::GIVE_WEAPON_COMPONENT_TO_PED(ped, weaponHash, componentHash);
 	}
 
-	void LUA_NATIVE_WEAPON_REMOVE_WEAPON_COMPONENT_FROM_PED( int ped, unsigned weaponHash, unsigned componentHash )
+	void LUA_NATIVE_WEAPON_REMOVE_WEAPON_COMPONENT_FROM_PED( Ped ped, Hash weaponHash, Hash componentHash )
 	{
 		WEAPON::REMOVE_WEAPON_COMPONENT_FROM_PED(ped, weaponHash, componentHash);
 	}
 
-	bool LUA_NATIVE_WEAPON_HAS_PED_GOT_WEAPON_COMPONENT( int ped, unsigned weaponHash, unsigned componentHash )
+	bool LUA_NATIVE_WEAPON_HAS_PED_GOT_WEAPON_COMPONENT( Ped ped, Hash weaponHash, Hash componentHash )
 	{
 		auto retval = (bool)WEAPON::HAS_PED_GOT_WEAPON_COMPONENT(ped, weaponHash, componentHash);
 		return retval;
 	}
 
-	bool LUA_NATIVE_WEAPON_IS_PED_WEAPON_COMPONENT_ACTIVE( int ped, unsigned weaponHash, unsigned componentHash )
+	bool LUA_NATIVE_WEAPON_IS_PED_WEAPON_COMPONENT_ACTIVE( Ped ped, Hash weaponHash, Hash componentHash )
 	{
 		auto retval = (bool)WEAPON::IS_PED_WEAPON_COMPONENT_ACTIVE(ped, weaponHash, componentHash);
 		return retval;
 	}
 
-	bool LUA_NATIVE_WEAPON_REFILL_AMMO_INSTANTLY( int ped )
+	bool LUA_NATIVE_WEAPON_REFILL_AMMO_INSTANTLY( Ped ped )
 	{
 		auto retval = (bool)WEAPON::REFILL_AMMO_INSTANTLY(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_WEAPON_MAKE_PED_RELOAD( int ped )
+	bool LUA_NATIVE_WEAPON_MAKE_PED_RELOAD( Ped ped )
 	{
 		auto retval = (bool)WEAPON::MAKE_PED_RELOAD(ped);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_REQUEST_WEAPON_ASSET( unsigned weaponHash, int p1, int p2 )
+	void LUA_NATIVE_WEAPON_REQUEST_WEAPON_ASSET( Hash weaponHash, int p1, int p2 )
 	{
 		WEAPON::REQUEST_WEAPON_ASSET(weaponHash, p1, p2);
 	}
 
-	bool LUA_NATIVE_WEAPON_HAS_WEAPON_ASSET_LOADED( unsigned weaponHash )
+	bool LUA_NATIVE_WEAPON_HAS_WEAPON_ASSET_LOADED( Hash weaponHash )
 	{
 		auto retval = (bool)WEAPON::HAS_WEAPON_ASSET_LOADED(weaponHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_REMOVE_WEAPON_ASSET( unsigned weaponHash )
+	void LUA_NATIVE_WEAPON_REMOVE_WEAPON_ASSET( Hash weaponHash )
 	{
 		WEAPON::REMOVE_WEAPON_ASSET(weaponHash);
 	}
 
-	Object LUA_NATIVE_WEAPON_CREATE_WEAPON_OBJECT( unsigned weaponHash, int ammoCount, float x, float y, float z, bool showWorldModel, float scale, Any p7, Any p8, Any p9 )
+	Object LUA_NATIVE_WEAPON_CREATE_WEAPON_OBJECT( Hash weaponHash, int ammoCount, float x, float y, float z, bool showWorldModel, float scale, Any p7, Any p8, Any p9 )
 	{
 		auto retval = WEAPON::CREATE_WEAPON_OBJECT(weaponHash, ammoCount, x, y, z, showWorldModel, scale, p7, p8, p9);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_GIVE_WEAPON_COMPONENT_TO_WEAPON_OBJECT( Object weaponObject, unsigned componentHash )
+	void LUA_NATIVE_WEAPON_GIVE_WEAPON_COMPONENT_TO_WEAPON_OBJECT( Object weaponObject, Hash componentHash )
 	{
 		WEAPON::GIVE_WEAPON_COMPONENT_TO_WEAPON_OBJECT(weaponObject, componentHash);
 	}
 
-	void LUA_NATIVE_WEAPON_REMOVE_WEAPON_COMPONENT_FROM_WEAPON_OBJECT( Object object, unsigned componentHash )
+	void LUA_NATIVE_WEAPON_REMOVE_WEAPON_COMPONENT_FROM_WEAPON_OBJECT( Object object, Hash componentHash )
 	{
 		WEAPON::REMOVE_WEAPON_COMPONENT_FROM_WEAPON_OBJECT(object, componentHash);
 	}
 
-	bool LUA_NATIVE_WEAPON_HAS_WEAPON_GOT_WEAPON_COMPONENT( Object weapon, unsigned componentHash )
+	bool LUA_NATIVE_WEAPON_HAS_WEAPON_GOT_WEAPON_COMPONENT( Object weapon, Hash componentHash )
 	{
 		auto retval = (bool)WEAPON::HAS_WEAPON_GOT_WEAPON_COMPONENT(weapon, componentHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_GIVE_WEAPON_OBJECT_TO_PED( Object weaponObject, int ped )
+	void LUA_NATIVE_WEAPON_GIVE_WEAPON_OBJECT_TO_PED( Object weaponObject, Ped ped )
 	{
 		WEAPON::GIVE_WEAPON_OBJECT_TO_PED(weaponObject, ped);
 	}
 
-	bool LUA_NATIVE_WEAPON_DOES_WEAPON_TAKE_WEAPON_COMPONENT( unsigned weaponHash, unsigned componentHash )
+	bool LUA_NATIVE_WEAPON_DOES_WEAPON_TAKE_WEAPON_COMPONENT( Hash weaponHash, Hash componentHash )
 	{
 		auto retval = (bool)WEAPON::DOES_WEAPON_TAKE_WEAPON_COMPONENT(weaponHash, componentHash);
 		return retval;
 	}
 
-	Object LUA_NATIVE_WEAPON_GET_WEAPON_OBJECT_FROM_PED( int ped, bool p1 )
+	Object LUA_NATIVE_WEAPON_GET_WEAPON_OBJECT_FROM_PED( Ped ped, bool p1 )
 	{
 		auto retval = WEAPON::GET_WEAPON_OBJECT_FROM_PED(ped, p1);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_GIVE_LOADOUT_TO_PED( int ped, unsigned loadoutHash )
+	void LUA_NATIVE_WEAPON_GIVE_LOADOUT_TO_PED( Ped ped, Hash loadoutHash )
 	{
 		WEAPON::GIVE_LOADOUT_TO_PED(ped, loadoutHash);
 	}
 
-	void LUA_NATIVE_WEAPON_SET_PED_WEAPON_TINT_INDEX( int ped, unsigned weaponHash, int tintIndex )
+	void LUA_NATIVE_WEAPON_SET_PED_WEAPON_TINT_INDEX( Ped ped, Hash weaponHash, int tintIndex )
 	{
 		WEAPON::SET_PED_WEAPON_TINT_INDEX(ped, weaponHash, tintIndex);
 	}
 
-	int LUA_NATIVE_WEAPON_GET_PED_WEAPON_TINT_INDEX( int ped, unsigned weaponHash )
+	int LUA_NATIVE_WEAPON_GET_PED_WEAPON_TINT_INDEX( Ped ped, Hash weaponHash )
 	{
 		auto retval = WEAPON::GET_PED_WEAPON_TINT_INDEX(ped, weaponHash);
 		return retval;
@@ -36511,35 +36506,35 @@ namespace lua::native
 		return retval;
 	}
 
-	int LUA_NATIVE_WEAPON_GET_WEAPON_TINT_COUNT( unsigned weaponHash )
+	int LUA_NATIVE_WEAPON_GET_WEAPON_TINT_COUNT( Hash weaponHash )
 	{
 		auto retval = WEAPON::GET_WEAPON_TINT_COUNT(weaponHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_SET_PED_WEAPON_COMPONENT_TINT_INDEX( int ped, unsigned weaponHash, unsigned camoComponentHash, int colorIndex )
+	void LUA_NATIVE_WEAPON_SET_PED_WEAPON_COMPONENT_TINT_INDEX( Ped ped, Hash weaponHash, Hash camoComponentHash, int colorIndex )
 	{
 		WEAPON::SET_PED_WEAPON_COMPONENT_TINT_INDEX(ped, weaponHash, camoComponentHash, colorIndex);
 	}
 
-	int LUA_NATIVE_WEAPON_GET_PED_WEAPON_COMPONENT_TINT_INDEX( int ped, unsigned weaponHash, unsigned camoComponentHash )
+	int LUA_NATIVE_WEAPON_GET_PED_WEAPON_COMPONENT_TINT_INDEX( Ped ped, Hash weaponHash, Hash camoComponentHash )
 	{
 		auto retval = WEAPON::GET_PED_WEAPON_COMPONENT_TINT_INDEX(ped, weaponHash, camoComponentHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_SET_WEAPON_OBJECT_COMPONENT_TINT_INDEX( Object weaponObject, unsigned camoComponentHash, int colorIndex )
+	void LUA_NATIVE_WEAPON_SET_WEAPON_OBJECT_COMPONENT_TINT_INDEX( Object weaponObject, Hash camoComponentHash, int colorIndex )
 	{
 		WEAPON::SET_WEAPON_OBJECT_COMPONENT_TINT_INDEX(weaponObject, camoComponentHash, colorIndex);
 	}
 
-	int LUA_NATIVE_WEAPON_GET_WEAPON_OBJECT_COMPONENT_TINT_INDEX( Object weaponObject, unsigned camoComponentHash )
+	int LUA_NATIVE_WEAPON_GET_WEAPON_OBJECT_COMPONENT_TINT_INDEX( Object weaponObject, Hash camoComponentHash )
 	{
 		auto retval = WEAPON::GET_WEAPON_OBJECT_COMPONENT_TINT_INDEX(weaponObject, camoComponentHash);
 		return retval;
 	}
 
-	int LUA_NATIVE_WEAPON_GET_PED_WEAPON_CAMO_INDEX( int ped, unsigned weaponHash )
+	int LUA_NATIVE_WEAPON_GET_PED_WEAPON_CAMO_INDEX( Ped ped, Hash weaponHash )
 	{
 		auto retval = WEAPON::GET_PED_WEAPON_CAMO_INDEX(ped, weaponHash);
 		return retval;
@@ -36550,7 +36545,7 @@ namespace lua::native
 		WEAPON::SET_WEAPON_OBJECT_CAMO_INDEX(weaponObject, p1);
 	}
 
-	std::tuple<bool, Any> LUA_NATIVE_WEAPON_GET_WEAPON_HUD_STATS( unsigned weaponHash, Any outData )
+	std::tuple<bool, Any> LUA_NATIVE_WEAPON_GET_WEAPON_HUD_STATS( Hash weaponHash, Any outData )
 	{
 		std::tuple<bool, Any> return_values;
 		std::get<0>(return_values) = (bool)WEAPON::GET_WEAPON_HUD_STATS(weaponHash, &outData);
@@ -36559,7 +36554,7 @@ namespace lua::native
 		return return_values;
 	}
 
-	std::tuple<bool, Any> LUA_NATIVE_WEAPON_GET_WEAPON_COMPONENT_HUD_STATS( unsigned componentHash, Any outData )
+	std::tuple<bool, Any> LUA_NATIVE_WEAPON_GET_WEAPON_COMPONENT_HUD_STATS( Hash componentHash, Any outData )
 	{
 		std::tuple<bool, Any> return_values;
 		std::get<0>(return_values) = (bool)WEAPON::GET_WEAPON_COMPONENT_HUD_STATS(componentHash, &outData);
@@ -36568,62 +36563,62 @@ namespace lua::native
 		return return_values;
 	}
 
-	float LUA_NATIVE_WEAPON_GET_WEAPON_DAMAGE( unsigned weaponHash, unsigned componentHash )
+	float LUA_NATIVE_WEAPON_GET_WEAPON_DAMAGE( Hash weaponHash, Hash componentHash )
 	{
 		auto retval = WEAPON::GET_WEAPON_DAMAGE(weaponHash, componentHash);
 		return retval;
 	}
 
-	int LUA_NATIVE_WEAPON_GET_WEAPON_CLIP_SIZE( unsigned weaponHash )
+	int LUA_NATIVE_WEAPON_GET_WEAPON_CLIP_SIZE( Hash weaponHash )
 	{
 		auto retval = WEAPON::GET_WEAPON_CLIP_SIZE(weaponHash);
 		return retval;
 	}
 
-	float LUA_NATIVE_WEAPON_GET_WEAPON_TIME_BETWEEN_SHOTS( unsigned weaponHash )
+	float LUA_NATIVE_WEAPON_GET_WEAPON_TIME_BETWEEN_SHOTS( Hash weaponHash )
 	{
 		auto retval = WEAPON::GET_WEAPON_TIME_BETWEEN_SHOTS(weaponHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_SET_PED_CHANCE_OF_FIRING_BLANKS( int ped, float xBias, float yBias )
+	void LUA_NATIVE_WEAPON_SET_PED_CHANCE_OF_FIRING_BLANKS( Ped ped, float xBias, float yBias )
 	{
 		WEAPON::SET_PED_CHANCE_OF_FIRING_BLANKS(ped, xBias, yBias);
 	}
 
-	Object LUA_NATIVE_WEAPON_SET_PED_SHOOT_ORDNANCE_WEAPON( int ped, float p1 )
+	Object LUA_NATIVE_WEAPON_SET_PED_SHOOT_ORDNANCE_WEAPON( Ped ped, float p1 )
 	{
 		auto retval = WEAPON::SET_PED_SHOOT_ORDNANCE_WEAPON(ped, p1);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_REQUEST_WEAPON_HIGH_DETAIL_MODEL( int weaponObject )
+	void LUA_NATIVE_WEAPON_REQUEST_WEAPON_HIGH_DETAIL_MODEL( Entity weaponObject )
 	{
 		WEAPON::REQUEST_WEAPON_HIGH_DETAIL_MODEL(weaponObject);
 	}
 
-	void LUA_NATIVE_WEAPON_SET_WEAPON_DAMAGE_MODIFIER( unsigned weaponHash, float damageMultiplier )
+	void LUA_NATIVE_WEAPON_SET_WEAPON_DAMAGE_MODIFIER( Hash weaponHash, float damageMultiplier )
 	{
 		WEAPON::SET_WEAPON_DAMAGE_MODIFIER(weaponHash, damageMultiplier);
 	}
 
-	void LUA_NATIVE_WEAPON_SET_WEAPON_AOE_MODIFIER( unsigned weaponHash, float multiplier )
+	void LUA_NATIVE_WEAPON_SET_WEAPON_AOE_MODIFIER( Hash weaponHash, float multiplier )
 	{
 		WEAPON::SET_WEAPON_AOE_MODIFIER(weaponHash, multiplier);
 	}
 
-	void LUA_NATIVE_WEAPON_SET_WEAPON_EFFECT_DURATION_MODIFIER( unsigned p0, float p1 )
+	void LUA_NATIVE_WEAPON_SET_WEAPON_EFFECT_DURATION_MODIFIER( Hash p0, float p1 )
 	{
 		WEAPON::SET_WEAPON_EFFECT_DURATION_MODIFIER(p0, p1);
 	}
 
-	bool LUA_NATIVE_WEAPON_IS_PED_CURRENT_WEAPON_SILENCED( int ped )
+	bool LUA_NATIVE_WEAPON_IS_PED_CURRENT_WEAPON_SILENCED( Ped ped )
 	{
 		auto retval = (bool)WEAPON::IS_PED_CURRENT_WEAPON_SILENCED(ped);
 		return retval;
 	}
 
-	bool LUA_NATIVE_WEAPON_IS_FLASH_LIGHT_ON( int ped )
+	bool LUA_NATIVE_WEAPON_IS_FLASH_LIGHT_ON( Ped ped )
 	{
 		auto retval = (bool)WEAPON::IS_FLASH_LIGHT_ON(ped);
 		return retval;
@@ -36635,40 +36630,40 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_SET_FLASH_LIGHT_ACTIVE_HISTORY( int ped, bool toggle )
+	void LUA_NATIVE_WEAPON_SET_FLASH_LIGHT_ACTIVE_HISTORY( Ped ped, bool toggle )
 	{
 		WEAPON::SET_FLASH_LIGHT_ACTIVE_HISTORY(ped, toggle);
 	}
 
-	void LUA_NATIVE_WEAPON_SET_WEAPON_ANIMATION_OVERRIDE( int ped, unsigned animStyle )
+	void LUA_NATIVE_WEAPON_SET_WEAPON_ANIMATION_OVERRIDE( Ped ped, Hash animStyle )
 	{
 		WEAPON::SET_WEAPON_ANIMATION_OVERRIDE(ped, animStyle);
 	}
 
-	int LUA_NATIVE_WEAPON_GET_WEAPON_DAMAGE_TYPE( unsigned weaponHash )
+	int LUA_NATIVE_WEAPON_GET_WEAPON_DAMAGE_TYPE( Hash weaponHash )
 	{
 		auto retval = WEAPON::GET_WEAPON_DAMAGE_TYPE(weaponHash);
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_SET_EQIPPED_WEAPON_START_SPINNING_AT_FULL_SPEED( int ped )
+	void LUA_NATIVE_WEAPON_SET_EQIPPED_WEAPON_START_SPINNING_AT_FULL_SPEED( Ped ped )
 	{
 		WEAPON::SET_EQIPPED_WEAPON_START_SPINNING_AT_FULL_SPEED(ped);
 	}
 
-	bool LUA_NATIVE_WEAPON_CAN_USE_WEAPON_ON_PARACHUTE( unsigned weaponHash )
+	bool LUA_NATIVE_WEAPON_CAN_USE_WEAPON_ON_PARACHUTE( Hash weaponHash )
 	{
 		auto retval = (bool)WEAPON::CAN_USE_WEAPON_ON_PARACHUTE(weaponHash);
 		return retval;
 	}
 
-	int LUA_NATIVE_WEAPON_CREATE_AIR_DEFENCE_SPHERE( float x, float y, float z, float radius, float p4, float p5, float p6, unsigned weaponHash )
+	int LUA_NATIVE_WEAPON_CREATE_AIR_DEFENCE_SPHERE( float x, float y, float z, float radius, float p4, float p5, float p6, Hash weaponHash )
 	{
 		auto retval = WEAPON::CREATE_AIR_DEFENCE_SPHERE(x, y, z, radius, p4, p5, p6, weaponHash);
 		return retval;
 	}
 
-	int LUA_NATIVE_WEAPON_CREATE_AIR_DEFENCE_ANGLED_AREA( float p0, float p1, float p2, float p3, float p4, float p5, float p6, float p7, float p8, float radius, unsigned weaponHash )
+	int LUA_NATIVE_WEAPON_CREATE_AIR_DEFENCE_ANGLED_AREA( float p0, float p1, float p2, float p3, float p4, float p5, float p6, float p7, float p8, float radius, Hash weaponHash )
 	{
 		auto retval = WEAPON::CREATE_AIR_DEFENCE_ANGLED_AREA(p0, p1, p2, p3, p4, p5, p6, p7, p8, radius, weaponHash);
 		return retval;
@@ -36685,7 +36680,7 @@ namespace lua::native
 		WEAPON::REMOVE_ALL_AIR_DEFENCE_SPHERES();
 	}
 
-	void LUA_NATIVE_WEAPON_SET_PLAYER_TARGETTABLE_FOR_AIR_DEFENCE_SPHERE( int player, int zoneId, bool enable )
+	void LUA_NATIVE_WEAPON_SET_PLAYER_TARGETTABLE_FOR_AIR_DEFENCE_SPHERE( Player player, int zoneId, bool enable )
 	{
 		WEAPON::SET_PLAYER_TARGETTABLE_FOR_AIR_DEFENCE_SPHERE(player, zoneId, enable);
 	}
@@ -36710,12 +36705,12 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_WEAPON_SET_CAN_PED_SELECT_INVENTORY_WEAPON( int ped, unsigned weaponHash, bool toggle )
+	void LUA_NATIVE_WEAPON_SET_CAN_PED_SELECT_INVENTORY_WEAPON( Ped ped, Hash weaponHash, bool toggle )
 	{
 		WEAPON::SET_CAN_PED_SELECT_INVENTORY_WEAPON(ped, weaponHash, toggle);
 	}
 
-	void LUA_NATIVE_WEAPON_SET_CAN_PED_SELECT_ALL_WEAPONS( int ped, bool toggle )
+	void LUA_NATIVE_WEAPON_SET_CAN_PED_SELECT_ALL_WEAPONS( Ped ped, bool toggle )
 	{
 		WEAPON::SET_CAN_PED_SELECT_ALL_WEAPONS(ped, toggle);
 	}
@@ -36755,7 +36750,7 @@ namespace lua::native
 		return retval;
 	}
 
-	void LUA_NATIVE_ZONE_OVERRIDE_POPSCHEDULE_VEHICLE_MODEL( int scheduleId, unsigned vehicleHash )
+	void LUA_NATIVE_ZONE_OVERRIDE_POPSCHEDULE_VEHICLE_MODEL( int scheduleId, Hash vehicleHash )
 	{
 		ZONE::OVERRIDE_POPSCHEDULE_VEHICLE_MODEL(scheduleId, vehicleHash);
 	}
@@ -36765,7 +36760,7 @@ namespace lua::native
 		ZONE::CLEAR_POPSCHEDULE_OVERRIDE_VEHICLE_MODEL(scheduleId);
 	}
 
-	unsigned LUA_NATIVE_ZONE_GET_HASH_OF_MAP_AREA_AT_COORDS( float x, float y, float z )
+	Hash LUA_NATIVE_ZONE_GET_HASH_OF_MAP_AREA_AT_COORDS( float x, float y, float z )
 	{
 		auto retval = ZONE::GET_HASH_OF_MAP_AREA_AT_COORDS(x, y, z);
 		return retval;
