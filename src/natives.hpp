@@ -27,7 +27,7 @@ FORCEINLINE Ret invoke(rage::scrNativeHash hash, Args&&... args)
 
 // clang-format off
 
-// Generated on 7/2/2023, 2:30:56 PM
+// Generated on 7/7/2023, 6:33:04 AM
 // https://nativedb.spyral.dev
 
 namespace SYSTEM
@@ -3665,7 +3665,7 @@ namespace NETWORK
 	static Vector3 NETWORK_GET_LAST_ENTITY_POS_RECEIVED_OVER_NETWORK(Entity entity) { return invoke<Vector3>(0x64D779659BC37B19, entity); } // 0x64D779659BC37B19  b393
 	static Vector3 NETWORK_GET_LAST_PLAYER_POS_RECEIVED_OVER_NETWORK(Player player) { return invoke<Vector3>(0x125E6D638B8605D4, player); } // 0x125E6D638B8605D4  b393
 	static Vector3 NETWORK_GET_LAST_VEL_RECEIVED_OVER_NETWORK(Entity entity) { return invoke<Vector3>(0x33DE49EDF4DDE77A, entity); } // 0x33DE49EDF4DDE77A  b1103
-	static Vector3 NETWORK_GET_PREDICTED_VELOCITY(Entity entity) { return invoke<Vector3>(0xAA5FAFCD2C5F5E47, entity); } // 0xAA5FAFCD2C5F5E47  b1103
+	static Vector3 NETWORK_GET_PREDICTED_VELOCITY(Entity entity, float maxSpeedToPredict) { return invoke<Vector3>(0xAA5FAFCD2C5F5E47, entity, maxSpeedToPredict); } // 0xAA5FAFCD2C5F5E47  b1103
 	static void NETWORK_DUMP_NET_IF_CONFIG() { invoke<void>(0xAEDF1BC1C133D6E3); } // 0xAEDF1BC1C133D6E3  b323
 	static void NETWORK_GET_SIGNALLING_INFO(Any* p0) { invoke<void>(0x2555CF7DA5473794, p0); } // 0x2555CF7DA5473794  b323
 	static void NETWORK_GET_NET_STATISTICS_INFO(Any* p0) { invoke<void>(0x6FD992C4A1C1B986, p0); } // 0x6FD992C4A1C1B986  b323

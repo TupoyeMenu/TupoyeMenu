@@ -20085,9 +20085,9 @@ namespace lua::native
 		return retval;
 	}
 
-	Vector3 LUA_NATIVE_NETWORK_NETWORK_GET_PREDICTED_VELOCITY( Entity entity )
+	Vector3 LUA_NATIVE_NETWORK_NETWORK_GET_PREDICTED_VELOCITY( Entity entity, float maxSpeedToPredict )
 	{
-		auto retval = NETWORK::NETWORK_GET_PREDICTED_VELOCITY(entity);
+		auto retval = NETWORK::NETWORK_GET_PREDICTED_VELOCITY(entity, maxSpeedToPredict);
 		return retval;
 	}
 

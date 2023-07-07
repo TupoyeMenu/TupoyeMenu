@@ -27,54 +27,17 @@ namespace lua::gui
 	// Class for representing a tab within the GUI.
 	class tab
 	{
-		big::tabs m_id;
 		rage::joaat_t m_tab_hash;
 
 	public:
-		inline big::tabs id() const
+		tab(rage::joaat_t hash) :
+			m_tab_hash(hash)
 		{
-			return m_id;
 		}
 
 		inline rage::joaat_t hash() const
 		{
 			return m_tab_hash;
-		}
-
-		bool check_if_existing_tab_and_fill_id(const std::map<big::tabs, big::navigation_struct>& nav)
-		{
-			for (const auto& nav_item : nav)
-			{
-				if (nav_item.second.hash == m_tab_hash)
-				{
-					m_id = nav_item.first;
-					return true;
-				}
-				
-				if (check_if_existing_tab_and_fill_id(nav_item.second.sub_nav))
-				{
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		static void add_to_existing_tab(std::map<big::tabs, big::navigation_struct>& nav, const rage::joaat_t existing_tab_hash, const std::pair<big::tabs, big::navigation_struct>& new_tab, const sol::this_state& state)
-		{
-			for (auto& nav_item : nav)
-			{
-				if (nav_item.second.hash == existing_tab_hash)
-				{
-					auto module = sol::state_view(state)["!this"].get<big::lua_module*>();
-					module->m_tab_to_sub_tabs[nav_item.first].push_back(new_tab.first);
-
-					nav_item.second.sub_nav.emplace(new_tab);
-					return;
-				}
-
-				add_to_existing_tab(nav_item.second.sub_nav, existing_tab_hash, new_tab, state);
-			}
 		}
 
 		// Lua API: Function
@@ -89,16 +52,6 @@ namespace lua::gui
 				module->m_gui[m_tab_hash] = {};
 		}
 
-		// Lua API: Function
-		// Class: tab
-		// Name: add_tab
-		// Add a sub tab to this tab.
-		tab add_tab(const std::string& name, sol::this_state state)
-		{
-			const auto sub_tab = tab(name, m_tab_hash, state);
-
-			return sub_tab;
-		}
 
 		// Lua API: Function
 		// Class: tab
@@ -214,19 +167,7 @@ namespace lua::gui
 	// Returns: tab: A tab instance which corresponds to the tab in the GUI.
 	static tab get_tab(const std::string& tab_name, sol::this_state state)
 	{
-		return tab(tab_name, state);
-	}
-
-	// Lua API: Function
-	// Table: gui
-	// Name: add_tab
-	// Param: tab_name: string: Name of the tab to add.
-	// Returns: tab: A tab instance which corresponds to the new tab in the GUI.
-	static tab add_tab(const std::string& tab_name, sol::this_state state)
-	{
-		const auto new_tab = tab(tab_name, state);
-
-		return new_tab;
+		return tab(rage::joaat(tab_name));
 	}
 
 	// Lua API: Function
@@ -272,7 +213,6 @@ namespace lua::gui
 	{
 		auto ns            = state["gui"].get_or_create<sol::table>();
 		ns["get_tab"]      = get_tab;
-		ns["add_tab"]      = add_tab;
 		ns["show_message"] = show_message;
 		ns["show_warning"] = show_warning;
 		ns["show_error"]   = show_error;
@@ -323,7 +263,6 @@ namespace lua::gui
 
 		ns.new_usertype<tab>("tab",
 			"clear", &tab::clear,
-			"add_tab", &tab::add_tab,
 			"add_button", &tab::add_button,
 			"add_text", &tab::add_text,
 			"add_checkbox", &tab::add_checkbox,

@@ -12,6 +12,7 @@
 
 namespace big
 {
+	bool has_scrollbar = false;
 	static void player_button(const player_ptr& plyr)
 	{
 		bool selected_player = plyr == g_player_service->get_selected();
@@ -49,7 +50,11 @@ namespace big
 
 		ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, {0.0, 0.5});
 		ImGui::PushID(plyr->id());
-		if (ImGui::Button(plyr->get_name(), {300.0f - ImGui::GetStyle().ScrollbarSize, 0.f}))
+
+		const auto style = ImGui::GetStyle();
+		// branchless conditional calculation
+		const auto plyr_btn_width = 300.f - (style.ItemInnerSpacing.x * 2) - (has_scrollbar * style.ScrollbarSize);
+		if (ImGui::Button(plyr->get_name(), { plyr_btn_width, 0.f}))
 		{
 			g_player_service->set_selected(plyr);
 			g.window.player = true;
@@ -86,6 +91,7 @@ namespace big
 
 	void view::players()
 	{
+		// player count does not include ourself that's why +1
 		const auto player_count = g_player_service->players().size() + 1;
 
 		if (!*g_pointers->m_gta.m_is_session_started && player_count < 2)
@@ -102,6 +108,7 @@ namespace big
 
 			if (ImGui::BeginListBox("##players", {ImGui::GetWindowSize().x - ImGui::GetStyle().WindowPadding.x * 2, window_height}))
 			{
+				ImGui::SetScrollX(0);
 				player_button(g_player_service->get_self());
 
 				if (player_count > 1)

@@ -47,7 +47,7 @@ namespace big::functions
 	using increment_stat_event = bool (*)(uint64_t net_event_struct, int64_t sender, int64_t a3);
 
 	using ptr_to_handle = Entity (*)(void*);
-	using handle_to_ptr = rage::CDynamicEntity* (*)(Entity);
+	using handle_to_ptr = rage::CDynamicEntity* (*)(Entity);
 
 	using check_chat_profanity              = int(__int64 chat_type, const char* input, const char** output);
 	using write_player_game_state_data_node = bool (*)(rage::netObject* plr, CPlayerGameStateDataNode* node);
@@ -94,9 +94,11 @@ namespace big::functions
 
 	using fidevice_get_device = rage::fiDevice* (*)(const char* path, bool allow_root);
 	using fipackfile_ctor     = rage::fiPackfile* (*)(rage::fiPackfile* this_);
+	using fipackfile_dtor     = rage::fiPackfile* (*)(rage::fiPackfile* this_);
 	using fipackfile_open_archive = bool (*)(rage::fiPackfile* this_, const char* archive, bool b_true, int type, intptr_t very_false);
-	using fipackfile_mount   = bool (*)(rage::fiPackfile* this_, const char* mount_point);
-	using fipackfile_unmount = bool (*)(const char* mount_point);
+	using fipackfile_mount         = bool (*)(rage::fiPackfile* this_, const char* mount_point);
+	using fipackfile_unmount       = bool (*)(const char* mount_point);
+	using fipackfile_close_archive = void (*)(rage::fiDevice* this_);
 
 	using get_gamer_online_state = bool (*)(int profile_index, rage::rlGamerHandle* handles, std::uint32_t count, int* online_state, rage::rlTaskStatus* status);
 	using start_get_session_by_gamer_handle = bool (*)(int profile_index, rage::rlGamerHandle* handles, int count, rage::rlSessionByGamerTaskResult* result, int unk, bool* success, rage::rlTaskStatus* state);
