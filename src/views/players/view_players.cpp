@@ -25,6 +25,7 @@
 
 namespace big
 {
+	bool has_scrollbar = false;
 	static void player_button(const player_ptr& plyr)
 	{
 		bool selected_player = plyr == g_player_service->get_selected();
@@ -103,6 +104,7 @@ namespace big
 
 	void view::players()
 	{
+		// player count does not include ourself that's why +1
 		const auto player_count = g_player_service->players().size() + 1;
 
 		if (!*g_pointers->m_gta.m_is_session_started && player_count < 2)
@@ -119,6 +121,7 @@ namespace big
 
 			if (ImGui::BeginListBox("##players", {ImGui::GetWindowSize().x - ImGui::GetStyle().WindowPadding.x * 2, window_height}))
 			{
+				ImGui::SetScrollX(0);
 				player_button(g_player_service->get_self());
 
 				if (player_count > 1)

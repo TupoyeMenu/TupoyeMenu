@@ -347,9 +347,9 @@ namespace big
 
 				ImGui::Text("CEO Name: %s", boss_goon.GangName);
 				ImGui::Text("MC Name: %s", boss_goon.ClubhouseName);
-				ImGui::Text("Money In Wallet: %d", stats.WalletBalance);
-				ImGui::Text("Money In Bank: %d", stats.Money - stats.WalletBalance);
-				ImGui::Text("Total Money: %d", stats.Money);
+				ImGui::Text("Money In Wallet: %llu", stats.WalletBalance);
+				ImGui::Text("Money In Bank: %llu", stats.Money - stats.WalletBalance);
+				ImGui::Text("Total Money: %llu", stats.Money);
 				ImGui::Text("Rank: %d (RP %d)", stats.Rank, stats.RP);
 				ImGui::Text("K/D Ratio: %f", stats.KdRatio);
 				ImGui::Text("Kills On Players: %d", stats.KillsOnPlayers);
