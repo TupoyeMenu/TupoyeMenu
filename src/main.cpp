@@ -39,7 +39,6 @@
 #include "services/vehicle/vehicle_control_service.hpp"
 #include "services/vehicle/xml_vehicles_service.hpp"
 #include "thread_pool.hpp"
-#include "util/migrate.hpp"
 #include "version.hpp"
 
 BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
