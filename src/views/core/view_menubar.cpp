@@ -13,14 +13,23 @@ namespace big
 			{
 				if (ImGui::MenuItem("Unload Menu"))
 				{
-					g_fiber_pool->reset();
-					g_fiber_pool->queue_job([] {
-						for (auto& command : g_looped_commands)
-							if (command->is_enabled())
-								command->on_disable();
+					// allow to unload in the main title screen.
+					if (g_script_mgr.can_tick())
+					{
+						// empty the pool, we want the that job below run no matter what for clean up purposes.
+						g_fiber_pool->reset();
+						g_fiber_pool->queue_job([] {
+							for (auto& command : g_looped_commands)
+								if (command->is_enabled())
+									command->on_disable();
 
+							g_running = false;
+						});
+					}
+					else
+					{
 						g_running = false;
-					});
+					}
 				}
 
 				if (ImGui::MenuItem("Rage Quit (hard crash)"))

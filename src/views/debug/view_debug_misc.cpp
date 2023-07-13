@@ -15,6 +15,8 @@
 #include "util/pathfind.hpp"
 #include "views/view.hpp"
 
+#include "hooking.hpp"
+
 namespace big
 {
 	void view::debug_misc()
@@ -57,6 +59,11 @@ namespace big
 		components::button("Network Shutdown And Load Most Recent Save", [] {
 			NETWORK::SHUTDOWN_AND_LOAD_MOST_RECENT_SAVE();
 		});
+
+		if (components::button("Trigger GTA Error Message Box"))
+		{
+			hooks::log_error_message_box(0xBAFD530B, 1);
+		}
 
 		components::button("Tp To Safe Pos", [] {
 			Vector3 safepos{};

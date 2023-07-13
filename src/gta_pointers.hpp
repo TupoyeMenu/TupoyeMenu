@@ -59,7 +59,6 @@ namespace big
 		CPedFactory** m_ped_factory{};
 		CNetworkPlayerMgr** m_network_player_mgr{};
 		CNetworkObjectMgr** m_network_object_mgr{};
-		rage::CReplayInterface** m_replay_interface{};
 
 		functions::ptr_to_handle m_ptr_to_handle{};
 		functions::handle_to_ptr m_handle_to_ptr{};
@@ -279,6 +278,12 @@ namespace big
 		PVOID m_model_spawn_bypass{};
 
 		functions::get_host_array_handler_by_index m_get_host_array_handler_by_index;
+
+		PVOID m_error_message_box{};
+
+		functions::get_title_caption_error_message_box m_get_title_caption_error_message_box{};
+
+		PVOID m_send_non_physical_player_data;
 	};
 #pragma pack(pop)
 	static_assert(sizeof(gta_pointers) % 8 == 0, "Pointers are not properly aligned");

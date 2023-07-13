@@ -30,11 +30,7 @@ namespace big
 		static void handling_saved_profiles();
 		static void reaction_settings();
 		static void protection_settings();
-<<<<<<< HEAD
 		static void translation_settings();
-=======
-		static void heading();
->>>>>>> 3bdd0796f438aaa7f19028996f98ea66ac01c223
 		static void mobile();
 		static void notifications();
 		static void spinner();
@@ -54,6 +50,7 @@ namespace big
 		static void spawn_vehicle();
 		static void pv();
 		static void persist_car();
+		static void xml_vehicles();
 		static void fun_vehicle();
 		static void vehicle_control();
 		static void spawn_ped();
@@ -64,6 +61,7 @@ namespace big
 		static void network_tabs();
 		static void spoofing();
 		static void teleport();
+		static void custom_teleport();
 		static void players();
 		static void weapons();
 		static void context_menu();

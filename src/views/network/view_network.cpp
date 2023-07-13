@@ -82,6 +82,14 @@ namespace big
 		ImGui::SameLine();
 		components::help_marker("JOIN_IN_SCTV_DESC"_T);
 
+		ImGui::BeginDisabled(!g_player_service->get_self()->is_host());
+
+		ImGui::Checkbox("Lobby Lock", &g.session.lock_session);
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Blocks all players from joining. May not work on some modders.");
+
+		ImGui::EndDisabled();
+
 		components::sub_title("PLAYER_MAGNET"_T);
 		ImGui::Checkbox("ENABLED"_T.data(), &g.session.player_magnet_enabled);
 		if (g.session.player_magnet_enabled)
@@ -90,9 +98,6 @@ namespace big
 		}
 		components::sub_title("Chat");
 		ImGui::Checkbox("AUTO_KICK_CHAT_SPAMMERS"_T.data(), &g.session.kick_chat_spammers);
-		ImGui::Checkbox("DISABLE_FILTER"_T.data(), &g.session.chat_force_clean);
-		ImGui::SameLine();
-		components::help_marker("Your sent chat messages will not be censored to the receivers"); // TODO: add translation
 		ImGui::Checkbox("LOG_CHAT_MSG"_T.data(), &g.session.log_chat_messages);
 		static char msg[256];
 		components::input_text("##message", msg, sizeof(msg));
@@ -134,6 +139,7 @@ namespace big
 
 		components::sub_title("DECLOAK"_T);
 		components::script_patch_checkbox("REVEAL_OTR_PLAYERS"_T, &g.session.decloak_players);
+		components::script_patch_checkbox("Reveal Hidden Players", &g.session.unhide_players_from_player_list, "Reveals players that have hidden themselves from the player list");
 
 		components::sub_title("FORCE_HOST"_T);
 		ImGui::Checkbox("FORCE_SESSION_HOST"_T.data(), &g.session.force_session_host);

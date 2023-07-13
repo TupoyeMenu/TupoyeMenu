@@ -12,13 +12,17 @@ namespace lua::script
 	class script_util
 	{
 	public:
+		// We keep the two functions below yield and sleep for backcompat.
+		// The idea of exposing big::script::get_current()->yield directly to lua
+		// on the surface looks like it could works but it doesnt, the lua stack end up exploding.
+
 		// Lua API: Function
 		// Class: script_util
 		// Name: yield
 		// Yield execution.
-		void yield()
+		int yield()
 		{
-			big::script::get_current()->yield();
+			return 0;
 		}
 
 		// Lua API: Function
@@ -26,9 +30,9 @@ namespace lua::script
 		// Name: sleep
 		// Param: ms: integer: The amount of time in milliseconds that we will sleep for.
 		// Sleep for the given amount of time, time is in milliseconds.
-		void sleep(int ms)
+		int sleep(int ms)
 		{
-			big::script::get_current()->yield(std::chrono::milliseconds(ms));
+			return ms;
 		}
 	};
 	static script_util dummy_script_util;
@@ -66,12 +70,16 @@ namespace lua::script
 	//     ENTITY.DELETE_ENTITY(spawnedVehicle)
 	// end)
 	// ```
-	static void register_looped(const std::string& name, sol::function func, sol::this_state state)
+	static void register_looped(const std::string& name, sol::function func_, sol::this_state state)
 	{
 		auto module = sol::state_view(state)["!this"].get<big::lua_module*>();
 
-		module->m_registered_scripts.push_back(big::g_script_mgr.add_script(std::make_unique<big::script>(
-		    [func] {
+		std::unique_ptr<big::script> lua_script = std::make_unique<big::script>(
+		    [func_, state]() mutable {
+
+				sol::thread t       = sol::thread::create(state);
+			    sol::coroutine func = sol::coroutine(t.state(), func_);
+
 			    while (big::g_running)
 			    {
 				    auto res = func(dummy_script_util);
@@ -79,10 +87,22 @@ namespace lua::script
 				    if (!res.valid())
 					    big::g_lua_manager->handle_error(res, res.lua_state());
 
-				    big::script::get_current()->yield();
+				    if (func.runnable())
+				    {
+					    big::script::get_current()->yield(std::chrono::milliseconds(res.return_count() ? res[0] : 0));
+				    }
+				    else
+				    {
+					    big::script::get_current()->yield();
+				    }
 			    }
 		    },
-		    name)));
+			name
+		);
+
+		const auto registered_script = big::g_script_mgr.add_script(std::move(lua_script));
+
+		module->m_registered_scripts.push_back(registered_script);
 	}
 
 	// Lua API: Function
@@ -113,14 +133,42 @@ namespace lua::script
     //     ENTITY.DELETE_ENTITY(spawnedVehicle)
 	// end)
 	// ```
-	static void run_in_fiber(sol::function func)
+	static void run_in_fiber(sol::function func_, sol::this_state state)
 	{
-		big::g_fiber_pool->queue_job([func] {
-			auto res = func(dummy_script_util);
+		auto module = sol::state_view(state)["!this"].get<big::lua_module*>();
 
-			if (!res.valid())
-				big::g_lua_manager->handle_error(res, res.lua_state());
-		});
+		static size_t name_i = 0;
+		std::string job_name = module->module_name() + std::to_string(name_i++);
+
+		// We make a new script for lua state destruction timing purposes, see lua_module dctor for more info.
+		std::unique_ptr<big::script> lua_script = std::make_unique<big::script>(
+		    [func_, state]() mutable {
+			    sol::thread t       = sol::thread::create(state);
+			    sol::coroutine func = sol::coroutine(t.state(), func_);
+
+			    while (big::g_running)
+			    {
+				    auto res = func(dummy_script_util);
+
+				    if (!res.valid())
+					    big::g_lua_manager->handle_error(res, res.lua_state());
+
+				    if (func.runnable())
+				    {
+					    big::script::get_current()->yield(std::chrono::milliseconds(res.return_count() ? res[0] : 0));
+				    }
+				    else
+				    {
+					    big::g_script_mgr.remove_script(big::script::get_current());
+					    break;
+				    }
+			    }
+		    },
+		    job_name);
+
+		const auto registered_script = big::g_script_mgr.add_script(std::move(lua_script));
+
+		module->m_registered_scripts.push_back(registered_script);
 	}
 
 	static void bind(sol::state& state)
@@ -129,10 +177,9 @@ namespace lua::script
 		ns["register_looped"] = register_looped;
 		ns["run_in_fiber"]    = run_in_fiber;
 
-		//clang-format off
-		state.new_usertype<script_util>("script_util",
-			"yield", &script_util::yield,
-			"sleep", &script_util::sleep);
-		//clang-format on
+		state.new_usertype<script_util>("script_util");
+
+		state["script_util"]["yield"] = sol::yielding(&script_util::yield);
+		state["script_util"]["sleep"] = sol::yielding(&script_util::sleep);
 	}
 }

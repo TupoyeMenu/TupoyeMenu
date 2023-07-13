@@ -47,7 +47,7 @@ namespace big::functions
 	using increment_stat_event = bool (*)(uint64_t net_event_struct, int64_t sender, int64_t a3);
 
 	using ptr_to_handle = Entity (*)(void*);
-	using handle_to_ptr = rage::CDynamicEntity* (*)(Entity);
+	using handle_to_ptr = rage::CDynamicEntity* (*)(Entity);
 
 	using check_chat_profanity              = int(__int64 chat_type, const char* input, const char** output);
 	using write_player_game_state_data_node = bool (*)(rage::netObject* plr, CPlayerGameStateDataNode* node);
@@ -152,4 +152,6 @@ namespace big::functions
 	using update_language = void (*)(bool);
 
 	using get_host_array_handler_by_index = rage::netArrayHandlerBase* (*)(CGameScriptHandlerNetComponent* component, int index);
+
+	using get_title_caption_error_message_box = const wchar_t* (*)(rage::joaat_t joaated_error_code);
 }
