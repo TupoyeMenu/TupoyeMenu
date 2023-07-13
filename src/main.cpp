@@ -86,6 +86,9 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    LOG(INFO) << "Renderer initialized.";
 			    auto gui_instance = std::make_unique<gui>();
 
+				auto fiber_pool_instance = std::make_unique<fiber_pool>(11);
+			    LOG(INFO) << "Fiber pool initialized.";
+
 			    g_translation_service.init();
 			    LOG(INFO) << "Translation Service initialized.";
 
