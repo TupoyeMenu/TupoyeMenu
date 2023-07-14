@@ -243,6 +243,7 @@ namespace big
 				contexts_per_player[i] = contexts[i];
 			}
 
+#ifdef ENABLE_SOCIALCLUB
 			if (g_pointers->m_sc.m_start_get_presence_attributes(0, bucket.data(), bucket.size(), contexts_per_player, 2, &status))
 			{
 				while (status.status == 1)
@@ -279,6 +280,7 @@ namespace big
 					}
 				}
 				else
+#endif // ENABLE_SOCIALCLUB
 				{
 					LOG(WARNING) << "Presence attribute endpoint failed";
 				}
