@@ -180,6 +180,72 @@ namespace big
 				    &global_test.global_appendages[i].size);
 				break;
 			}
+<<<<<<< HEAD
+=======
+			else
+				ImGui::Text("INVALID_GLOBAL_READ");
+
+			auto globals = list_globals();
+			static std::string selected_global;
+			ImGui::Text("Saved Globals");
+			if (ImGui::BeginListBox("##savedglobals", ImVec2(200, 200)))
+			{
+				for (auto pair : globals)
+				{
+					if (ImGui::Selectable(pair.first.c_str(), selected_global == pair.first))
+						selected_global = std::string(pair.first);
+				}
+				ImGui::EndListBox();
+			}
+			ImGui::SameLine();
+			if (ImGui::BeginListBox("##globalvalues", ImVec2(200, 200)))
+			{
+				for (auto pair : globals)
+				{
+					if (auto ptr = get_global_ptr(pair.second))
+						ImGui::Selectable(std::format("{}", *ptr).c_str(), false, ImGuiSelectableFlags_Disabled);
+					else
+						ImGui::Selectable("INVALID_GLOBAL_READ", false, ImGuiSelectableFlags_Disabled);
+				}
+				ImGui::EndListBox();
+			}
+			ImGui::SameLine();
+			ImGui::BeginGroup();
+			static char global_name[50]{};
+			ImGui::SetNextItemWidth(200.f);
+			ImGui::InputText("##GlobalName", global_name, IM_ARRAYSIZE(global_name));
+			if (ImGui::Button("Save Global"))
+			{
+				save_global(global_name, global_test);
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Load Global"))
+			{
+				load_global_menu(selected_global, global_test);
+			}
+
+			if (ImGui::Button("Delete Global"))
+			{
+				if (!selected_global.empty())
+				{
+					delete_global(selected_global);
+					selected_global.clear();
+				}
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Add Read Global"))
+			{
+				global_test.global_appendages.push_back({GlobalAppendageType_ReadGlobal, 0LL, 0ULL, selected_global});
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Clear"))
+			{
+				global_test.global_index = 0;
+				global_test.global_appendages.clear();
+			}
+			ImGui::EndGroup();
+			ImGui::EndTabItem();
+>>>>>>> d15182ca9c5dd6984a6fd354a3f83f6247f2353e
 		}
 
 		if (ImGui::Button("Add Offset"))

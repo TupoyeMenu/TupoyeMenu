@@ -1404,7 +1404,7 @@ namespace big
         // Start Get Presence Attributes
         {
             "SGPA",
-            "48 8B C4 48 89 58 08 48 89 68 10 48 89 70 18 48 89 78 20 41 54 41 56 41 57 48 83 EC 40 33 DB 41",
+            "48 8B C4 48 89 58 08 48 89 68 10 48 89 70 18 48 89 78 20 41 54 41 56 41 57 48 83 EC 40 33 DB 49",
             [](memory::handle ptr)
             {
                 g_pointers->m_sc.m_start_get_presence_attributes = ptr.as<functions::start_get_presence_attributes>();
@@ -1457,7 +1457,7 @@ namespace big
 	    m_gta_pointers_cache(g_file_manager.get_project_file("./cache/gta_pointers.bin")),
 	    m_sc_pointers_cache(g_file_manager.get_project_file("./cache/sc_pointers.bin"))
 #else 
-	    m_gta_pointers_cache(g_file_manager.get_project_file("./cache/gta_pointers.bin")),
+	    m_gta_pointers_cache(g_file_manager.get_project_file("./cache/gta_pointers.bin"))
 #endif // ENABLE_SOCIALCLUB
 	{
 		g_pointers = this;

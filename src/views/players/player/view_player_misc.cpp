@@ -35,7 +35,12 @@ namespace big
 		ImGui::Checkbox("Off The Radar", &g_player_service->get_selected()->off_radar);
 		ImGui::Checkbox("Never Wanted", &g_player_service->get_selected()->never_wanted);
 		ImGui::Checkbox("Semi Godmode", &g_player_service->get_selected()->semi_godmode);
+
 		ImGui::Checkbox("Block Explosions", &g_player_service->get_selected()->block_explosions);
+		ImGui::Checkbox("Block Clone Creates", &g_player_service->get_selected()->block_clone_create);
+		ImGui::Checkbox("Block Clone Syncs", &g_player_service->get_selected()->block_clone_sync);
+		ImGui::Checkbox("Block Network Events", &g_player_service->get_selected()->block_net_events);
+
 
 		components::button("Gooch Test", [] {
 			*script_global(1890378).at(289).at(1).as<Player*>() = g_player_service->get_selected()->id();

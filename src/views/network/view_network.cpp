@@ -40,8 +40,10 @@ namespace big
 		components::input_text("Session Info", base64, sizeof(base64));
 		components::button("Join Session Info", [] {
 			rage::rlSessionInfo info;
-			g_pointers->m_gta.m_decode_session_info(&info, base64, nullptr);
-			session::join_session(info);
+			if (g_pointers->m_gta.m_decode_session_info(&info, base64, nullptr))
+				session::join_session(info);
+			else
+				g_notification_service->push_error("Join", "Session info is invalid");
 		});
 		ImGui::SameLine();
 		components::button("Copy Session Info", [] {
