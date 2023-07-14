@@ -19,7 +19,6 @@
 #include "services/chat/chat_service.hpp"
 #include "services/context_menu/context_menu_service.hpp"
 #include "services/custom_text/custom_text_service.hpp"
-#include "services/globals/globals_service.hpp"
 #include "services/gta_data/gta_data_service.hpp"
 #include "services/hotkey/hotkey_service.hpp"
 #include "services/matchmaking/matchmaking_service.hpp"
@@ -98,7 +97,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    auto chat_service_instance              = std::make_unique<chat_service>();
 			    auto context_menu_service_instance      = std::make_unique<context_menu_service>();
 			    auto custom_text_service_instance       = std::make_unique<custom_text_service>();
-			    auto globals_service_instace            = std::make_unique<globals_service>();
 			    auto mobile_service_instance            = std::make_unique<mobile_service>();
 			    auto notification_service_instance      = std::make_unique<notification_service>();
 			    auto spinner_service_instance           = std::make_unique<spinner_service>();
@@ -216,8 +214,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    LOG(INFO) << "Player Database Service reset.";
 			    pickup_service_instance.reset();
 			    LOG(INFO) << "Pickup Service reset.";
-			    globals_service_instace.reset();
-			    LOG(INFO) << "Globals Service reset.";
 			    custom_text_service_instance.reset();
 			    LOG(INFO) << "Custom Text Service reset.";
 			    context_menu_service_instance.reset();
