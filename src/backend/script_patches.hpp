@@ -67,12 +67,6 @@ namespace big
 		g_script_patcher_service->add_patch(
 		    {RAGE_JOAAT("carmod_shop"), "2D 03 07 00 00 71 38 02", 5, {0x72, 0x2E, 0x03, 0x01}, &g.vehicle.ls_customs}); // allow all vehicles 2
 		
-		g_script_patcher_service->add_patch({RAGE_JOAAT("maintransition"),
-		    "2D 00 02 00 00 2C ? ? ? 56 ? ? 2C ? ? ? 74 58 ? ? 2C ? ? ? 73",
-		    5,
-		    {0x72, 0x2E, 0x00, 0x01},
-		    &g.tunables.seamless_join}); // Prevents infinite loading screen.
-
 		/**
 		 * @brief Prevents infinite loading screen.
 		 * @code {.asm}

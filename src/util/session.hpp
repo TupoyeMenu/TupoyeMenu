@@ -81,7 +81,7 @@ namespace big::session
 		if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(RAGE_JOAAT("maintransition")) == 0)
 		{
 			*script_global(2694534).as<int*>() = 1;
-			script::get_current()->yield(200ms);
+			script::get_current()->yield(500ms);
 			*script_global(1574589).as<int*>() = 0;
 		}
 

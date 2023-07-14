@@ -133,7 +133,7 @@ namespace big
 				if (ImGui::InputScalar("RID", ImGuiDataType_S64, &current_player->rockstar_id)
 				    || ImGui::Checkbox("Is Modder", &current_player->is_modder)
 				    || ImGui::Checkbox("Force Allow Join", &current_player->force_allow_join)
-				    || ImGui::Checkbox("BLOCK_JOIN"_T.data(), &current_player->block_join)
+				    || ImGui::Checkbox("Block Join", &current_player->block_join)
 				    || ImGui::Checkbox("Track Player", &current_player->notify_online))
 				{
 					if (current_player->rockstar_id != selected->rockstar_id)
@@ -281,17 +281,5 @@ namespace big
 			current_player = g_player_database_service->add_player(new_rockstar_id, new_name);
 			g_player_database_service->save();
 		}
-		ImGui::SameLine();
-		if (ImGui::Button("SEARCH"_T.data()))
-		{
-			g_thread_pool->push([] {
-				if (!g_api_service->get_rid_from_username(new_name, *(uint64_t*)&new_rockstar_id))
-				{
-					g_notification_service->push_error("New Player DB Entry", std::format("No user '{}' called could be found.", new_name));
-					new_rockstar_id = 0;
-				}
-			});
-		}
-		components::help_marker("Do you know only the name of someone and not their Rockstar ID? Just fill in the username and click \"search\".");
 	}
 }

@@ -11,6 +11,7 @@
 #include "script_patch.hpp"
 
 #include "script_data.hpp"
+#include <cstdint>
 
 namespace big
 {
@@ -63,7 +64,11 @@ namespace big
 		{
 			auto result = get_code_location_by_pattern(data, m_pattern);
 			if (!result.has_value())
-				LOG(FATAL) << "Failed to find pattern";
+			{
+				LOG(FATAL) << "Failed to find pattern for script " << m_script;
+				for(std::uint8_t byte : m_patch)
+					LOG(VERBOSE) << HEX_TO_UPPER(byte);
+			}
 
 			m_ip = result.value() + m_offset;
 
