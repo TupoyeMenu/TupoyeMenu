@@ -21,7 +21,7 @@ namespace big::asi_loader
 	{
 		LOG(INFO) << "Loading *.asi plugins.";
 
-		const auto asi_folder = g_file_manager->get_project_folder("./OpenHookV");
+		const auto asi_folder = g_file_manager.get_project_folder("./OpenHookV");
 
 		for (const auto& item : std::filesystem::directory_iterator(asi_folder.get_path()))
 		{

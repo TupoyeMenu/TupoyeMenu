@@ -112,8 +112,7 @@ namespace big
 			    command->get_lower_bound(),
 			    command->get_upper_bound());
 
-			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip(command->get_description().c_str());
+			help_marker(command->get_description());
 		}
 
 		template<ImVec2 size = ImVec2(0, 0), ImVec4 color = ImVec4(0.172f, 0.380f, 0.909f, 1.f)> // TODO: Use GUI Color.

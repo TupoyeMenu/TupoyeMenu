@@ -96,17 +96,23 @@ namespace big
 		ImGui::SameLine();
 		components::help_marker("Allows you to join full and solo sessions but can be detected by other modders");
 
+		ImGui::BeginDisabled(!g_player_service->get_self()->is_host());
+
+		ImGui::Checkbox("Lobby Lock", &g.session.lock_session);
+		components::help_marker("Blocks all players from joining. May not work on some modders.");
+
+		ImGui::EndDisabled();
+
 		ImGui::SeparatorText("Player Magnet");
 		ImGui::Checkbox("Enabled", &g.session.player_magnet_enabled);
+
 		if (g.session.player_magnet_enabled)
 		{
 			ImGui::InputInt("Player Count", &g.session.player_magnet_count);
 		}
+
 		ImGui::SeparatorText("Chat");
 		ImGui::Checkbox("Auto-kick Chat Spammers", &g.session.kick_chat_spammers);
-		ImGui::Checkbox("Disable Filter", &g.session.chat_force_clean);
-		ImGui::SameLine();
-		components::help_marker("Your sent chat messages will not be censored to the receivers");
 		ImGui::Checkbox("Log Chat Messages", &g.session.log_chat_messages);
 		static char msg[256];
 		components::input_text("##message", msg, sizeof(msg));
@@ -148,6 +154,7 @@ namespace big
 
 		ImGui::SeparatorText("Decloak");
 		components::script_patch_checkbox("Reveal OTR Players", &g.session.decloak_players);
+		components::script_patch_checkbox("Reveal Hidden Players", &g.session.unhide_players_from_player_list, "Reveals players that have hidden themselves from the player list");
 
 		ImGui::SeparatorText("Force Host");
 		ImGui::Checkbox("Force Session Host", &g.session.force_session_host);

@@ -66,7 +66,6 @@ namespace big
 			ImGui::EndCombo();
 		}
 
-
 		static char search[64];
 
 		ImGui::SetNextItemWidth(300.f);
@@ -95,7 +94,6 @@ namespace big
 				}
 			}
 		});
-
 
 		if (ImGui::BeginListBox("###vehicles", ImVec2(300, -ImGui::GetFrameHeight())))
 		{
@@ -234,11 +232,14 @@ namespace big
 		ImGui::RadioButton("New", &spawn_type, 0);
 		ImGui::SameLine();
 		ImGui::RadioButton("Personal", &spawn_type, 1);
+		ImGui::SameLine();
+		ImGui::RadioButton("Xml", &spawn_type, 2);
 
 		switch (spawn_type)
 		{
 		case 0: render_spawn_new_vehicle(); break;
 		case 1: view::pv(); break;
+		case 2: view::xml_vehicles(); break;
 		}
 	}
 }

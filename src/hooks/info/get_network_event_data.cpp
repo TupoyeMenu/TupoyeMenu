@@ -31,9 +31,6 @@ namespace big
 		if (!player->get_ped())
 			return false;
 
-		if (!NETWORK::NETWORK_ARE_PLAYERS_IN_SAME_TUTORIAL_SESSION(self::id, player->id()))
-			return false; // probably not
-
 		if (scr_globals::globalplayer_bd.as<GlobalPlayerBD*>()->Entries[player->id()].IsInvisible)
 			return true;
 
@@ -72,8 +69,17 @@ namespace big
 		{
 		case rage::eEventNetworkType::CEventNetworkRemovedFromSessionDueToComplaints:
 		{
-			g_notification_service->push_warning("Kicked", "You have been desync kicked.");
-			LOG(WARNING) << "You have been desync kicked.";
+			if (g.protections.kick_rejoin && !NETWORK::NETWORK_IS_ACTIVITY_SESSION() && SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(RAGE_JOAAT("maintransition")) == 0 && !STREAMING::IS_PLAYER_SWITCH_IN_PROGRESS())
+			{
+				g_fiber_pool->queue_job([] {
+					session::join_session(gta_util::get_network()->m_last_joined_session.m_session_info);
+				});
+				g_notification_service->push_warning("Kicked", "You have been desync kicked. Rejoining previous session...");
+			}
+			else
+			{
+				g_notification_service->push_warning("Kicked", "You have been desync kicked.");
+			}
 			break;
 		}
 		case rage::eEventNetworkType::CEventNetworkEntityDamage:
@@ -110,6 +116,9 @@ namespace big
 					}
 
 					if (NETWORK::NETWORK_IS_ACTIVITY_SESSION())
+						break;
+
+					if (!NETWORK::NETWORK_ARE_PLAYERS_IN_SAME_TUTORIAL_SESSION(self::id, player->id()))
 						break;
 
 					if (globals::get_interior_from_player(player->id()) != 0)

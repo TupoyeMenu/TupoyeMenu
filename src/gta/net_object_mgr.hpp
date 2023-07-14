@@ -12,7 +12,6 @@
 #include "pointers.hpp"
 #include "enums.hpp"
 #include "node_list.hpp"
-#include "replay.hpp"
 
 class CNetGamePlayer;
 
@@ -21,10 +20,10 @@ namespace rage
 	class CPlayerSyncTree
 	{
 	public:
-		char pad_0000[8];        //0x0000
-		netObject* player_object;//0x0008
-		char pad_0010[256];      //0x0010
-	};                           //Size: 0x0110
+		char pad_0000[8];         //0x0000
+		netObject* player_object; //0x0008
+		char pad_0010[256];       //0x0010
+	};                            //Size: 0x0110
 
 	class CNetworkSyncDataULBase
 	{
@@ -70,12 +69,12 @@ namespace rage
 		uint8_t ownerId;
 		uint8_t nextOwnerId;
 		uint8_t isRemote;
-		uint8_t wantsToDelete : 1;// netobj+76
+		uint8_t wantsToDelete : 1; // netobj+76
 		uint8_t unk1 : 1;
 		uint8_t shouldNotBeDeleted : 1;
 		uint8_t pad_4Dh[3];
 		uint8_t pad_50h[32];
-		uint32_t creationAckedPlayers;// netobj+112
+		uint32_t creationAckedPlayers; // netobj+112
 		uint32_t m64;
 		uint32_t m68;
 		uint32_t m6C;

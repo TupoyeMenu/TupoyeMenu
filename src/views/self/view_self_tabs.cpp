@@ -46,6 +46,13 @@ namespace big
 					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_TELEPORT"));
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("Custom Teleport"))
+			{
+				view::custom_teleport();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_CUSTOM_TELEPORT"));
+				ImGui::EndTabItem();
+			}
 			if (ImGui::BeginTabItem("Outfit Editor"))
 			{
 				view::outfit_editor();

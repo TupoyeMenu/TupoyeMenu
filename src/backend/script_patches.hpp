@@ -48,6 +48,11 @@ namespace big
 		    0,
 		    {0x2B, 0x2B, 0x2B, 0x00, 0x55},
 		    &g.self.invisibility});
+		g_script_patcher_service->add_patch({RAGE_JOAAT("freemode"),
+		    "2D 01 03 00 00 38 00 71 72 5D ? ? ? 06 56 ? ? 71 2E ? ? 2C ? ? ? 71",
+		    5,
+		    {0x72, 0x2E, 0x01, 0x01},
+		    &g.session.unhide_players_from_player_list});
 
 		g_script_patcher_service->add_patch(
 		    {RAGE_JOAAT("carmod_shop"), "2D 01 0A 00 00 4F ? ? 40 ? 41 ? 39 03", 5, {0x2E, 0x01, 0x00}, &g.vehicle.ls_customs}); // disable camera
@@ -61,6 +66,12 @@ namespace big
 		    {RAGE_JOAAT("carmod_shop"), "2D 03 16 00 00 5D", 5, {0x72, 0x2E, 0x03, 0x01}, &g.vehicle.ls_customs}); // allow all vehicles
 		g_script_patcher_service->add_patch(
 		    {RAGE_JOAAT("carmod_shop"), "2D 03 07 00 00 71 38 02", 5, {0x72, 0x2E, 0x03, 0x01}, &g.vehicle.ls_customs}); // allow all vehicles 2
+		
+		g_script_patcher_service->add_patch({RAGE_JOAAT("maintransition"),
+		    "2D 00 02 00 00 2C ? ? ? 56 ? ? 2C ? ? ? 74 58 ? ? 2C ? ? ? 73",
+		    5,
+		    {0x72, 0x2E, 0x00, 0x01},
+		    &g.tunables.seamless_join}); // Prevents infinite loading screen.
 
 		/**
 		 * @brief Prevents infinite loading screen.

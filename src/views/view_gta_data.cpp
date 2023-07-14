@@ -37,27 +37,9 @@ namespace big
 			{
 				ImGui::Text("TupoyeMenu requires a rebuild of the game cache. This may take up to one minute to generate.");
 
-				if (*g_pointers->m_gta.m_is_session_started)
+				if (ImGui::Button("Update Cache"))
 				{
-					if (ImGui::Button("Update Cache"))
-					{
-						g_gta_data_service->update_now();
-					}
-				}
-				else
-				{
-					if (ImGui::Button("Update Cache"))
-					{
-						g_gta_data_service->update_now();
-					}
-
-					if (*g_pointers->m_gta.m_game_state == eGameState::Respawn)
-					{
-						if (ImGui::Button("Update Cache On Init"))
-						{
-							g_gta_data_service->update_on_init();
-						}
-					}
+					g_gta_data_service->update_now();
 				}
 
 				break;
@@ -68,25 +50,7 @@ namespace big
 
 				break;
 			}
-			case eGtaDataUpdateState::WAITING_FOR_ONLINE:
-			{
-				ImGui::Text("Waiting for online to start cache update...");
-
-				break;
-			}
 			case eGtaDataUpdateState::UPDATING:
-			{
-				ImGui::Text("Updating cache, please wait...");
-
-				break;
-			}
-			case eGtaDataUpdateState::ON_INIT_WAITING:
-			{
-				ImGui::Text("Waiting for single player to be loaded...");
-
-				break;
-			}
-			case eGtaDataUpdateState::ON_INIT_UPDATE_START:
 			{
 				ImGui::Text("Updating cache, please wait...");
 

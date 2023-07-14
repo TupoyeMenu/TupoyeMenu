@@ -55,6 +55,7 @@ namespace big
 		static void lsc();
 		static void spawn_vehicle();
 		static void pv();
+		static void xml_vehicles();
 		static void fun_vehicle();
 		static void spawn_ped();
 		static void world_tabs();
@@ -64,6 +65,7 @@ namespace big
 		static void network_tabs();
 		static void spoofing();
 		static void teleport();
+		static void custom_teleport();
 		static void players();
 		static void weapons();
 		static void context_menu();

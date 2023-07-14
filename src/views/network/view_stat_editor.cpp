@@ -227,8 +227,7 @@ namespace big
 				components::input_text("Value", stat_date_value, sizeof(stat_date_value), ImGuiInputTextFlags_None, [] {
 					g.stat_editor.stat.date_value = stat_date_value;
 				});
-				if (ImGui::IsItemHovered())
-					ImGui::SetTooltip("year month day hour minute second millisecond\nexample: 2022 1 17 21 34 55");
+				components::help_marker("year month day hour minute second millisecond\nexample: 2022 1 17 21 34 55");
 				components::button("Apply", [] {
 					helper::stat_set_date(stat_date_text, stat_date_value);
 				});

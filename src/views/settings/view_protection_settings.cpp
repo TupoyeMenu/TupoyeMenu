@@ -57,6 +57,7 @@ namespace big
 		ImGui::Checkbox("Receive Pickup", &g.protections.receive_pickup);
 		ImGui::SameLine(); components::help_marker("This prevents any pickup from the ground such as unwanted money drops.\nAttention: Normal pickups are also no longer possible.");
 		ImGui::Checkbox("Admin Check", &g.protections.admin_check);
+		ImGui::Checkbox("Kick Rejoin", &g.protections.kick_rejoin);
 		ImGui::EndGroup();
 	}
 

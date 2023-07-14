@@ -56,7 +56,7 @@ namespace big
 	private:
 		bool m_running;
 
-		std::unique_ptr<file> m_save_file;
+		file m_save_file;
 
 		nlohmann::json m_default_options;
 		nlohmann::json m_options;
@@ -201,8 +201,9 @@ namespace big
 			reaction rotate_cam{"Rotate Cam", "Blocked Rotate Cam from %s", "%s tried to mess with my camera!"};
 			reaction send_to_cutscene{"Send To Cutscene", "Blocked Send To Cutscene from %s", "%s tried to force me into a cutscene!"};
 			reaction send_to_location{"Send To Location", "Blocked Send To Location from %s", "%s tried to send me to Cayo Perico!"};
+			reaction send_to_interior{"Send To Interior", "Blocked Send To Interior from %s", "%s tried to send me to an interior!"};
 			reaction sound_spam{"Sound Spam", "Blocked Sound Spam from %s", "%s tried to spam annoying sounds at me!"};
-			reaction spectate_notification{"Spectate", "Blocked Spectate from %s", "Blocked Spectate from %s"};
+			reaction spectate_notification{"Spectate Notification", "Blocked Spectate Notification from %s", "Blocked Spectate Notification from %s"};
 			reaction give_collectible{"Give Collectible", "Blocked Give Collectible from %s", "%s tried to give me a collectible!"};
 			reaction transaction_error{"Transaction Error", "Blocked Transaction Error from %s", "%s tried to show me a transaction error!"};
 			reaction tse_freeze{"TSE Freeze", "Blocked TSE Freeze from %s", "%s tried to softlock my game!"};
@@ -225,10 +226,12 @@ namespace big
 			reaction modder_detection{"Modder Detection", "%s is detected as a modder by the anticheat", "%s is detected as a modder by the anticheat"};
 			reaction request_control_event{"Request Control Event", "Blocked Request Control Event from %s", "%s tried to mess with my vehicle!"};
 			reaction report{"Report", "Blocked Report from %s", "%s tried to report me!"};
+			reaction spectate{"Spectate", "%s is spectating you", "%s is spectating me!"};
+			interloper_reaction spectate_others{"Spectate Others", "%s is spectating %s!", "%s is spectating %s!", false, false};
 
 			reaction gamer_instruction_kick{"Gamer Instruction Kick", "Blocked Gamer Instruction Kick from %s", "%s tried to kick me out!"};
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(reactions, bounty, blame_explode, ceo_money, ceo_kick, clear_wanted_level, crash, end_session_kick, fake_deposit, force_mission, force_teleport, gta_banner, kick_from_interior, mc_teleport, network_bail, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate_notification, give_collectible, transaction_error, tse_freeze, tse_sender_mismatch, vehicle_kick, teleport_to_warehouse, trigger_business_raid, start_activity, start_script, null_function_kick, destroy_personal_vehicle, clear_ped_tasks, turn_into_beast, remote_wanted_level, remote_wanted_level_others, remote_ragdoll, kick_vote, report_cash_spawn, modder_detection, request_control_event, report, gamer_instruction_kick)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(reactions, bounty, blame_explode, ceo_money, ceo_kick, clear_wanted_level, crash, end_session_kick, fake_deposit, force_mission, force_teleport, gta_banner, kick_from_interior, mc_teleport, network_bail, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate_notification, give_collectible, transaction_error, tse_freeze, tse_sender_mismatch, vehicle_kick, teleport_to_warehouse, trigger_business_raid, start_activity, start_script, null_function_kick, destroy_personal_vehicle, clear_ped_tasks, turn_into_beast, remote_wanted_level, remote_wanted_level_others, remote_ragdoll, kick_vote, report_cash_spawn, modder_detection, request_control_event, report, gamer_instruction_kick, send_to_interior, spectate, spectate_others)
 		} reactions{};
 
 		struct player
@@ -273,12 +276,13 @@ namespace big
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(script_events, bounty, ceo_money, clear_wanted_level, fake_deposit, force_mission, force_teleport, gta_banner, mc_teleport, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate, give_collectible, vehicle_kick, teleport_to_warehouse, start_activity, send_sms)
 			} script_events{};
 
-			bool receive_pickup  = false;
+			bool rid_join       = false;
+			bool receive_pickup = false;
 			bool request_control = true;
-			bool rid_join        = false;
-			bool admin_check     = true;
+			bool admin_check    = true;
+			bool kick_rejoin    = true;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(protections, script_events, rid_join, receive_pickup, request_control, admin_check)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(protections, script_events, rid_join, receive_pickup, request_control, admin_check, kick_rejoin)
 		} protections{};
 
 		struct self
@@ -347,9 +351,9 @@ namespace big
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(population_control, ped_enable, ped, vehicle_enable, vehicle)
 			} population_control;
 
-			bool chat_force_clean      = false;
 			bool log_chat_messages     = false;
 			bool decloak_players       = false;
+			bool unhide_players_from_player_list = true;
 			bool force_session_host    = false;
 			bool force_script_host     = false;
 			bool player_magnet_enabled = false;
@@ -395,7 +399,7 @@ namespace big
 			bool anonymous_bounty      = true;
 
 			bool fast_join = false;
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, chat_force_clean, log_chat_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, join_in_sctv_slots, kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty, lock_session, fast_join)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, log_chat_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, join_in_sctv_slots, kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty, lock_session, fast_join, unhide_players_from_player_list)
 		} session{};
 
 		struct settings
@@ -406,7 +410,9 @@ namespace big
 				int menu_toggle          = VK_INSERT;
 				int teleport_waypoint    = 0;
 				int teleport_objective   = 0;
+				int teleport_pv          = 0;
 				int noclip               = 0;
+				int vehicle_flymode      = 0;
 				int bringvehicle         = 0;
 				int invis                = 0;
 				int heal                 = 0;
@@ -419,9 +425,9 @@ namespace big
 				int fill_ammo            = 0;
 				int fast_quit            = 0;
 				int clear_wanted            = 0;
-				int cmd_excecutor        = 0x55;
+				int cmd_excecutor        = 'U';
 
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys, editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, noclip, bringvehicle, invis, heal, fill_inventory, skip_cutscene, freecam, superrun, invisveh, localinvisveh, fill_ammo, fast_quit, clear_wanted, cmd_excecutor)
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys, editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, teleport_pv, noclip, vehicle_flymode, bringvehicle, invis, heal, fill_inventory, skip_cutscene, freecam, superrun, invisveh, localinvisveh, fill_ammo, fast_quit, clear_wanted, cmd_excecutor)
 			} hotkeys{};
 
 			bool dev_dlc = false;
@@ -696,8 +702,10 @@ namespace big
 			bool rapid_fire               = false;
 			bool interior_weapon          = false;
 			bool infinite_range           = false;
+			bool enable_weapon_hotkeys    = false;
+			std::map<int, std::vector<std::uint32_t>> weapon_hotkeys{};
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(weapons, ammo_special, custom_weapon, infinite_ammo, always_full_ammo, infinite_mag, increased_damage, increase_damage, no_recoil, no_spread, vehicle_gun_model, increased_c4_limit, increased_flare_limit, rapid_fire, gravity_gun, interior_weapon, infinite_range)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(weapons, ammo_special, custom_weapon, infinite_ammo, always_full_ammo, infinite_mag, increased_damage, increase_damage, no_recoil, no_spread, vehicle_gun_model, increased_c4_limit, increased_flare_limit, rapid_fire, gravity_gun, interior_weapon, infinite_range, enable_weapon_hotkeys, weapon_hotkeys)
 		} weapons{};
 
 		struct window
@@ -902,7 +910,15 @@ namespace big
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(lua, enable_auto_reload_changed_scripts)
 		} lua{};
 
-		NLOHMANN_DEFINE_TYPE_INTRUSIVE(menu_settings, debug, tunables, notifications, player, player_db, protections, self, session, settings, spawn_vehicle, clone_pv, spoofing, vehicle, weapons, window, context_menu, esp, session_browser, ugc, reactions, world, stat_editor, lua)
+		struct persist_weapons
+		{
+			bool enabled = false;
+			std::string weapon_loadout_file;
+
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(persist_weapons, enabled, weapon_loadout_file)
+		} persist_weapons{};
+
+		NLOHMANN_DEFINE_TYPE_INTRUSIVE(menu_settings, debug, tunables, notifications, player, player_db, protections, self, session, settings, spawn_vehicle, clone_pv, spoofing, vehicle, weapons, window, context_menu, esp, session_browser, ugc, reactions, world, stat_editor, lua, persist_weapons)
 	};
 
 	inline auto g = menu_settings();

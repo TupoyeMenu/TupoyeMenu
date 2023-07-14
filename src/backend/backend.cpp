@@ -5,10 +5,12 @@
 #include "script.hpp"
 #include "script_patches.hpp"
 #include "services/context_menu/context_menu_service.hpp"
+#include "services/custom_teleport/custom_teleport_service.hpp"
 #include "services/script_connection/script_connection_service.hpp"
 #include "services/tunables/tunables_service.hpp"
 #include "thread_pool.hpp"
 #include "util/teleport.hpp"
+#include "services/vehicle/xml_vehicles_service.hpp"
 
 namespace big
 {
@@ -18,7 +20,9 @@ namespace big
 			command->refresh();
 
 		register_script_patches();
-		teleport::fetch_saved_locations();
+
+		g_xml_vehicles_service->fetch_xml_files();
+		g_custom_teleport_service.fetch_saved_locations();
 
 		while (g_running)
 		{
@@ -65,6 +69,8 @@ namespace big
 			looped::weapons_steal_vehicle_gun();
 			looped::weapons_vehicle_gun();
 			looped::weapons_c4_limit();
+			looped::weapons_do_persist_weapons();
+			looped::weapons_do_weapon_hotkeys();
 
 			script::get_current()->yield();
 		}

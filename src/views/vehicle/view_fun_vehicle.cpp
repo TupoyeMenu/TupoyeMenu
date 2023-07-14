@@ -196,10 +196,10 @@ namespace big
 		}
 		ImGui::SeparatorText("Boost");
 
-		const char* boost_behaviors[] = {"Default", "Instant Refill", "Infinite"};
+		const char* boost_behaviors[] = {"Default", "Instant Refill", "Infinite", "Hold for Boost"};
 		if (ImGui::BeginCombo("Boost Behavior", boost_behaviors[static_cast<int>(g.vehicle.boost_behavior)]))
 		{
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 4; i++)
 			{
 				bool itemSelected = g.vehicle.boost_behavior == static_cast<eBoostBehaviors>(i);
 
