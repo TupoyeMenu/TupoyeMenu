@@ -252,8 +252,12 @@ namespace big
 			bool notify_when_offline           = false;
 			bool notify_on_session_type_change = false;
 			bool notify_on_session_change      = false;
+			bool notify_on_spectator_change    = false;
+			bool notify_on_become_host         = false;
+			bool notify_on_transition_change   = false;
+			bool notify_on_mission_change      = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(player_db, update_player_online_states, notify_when_online, notify_when_joinable, notify_when_unjoinable, notify_when_offline, notify_on_session_type_change, notify_on_session_change)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(player_db, update_player_online_states, notify_when_online, notify_when_joinable, notify_when_unjoinable, notify_when_offline, notify_on_session_type_change, notify_on_session_change, notify_on_spectator_change, notify_on_become_host, notify_on_transition_change, notify_on_mission_change)
 		} player_db{};
 
 		struct protections
@@ -321,6 +325,7 @@ namespace big
 			bool no_ragdoll         = false;
 			bool noclip             = false;
 			bool off_radar          = false;
+			bool ghost_org          = false;
 			bool super_run          = false;
 			bool no_collision       = false;
 			bool unlimited_oxygen   = false;
@@ -432,6 +437,15 @@ namespace big
 
 		struct settings
 		{
+			bool dev_dlc = false;
+
+			struct rainbow
+			{
+				bool fade = false;
+				bool spasm = false;
+				int speed = 1;
+			} rainbow{};
+
 			struct hotkeys
 			{
 				bool editing_menu_toggle    = false;
@@ -462,8 +476,6 @@ namespace big
 
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys, editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, teleport_pv, noclip, vehicle_flymode, bringvehicle, invis, heal, fill_inventory, skip_cutscene, freecam, superrun, superjump, beastjump, invisveh, localinvisveh, fill_ammo, fast_quit, cmd_excecutor, repairpv, open_vehicle_controller, clear_wanted, random_ped_components)
 			} hotkeys{};
-
-			bool dev_dlc = false;
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(settings, hotkeys, dev_dlc)
 		} settings{};
@@ -695,6 +707,7 @@ namespace big
 			bool disable_engine_auto_start              = false;
 			bool change_engine_state_immediately        = false;
 			bool keep_engine_running                    = false;
+			bool keep_vehicle_clean                     = false;
 			bool vehinvisibility                        = false;
 			bool localveh_visibility                    = false;
 			bool localped_visibility                    = true;
@@ -703,7 +716,7 @@ namespace big
 			bool unlimited_weapons                      = false;
 			bool siren_mute                             = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(vehicle, speedo_meter, fly, rainbow_paint, speed_unit, god_mode, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_water, proof_mask, auto_drive_destination, auto_drive_style, auto_drive_speed, auto_turn_signals, boost_behavior, drive_on_water, horn_boost, instant_brake, block_homing, seatbelt, turn_signals, vehicle_jump, keep_vehicle_repaired, flares, chaff, no_water_collision, disable_engine_auto_start, change_engine_state_immediately, keep_engine_running, vehinvisibility, localveh_visibility, localped_visibility, keep_on_ground, no_collision, unlimited_weapons, siren_mute)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(vehicle, speedo_meter, fly, rainbow_paint, speed_unit, god_mode, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_water, proof_mask, auto_drive_destination, auto_drive_style, auto_drive_speed, auto_turn_signals, boost_behavior, drive_on_water, horn_boost, instant_brake, block_homing, seatbelt, turn_signals, vehicle_jump, keep_vehicle_repaired, flares, chaff, no_water_collision, disable_engine_auto_start, change_engine_state_immediately, keep_engine_running, keep_vehicle_clean, vehinvisibility, localveh_visibility, localped_visibility, keep_on_ground, no_collision, unlimited_weapons, siren_mute)
 		} vehicle{};
 
 		struct weapons
@@ -731,7 +744,14 @@ namespace big
 			{
 				bool launch_on_release = false;
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(gravity_gun, launch_on_release)
-			} gravity_gun;
+			} gravity_gun{};
+
+			struct paintgun
+			{
+				bool rainbow	= false;
+				float col[4]    = {0.f, 0.f, 1.f, 1.f};
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(paintgun, rainbow, col)
+			} paintgun{};
 
 			struct aimbot
 			{
@@ -766,7 +786,7 @@ namespace big
 			bool enable_weapon_hotkeys    = false;
 			std::map<int, std::vector<std::uint32_t>> weapon_hotkeys{};
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(weapons, ammo_special, custom_weapon, aimbot, infinite_ammo, always_full_ammo, infinite_mag, increased_damage, increase_damage, no_recoil, no_spread, vehicle_gun_model, increased_c4_limit, increased_flare_limit, rapid_fire, gravity_gun, interior_weapon, triggerbot, infinite_range, enable_weapon_hotkeys, weapon_hotkeys)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(weapons, ammo_special, custom_weapon, aimbot, infinite_ammo, always_full_ammo, infinite_mag, increased_damage, increase_damage, no_recoil, no_spread, vehicle_gun_model, increased_c4_limit, increased_flare_limit, rapid_fire, gravity_gun, paintgun, interior_weapon, triggerbot, infinite_range, enable_weapon_hotkeys, weapon_hotkeys)
 		} weapons{};
 
 		struct window

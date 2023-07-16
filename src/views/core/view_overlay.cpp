@@ -103,7 +103,7 @@ namespace big
 
 				if (*g_pointers->m_gta.m_ped_pool)
 					ImGui::Text("Ped Pool: %i/%i",
-					    *g_pointers->m_gta.m_ped_pool->get_item_count(),
+					    (*g_pointers->m_gta.m_ped_pool)->get_item_count(),
 					    (*g_pointers->m_gta.m_ped_pool)->m_size);
 
 				if (*g_pointers->m_gta.m_vehicle_pool && **g_pointers->m_gta.m_vehicle_pool)

@@ -396,13 +396,14 @@ namespace big
 		ImGui::SameLine();
 		components::help_marker("DISABLE_CEO_MONEY_DESC"_T);
 		ImGui::SameLine();
-		ImGui::Checkbox("RANDOMIZE_CEO_COLORS"_T.data(), &g.session.randomize_ceo_colors);
 		ImGui::Checkbox("Block Jobs", &g.session.block_jobs);
 		ImGui::SameLine();
 		components::help_marker("Prevents remote players from starting jobs while in your session");
 		ImGui::SameLine();
 		components::script_patch_checkbox("Block Muggers", &g.session.block_muggers, "For the entire session");
-		ImGui::SameLine();
+
 		components::script_patch_checkbox("Block CEO Raids", &g.session.block_ceo_raids, "For the entire session");
+
+		ImGui::EndGroup();
 	}
 }

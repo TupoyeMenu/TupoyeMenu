@@ -2,6 +2,7 @@
 #include "natives.hpp"
 #include "util/session.hpp"
 #include "views/view.hpp"
+#include "script_mgr.hpp"
 
 namespace big
 {
