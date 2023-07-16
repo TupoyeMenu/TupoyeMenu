@@ -24,20 +24,7 @@ namespace big
 {
 	void view::fun_vehicle()
 	{
-		ImGui::Text("Engine");
-
-		components::button("Turn Engine On", [] {
-			vehicle::set_engine_state(self::veh, true, g.vehicle.change_engine_state_immediately, g.vehicle.disable_engine_auto_start);
-		});
-		ImGui::SameLine();
-		components::button("Turn Engine Off", [] {
-			vehicle::set_engine_state(self::veh, false, g.vehicle.change_engine_state_immediately, g.vehicle.disable_engine_auto_start);
-		});
-		ImGui::Checkbox("Disable Engine Auto Start", &g.vehicle.disable_engine_auto_start);
-		ImGui::SameLine();
-		ImGui::Checkbox("Change State Immediately", &g.vehicle.change_engine_state_immediately);
-
-		ImGui::SeparatorText("Seat Changer");
+		ImGui::Text("Seat Changer");
 		{
 			static std::map<int, bool> seats;
 			static bool ready = true;
@@ -154,8 +141,35 @@ namespace big
 			if (components::button("Emergency Stop"))
 				g.vehicle.auto_drive_destination = AutoDriveDestination::EMERGENCY_STOP;
 		}
-		ImGui::SeparatorText("Rainbow Paint");
 
+		ImGui::SeparatorText("Dirt Level");
+		{
+			if (!ENTITY::DOES_ENTITY_EXIST(self::veh))
+			{
+				ImGui::Text("Please enter a vehicle.");
+				return;
+			}
+
+			if (g.vehicle.keep_vehicle_clean)
+			{
+				ImGui::Text("Keep Vehicle Clean is turned on, disable it to change the dirt level.");
+				return;
+			}
+
+			if (g.vehicle.keep_vehicle_repaired)
+			{
+				ImGui::Text("Keep Vehicle Repaired is turned on, disable it to change the vehicle health.");
+				return;
+			}
+
+			float dirt_level = VEHICLE::GET_VEHICLE_DIRT_LEVEL(self::veh);
+			if (ImGui::SliderFloat("Dirt Level", &dirt_level, 0.f, 15.f, "%.1f"))
+			{
+				VEHICLE::SET_VEHICLE_DIRT_LEVEL(self::veh, dirt_level);
+			}
+		}
+
+		ImGui::SeparatorText("Rainbow Paint");
 		{
 			components::command_checkbox<"rainbowpri">("Primary");
 			ImGui::SameLine();
@@ -196,7 +210,10 @@ namespace big
 		}
 		ImGui::SeparatorText("Boost");
 
-		const char* boost_behaviors[] = {"Default", "Instant Refill", "Infinite", "Hold for Boost"};
+		const char* boost_behaviors[] = {"Default",
+		    "Instant Refill",
+		    "Infinite",
+		    "Hold for Boost"};
 		if (ImGui::BeginCombo("Boost Behavior", boost_behaviors[static_cast<int>(g.vehicle.boost_behavior)]))
 		{
 			for (int i = 0; i < 4; i++)

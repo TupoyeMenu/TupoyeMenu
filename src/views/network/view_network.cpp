@@ -403,7 +403,9 @@ namespace big
 		components::help_marker("Prevents remote players from starting jobs while in your session");
 		ImGui::SameLine();
 		components::script_patch_checkbox("Block Muggers", &g.session.block_muggers, "For the entire session");
-		ImGui::SameLine();
+
 		components::script_patch_checkbox("Block CEO Raids", &g.session.block_ceo_raids, "For the entire session");
+
+		ImGui::EndGroup();
 	}
 }

@@ -52,6 +52,29 @@ namespace big
 
 		components::button("Request Airstrike", [] {
 			mobile::merry_weather::request_airstrike();
-		});		
+		});
+
+
+		ImGui::SeparatorText("CEO Abilities");
+
+		components::button("Bullshark Testosterone", [] {
+			mobile::ceo_abilities::request_bullshark_testosterone();
+		});
+
+		components::command_button<"ballisticarmor">();
+
+
+		ImGui::SeparatorText("Services");
+
+		components::command_button<"avenger">();
+		components::command_button<"kosatka">();
+		components::command_button<"moc">();
+		components::command_button<"terrorbyte">();
+		components::command_button<"acidlab">();
+		components::command_button<"acidbike">();
+
+		ImGui::SeparatorText("Miscellaneous");
+
+		components::command_button<"taxi">();
 	}
 }

@@ -16,6 +16,8 @@
 #include "util/scripts.hpp"
 #include "views/view.hpp"
 
+#include <script/globals/GPBD_FM_3.hpp>
+
 namespace big
 {
 	void view::self()
@@ -46,6 +48,8 @@ namespace big
 
 		components::command_checkbox<"godmode">();
 		components::command_checkbox<"otr">();
+		if (g.self.off_radar && scr_globals::gpbd_fm_3.as<GPBD_FM_3*>()->Entries[self::id].BossGoon.Boss == self::id)
+			components::command_checkbox<"ghostorg">();
 		ImGui::Checkbox("Phone Anim", &g.tunables.phone_anim);
 		components::command_checkbox<"nophone">();
 		components::command_checkbox<"mobileradio">();
@@ -61,7 +65,6 @@ namespace big
 		components::command_checkbox<"noragdoll">();
 		components::command_checkbox<"fastrun">();
 		ImGui::Checkbox("Jump Ragdoll", &g.self.allow_ragdoll);
-		ImGui::Checkbox("Always Control", &g.tunables.always_control);
 		components::command_checkbox<"noidlekick">();
 
 		ImGui::EndGroup();
@@ -73,6 +76,9 @@ namespace big
 		ImGui::Checkbox("Dance Mode", &g.self.dance_mode);
 		components::command_checkbox<"infoxy">();    //
 		components::command_checkbox<"walkunder">(); // WTF Who namend this??
+		components::command_checkbox<"invis">();
+		if (g.self.invisibility)
+			components::command_checkbox<"localvis">(); // TODO: does nothing in SP
 
 		ImGui::EndGroup();
 

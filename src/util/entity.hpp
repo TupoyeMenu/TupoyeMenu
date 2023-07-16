@@ -134,8 +134,36 @@ namespace big::entity
 		return (bool)hit;
 	}
 
+	inline bool raycast(Vector3* endcoor)
+	{
+		Entity ent;
+		BOOL hit;
+		Vector3 surfaceNormal;
+
+		Vector3 camCoords = CAM::GET_GAMEPLAY_CAM_COORD();
+		Vector3 dir       = math::rotation_to_direction(CAM::GET_GAMEPLAY_CAM_ROT(2));
+		Vector3 farCoords;
+
+		farCoords.x = camCoords.x + dir.x * 1000;
+		farCoords.y = camCoords.y + dir.y * 1000;
+		farCoords.z = camCoords.z + dir.z * 1000;
+
+		int ray = SHAPETEST::START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE(camCoords.x,
+		    camCoords.y,
+		    camCoords.z,
+		    farCoords.x,
+		    farCoords.y,
+		    farCoords.z,
+		    -1,
+		    0,
+		    7);
+		SHAPETEST::GET_SHAPE_TEST_RESULT(ray, &hit, endcoor, &surfaceNormal, &ent);
+
+		return (bool)hit;
+	}
+
 	/**
-	 * @brief Gets all entitys from the replay interface.
+	 * @brief Gets all entitys from game pools.
 	 * 
 	 * @note Does not include local player or local vehicle.
 	 * 
@@ -143,7 +171,7 @@ namespace big::entity
 	 * @param peds Include peds.
 	 * @param props Include props. Default: false.
 	 * @param include_self_veh Include vehicle local player is in. Default: false.
-	 * @return std::vector<Entity> of all entitys in the replay interface.
+	 * @return std::vector<Entity> of all entitys in game pools.
 	 */
 	inline std::vector<Entity> get_entities(bool vehicles, bool peds, bool props = false, bool include_self_veh = false)
 	{

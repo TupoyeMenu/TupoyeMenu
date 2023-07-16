@@ -86,6 +86,8 @@ namespace big
 				g_notification_service->push_error("Find safe pos", "Failed to find a safe position");
 		});
 
+		ImGui::Checkbox("Always Control", &g.tunables.always_control);
+
 		ImGui::Text("Fiber Pool Usage %d/%d", g_fiber_pool->get_used_fibers(), g_fiber_pool->get_total_fibers());
 		ImGui::SameLine();
 		if (components::button("Reset"))

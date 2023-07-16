@@ -1194,6 +1194,15 @@ namespace big
                 g_pointers->m_gta.m_send_non_physical_player_data = ptr.add(1).rip().as<PVOID>();
             }
         },
+        // Presence Data
+        {
+            "PD",
+            "48 8B 0D ? ? ? ? 44 8B 4B 60",
+            [](memory::handle ptr)
+            {
+                g_pointers->m_gta.m_presence_data = ptr.add(3).rip().as<void**>();
+            }
+        },
         // Max Wanted Level
         {
             "MWL",
@@ -1397,8 +1406,8 @@ namespace big
             [](memory::handle ptr)
             {
                 auto presence_data_vft             = ptr.add(3).rip().as<PVOID*>();
-                g_pointers->m_sc.m_update_presence_attribute_int    = presence_data_vft[1];
-                g_pointers->m_sc.m_update_presence_attribute_string = presence_data_vft[3];
+                g_pointers->m_sc.m_update_presence_attribute_int    = (functions::update_presence_attribute_int)presence_data_vft[1];
+                g_pointers->m_sc.m_update_presence_attribute_string = (functions::update_presence_attribute_string)presence_data_vft[3];
             }
         },
         // Start Get Presence Attributes
@@ -1408,6 +1417,16 @@ namespace big
             [](memory::handle ptr)
             {
                 g_pointers->m_sc.m_start_get_presence_attributes = ptr.as<functions::start_get_presence_attributes>();
+            }
+        },
+        // Read Attribute Patch
+        {
+            "RAP",
+            "75 72 EB 23 80 F9 03",
+            [](memory::handle ptr)
+            {
+                g_pointers->m_sc.m_read_attribute_patch = ptr.as<PVOID>();
+                g_pointers->m_sc.m_read_attribute_patch_2 = ptr.add(0x74).as<PVOID>();
             }
         }
         >();

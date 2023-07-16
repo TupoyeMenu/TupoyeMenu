@@ -217,7 +217,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 			    renderer_instance.reset();
 			    LOG(INFO) << "Renderer uninitialized.";
-				gui_instance.reset();
 
 			    byte_patch_manager_instance.reset();
 			    LOG(INFO) << "Byte Patch Manager uninitialized.";

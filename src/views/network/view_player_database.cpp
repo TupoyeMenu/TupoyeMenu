@@ -130,7 +130,7 @@ namespace big
 					current_player->name = name_buf;
 				}
 
-				if (ImGui::InputScalar("RID", ImGuiDataType_S64, &current_player->rockstar_id)
+				if (ImGui::InputScalar("Rockstar ID", ImGuiDataType_S64, &current_player->rockstar_id)
 				    || ImGui::Checkbox("Is Modder", &current_player->is_modder)
 				    || ImGui::Checkbox("Force Allow Join", &current_player->force_allow_join)
 				    || ImGui::Checkbox("Block Join", &current_player->block_join)
@@ -199,6 +199,39 @@ namespace big
 					notes_dirty           = true;
 				}
 
+				ImGui::Checkbox("Join Redirect", &current_player->join_redirect);
+				ImGui::SameLine();
+				components::help_marker("Anyone trying to join you will join this player instead if they are active. The preference input will control redirect priority if multiple players with join redirect are active");
+
+				if (current_player->join_redirect)
+				{
+					ImGui::InputInt("Preference", &current_player->join_redirect_preference);
+				}
+
+				ImGui::Text("Session Type: %s", player_database_service::get_session_type_str(selected->session_type));
+
+				if (selected->session_type != GSType::Invalid && selected->session_type != GSType::Unknown)
+				{
+					ImGui::Text("Is Host Of Session: %s", selected->is_host_of_session ? "Yes" : "No");
+					ImGui::Text("Is Spectating: %s", selected->is_spectating ? "Yes" : "No");
+					ImGui::Text("In Job Lobby: %s", selected->transition_session_id != -1 ? "Yes" : "No");
+					ImGui::Text("Is Host Of Job Loby: %s", selected->is_host_of_transition_session ? "Yes" : "No");
+					ImGui::Text("Current Mission Type: %s", player_database_service::get_game_mode_str(selected->game_mode));
+					if (selected->game_mode != GameMode::None && player_database_service::can_fetch_name(selected->game_mode))
+					{
+						ImGui::Text("Current Mission Name: %s", selected->game_mode_name.c_str());
+						if ((selected->game_mode_name == "Unknown" || selected->game_mode_name.empty())
+						    && !selected->game_mode_id.empty())
+						{
+							ImGui::SameLine();
+							components::button("Fetch", [] {
+								current_player->game_mode_name =
+								    player_database_service::get_name_by_content_id(current_player->game_mode_id);
+							});
+						}
+					}
+				}
+
 				components::button("Join Session", [] {
 					session::join_by_rockstar_id(current_player->rockstar_id);
 				});
@@ -264,6 +297,10 @@ namespace big
 			ImGui::Checkbox("Notify When Offline", &g.player_db.notify_when_offline);
 			ImGui::Checkbox("Notify On Session Type Change", &g.player_db.notify_on_session_type_change);
 			ImGui::Checkbox("Notify On Session Change", &g.player_db.notify_on_session_change);
+			ImGui::Checkbox("Notify On Spectator Change", &g.player_db.notify_on_spectator_change);
+			ImGui::Checkbox("Notify On Become Host", &g.player_db.notify_on_become_host);
+			ImGui::Checkbox("Notify On Job Lobby Change", &g.player_db.notify_on_transition_change);
+			ImGui::Checkbox("Notify On Mission Change", &g.player_db.notify_on_mission_change);
 			ImGui::TreePop();
 		}
 

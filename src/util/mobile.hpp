@@ -111,6 +111,39 @@ namespace big::mobile
 		}
 	}
 
+	namespace services
+	{
+		inline void request_avenger()
+		{
+			*script_global(scr_globals::mechanic_global).at(938).as<int*>() = 1;
+		}
+
+		inline void request_kosatka()
+		{
+			*script_global(scr_globals::mechanic_global).at(960).as<int*>() = 1;
+		}
+
+		inline void request_mobile_operations_center()
+		{
+			*script_global(scr_globals::mechanic_global).at(930).as<int*>() = 1;
+		}
+
+		inline void request_terrorbyte()
+		{
+			*script_global(scr_globals::mechanic_global).at(943).as<int*>() = 1;
+		}
+
+		inline void request_acidlab()
+		{
+			*script_global(scr_globals::mechanic_global).at(944).as<int*>() = 1;
+		}
+
+		inline void request_acidlab_bike()
+		{
+			*script_global(scr_globals::mechanic_global).at(994).as<int*>() = 1;
+		}
+	}
+
 	namespace mechanic
 	{
 		inline Vehicle get_personal_vehicle()
@@ -160,6 +193,14 @@ namespace big::mobile
 			{
 				vehicle::bring(get_personal_vehicle(), self::pos, true);
 			}
+		}
+	}
+
+	namespace mobile_misc
+	{
+		inline void request_taxi()
+		{
+			*script_global(scr_globals::mechanic_global).at(853).as<int*>() = 1;
 		}
 	}
 }
