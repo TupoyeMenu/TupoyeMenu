@@ -80,7 +80,6 @@ If you are doing custom modifications to the codebase and have a fork you are on
 - `backend/` all features that should be ran in a loop are in here sorted by category
 - `gui/` includes everything related to UI elements
 - `hooks/` function hooks
-- `native_hooks/` hooks to natives
 - `services/` service files to interact and maintain stuff
 - `util/` general utility functions to keep code as compact and as much in one place as possible
 - `views/` all gui windows are here
