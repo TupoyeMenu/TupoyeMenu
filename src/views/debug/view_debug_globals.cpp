@@ -199,7 +199,7 @@ namespace big
 			if (auto ptr = get_global_ptr(global_test))
 			{
 				ImGui::SetNextItemWidth(200.f);
-				ImGui::InputScalar("Value", ImGuiDataType_S64, ptr);
+				ImGui::InputScalar("Value", ImGuiDataType_S32, ptr);
 			}
 			else
 				ImGui::Text("INVALID_GLOBAL_READ");
@@ -222,7 +222,7 @@ namespace big
 				for (auto pair : globals)
 				{
 					if (auto ptr = get_global_ptr(pair.second))
-						ImGui::Selectable(std::format("{}", *ptr).c_str(), false, ImGuiSelectableFlags_Disabled);
+						ImGui::Selectable(std::format("{}", (std::int32_t)*ptr).c_str(), false, ImGuiSelectableFlags_Disabled);
 					else
 						ImGui::Selectable("INVALID_GLOBAL_READ", false, ImGuiSelectableFlags_Disabled);
 				}

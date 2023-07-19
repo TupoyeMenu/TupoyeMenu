@@ -36,6 +36,7 @@ namespace nlohmann
 }
 
 enum class GSType : int32_t;
+enum class GameMode : int32_t;
 
 namespace big
 {
