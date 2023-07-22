@@ -84,6 +84,9 @@ namespace big
 		// Patch script network check
 		memory::byte_patch::make(g_pointers->m_gta.m_model_spawn_bypass, std::vector{0x90, 0x90})->apply(); // this is no longer integrity checked
 
+		// window hook: pt1
+		memory::byte_patch::make(g_pointers->m_gta.m_window_hook.as<void*>(), std::to_array({0xC3, 0x90, 0x90, 0x90}))->apply();
+
 		// Prevent the attribute task from failing
 #ifdef ENABLE_SOCIALCLUB
 		memory::byte_patch::make(g_pointers->m_sc.m_read_attribute_patch, std::vector{0x90, 0x90})->apply();

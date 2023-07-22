@@ -23,7 +23,8 @@
 #include "gta/enums.hpp"
 
 namespace big::vehicle
-{	struct disable_collisions
+{
+	struct disable_collisions
 	{
 		inline static memory::byte_patch* m_patch;
 	};

@@ -286,11 +286,11 @@ namespace big
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(script_events, bounty, ceo_money, clear_wanted_level, fake_deposit, force_mission, force_teleport, gta_banner, mc_teleport, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate, give_collectible, vehicle_kick, teleport_to_warehouse, start_activity, send_sms)
 			} script_events{};
 
-			bool rid_join       = false;
-			bool receive_pickup = false;
+			bool rid_join        = false;
+			bool receive_pickup  = false;
 			bool request_control = true;
-			bool admin_check    = true;
-			bool kick_rejoin    = true;
+			bool admin_check     = true;
+			bool kick_rejoin     = true;
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(protections, script_events, rid_join, receive_pickup, request_control, admin_check, kick_rejoin)
 		} protections{};
@@ -303,37 +303,39 @@ namespace big
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(ipls, select)
 			} ipls{};
 
-			bool allow_ragdoll      = false;
-			bool clean_player       = false;
-			bool force_wanted_level = false;
-			bool free_cam           = false;
-			bool invisibility       = false;
-			bool local_visibility   = true;
-			bool never_wanted       = false;
-			bool no_ragdoll         = false;
-			bool noclip             = false;
-			bool off_radar          = false;
-			bool ghost_org          = false;
-			bool super_run          = false;
-			bool no_collision       = false;
-			bool unlimited_oxygen   = false;
-			bool no_water_collision = false;
-			int wanted_level        = 0;
-			bool god_mode           = false;
-			bool part_water         = false;
-			bool proof_bullet       = false;
-			bool proof_fire         = false;
-			bool proof_collision    = false;
-			bool proof_melee        = false;
-			bool proof_explosion    = false;
-			bool proof_steam        = false;
-			bool proof_drown        = false;
-			bool proof_water        = false;
-			uint32_t proof_mask     = 0;
-			bool mobile_radio       = false;
-			bool fast_respawn       = false;
-			bool auto_tp            = false;
-			bool custom_weapon_stop = true;
+			bool allow_ragdoll         = false;
+			bool clean_player          = false;
+			bool force_wanted_level    = false;
+			bool free_cam              = false;
+			bool invisibility          = false;
+			bool local_visibility      = true;
+			bool never_wanted          = false;
+			bool no_ragdoll            = false;
+			bool noclip                = false;
+			bool off_radar             = false;
+			bool ghost_org             = false;
+			bool super_run             = false;
+			bool no_collision          = false;
+			bool unlimited_oxygen      = false;
+			bool no_water_collision    = false;
+			int wanted_level           = 0;
+			bool god_mode              = false;
+			bool part_water            = false;
+			bool proof_bullet          = false;
+			bool proof_fire            = false;
+			bool proof_collision       = false;
+			bool proof_melee           = false;
+			bool proof_explosion       = false;
+			bool proof_steam           = false;
+			bool proof_drown           = false;
+			bool proof_water           = false;
+			uint32_t proof_mask        = 0;
+			bool mobile_radio          = false;
+			bool fast_respawn          = false;
+			bool auto_tp               = false;
+			bool custom_weapon_stop    = true;
+			std::string persist_outfit = "";
+			bool persist_outfits_mis   = false;
 			struct hud
 			{
 				bool hide_radar                            = false;
@@ -348,7 +350,7 @@ namespace big
 			// do not save below entries
 			bool dance_mode = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(self, ipls, allow_ragdoll, clean_player, force_wanted_level, free_cam, invisibility, local_visibility, never_wanted, no_ragdoll, noclip, off_radar, super_run, no_collision, unlimited_oxygen, no_water_collision, wanted_level, god_mode, part_water, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_drown, proof_water, proof_mask, mobile_radio, fast_respawn, auto_tp, hud, custom_weapon_stop)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(self, ipls, allow_ragdoll, clean_player, force_wanted_level, free_cam, invisibility, local_visibility, never_wanted, no_ragdoll, noclip, off_radar, super_run, no_collision, unlimited_oxygen, no_water_collision, wanted_level, god_mode, part_water, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_drown, proof_water, proof_mask, mobile_radio, fast_respawn, auto_tp, hud, custom_weapon_stop, persist_outfit, persist_outfits_mis)
 		} self{};
 
 		struct session
@@ -362,16 +364,17 @@ namespace big
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(population_control, ped_enable, ped, vehicle_enable, vehicle)
 			} population_control;
 
-			bool log_chat_messages     = false;
-			bool decloak_players       = false;
-			bool unhide_players_from_player_list = true;
-			bool force_session_host    = false;
-			bool force_script_host     = false;
-			bool player_magnet_enabled = false;
-			int player_magnet_count    = 32;
-			bool is_team               = false;
-			bool join_in_sctv_slots    = false;
-			bool lock_session          = false;
+			bool log_chat_messages                 = false;
+			bool decloak_players                   = false;
+			bool unhide_players_from_player_list   = true;
+			bool force_session_host                = false;
+			bool force_script_host                 = false;
+			bool player_magnet_enabled             = false;
+			int player_magnet_count                = 32;
+			bool is_team                           = false;
+			bool join_in_sctv_slots                = false;
+			bool lock_session                      = false;
+			bool allow_friends_into_locked_session = false;
 
 			const char chat_command_prefix = '/';
 			const char chat_output_prefix  = '>';
@@ -410,7 +413,8 @@ namespace big
 			bool anonymous_bounty      = true;
 
 			bool fast_join = false;
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, log_chat_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, join_in_sctv_slots, kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty, lock_session, fast_join, unhide_players_from_player_list)
+
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, log_chat_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, join_in_sctv_slots, kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty, lock_session, fast_join, unhide_players_from_player_list, allow_friends_into_locked_session)
 		} session{};
 
 		struct settings
@@ -419,9 +423,9 @@ namespace big
 
 			struct rainbow
 			{
-				bool fade = false;
+				bool fade  = false;
 				bool spasm = false;
-				int speed = 1;
+				int speed  = 1;
 			} rainbow{};
 
 			struct hotkeys
@@ -444,7 +448,7 @@ namespace big
 				int localinvisveh        = 0;
 				int fill_ammo            = 0;
 				int fast_quit            = 0;
-				int clear_wanted            = 0;
+				int clear_wanted         = 0;
 				int cmd_excecutor        = 'U';
 
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys, editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, teleport_pv, noclip, vehicle_flymode, bringvehicle, invis, heal, fill_inventory, skip_cutscene, freecam, superrun, invisveh, localinvisveh, fill_ammo, fast_quit, clear_wanted, cmd_excecutor)
@@ -671,13 +675,12 @@ namespace big
 			bool keep_vehicle_clean                     = false;
 			bool vehinvisibility                        = false;
 			bool localveh_visibility                    = false;
-			bool localped_visibility                    = true;
 			bool keep_on_ground                         = false;
 			bool no_collision                           = false;
 			bool unlimited_weapons                      = false;
 			bool siren_mute                             = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(vehicle, speedo_meter, fly, rainbow_paint, speed_unit, god_mode, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_water, proof_mask, auto_drive_destination, auto_drive_style, auto_drive_speed, auto_turn_signals, boost_behavior, drive_on_water, horn_boost, instant_brake, block_homing, seatbelt, turn_signals, vehicle_jump, keep_vehicle_repaired, no_water_collision, disable_engine_auto_start, change_engine_state_immediately, keep_engine_running, keep_vehicle_clean, vehinvisibility, localveh_visibility, localped_visibility, keep_on_ground, no_collision, unlimited_weapons, siren_mute)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(vehicle, speedo_meter, fly, rainbow_paint, speed_unit, god_mode, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_water, proof_mask, auto_drive_destination, auto_drive_style, auto_drive_speed, auto_turn_signals, boost_behavior, drive_on_water, horn_boost, instant_brake, block_homing, seatbelt, turn_signals, vehicle_jump, keep_vehicle_repaired, no_water_collision, disable_engine_auto_start, change_engine_state_immediately, keep_engine_running, keep_vehicle_clean, vehinvisibility, localveh_visibility, keep_on_ground, no_collision, unlimited_weapons, siren_mute)
 		} vehicle{};
 
 		struct weapons
@@ -709,8 +712,8 @@ namespace big
 
 			struct paintgun
 			{
-				bool rainbow	= false;
-				float col[4]    = {0.f, 0.f, 1.f, 1.f};
+				bool rainbow = false;
+				float col[4] = {0.f, 0.f, 1.f, 1.f};
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(paintgun, rainbow, col)
 			} paintgun{};
 
@@ -736,11 +739,11 @@ namespace big
 
 		struct window
 		{
-			bool about    = false;
-			bool main     = true;
-			bool users    = true;
-			bool player   = true;
-			bool demo     = false;
+			bool about  = false;
+			bool main   = true;
+			bool users  = true;
+			bool player = true;
+			bool demo   = false;
 
 			ImU32 background_color = 3357612055;
 			ImU32 text_color       = 4294967295;
@@ -776,7 +779,7 @@ namespace big
 					bool show_infinite_ammo    = false;
 					bool show_always_full_ammo = false;
 					bool show_infinite_mag     = false;
-					bool show_invisibility    = false;
+					bool show_invisibility     = false;
 
 					NLOHMANN_DEFINE_TYPE_INTRUSIVE(ingame_overlay_indicators, show_player_godmode, show_off_radar, show_vehicle_godmode, show_never_wanted, show_always_full_ammo, show_infinite_ammo, show_infinite_mag, show_invisibility)
 				} ingame_overlay_indicators{};

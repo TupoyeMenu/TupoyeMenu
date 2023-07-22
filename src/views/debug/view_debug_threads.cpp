@@ -15,7 +15,6 @@
 #include "gta/joaat.hpp"
 #include "gta/script_handler.hpp"
 #include "gta/script_thread.hpp"
-#include "gta/tls_context.hpp"
 #include "gta_util.hpp"
 #include "gui/components/components.hpp"
 #include "natives.hpp"
@@ -92,9 +91,9 @@ namespace big
 		{
 			ImGui::Combo("State", (int*)&selected_thread->m_context.m_state, "RUNNING\0WAITING\0KILLED\0PAUSED\0STATE_4");
 
-			if (auto net_component = selected_thread->m_net_component)
-				if (auto host = net_component->m_host)
-					if (auto host_net_player = host->m_net_game_player)
+			if (CGameScriptHandlerNetComponent* net_component = (CGameScriptHandlerNetComponent*)selected_thread->m_net_component)
+				if (CScriptParticipant* host = net_component->m_host)
+					if (CNetGamePlayer* host_net_player = host->m_net_game_player)
 						ImGui::Text("Host: %s", host_net_player->get_name());
 
 			ImGui::Text("m_safe_for_network_game: %s", selected_thread->m_safe_for_network_game ? "Yes" : "No");

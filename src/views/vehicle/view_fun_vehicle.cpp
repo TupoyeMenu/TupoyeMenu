@@ -144,28 +144,21 @@ namespace big
 
 		ImGui::SeparatorText("Dirt Level");
 		{
-			if (!ENTITY::DOES_ENTITY_EXIST(self::veh))
+			if (g_local_player == nullptr || g_local_player->m_vehicle == nullptr)
 			{
 				ImGui::Text("Please enter a vehicle.");
-				return;
 			}
-
-			if (g.vehicle.keep_vehicle_clean)
+			else if (g.vehicle.keep_vehicle_clean)
 			{
 				ImGui::Text("Keep Vehicle Clean is turned on, disable it to change the dirt level.");
-				return;
 			}
-
-			if (g.vehicle.keep_vehicle_repaired)
+			else if (g.vehicle.keep_vehicle_repaired) 
 			{
 				ImGui::Text("Keep Vehicle Repaired is turned on, disable it to change the vehicle health.");
-				return;
 			}
-
-			float dirt_level = VEHICLE::GET_VEHICLE_DIRT_LEVEL(self::veh);
-			if (ImGui::SliderFloat("Dirt Level", &dirt_level, 0.f, 15.f, "%.1f"))
+			else
 			{
-				VEHICLE::SET_VEHICLE_DIRT_LEVEL(self::veh, dirt_level);
+				ImGui::SliderFloat("Dirt Level", &g_local_player->m_vehicle->m_dirt_level, 0.f, 15.f, "%.1f");
 			}
 		}
 

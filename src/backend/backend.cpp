@@ -51,6 +51,7 @@ namespace big
 			looped::ragdoll_mp();
 			looped::self_hud();
 			looped::self_dance_mode();
+			looped::self_persist_outfit();
 
 			script::get_current()->yield();
 		}
@@ -86,6 +87,7 @@ namespace big
 		while (g_running)
 		{
 			looped::vehicle_auto_drive();
+			looped::vehicle_allow_all_weapons();
 			looped::vehicle_boost_behavior();
 
 			script::get_current()->yield();

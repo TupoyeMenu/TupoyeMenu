@@ -11,7 +11,7 @@
 #pragma once
 #include "pointers.hpp"
 #include "enums.hpp"
-#include "node_list.hpp"
+#include "script/dataList.hpp"
 
 class CNetGamePlayer;
 

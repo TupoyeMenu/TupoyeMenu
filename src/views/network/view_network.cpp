@@ -103,6 +103,9 @@ namespace big
 		ImGui::Checkbox("Lobby Lock", &g.session.lock_session);
 		components::help_marker("Blocks all players from joining. May not work on some modders.");
 
+		ImGui::Checkbox("Allow Friends Into Locked Lobby", &g.session.allow_friends_into_locked_session);
+		components::help_marker("Allows Friends to Join Lobby While Locked");
+
 		ImGui::EndDisabled();
 
 		ImGui::SeparatorText("Player Magnet");
@@ -176,11 +179,11 @@ namespace big
 				g_fiber_pool->queue_job([] {
 					scripts::force_host(RAGE_JOAAT("freemode"));
 					if (auto script = gta_util::find_script_thread(RAGE_JOAAT("freemode")); script && script->m_net_component)
-						script->m_net_component->block_host_migration(true);
+						((CGameScriptHandlerNetComponent*)script->m_net_component)->block_host_migration(true);
 
 					scripts::force_host(RAGE_JOAAT("fmmc_launcher"));
 					if (auto script = gta_util::find_script_thread(RAGE_JOAAT("fmmc_launcher")); script && script->m_net_component)
-						script->m_net_component->block_host_migration(true);
+						((CGameScriptHandlerNetComponent*)script->m_net_component)->block_host_migration(true);
 				});
 		}
 		ImGui::SameLine();

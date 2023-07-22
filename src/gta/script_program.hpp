@@ -12,7 +12,7 @@
 #include "base.hpp"
 #include "fwddec.hpp"
 #include "joaat.hpp"
-#include "script_id.hpp"
+#include "script/scriptIdBase.hpp"
 
 #include <cstdint>
 

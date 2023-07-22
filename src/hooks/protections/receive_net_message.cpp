@@ -13,7 +13,7 @@
 #include "backend/player_command.hpp"
 #include "core/data/packet_types.hpp"
 #include "gta/net_game_event.hpp"
-#include "gta/script_id.hpp"
+#include "script/scriptIdBase.hpp"
 #include "gta_util.hpp"
 #include "hooking.hpp"
 #include "lua/lua_manager.hpp"

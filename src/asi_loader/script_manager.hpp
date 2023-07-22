@@ -133,6 +133,8 @@ enum eGameVersion : int
 
 	VER_1_0_2845_0,
 
+	VER_1_0_2944_0,
+
 	VER_SIZE,
 	VER_UNK = -1
 };
