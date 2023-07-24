@@ -74,6 +74,8 @@ namespace big
 				g_notification_service->push_error("Find safe pos", "Failed to find a safe position");
 		});
 
+		components::command_checkbox<"windowhook">("Disable GTA Window Hook");
+
 		ImGui::Text("Fiber Pool Usage %d/%d", g_fiber_pool->get_used_fibers(), g_fiber_pool->get_total_fibers());
 		ImGui::SameLine();
 		if (components::button("Reset"))

@@ -3,12 +3,12 @@
 #include "backend/player_command.hpp"
 #include "core/data/packet_types.hpp"
 #include "gta/net_game_event.hpp"
-#include "script/scriptIdBase.hpp"
 #include "gta_util.hpp"
 #include "hooking.hpp"
 #include "lua/lua_manager.hpp"
 #include "natives.hpp"
 #include "services/chat/chat_service.hpp"
+#include "script/scriptIdBase.hpp"
 #include "services/players/player_service.hpp"
 #include "util/session.hpp"
 #include "util/spam.hpp"
@@ -85,7 +85,7 @@ namespace big
 		rage::eNetMessage msgType;
 		player_ptr player;
 
-		for (std::uint32_t i = 0; i < gta_util::get_network()->m_game_session_ptr->m_player_count; i++)
+		for (uint32_t i = 0; i < gta_util::get_network()->m_game_session_ptr->m_player_count; i++)
 		{
 			if (gta_util::get_network()->m_game_session_ptr->m_players[i]->m_player_data.m_peer_id_2 == frame->m_peer_id)
 			{
@@ -268,6 +268,25 @@ namespace big
 
 				break;
 			}
+			case rage::eNetMessage::MsgRadioStationSyncRequest:
+			{
+				if (player->block_radio_requests)
+					return true;
+
+				if (player->m_radio_request_rate_limit.process())
+				{
+					if (player->m_radio_request_rate_limit.exceeded_last_process())
+					{
+						session::add_infraction(player, Infraction::TRIED_KICK_PLAYER);
+						g_notification_service->push_error("PROTECTIONS"_T.data(),
+						    std::vformat("OOM_KICK"_T, std::make_format_args(player->get_name())));
+						player->block_radio_requests = true;
+					}
+					return true;
+				}
+
+				break;
+			}
 			}
 		}
 		else
@@ -275,6 +294,7 @@ namespace big
 			switch (msgType)
 			{
 			case rage::eNetMessage::MsgScriptMigrateHost: return true;
+			case rage::eNetMessage::MsgRadioStationSyncRequest: return true;
 			}
 		}
 

@@ -77,6 +77,7 @@ namespace big
 		static void world();
 		static void gta_cache();
 		static void lua_scripts();
+		static void vfx();
 
 		static void cmd_executor();
 

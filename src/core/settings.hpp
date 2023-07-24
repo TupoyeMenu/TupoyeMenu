@@ -68,18 +68,18 @@ namespace big
 		int player_count = 0;
 
 		CNetGamePlayer* m_syncing_player = nullptr;
-		std::unordered_map<std::uint64_t, std::uint64_t> m_spoofed_peer_ids;
+		std::unordered_map<uint64_t, uint64_t> m_spoofed_peer_ids;
 
 		int m_remote_controller_vehicle = -1;
 		int m_remote_controlled_vehicle = -1;
 
 		/*
-		std::uint16_t m_tp_veh_net_id;
-		std::uint16_t m_tp_player_net_id;
+		uint16_t m_tp_veh_net_id;
+		uint16_t m_tp_player_net_id;
 		rage::fvector3 m_tp_position;
 		*/
 
-		std::unordered_map<std::uint16_t, remote_player_teleport> m_remote_player_teleports;
+		std::unordered_map<uint16_t, remote_player_teleport> m_remote_player_teleports;
 
 		rage::scrThread* m_hunt_the_beast_thread = nullptr;
 
@@ -125,11 +125,10 @@ namespace big
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(logs, metric_logs, script_hook_logs, stupid_script_native_logs, packet_logs, net_event_logs, remote_sound_logs, script_event)
 			} logs{};
 
-			bool sort_scripts       = false;
-			bool with_args          = false;
 			bool asi_plugins_loaded = false;
+			bool window_hook = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(debug, logs, sort_scripts)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(debug, logs, window_hook)
 		} debug{};
 
 		struct tunables
@@ -224,8 +223,9 @@ namespace big
 			reaction clear_ped_tasks{"Clear Ped Tasks", "Blocked Clear Ped Tasks from %s", "%s tried to freeze me!"};
 			reaction remote_ragdoll{"Remote Ragdoll", "Blocked Remote Ragdoll from %s", "%s tried to ragdoll me!"};
 			reaction kick_vote{"Kick Vote", "%s is voting to kick you!", "%s is voting to kick me!"};
-			reaction report_cash_spawn{"Cash Spawn", "%s is spawning cash", "%s is spawning cash"};
-			reaction modder_detection{"Modder Detection", "%s is detected as a modder by the anticheat", "%s is detected as a modder by the anticheat"};
+			reaction report_cash_spawn{"Cash Spawn", "%s is spawning cash!", "%s is spawning cash!"};
+			reaction modder_detection{"Modder Detection", "%s is detected as a modder!", "%s is detected as a modder!"};
+			reaction game_anti_cheat_modder_detection{"Game Anti-Cheat Modder Detection", "%s is detected as a modder by the game anti-cheat!", "%s is detected as a modder by the game anti-cheat!"};
 			reaction request_control_event{"Request Control Event", "Blocked Request Control Event from %s", "%s tried to mess with my vehicle!"};
 			reaction report{"Report", "Blocked Report from %s", "%s tried to report me!"};
 			reaction spectate{"Spectate", "%s is spectating you", "%s is spectating me!"};
@@ -233,7 +233,7 @@ namespace big
 
 			reaction gamer_instruction_kick{"Gamer Instruction Kick", "Blocked Gamer Instruction Kick from %s", "%s tried to kick me out!"};
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(reactions, bounty, ceo_money, ceo_kick, clear_wanted_level, crash, end_session_kick, fake_deposit, force_mission, force_teleport, gta_banner, kick_from_interior, mc_teleport, network_bail, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate_notification, give_collectible, transaction_error, tse_freeze, tse_sender_mismatch, vehicle_kick, teleport_to_warehouse, trigger_business_raid, start_activity, start_script, null_function_kick, destroy_personal_vehicle, clear_ped_tasks, turn_into_beast, remote_wanted_level, remote_wanted_level_others, remote_ragdoll, kick_vote, report_cash_spawn, modder_detection, request_control_event, report, gamer_instruction_kick, send_to_interior, spectate, spectate_others)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(reactions, bounty, ceo_money, ceo_kick, clear_wanted_level, crash, end_session_kick, fake_deposit, force_mission, force_teleport, gta_banner, kick_from_interior, mc_teleport, network_bail, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate_notification, give_collectible, transaction_error, tse_freeze, tse_sender_mismatch, vehicle_kick, teleport_to_warehouse, trigger_business_raid, start_activity, start_script, null_function_kick, destroy_personal_vehicle, clear_ped_tasks, turn_into_beast, remote_wanted_level, remote_wanted_level_others, remote_ragdoll, kick_vote, report_cash_spawn, modder_detection, game_anti_cheat_modder_detection, request_control_event, report, gamer_instruction_kick, send_to_interior, spectate, spectate_others)
 		} reactions{};
 
 		struct player
@@ -293,8 +293,9 @@ namespace big
 			bool request_control = true;
 			bool admin_check     = true;
 			bool kick_rejoin     = true;
+			bool force_relay_connections = true;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(protections, script_events, rid_join, receive_pickup, request_control, admin_check, kick_rejoin)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(protections, script_events, rid_join, receive_pickup, request_control, admin_check, kick_rejoin, force_relay_connections)
 		} protections{};
 
 		struct self
@@ -306,12 +307,14 @@ namespace big
 				int select         = 0;
 				const char* asset  = "scr_agencyheist";
 				const char* effect = "scr_fbi_mop_drips";
+
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(ptfx_effects, show, size)
 			} ptfx_effects{};
 
 			struct ipls
 			{
 				int select = 0;
+
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(ipls, select)
 			} ipls{};
 
@@ -324,6 +327,8 @@ namespace big
 			bool never_wanted          = false;
 			bool no_ragdoll            = false;
 			bool noclip                = false;
+			float noclip_aim_speed_multiplier = 0.25f;
+			float noclip_speed_multiplier     = 20.f;
 			bool off_radar             = false;
 			bool ghost_org             = false;
 			bool super_run             = false;
@@ -372,7 +377,7 @@ namespace big
 			// do not save below entries
 			bool dance_mode = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(self, ipls, ptfx_effects, allow_ragdoll, clean_player, force_wanted_level, free_cam, invisibility, local_visibility, never_wanted, no_ragdoll, noclip, off_radar, super_run, no_collision, unlimited_oxygen, no_water_collision, wanted_level, god_mode, part_water, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_drown, proof_water, proof_mask, mobile_radio, fast_respawn, auto_tp, super_jump, beast_jump, healthregen, healthregenrate, hud, superman, custom_weapon_stop, persist_outfit, persist_outfits_mis)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(self, ipls, ptfx_effects, allow_ragdoll, clean_player, force_wanted_level, free_cam, invisibility, local_visibility, never_wanted, no_ragdoll, noclip, noclip_aim_speed_multiplier, noclip_speed_multiplier, off_radar, super_run, no_collision, unlimited_oxygen, no_water_collision, wanted_level, god_mode, part_water, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_drown, proof_water, proof_mask, mobile_radio, fast_respawn, auto_tp, super_jump, beast_jump, healthregen, healthregenrate, hud, superman, custom_weapon_stop, persist_outfit, persist_outfits_mis)
 		} self{};
 
 		struct session
@@ -443,13 +448,6 @@ namespace big
 		{
 			bool dev_dlc = false;
 
-			struct rainbow
-			{
-				bool fade  = false;
-				bool spasm = false;
-				int speed  = 1;
-			} rainbow{};
-
 			struct hotkeys
 			{
 				bool editing_menu_toggle    = false;
@@ -457,6 +455,7 @@ namespace big
 				int teleport_waypoint       = 0;
 				int teleport_objective      = 0;
 				int teleport_pv             = 0;
+				int teleport_selected       = 0;
 				int noclip                  = 0;
 				int vehicle_flymode         = 0;
 				int bringvehicle            = 0;
@@ -514,6 +513,7 @@ namespace big
 				bool detect_player       = false;
 				float nav_ovverride_fast = 3.f;
 				float nav_ovverride_slow = 0.25f;
+
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(orbital_drone, detect_player, nav_ovverride_fast, nav_ovverride_slow);
 			} orbital_drone{};
 
@@ -526,6 +526,7 @@ namespace big
 			struct water
 			{
 				bool part_water = false;
+
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(water, part_water)
 			} water{};
 
@@ -585,6 +586,7 @@ namespace big
 				std::vector<std::pair<std::string, std::string>> models;
 				std::mutex m;
 				bool update = false;
+
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(model_swapper, models)
 			} model_swapper{};
 
@@ -618,8 +620,6 @@ namespace big
 			bool spoof_player_model  = false;
 			std::string player_model = "";
 
-			bool spoof_cheater = false;
-
 			bool spoof_hide_god      = false;
 			bool spoof_hide_spectate = true;
 
@@ -639,7 +639,7 @@ namespace big
 
 			bool voice_chat_audio = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(spoofing, hide_from_player_list, pool_type, spoof_cheater, spoof_hide_god, spoof_hide_spectate, spoof_crew_data, crew_tag, rockstar_crew, square_crew_tag, spoof_session_region_type, session_region_type, spoof_session_language, session_language, spoof_session_player_count, session_player_count, voice_chat_audio, spoof_session_bad_sport_status, session_bad_sport)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(spoofing, hide_from_player_list, pool_type, spoof_blip, blip_type, spoof_rank, rank, spoof_job_points, job_points, spoof_kd_ratio, kd_ratio, spoof_bad_sport, badsport_type, spoof_player_model, player_model, spoof_hide_god, spoof_hide_spectate, spoof_crew_data, crew_tag, rockstar_crew, square_crew_tag, spoof_session_region_type, session_region_type, spoof_session_language, session_language, spoof_session_player_count, session_player_count, spoof_session_bad_sport_status, session_bad_sport, voice_chat_audio)
 		} spoofing{};
 
 		struct vehicle
@@ -752,22 +752,23 @@ namespace big
 			struct paintgun
 			{
 				bool rainbow = false;
+				float speed  = 1.f;
 				float col[4] = {0.f, 0.f, 1.f, 1.f};
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(paintgun, rainbow, col)
 			} paintgun{};
 
 			struct aimbot
 			{
-				bool enable                 = false;
-				bool smoothing              = true;
-				float smoothing_speed       = 2.f;
-				bool on_player              = true;
-				bool on_enemy               = false;
-				bool on_police              = false;
-				bool on_npc                 = false;
-				float fov                   = 90.f;
-				float distance              = 200.f;
-				std::uint32_t selected_bone = 0x796E; // Default to head
+				bool enable            = false;
+				bool smoothing         = true;
+				float smoothing_speed  = 2.f;
+				bool on_player         = true;
+				bool on_enemy          = false;
+				bool on_police         = false;
+				bool on_npc            = false;
+				float fov              = 90.f;
+				float distance         = 200.f;
+				uint32_t selected_bone = 0x796E; // Default to head
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(aimbot, enable, smoothing, smoothing_speed, fov, distance, selected_bone)
 			} aimbot{};
 
@@ -787,7 +788,7 @@ namespace big
 			bool triggerbot               = false;
 			bool infinite_range           = false;
 			bool enable_weapon_hotkeys    = false;
-			std::map<int, std::vector<std::uint32_t>> weapon_hotkeys{};
+			std::map<int, std::vector<uint32_t>> weapon_hotkeys{};
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(weapons, ammo_special, custom_weapon, aimbot, infinite_ammo, always_full_ammo, infinite_mag, increased_damage, increase_damage, no_recoil, no_spread, vehicle_gun_model, increased_c4_limit, increased_flare_limit, rapid_fire, gravity_gun, paintgun, interior_weapon, triggerbot, infinite_range, enable_weapon_hotkeys, weapon_hotkeys)
 		} weapons{};
@@ -1016,7 +1017,21 @@ namespace big
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(persist_weapons, enabled, weapon_loadout_file)
 		} persist_weapons{};
 
-		NLOHMANN_DEFINE_TYPE_INTRUSIVE(menu_settings, debug, tunables, notifications, player, player_db, protections, self, session, settings, spawn_vehicle, clone_pv, spoofing, vehicle, weapons, window, context_menu, esp, session_browser, ugc, reactions, world, stat_editor, lua, persist_weapons)
+		struct vfx
+		{
+			bool enable_custom_sky_color = false;
+
+			float azimuth_east[4]       = {1, 0, 0, 0};
+			float azimuth_west[4]       = {1, 0, 0, 0};
+			float azimuth_transition[4] = {1, 0, 0, 0};
+			float zenith[4]             = {1, 0, 0, 0};
+
+			float stars_intensity = 1;
+
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(vfx, azimuth_east, azimuth_west, azimuth_transition, zenith, stars_intensity)
+		} vfx{};
+
+		NLOHMANN_DEFINE_TYPE_INTRUSIVE(menu_settings, debug, tunables, notifications, player, player_db, protections, self, session, settings, spawn_vehicle, clone_pv, spoofing, vehicle, weapons, window, context_menu, esp, session_browser, ugc, reactions, world, stat_editor, lua, persist_weapons, vfx)
 	};
 
 	inline auto g = menu_settings();

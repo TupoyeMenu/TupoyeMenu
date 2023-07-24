@@ -1,15 +1,15 @@
+#include "core/data/net_event_names.hpp"
 #include "fiber_pool.hpp"
 #include "gta/enums.hpp"
 #include "gta/net_game_event.hpp"
-#include "script/scriptIdBase.hpp"
 #include "hooking.hpp"
+#include "script/scriptIdBase.hpp"
 #include "util/math.hpp"
 #include "util/notify.hpp"
 #include "util/toxic.hpp"
 
 #include <base/CObject.hpp>
 #include <network/CNetGamePlayer.hpp>
-#include "core/data/net_event_names.hpp"
 
 namespace big
 {
@@ -28,7 +28,7 @@ namespace big
 	void scan_weapon_damage_event(CNetGamePlayer* player, rage::datBitBuffer* buffer)
 	{
 		uint8_t damageType;
-		uint32_t weaponType;// weaponHash
+		uint32_t weaponType; // weaponHash
 
 		bool overrideDefaultDamage;
 		bool hitEntityWeapon;
@@ -56,8 +56,8 @@ namespace big
 
 		uint16_t f112_1;
 
-		uint16_t parentGlobalId;// Source entity?
-		uint16_t hitGlobalId;   // Target entity?
+		uint16_t parentGlobalId; // Source entity?
+		uint16_t hitGlobalId;    // Target entity?
 
 		uint8_t tyreIndex;
 		uint8_t suspensionIndex;
@@ -108,7 +108,7 @@ namespace big
 
 		if (isNetTargetPos)
 		{
-			localPos.x = buffer->ReadSignedFloat(16, 55.f);// divisor: 0x425C0000
+			localPos.x = buffer->ReadSignedFloat(16, 55.f); // divisor: 0x425C0000
 			localPos.y = buffer->ReadSignedFloat(16, 55.f);
 			localPos.z = buffer->ReadSignedFloat(16, 55.f);
 		}
@@ -140,13 +140,13 @@ namespace big
 		}
 		else
 		{
-			parentGlobalId = buffer->Read<uint16_t>(13);// +118
-			hitGlobalId    = buffer->Read<uint16_t>(13);// +120
+			parentGlobalId = buffer->Read<uint16_t>(13); // +118
+			hitGlobalId    = buffer->Read<uint16_t>(13); // +120
 		}
 
 		if (damageType < 2)
 		{
-			localPos.x = buffer->ReadSignedFloat(16, 55.f);// divisor: 0x425C0000
+			localPos.x = buffer->ReadSignedFloat(16, 55.f); // divisor: 0x425C0000
 			localPos.y = buffer->ReadSignedFloat(16, 55.f);
 			localPos.z = buffer->ReadSignedFloat(16, 55.f);
 
@@ -156,14 +156,14 @@ namespace big
 
 				if (hasVehicleData)
 				{
-					tyreIndex       = buffer->Read<uint8_t>(4);// +122
-					suspensionIndex = buffer->Read<uint8_t>(4);// +123
+					tyreIndex       = buffer->Read<uint8_t>(4); // +122
+					suspensionIndex = buffer->Read<uint8_t>(4); // +123
 				}
 			}
 		}
 		else
 		{
-			hitComponent = buffer->Read<uint8_t>(5);// +108
+			hitComponent = buffer->Read<uint8_t>(5); // +108
 		}
 
 		f133         = buffer->Read<uint8_t>(1);
@@ -171,7 +171,7 @@ namespace big
 
 		if (hasImpactDir)
 		{
-			impactDir.x = buffer->ReadSignedFloat(16, 6.2831854820251f);// divisor: 0x40C90FDB
+			impactDir.x = buffer->ReadSignedFloat(16, 6.2831854820251f); // divisor: 0x40C90FDB
 			impactDir.y = buffer->ReadSignedFloat(16, 6.2831854820251f);
 			impactDir.z = buffer->ReadSignedFloat(16, 6.2831854820251f);
 		}
@@ -369,17 +369,12 @@ namespace big
 
 		auto plyr = g_player_service->get_by_id(source_player->m_player_id);
 
-		if(g.debug.logs.net_event_logs &&
-			event_id != (int)eNetworkEvents::SCRIPTED_GAME_EVENT && event_id != (int)eNetworkEvents::REMOTE_SCRIPT_INFO_EVENT &&
-			event_id != (int)eNetworkEvents::REMOTE_SCRIPT_LEAVE_EVENT && event_id != (int)eNetworkEvents::NETWORK_ENTITY_AREA_STATUS_EVENT
-		)
+		if (g.debug.logs.net_event_logs && event_id != (int)eNetworkEvents::SCRIPTED_GAME_EVENT && event_id != (int)eNetworkEvents::REMOTE_SCRIPT_INFO_EVENT && event_id != (int)eNetworkEvents::REMOTE_SCRIPT_LEAVE_EVENT && event_id != (int)eNetworkEvents::NETWORK_ENTITY_AREA_STATUS_EVENT)
 		{
-			LOG(VERBOSE) << std::format(
-				"RECEIVED EVENT | Type Name: {} | Sender: {} | Type: {}",
-				net_event_names[event_id],
-				source_player ? source_player->get_name() : "<UNKNOWN>",
-				event_id
-			);	
+			LOG(VERBOSE) << std::format("RECEIVED EVENT | Type Name: {} | Sender: {} | Type: {}",
+			    net_event_names[event_id],
+			    source_player ? source_player->get_name() : "<UNKNOWN>",
+			    event_id);
 		}
 
 		if (plyr && plyr->block_net_events)
@@ -392,7 +387,7 @@ namespace big
 		{
 		case eNetworkEvents::KICK_VOTES_EVENT:
 		{
-			std::uint32_t player_bitfield = buffer->Read<uint32_t>(32);
+			uint32_t player_bitfield = buffer->Read<uint32_t>(32);
 			if (player_bitfield & (1 << target_player->m_player_id))
 			{
 				g.reactions.kick_vote.process(plyr);
@@ -507,20 +502,25 @@ namespace big
 			if (auto plyr = g_player_service->get_by_id(source_player->m_player_id))
 				session::add_infraction(plyr, Infraction::TRIGGERED_ANTICHEAT);
 
-			g.reactions.modder_detection.process(plyr);
+			g.reactions.game_anti_cheat_modder_detection.process(plyr);
 			break;
 		}
 		case eNetworkEvents::REQUEST_CONTROL_EVENT:
 		{
 			int net_id = buffer->Read<int>(13);
 			if (g_local_player && g_local_player->m_vehicle && g_local_player->m_vehicle->m_net_object
-			    && g_local_player->m_vehicle->m_net_object->m_object_id == net_id && g_local_player->m_vehicle->m_driver == g_local_player)
+			    && g_local_player->m_vehicle->m_net_object->m_object_id == net_id) //The request is for a vehicle we are currently in.
 			{
-				g.reactions.request_control_event.process(plyr);
-
-				if(g.protections.request_control)
+				Vehicle personal_vehicle = mobile::mechanic::get_personal_vehicle();
+				Vehicle veh              = g_pointers->m_gta.m_ptr_to_handle(g_local_player->m_vehicle);
+				if (!NETWORK::NETWORK_IS_ACTIVITY_SESSION() //If we're in Freemode.
+				    || personal_vehicle == veh              //Or we're in our personal vehicle.
+				    || DECORATOR::DECOR_GET_INT(veh, "RandomId") == g_local_player->m_net_object->m_object_id) // Or it's a vehicle we spawned.
 				{
-					g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+					if (g.protections.request_control)
+						g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+
+					g.reactions.request_control_event.process(plyr);
 					return;
 				}
 			}
@@ -536,22 +536,21 @@ namespace big
 
 			if (type == WorldStateDataType::Rope)
 			{
-				buffer->Read<int>(9);   // network rope id
-				buffer->Read<float>(19);// pos x
-				buffer->Read<float>(19);// pos y
-				buffer->Read<float>(19);// pos z
-				buffer->Read<float>(19);// rot x
-				buffer->Read<float>(19);// rot y
-				buffer->Read<float>(19);// rot z
-				buffer->Read<float>(16);// length
+				buffer->Read<int>(9);    // network rope id
+				buffer->Read<float>(19); // pos x
+				buffer->Read<float>(19); // pos y
+				buffer->Read<float>(19); // pos z
+				buffer->Read<float>(19); // rot x
+				buffer->Read<float>(19); // rot y
+				buffer->Read<float>(19); // rot z
+				buffer->Read<float>(16); // length
 				int type             = buffer->Read<int>(4);
 				float initial_length = buffer->Read<float>(16);
 				float min_length     = buffer->Read<float>(16);
 
-				if (type == 0 || initial_length < min_length)// https://docs.fivem.net/natives/?_0xE832D760399EB220
+				if (type == 0 || initial_length < min_length) // https://docs.fivem.net/natives/?_0xE832D760399EB220
 				{
 					// most definitely a crash
-					LOG(INFO) << std::hex << std::uppercase << "0x" << id.m_hash;
 					notify::crash_blocked(source_player, "rope");
 					g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 					return;
@@ -559,9 +558,9 @@ namespace big
 			}
 			else if (type == WorldStateDataType::PopGroupOverride)
 			{
-				int pop_schedule = buffer->ReadSigned<int>(8);// Pop Schedule
-				int pop_group    = buffer->Read<int>(32);     // Pop Group
-				int percentage   = buffer->Read<int>(7);      // Percentage
+				int pop_schedule = buffer->ReadSigned<int>(8); // Pop Schedule
+				int pop_group    = buffer->Read<int>(32);      // Pop Group
+				int percentage   = buffer->Read<int>(7);       // Percentage
 
 				if (pop_group == 0 && (percentage == 0 || percentage == 103))
 				{
@@ -662,7 +661,7 @@ namespace big
 			bool is_entity = buffer->Read<bool>(1);
 			std::int16_t entity_net_id;
 			rage::fvector3 position;
-			std::uint32_t ref_hash;
+			uint32_t ref_hash;
 
 			if (is_entity)
 				entity_net_id = buffer->Read<std::int16_t>(13);
@@ -675,12 +674,18 @@ namespace big
 
 			bool has_ref = buffer->Read<bool>(1);
 			if (has_ref)
-				ref_hash = buffer->Read<std::uint32_t>(32);
+				ref_hash = buffer->Read<uint32_t>(32);
 
-			std::uint32_t sound_hash = buffer->Read<std::uint32_t>(32);
+			uint32_t sound_hash = buffer->Read<uint32_t>(32);
 
-			if(g.debug.logs.remote_sound_logs)
-				LOG(VERBOSE) << std::format("Received Remote Sound | Hash: {} | Pos: X:{} Y:{} Z:{} | Is Entity: {} | Entity Net ID: {}", sound_hash, position.x, position.y, position.z, is_entity, entity_net_id);
+			if (g.debug.logs.remote_sound_logs)
+				LOG(VERBOSE) << std::format("Received Remote Sound | Hash: {} | Pos: X:{} Y:{} Z:{} | Is Entity: {} | Entity Net ID: {}",
+				    sound_hash,
+				    position.x,
+				    position.y,
+				    position.z,
+				    is_entity,
+				    entity_net_id);
 
 			if (sound_hash == RAGE_JOAAT("Remote_Ring") && plyr)
 			{

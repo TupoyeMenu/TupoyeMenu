@@ -4,19 +4,16 @@
 
 namespace lua::gui
 {
-	static void add_independent_element(lua_State* state, std::shared_ptr<lua::gui::gui_element> element)
+	static void add_independent_element(lua_State* state, std::unique_ptr<lua::gui::gui_element> element)
 	{
-		auto module = sol::state_view(state)["!this"].get<big::lua_module*>();
+		big::lua_module* module = sol::state_view(state)["!this"];
 
 		module->m_independent_gui.push_back(std::move(element));
 	}
 
-	static void add_element(lua_State* state, std::uint32_t hash, std::shared_ptr<lua::gui::gui_element> element)
+	static void add_element(lua_State* state, uint32_t hash, std::unique_ptr<lua::gui::gui_element> element)
 	{
-		auto module = sol::state_view(state)["!this"].get<big::lua_module*>();
-
-		if (!module->m_gui.contains(hash))
-			module->m_gui[hash] = {};
+		big::lua_module* module = sol::state_view(state)["!this"];
 
 		module->m_gui[hash].push_back(std::move(element));
 	}
@@ -31,28 +28,9 @@ namespace lua::gui
 		return m_tab_hash;
 	}
 
-	bool tab::check_if_existing_tab_and_fill_id(const std::map<big::tabs, big::navigation_struct>& nav)
-	{
-		for (const auto& nav_item : nav)
-		{
-			if (nav_item.second.hash == m_tab_hash)
-			{
-				m_id = nav_item.first;
-				return true;
-			}
-
-			if (check_if_existing_tab_and_fill_id(nav_item.second.sub_nav))
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	void tab::clear(sol::this_state state)
 	{
-		auto module = sol::state_view(state)["!this"].get<big::lua_module*>();
+		big::lua_module* module = sol::state_view(state)["!this"];
 
 		if (module->m_gui.contains(m_tab_hash))
 			module->m_gui[m_tab_hash] = {};
@@ -65,67 +43,76 @@ namespace lua::gui
 		return sub_tab;
 	}
 
-	std::shared_ptr<lua::gui::button> tab::add_button(const std::string& name, sol::protected_function callback, sol::this_state state)
+	lua::gui::button* tab::add_button(const std::string& name, sol::protected_function callback, sol::this_state state)
 	{
-		auto element = std::make_shared<lua::gui::button>(name, callback);
-		add_element(state, m_tab_hash, element);
-		return element;
+		auto element = std::make_unique<lua::gui::button>(name, callback);
+		auto el_ptr  = element.get();
+		add_element(state, m_tab_hash, std::move(element));
+		return el_ptr;
 	}
 
-	std::shared_ptr<lua::gui::text> tab::add_text(const std::string& name, sol::this_state state)
+	lua::gui::text* tab::add_text(const std::string& name, sol::this_state state)
 	{
-		auto element = std::make_shared<lua::gui::text>(name);
-		add_element(state, m_tab_hash, element);
-		return element;
+		auto element = std::make_unique<lua::gui::text>(name);
+		auto el_ptr  = element.get();
+		add_element(state, m_tab_hash, std::move(element));
+		return el_ptr;
 	}
 
-	std::shared_ptr<lua::gui::checkbox> tab::add_checkbox(const std::string& name, sol::this_state state)
+	lua::gui::checkbox* tab::add_checkbox(const std::string& name, sol::this_state state)
 	{
-		auto element = std::make_shared<lua::gui::checkbox>(name);
-		add_element(state, m_tab_hash, element);
-		return element;
+		auto element = std::make_unique<lua::gui::checkbox>(name);
+		auto el_ptr  = element.get();
+		add_element(state, m_tab_hash, std::move(element));
+		return el_ptr;
 	}
 
-	std::shared_ptr<lua::gui::sameline> tab::add_sameline(sol::this_state state)
+	lua::gui::sameline* tab::add_sameline(sol::this_state state)
 	{
-		auto element = std::make_shared<lua::gui::sameline>();
-		add_element(state, m_tab_hash, element);
-		return element;
+		auto element = std::make_unique<lua::gui::sameline>();
+		auto el_ptr  = element.get();
+		add_element(state, m_tab_hash, std::move(element));
+		return el_ptr;
 	}
 
-	std::shared_ptr<lua::gui::separator> tab::add_separator(sol::this_state state)
+	lua::gui::separator* tab::add_separator(sol::this_state state)
 	{
-		auto element = std::make_shared<lua::gui::separator>();
-		add_element(state, m_tab_hash, element);
-		return element;
+		auto element = std::make_unique<lua::gui::separator>();
+		auto el_ptr  = element.get();
+		add_element(state, m_tab_hash, std::move(element));
+		return el_ptr;
 	}
 
-	std::shared_ptr<lua::gui::input_int> tab::add_input_int(const std::string& name, sol::this_state state)
+	lua::gui::input_int* tab::add_input_int(const std::string& name, sol::this_state state)
 	{
-		auto element = std::make_shared<lua::gui::input_int>(name);
-		add_element(state, m_tab_hash, element);
-		return element;
+		auto element = std::make_unique<lua::gui::input_int>(name);
+		auto el_ptr  = element.get();
+		add_element(state, m_tab_hash, std::move(element));
+		return el_ptr;
 	}
 
-	std::shared_ptr<lua::gui::input_float> tab::add_input_float(const std::string& name, sol::this_state state)
+	lua::gui::input_float* tab::add_input_float(const std::string& name, sol::this_state state)
 	{
-		auto element = std::make_shared<lua::gui::input_float>(name);
-		add_element(state, m_tab_hash, element);
-		return element;
+		auto element = std::make_unique<lua::gui::input_float>(name);
+		auto el_ptr  = element.get();
+		add_element(state, m_tab_hash, std::move(element));
+		return el_ptr;
 	}
 
-	std::shared_ptr<lua::gui::input_string> tab::add_input_string(const std::string& name, sol::this_state state)
+	lua::gui::input_string* tab::add_input_string(const std::string& name, sol::this_state state)
 	{
-		auto element = std::make_shared<lua::gui::input_string>(name);
-		add_element(state, m_tab_hash, element);
-		return element;
+		auto element = std::make_unique<lua::gui::input_string>(name);
+		auto el_ptr  = element.get();
+		add_element(state, m_tab_hash, std::move(element));
+		return el_ptr;
 	}
 
-	std::shared_ptr<lua::gui::raw_imgui_callback> tab::add_imgui(sol::protected_function imgui_rendering, sol::this_state state)
+	lua::gui::raw_imgui_callback* tab::add_imgui(sol::protected_function imgui_rendering, sol::this_state state)
 	{
-		auto element = std::make_shared<lua::gui::raw_imgui_callback>(imgui_rendering);
-		add_element(state, m_tab_hash, element);
-		return element;
+		auto element = std::make_unique<lua::gui::raw_imgui_callback>(imgui_rendering);
+		auto el_ptr  = element.get();
+		add_element(state, m_tab_hash, std::move(element));
+		return el_ptr;
 	}
 
 	// Lua API: Table
@@ -215,11 +202,12 @@ namespace lua::gui
 	//   end
 	// end)
 	// ```
-	static std::shared_ptr<lua::gui::raw_imgui_callback> add_imgui(sol::protected_function imgui_rendering, sol::this_state state)
+	static lua::gui::raw_imgui_callback* add_imgui(sol::protected_function imgui_rendering, sol::this_state state)
 	{
-		auto element = std::make_shared<lua::gui::raw_imgui_callback>(imgui_rendering);
-		add_independent_element(state, element);
-		return element;
+		auto element = std::make_unique<lua::gui::raw_imgui_callback>(imgui_rendering);
+		auto el_ptr  = element.get();
+		add_independent_element(state, std::move(element));
+		return el_ptr;
 	}
 
 	void bind(sol::state& state)
