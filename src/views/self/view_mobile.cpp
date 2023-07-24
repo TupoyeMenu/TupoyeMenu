@@ -54,16 +54,6 @@ namespace big
 			mobile::merry_weather::request_airstrike();
 		});
 
-
-		ImGui::SeparatorText("CEO Abilities");
-
-		components::button("Bullshark Testosterone", [] {
-			mobile::ceo_abilities::request_bullshark_testosterone();
-		});
-
-		components::command_button<"ballisticarmor">();
-
-
 		ImGui::SeparatorText("Services");
 
 		components::command_button<"avenger">();
