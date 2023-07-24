@@ -82,6 +82,17 @@ namespace big
 
 		ImGui::EndGroup();
 
+		components::options_modal("Noclip", [] {
+			ImGui::Separator();
+
+			ImGui::BeginGroup();
+			ImGui::Text("No Clip Movement Speed Multiplier While Aiming");
+			ImGui::SliderFloat("##noclipaimspeedmult", &g.self.noclip_aim_speed_multiplier, 0.1f, 1.0f);
+			ImGui::Text("No Clip Movement Speed Multiplier");
+			ImGui::SliderFloat("##noclipspeedmult", &g.self.noclip_speed_multiplier, 1.f, 100.f);
+			ImGui::EndGroup();
+		});
+
 		ImGui::SeparatorText("Proofs");
 
 		if (ImGui::Button("Check all"))

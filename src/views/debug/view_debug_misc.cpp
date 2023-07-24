@@ -87,6 +87,7 @@ namespace big
 		});
 
 		ImGui::Checkbox("Always Control", &g.tunables.always_control);
+		components::command_checkbox<"windowhook">("Disable GTA Window Hook");
 
 		ImGui::Text("Fiber Pool Usage %d/%d", g_fiber_pool->get_used_fibers(), g_fiber_pool->get_total_fibers());
 		ImGui::SameLine();

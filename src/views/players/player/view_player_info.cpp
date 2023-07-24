@@ -21,12 +21,37 @@
 #include "util/misc.hpp"
 #include "views/view.hpp"
 
+#include <network/netConnection.hpp>
 #include <script/globals/GPBD_FM.hpp>
 #include <script/globals/GPBD_FM_3.hpp>
 #include <script/globals/GlobalPlayerBD.hpp>
 
 namespace big
 {
+	const char* get_nat_type_str(int type)
+	{
+		switch (type)
+		{
+		case 1: return "Open";
+		case 2: return "Moderate";
+		case 3: return "Strict";
+		}
+
+		return "Unknown";
+	}
+
+	const char* get_connection_type_str(int type)
+	{
+		switch (type)
+		{
+		case 1: return "Direct";
+		case 2: return "Relay";
+		case 3: return "Peer Relay";
+		}
+
+		return "Unknown";
+	}
+
 	void view::view_player_info()
 	{
 		std::string title        = std::format("Player Info: {}", g_player_service->get_selected()->get_name());
@@ -186,17 +211,72 @@ namespace big
 				auto ip   = g_player_service->get_selected()->get_ip_address();
 				auto port = g_player_service->get_selected()->get_port();
 
-				ImGui::Text("IP Address: %d.%d.%d.%d:%d", ip.m_field1, ip.m_field2, ip.m_field3, ip.m_field4, port);
-
-				ImGui::SameLine();
-
-				if (ImGui::Button("Copy"))
+				if (ip)
 				{
-					ImGui::SetClipboardText(
-					    std::format("{}.{}.{}.{}:{}", ip.m_field1, ip.m_field2, ip.m_field3, ip.m_field4, port).data());
+					ImGui::Text("IP Address: %d.%d.%d.%d:%d",
+					    ip.value().m_field1,
+					    ip.value().m_field2,
+					    ip.value().m_field3,
+					    ip.value().m_field4,
+					    port);
+
+					ImGui::SameLine();
+
+					// clang-format off
+					ImGui::PushID("##ip");
+					if (ImGui::SmallButton("Copy"))
+						ImGui::SetClipboardText(std::format("{}.{}.{}.{}:{}",
+						    ip.value().m_field1,
+						    ip.value().m_field2,
+						    ip.value().m_field3,
+						    ip.value().m_field4,
+						    port).data());
+					ImGui::PopID();
+					// clang-format on
+				}
+				else
+				{
+					if (net_player_data->m_force_relays)
+						ImGui::Text("IP Address: Hidden");
+					else
+						ImGui::Text("IP Address: Unknown");
+
+					auto cxn_type = g_player_service->get_selected()->get_connection_peer() ?
+					    g_player_service->get_selected()->get_connection_peer()->m_peer_address.m_connection_type :
+					    0;
+
+					if (g.protections.force_relay_connections && ImGui::IsItemHovered())
+						ImGui::SetTooltip("IP addresses cannot be seen when Force Relay Connections is enabled");
+					else if (cxn_type == 2 && ImGui::IsItemHovered())
+						ImGui::SetTooltip("Cannot retrieve IP address since this player is connected through dedicated servers");
+					else if (cxn_type == 3 && ImGui::IsItemHovered())
+						ImGui::SetTooltip("Cannot retrieve IP address since this player is connected through another player");
 				}
 
 				ImGui::Text("Game State: %s", game_states[(int32_t)player_info->m_game_state]);
+
+				ImGui::Text("NAT Type: %s", get_nat_type_str(g_player_service->get_selected()->get_net_data()->m_nat_type));
+
+				if (auto peer = g_player_service->get_selected()->get_connection_peer())
+				{
+					ImGui::Text("Connection Type: %s", get_connection_type_str(peer->m_peer_address.m_connection_type));
+
+					if (peer->m_peer_address.m_connection_type == 2)
+					{
+						auto ip = peer->m_relay_address.m_relay_address;
+						ImGui::Text("Relay IP: %d.%d.%d.%d", ip.m_field1, ip.m_field2, ip.m_field3, ip.m_field4);
+					}
+					else if (peer->m_peer_address.m_connection_type == 3)
+					{
+						auto ip = peer->m_peer_address.m_relay_address;
+						ImGui::Text("Peer Relay IP: %d.%d.%d.%d", ip.m_field1, ip.m_field2, ip.m_field3, ip.m_field4);
+					}
+
+					ImGui::Text("Num Messages Sent: %d", peer->m_num_messages_batched);
+					ImGui::Text("Num Reliables Sent: %d", peer->m_num_reliable_messages_batched);
+					ImGui::Text("Num Reliables Resent: %d", peer->m_num_resent_reliable_messages_batched);
+					ImGui::Text("Num Encryption Attempts: %d", peer->m_num_encryption_attempts);
+				}
 
 				components::button("Open SC Overlay", [] {
 					int gamerHandle;
@@ -220,9 +300,11 @@ namespace big
 						}
 					}
 
-					if (ImGui::Checkbox("Is Modder", &current_player->is_modder) || ImGui::Checkbox("Force Allow Join", &current_player->force_allow_join) || ImGui::Checkbox("Block Join", &current_player->block_join))
+					if (ImGui::Checkbox("Is Modder", &current_player->is_modder)
+					    || ImGui::Checkbox("Force Allow Join", &current_player->force_allow_join)
+					    || ImGui::Checkbox("Block Join", &current_player->block_join))
 					{
-						g_player_service->get_selected()->is_modder = current_player->is_modder;
+						g_player_service->get_selected()->is_modder  = current_player->is_modder;
 						g_player_service->get_selected()->block_join = current_player->block_join;
 						g_player_database_service->save();
 					}
@@ -279,13 +361,10 @@ namespace big
 				ImGui::Text("Health: %f / %f", cped->m_health, cped->m_maxhealth);
 				ImGui::SameLine();
 				ImGui::Text("Armor: %f", cped->m_armor);
-				ImGui::Text("Pos X: %f, Y: %f, Z: %f",
-				    pos->x,
-				    pos->y,
-				    pos->z);
+				ImGui::Text("Pos X: %f, Y: %f, Z: %f", pos->x, pos->y, pos->z);
 
 				ImGui::Text("Distance: %f", math::distance_between_vectors(misc::fvector3_to_Vector3(*g_local_player->get_position()), misc::fvector3_to_Vector3(*cped->get_position())));
-				if(cped->m_vehicle != nullptr)
+				if (cped->m_vehicle != nullptr)
 					ImGui::Text("Speed: %f", cped->m_vehicle->get_speed());
 				else
 					ImGui::Text("Speed: %f", cped->get_speed());

@@ -68,6 +68,13 @@ namespace big
 					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_MODEL_SWAPPER"));
 				ImGui::EndTabItem();
 			}
+			if (ImGui::BeginTabItem("VFX"))
+			{
+				view::vfx();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_VFX"));
+				ImGui::EndTabItem();
+			}
 
 			ImGui::EndTabBar();
 		}

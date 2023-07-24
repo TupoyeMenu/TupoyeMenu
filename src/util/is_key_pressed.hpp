@@ -20,7 +20,7 @@ namespace big
 	 * @param key Key to check.
 	 * @return True if key is pressed and you are focused on the game window.
 	 */
-	inline bool is_key_pressed(std::uint16_t key)
+	inline bool is_key_pressed(uint16_t key)
 	{
 		if (GetForegroundWindow() == g_pointers->m_hwnd)
 		{
