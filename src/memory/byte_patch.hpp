@@ -22,7 +22,6 @@ namespace memory
 		virtual ~byte_patch();
 
 		void apply() const;
-
 		void restore() const;
 
 		void remove() const;

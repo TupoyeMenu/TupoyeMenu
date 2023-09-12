@@ -13,6 +13,7 @@
 #include "bindings/native.hpp"
 #include "bindings/network.hpp"
 #include "bindings/script.hpp"
+#include "bindings/stats.hpp"
 #include "bindings/tunables.hpp"
 #include "bindings/vector.hpp"
 #include "file_manager.hpp"
@@ -203,6 +204,7 @@ namespace big
 		lua::global_table::bind(m_state);
 		lua::imgui::bind(m_state, m_state.globals());
 		lua::entities::bind(m_state);
+		lua::stats::bind(m_state);
 	}
 
 	void lua_module::load_and_call_script()
@@ -224,8 +226,11 @@ namespace big
 	{
 		std::lock_guard guard(m_registered_scripts_mutex);
 
-		for (auto& script : m_registered_scripts)
+		const auto script_count = m_registered_scripts.size();
+		for (size_t i = 0; i < script_count; i++)
 		{
+			const auto script = m_registered_scripts[i].get();
+
 			if (script->is_enabled())
 			{
 				script->tick();

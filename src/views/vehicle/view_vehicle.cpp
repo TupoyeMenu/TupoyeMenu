@@ -84,6 +84,7 @@ namespace big
 				components::command_checkbox<"localinvisveh">();
 			}
 			components::command_checkbox<"vehnocollision">();
+			components::command_checkbox<"allvehsinheists">();
 
 			ImGui::EndGroup();
 			ImGui::SameLine();

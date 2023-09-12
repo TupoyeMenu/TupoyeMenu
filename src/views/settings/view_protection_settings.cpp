@@ -28,7 +28,6 @@ namespace big
 		ImGui::BeginGroup();
 		ImGui::Checkbox("Bounty", &g.protections.script_events.bounty);
 		ImGui::Checkbox("CEO Money", &g.protections.script_events.ceo_money);
-		ImGui::Checkbox("Fake Deposit", &g.protections.script_events.fake_deposit);
 		ImGui::Checkbox("Force Mission", &g.protections.script_events.force_mission);
 		ImGui::Checkbox("Force Teleport", &g.protections.script_events.force_teleport);
 		ImGui::Checkbox("GTA Banner", &g.protections.script_events.gta_banner);
@@ -53,7 +52,6 @@ namespace big
 		ImGui::Checkbox("Personal Vehicle Destroyed", &g.protections.script_events.personal_vehicle_destroyed);
 		ImGui::Checkbox("Remote Off Radar", &g.protections.script_events.remote_off_radar);
 		ImGui::Checkbox("Rotate Cam", &g.protections.script_events.rotate_cam);
-		ImGui::Checkbox("Teleport To Warehouse", &g.protections.script_events.teleport_to_warehouse);
 		ImGui::EndGroup();
 
 		ImGui::SameLine();

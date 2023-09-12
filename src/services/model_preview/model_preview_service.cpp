@@ -178,8 +178,7 @@ namespace big
 				}
 				else if (m_new_model)
 				{
-					ENTITY::DETACH_ENTITY(m_current_ent, 1, 1);
-					ENTITY::DELETE_ENTITY(&m_current_ent);
+					entity::delete_entity(m_current_ent, true);
 				}
 				else
 				{
@@ -200,8 +199,7 @@ namespace big
 				script::get_current()->yield(15ms);
 			}
 
-			ENTITY::DETACH_ENTITY(m_current_ent, 1, 1);
-			ENTITY::DELETE_ENTITY(&m_current_ent);
+			entity::delete_entity(m_current_ent, true);
 
 			m_current_ent    = 0;
 			m_ped_model_hash = 0;

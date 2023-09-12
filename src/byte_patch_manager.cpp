@@ -95,6 +95,9 @@ namespace big
 		memory::byte_patch::make(g_pointers->m_sc.m_read_attribute_patch, std::vector{0x90, 0x90})->apply();
 		memory::byte_patch::make(g_pointers->m_sc.m_read_attribute_patch_2, std::vector{0xB0, 0x01})->apply();
 #endif // ENABLE_SOCIALCLUB
+
+		// Always send the special ability event
+		memory::byte_patch::make(g_pointers->m_gta.m_activate_special_ability_patch, std::to_array({0xB0, 0x01, 0xC3}))->apply();
 	}
 
 	byte_patch_manager::byte_patch_manager()

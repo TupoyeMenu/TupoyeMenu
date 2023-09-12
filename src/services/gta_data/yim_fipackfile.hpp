@@ -17,6 +17,7 @@ namespace big
 
 	class yim_fipackfile
 	{
+	private:
 		rage::fiPackfile* rpf;
 		std::string mount_name;
 

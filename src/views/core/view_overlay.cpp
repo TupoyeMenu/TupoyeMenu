@@ -53,7 +53,7 @@ namespace big
 				ImGui::Text("Coords: (X:%.1f, Y:%.1f, Z:%.1f)", self::pos.x, self::pos.y, self::pos.z);
 
 			if (g.window.ingame_overlay.show_fps)
-				ImGui::Text("FPS: %.1f  Frame Time: %.1f", ImGui::GetIO().Framerate / 2, 1000.0f / ImGui::GetIO().Framerate);
+				ImGui::Text("FPS: %.1f  Frame Time: %.1f", ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
 
 			if (g.window.ingame_overlay.show_indicators)
 			{

@@ -630,6 +630,7 @@ namespace big
 			uint32_t timestamp                = buffer->Read<uint32_t>(32);
 			int count                         = buffer->Read<int>(2);
 			bool all_objects_migrate_together = buffer->Read<bool>(1);
+			eNetObjType sync_type;
 
 			if (count > 3)
 			{
@@ -648,10 +649,16 @@ namespace big
 					g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 					return;
 				}
+				
+				sync_type = object_type;
 			}
 
 			buffer->Seek(0);
-			g.m_syncing_player = source_player;
+			if (count)
+			{
+				g.m_syncing_player      = source_player;
+				g.m_syncing_object_type = sync_type;
+			}
 			break;
 		}
 		case eNetworkEvents::NETWORK_PLAY_SOUND_EVENT:

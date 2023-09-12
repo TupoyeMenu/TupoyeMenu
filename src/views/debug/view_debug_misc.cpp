@@ -12,7 +12,7 @@
 #include "gta/joaat.hpp"
 #include "gta_util.hpp"
 #include "gui/components/components.hpp"
-#include "imgui.h"
+#include "hooking.hpp"
 #include "natives.hpp"
 #include "network/Network.hpp"
 #include "pointers.hpp"
@@ -23,11 +23,7 @@
 #include "util/pathfind.hpp"
 #include "util/ped.hpp"
 #include "util/system.hpp"
-#include "util/ped.hpp"
-#include "util/pathfind.hpp"
 #include "views/view.hpp"
-
-#include "hooking.hpp"
 
 namespace big
 {
@@ -88,6 +84,18 @@ namespace big
 
 		ImGui::Checkbox("Always Control", &g.tunables.always_control);
 		components::command_checkbox<"windowhook">("Disable GTA Window Hook");
+
+		if (ImGui::TreeNode("Fuzzer"))
+		{
+			ImGui::Checkbox("Enabled", &g.debug.fuzzer.enabled);
+
+			for (int i = 0; i < net_object_type_strs.size(); i++)
+			{
+				ImGui::Checkbox(net_object_type_strs[i], &g.debug.fuzzer.enabled_object_types[i]);
+			}
+
+			ImGui::TreePop();
+		}
 
 		ImGui::Text("Fiber Pool Usage %d/%d", g_fiber_pool->get_used_fibers(), g_fiber_pool->get_total_fibers());
 		ImGui::SameLine();

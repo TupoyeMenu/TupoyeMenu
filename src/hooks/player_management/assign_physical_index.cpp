@@ -39,7 +39,6 @@ namespace big
 
 		if (new_index == static_cast<uint8_t>(-1))
 		{
-			g.m_spoofed_peer_ids.erase(player->get_net_data()->m_host_token);
 			g_player_service->player_leave(player);
 
 			if (net_player_data)
@@ -78,7 +77,7 @@ namespace big
 
 					auto id = player->m_player_id;
 					if (auto plyr = g_player_service->get_by_id(id))
-						plyr->is_rockstar_admin = true;
+						plyr->is_admin = true;
 				}
 			}
 

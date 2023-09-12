@@ -32,6 +32,8 @@ namespace big
 		bool m_loop_running = false;
 		bool m_running      = false;
 
+		std::string m_current_persisted_vehicle_name;
+
 	public:
 		model_preview_service();
 		~model_preview_service();
@@ -41,6 +43,8 @@ namespace big
 
 		void show_vehicle(Hash hash, bool spawn_max);
 		void show_vehicle(const std::map<int, int32_t>& owned_mods, bool spawn_max);
+		void show_vehicle_persisted(std::string vehicle_name);
+		void show_vehicle(Vehicle veh);
 
 		void preview_loop();
 		void stop_preview();

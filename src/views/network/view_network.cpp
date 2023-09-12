@@ -48,7 +48,7 @@ namespace big
 		ImGui::SameLine();
 		components::button("Copy Session Info", [] {
 			char buf[0x100]{};
-			g_pointers->m_gta.m_encode_session_info(&gta_util::get_network()->m_game_session.m_rline_session.m_session_info, buf, 0xA9, nullptr);
+			g_pointers->m_gta.m_encode_session_info(&gta_util::get_network()->m_last_joined_session.m_session_info, buf, 0xA9, nullptr);
 			ImGui::SetClipboardText(buf);
 		});
 
@@ -205,6 +205,8 @@ namespace big
 		ImGui::Checkbox("Explosion Karma", &g.session.explosion_karma);
 		ImGui::SameLine();
 		ImGui::Checkbox("Damage Karma", &g.session.damage_karma);
+		ImGui::SameLine();
+		ImGui::Checkbox("Fix Vehicle", &g.session.vehicle_fix_all);
 
 		static int global_wanted_level = 0;
 
@@ -366,6 +368,7 @@ namespace big
 		ImGui::Checkbox("Disable Traffic", &g.session.disable_traffic);
 		ImGui::SameLine();
 		ImGui::Checkbox("Force Thunder", &g.session.force_thunder);
+		components::command_button<"emptysession">();
 
 		ImGui::SeparatorText("Warp Time (requires session host)");
 
@@ -407,7 +410,9 @@ namespace big
 		ImGui::SameLine();
 		components::script_patch_checkbox("Block Muggers", &g.session.block_muggers, "For the entire session");
 
-		components::script_patch_checkbox("Block CEO Raids", &g.session.block_ceo_raids, "For the entire session");
+		components::script_patch_checkbox("Block CEO Raids",
+		    &g.session.block_ceo_raids,
+		    "For the entire session");
 
 		ImGui::EndGroup();
 	}
