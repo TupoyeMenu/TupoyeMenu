@@ -218,7 +218,6 @@ namespace big
 
 		PVOID m_broadcast_net_array;
 
-		rage::atSingleton<rage::RageSecurity>* m_security;
 		PVOID m_prepare_metric_for_sending;
 
 		PVOID m_queue_dependency;
