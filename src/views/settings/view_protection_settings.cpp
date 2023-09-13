@@ -41,6 +41,7 @@ namespace big
 		ImGui::EndDisabled();
 		ImGui::SameLine(); components::help_marker("This feature is currently disabled, Enable `ENABLE_SOCIALCLUB` to enable.");
 #endif // ENABLE_SOCIALCLUB
+		ImGui::Checkbox("Admin Check", &g.protections.admin_check);
 		ImGui::EndGroup();
 
 		ImGui::SameLine();
@@ -52,6 +53,9 @@ namespace big
 		ImGui::Checkbox("Personal Vehicle Destroyed", &g.protections.script_events.personal_vehicle_destroyed);
 		ImGui::Checkbox("Remote Off Radar", &g.protections.script_events.remote_off_radar);
 		ImGui::Checkbox("Rotate Cam", &g.protections.script_events.rotate_cam);
+		ImGui::Checkbox("Receive Pickup", &g.protections.receive_pickup);
+		ImGui::SameLine(); components::help_marker("This prevents any pickup from the ground such as unwanted money drops.\nAttention: Normal pickups are also no longer possible.");
+		ImGui::Checkbox("Kick Rejoin", &g.protections.kick_rejoin);
 		ImGui::EndGroup();
 
 		ImGui::SameLine();
@@ -63,10 +67,6 @@ namespace big
 		ImGui::Checkbox("Vehicle Kick", &g.protections.script_events.vehicle_kick);
 		ImGui::Checkbox("Wanted Level", &g.protections.script_events.clear_wanted_level);
 		ImGui::Checkbox("Request Controll", &g.protections.request_control);
-		ImGui::Checkbox("Receive Pickup", &g.protections.receive_pickup);
-		ImGui::SameLine(); components::help_marker("This prevents any pickup from the ground such as unwanted money drops.\nAttention: Normal pickups are also no longer possible.");
-		ImGui::Checkbox("Admin Check", &g.protections.admin_check);
-		ImGui::Checkbox("Kick Rejoin", &g.protections.kick_rejoin);
 		components::command_checkbox<"forcerelays">();
 		ImGui::EndGroup();
 

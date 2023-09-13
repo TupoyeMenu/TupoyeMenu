@@ -101,9 +101,11 @@ namespace big
 		ImGui::BeginDisabled(!g_player_service->get_self()->is_host());
 
 		ImGui::Checkbox("Lobby Lock", &g.session.lock_session);
+		ImGui::SameLine();
 		components::help_marker("Blocks all players from joining. May not work on some modders.");
 
 		ImGui::Checkbox("Allow Friends Into Locked Lobby", &g.session.allow_friends_into_locked_session);
+		ImGui::SameLine();
 		components::help_marker("Allows Friends to Join Lobby While Locked");
 
 		ImGui::EndDisabled();
@@ -410,9 +412,7 @@ namespace big
 		ImGui::SameLine();
 		components::script_patch_checkbox("Block Muggers", &g.session.block_muggers, "For the entire session");
 
-		components::script_patch_checkbox("Block CEO Raids",
-		    &g.session.block_ceo_raids,
-		    "For the entire session");
+		components::script_patch_checkbox("Block CEO Raids", &g.session.block_ceo_raids, "For the entire session");
 
 		ImGui::EndGroup();
 	}

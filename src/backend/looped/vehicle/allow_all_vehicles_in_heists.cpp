@@ -27,5 +27,5 @@ namespace big
 		}
 	};
 
-	allvehsinheists g_allvehsinheists("allvehsinheists", "VEHICLE_ALLOW_ALL_IN_HEISTS", "VEHICLE_ALLOW_ALL_IN_HEISTS_DESC", g.vehicle.all_vehs_in_heists);
+	allvehsinheists g_allvehsinheists("allvehsinheists", "Allow All Vehicles", "Allows All Vehicles that have been banned from being used in heists or missions.", g.vehicle.all_vehs_in_heists);
 }

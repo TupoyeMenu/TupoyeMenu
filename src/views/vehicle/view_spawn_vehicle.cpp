@@ -26,6 +26,7 @@ namespace big
 				g_model_preview_service->stop_preview();
 			}
 		}
+		ImGui::SameLine();
 		components::help_marker("Shows a render of what you have highlighted in front of you.");
 		ImGui::SameLine();
 		components::command_checkbox<"spawnin">();

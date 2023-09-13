@@ -23,5 +23,5 @@ namespace big
 		}
 	};
 
-	fill_inventory g_fill_inventory("fillsnacks", "FILL_INVENTORY", "FILL_INVENTORY_DESC", 0);
+	fill_inventory g_fill_inventory("fillsnacks", "Fill Inventory", "Refills snacks and armor", 0);
 }

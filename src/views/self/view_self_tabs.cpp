@@ -10,6 +10,7 @@
  */
 
 #include "lua/lua_manager.hpp"
+#include "pointers.hpp"
 #include "views/view.hpp"
 
 namespace big
@@ -60,11 +61,19 @@ namespace big
 					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_OUTFIT_EDITOR"));
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Outfit Slots"))
+			if (*g_pointers->m_gta.m_script_globals && ImGui::BeginTabItem("Outfit Slots"))
+
 			{
 				view::outfit_slots();
 				if (g_lua_manager)
 					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_OUTFIT_SLOTS"));
+				ImGui::EndTabItem();
+			}
+			if (ImGui::BeginTabItem("Animations"))
+			{
+				view::animations();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_ANIMATIONS"));
 				ImGui::EndTabItem();
 			}
 

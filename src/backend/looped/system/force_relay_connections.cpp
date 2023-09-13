@@ -18,6 +18,6 @@ namespace big
 		}
 	};
 
-	force_relay_connections g_force_relay_connections("forcerelays", "FORCE_RELAY_CXN", "FORCE_RELAY_CXN_DESC",
+	force_relay_connections g_force_relay_connections("forcerelays", "Force Relay Connections", "Force Relay Connections will hide your IP address from other players. This will also prevent you from seeing other people's actual IP address. Enabling this feature may cause you or other players to appear laggy and will cause issues with missions.",
 	    g.protections.force_relay_connections);
 }

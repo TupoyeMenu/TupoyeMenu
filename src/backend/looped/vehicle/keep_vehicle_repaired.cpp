@@ -56,6 +56,6 @@ namespace big
 		}
 	};
 
-	keep_vehicle_repaired g_keep_vehicle_repaired("keepfixed", "KEEP_VEHICLE_FIXED", "KEEP_VEHICLE_FIXED_DESC",
+	keep_vehicle_repaired g_keep_vehicle_repaired("keepfixed", "Keep Vehicle Repaired", "Keeps your vehicle free of wear and tear",
 	    g.vehicle.keep_vehicle_repaired);
 }

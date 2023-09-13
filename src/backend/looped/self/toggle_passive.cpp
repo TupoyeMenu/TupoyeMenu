@@ -37,5 +37,5 @@ namespace big
 		}
 	};
 
-	toggle_passive g_toggle_passive("passive", "PASSIVE", "PASSIVE_DESC", g.self.passive);
+	toggle_passive g_toggle_passive("passive", "Passive Mode", "Instantly toggle passive mode", g.self.passive);
 }

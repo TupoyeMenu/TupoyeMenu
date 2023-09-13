@@ -14,7 +14,7 @@ namespace big
 		    {eSessionType::FIND_FRIEND, "FRIENDS"},
 		    {eSessionType::SOLO, "SOLO"},
 		    {eSessionType::INVITE_ONLY, "INVITE"},
-		    {eSessionType::JOIN_CREW, "CREW"},
+		    {eSessionType::JOIN_CREW, "Crew"},
 		    {eSessionType::SC_TV, "SCTV"},
 		    {eSessionType::LEAVE_ONLINE, "SINGLEPLAYER"},
 		};

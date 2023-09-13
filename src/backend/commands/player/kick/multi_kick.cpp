@@ -34,5 +34,5 @@ namespace big
 		}
 	};
 
-	multi_kick g_multi_kick("multikick", "MULTI_KICK", "MULTI_KICK_DESC", 0, false);
+	multi_kick g_multi_kick("multikick", "Multi kick", "Kick the player using all available methods", 0, false);
 }
