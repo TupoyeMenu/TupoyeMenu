@@ -1,3 +1,5 @@
+#if defined(ENABLE_LUA)
+
 #include "base_text_element.hpp"
 
 namespace lua::gui
@@ -17,3 +19,5 @@ namespace lua::gui
 		return m_text;
 	}
 }
+
+#endif // ENABLE_LUA

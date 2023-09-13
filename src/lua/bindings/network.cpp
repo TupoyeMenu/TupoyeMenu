@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "network.hpp"
 
 #include "../../script.hpp"
@@ -171,3 +173,5 @@ namespace lua::network
 		ns["send_chat_message"]                        = send_chat_message;
 	}
 }
+
+#endif // ENABLE_LUA

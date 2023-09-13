@@ -13,12 +13,15 @@
 #include "fiber_pool.hpp"
 #include "gta_util.hpp"
 #include "hooking.hpp"
-#include "lua/lua_manager.hpp"
 #include "packet.hpp"
 #include "services/player_database/player_database_service.hpp"
 #include "services/players/player_service.hpp"
 #include "util/notify.hpp"
 #include "util/session.hpp"
+
+#if defined(ENABLE_LUA)
+#include "lua/lua_manager.hpp"
+#endif // ENABLE_LUA
 
 #include <network/Network.hpp>
 
@@ -43,7 +46,9 @@ namespace big
 
 			if (net_player_data)
 			{
+#if defined(ENABLE_LUA)
 				g_lua_manager->trigger_event<menu_event::PlayerLeave>(net_player_data->m_name);
+#endif // ENABLE_LUA
 
 				if (g.notifications.player_leave.log)
 					LOG(INFO) << "Player left '" << net_player_data->m_name << "' freeing slot #" << (int)player->m_player_id
@@ -81,7 +86,10 @@ namespace big
 				}
 			}
 
+
+#if defined(ENABLE_LUA)
 			g_lua_manager->trigger_event<menu_event::PlayerJoin>(net_player_data->m_name, player->m_player_id);
+#endif // ENABLE_LUA
 
 			if (g.notifications.player_join.above_map && *g_pointers->m_gta.m_is_session_started) // prevent loading screen spam
 				notify::player_joined(player);

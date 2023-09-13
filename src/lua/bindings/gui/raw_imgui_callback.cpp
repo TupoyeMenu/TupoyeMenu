@@ -1,3 +1,5 @@
+#if defined(ENABLE_LUA)
+
 #include "raw_imgui_callback.hpp"
 
 namespace lua::gui
@@ -13,3 +15,5 @@ namespace lua::gui
 		m_callback();
 	}
 }
+
+#endif // ENABLE_LUA

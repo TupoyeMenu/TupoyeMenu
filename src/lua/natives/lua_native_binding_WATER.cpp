@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -102,3 +104,5 @@ namespace lua::native
 		WATER.set_function("RESET_DEEP_OCEAN_SCALER", LUA_NATIVE_WATER_RESET_DEEP_OCEAN_SCALER);
 	}
 }
+
+#endif // ENABLE_LUA

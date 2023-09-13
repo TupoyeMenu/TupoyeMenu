@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "gui.hpp"
 
 #include "../../gui.hpp"
@@ -245,3 +247,5 @@ namespace lua::gui
 		tab_ut["add_imgui"]        = &tab::add_imgui;
 	}
 }
+
+#endif // ENABLE_LUA

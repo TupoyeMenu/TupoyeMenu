@@ -1,3 +1,5 @@
+#if defined(ENABLE_LUA)
+
 #include "input_int.hpp"
 
 namespace lua::gui
@@ -22,3 +24,4 @@ namespace lua::gui
 		m_value = val;
 	}
 }
+#endif // ENABLE_LUA

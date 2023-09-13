@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -255,3 +257,5 @@ namespace lua::native
 		SCRIPT.set_function("SEND_TU_SCRIPT_EVENT", LUA_NATIVE_SCRIPT_SEND_TU_SCRIPT_EVENT);
 	}
 }
+
+#endif // ENABLE_LUA

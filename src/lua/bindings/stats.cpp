@@ -1,4 +1,5 @@
-#pragma once
+#if defined (ENABLE_LUA)
+
 #include "stats.hpp"
 
 #include "natives.hpp"
@@ -292,3 +293,5 @@ namespace lua::stats
 		ns["set_masked_int"]  = sol::overload(set_masked_int_hash, set_masked_int_name);
 	}
 }
+
+#endif // ENABLE_LUA

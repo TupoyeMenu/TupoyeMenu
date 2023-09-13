@@ -1,4 +1,5 @@
-#pragma once
+#if defined (ENABLE_LUA)
+
 #include "entities.hpp"
 
 #include "util/pools.hpp"
@@ -44,3 +45,5 @@ namespace lua::entities
 		ns["get_all_objects_as_handles"]  = get_all_objects_as_handles;
 	}
 }
+
+#endif // ENABLE_LUA

@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -2234,3 +2236,5 @@ namespace lua::native
 		MISC.set_function("GET_CONTENT_ID_INDEX", LUA_NATIVE_MISC_GET_CONTENT_ID_INDEX);
 	}
 }
+
+#endif // ENABLE_LUA

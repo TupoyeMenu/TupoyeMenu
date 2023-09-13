@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -45,3 +47,5 @@ namespace lua::native
 		REPLAY.set_function("ACTIVATE_ROCKSTAR_EDITOR", LUA_NATIVE_REPLAY_ACTIVATE_ROCKSTAR_EDITOR);
 	}
 }
+
+#endif // ENABLE_LUA

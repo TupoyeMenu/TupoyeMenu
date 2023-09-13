@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -1064,3 +1066,5 @@ namespace lua::native
 		OBJECT.set_function("SET_IS_OBJECT_BALL", LUA_NATIVE_OBJECT_SET_IS_OBJECT_BALL);
 	}
 }
+
+#endif // ENABLE_LUA

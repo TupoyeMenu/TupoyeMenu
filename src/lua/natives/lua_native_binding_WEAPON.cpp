@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -795,3 +797,5 @@ namespace lua::native
 		WEAPON.set_function("SET_CAN_PED_SELECT_ALL_WEAPONS", LUA_NATIVE_WEAPON_SET_CAN_PED_SELECT_ALL_WEAPONS);
 	}
 }
+
+#endif // ENABLE_LUA

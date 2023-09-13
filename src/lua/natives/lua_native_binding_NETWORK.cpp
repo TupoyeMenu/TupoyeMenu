@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -5957,3 +5959,5 @@ namespace lua::native
 		NETWORK.set_function("NETWORK_UGC_NAV", LUA_NATIVE_NETWORK_NETWORK_UGC_NAV);
 	}
 }
+
+#endif // ENABLE_LUA

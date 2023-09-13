@@ -1,3 +1,4 @@
+#if defined (ENABLE_LUA)
 #include "lua_native_binding.hpp"
 
 namespace lua::native
@@ -51,3 +52,4 @@ namespace lua::native
 		init_native_binding_ZONE(L);
 	}
 }
+#endif // ENABLE_LUA

@@ -1,3 +1,5 @@
+#if defined(ENABLE_LUA)
+
 #include "button.hpp"
 
 #include "fiber_pool.hpp"
@@ -32,3 +34,5 @@ namespace lua::gui
 		}
 	}
 }
+
+#endif // ENABLE_LUA

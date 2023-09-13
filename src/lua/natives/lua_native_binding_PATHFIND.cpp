@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -474,3 +476,5 @@ namespace lua::native
 		PATHFIND.set_function("CALCULATE_TRAVEL_DISTANCE_BETWEEN_POINTS", LUA_NATIVE_PATHFIND_CALCULATE_TRAVEL_DISTANCE_BETWEEN_POINTS);
 	}
 }
+
+#endif // ENABLE_LUA

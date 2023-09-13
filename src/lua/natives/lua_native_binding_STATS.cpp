@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -2198,3 +2200,5 @@ namespace lua::native
 		STATS.set_function("PLAYSTATS_SHOWROOM_OVERVIEW_", LUA_NATIVE_STATS_PLAYSTATS_SHOWROOM_OVERVIEW_);
 	}
 }
+
+#endif // ENABLE_LUA

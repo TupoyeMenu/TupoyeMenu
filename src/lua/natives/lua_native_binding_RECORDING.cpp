@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -115,3 +117,5 @@ namespace lua::native
 		RECORDING.set_function("IS_REPLAY_RECORD_SPACE_AVAILABLE", LUA_NATIVE_RECORDING_IS_REPLAY_RECORD_SPACE_AVAILABLE);
 	}
 }
+
+#endif // ENABLE_LUA

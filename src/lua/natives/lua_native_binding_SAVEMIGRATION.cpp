@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -60,3 +62,5 @@ namespace lua::native
 		SAVEMIGRATION.set_function("SAVEMIGRATION_MP_GET_STATUS", LUA_NATIVE_SAVEMIGRATION_SAVEMIGRATION_MP_GET_STATUS);
 	}
 }
+
+#endif // ENABLE_LUA

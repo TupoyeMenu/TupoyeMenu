@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -674,3 +676,5 @@ namespace lua::native
 		SOCIALCLUB.set_function("SC_HAS_ACHIEVEMENT_BEEN_PASSED", LUA_NATIVE_SOCIALCLUB_SC_HAS_ACHIEVEMENT_BEEN_PASSED);
 	}
 }
+
+#endif // ENABLE_LUA

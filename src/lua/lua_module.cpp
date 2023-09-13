@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_module.hpp"
 
 #include "bindings/command.hpp"
@@ -247,3 +249,5 @@ namespace big
 		});
 	}
 }
+
+#endif // ENABLE_LUA

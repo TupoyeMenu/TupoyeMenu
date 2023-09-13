@@ -1,4 +1,5 @@
-#pragma once
+#if defined (ENABLE_LUA)
+
 #include "../../script.hpp"
 #include "tunables.hpp"
 
@@ -15,3 +16,5 @@ namespace lua::tunables
 		ns["set_bool"]  = set<bool>;
 	}
 }
+
+#endif // ENABLE_LUA

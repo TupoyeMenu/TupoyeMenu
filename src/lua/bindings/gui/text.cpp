@@ -1,3 +1,5 @@
+#if defined(ENABLE_LUA)
+
 #include "text.hpp"
 
 namespace lua::gui
@@ -30,3 +32,5 @@ namespace lua::gui
 		}
 	}
 }
+
+#endif // ENABLE_LUA

@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -1555,3 +1557,5 @@ namespace lua::native
 		CAM.set_function("REPLAY_GET_MAX_DISTANCE_ALLOWED_FROM_PLAYER", LUA_NATIVE_CAM_REPLAY_GET_MAX_DISTANCE_ALLOWED_FROM_PLAYER);
 	}
 }
+
+#endif // ENABLE_LUA

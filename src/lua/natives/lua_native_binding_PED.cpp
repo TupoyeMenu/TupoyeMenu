@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -3999,3 +4001,5 @@ namespace lua::native
 		PED.set_function("SET_ALLOW_STUNT_JUMP_CAMERA", LUA_NATIVE_PED_SET_ALLOW_STUNT_JUMP_CAMERA);
 	}
 }
+
+#endif // ENABLE_LUA

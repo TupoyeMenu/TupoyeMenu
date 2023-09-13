@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -1277,3 +1279,5 @@ namespace lua::native
 		ENTITY.set_function("SET_PICK_UP_BY_CARGOBOB_DISABLED", LUA_NATIVE_ENTITY_SET_PICK_UP_BY_CARGOBOB_DISABLED);
 	}
 }
+
+#endif // ENABLE_LUA

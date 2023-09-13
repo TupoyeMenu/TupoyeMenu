@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "fiber_pool.hpp"
 #include "lua/lua_manager.hpp"
 #include "script.hpp"
@@ -64,3 +66,5 @@ namespace big
 		}
 	}
 }
+
+#endif // ENABLE_LUA

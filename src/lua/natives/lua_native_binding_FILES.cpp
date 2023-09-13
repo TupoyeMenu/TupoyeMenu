@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -393,3 +395,5 @@ namespace lua::native
 		FILES.set_function("REVERT_CONTENT_CHANGESET_GROUP_FOR_ALL", LUA_NATIVE_FILES_REVERT_CONTENT_CHANGESET_GROUP_FOR_ALL);
 	}
 }
+
+#endif // ENABLE_LUA

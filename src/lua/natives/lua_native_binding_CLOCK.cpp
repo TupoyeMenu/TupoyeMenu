@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -139,3 +141,5 @@ namespace lua::native
 		CLOCK.set_function("GET_LOCAL_TIME", LUA_NATIVE_CLOCK_GET_LOCAL_TIME);
 	}
 }
+
+#endif // ENABLE_LUA

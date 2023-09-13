@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -29,3 +31,5 @@ namespace lua::native
 		LOCALIZATION.set_function("LOCALIZATION_GET_SYSTEM_DATE_TYPE", LUA_NATIVE_LOCALIZATION_LOCALIZATION_GET_SYSTEM_DATE_TYPE);
 	}
 }
+
+#endif // ENABLE_LUA

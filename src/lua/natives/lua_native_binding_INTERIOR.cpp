@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -303,3 +305,5 @@ namespace lua::native
 		INTERIOR.set_function("SET_IS_EXTERIOR_ONLY", LUA_NATIVE_INTERIOR_SET_IS_EXTERIOR_ONLY);
 	}
 }
+
+#endif // ENABLE_LUA

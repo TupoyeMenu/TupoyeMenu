@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -1944,3 +1946,5 @@ namespace lua::native
 		TASK.set_function("IS_PED_CUFFED", LUA_NATIVE_TASK_IS_PED_CUFFED);
 	}
 }
+
+#endif // ENABLE_LUA

@@ -1,3 +1,4 @@
+#if defined (ENABLE_LUA)
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -118,3 +119,5 @@ namespace lua::native
 		APP.set_function("APP_DELETE_APP_DATA", LUA_NATIVE_APP_APP_DELETE_APP_DATA);
 	}
 }
+
+#endif // ENABLE_LUA

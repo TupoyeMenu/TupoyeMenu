@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -2193,3 +2195,5 @@ namespace lua::native
 		MONEY.set_function("WAS_VC_WITHDRAWAL_SUCCESSFUL", LUA_NATIVE_MONEY_WAS_VC_WITHDRAWAL_SUCCESSFUL);
 	}
 }
+
+#endif // ENABLE_LUA

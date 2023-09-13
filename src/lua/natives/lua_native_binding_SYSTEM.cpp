@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -192,3 +194,5 @@ namespace lua::native
 		SYSTEM.set_function("SET_THIS_THREAD_PRIORITY", LUA_NATIVE_SYSTEM_SET_THIS_THREAD_PRIORITY);
 	}
 }
+
+#endif // ENABLE_LUA

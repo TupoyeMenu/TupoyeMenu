@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -359,3 +361,5 @@ namespace lua::native
 		CUTSCENE.set_function("HAS_CUTSCENE_CUT_THIS_FRAME", LUA_NATIVE_CUTSCENE_HAS_CUTSCENE_CUT_THIS_FRAME);
 	}
 }
+
+#endif // ENABLE_LUA

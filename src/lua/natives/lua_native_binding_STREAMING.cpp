@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -774,3 +776,5 @@ namespace lua::native
 		STREAMING.set_function("SET_ISLAND_ENABLED", LUA_NATIVE_STREAMING_SET_ISLAND_ENABLED);
 	}
 }
+
+#endif // ENABLE_LUA

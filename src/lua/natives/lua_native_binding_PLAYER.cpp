@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -1615,3 +1617,5 @@ namespace lua::native
 		PLAYER.set_function("SET_SCRIPT_FIRE_POSITION", LUA_NATIVE_PLAYER_SET_SCRIPT_FIRE_POSITION);
 	}
 }
+
+#endif // ENABLE_LUA

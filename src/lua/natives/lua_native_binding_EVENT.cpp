@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -90,3 +92,5 @@ namespace lua::native
 		EVENT.set_function("SUPPRESS_AGITATION_EVENTS_NEXT_FRAME", LUA_NATIVE_EVENT_SUPPRESS_AGITATION_EVENTS_NEXT_FRAME);
 	}
 }
+
+#endif // ENABLE_LUA

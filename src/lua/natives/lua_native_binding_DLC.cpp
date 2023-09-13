@@ -1,3 +1,4 @@
+#if defined (ENABLE_LUA)
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -86,3 +87,5 @@ namespace lua::native
 		DLC.set_function("ON_ENTER_MP", LUA_NATIVE_DLC_ON_ENTER_MP);
 	}
 }
+
+#endif // ENABLE_LUA

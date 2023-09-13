@@ -1,3 +1,5 @@
+#if defined(ENABLE_LUA)
+
 #include "checkbox.hpp"
 
 namespace lua::gui
@@ -22,3 +24,5 @@ namespace lua::gui
 		m_enabled = enabled;
 	}
 }
+
+#endif // ENABLE_LUA

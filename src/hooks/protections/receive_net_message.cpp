@@ -15,12 +15,15 @@
 #include "gta/net_game_event.hpp"
 #include "gta_util.hpp"
 #include "hooking.hpp"
-#include "lua/lua_manager.hpp"
 #include "natives.hpp"
 #include "script/scriptIdBase.hpp"
 #include "services/players/player_service.hpp"
 #include "util/session.hpp"
 #include "util/spam.hpp"
+
+#if defined(ENABLE_LUA)
+#include "lua/lua_manager.hpp"
+#endif // ENABLE_LUA
 
 #include <network/Network.hpp>
 #include <network/netTime.hpp>
@@ -137,8 +140,11 @@ namespace big
 
 					if (g.session.chat_commands && message[0] == g.session.chat_command_prefix)
 						command::process(std::string(message + 1), std::make_shared<chat_command_context>(player));
+#if defined(ENABLE_LUA)
 					else
 						g_lua_manager->trigger_event<menu_event::ChatMessageReceived>(player->id(), message);
+#endif // ENABLE_LUA
+
 				}
 				break;
 			}
@@ -176,8 +182,10 @@ namespace big
 
 					if (g.session.chat_commands && message[0] == g.session.chat_command_prefix)
 						command::process(std::string(message + 1), std::make_shared<chat_command_context>(player));
+#if defined(ENABLE_LUA)
 					else
 						g_lua_manager->trigger_event<menu_event::ChatMessageReceived>(player->id(), message);
+#endif // ENABLE_LUA
 
 					if (msgType == rage::eNetMessage::MsgTextMessage && g_pointers->m_gta.m_chat_data && player->get_net_data())
 					{

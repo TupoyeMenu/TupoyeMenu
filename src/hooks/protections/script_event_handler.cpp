@@ -13,9 +13,12 @@
 #include "gta/script_handler.hpp"
 #include "gta_util.hpp"
 #include "hooking.hpp"
-#include "lua/lua_manager.hpp"
 #include "util/math.hpp"
 #include "util/session.hpp"
+
+#if defined(ENABLE_LUA)
+#include "lua/lua_manager.hpp"
+#endif // ENABLE_LUA
 
 #include <network/CNetGamePlayer.hpp>
 #include <network/Network.hpp>
@@ -76,17 +79,18 @@ namespace big
 
 		auto plyr = g_player_service->get_by_id(player->m_player_id);
 
+#if defined(ENABLE_LUA)
 		if (g_lua_manager && g_lua_manager->get_module_count() > 0)
 		{
 			std::vector<int32_t> script_event_args;
 
 			for (int i = 0; i < scripted_game_event->m_args_size; i++)
 				script_event_args.push_back(args[i]);
-
 			auto event_ret = g_lua_manager->trigger_event<menu_event::ScriptedGameEventReceived, bool>((int)player->m_player_id, script_event_args);
 			if (event_ret.has_value())
 				return true; // don't care, block event if any bool is returned
 		}
+#endif // ENABLE_LUA
 
 		switch (hash)
 		{

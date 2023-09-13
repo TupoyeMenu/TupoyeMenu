@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -130,3 +132,5 @@ namespace lua::native
 		FIRE.set_function("GET_OWNER_OF_EXPLOSION_IN_ANGLED_AREA", LUA_NATIVE_FIRE_GET_OWNER_OF_EXPLOSION_IN_ANGLED_AREA);
 	}
 }
+
+#endif // ENABLE_LUA

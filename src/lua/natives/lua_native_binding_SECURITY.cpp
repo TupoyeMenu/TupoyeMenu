@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -28,3 +30,5 @@ namespace lua::native
 		SECURITY.set_function("FORCE_CHECK_SCRIPT_VARIABLES", LUA_NATIVE_SECURITY_FORCE_CHECK_SCRIPT_VARIABLES);
 	}
 }
+
+#endif // ENABLE_LUA

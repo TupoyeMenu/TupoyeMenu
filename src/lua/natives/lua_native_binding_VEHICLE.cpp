@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -4816,3 +4818,5 @@ namespace lua::native
 		VEHICLE.set_function("SET_CHECK_FOR_ENOUGH_ROOM_FOR_PED", LUA_NATIVE_VEHICLE_SET_CHECK_FOR_ENOUGH_ROOM_FOR_PED);
 	}
 }
+
+#endif // ENABLE_LUA

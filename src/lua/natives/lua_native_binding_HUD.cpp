@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -3310,3 +3312,5 @@ namespace lua::native
 		HUD.set_function("HIDE_HUDMARKERS_THIS_FRAME", LUA_NATIVE_HUD_HIDE_HUDMARKERS_THIS_FRAME);
 	}
 }
+
+#endif // ENABLE_LUA

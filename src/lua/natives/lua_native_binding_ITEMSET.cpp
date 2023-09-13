@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -68,3 +70,5 @@ namespace lua::native
 		ITEMSET.set_function("CLEAN_ITEMSET", LUA_NATIVE_ITEMSET_CLEAN_ITEMSET);
 	}
 }
+
+#endif // ENABLE_LUA

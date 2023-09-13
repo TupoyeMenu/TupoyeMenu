@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -68,3 +70,5 @@ namespace lua::native
 		ZONE.set_function("GET_HASH_OF_MAP_AREA_AT_COORDS", LUA_NATIVE_ZONE_GET_HASH_OF_MAP_AREA_AT_COORDS);
 	}
 }
+
+#endif // ENABLE_LUA

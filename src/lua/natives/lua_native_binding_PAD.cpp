@@ -1,3 +1,4 @@
+#if defined (ENABLE_LUA)
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -328,3 +329,5 @@ namespace lua::native
 		PAD.set_function("ALLOW_ALTERNATIVE_SCRIPT_CONTROLS_LAYOUT", LUA_NATIVE_PAD_ALLOW_ALTERNATIVE_SCRIPT_CONTROLS_LAYOUT);
 	}
 }
+
+#endif // ENABLE_LUA

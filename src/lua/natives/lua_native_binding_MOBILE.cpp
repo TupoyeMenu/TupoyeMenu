@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -163,3 +165,5 @@ namespace lua::native
 		MOBILE.set_function("GET_MOBILE_PHONE_RENDER_ID", LUA_NATIVE_MOBILE_GET_MOBILE_PHONE_RENDER_ID);
 	}
 }
+
+#endif // ENABLE_LUA

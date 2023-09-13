@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -2509,3 +2511,5 @@ namespace lua::native
 		GRAPHICS.set_function("ANIMPOSTFX_STOP_AND_FLUSH_REQUESTS", LUA_NATIVE_GRAPHICS_ANIMPOSTFX_STOP_AND_FLUSH_REQUESTS);
 	}
 }
+
+#endif // ENABLE_LUA

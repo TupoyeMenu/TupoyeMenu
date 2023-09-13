@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_patch.hpp"
 
 #include "memory/byte_patch.hpp"
@@ -25,3 +27,5 @@ namespace big
 		m_byte_patch->restore();
 	}
 }
+
+#endif // ENABLE_LUA

@@ -1,4 +1,5 @@
-#pragma once
+#if defined (ENABLE_LUA)
+
 #include "command.hpp"
 #include "backend/command.hpp"
 #include "backend/player_command.hpp"
@@ -57,3 +58,5 @@ namespace lua::command
 		ns["call_player"] = call_player;
 	}
 }
+
+#endif // ENABLE_LUA

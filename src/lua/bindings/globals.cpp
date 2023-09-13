@@ -1,4 +1,5 @@
-#pragma once
+#if defined (ENABLE_LUA)
+
 #include "globals.hpp"
 #include "memory.hpp"
 #include "script_global.hpp"
@@ -122,3 +123,5 @@ namespace lua::globals
 		ns["get_pointer"] = get_pointer;
 	}
 }
+
+#endif // ENABLE_LUA

@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -90,3 +92,5 @@ namespace lua::native
 		DECORATOR.set_function("DECOR_REGISTER_LOCK", LUA_NATIVE_DECORATOR_DECOR_REGISTER_LOCK);
 	}
 }
+
+#endif // ENABLE_LUA

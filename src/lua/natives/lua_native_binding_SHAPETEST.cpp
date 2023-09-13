@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -101,3 +103,5 @@ namespace lua::native
 		SHAPETEST.set_function("RELEASE_SCRIPT_GUID_FROM_ENTITY", LUA_NATIVE_SHAPETEST_RELEASE_SCRIPT_GUID_FROM_ENTITY);
 	}
 }
+
+#endif // ENABLE_LUA

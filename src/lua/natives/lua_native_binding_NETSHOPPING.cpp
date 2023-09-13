@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -316,3 +318,5 @@ namespace lua::native
 		NETSHOPPING.set_function("NET_GAMESERVER_SET_TELEMETRY_NONCE_SEED", LUA_NATIVE_NETSHOPPING_NET_GAMESERVER_SET_TELEMETRY_NONCE_SEED);
 	}
 }
+
+#endif // ENABLE_LUA

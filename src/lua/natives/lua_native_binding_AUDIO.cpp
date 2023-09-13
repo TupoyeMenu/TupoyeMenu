@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -1745,3 +1747,5 @@ namespace lua::native
 		AUDIO.set_function("SET_VEHICLE_HORN_SOUND_INDEX", LUA_NATIVE_AUDIO_SET_VEHICLE_HORN_SOUND_INDEX);
 	}
 }
+
+#endif // ENABLE_LUA

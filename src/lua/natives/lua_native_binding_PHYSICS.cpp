@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -324,3 +326,5 @@ namespace lua::native
 		PHYSICS.set_function("SET_IN_ARENA_MODE", LUA_NATIVE_PHYSICS_SET_IN_ARENA_MODE);
 	}
 }
+
+#endif // ENABLE_LUA

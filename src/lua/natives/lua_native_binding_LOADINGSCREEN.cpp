@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
@@ -60,3 +62,5 @@ namespace lua::native
 		LOADINGSCREEN.set_function("SHUTDOWN_SESSION_CLEARS_AUTO_MULTIPLAYER", LUA_NATIVE_LOADINGSCREEN_SHUTDOWN_SESSION_CLEARS_AUTO_MULTIPLAYER);
 	}
 }
+
+#endif // ENABLE_LUA

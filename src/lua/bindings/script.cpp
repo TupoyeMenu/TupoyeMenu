@@ -1,4 +1,5 @@
-#pragma once
+#if defined (ENABLE_LUA)
+
 #include "script.hpp"
 
 #include "lua/lua_manager.hpp"
@@ -163,3 +164,5 @@ namespace lua::script
 		usertype["sleep"] = sol::yielding(&script_util::sleep);
 	}
 }
+
+#endif // ENABLE_LUA
