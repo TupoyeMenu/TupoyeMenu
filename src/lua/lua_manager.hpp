@@ -93,10 +93,11 @@ namespace big
 				func(module);
 			}
 		}
-#endif // ENABLE_LUA
+#else
 		public:
 
 			void draw_gui(rage::joaat_t) {} // Nullsub to allow compilation
+#endif // ENABLE_LUA
 	};
 
 	inline lua_manager* g_lua_manager;
