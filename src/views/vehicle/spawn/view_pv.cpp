@@ -27,8 +27,8 @@ namespace big
 				g_model_preview_service->stop_preview();
 			}
 		}
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("Shows a render of what you have highlighted in front of you.");
+		ImGui::SameLine();
+		components::help_marker("Shows a render of what you have highlighted in front of you.");
 		ImGui::SameLine();
 		ImGui::Checkbox("Spawn In", &g.clone_pv.spawn_inside);
 		components::help_marker("Controls whether the player should be set inside the vehicle after it spawns");
