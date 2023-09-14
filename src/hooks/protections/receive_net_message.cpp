@@ -15,15 +15,19 @@
 #include "gta/net_game_event.hpp"
 #include "gta_util.hpp"
 #include "hooking.hpp"
-#include "lua/lua_manager.hpp"
 #include "natives.hpp"
 #include "script/scriptIdBase.hpp"
 #include "services/players/player_service.hpp"
 #include "util/session.hpp"
 #include "util/spam.hpp"
 
+#if defined(ENABLE_LUA)
+#include "lua/lua_manager.hpp"
+#endif // ENABLE_LUA
+
 #include <network/Network.hpp>
 #include <network/netTime.hpp>
+
 
 inline void gamer_handle_deserialize(rage::rlGamerHandle& hnd, rage::datBitBuffer& buf)
 {
@@ -136,8 +140,11 @@ namespace big
 
 					if (g.session.chat_commands && message[0] == g.session.chat_command_prefix)
 						command::process(std::string(message + 1), std::make_shared<chat_command_context>(player));
+#if defined(ENABLE_LUA)
 					else
 						g_lua_manager->trigger_event<menu_event::ChatMessageReceived>(player->id(), message);
+#endif // ENABLE_LUA
+
 				}
 				break;
 			}
@@ -163,7 +170,7 @@ namespace big
 							dynamic_cast<player_command*>(command::get(RAGE_JOAAT("breakup")))->call(player, {}),
 							    dynamic_cast<player_command*>(command::get(RAGE_JOAAT("hostkick")))->call(player, {});
 
-						dynamic_cast<player_command*>(command::get(RAGE_JOAAT("bailkick")))->call(player, {});
+						dynamic_cast<player_command*>(command::get(RAGE_JOAAT("endkick")))->call(player, {});
 						dynamic_cast<player_command*>(command::get(RAGE_JOAAT("nfkick")))->call(player, {});
 					}
 					return true;
@@ -175,8 +182,10 @@ namespace big
 
 					if (g.session.chat_commands && message[0] == g.session.chat_command_prefix)
 						command::process(std::string(message + 1), std::make_shared<chat_command_context>(player));
+#if defined(ENABLE_LUA)
 					else
 						g_lua_manager->trigger_event<menu_event::ChatMessageReceived>(player->id(), message);
+#endif // ENABLE_LUA
 
 					if (msgType == rage::eNetMessage::MsgTextMessage && g_pointers->m_gta.m_chat_data && player->get_net_data())
 					{
@@ -208,17 +217,6 @@ namespace big
 				}
 				break;
 			}
-			case rage::eNetMessage::MsgNetComplaint:
-			{
-				uint64_t host_token{};
-				buffer.ReadQWord(&host_token, 64);
-				if (player && host_token != player->get_net_data()->m_host_token && !player->exposed_desync_protection)
-				{
-					session::add_infraction(player, Infraction::DESYNC_PROTECTION);
-					player->exposed_desync_protection = true;
-				}
-				return true;
-			}
 			case rage::eNetMessage::MsgScriptHostRequest:
 			{
 				CGameScriptId script;
@@ -243,16 +241,6 @@ namespace big
 					player->player_time_value_received_time = std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now());
 					if (!player->time_difference || time_diff > player->time_difference.value())
 						player->time_difference = time_diff;
-				}
-				break;
-			}
-			case rage::eNetMessage::MsgTransitionGamerInstruction:
-			{
-				// it doesn't work but a certain p2c uses it
-				if (is_kick_instruction(buffer))
-				{
-					g.reactions.gamer_instruction_kick.process(player);
-					return true;
 				}
 				break;
 			}

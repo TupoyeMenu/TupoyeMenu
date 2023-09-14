@@ -16,7 +16,6 @@
 #include "gui.hpp"
 #include "hooking.hpp"
 #include "logger/exception_handler.hpp"
-#include "lua/lua_manager.hpp"
 #include "native_hooks/native_hooks.hpp"
 #include "pointers.hpp"
 #include "renderer.hpp"
@@ -25,6 +24,10 @@
 	#include "asi_loader/asi_scripts.hpp"
 	#include "shv_runner.hpp"
 #endif // ENABLE_ASI_LOADER
+
+#if defined (ENABLE_LUA)
+#include "lua/lua_manager.hpp"
+#endif // ENABLE_LUA
 
 #include "services/context_menu/context_menu_service.hpp"
 #include "services/custom_text/custom_text_service.hpp"
@@ -129,6 +132,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    g_script_mgr.add_script(std::make_unique<script>(&backend::world_loop, "World"));
 			    g_script_mgr.add_script(std::make_unique<script>(&context_menu_service::context_menu, "Context Menu"));
 			    g_script_mgr.add_script(std::make_unique<script>(&backend::tunables_script, "Tunables"));
+			    g_script_mgr.add_script(std::make_unique<script>(&backend::ambient_animations_loop, "Ambient Animations"));
 
 			    LOG(INFO) << "Scripts registered.";
 
@@ -143,8 +147,10 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    LOG(INFO) << "ASI Loader initialized.";
 #endif // ENABLE_ASI_LOADER
 
+#if defined(ENABLE_LUA)
 			    auto lua_manager_instance = std::make_unique<lua_manager>(g_file_manager.get_project_folder("scripts"));
 			    LOG(INFO) << "Lua manager initialized.";
+#endif // ENABLE_LUA
 
 			    g_running = true;
 
@@ -161,8 +167,10 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				g_script_mgr.remove_all_scripts();
 			    LOG(INFO) << "Scripts unregistered.";
 
+#if defined(ENABLE_LUA)
 			    lua_manager_instance.reset();
 			    LOG(INFO) << "Lua manager uninitialized.";
+#endif // ENABLE_LUA
 
 			    g_hooking->disable();
 			    LOG(INFO) << "Hooking disabled.";

@@ -105,8 +105,9 @@ namespace big
 			{
 				ImGui::Checkbox("Fully Automatic Signal", &g.vehicle.auto_turn_signals);
 			}
-			components::command_checkbox<"driveunder">(); // Who named this????????????
+			components::command_checkbox<"driveunder">(); // Who named this???
 			components::command_checkbox<"driveonwater">();
+			components::command_checkbox<"allvehsinheists">();
 
 			ImGui::EndGroup();
 		}

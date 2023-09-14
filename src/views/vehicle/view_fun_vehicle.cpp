@@ -8,6 +8,8 @@
  * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "core/data/bullet_impact_types.hpp"
+#include "core/data/special_ammo_types.hpp"
 #include "core/data/speed_units.hpp"
 #include "core/enums.hpp"
 #include "fiber_pool.hpp"
@@ -152,7 +154,7 @@ namespace big
 			{
 				ImGui::Text("Keep Vehicle Clean is turned on, disable it to change the dirt level.");
 			}
-			else if (g.vehicle.keep_vehicle_repaired) 
+			else if (g.vehicle.keep_vehicle_repaired)
 			{
 				ImGui::Text("Keep Vehicle Repaired is turned on, disable it to change the vehicle health.");
 			}
@@ -203,10 +205,7 @@ namespace big
 		}
 		ImGui::SeparatorText("Boost");
 
-		const char* boost_behaviors[] = {"Default",
-		    "Instant Refill",
-		    "Infinite",
-		    "Hold for Boost"};
+		const char* boost_behaviors[] = {"Default", "Instant Refill", "Infinite", "Hold for Boost"};
 		if (ImGui::BeginCombo("Boost Behavior", boost_behaviors[static_cast<int>(g.vehicle.boost_behavior)]))
 		{
 			for (int i = 0; i < 4; i++)
@@ -252,6 +251,109 @@ namespace big
 			{
 				g.vehicle.fly.speed = vehicle::speed_to_mps(fly_speed_user_unit, g.vehicle.speed_unit);
 			}
+		}
+		ImGui::SeparatorText("Custom Vehicle Weapons");
+		{
+			components::command_checkbox<"customvehweaps">();
+			components::options_modal("Custom Vehicle Weapons", [] {
+				eAmmoSpecialType selected_ammo          = g.vehicle.vehicle_ammo_special.type;
+				eExplosionTag selected_explosion        = g.vehicle.vehicle_ammo_special.explosion_tag;
+				eExplosionTag selected_rocket_explosion = g.vehicle.vehicle_ammo_special.rocket_explosion_tag;
+
+				ImGui::BeginGroup();
+				components::sub_title("Machine Gun");
+				if (ImGui::BeginCombo("Special Ammo", SPECIAL_AMMOS[(int)selected_ammo].name))
+				{
+					for (const auto& special_ammo : SPECIAL_AMMOS)
+					{
+						if (ImGui::Selectable(special_ammo.name, special_ammo.type == selected_ammo))
+						{
+							g.vehicle.vehicle_ammo_special.type = special_ammo.type;
+						}
+
+						if (special_ammo.type == selected_ammo)
+						{
+							ImGui::SetItemDefaultFocus();
+						}
+					}
+					ImGui::EndCombo();
+				}
+				if (ImGui::BeginCombo("Bullet Impact", BULLET_IMPACTS[selected_explosion]))
+				{
+					for (const auto& [type, name] : BULLET_IMPACTS)
+					{
+						if (ImGui::Selectable(name, type == selected_explosion))
+						{
+							g.vehicle.vehicle_ammo_special.explosion_tag = type;
+						}
+
+						if (type == selected_explosion)
+						{
+							ImGui::SetItemDefaultFocus();
+						}
+					}
+
+					ImGui::EndCombo();
+				}
+
+				ImGui::InputFloat("Speed", &g.vehicle.vehicle_ammo_special.speed, 10, 100, "%.1f");
+				ImGui::InputFloat("Range", &g.vehicle.vehicle_ammo_special.weapon_range, 50, 100, "%.1f");
+				ImGui::InputFloat("Time Between Shots", &g.vehicle.vehicle_ammo_special.time_between_shots, 0.001, 0.1, "%.3f");
+				ImGui::SameLine();
+				components::help_marker("Time taken to fire consecutive shots on the same side. Related to rate of fire.");
+				ImGui::InputFloat("Alternate Wait Time", &g.vehicle.vehicle_ammo_special.alternate_wait_time, 0.001, 0.1, "%.3f");
+				ImGui::SameLine();
+				components::help_marker("Time taken to switch between sides. Related to rate of fire.");
+				ImGui::EndGroup();
+
+				ImGui::SameLine();
+				ImGui::BeginGroup();
+				components::sub_title("Missile");
+				if (ImGui::BeginCombo("Explosion##customvehweaps", BULLET_IMPACTS[selected_rocket_explosion]))
+				{
+					for (const auto& [type, name] : BULLET_IMPACTS)
+					{
+						if (ImGui::Selectable(name, type == selected_rocket_explosion))
+						{
+							g.vehicle.vehicle_ammo_special.rocket_explosion_tag = type;
+						}
+
+						if (type == selected_rocket_explosion)
+						{
+							ImGui::SetItemDefaultFocus();
+						}
+					}
+
+					ImGui::EndCombo();
+				}
+
+				ImGui::InputFloat("Reload Time", &g.vehicle.vehicle_ammo_special.rocket_reload_time, 0.1, 1, "%.1f");
+				ImGui::InputFloat("Speed##rocket", &g.vehicle.vehicle_ammo_special.rocket_launch_speed, 10, 100, "%.1f");
+				ImGui::InputFloat("Range##rocket", &g.vehicle.vehicle_ammo_special.rocket_range, 50, 100, "%.1f");
+				ImGui::InputFloat("Lock-on Range", &g.vehicle.vehicle_ammo_special.rocket_lock_on_range, 50, 100, "%.1f");
+				ImGui::InputFloat("Lock-on Time", &g.vehicle.vehicle_ammo_special.rocket_time_before_homing, 0.01, 0.1, "%.2f");
+				ImGui::InputFloat("Time Between Shots##rocket",
+				    &g.vehicle.vehicle_ammo_special.rocket_time_between_shots,
+				    0.001,
+				    0.1,
+				    "%.3f");
+				ImGui::SameLine();
+				components::help_marker("Time taken to fire consecutive shots on the same side. Related to rate of fire.");
+				ImGui::InputFloat("Alternate Wait Time##rocket",
+				    &g.vehicle.vehicle_ammo_special.rocket_alternate_wait_time,
+				    0.001,
+				    0.1,
+				    "%.3f");
+				ImGui::SameLine();
+				components::help_marker("Time taken to switch between sides. Related to rate of fire.");
+				ImGui::InputFloat("Life Time", &g.vehicle.vehicle_ammo_special.rocket_lifetime, 0.1, 1, "%.1f");
+				ImGui::SameLine();
+				components::help_marker("Time taken for missile to explode if not hitting anything.");
+				ImGui::Checkbox("Smart Missiles", &g.vehicle.vehicle_ammo_special.rocket_improve_tracking);
+				ImGui::SameLine();
+				components::help_marker("Improves current missile's tracking ability.");
+				ImGui::EndGroup();
+			});
 		}
 	}
 }

@@ -1,4 +1,5 @@
-#pragma once
+#if defined (ENABLE_LUA)
+
 #include "vector.hpp"
 
 namespace lua::vector
@@ -13,3 +14,5 @@ namespace lua::vector
 		usertype["__tostring"] = &Vector3::to_string;
 	}
 }
+
+#endif // ENABLE_LUA

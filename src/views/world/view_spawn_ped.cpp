@@ -285,8 +285,7 @@ namespace big
 
 					ImGui::SetNextItemWidth(240.f);
 					if (ImGui::BeginCombo("##ped_player",
-					        selected_ped_player_id == -1 ? "Self" :
-					                                       g_player_service->get_by_id(selected_ped_player_id)->get_name()))
+					        selected_ped_player_id == -1 ? "Self" : g_player_service->get_by_id(selected_ped_player_id)->get_name()))
 					{
 						if (ImGui::Selectable("Self", selected_ped_player_id == -1))
 						{
@@ -496,9 +495,11 @@ namespace big
 
 				ImGui::SetNextItemWidth(240.f);
 				if (ImGui::BeginCombo("##ped_weapon",
-				        selected_ped_weapon_type == SPAWN_PED_NO_WEAPONS ? "NO WEAPONS" :
-				            selected_ped_weapon_hash == 0                ? "ALL" :
-				                                            g_gta_data_service->weapon_by_hash(selected_ped_weapon_hash).m_display_name.c_str()))
+				        selected_ped_weapon_type == SPAWN_PED_NO_WEAPONS ?
+				            "NO WEAPONS" :
+				            selected_ped_weapon_hash == 0 ?
+				            "All" :
+				            g_gta_data_service->weapon_by_hash(selected_ped_weapon_hash).m_display_name.c_str()))
 				{
 					if (selected_ped_weapon_type != SPAWN_PED_NO_WEAPONS)
 					{
@@ -597,6 +598,8 @@ namespace big
 				g_model_preview_service->stop_preview();
 			}
 		}
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Shows a render of what you have highlighted in front of you.");
 
 		ImGui::Checkbox("Invincible", &g.world.spawn_ped.spawn_invincible);
 		ImGui::Checkbox("Invisible", &g.world.spawn_ped.spawn_invisible);
@@ -662,6 +665,17 @@ namespace big
 			g.spoofing.spoof_player_model = true;
 			g.spoofing.player_model       = ped_model_buf;
 		});
+
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("This WILL break freemode missions and jobs");
+
+		if (g.spoofing.spoof_player_model)
+		{
+			ImGui::SameLine();
+			components::button("Unspoof Model", [] {
+				g.spoofing.spoof_player_model = false;
+			});
+		}
 
 		components::button("Cleanup Spawned Peds", [] {
 			for (auto& ped : spawned_peds)

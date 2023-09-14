@@ -30,8 +30,10 @@ namespace big
 		ImGui::SeparatorText("Teleport");
 		if (ImGui::Hotkey("Teleport to waypoint", &g.settings.hotkeys.teleport_waypoint))
 			g_hotkey_service->update_hotkey("waypoint", g.settings.hotkeys.teleport_waypoint);
-		if (ImGui::Hotkey("Teleport to objective", &g.settings.hotkeys.teleport_objective))
+		if (ImGui::Hotkey("Teleport to Objective", &g.settings.hotkeys.teleport_objective))
 			g_hotkey_service->update_hotkey("objective", g.settings.hotkeys.teleport_objective);
+		if (ImGui::Hotkey("Teleport to Selected", &g.settings.hotkeys.teleport_selected))
+			g_hotkey_service->update_hotkey("highlighttp", g.settings.hotkeys.teleport_selected);
 		if (ImGui::Hotkey("Teleport into PV", &g.settings.hotkeys.teleport_pv))
 			g_hotkey_service->update_hotkey("pvtp", g.settings.hotkeys.teleport_pv);
 		if (ImGui::Hotkey("Bring PV", &g.settings.hotkeys.bringvehicle))
@@ -71,6 +73,8 @@ namespace big
 			g_hotkey_service->update_hotkey("skipcutscene", g.settings.hotkeys.skip_cutscene);
 		if (ImGui::Hotkey("Clear Wanted", &g.settings.hotkeys.clear_wanted))
 			g_hotkey_service->update_hotkey("clearwantedlvl", g.settings.hotkeys.clear_wanted);
+		if (ImGui::Hotkey("Toggle passive mode", &g.settings.hotkeys.passive))
+			g_hotkey_service->update_hotkey("passive", g.settings.hotkeys.passive);
 
 		ImGui::PopItemWidth();
 	}

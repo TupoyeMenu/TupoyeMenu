@@ -32,6 +32,7 @@ namespace big
 					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_HOTKEYS"));
 				ImGui::EndTabItem();
 			}
+#if defined (ENABLE_LUA)
 			if (ImGui::BeginTabItem("Lua Scripts"))
 			{
 				view::lua_scripts();
@@ -39,6 +40,7 @@ namespace big
 					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_LUA_SCRIPTS"));
 				ImGui::EndTabItem();
 			}
+#endif // ENABLE_LUA
 			if (ImGui::BeginTabItem("Context Menu"))
 			{
 				view::context_menu_settings();

@@ -159,10 +159,15 @@ namespace big
 		case CustomWeapon::PAINT_GUN:
 			ImGui::Checkbox("Rainbow Color", &g.weapons.paintgun.rainbow);
 			ImGui::SliderFloat("Rainbow Speed", &g.weapons.paintgun.speed, 0.f, 10.f);
-			if (!g.weapons.paintgun.rainbow) { ImGui::ColorEdit4("Paint Gun Color", g.weapons.paintgun.col); }
+			if (!g.weapons.paintgun.rainbow)
+			{
+				ImGui::ColorEdit4("Paint Gun Color", g.weapons.paintgun.col);
+			}
 		}
 
-		if (ImGui::CollapsingHeader("Ammunation"))
+		ImGui::Separator();
+
+		if (ImGui::TreeNode("Ammunation"))
 		{
 			static Hash selected_weapon_hash, selected_weapon_attachment_hash{};
 			static std::string selected_weapon, selected_weapon_attachment;
@@ -204,7 +209,7 @@ namespace big
 				{
 					for (std::string attachment : weapon.m_attachments)
 					{
-						weapon_component attachment_component   = g_gta_data_service->weapon_component_by_name(attachment);
+						weapon_component attachment_component = g_gta_data_service->weapon_component_by_name(attachment);
 						std::string attachment_name = attachment_component.m_display_name;
 						Hash attachment_hash        = attachment_component.m_hash;
 						if (attachment_hash == NULL)
@@ -254,8 +259,9 @@ namespace big
 			components::button("Apply", [] {
 				WEAPON::SET_PED_WEAPON_TINT_INDEX(self::ped, selected_weapon_hash, tint);
 			});
+			ImGui::TreePop();
 		}
-		if (ImGui::CollapsingHeader("Persist Weapons"))
+		if (ImGui::TreeNode("Persist Weapons"))
 		{
 			ImGui::Checkbox("Enabled##persist_weapons", &g.persist_weapons.enabled);
 
@@ -275,7 +281,7 @@ namespace big
 			ImGui::SameLine();
 			ImGui::BeginGroup();
 			static std::string input_file_name;
-			components::input_text_with_hint("Weapon Loadout Filename", "Loadout Name", &input_file_name);
+			components::input_text_with_hint("Weapon Loadout Filename", "Loadout Name", input_file_name);
 			components::button("Save Loadout", [] {
 				persist_weapons::save_weapons(input_file_name);
 				input_file_name.clear();
@@ -291,10 +297,12 @@ namespace big
 			ImGui::Text(std::format("Current Loadout: {}:", g.persist_weapons.weapon_loadout_file).data());
 			ImGui::EndGroup();
 			ImGui::PopItemWidth();
+			ImGui::TreePop();
 		}
-		if (ImGui::CollapsingHeader("Weapon Hotkeys"))
+		if (ImGui::TreeNode("Weapon Hotkeys"))
 		{
 			ImGui::Checkbox("Enabled##weapon_hotkeys", &g.weapons.enable_weapon_hotkeys);
+			ImGui::SameLine();
 			components::help_marker("This will select the next weapon in the hotkey list.\r\nThe first weapon in the list is the first weapon it will select, then the second is the one it will select after and so on.\r\nAfter the end of the list, it will wrap back to the first weapon.");
 
 			static int selected_key = 0;
@@ -355,6 +363,7 @@ namespace big
 			{
 				g.weapons.weapon_hotkeys[selected_key].push_back(RAGE_JOAAT("WEAPON_UNARMED"));
 			}
+			ImGui::TreePop();
 		}
 	}
 }

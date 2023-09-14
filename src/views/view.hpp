@@ -21,7 +21,7 @@ namespace big
 		static void about_view();
 		static void main_view();
 
-		static void debug_animations();
+		static void debug_animations(std::string* dict = nullptr, std::string* anim = nullptr); // Can be used to retrieve animations
 		static void debug_script_events();
 		static void debug_globals();
 		static void debug_locals();
@@ -44,6 +44,7 @@ namespace big
 		static void root();
 		static void self_tabs();
 		static void self();
+		static void animations();
 		static void network();
 		static void settings_tabs();
 		static void missions();

@@ -1,4 +1,5 @@
-#pragma once
+#if defined (ENABLE_LUA)
+
 #include "lua/sol.hpp"
 
 namespace lua::global_table
@@ -18,3 +19,5 @@ namespace lua::global_table
 		state["joaat"] = rage::joaat;
 	}
 }
+
+#endif // ENABLE_LUA

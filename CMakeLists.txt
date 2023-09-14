@@ -19,6 +19,8 @@ include(scripts/imgui.cmake)
 message("\nFetching custom modules")
 include(scripts/gtav-classes.cmake)
 
+# Build options
+include(scripts/build_options.cmake)
 
 # TupoyeMenu
 message(STATUS "TupoyeMenu")
@@ -31,8 +33,14 @@ file(GLOB_RECURSE SRC_MAIN
     "${SRC_DIR}/**.asm"
 )
 
+if(NOT ENABLE_LUA)
+    list(FILTER SRC_MAIN EXCLUDE REGEX "lua/")
+endif()
+
 if (MSVC)
   add_compile_options(/bigobj)
+  add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
+  add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 else ()
   add_compile_options(-Wa,-mbig-obj)
 endif ()
@@ -40,7 +48,7 @@ endif ()
 add_library(TupoyeMenu MODULE "${SRC_MAIN}")
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set_property(TARGET TupoyeMenu PROPERTY CXX_STANDARD 23) # 23 Because std::format is not avalible in std:c++20 for some reason. Maybe it's because i use v142 toolset.
+set_property(TARGET TupoyeMenu PROPERTY CXX_STANDARD 23)
 
 source_group(TREE ${SRC_DIR} PREFIX "src" FILES ${SRC_MAIN} )
 
@@ -52,10 +60,10 @@ target_include_directories(TupoyeMenu PRIVATE
 )
 
 target_precompile_headers(TupoyeMenu PRIVATE "${SRC_DIR}/common.hpp")
-target_link_libraries(TupoyeMenu PRIVATE pugixml minhook AsyncLogger dbghelp imgui Zydis lua_static)
+target_link_libraries(TupoyeMenu PRIVATE pugixml minhook AsyncLogger dbghelp imgui Zydis)
 
-# Build Options
-include(scripts/build_options.cmake)
+# Actually use build options
+include(scripts/build_options_impl.cmake)
 
 # Warnings as errors
 set_property(TARGET TupoyeMenu PROPERTY COMPILE_WARNING_AS_ERROR ON)

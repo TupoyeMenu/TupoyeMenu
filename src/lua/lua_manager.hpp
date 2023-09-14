@@ -1,11 +1,14 @@
 #pragma once
+#if defined (ENABLE_LUA)
 #include "core/enums.hpp"
 #include "lua_module.hpp"
+#endif // ENABLE_LUA
 
 namespace big
 {
 	class lua_manager
 	{
+#if defined (ENABLE_LUA)
 	private:
 		std::mutex m_module_lock;
 		std::vector<std::shared_ptr<lua_module>> m_modules;
@@ -14,7 +17,6 @@ namespace big
 		std::chrono::high_resolution_clock::time_point m_wake_time_changed_scripts_check;
 
 		folder m_scripts_folder;
-
 	public:
 		lua_manager(folder scripts_folder);
 		~lua_manager();
@@ -91,6 +93,11 @@ namespace big
 				func(module);
 			}
 		}
+#else
+		public:
+
+			void draw_gui(rage::joaat_t) {} // Nullsub to allow compilation
+#endif // ENABLE_LUA
 	};
 
 	inline lua_manager* g_lua_manager;

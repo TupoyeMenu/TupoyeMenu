@@ -33,6 +33,7 @@ namespace big
 			ImGui::Checkbox("Block Joins", &reaction.block_joins);
 		ImGui::EndDisabled();
 		ImGui::Checkbox("Kick Attacker", &reaction.kick);
+		ImGui::Checkbox("Time Out (Block sync)", &reaction.timeout);
 	}
 
 	void draw_reaction(reaction& reaction)

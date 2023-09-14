@@ -1,3 +1,5 @@
+#if defined(ENABLE_LUA)
+
 #include "input_float.hpp"
 
 namespace lua::gui
@@ -12,7 +14,7 @@ namespace lua::gui
 		ImGui::InputFloat(m_text.c_str(), &m_value);
 	}
 
-	int input_float::get_value()
+	float input_float::get_value()
 	{
 		return m_value;
 	}
@@ -22,3 +24,5 @@ namespace lua::gui
 		m_value = val;
 	}
 }
+
+#endif // ENABLE_LUA

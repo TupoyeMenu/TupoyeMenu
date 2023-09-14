@@ -1,4 +1,5 @@
-#pragma once
+#if defined (ENABLE_LUA)
+
 #include "locals.hpp"
 #include "memory.hpp"
 
@@ -73,3 +74,5 @@ namespace lua::locals
 		ns["get_pointer"] = get_pointer;
 	}
 }
+
+#endif // ENABLE_LUA

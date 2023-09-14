@@ -1,4 +1,5 @@
-#pragma once
+#if defined (ENABLE_LUA)
+
 #include "script.hpp"
 
 #include "lua/lua_manager.hpp"
@@ -65,7 +66,10 @@ namespace lua::script
 				    auto res = func(dummy_script_util);
 
 				    if (!res.valid())
+				    {
 					    big::g_lua_manager->handle_error(res, res.lua_state());
+					    break;
+				    }
 
 				    if (func.runnable())
 				    {
@@ -128,7 +132,10 @@ namespace lua::script
 				    auto res = func(dummy_script_util);
 
 				    if (!res.valid())
+				    {
 					    big::g_lua_manager->handle_error(res, res.lua_state());
+					    break;
+				    }
 
 				    if (func.runnable())
 				    {
@@ -157,3 +164,5 @@ namespace lua::script
 		usertype["sleep"] = sol::yielding(&script_util::sleep);
 	}
 }
+
+#endif // ENABLE_LUA

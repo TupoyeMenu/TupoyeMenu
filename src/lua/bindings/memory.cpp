@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "memory.hpp"
 
 #include "memory/module.hpp"
@@ -171,3 +173,5 @@ namespace lua::memory
 		ns["free"]          = free;
 	}
 }
+
+#endif // ENABLE_LUA

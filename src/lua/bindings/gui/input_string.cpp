@@ -1,3 +1,5 @@
+#if defined(ENABLE_LUA)
+
 #include "input_string.hpp"
 
 namespace lua::gui
@@ -22,3 +24,5 @@ namespace lua::gui
 		strncpy(m_value, val.c_str(), sizeof(m_value));
 	}
 }
+
+#endif // ENABLE_LUA

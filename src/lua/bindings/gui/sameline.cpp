@@ -1,3 +1,5 @@
+#if defined(ENABLE_LUA)
+
 #include "sameline.hpp"
 
 namespace lua::gui
@@ -7,3 +9,5 @@ namespace lua::gui
 		ImGui::SameLine();
 	}
 }
+
+#endif // ENABLE_LUA

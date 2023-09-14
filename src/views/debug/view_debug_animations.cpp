@@ -15,11 +15,17 @@
 
 namespace big
 {
-	void view::debug_animations()
+	void view::debug_animations(std::string* dict, std::string* anim)
 	{
 		static std::string current_dict, current_anim;
 		static std::vector<std::string> selected_dict_anim_list{};
 
+		if(dict && anim)
+		{
+			*dict = current_dict;
+			*anim = current_anim;
+		}
+			
 		static auto reload_anim_list = []() -> void {
 			selected_dict_anim_list.clear();
 			auto range = animations::all_anims.equal_range(current_dict);
@@ -28,15 +34,16 @@ namespace big
 				selected_dict_anim_list.push_back(it->second);
 			}
 		};
-
-		ImGui::Text("There are %d dictionaries with %d animations in memory", animations::anim_dict_count(), animations::total_anim_count());
+		
+		if(animations::has_anim_list_been_populated())
+			ImGui::Text(std::format("There are {} dictionaries with {} animations in memory", animations::anim_dict_count(), animations::total_anim_count()).data());
 
 		components::button("Fetch All Anims", [] {
 			animations::fetch_all_anims();
 		});
 
 		ImGui::SetNextItemWidth(400);
-		components::input_text_with_hint("##dictionaryfilter", "Dictionary", &current_dict);
+		components::input_text_with_hint("##dictionaryfilter", "Dictionary", current_dict);
 
 		if (animations::has_anim_list_been_populated() && ImGui::BeginListBox("##dictionaries", ImVec2(400, 200)))
 		{
@@ -63,17 +70,17 @@ namespace big
 				if (ImGui::Selectable(entry.data(), entry == current_anim))
 				{
 					current_anim = entry;
-
-					g_fiber_pool->queue_job([=] {
-						TASK::CLEAR_PED_TASKS_IMMEDIATELY(self::ped);
-						ped::ped_play_animation(self::ped, current_dict, current_anim, 4.f, -4.f, -1, 0, 0, false);
-					});
 				}
 			}
 
 			ImGui::EndListBox();
 		}
 
+		components::button("Play", [] {
+			TASK::CLEAR_PED_TASKS_IMMEDIATELY(self::ped);
+			ped::ped_play_animation(self::ped, current_dict, current_anim, 4.f, -4.f, -1, 0, 0, false);
+		});
+		ImGui::SameLine();
 		components::button("Stop", [] {
 			TASK::CLEAR_PED_TASKS(self::ped);
 		});

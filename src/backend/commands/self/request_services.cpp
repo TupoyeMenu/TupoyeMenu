@@ -8,7 +8,7 @@ namespace big
 	{
 		using command::command;
 
-		virtual void execute(const std::vector<uint64_t>&, const std::shared_ptr<command_context> ctx)
+		virtual void execute(const command_arguments&, const std::shared_ptr<command_context> ctx) override
 		{
 			mobile::merry_weather::request_boat_pickup();
 		}
@@ -18,7 +18,7 @@ namespace big
 	{
 		using command::command;
 
-		virtual void execute(const std::vector<uint64_t>&, const std::shared_ptr<command_context> ctx)
+		virtual void execute(const command_arguments&, const std::shared_ptr<command_context> ctx) override
 		{
 			mobile::ceo_abilities::request_ballistic_armor();
 		}
@@ -28,7 +28,7 @@ namespace big
 	{
 		using command::command;
 
-		virtual void execute(const std::vector<uint64_t>&, const std::shared_ptr<command_context> ctx)
+		virtual void execute(const command_arguments&, const std::shared_ptr<command_context> ctx) override
 		{
 			mobile::services::request_avenger();
 		}
@@ -38,7 +38,7 @@ namespace big
 	{
 		using command::command;
 
-		virtual void execute(const std::vector<uint64_t>&, const std::shared_ptr<command_context> ctx)
+		virtual void execute(const command_arguments&, const std::shared_ptr<command_context> ctx) override
 		{
 			mobile::services::request_kosatka();
 		}
@@ -48,7 +48,7 @@ namespace big
 	{
 		using command::command;
 
-		virtual void execute(const std::vector<uint64_t>&, const std::shared_ptr<command_context> ctx)
+		virtual void execute(const command_arguments&, const std::shared_ptr<command_context> ctx) override
 		{
 			mobile::services::request_mobile_operations_center();
 		}
@@ -58,7 +58,7 @@ namespace big
 	{
 		using command::command;
 
-		virtual void execute(const std::vector<uint64_t>&, const std::shared_ptr<command_context> ctx)
+		virtual void execute(const command_arguments&, const std::shared_ptr<command_context> ctx) override
 		{
 			mobile::services::request_terrorbyte();
 		}
@@ -68,7 +68,7 @@ namespace big
 	{
 		using command::command;
 
-		virtual void execute(const std::vector<uint64_t>&, const std::shared_ptr<command_context> ctx)
+		virtual void execute(const command_arguments&, const std::shared_ptr<command_context> ctx) override
 		{
 			mobile::services::request_acidlab();
 		}
@@ -78,7 +78,7 @@ namespace big
 	{
 		using command::command;
 
-		virtual void execute(const std::vector<uint64_t>&, const std::shared_ptr<command_context> ctx)
+		virtual void execute(const command_arguments&, const std::shared_ptr<command_context> ctx) override
 		{
 			mobile::services::request_acidlab_bike();
 		}
@@ -88,7 +88,7 @@ namespace big
 	{
 		using command::command;
 
-		virtual void execute(const std::vector<uint64_t>&, const std::shared_ptr<command_context> ctx)
+		virtual void execute(const command_arguments&, const std::shared_ptr<command_context> ctx) override
 		{
 			mobile::mobile_misc::request_taxi();
 		}
@@ -97,9 +97,9 @@ namespace big
 	boat_pickup g_boat_pickup("boatpickup", "Request Boat Pickup", "Request a boat pickup", 0);
 	ballistic_armor g_ballistic_armor("ballisticarmor", "Request Ballistic Equipment", "Requests ballistic equipment which includes ballistic armor and an minigun", 0);
 	request_avenger g_request_avenger("avenger", "Request Avenger", "Requests the Avenger", 0);
-	request_kosatka g_request_kosatka("kosatka", "Request Kosatka", "Requests the Kosatka", 0);
+	request_kosatka g_request_kosatka("kosatka", "Requests Kosatka", "Requests the Kosatka", 0);
 	request_moc g_request_moc("moc", "Request M.O.C", "Requests the Mobile Operations Center", 0);
-	request_terrorbyte g_request_terrorbyte("terrorbyte", "Request Terrorbyte", "Requests the terrorbyte", 0);
+	request_terrorbyte g_request_terrorbyte("terrorbyte", "Request Terrorbyte", "Requests the Terrorbyte", 0);
 	request_acidlab g_request_acidlab("acidlab", "Request Acid Lab", "Requests the Acid Lab", 0);
 	request_acidlab_bike g_request_acidlab_bike("acidbike", "Request Acid Bike", "Requests the Acid Lab Delivery Bike", 0);
 	request_taxi g_request_taxi("taxi", "Request Taxi", "Requests a taxi to give you a ride", 0);

@@ -1,4 +1,5 @@
-#pragma once
+#if defined (ENABLE_LUA)
+
 #include "event.hpp"
 
 #include "fiber_pool.hpp"
@@ -115,3 +116,5 @@ namespace lua::event
 		// TODO: triggering events through script?
 	}
 }
+
+#endif // ENABLE_LUA

@@ -1,4 +1,5 @@
-#pragma once
+#if defined (ENABLE_LUA)
+
 #include "log.hpp"
 
 namespace lua::log
@@ -45,3 +46,5 @@ namespace lua::log
 		ns["debug"]   = debug;
 	}
 }
+
+#endif // ENABLE_LUA

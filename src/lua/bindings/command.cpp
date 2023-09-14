@@ -1,4 +1,5 @@
-#pragma once
+#if defined (ENABLE_LUA)
+
 #include "command.hpp"
 #include "backend/command.hpp"
 #include "backend/player_command.hpp"
@@ -18,7 +19,7 @@ namespace lua::command
 	// Call a menu command.
 	static void call(const std::string& command_name, std::optional<sol::table> _args)
 	{
-		const auto args = convert_sequence<uint64_t>(_args.value_or(sol::table()));
+		big::command_arguments args = convert_sequence<uint64_t>(_args.value_or(sol::table()));
 
 		const auto command = big::command::get(rage::joaat(command_name));
 
@@ -57,3 +58,5 @@ namespace lua::command
 		ns["call_player"] = call_player;
 	}
 }
+
+#endif // ENABLE_LUA

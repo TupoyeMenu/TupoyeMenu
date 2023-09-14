@@ -35,6 +35,8 @@ namespace big
 		register_hotkey("localinvisveh", g.settings.hotkeys.localinvisveh, RAGE_JOAAT("localinvisveh"));
 		register_hotkey("noclip", g.settings.hotkeys.noclip, RAGE_JOAAT("noclip"));
 		register_hotkey("objective", g.settings.hotkeys.teleport_objective, RAGE_JOAAT("objectivetp"));
+		register_hotkey("passive", g.settings.hotkeys.passive, RAGE_JOAAT("passive"));
+		//register_hotkey("repairpv", g.settings.hotkeys.repairpv, RAGE_JOAAT("repairpv"));
 		register_hotkey("skipcutscene", g.settings.hotkeys.skip_cutscene, RAGE_JOAAT("skipcutscene"));
 		register_hotkey("pvtp", g.settings.hotkeys.teleport_pv, RAGE_JOAAT("pvtp"));
 		register_hotkey("vehiclefly", g.settings.hotkeys.vehicle_flymode, RAGE_JOAAT("vehiclefly"));
@@ -61,6 +63,8 @@ namespace big
 	bool hotkey_service::update_hotkey(const std::string_view name, const key_t key)
 	{
 		static auto update_hotkey_map = [](hotkey_map& hotkey_map, rage::joaat_t name_hash, key_t new_key) -> bool {
+			bool processed = false;
+
 			for (auto it = hotkey_map.begin(); it != hotkey_map.end(); ++it)
 			{
 				auto hotkey = it->second;
@@ -71,9 +75,9 @@ namespace big
 				hotkey.set_key(new_key);
 				hotkey_map.emplace(new_key, hotkey);
 
-				return true;
+				processed = true;
 			}
-			return false;
+			return processed;
 		};
 
 		const auto name_hash = rage::joaat(name);
@@ -93,7 +97,7 @@ namespace big
 		if (state == eKeyState::RELEASE || state == eKeyState::DOWN)
 		{
 			auto& hotkey_map = m_hotkeys[state == eKeyState::RELEASE];
-			if (const auto& it = hotkey_map.find(key); it != hotkey_map.end())
+			for (auto [ it, end ] = hotkey_map.equal_range(key); it != end; ++it)
 			{
 				if (auto& hotkey = it->second; hotkey.can_exec())
 				{

@@ -16,6 +16,7 @@
 #include "gta/fwddec.hpp"
 #include "gta/script_thread.hpp"
 #include "vmt_hook.hpp"
+#include "vtable_hook.hpp"
 
 #include <network/netConnection.hpp>
 
@@ -44,6 +45,8 @@ class IDirectSoundCapture;
 class CVehicleProximityMigrationDataNode;
 class CNonPhysicalPlayerData;
 class TimecycleKeyframeData;
+class CPedTaskSpecificDataNode;
+class CPedTaskSequenceDataNode;
 
 namespace rage
 {
@@ -80,7 +83,7 @@ namespace big
 		static bool init_native_tables(rage::scrProgram* program);
 		static rage::eThreadState script_vm(uint64_t* start_stack, uint64_t** scr_globals, rage::scrProgram* program, rage::scrThreadContext* ctx);
 
-		static void network_player_mgr_init(CNetworkPlayerMgr* _this, uint64_t a2, uint32_t a3, uint32_t a4[4]);
+		static bool network_player_mgr_init(CNetworkPlayerMgr* _this, uint64_t a2, uint32_t a3, uint32_t a4[4]);
 		static void network_player_mgr_shutdown(CNetworkPlayerMgr* _this);
 
 		static bool fragment_physics_crash_2(float* a1, float* a2);
@@ -92,23 +95,24 @@ namespace big
 		static bool scripted_game_event(CScriptedGameEvent* scripted_game_event, CNetGamePlayer* player);
 
 		static bool receive_net_message(void* netConnectionManager, void* a2, rage::netConnection::InFrame* frame);
-		static void get_network_event_data(int64_t unk, rage::CEventNetwork* net_event);
+		static rage::CEventNetwork* get_network_event_data(int64_t unk, rage::CEventNetwork* net_event);
 
 		static int get_pool_type();
 
 		static void* assign_physical_index(CNetworkPlayerMgr* netPlayerMgr, CNetGamePlayer* player, uint8_t new_index);
 
 		//SYNC
-		static bool received_clone_create(CNetworkObjectMgr* mgr, CNetGamePlayer* src, CNetGamePlayer* dst, eNetObjType object_type, int32_t object_id, int32_t object_flag, rage::datBitBuffer* buffer, int32_t timestamp);
+		static void received_clone_create(CNetworkObjectMgr* mgr, CNetGamePlayer* src, CNetGamePlayer* dst, eNetObjType object_type, int32_t object_id, int32_t object_flag, rage::datBitBuffer* buffer, int32_t timestamp);
 		static eAckCode received_clone_sync(CNetworkObjectMgr* mgr, CNetGamePlayer* src, CNetGamePlayer* dst, eNetObjType object_type, uint16_t object_id, rage::datBitBuffer* bufer, uint16_t unk, uint32_t timestamp);
 		static bool can_apply_data(rage::netSyncTree* tree, rage::netObject* object);
 
 		static void write_player_gamer_data_node(rage::netObject* player, CPlayerGamerDataNode* node);
-		static bool write_player_game_state_data_node(rage::netObject* player, CPlayerGameStateDataNode* node);
+		static void write_player_game_state_data_node(rage::netObject* player, CPlayerGameStateDataNode* node);
 
 		static void invalid_mods_crash_detour(int64_t a1, int64_t a2, int a3, char a4);
-		static uint64_t invalid_decal(uintptr_t a1, int a2);
-		static uint64_t task_parachute_object_0x270(uint64_t _this, int a2, int a3);
+		static void invalid_decal(uintptr_t a1, int a2);
+		static int task_parachute_object(uint64_t _this, int a2, int a3);
+		static int task_ambient_clips(uint64_t _this, int a2, int a3);
 
 #ifdef ENABLE_SOCIALCLUB
 		static bool update_presence_attribute_int(void* presence_data, int profile_index, char* attr, uint64_t value);
@@ -133,18 +137,19 @@ namespace big
 		static bool send_session_matchmaking_attributes(void* a1, rage::rlSessionInfo* info, uint64_t session_id, bool use_session_id, MatchmakingAttributes* attributes);
 
 		static void serialize_take_off_ped_variation_task(ClonedTakeOffPedVariationInfo* info, rage::CSyncDataBase* serializer);
+		static void serialize_parachute_task(__int64 info, rage::CSyncDataBase* serializer);
 
 		static void queue_dependency(void* dependency);
 
 		static int linux_dx_error_fix();
 
-		static void prepare_metric_for_sending(rage::datBitBuffer* bit_buffer, int unk, int time, rage::rlMetric* metric);
+		static bool prepare_metric_for_sending(rage::datBitBuffer* bit_buffer, int unk, int time, rage::rlMetric* metric);
 
 		static bool received_array_update(rage::netArrayHandlerBase* array, CNetGamePlayer* sender, rage::datBitBuffer* buffer, int size, int16_t cycle);
 
 		static bool receive_pickup(rage::netObject* netobject, void* unk, CPed* ped);
 
-		static bool write_player_camera_data_node(rage::netObject* player, CPlayerCameraDataNode* node);
+		static void write_player_camera_data_node(rage::netObject* player, CPlayerCameraDataNode* node);
 
 		static rage::netGameEvent* send_player_card_stats(rage::netGameEvent* a1, CPlayerCardStats* stats);
 		static void serialize_stats(CStatsSerializationContext* context, rage::joaat_t* stats, uint32_t stat_count);
@@ -161,17 +166,33 @@ namespace big
 
 		static int netfilter_handle_message(__int64 filter, char* message, int flags);
 
-		static void log_error_message_box(rage::joaat_t joaated_error_code, char a2);
+		static void log_error_message_box(rage::joaat_t joaated_error_code, bool a2);
 
-		static void send_non_physical_player_data(CNetGamePlayer* player, __int64 message, int flags, void* a4, CNetGamePlayer* a5);
+		static bool send_non_physical_player_data(CNetGamePlayer* player, __int64 message, int flags, void* a4, CNetGamePlayer* a5);
 
-		static int64_t update_timecycle_keyframe_data(int64_t timecycleManager, TimecycleKeyframeData* timecycleKeyframeData);
+		static void update_timecycle_keyframe_data(int64_t timecycleManager, TimecycleKeyframeData* timecycleKeyframeData);
 
 		static void* allocate_memory_reliable(rage::netConnection* cxn, int required_memory);
 
 		static void* render_ped(__int64 renderer, CPed* ped, __int64 a3, __int64 a4);
 		static void render_entity(__int64 renderer, rage::fwEntity* entity, int unk, bool a4);
 		static __int64 render_big_ped(__int64 renderer, CPed* ped, __int64 a3, __int64 a4);
+
+		static bool read_bits_single(void* data, int* out_value, int size, int offset);
+
+		static bool sync_reader_serialize_dword(void* _this, uint32_t* dword, int size);
+		static bool sync_reader_serialize_word(void* _this, uint16_t* word, int size);
+		static bool sync_reader_serialize_byte(void* _this, uint8_t* byte, int size);
+		static bool sync_reader_serialize_int32(void* _this, int32_t* i, int size);
+		static bool sync_reader_serialize_int16(void* _this, int16_t* i, int size);
+		static bool sync_reader_serialize_signed_byte(void* _this, int8_t* i, int size);
+		static bool sync_reader_serialize_bool(void* _this, bool* flag, int size);
+		static bool sync_reader_serialize_signed_float(void* _this, float* flt, float divisor, int size);
+		static bool sync_reader_serialize_float(void* _this, float* flt, float divisor, int size);
+		static bool sync_reader_serialize_net_id(void* _this, uint16_t* id);
+		static bool sync_reader_serialize_vec3(void* _this, rage::fvector3* vec, float divisor, int size);
+		static bool sync_reader_serialize_vec3_signed(void* _this, rage::fvector3* vec, float divisor, int size);
+		static bool sync_reader_serialize_array(void* _this, void* array, int size);
 	};
 
 	class minhook_keepalive
@@ -260,6 +281,7 @@ namespace big
 		minhook_keepalive m_minhook_keepalive;
 
 		vmt_hook m_swapchain_hook;
+		vtable_hook m_sync_data_reader_hook;
 
 		WNDPROC m_og_wndproc = nullptr;
 

@@ -9,12 +9,12 @@ namespace big
 	{
 		using player_command::player_command;
 
-		virtual CommandAccessLevel get_access_level()
+		virtual CommandAccessLevel get_access_level() override
 		{
 			return CommandAccessLevel::TOXIC;
 		}
 
-		virtual void execute(player_ptr player, const std::vector<std::uint64_t>& _args, const std::shared_ptr<command_context> ctx)
+		virtual void execute(player_ptr player, const command_arguments& _args, const std::shared_ptr<command_context> ctx) override
 		{
 			int64_t args1[] = { (int64_t)eRemoteEvent::Crash, (int64_t)self::id };
 			g_pointers->m_gta.m_trigger_script_event(1, args1, sizeof(args1) / sizeof(args1[0]), 1 << player->id());

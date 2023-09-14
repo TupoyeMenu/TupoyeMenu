@@ -17,7 +17,10 @@
 #include "natives.hpp"
 #include "util/notify.hpp"
 #include "util/scripts.hpp"
+
+#if defined (ENABLE_LUA)
 #include "lua/lua_manager.hpp"
+#endif // ENABLE_LUA
 
 namespace big
 {
@@ -40,9 +43,11 @@ namespace big
 			if (g.debug.logs.stupid_script_native_logs)
 				LOG(VERBOSE) << std::format("NETWORK::NETWORK_BAIL({}, {}, {}); // In: {}", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2), SCRIPT::GET_THIS_SCRIPT_NAME());
 
+#if defined (ENABLE_LUA)
 			auto event_ret = g_lua_manager->trigger_event<menu_event::NetworkBail, bool>(src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2), SCRIPT::GET_ID_OF_THIS_THREAD());
 			if (event_ret.has_value())
 				return; // don't care, block if any bool is returned
+#endif // ENABLE_LUA
 
 			if (!(SCRIPT::GET_HASH_OF_THIS_SCRIPT_NAME() == RAGE_JOAAT("freemode")))
 				NETWORK::NETWORK_BAIL(src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2));

@@ -45,6 +45,7 @@ namespace big
 		m_can_tick = true;
 	}
 
+#if defined (ENABLE_LUA)
 	static void lua_manager_tick()
 	{
 		g_lua_manager->reload_changed_scripts();
@@ -54,6 +55,7 @@ namespace big
 			module->cleanup_done_scripts();
 		});
 	}
+#endif // ENABLE_LUA
 
 	void script_mgr::tick_internal()
 	{
@@ -61,7 +63,9 @@ namespace big
 
 		std::lock_guard lock(m_mutex);
 
+#if defined (ENABLE_LUA)
 		lua_manager_tick();
+#endif // ENABLE_LUA
 
 		for (const auto& script : m_scripts)
 		{

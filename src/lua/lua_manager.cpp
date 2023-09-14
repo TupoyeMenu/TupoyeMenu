@@ -1,3 +1,5 @@
+#if defined (ENABLE_LUA)
+
 #include "lua_manager.hpp"
 
 #include "file_manager.hpp"
@@ -174,3 +176,5 @@ namespace big
 		m_modules.clear();
 	}
 }
+
+#endif // ENABLE_LUA

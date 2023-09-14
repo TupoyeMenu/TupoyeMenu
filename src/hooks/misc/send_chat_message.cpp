@@ -13,9 +13,12 @@
 #include "gta/net_game_event.hpp"
 #include "gta_util.hpp"
 #include "hooking.hpp"
-#include "lua/lua_manager.hpp"
 #include "packet.hpp"
 #include "services/players/player_service.hpp"
+
+#if defined(ENABLE_LUA)
+#include "lua/lua_manager.hpp"
+#endif // ENABLE_LUA
 
 namespace big
 {
@@ -31,8 +34,10 @@ namespace big
 	{
 		if (g.session.chat_commands && message[0] == g.session.chat_command_prefix)
 			command::process(std::string(message + 1), std::make_shared<chat_command_context>(g_player_service->get_self()));
+#if defined(ENABLE_LUA)
 		else
 			g_lua_manager->trigger_event<menu_event::ChatMessageReceived>(self::id, message);
+#endif // ENABLE_LUA
 
 		packet msg{};
 		msg.write_message(rage::eNetMessage::MsgTextMessage);

@@ -1,57 +1,58 @@
+#if defined (ENABLE_LUA)
 #include "lua_native_binding.hpp"
 #include "natives.hpp"
 
 namespace lua::native
 {
-	static bool LUA_NATIVE_DLC_ARE_ANY_CCS_PENDING(  )
+	static bool LUA_NATIVE_DLC_ARE_ANY_CCS_PENDING()
 	{
 		auto retval = (bool)DLC::ARE_ANY_CCS_PENDING();
 		return retval;
 	}
 
-	static bool LUA_NATIVE_DLC_IS_DLC_PRESENT( Hash dlcHash )
+	static bool LUA_NATIVE_DLC_IS_DLC_PRESENT(Hash dlcHash)
 	{
 		auto retval = (bool)DLC::IS_DLC_PRESENT(dlcHash);
 		return retval;
 	}
 
-	static bool LUA_NATIVE_DLC_DLC_CHECK_CLOUD_DATA_CORRECT(  )
+	static bool LUA_NATIVE_DLC_DLC_CHECK_CLOUD_DATA_CORRECT()
 	{
 		auto retval = (bool)DLC::DLC_CHECK_CLOUD_DATA_CORRECT();
 		return retval;
 	}
 
-	static int LUA_NATIVE_DLC_GET_EXTRACONTENT_CLOUD_RESULT(  )
+	static int LUA_NATIVE_DLC_GET_EXTRACONTENT_CLOUD_RESULT()
 	{
 		auto retval = DLC::GET_EXTRACONTENT_CLOUD_RESULT();
 		return retval;
 	}
 
-	static bool LUA_NATIVE_DLC_DLC_CHECK_COMPAT_PACK_CONFIGURATION(  )
+	static bool LUA_NATIVE_DLC_DLC_CHECK_COMPAT_PACK_CONFIGURATION()
 	{
 		auto retval = (bool)DLC::DLC_CHECK_COMPAT_PACK_CONFIGURATION();
 		return retval;
 	}
 
-	static bool LUA_NATIVE_DLC_GET_EVER_HAD_BAD_PACK_ORDER(  )
+	static bool LUA_NATIVE_DLC_GET_EVER_HAD_BAD_PACK_ORDER()
 	{
 		auto retval = (bool)DLC::GET_EVER_HAD_BAD_PACK_ORDER();
 		return retval;
 	}
 
-	static bool LUA_NATIVE_DLC_GET_IS_LOADING_SCREEN_ACTIVE(  )
+	static bool LUA_NATIVE_DLC_GET_IS_LOADING_SCREEN_ACTIVE()
 	{
 		auto retval = (bool)DLC::GET_IS_LOADING_SCREEN_ACTIVE();
 		return retval;
 	}
 
-	static bool LUA_NATIVE_DLC_GET_IS_INITIAL_LOADING_SCREEN_ACTIVE(  )
+	static bool LUA_NATIVE_DLC_GET_IS_INITIAL_LOADING_SCREEN_ACTIVE()
 	{
 		auto retval = (bool)DLC::GET_IS_INITIAL_LOADING_SCREEN_ACTIVE();
 		return retval;
 	}
 
-	static std::tuple<bool, bool> LUA_NATIVE_DLC_HAS_CLOUD_REQUESTS_FINISHED( bool p0, int unused )
+	static std::tuple<bool, bool> LUA_NATIVE_DLC_HAS_CLOUD_REQUESTS_FINISHED(bool p0, int unused)
 	{
 		std::tuple<bool, bool> return_values;
 		std::get<0>(return_values) = (bool)DLC::HAS_CLOUD_REQUESTS_FINISHED((BOOL*)&p0, unused);
@@ -60,12 +61,12 @@ namespace lua::native
 		return return_values;
 	}
 
-	static void LUA_NATIVE_DLC_ON_ENTER_SP(  )
+	static void LUA_NATIVE_DLC_ON_ENTER_SP()
 	{
 		DLC::ON_ENTER_SP();
 	}
 
-	static void LUA_NATIVE_DLC_ON_ENTER_MP(  )
+	static void LUA_NATIVE_DLC_ON_ENTER_MP()
 	{
 		DLC::ON_ENTER_MP();
 	}
@@ -86,3 +87,5 @@ namespace lua::native
 		DLC.set_function("ON_ENTER_MP", LUA_NATIVE_DLC_ON_ENTER_MP);
 	}
 }
+
+#endif // ENABLE_LUA
