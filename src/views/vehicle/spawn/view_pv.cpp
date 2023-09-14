@@ -30,13 +30,16 @@ namespace big
 		ImGui::SameLine();
 		components::help_marker("Shows a render of what you have highlighted in front of you.");
 		ImGui::SameLine();
-		ImGui::Checkbox("Spawn In", &g.clone_pv.spawn_inside);
+		ImGui::Checkbox("Spawn Inside", &g.clone_pv.spawn_inside);
+		ImGui::SameLine();
 		components::help_marker("Controls whether the player should be set inside the vehicle after it spawns");
 		ImGui::SameLine();
 
 		static char plate_buf[9] = {0};
 
+		ImGui::SameLine();
 		ImGui::Checkbox("Spawn Clone", &g.clone_pv.spawn_clone);
+		ImGui::SameLine();
 		components::help_marker("Determines if the vehicle selected to be spawned will be set to your personal vehicle.");
 		if (g.clone_pv.spawn_clone)
 		{
