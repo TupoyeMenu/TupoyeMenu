@@ -228,6 +228,9 @@ namespace big
 		static char global_name[50]{};
 		ImGui::SetNextItemWidth(200.f);
 		ImGui::InputText("##GlobalName", global_name, IM_ARRAYSIZE(global_name));
+		if (ImGui::IsItemActive())
+			g.self.hud.typing = TYPING_TICKS;
+
 		if (ImGui::Button("Save Global"))
 		{
 			save_global(global_name, global_test);

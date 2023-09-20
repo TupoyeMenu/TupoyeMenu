@@ -129,6 +129,8 @@ namespace big
 				{
 					current_player->name = name_buf;
 				}
+				if (ImGui::IsItemActive())
+					g.self.hud.typing = TYPING_TICKS;
 
 				if (ImGui::InputScalar("Rockstar ID", ImGuiDataType_S64, &current_player->rockstar_id)
 				    || ImGui::Checkbox("Is Modder", &current_player->is_modder)
@@ -198,6 +200,8 @@ namespace big
 					current_player->notes = note_buffer;
 					notes_dirty           = true;
 				}
+				if (ImGui::IsItemActive())
+					g.self.hud.typing = TYPING_TICKS;
 
 				ImGui::Checkbox("Join Redirect", &current_player->join_redirect);
 				ImGui::SameLine();
