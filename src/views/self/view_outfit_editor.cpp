@@ -192,6 +192,8 @@ namespace big
 		ImGui::SetNextItemWidth(300);
 
 		ImGui::InputText("##outfit_name", outfit_name, sizeof(outfit_name));
+		if (ImGui::IsItemActive())
+			g.self.hud.typing = TYPING_TICKS;
 		ImGui::SameLine();
 
 		components::button("Save Current", [] {

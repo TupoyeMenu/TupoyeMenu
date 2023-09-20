@@ -18,6 +18,7 @@ namespace big
 	{
 	public:
 		static void hud_transition_state();
+		static void hud_disable_input();
 
 		static void tunables_disable_phone();
 		static void phone_anim(); 

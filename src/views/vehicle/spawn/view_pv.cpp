@@ -18,6 +18,32 @@
 
 namespace big
 {
+	bool is_blacklist_vehicle(Hash vehicle_hash)
+	{
+		switch (vehicle_hash)
+		{
+			case RAGE_JOAAT("avenger"):
+			case RAGE_JOAAT("avenger3"):
+			case RAGE_JOAAT("hauler2"):
+			case RAGE_JOAAT("phantom3"):
+			case RAGE_JOAAT("trailersmall2"):
+			case RAGE_JOAAT("khanjali"):
+			case RAGE_JOAAT("chernobog"):
+			case RAGE_JOAAT("riot2"):
+			case RAGE_JOAAT("thruster"):
+			case RAGE_JOAAT("brickade2"):
+			case RAGE_JOAAT("manchez3"):
+			case RAGE_JOAAT("terbyte"):
+			case RAGE_JOAAT("speedo4"):
+			case RAGE_JOAAT("mule4"):
+			case RAGE_JOAAT("pounder2"):
+			case RAGE_JOAAT("rcbandito"):
+			case RAGE_JOAAT("minitank"):
+				return true;
+		}
+		return false;
+	}
+
 	void view::pv()
 	{
 		if (ImGui::Checkbox("Preview", &g.clone_pv.preview_vehicle))
@@ -119,6 +145,10 @@ namespace big
 				if ((selected_class == -1 || class_arr[selected_class] == vehicle_class)
 				    && (display_name.find(lower_search) != std::string::npos || display_manufacturer.find(lower_search) != std::string::npos))
 				{
+					if (!g.clone_pv.spawn_clone && is_blacklist_vehicle(personal_veh->get_hash()))
+					{
+						continue;
+					}
 					indexes_to_use.insert(personal_veh->get_id());
 				}
 			}

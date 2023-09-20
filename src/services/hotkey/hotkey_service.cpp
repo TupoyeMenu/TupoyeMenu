@@ -94,6 +94,9 @@ namespace big
 		if (g.cmd_executor.enabled)
 			return;
 
+		if (*g_pointers->m_gta.m_is_social_club_overlay_active)
+			return;
+
 		if (state == eKeyState::RELEASE || state == eKeyState::DOWN)
 		{
 			auto& hotkey_map = m_hotkeys[state == eKeyState::RELEASE];
