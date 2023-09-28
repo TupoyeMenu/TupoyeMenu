@@ -94,7 +94,17 @@ namespace big
 		if (g.cmd_executor.enabled)
 			return;
 
-		if (*g_pointers->m_gta.m_is_social_club_overlay_active)
+		bool is_using_cellphone = false;
+		for (auto script : *g_pointers->m_gta.m_script_threads)
+		{
+			if (script && script->m_script_hash == RAGE_JOAAT("cellphone_flashhand"))
+			{
+				is_using_cellphone = script->m_context.m_state == rage::eThreadState::running;
+			}
+		}
+
+		if (g_gui->is_open() || *g_pointers->m_gta.m_is_social_club_overlay_active || is_using_cellphone
+		    || g.settings.hotkeys.is_mp_chat_active)
 			return;
 
 		if (state == eKeyState::RELEASE || state == eKeyState::DOWN)

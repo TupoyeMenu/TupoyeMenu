@@ -144,6 +144,7 @@ namespace big
 		static int linux_dx_error_fix();
 
 		static bool prepare_metric_for_sending(rage::datBitBuffer* bit_buffer, int unk, int time, rage::rlMetric* metric);
+		static bool http_start_request(void* request, const char* uri);
 
 		static bool received_array_update(rage::netArrayHandlerBase* array, CNetGamePlayer* sender, rage::datBitBuffer* buffer, int size, int16_t cycle);
 

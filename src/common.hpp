@@ -81,6 +81,7 @@ namespace self
 	inline Vector3 pos;
 	inline Vector3 rot;
 	inline Vehicle veh;
+	inline int char_index;
 }
 
 template<size_t N>

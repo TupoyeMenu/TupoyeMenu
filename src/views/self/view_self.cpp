@@ -12,7 +12,6 @@
 #include "fiber_pool.hpp"
 #include "imgui.h"
 #include "util/entity.hpp"
-#include "util/local_player.hpp"
 #include "util/scripts.hpp"
 #include "views/view.hpp"
 
@@ -31,13 +30,6 @@ namespace big
 
 		ImGui::SameLine();
 
-		components::button("Maximum BEER", [] {
-			std::string mpPrefix = local_player::get_mp_prefix();
-			STATS::STAT_SET_INT(rage::joaat(mpPrefix + "NUMBER_OF_BOURGE_BOUGHT"), INT32_MAX, false);
-		});
-		ImGui::SameLine();
-		components::help_marker("Gives you all the beer you will ever need!\n`INT32_MAX` Beer for everyone!!!");
-		ImGui::SameLine();
 		components::command_button<"clean">();
 		ImGui::SameLine();
 		components::command_button<"fillammo">();

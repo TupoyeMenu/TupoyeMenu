@@ -13,7 +13,6 @@
 #include "entity.hpp"
 #include "vehicle.hpp"
 #include "gta/enums.hpp"
-#include "local_player.hpp"
 #include "math.hpp"
 #include "natives.hpp"
 #include "outfit.hpp"
