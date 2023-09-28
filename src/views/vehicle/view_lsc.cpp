@@ -24,6 +24,7 @@ namespace big
 		static Vehicle player_vehicle = 0;
 		static bool ready             = true;
 
+		static Hash model;
 		static std::map<int, int32_t> owned_mods;
 		static std::map<int, std::string> slot_display_names;
 		static std::map<int, std::map<int, std::string>> mod_display_names;
@@ -67,7 +68,7 @@ namespace big
 
 				VEHICLE::SET_VEHICLE_MOD_KIT(player_vehicle, 0);
 
-				Hash model = ENTITY::GET_ENTITY_MODEL(player_vehicle);
+				model = ENTITY::GET_ENTITY_MODEL(player_vehicle);
 
 				owned_mods = vehicle::get_owned_mods_from_vehicle(player_vehicle);
 				VEHICLE::SET_VEHICLE_MOD_KIT(player_vehicle, 0);
