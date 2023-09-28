@@ -1,6 +1,7 @@
 #include "backend/looped/looped.hpp"
 #include "natives.hpp"
 #include "pointers.hpp"
+#include "gta/joaat.hpp"
 
 #include <network/CNetworkPlayerMgr.hpp>
 
@@ -15,6 +16,8 @@ namespace big
 			self::id = (*g_pointers->m_gta.m_network_player_mgr)->m_local_net_player->m_player_id;
 
 		self::ped = PLAYER::PLAYER_PED_ID();
+
+		STATS::STAT_GET_INT(RAGE_JOAAT("MPPLY_LAST_MP_CHAR"), &self::char_index, true);
 
 		self::pos = ENTITY::GET_ENTITY_COORDS(self::ped, false /*Unused*/);
 

@@ -434,6 +434,7 @@ namespace big
 			{
 				bool editing_menu_toggle = false;
 				int menu_toggle          = VK_INSERT;
+				std::atomic<bool> is_mp_chat_active;
 				int teleport_waypoint    = 0;
 				int teleport_objective   = 0;
 				int teleport_pv          = 0;
@@ -480,8 +481,9 @@ namespace big
 			bool spawn_maxed     = false;
 			bool clone_plate     = false;
 			std::string plate    = "";
+			std::string garage   = "";
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(clone_pv, preview_vehicle, spawn_inside, spawn_clone, spawn_maxed, clone_plate, plate)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(clone_pv, preview_vehicle, spawn_inside, spawn_clone, spawn_maxed, clone_plate, plate, garage)
 		} clone_pv{};
 
 		struct persist_car
