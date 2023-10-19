@@ -19,6 +19,16 @@
 
 namespace big::teleport
 {
+	/**
+	 * @brief Teleports local ped to coords.
+	 * 
+	 * @param location Coords to teleport to.
+	 */
+	inline void to_coords(Vector3 location)
+	{
+		PED::SET_PED_COORDS_KEEP_VEHICLE(self::ped, location.x, location.y, location.z + 1.f);
+	}
+
 	inline bool teleport_player_to_coords(player_ptr player, Vector3 coords, Vector3 euler = {0, 0, 0})
 	{
 		Entity ent;
@@ -31,7 +41,10 @@ namespace big::teleport
 		bool is_local_player = (ent == self::ped || ent == self::veh);
 
 		if (is_local_player)
-			PED::SET_PED_COORDS_KEEP_VEHICLE(ent, coords.x, coords.y, coords.z);
+		{
+			to_coords(coords);
+			return true;
+		}
 
 		if (ENTITY::IS_ENTITY_DEAD(ent, true))
 		{
@@ -171,15 +184,7 @@ namespace big::teleport
 		return true;
 	}
 
-	/**
-	 * @brief Teleports local ped to coords.
-	 * 
-	 * @param location Coords to teleport to.
-	 */
-	inline void to_coords(Vector3 location)
-	{
-		PED::SET_PED_COORDS_KEEP_VEHICLE(self::ped, location.x, location.y, location.z + 1.f);
-	}
+	
 
 	/**
 	 * @brief Teleports local ped to blip.
@@ -198,7 +203,7 @@ namespace big::teleport
 		if (sprite == (int)BlipIcons::Waypoint)
 			entity::load_ground_at_3dcoord(location);
 
-		PED::SET_PED_COORDS_KEEP_VEHICLE(self::ped, location.x, location.y, location.z);
+		to_coords(location);
 
 		return true;
 	}
@@ -212,7 +217,7 @@ namespace big::teleport
 	{
 		Vector3 location = ENTITY::GET_ENTITY_COORDS(ent, true);
 
-		PED::SET_PED_COORDS_KEEP_VEHICLE(self::ped, location.x, location.y, location.z);
+		to_coords(location);
 	}
 
 	/**
@@ -256,7 +261,7 @@ namespace big::teleport
 			return false;
 		}
 
-		PED::SET_PED_COORDS_KEEP_VEHICLE(self::ped, location.x, location.y, location.z);
+		to_coords(location);
 
 		return true;
 	}

@@ -11,6 +11,7 @@
 
 #pragma once
 #include <memory/handle.hpp>
+#include "function_types.hpp"
 
 class CCommunications;
 class FriendRegistry;
@@ -41,6 +42,9 @@ namespace rage
 	class GenericPool;
 	class VehiclePool;
 }
+
+template<typename T>
+class HashTable;
 
 namespace big
 {
@@ -355,6 +359,12 @@ namespace big
 		PVOID m_decal_manager;
 
 		bool* m_is_social_club_overlay_active;
+
+		functions::remove_player_from_sender_list m_remove_player_from_sender_list;
+		PVOID m_remove_player_from_sender_list_caller_1;
+		PVOID m_remove_player_from_sender_list_caller_2;
+
+		PVOID m_game_skeleton_update;
 	};
 #pragma pack(pop)
 	static_assert(sizeof(gta_pointers) % 8 == 0, "Pointers are not properly aligned");

@@ -18,6 +18,7 @@
 #include "pointers.hpp"
 #include "services/gta_data/gta_data_service.hpp"
 #include "util/entity.hpp"
+#include "util/explosion_anti_cheat_bypass.hpp"
 #include "util/scripts.hpp"
 #include "util/session.hpp"
 #include "util/system.hpp"
@@ -31,12 +32,6 @@
 
 namespace big::toxic
 {
-	struct explosion_anti_cheat_bypass
-	{
-		inline static memory::byte_patch* m_can_blame_others;
-		inline static memory::byte_patch* m_can_use_blocked_explosions;
-	};
-
 	/**
 	 * @brief Creates an explosion owned by other player.
 	 * 
@@ -50,8 +45,7 @@ namespace big::toxic
 	 */
 	inline void blame_explode_coord(player_ptr to_blame, Vector3 pos, eExplosionTag explosion_type, float damage, bool is_audible, bool is_invisible, float camera_shake)
 	{
-		explosion_anti_cheat_bypass::m_can_blame_others->apply();
-		explosion_anti_cheat_bypass::m_can_use_blocked_explosions->apply();
+		explosion_anti_cheat_bypass::apply();
 
 		FIRE::ADD_OWNED_EXPLOSION(
 		    (*g_pointers->m_gta.m_is_session_started && to_blame) ? PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(to_blame->id()) : 0,
@@ -64,8 +58,7 @@ namespace big::toxic
 		    is_invisible,
 		    camera_shake);
 
-		explosion_anti_cheat_bypass::m_can_use_blocked_explosions->restore();
-		explosion_anti_cheat_bypass::m_can_blame_others->restore();
+		explosion_anti_cheat_bypass::restore();
 	}
 
 	/**
