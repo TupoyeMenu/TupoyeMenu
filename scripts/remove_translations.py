@@ -2,8 +2,11 @@
 
 import json, sys, glob, urllib.request
 
-with urllib.request.urlopen("https://raw.githubusercontent.com/YimMenu/Translations/master/en_US.json") as url:
-    translation_data = json.load(url)
+#with urllib.request.urlopen("https://raw.githubusercontent.com/YimMenu/Translations/master/en_US.json") as url:
+#    translation_data = json.load(url)
+
+with open('en_US.json', 'r') as translation_file:
+    translation_data = json.load(translation_file)
 
 arg_files = glob.glob(sys.argv[1], recursive=True)
 

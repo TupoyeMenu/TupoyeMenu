@@ -29,7 +29,7 @@ namespace big
 		ImGui::InputFloat("Z", &g.world.blackhole.pos.z, 5.f, 200.f);
 		ImGui::SliderFloat("Scale", &g.world.blackhole.scale, 2.f, 12.f, "%.0f");
 
-		components::button("Set to current coords", [] {
+		components::button("Set To Current Coordinates", [] {
 			const auto player_pos = g_local_player->get_position();
 
 			g.world.blackhole.pos.x = player_pos->x;

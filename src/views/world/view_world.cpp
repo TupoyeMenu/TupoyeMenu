@@ -11,6 +11,18 @@ namespace big
 	{
 		ImGui::Text("Peds");
 
+		ImGui::SeparatorText("Ocean");
+		{
+			view::ocean();
+		}
+
+		ImGui::SeparatorText("Waypoint And Objective");
+		{
+			view::waypoint_and_objective();
+		}
+
+		ImGui::SeparatorText("Ped");
+
 		components::button<ImVec2(110, 0), ImVec4(0.70196f, 0.3333f, 0.00392f, 1.f)>("Kill", [] {
 			for (auto peds : entity::get_entities(false, true))
 			{
@@ -44,9 +56,8 @@ namespace big
 		});
 
 		ImGui::SeparatorText("Vehicles");
-		components::sub_title("Vehicles");
 
-		components::button<ImVec2(110, 0), ImVec4(0.02745f, 0.4745f, 0.10196f, 1.f)>("Max Upgrade", [] {
+		components::button<ImVec2(0, 0), ImVec4(0.02745f, 0.4745f, 0.10196f, 1.f)>("Max Vehicle Mods", [] {
 			for (auto vehs : entity::get_entities(true, false))
 			{
 				if (entity::take_control_of(vehs))
@@ -58,7 +69,7 @@ namespace big
 		});
 		ImGui::SameLine();
 
-		components::button<ImVec2(110, 0), ImVec4(0.4549f, 0.03529f, 0.03529f, 1.f)>("Downgrade", [] {
+		components::button<ImVec2(0, 0), ImVec4(0.4549f, 0.03529f, 0.03529f, 1.f)>("Downgrade", [] {
 			for (auto vehs : entity::get_entities(true, false))
 			{
 				if (entity::take_control_of(vehs))
@@ -80,13 +91,13 @@ namespace big
 		ImGui::Text("Include:");
 		ImGui::Checkbox("Vehicles", &included_entity_types[0]);
 		ImGui::SameLine();
-		ImGui::Checkbox("Peds", &included_entity_types[1]);
+		ImGui::Checkbox("Ped", &included_entity_types[1]);
 		ImGui::SameLine();
 		ImGui::Checkbox("Props", &included_entity_types[2]);
 
 		if (included_entity_types[0])
 		{
-			ImGui::Checkbox("Self vehicle", &own_vehicle);
+			ImGui::Checkbox("Self Vehicle", &own_vehicle);
 			ImGui::SameLine();
 		}
 
@@ -99,12 +110,12 @@ namespace big
 		}
 		else
 		{
-			components::button("Delete all", [&] {
+			components::button("Delete All", [&] {
 				auto list = entity::get_entities(included_entity_types[0], included_entity_types[1], included_entity_types[2], own_vehicle);
 
 				quantity  = list.size();
 				remaining = quantity;
-				g_notification_service->push("Entity Deletion", std::format("Deleting {} entities", quantity));
+				g_notification_service->push("Time And Weather", std::format("Deleting {} entities", quantity));
 				deleting   = true;
 				int failed = 0;
 
@@ -144,7 +155,7 @@ namespace big
 				}
 
 				if (failed > 0)
-					g_notification_service->push_warning("Entity Deletion", std::format("Failed deleting {} entities", failed));
+					g_notification_service->push_warning("Time And Weather", std::format("Failed deleting {} entities", failed));
 
 				deleting = false;
 			});

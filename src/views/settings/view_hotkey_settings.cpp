@@ -32,14 +32,14 @@ namespace big
 			g_hotkey_service->update_hotkey("waypoint", g.settings.hotkeys.teleport_waypoint);
 		if (ImGui::Hotkey("Teleport to Objective", &g.settings.hotkeys.teleport_objective))
 			g_hotkey_service->update_hotkey("objective", g.settings.hotkeys.teleport_objective);
-		if (ImGui::Hotkey("Teleport to Selected", &g.settings.hotkeys.teleport_selected))
+		if (ImGui::Hotkey("Teleport to Selected Blip", &g.settings.hotkeys.teleport_selected))
 			g_hotkey_service->update_hotkey("highlighttp", g.settings.hotkeys.teleport_selected);
-		if (ImGui::Hotkey("Teleport into PV", &g.settings.hotkeys.teleport_pv))
+		if (ImGui::Hotkey("Teleport into Personal Vehicle", &g.settings.hotkeys.teleport_pv))
 			g_hotkey_service->update_hotkey("pvtp", g.settings.hotkeys.teleport_pv);
 		if (ImGui::Hotkey("Bring PV", &g.settings.hotkeys.bringvehicle))
 			g_hotkey_service->update_hotkey("bringpv", g.settings.hotkeys.bringvehicle);
 
-		if (ImGui::Hotkey("Toggle Noclip", &g.settings.hotkeys.noclip))
+		if (ImGui::Hotkey("Toggle No Clip", &g.settings.hotkeys.noclip))
 			g_hotkey_service->update_hotkey("noclip", g.settings.hotkeys.noclip);
 
 		ImGui::SeparatorText("Movement");
@@ -65,7 +65,7 @@ namespace big
 			g_hotkey_service->update_hotkey("invis", g.settings.hotkeys.invis);
 		if (ImGui::Hotkey("Toggle Vehicle Invisibility", &g.settings.hotkeys.invisveh))
 			g_hotkey_service->update_hotkey("invisveh", g.settings.hotkeys.invisveh);
-		if (ImGui::Hotkey("Toggle Local Veh Invisibility", &g.settings.hotkeys.localinvisveh))
+		if (ImGui::Hotkey("Toggle Local Vehicle Invisibility", &g.settings.hotkeys.localinvisveh))
 			g_hotkey_service->update_hotkey("localinvisveh", g.settings.hotkeys.localinvisveh);
 
 		ImGui::SeparatorText("Misc");

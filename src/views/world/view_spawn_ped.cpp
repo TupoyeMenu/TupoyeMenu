@@ -667,7 +667,7 @@ namespace big
 		});
 
 		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("This WILL break freemode missions and jobs");
+			ImGui::SetTooltip("This WILL break freemode missions and jobs!");
 
 		if (g.spoofing.spoof_player_model)
 		{

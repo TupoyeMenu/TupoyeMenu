@@ -43,7 +43,7 @@ namespace big
 			}
 			else
 			{
-				ctx->report_error("Player does not appear to be in an interior");
+				ctx->report_error("Player does not appear to be in an interior.");
 			}
 		}
 	};

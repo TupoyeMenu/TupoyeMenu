@@ -16,7 +16,7 @@ namespace big
 		if (plyr && plyr->block_join && *g_pointers->m_gta.m_is_session_started)
 		{
 			data->m_bubble_id = 10;
-			g_notification_service->push("Block Join", std::vformat("Trying to prevent {} from joining...", std::make_format_args(plyr->get_name())));
+			g_notification_service->push("Block Join", std::format("Trying to prevent {} from joining...", plyr->get_name()));
 		}
 
 		bool result = g_hooking->get_original<hooks::send_non_physical_player_data>()(player, message, flags, a4, a5);

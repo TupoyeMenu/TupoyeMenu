@@ -29,11 +29,11 @@ namespace big
 				}
 				else
 				{
-					g_notification_service->push_warning("Toxic", "Failed to take control of vehicle");
+					g_notification_service->push_warning("Toxic", "Failed to take control of player vehicle.");
 				}
 			}
 		}
 	};
 
-	open_doors g_open_doors("opendoors", "Opens Vehicle Doors", "Opens all vehicle doors", 0);
+	open_doors g_open_doors("opendoors", "Open Vehicle Doors", "Opens all of the vehicle's doors.", 0);
 }

@@ -9,18 +9,19 @@ namespace big
 	{
 		components::sub_title("Checkpoints");
 
-		components::button("Start Event##cp_collection", [] {
+		ImGui::PushID(1);
+		components::button("Start Event", [] {
 			if (scripts::force_host(RAGE_JOAAT("am_cp_collection")))
 				if (auto script = gta_util::find_script_thread(RAGE_JOAAT("am_cp_collection")))
 					*script_local(script->m_stack, scr_locals::am_cp_collection::broadcast_idx).at(667).as<int*>() = 0;
 		});
 		ImGui::SameLine();
-		components::button("Finish Event##cp_collection", [] {
+		components::button("Finish Event", [] {
 			if (scripts::force_host(RAGE_JOAAT("am_cp_collection")))
 				if (auto script = gta_util::find_script_thread(RAGE_JOAAT("am_cp_collection")))
 					*script_local(script->m_stack, scr_locals::am_cp_collection::broadcast_idx).at(661).as<int*>() = 0;
 		});
-
+		ImGui::PopID();
 		components::button("Win Event", [] {
 			if (auto checkpoints = gta_util::find_script_thread(RAGE_JOAAT("am_cp_collection")))
 				*script_local(checkpoints->m_stack, scr_locals::am_cp_collection::player_broadcast_idx)

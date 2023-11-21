@@ -74,8 +74,8 @@ namespace big::vehicle
 	void set_mp_bitset(Vehicle veh, bool is_stolen = false)
 	{
 		DECORATOR::DECOR_SET_INT(veh, "MPBitset", 0);
-		DECORATOR::DECOR_SET_INT(veh, "RandomId", g_local_player->m_net_object->m_object_id);
 		auto networkId = NETWORK::VEH_TO_NET(veh);
+		self::spawned_vehicles.insert(networkId);
 		if (NETWORK::NETWORK_GET_ENTITY_IS_NETWORKED(veh))
 			NETWORK::SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(networkId, true);
 		VEHICLE::SET_VEHICLE_IS_STOLEN(veh, is_stolen);

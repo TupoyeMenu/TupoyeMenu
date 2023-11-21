@@ -19,7 +19,7 @@ namespace big
 
 			if (level < 0 || level > 5)
 			{
-				ctx->report_error(std::format("Wanted level {} is invalid [0 - 5]", level));
+				ctx->report_error(std::format("{}: '{}' {} [0 - 5]", "Wanted Level", level, "Invalid Index"));
 				return std::nullopt;
 			}
 

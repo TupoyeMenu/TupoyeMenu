@@ -117,7 +117,7 @@ namespace big
 				(plyr->get_ped()->m_ped_task_flag & (uint32_t)ePedTask::TASK_DRIVING) &&
 				(player_vehicle->m_damage_bits & (uint32_t)eEntityProofs::GOD))
 			{
-				mode_str =+ "Vehicle God";
+				mode_str =+ "Vehicle God Mode";
 			}
 
 			if (!mode_str.empty())

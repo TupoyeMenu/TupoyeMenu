@@ -20,7 +20,7 @@
 #include "util/session.hpp"
 
 #if defined(ENABLE_LUA)
-#include "lua/lua_manager.hpp"
+	#include "lua/lua_manager.hpp"
 #endif // ENABLE_LUA
 
 #include <network/Network.hpp>
@@ -59,8 +59,8 @@ namespace big
 					g_notification_service->push("Player Left",
 					    std::format("{} freeing slot {} with Rockstar ID: {}",
 					        net_player_data->m_name,
-					            player->m_player_id,
-					            net_player_data->m_gamer_handle.m_rockstar_id));
+					        player->m_player_id,
+					        net_player_data->m_gamer_handle.m_rockstar_id));
 				}
 			}
 
@@ -76,7 +76,7 @@ namespace big
 				if (admin_rids.contains(net_player_data->m_gamer_handle.m_rockstar_id))
 				{
 					g_notification_service->push_warning("Potential Admin Found!",
-					    std::vformat("{} has been detected as admin", std::make_format_args(net_player_data->m_name)));
+					    std::format("{} has been detected as admin", net_player_data->m_name));
 
 					LOG(WARNING) << net_player_data->m_name << " (" << net_player_data->m_gamer_handle.m_rockstar_id << ") has been detected as an admin";
 
@@ -103,8 +103,8 @@ namespace big
 				g_notification_service->push("Player Joined",
 				    std::format("{} taking slot {} with Rockstar ID: {}",
 				        net_player_data->m_name,
-				            player->m_player_id,
-				            net_player_data->m_gamer_handle.m_rockstar_id));
+				        player->m_player_id,
+				        net_player_data->m_gamer_handle.m_rockstar_id));
 			}
 
 			auto id = player->m_player_id;
@@ -117,14 +117,17 @@ namespace big
 						if (auto entry = g_player_database_service->get_player_by_rockstar_id(
 						        plyr->get_net_data()->m_gamer_handle.m_rockstar_id))
 						{
-							plyr->is_modder         = entry->is_modder;
-							plyr->block_join        = entry->block_join;
-							plyr->block_join_reason = entry->block_join_reason;
+							plyr->is_trusted = entry->is_trusted;
+							if (!(plyr->is_friend() && g.session.trust_friends))
+							{
+								plyr->is_modder         = entry->is_modder;
+								plyr->block_join        = entry->block_join;
+								plyr->block_join_reason = entry->block_join_reason;
+							}
 
 							if (strcmp(plyr->get_name(), entry->name.data()))
 							{
-								g_notification_service->push("Players",
-								    std::format("{} changed their name to {}", entry->name, plyr->get_name()));
+								g_notification_service->push("Players", std::format("{} changed their name to {}", entry->name, plyr->get_name()));
 								entry->name = plyr->get_name();
 								g_player_database_service->save();
 							}
@@ -145,16 +148,16 @@ namespace big
 
 					if (g.session.lock_session && g_player_service->get_self()->is_host() && *g_pointers->m_gta.m_is_session_started)
 					{
-						if (plyr->is_friend() && g.session.allow_friends_into_locked_session)
+						if ((plyr->is_friend() && g.session.allow_friends_into_locked_session) || plyr->is_trusted)
 						{
-							g_notification_service->push_success("Lock Session",
-							    std::format("A friend with the name of {} has been allowed to join the locked session",
+							g_notification_service->push_success("Lobby Lock",
+							    std::format("A friend or trusted player with the name of {} has been allowed to join the locked session",
 							        plyr->get_net_data()->m_name));
 						}
 						else
 						{
 							dynamic_cast<player_command*>(command::get(RAGE_JOAAT("multikick")))->call(plyr, {});
-							g_notification_service->push_warning("Lock Session",
+							g_notification_service->push_warning("Lobby Lock",
 							    std::format("A player with the name of {} has been denied entry", plyr->get_net_data()->m_name));
 						}
 					}

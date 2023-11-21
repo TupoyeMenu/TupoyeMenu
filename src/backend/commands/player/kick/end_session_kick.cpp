@@ -21,7 +21,7 @@ namespace big
 				return;
 			if (!scripts::force_host(RAGE_JOAAT("freemode")))
 			{
-				g_notification_service->push_error("Kick", "Force script host failed!");
+				g_notification_service->push_error("End Session Kick", "Force script host failed!");
 				return;
 			}
 

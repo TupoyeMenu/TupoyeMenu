@@ -24,7 +24,9 @@ namespace big
 						}
 					}
 					else
-						g_notification_service->push_error("Weapons", "No entity found.");
+					{
+						g_notification_service->push_error("Custom Weapons", "No entity found.");
+					}
 				}
 			}
 		}

@@ -23,7 +23,7 @@ namespace big
 
 		components::button("Mors Mutual Fix All Vehicles", [] {
 			int amount_fixed = mobile::mors_mutual::fix_all();
-			g_notification_service->push("Mobile", std::format("{} vehicle{} been fixed.", amount_fixed, amount_fixed == 1 ? " has" : "s have"));
+			g_notification_service->push_success("Mobile", std::format("{} vehicle{} been fixed.", amount_fixed, amount_fixed == 1 ? " has" : "s have"));
 		});
 
 		ImGui::SeparatorText("CEO Abilities");
@@ -63,8 +63,10 @@ namespace big
 		components::command_button<"acidlab">();
 		components::command_button<"acidbike">();
 
-		ImGui::SeparatorText("Miscellaneous");
+		ImGui::SeparatorText("Misc");
 
 		components::command_button<"taxi">();
+
+		components::command_button<"gunvan">();
 	}
 }

@@ -16,5 +16,5 @@ namespace big
 		}
 	};
 
-	bring_personal_vehicle g_bring_personal_vehicle("bringpv", "Bring Personal Vehicle", "Teleports your PV near you", 0);
+	bring_personal_vehicle g_bring_personal_vehicle("bringpv", "Bring Personal Vehicle", "Teleports your personal vehicle near you.", 0);
 }

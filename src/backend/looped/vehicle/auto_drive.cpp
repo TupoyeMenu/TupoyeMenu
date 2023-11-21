@@ -29,7 +29,7 @@ namespace big
 		{
 			current_destination     = AutoDriveDestination::STOPPED;
 			changing_driving_styles = false;
-			g_notification_service->push_warning("Warning", "Please be in a car first then try again.");
+			g_notification_service->push_warning("Auto Drive", "No vehicle detected");
 		}
 		else if (current_driving_flag != driving_style_flags[g.vehicle.auto_drive_style] || current_speed != g.vehicle.auto_drive_speed)
 		{
@@ -77,11 +77,11 @@ namespace big
 
 				if (to_waypoint && !does_waypoint_exist)
 				{
-					g_notification_service->push_warning("Warning", "No Waypoint found please set one first.");
+					g_notification_service->push_warning("Auto Drive", "No waypoint found.");
 				}
 				else
 				{
-					g_notification_service->push_warning("Warning", "Auto Drive Stopped");
+					g_notification_service->push_warning("Auto Drive", "Auto Drive Stopped");
 				}
 
 				started = false;

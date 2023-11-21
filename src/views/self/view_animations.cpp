@@ -16,7 +16,7 @@ namespace big
 
 		if (ImGui::BeginPopupModal("##deletepedanimation", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove))
 		{
-			ImGui::Text(std::format("Are you sure you want to delete {}", deletion_ped_animation.name).data());
+			ImGui::Text("Are you sure you want to delete %s?", deletion_ped_animation.name);
 
 			ImGui::Spacing();
 
@@ -37,7 +37,7 @@ namespace big
 		}
 
 		ImGui::PushItemWidth(250);
-		components::input_text_with_hint("##dict", "Dict", g_ped_animation_service.current_animation.dict);
+		components::input_text_with_hint("##dict", "Dictionary", g_ped_animation_service.current_animation.dict);
 		components::options_modal(
 		    "Debug animations",
 		    [] {
@@ -45,7 +45,7 @@ namespace big
 		    },
 		    true,
 		    "List From Debug");
-		components::input_text_with_hint("##anim", "Anim", g_ped_animation_service.current_animation.anim);
+		components::input_text_with_hint("##anim", "Animation", g_ped_animation_service.current_animation.anim);
 
 		ImGui::SameLine();
 		components::button("Play", [] {
@@ -60,7 +60,7 @@ namespace big
 		{
 			ImGui::SliderFloat("Blend in", &g_ped_animation_service.current_animation.blendin, -5, 10);
 			ImGui::SliderFloat("Blend out", &g_ped_animation_service.current_animation.blendout, -5, 10);
-			ImGui::InputInt("Duration in ms", &g_ped_animation_service.current_animation.time_to_play);
+			ImGui::InputInt("Duration in milliseconds", &g_ped_animation_service.current_animation.time_to_play);
 			if (ImGui::IsItemHovered())
 				ImGui::SetTooltip("-1 will make the duration indefinite, assuming it is looped");
 			ImGui::PopItemWidth();
@@ -96,12 +96,12 @@ namespace big
 			ImGui::CheckboxFlags("Hold Last Frame", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::HOLD_LAST_FRAME));
 			ImGui::CheckboxFlags("Uninterruptable", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::NOT_INTERRUPTABLE));
 			ImGui::CheckboxFlags("Only Upperbody", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::UPPERBODY));
-			ImGui::CheckboxFlags("Secondary slot", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::SECONDARY));
+			ImGui::CheckboxFlags("Secondary", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::SECONDARY));
 			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Allow primary animations to run simultaniously, such as walking");
+				ImGui::SetTooltip("Allow primary animations to run simultaneously, such as walking.");
 			ImGui::CheckboxFlags("Realize Animation Orientation", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::REORIENT_WHEN_FINISHED));
 			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Use the final orientation achieved in the animation");
+				ImGui::SetTooltip("Use the final orientation achieved in the animation.");
 			ImGui::CheckboxFlags("Hide Weapon", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::HIDE_WEAPON));
 
 			ImGui::EndGroup();
@@ -111,15 +111,16 @@ namespace big
 			//Sync flags
 			ImGui::CheckboxFlags("Sync In", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TAG_SYNC_IN));
 			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Seamless transition into the animation, for example from walking");
+				ImGui::SetTooltip("Seamless transition into the animation, for example from walking.");
+
 			ImGui::CheckboxFlags("Sync Out", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TAG_SYNC_OUT));
 			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Seamless transition out of the animation, for example to continue walking");
+				ImGui::SetTooltip("Seamless transition out of the animation, for example to continue walking.");
 			ImGui::CheckboxFlags("Sync Continuous", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TAG_SYNC_CONTINUOUS));
 			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Seamless transition during the animation, especially usefull for upperbody animations");
+				ImGui::SetTooltip("Seamless transition during the animation, especially usefull for upperbody animations.");
 			ImGui::CheckboxFlags("Force Start", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::FORCE_START));
-			ImGui::CheckboxFlags("Disable Colission", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TURN_OFF_COLLISION));
+			ImGui::CheckboxFlags("Disable Collision", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TURN_OFF_COLLISION));
 			ImGui::CheckboxFlags("Override Physics", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::OVERRIDE_PHYSICS));
 			ImGui::CheckboxFlags("Ignore Gravity", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::IGNORE_GRAVITY));
 
@@ -128,35 +129,35 @@ namespace big
 			ImGui::TreePop();
 		}
 
-		ImGui::SeparatorText("Saving");
+		ImGui::SeparatorText("Save To File");
 
-		components::input_text_with_hint("Category", "Category", category);
-		components::input_text_with_hint("Name", "Name", g_ped_animation_service.current_animation.name);
+		components::input_text_with_hint("Category", "The category the animation will be saved under.", category);
+		components::input_text_with_hint("Name", "File Name", g_ped_animation_service.current_animation.name);
 
 		static auto save_response = [=]() -> bool {
 			if (!STREAMING::DOES_ANIM_DICT_EXIST(g_ped_animation_service.current_animation.dict.data()))
 			{
 				g_notification_service->push_warning("Animations",
-				    std::format("Dict with the name {} does not exist", g_ped_animation_service.current_animation.dict));
+				    std::format("Dictionary with the name {} does not exist.", g_ped_animation_service.current_animation.dict));
 				return false;
 			}
 
 			if (g_ped_animation_service.get_animation_by_name(g_ped_animation_service.current_animation.name))
 			{
 				g_notification_service->push_warning("Animations",
-				    std::format("Animation with the name {} already exists", g_ped_animation_service.current_animation.name));
+					std::format("Animation with the name {} already exists.", g_ped_animation_service.current_animation.name));
 				return false;
 			}
 
 			if (category.empty())
 			{
-				g_notification_service->push_warning("Animations", "Category can't be empty");
+				g_notification_service->push_warning("Animations", "Category cannot be empty.");
 				return false;
 			}
 
 			if (g_ped_animation_service.current_animation.anim.empty())
 			{
-				g_notification_service->push_warning("Animations", "Animation name can't be empty");
+				g_notification_service->push_warning("Animations", "Animation name cannot be empty.");
 				return false;
 			}
 
@@ -177,13 +178,14 @@ namespace big
 			g_ped_animation_service.fetch_saved_animations();
 		});
 
-		components::small_text("Double click to play\nShift click to delete");
+		components::small_text("Double click to play.");
+		components::small_text("Shift click to delete.");
 
 		ImGui::SameLine();
 
 		ImGui::Checkbox("Prompt Ambient", &g.self.prompt_ambient_animations);
 		if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Ambient animations will be prompted if you are close to one");
+				ImGui::SetTooltip("Ambient animations will be prompted if you are close to one.");
 
 		static std::string filter;
 
@@ -245,10 +247,10 @@ namespace big
 						if (p.name.length() > 25)
 							ImGui::Text(p.name.data());
 
-						ImGui::Text(std::format("Dict: {}\nAnim: {}", p.dict, p.anim).data());
+						ImGui::Text(std::format("{}: {}\n{}: {}", "Dictionary", p.dict, "Animation", p.anim).c_str());
 
 						if (p.ambient)
-							ImGui::BulletText("Ambient animation");
+							ImGui::BulletText("Ambient Animation");
 						ImGui::EndTooltip();
 					}
 				}

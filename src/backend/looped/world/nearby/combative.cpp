@@ -18,5 +18,5 @@ namespace big
 		}
 	};
 
-	combative g_combative("riotmode", "Riot Mode", "Make nearby peds attack each other", g.world.nearby.combative);
+	combative g_combative("riotmode", "Riot Mode", "Makes all nearby peds attack each other.", g.world.nearby.combative);
 }

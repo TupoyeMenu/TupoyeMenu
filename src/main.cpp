@@ -44,8 +44,10 @@
 #include "services/script_patcher/script_patcher_service.hpp"
 #include "services/tunables/tunables_service.hpp"
 #include "services/vehicle/xml_vehicles_service.hpp"
+#include "services/xml_maps/xml_map_service.hpp"
 #include "thread_pool.hpp"
 #include "version.hpp"
+
 
 BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 {
@@ -113,6 +115,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    auto tunables_service_instance          = std::make_unique<tunables_service>();
 			    auto script_connection_service_instance = std::make_unique<script_connection_service>();
 			    auto xml_vehicles_service_instance      = std::make_unique<xml_vehicles_service>();
+			    auto xml_maps_service_instance          = std::make_unique<xml_map_service>();
 			    LOG(INFO) << "Registered service instances...";
 
 			    g_script_mgr.add_script(std::make_unique<script>(&gui::script_func, "GUI", false));

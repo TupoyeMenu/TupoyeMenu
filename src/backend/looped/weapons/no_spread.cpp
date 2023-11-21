@@ -47,5 +47,5 @@ namespace big
 		}
 	};
 
-	no_spread g_no_spread("nospread", "No Spread", "Removes weapon spread when shooting", g.weapons.no_spread);
+	no_spread g_no_spread("nospread", "No Spread", "Bullets always hit at where the crosshair is centered.", g.weapons.no_spread);
 }

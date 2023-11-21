@@ -85,5 +85,5 @@ namespace big
 			session::join_type(args.shift<eSessionType>());
 		}
 	};
-	switch_session g_switch_session("joinsession", "Join Session", "Join a specific session type.", 1);
+	switch_session g_switch_session("joinsession", "Join Session", "Joins a new session of the specified type.", 1);
 }

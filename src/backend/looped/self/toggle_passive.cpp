@@ -19,7 +19,7 @@ namespace big
 			{
 				on_disable();
 				g.self.passive = false;
-				g_notification_service->push_warning("Disabled passive mode", "Disabled passive mode because you started mission / joined CEO/MC");
+				g_notification_service->push_warning("Passive Mode", "Disabled passive mode because you started mission or joined your company or motorcycle club.");
 				return;
 			}
 			*g_tunables_service->get_tunable<int*>(-29732167) = 0; // End Passive Time = 0s

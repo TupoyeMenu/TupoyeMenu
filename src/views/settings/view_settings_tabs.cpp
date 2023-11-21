@@ -22,7 +22,7 @@ namespace big
 			{
 				view::settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SETTINGS"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("Settings"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Hotkeys"))
@@ -37,7 +37,7 @@ namespace big
 			{
 				view::lua_scripts();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_LUA_SCRIPTS"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("Lua Scripts"));
 				ImGui::EndTabItem();
 			}
 #endif // ENABLE_LUA

@@ -30,6 +30,7 @@ namespace big
 
 		bool result = g_hooking->get_original<hooks::network_player_mgr_init>()(_this, a2, a3, a4);
 
+		g.session.trust_session = false;
 		g_player_service->player_join(_this->m_local_net_player);
 #if defined(ENABLE_LUA)
 		g_lua_manager->trigger_event<menu_event::PlayerMgrInit>();
@@ -41,12 +42,14 @@ namespace big
 	void hooks::network_player_mgr_shutdown(CNetworkPlayerMgr* _this)
 	{
 		g_player_service->do_cleanup();
+		self::spawned_vehicles.clear();
 
 		if (g.notifications.network_player_mgr_shutdown.log)
 			LOG(INFO) << "CNetworkPlayerMgr#shutdown got called, we're probably leaving our session.";
 		if (g.notifications.network_player_mgr_shutdown.notify)
 			g_notification_service->push("Network Player Manager", "Leaving session and cleaning up player data.");
 
+		g.session.trust_session = false;
 		g_hooking->get_original<hooks::network_player_mgr_shutdown>()(_this);
 #if defined(ENABLE_LUA)
 		g_lua_manager->trigger_event<menu_event::PlayerMgrShutdown>();
