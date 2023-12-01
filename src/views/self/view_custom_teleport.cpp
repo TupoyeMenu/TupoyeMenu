@@ -49,7 +49,7 @@ namespace big
 
 		if (ImGui::BeginPopupModal("##deletelocation", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove))
 		{
-			ImGui::Text("Are you sure you want to delete %s?", deletion_telelocation.name);
+			ImGui::Text("Are you sure you want to delete %s?", deletion_telelocation.name.c_str());
 
 			ImGui::Spacing();
 
@@ -194,8 +194,8 @@ namespace big
 					{
 						ImGui::BeginTooltip();
 						if (l.name.length() > 27)
-							ImGui::Text(l.name.data());
-						ImGui::Text(std::format("{}: {}", "Distance", get_distance_to_telelocation(l)).c_str());
+							ImGui::TextUnformatted(l.name.data());
+						ImGui::Text("%s: %f", "Distance", get_distance_to_telelocation(l));
 						ImGui::EndTooltip();
 					}
 				}

@@ -8,7 +8,6 @@
  * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
 #include "logger.hpp"
 
 #include "memory/module.hpp"
@@ -154,7 +153,7 @@ namespace big
 
 	const char* get_level_string(const eLogLevel level)
 	{
-		constexpr std::array<const char*, 4> levelStrings = {{{"DEBUG"}, {"INFO"}, {"WARN"}, {"FATAL"}}};
+		constexpr std::array<const char*, 4> levelStrings = {{"DEBUG", "INFO", "WARN", "FATAL"}};
 
 		return levelStrings[level];
 	}

@@ -234,11 +234,11 @@ namespace big
 			}
 		}
 
-		ImGui::Text("Ped Model");
+		ImGui::TextUnformatted("Ped Model");
 		{
 			ImGui::BeginGroup();
 			{
-				ImGui::Text("Ped Type");
+				ImGui::TextUnformatted("Ped Type");
 
 				ImGui::SetNextItemWidth(160.f);
 				if (ImGui::BeginCombo("##ped_type",
@@ -281,7 +281,7 @@ namespace big
 			{
 				ImGui::BeginGroup();
 				{
-					ImGui::Text("Player");
+					ImGui::TextUnformatted("Player");
 
 					ImGui::SetNextItemWidth(240.f);
 					if (ImGui::BeginCombo("##ped_player",
@@ -357,7 +357,7 @@ namespace big
 			{
 				ImGui::BeginGroup();
 				{
-					ImGui::Text("Model Name");
+					ImGui::TextUnformatted("Model Name");
 
 					ImGui::SetNextItemWidth(240.f);
 					components::input_text_with_hint("##ped_model_name", "Model Name", ped_model_buf, sizeof(ped_model_buf), ImGuiInputTextFlags_EnterReturnsTrue, [] {
@@ -440,7 +440,7 @@ namespace big
 		{
 			ImGui::BeginGroup();
 			{
-				ImGui::Text("Weapon Type");
+				ImGui::TextUnformatted("Weapon Type");
 
 				ImGui::SetNextItemWidth(160.f);
 				if (ImGui::BeginCombo("##ped_weapon_type",
@@ -491,7 +491,7 @@ namespace big
 
 			ImGui::BeginGroup();
 			{
-				ImGui::Text("Weapon");
+				ImGui::TextUnformatted("Weapon");
 
 				ImGui::SetNextItemWidth(240.f);
 				if (ImGui::BeginCombo("##ped_weapon",
@@ -599,7 +599,7 @@ namespace big
 			}
 		}
 		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("Shows a render of what you have highlighted in front of you.");
+			ImGui::SetTooltip("%s", "Shows a render of what you have highlighted in front of you.");
 
 		ImGui::Checkbox("Invincible", &g.world.spawn_ped.spawn_invincible);
 		ImGui::Checkbox("Invisible", &g.world.spawn_ped.spawn_invisible);
@@ -667,7 +667,7 @@ namespace big
 		});
 
 		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("This WILL break freemode missions and jobs!");
+			ImGui::SetTooltip("%s", "This WILL break freemode missions and jobs!");
 
 		if (g.spoofing.spoof_player_model)
 		{

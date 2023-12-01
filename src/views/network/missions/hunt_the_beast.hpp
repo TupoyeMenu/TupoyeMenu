@@ -8,7 +8,7 @@
 
 namespace big
 {
-	int get_land_mark_beast_is_closest_to(player_ptr player, script_local land_mark_list, int num_landmarks)
+	inline int get_land_mark_beast_is_closest_to(player_ptr player, script_local land_mark_list, int num_landmarks)
 	{
 		if (!player->get_ped() || !player->get_ped()->m_navigation)
 			return -1;
@@ -40,7 +40,7 @@ namespace big
 			    *script_local(hunt_the_beast_script_thread, scr_locals::am_hunt_the_beast::broadcast_idx).at(1).at(6).as<uint32_t*>();
 			if (auto beast = g_player_service->get_by_id(beast_player_index))
 			{
-				ImGui::Text(std::format("{} {}", g_player_service->get_by_id(beast_player_index).get()->get_name(), "is the beast.").c_str());
+				ImGui::Text("%s %s", g_player_service->get_by_id(beast_player_index).get()->get_name(), "is the beast.");
 				ImGui::SameLine();
 				components::button("Set as selected", [beast] {
 					g_player_service->set_selected(beast);
@@ -73,7 +73,7 @@ namespace big
 			}
 			else
 			{
-				ImGui::Text("Hunt the beast event is active...");
+				ImGui::TextUnformatted("Hunt the beast event is active...");
 			}
 		}
 	}

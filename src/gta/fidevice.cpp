@@ -16,7 +16,7 @@
 namespace rage
 {
 #define PURECALL()                                         \
-	LOG(FATAL) << "pure fiDevice call (" __FUNCTION__ ")"; \
+	LOG(FATAL) << "pure fiDevice call (" << __FUNCTION__ << ")"; \
 	return 0
 
 	fiDeviceImplemented::fiDeviceImplemented()
@@ -25,7 +25,7 @@ namespace rage
 
 	void fiDeviceImplemented::Destroy()
 	{
-		LOG(FATAL) << "pure fiDevice call (" __FUNCTION__ ")";
+		LOG(FATAL) << "pure fiDevice call (" << __FUNCTION__ << ")";
 	}
 
 	uint64_t fiDeviceImplemented::Open(const char* fileName, bool)

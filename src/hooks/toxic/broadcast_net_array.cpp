@@ -15,6 +15,7 @@
 #include "services/players/player_service.hpp"
 #include "util/scripts.hpp"
 #include "util/system.hpp"
+#include "memory/byte_patch.hpp"
 
 #include <script/globals/GlobalPlayerBD.hpp>
 

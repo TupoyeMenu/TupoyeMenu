@@ -15,9 +15,9 @@
 #include "hooking.hpp"
 #include "script/scriptIdBase.hpp"
 #include "util/math.hpp"
+#include "util/mobile.hpp"
 #include "util/notify.hpp"
 #include "util/toxic.hpp"
-#include "util/mobile.hpp"
 
 #include <base/CObject.hpp>
 #include <network/CNetGamePlayer.hpp>
@@ -342,9 +342,10 @@ namespace big
 			&& player->m_player_info->m_ped && player->m_player_info->m_ped->m_net_object
 			&& ownerNetId != player->m_player_info->m_ped->m_net_object->m_object_id && !offset_object)
 		{
-			// TODO: Add infraction.
-			// TODO: Fix crash here.
-			//g.reactions.blame_explode.process(g_player_service->get_by_id(player->m_player_id), g_player_service->get_by_rid(reinterpret_cast<CPed*>(entity)->m_player_info->m_net_player_data.m_gamer_handle.m_rockstar_id));
+			g_notification_service->push_error("Warning!",
+				std::format("{} blamed {} for explosion", player->get_name(), reinterpret_cast<CPed*>(entity)->m_player_info->m_net_player_data.m_name));
+			// too many false positives, disabling it
+			//session::add_infraction(g_player_service->get_by_id(player->m_player_id), Infraction::BLAME_EXPLOSION_DETECTED);
 			return;
 		}
 
@@ -368,7 +369,7 @@ namespace big
 			return;
 		}
 
-		const auto event_name = *(char**)((DWORD64)event_manager + 8i64 * event_id + 243376);
+		const auto event_name = *(char**)((DWORD64)event_manager + 8 * event_id + 243376);
 		if (event_name == nullptr || source_player == nullptr || source_player->m_player_id < 0 || source_player->m_player_id >= 32)
 		{
 			g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
@@ -521,12 +522,12 @@ namespace big
 			{
 				Vehicle personal_vehicle = mobile::mechanic::get_personal_vehicle();
 				Vehicle veh              = g_pointers->m_gta.m_ptr_to_handle(g_local_player->m_vehicle);
-				if (!NETWORK::NETWORK_IS_ACTIVITY_SESSION() //If we're in Freemode.
-				    || personal_vehicle == veh              //Or we're in our personal vehicle.
+				if (!NETWORK::NETWORK_IS_ACTIVITY_SESSION()     //If we're in Freemode.
+				    || personal_vehicle == veh                  //Or we're in our personal vehicle.
 				    || self::spawned_vehicles.contains(net_id)) // Or it's a vehicle we spawned.
 				{
 					if (g.protections.request_control)
-						g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+						g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset); // Tell them to get bent.
 
 					g.reactions.request_control_event.process(plyr);
 					return;
@@ -649,7 +650,6 @@ namespace big
 					g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 					return;
 				}
-				
 				sync_type = object_type;
 			}
 

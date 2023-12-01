@@ -37,7 +37,7 @@ namespace big
 
 	void view::settings()
 	{
-		ImGui::Text("Misc");
+		ImGui::TextUnformatted("Misc");
 		ImGui::Checkbox("Enable Dev DLC", &g.settings.dev_dlc);
 		ImGui::Checkbox("Enable Cable Cars", &g.tunables.cable_cars);
 

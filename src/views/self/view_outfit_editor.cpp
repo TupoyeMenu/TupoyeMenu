@@ -247,7 +247,7 @@ namespace big
 		}
 		ImGui::SameLine();
 		ImGui::Checkbox("Disable During Missions?", &g.self.persist_outfits_mis);
-		ImGui::Text(std::format("Current Persisted Outfit: {}", g.self.persist_outfit).c_str());
+		ImGui::Text("%s: %s", "Current Persisted Outfit", g.self.persist_outfit.c_str());
 		ImGui::EndGroup();
 	}
 }

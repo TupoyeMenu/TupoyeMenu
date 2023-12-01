@@ -19,7 +19,7 @@ namespace big
 {
 	void view::mobile()
 	{
-		ImGui::Text("Mors Mutual");
+		ImGui::TextUnformatted("Mors Mutual");
 
 		components::button("Mors Mutual Fix All Vehicles", [] {
 			int amount_fixed = mobile::mors_mutual::fix_all();

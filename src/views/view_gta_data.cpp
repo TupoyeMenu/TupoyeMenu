@@ -35,7 +35,7 @@ namespace big
 			{
 			case eGtaDataUpdateState::NEEDS_UPDATE:
 			{
-				ImGui::Text("TupoyeMenu requires a rebuild of the game cache. This may take up to one minute to generate.");
+				ImGui::TextUnformatted("TupoyeMenu requires a rebuild of the game cache. This may take up to one minute to generate.");
 
 				if (ImGui::Button("Update Cache"))
 				{
@@ -46,13 +46,13 @@ namespace big
 			}
 			case eGtaDataUpdateState::WAITING_FOR_SINGLE_PLAYER:
 			{
-				ImGui::Text("Waiting for single player to be loaded...");
+				ImGui::TextUnformatted("Waiting for single player to be loaded...");
 
 				break;
 			}
 			case eGtaDataUpdateState::UPDATING:
 			{
-				ImGui::Text("Updating cache, please wait...");
+				ImGui::TextUnformatted("Updating cache, please wait...");
 
 				break;
 			}

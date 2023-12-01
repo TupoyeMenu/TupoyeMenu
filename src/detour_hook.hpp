@@ -36,7 +36,7 @@ namespace big
 		template<typename T>
 		T get_original()
 		{
-			return static_cast<T>(m_original);
+			return reinterpret_cast<T>(m_original);
 		}
 
 		void fix_hook_address();

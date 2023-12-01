@@ -119,7 +119,7 @@ namespace big
 	{
 		if (ImGui::BeginTabItem("Stat"))
 		{
-			ImGui::Text("Stat: prefix with $ for string ($MPX_CHAR_SET_RP_GIFT_ADMIN)");
+			ImGui::TextUnformatted("Stat: prefix with $ for string ($MPX_CHAR_SET_RP_GIFT_ADMIN)");
 
 			enum Mode
 			{
@@ -284,8 +284,8 @@ namespace big
 			break;
 			case IMPORT:
 			{
-				ImGui::Text("0:Int\n1:Bool\n2:Float\n3:Increment\n4:Date\n5:String\n6:Label\n7:User Id");
-				ImGui::Text("Example:\n$MPX_CHAR_NAME\n5:name\n$MPX_DEFAULT_STATS_SET\n1:0");
+				ImGui::TextUnformatted("0:Int\n1:Bool\n2:Float\n3:Increment\n4:Date\n5:String\n6:Label\n7:User Id");
+				ImGui::TextUnformatted("Example:\n$MPX_CHAR_NAME\n5:name\n$MPX_DEFAULT_STATS_SET\n1:0");
 				components::button("Import From Clipboard", [] {
 					std::string clipboard_text     = ImGui::GetClipboardText();
 					std::vector<std::string> lines;
@@ -332,7 +332,7 @@ namespace big
 	{
 		if (ImGui::BeginTabItem("Packed Stat"))
 		{
-			ImGui::Text("Index: enter two numbers to represent a range (31786 32786)");
+			ImGui::TextUnformatted("Index: enter two numbers to represent a range (31786 32786)");
 
 			enum Mode
 			{
@@ -383,8 +383,8 @@ namespace big
 			break;
 			case IMPORT:
 			{
-				ImGui::Text("0:Int\n1:Bool");
-				ImGui::Text("Example:\n31786\n0:123\n31786 32786\n1:1");
+				ImGui::TextUnformatted("0:Int\n1:Bool");
+				ImGui::TextUnformatted("Example:\n31786\n0:123\n31786 32786\n1:1");
 				components::button("Import From Clipboard", [] {
 					std::string clipboard_text = ImGui::GetClipboardText();
 					std::vector<std::string> lines;

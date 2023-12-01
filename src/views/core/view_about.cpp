@@ -46,7 +46,7 @@ If you still want to do it here is my XMR address:
 			static char xmr_address[96] = "8Bma7KYCG4xPWibfHNZ7sYHYjN8jzDV165qqUPfpbELVC9dTDZuJFHSd21RbGgB8vKHnHZWwQ2zmPfWzZ8JMujYzLGxn1vm";
             components::markdown(about_text);
 
-			ImGui::Text(xmr_address);
+			ImGui::TextUnformatted(xmr_address);
 
             if (ImGui::Button("Copy"))
 				ImGui::SetClipboardText(xmr_address);

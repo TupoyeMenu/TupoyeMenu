@@ -116,14 +116,14 @@ namespace big
 			}
 			ImGui::Combo("State", (int*)&selected_thread->m_context.m_state, "RUNNING\0WAITING\0KILLED\0PAUSED\0STATE_4");
 
-			ImGui::Text("Script Pointer: ");
+			ImGui::TextUnformatted("Script Pointer: ");
 			ImGui::SameLine();
 			if (ImGui::Button(std::format("0x{:X}", (DWORD64)selected_thread).c_str()))
 				ImGui::SetClipboardText(std::format("0x{:X}", (DWORD64)selected_thread).c_str());
 
 			ImGui::Text("m_safe_for_network_game: %s", selected_thread->m_safe_for_network_game ? "Yes" : "No");
 			ImGui::Text("m_can_be_paused: %s", selected_thread->m_can_be_paused ? "Yes" : "No");
-			ImGui::Text("Stack Pointer: ");
+			ImGui::TextUnformatted("Stack Pointer: ");
 			ImGui::SameLine();
 			if (ImGui::Button(std::format("0x{:X}", (DWORD64)selected_thread->m_stack).c_str()))
 				ImGui::SetClipboardText(std::format("0x{:X}", (DWORD64)selected_thread->m_stack).c_str());

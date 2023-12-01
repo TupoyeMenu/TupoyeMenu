@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 
+# Crosscompiling
+include(scripts/crosscompile.cmake)
+
 project(TupoyeMenu CXX ASM_MASM)
 
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
@@ -15,8 +18,13 @@ include(scripts/pugixml.cmake)
 include(scripts/json.cmake)
 include(scripts/zydis.cmake)
 include(scripts/lua.cmake)
-include(scripts/imgui.cmake)
+
+if (NOT MINGW)
+    include(scripts/cpr.cmake) 
+endif()
+
 message("\nFetching custom modules")
+include(scripts/imgui.cmake)
 include(scripts/gtav-classes.cmake)
 
 # Build options
@@ -38,11 +46,11 @@ if(NOT ENABLE_LUA)
 endif()
 
 if (MSVC)
-  add_compile_options(/bigobj)
-  add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
-  add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
+    add_compile_options(/bigobj)
+    add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
+    add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 else ()
-  add_compile_options(-Wa,-mbig-obj)
+    add_compile_options(-Wa,-mbig-obj)
 endif ()
 
 add_library(TupoyeMenu MODULE "${SRC_MAIN}")
@@ -59,16 +67,20 @@ target_include_directories(TupoyeMenu PRIVATE
     "${imgui_SOURCE_DIR}"
 )
 
+
 target_precompile_headers(TupoyeMenu PRIVATE "${SRC_DIR}/common.hpp")
-target_link_libraries(TupoyeMenu PRIVATE pugixml minhook AsyncLogger dbghelp imgui Zydis)
+target_link_libraries(TupoyeMenu PRIVATE pugixml minhook AsyncLogger dbghelp imgui Zydis lua_static d3dcompiler dwmapi winmm psapi)
 
 # Actually use build options
 include(scripts/build_options_impl.cmake)
 
 # Warnings as errors
-set_property(TARGET TupoyeMenu PROPERTY COMPILE_WARNING_AS_ERROR ON)
+if(NOT CROSSCOMPILE)
+    set_property(TARGET TupoyeMenu PROPERTY COMPILE_WARNING_AS_ERROR ON)
+endif()
 
-add_compile_definitions(TupoyeMenu 
+
+add_compile_definitions(TupoyeMenu
     "_CRT_SECURE_NO_WARNINGS"
     "NOMINMAX"
     "WIN32_LEAN_AND_MEAN"

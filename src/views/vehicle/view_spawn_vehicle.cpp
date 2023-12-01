@@ -242,7 +242,7 @@ namespace big
 			}
 			else
 			{
-				ImGui::Text("No vehicles in registry.");
+				ImGui::TextUnformatted("No vehicles in registry.");
 			}
 			ImGui::EndListBox();
 		}

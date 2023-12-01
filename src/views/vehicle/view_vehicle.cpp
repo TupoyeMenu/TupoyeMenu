@@ -118,7 +118,7 @@ namespace big
 
 			ImGui::BeginDisabled(!g.vehicle.speedo_meter.enabled);
 
-			ImGui::Text("Position (X, Y)");
+			ImGui::TextUnformatted("Position (X, Y)");
 			float pos[2] = {g.vehicle.speedo_meter.x, g.vehicle.speedo_meter.y};
 
 			if (ImGui::SliderFloat2("###speedo_pos", pos, .001f, .999f, "%.3f"))
@@ -131,7 +131,7 @@ namespace big
 			ImGui::SameLine();
 			components::command_checkbox<"speedometergears">();
 
-			ImGui::Text("Speed Unit");
+			ImGui::TextUnformatted("Speed Unit");
 			{
 				ImGui::RadioButton(speed_unit_strings[(int)SpeedUnit::KMPH].c_str(), (int*)&g.vehicle.speed_unit, (int)SpeedUnit::KMPH);
 				ImGui::SameLine();

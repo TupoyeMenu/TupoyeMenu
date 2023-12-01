@@ -32,7 +32,7 @@ namespace big
 		}
 
 		ImGui::PushItemWidth(250);
-		ImGui::Text("Saved Jobs");
+		ImGui::TextUnformatted("Saved Jobs");
 
 		if (ImGui::BeginListBox("##empty", ImVec2(200, 200)))
 		{

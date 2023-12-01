@@ -17,7 +17,7 @@ namespace big
 {
 	void view::gui_settings()
 	{
-		ImGui::Text("UI Scale");
+		ImGui::TextUnformatted("UI Scale");
 		if (ImGui::SliderFloat("##gui-scale", &g.window.gui_scale, 0.75f, 1.5f, "%.2f"))
 			g_renderer->rescale(g.window.gui_scale);
 		ImGui::SameLine();
@@ -56,7 +56,7 @@ namespace big
 
 		ImGui::BeginGroup();
 
-		ImGui::Text("Position");
+		ImGui::TextUnformatted("Position");
 		if (ImGui::Button("Custom"))
 			g.window.ingame_overlay.corner = -1;
 		if (ImGui::Button("Top-left"))

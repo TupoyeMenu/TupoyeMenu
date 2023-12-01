@@ -39,7 +39,7 @@ namespace big
 	{
 		mission_found = false;
 
-		ImGui::Text("Event Starter");
+		ImGui::TextUnformatted("Event Starter");
 
 		ImGui::BeginGroup();
 		components::button("Hot Target", [] {
@@ -145,7 +145,7 @@ namespace big
 
 		if (!mission_found)
 		{
-			ImGui::Text("No active mission");
+			ImGui::TextUnformatted("No active mission");
 		}
 
 		ImGui::SeparatorText("MiniGames");

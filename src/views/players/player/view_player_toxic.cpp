@@ -23,7 +23,7 @@ namespace big
 	{
 		std::string title = std::format("Player Toxic Options: {}", g_player_service->get_selected()->get_name());
 
-		ImGui::Text(title.c_str());
+		ImGui::TextUnformatted(title.c_str());
 
 		if (ImGui::TreeNode("Ped"))
 		{

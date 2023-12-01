@@ -88,9 +88,9 @@ namespace big
 			ImGui::Separator();
 
 			ImGui::BeginGroup();
-			ImGui::Text("No Clip Movement Speed Multiplier While Aiming");
+			ImGui::TextUnformatted("No Clip Movement Speed Multiplier While Aiming");
 			ImGui::SliderFloat("##noclipaimspeedmult", &g.self.noclip_aim_speed_multiplier, 0.1f, 1.0f);
-			ImGui::Text("No Clip Movement Speed Multiplier");
+			ImGui::TextUnformatted("No Clip Movement Speed Multiplier");
 			ImGui::SliderFloat("##noclipspeedmult", &g.self.noclip_speed_multiplier, 1.f, 100.f);
 			ImGui::EndGroup();
 		});
@@ -162,7 +162,7 @@ namespace big
 			ImGui::Checkbox("Force Wanted Level", &g.self.force_wanted_level);
 			ImGui::SameLine();
 			components::help_marker("Keep a specific wanted level active on yourself");
-			ImGui::Text("Wanted Level");
+			ImGui::TextUnformatted("Wanted Level");
 			if (ImGui::SliderInt("###wanted_level", &g.self.wanted_level, 0, 5) && !g.self.force_wanted_level && g_local_player != nullptr)
 			{
 				g_local_player->m_player_info->m_wanted_level = g.self.wanted_level;

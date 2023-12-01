@@ -74,7 +74,7 @@ namespace big
 			}
 
 			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip(player_database_service::get_session_type_str(player->session_type));
+				ImGui::SetTooltip("%s", player_database_service::get_session_type_str(player->session_type));
 
 			ImGui::PopID();
 		}
@@ -93,28 +93,28 @@ namespace big
 				std::string lower_search = search;
 				std::transform(lower_search.begin(), lower_search.end(), lower_search.begin(), tolower);
 
-				for (auto& player : item_arr | std::ranges::views::values)
+				for (auto& player : item_arr)
 				{
-					if (player_database_service::is_joinable_session(player->session_type))
-						draw_player_db_entry(player, lower_search);
+					if (player_database_service::is_joinable_session(player.second->session_type))
+						draw_player_db_entry(player.second, lower_search);
 				}
 
-				for (auto& player : item_arr | std::ranges::views::values)
+				for (auto& player : item_arr)
 				{
-					if (!player_database_service::is_joinable_session(player->session_type) && player->session_type != GSType::Invalid
-					    && player->session_type != GSType::Unknown)
-						draw_player_db_entry(player, lower_search);
+					if (!player_database_service::is_joinable_session(player.second->session_type) && player.second->session_type != GSType::Invalid
+					    && player.second->session_type != GSType::Unknown)
+						draw_player_db_entry(player.second, lower_search);
 				}
 
-				for (auto& player : item_arr | std::ranges::views::values)
+				for (auto& player : item_arr)
 				{
-					if (player->session_type == GSType::Invalid || player->session_type == GSType::Unknown)
-						draw_player_db_entry(player, lower_search);
+					if (player.second->session_type == GSType::Invalid || player.second->session_type == GSType::Unknown)
+						draw_player_db_entry(player.second, lower_search);
 				}
 			}
 			else
 			{
-				ImGui::Text("No stored players");
+				ImGui::TextUnformatted("No stored players");
 			}
 
 			ImGui::EndListBox();
@@ -188,11 +188,11 @@ namespace big
 
 				if (!current_player->infractions.empty())
 				{
-					ImGui::Text("Infractions:");
+					ImGui::TextUnformatted("Infractions:");
 
 					for (auto& infraction : current_player->infractions)
 					{
-						ImGui::BulletText(current_player->get_infraction_description(infraction));
+						ImGui::BulletText("%s", current_player->get_infraction_description(infraction));
 					}
 				}
 
@@ -228,18 +228,18 @@ namespace big
 					session::add_friend_by_rockstar_id(current_player->rockstar_id);
 				});
 
-				ImGui::Text("Session Type: %s", player_database_service::get_session_type_str(selected->session_type));
+				ImGui::Text("%s: %s", "Session Type", player_database_service::get_session_type_str(selected->session_type));
 
 				if (selected->session_type != GSType::Invalid && selected->session_type != GSType::Unknown)
 				{
-					ImGui::Text(std::format("{}: {}", "Is Host Of Session", selected->is_host_of_session ? "Yes" : "No").c_str());
-					ImGui::Text(std::format("{}: {}", "Is Spectating", selected->is_spectating ? "Yes" : "No").c_str());
-					ImGui::Text(std::format("{}: {}", "In Job Lobby", selected->transition_session_id != -1 ? "Yes" : "No").c_str());
-					ImGui::Text(std::format("{}: {}", "Is Host Of Job Lobby", selected->is_host_of_transition_session ? "Yes" : "No").c_str());
-					ImGui::Text(std::format("{}: {}", "Current Mission Type", player_database_service::get_game_mode_str(selected->game_mode)).c_str());
+					ImGui::Text("%s: %s", "Is Host Of Session", selected->is_host_of_session ? "Yes" : "No");
+					ImGui::Text("%s: %s", "Is Spectating", selected->is_spectating ? "Yes" : "No");
+					ImGui::Text("%s: %s", "In Job Lobby", selected->transition_session_id != -1 ? "Yes" : "No");
+					ImGui::Text("%s: %s", "Is Host Of Job Lobby", selected->is_host_of_transition_session ? "Yes" : "No");
+					ImGui::Text("%s: %s", "Current Mission Type", player_database_service::get_game_mode_str(selected->game_mode));
 					if (selected->game_mode != GameMode::None && player_database_service::can_fetch_name(selected->game_mode))
 					{
-						ImGui::Text("Current Mission Type", selected->game_mode_name.c_str());
+						ImGui::Text("Current Mission Type: %s", selected->game_mode_name.c_str());
 						if ((selected->game_mode_name == "Unknown" || selected->game_mode_name.empty())
 						    && !selected->game_mode_id.empty())
 						{
@@ -282,7 +282,7 @@ namespace big
 
 		if (ImGui::BeginPopupModal("##removeall"))
 		{
-			ImGui::Text("Are you sure?");
+			ImGui::TextUnformatted("Are you sure?");
 
 			if (ImGui::Button("Yes"))
 			{
@@ -334,10 +334,12 @@ namespace big
 		components::input_text("Name", new_name, sizeof(new_name));
 		ImGui::InputScalar("Rockstar ID", ImGuiDataType_S64, &new_rockstar_id);
 
+#ifndef __clang__ // ! FIXME What?
 		if (ImGui::Button("Add"))
 		{
 			current_player = g_player_database_service->add_player(new_rockstar_id, new_name);
 			g_player_database_service->save();
 		}
+#endif
 	}
 }

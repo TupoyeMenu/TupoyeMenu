@@ -18,7 +18,7 @@ namespace big
 	void view::view_player_troll()
 	{
 		std::string title = std::format("Player Troll Options: {}", g_player_service->get_selected()->get_name());
-		ImGui::Text(title.c_str());
+		ImGui::TextUnformatted(title.c_str());
 
 		components::player_command_button<"playertp">(g_player_service->get_selected());
 		ImGui::SameLine();

@@ -1,5 +1,5 @@
 /**
- * @file script.cpp
+ * @file script.hpp
  * 
  * @copyright GNU General Public License Version 2.
  * This file is part of YimMenu.
@@ -8,10 +8,7 @@
  * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
 #include "script.hpp"
-
-#include "common.hpp"
 
 namespace big
 {

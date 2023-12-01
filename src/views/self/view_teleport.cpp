@@ -21,7 +21,7 @@ namespace big
 {
 	void view::teleport()
 	{
-		ImGui::Text("Blips:");
+		ImGui::TextUnformatted("Blips:");
 
 		components::command_button<"waypointtp">({}, "Waypoint");
 		ImGui::SameLine();
@@ -165,7 +165,7 @@ namespace big
 		ImGui::Spacing();
 		components::small_text("IPL Information");
 
-		ImGui::Text("IPL Count %d", ipls[current_select].ipl_names.size());
+		ImGui::Text("IPL Count %zu", ipls[current_select].ipl_names.size());
 		ImGui::Text("Position X: %f | Y: %f | Z: %f", ipls[current_select].location.x, ipls[current_select].location.y, ipls[current_select].location.z);
 	}
 }

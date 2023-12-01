@@ -27,16 +27,16 @@ namespace memory
 		void remove() const;
 
 		template<typename TAddr>
-		static const std::unique_ptr<byte_patch>& make(TAddr address, std::remove_pointer_t<std::remove_reference_t<TAddr>> value)
+		static const std::shared_ptr<byte_patch>& make(TAddr address, std::remove_pointer_t<std::remove_reference_t<TAddr>> value)
 		{
-			return m_patches.emplace_back(std::unique_ptr<byte_patch>(new byte_patch(address, value)));
+			return m_patches.emplace_back(std::shared_ptr<byte_patch>(new byte_patch(address, value)));
 		}
 
 		template<typename TAddr, typename T>
-		    requires SpanCompatibleType<T>
-		static const std::unique_ptr<byte_patch>& make(TAddr address, T span_compatible)
+		requires SpanCompatibleType<T>
+		static const std::shared_ptr<byte_patch>& make(TAddr address, T span_compatible)
 		{
-			return m_patches.emplace_back(std::unique_ptr<byte_patch>(new byte_patch(address, std::span{span_compatible})));
+			return m_patches.emplace_back(std::shared_ptr<byte_patch>(new byte_patch(address, std::span{span_compatible})));
 		}
 
 		static void restore_all();
@@ -68,9 +68,7 @@ namespace memory
 			for (int i = 0; i < m_size; i++)
 				m_value[i] = span[i];
 		}
-
-	protected:
-		static inline std::vector<std::unique_ptr<byte_patch>> m_patches;
+		static inline std::vector<std::shared_ptr<byte_patch>> m_patches;
 
 	private:
 		void* m_address;
@@ -79,6 +77,6 @@ namespace memory
 		std::size_t m_size;
 		DWORD m_old_protect;
 
-		friend bool operator==(const std::unique_ptr<byte_patch>& a, const byte_patch* b);
+		friend bool operator==(const std::shared_ptr<byte_patch>& a, const byte_patch* b);
 	};
 }

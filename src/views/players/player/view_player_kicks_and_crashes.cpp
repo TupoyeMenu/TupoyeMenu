@@ -22,13 +22,13 @@ namespace big
 	void view::view_player_kicks_and_crashes()
 	{
 		std::string title = std::format("Player Kick Options: {}", g_player_service->get_selected()->get_name());
-		ImGui::Text(title.c_str());
+		ImGui::TextUnformatted(title.c_str());
 		auto const is_session_host = [] {
 			return gta_util::get_network()->m_game_session_ptr->is_host();
 		};
 
 		if (!g_player_service->get_self()->is_host())
-				ImGui::Text("Host and breakup kick require session host");
+				ImGui::TextUnformatted("Host and breakup kick require session host");
 
 		ImGui::BeginDisabled(!g_player_service->get_self()->is_host());
 

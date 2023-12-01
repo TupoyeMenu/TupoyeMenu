@@ -16,7 +16,7 @@ namespace big
 
 		if (ImGui::BeginPopupModal("##deletepedanimation", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove))
 		{
-			ImGui::Text("Are you sure you want to delete %s?", deletion_ped_animation.name);
+			ImGui::Text("Are you sure you want to delete %s?", deletion_ped_animation.name.c_str());
 
 			ImGui::Spacing();
 
@@ -61,13 +61,11 @@ namespace big
 			ImGui::SliderFloat("Blend in", &g_ped_animation_service.current_animation.blendin, -5, 10);
 			ImGui::SliderFloat("Blend out", &g_ped_animation_service.current_animation.blendout, -5, 10);
 			ImGui::InputInt("Duration in milliseconds", &g_ped_animation_service.current_animation.time_to_play);
-			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("-1 will make the duration indefinite, assuming it is looped");
+			components::help_marker("-1 will make the duration indefinite, assuming it is looped");
 			ImGui::PopItemWidth();
 
 			ImGui::Checkbox("Ambient", &g_ped_animation_service.current_animation.ambient);
-			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Current location and rotation will be saved and used");
+			components::help_marker("Current location and rotation will be saved and used");
 
 			if (g_ped_animation_service.current_animation.ambient)
 			{
@@ -97,11 +95,9 @@ namespace big
 			ImGui::CheckboxFlags("Uninterruptable", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::NOT_INTERRUPTABLE));
 			ImGui::CheckboxFlags("Only Upperbody", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::UPPERBODY));
 			ImGui::CheckboxFlags("Secondary", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::SECONDARY));
-			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Allow primary animations to run simultaneously, such as walking.");
+			components::help_marker("Allow primary animations to run simultaneously, such as walking.");
 			ImGui::CheckboxFlags("Realize Animation Orientation", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::REORIENT_WHEN_FINISHED));
-			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Use the final orientation achieved in the animation.");
+			components::help_marker("Use the final orientation achieved in the animation.");
 			ImGui::CheckboxFlags("Hide Weapon", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::HIDE_WEAPON));
 
 			ImGui::EndGroup();
@@ -110,15 +106,12 @@ namespace big
 
 			//Sync flags
 			ImGui::CheckboxFlags("Sync In", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TAG_SYNC_IN));
-			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Seamless transition into the animation, for example from walking.");
+			components::help_marker("Seamless transition into the animation, for example from walking.");
 
 			ImGui::CheckboxFlags("Sync Out", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TAG_SYNC_OUT));
-			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Seamless transition out of the animation, for example to continue walking.");
+			components::help_marker("Seamless transition out of the animation, for example to continue walking.");
 			ImGui::CheckboxFlags("Sync Continuous", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TAG_SYNC_CONTINUOUS));
-			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Seamless transition during the animation, especially usefull for upperbody animations.");
+			components::help_marker("Seamless transition during the animation, especially usefull for upperbody animations.");
 			ImGui::CheckboxFlags("Force Start", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::FORCE_START));
 			ImGui::CheckboxFlags("Disable Collision", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TURN_OFF_COLLISION));
 			ImGui::CheckboxFlags("Override Physics", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::OVERRIDE_PHYSICS));
@@ -184,8 +177,7 @@ namespace big
 		ImGui::SameLine();
 
 		ImGui::Checkbox("Prompt Ambient", &g.self.prompt_ambient_animations);
-		if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Ambient animations will be prompted if you are close to one.");
+		components::help_marker("Ambient animations will be prompted if you are close to one.");
 
 		static std::string filter;
 
@@ -245,12 +237,12 @@ namespace big
 					{
 						ImGui::BeginTooltip();
 						if (p.name.length() > 25)
-							ImGui::Text(p.name.data());
+							ImGui::TextUnformatted(p.name.data());
 
-						ImGui::Text(std::format("{}: {}\n{}: {}", "Dictionary", p.dict, "Animation", p.anim).c_str());
+						ImGui::Text("%s: %s\n%s: %s", "Dictionary", p.dict.c_str(), "Animation", p.anim.c_str());
 
 						if (p.ambient)
-							ImGui::BulletText("Ambient Animation");
+							ImGui::BulletText("%s","Ambient Animation");
 						ImGui::EndTooltip();
 					}
 				}

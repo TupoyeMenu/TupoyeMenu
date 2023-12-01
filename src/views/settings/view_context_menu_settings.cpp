@@ -19,7 +19,7 @@ namespace big
 		ImGui::Checkbox("Context Menu Enabled", &g.context_menu.enabled);
 
 		ImGui::BeginDisabled(!g.context_menu.enabled);
-		ImGui::Text("Allowed Entity Types:");
+		ImGui::TextUnformatted("Allowed Entity Types:");
 		ImGui::CheckboxFlags("Object", reinterpret_cast<int*>(&g.context_menu.allowed_entity_types), static_cast<int>(ContextEntityType::OBJECT));
 		ImGui::SameLine();
 		ImGui::CheckboxFlags("Ped", reinterpret_cast<int*>(&g.context_menu.allowed_entity_types), static_cast<int>(ContextEntityType::PED));
@@ -29,7 +29,7 @@ namespace big
 		ImGui::CheckboxFlags("Vehicle", reinterpret_cast<int*>(&g.context_menu.allowed_entity_types), static_cast<int>(ContextEntityType::VEHICLE));
 
 		static ImVec4 selected_option_color = ImGui::ColorConvertU32ToFloat4(g.context_menu.selected_option_color);
-		ImGui::Text("Selected Option Color:");
+		ImGui::TextUnformatted("Selected Option Color:");
 		if (ImGui::ColorEdit4("###BSelected Option Color##cm_picker", (float*)&selected_option_color, ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_NoSidePreview))
 		{
 			g.context_menu.selected_option_color = ImGui::ColorConvertFloat4ToU32(selected_option_color);
@@ -40,7 +40,7 @@ namespace big
 		if (g.context_menu.bounding_box_enabled)
 		{
 			static ImVec4 bounding_box_color = ImGui::ColorConvertU32ToFloat4(g.context_menu.bounding_box_color);
-			ImGui::Text("Bounding Box Color:");
+			ImGui::TextUnformatted("Bounding Box Color:");
 			if (ImGui::ColorEdit4("###Bounding Box Color##cm_picker", (float*)&bounding_box_color, ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_NoSidePreview))
 			{
 				g.context_menu.bounding_box_color = ImGui::ColorConvertFloat4ToU32(bounding_box_color);

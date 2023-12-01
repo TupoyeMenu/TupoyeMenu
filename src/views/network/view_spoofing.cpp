@@ -23,7 +23,7 @@ namespace big
 {
 	void view::spoofing()
 	{
-		ImGui::Text("Detection Avoidance");
+		ImGui::TextUnformatted("Detection Avoidance");
 		ImGui::Checkbox("Hide God Mode", &g.spoofing.spoof_hide_god);
 		ImGui::Checkbox("Hide Spectate", &g.spoofing.spoof_hide_spectate);
 
@@ -121,7 +121,7 @@ namespace big
 		static char crew_tag[crew_tag_size];
 		strcpy_s(crew_tag, sizeof(crew_tag), g.spoofing.crew_tag.c_str());
 
-		ImGui::Text("Crew Tag:");
+		ImGui::TextUnformatted("Crew Tag:");
 		components::input_text("##crew_tag_input", crew_tag, sizeof(crew_tag));
 
 		if (crew_tag != g.spoofing.crew_tag)

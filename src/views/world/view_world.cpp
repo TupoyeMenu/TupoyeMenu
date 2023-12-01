@@ -9,7 +9,7 @@ namespace big
 {
 	void view::world()
 	{
-		ImGui::Text("Peds");
+		ImGui::TextUnformatted("Peds");
 
 		ImGui::SeparatorText("Ocean");
 		{
@@ -36,7 +36,7 @@ namespace big
 			for (auto ped : entity::get_entities(false, true))
 			{
 				if (!PED::IS_PED_A_PLAYER(ped))
-					ped::kill_ped_by_relation(ped, 4 || 5);
+					ped::kill_ped_by_relation(ped, 4 | 5);
 			}
 		});
 
@@ -88,7 +88,7 @@ namespace big
 		static bool own_vehicle, deleting, force;
 		static int quantity, remaining;
 
-		ImGui::Text("Include:");
+		ImGui::TextUnformatted("Include:");
 		ImGui::Checkbox("Vehicles", &included_entity_types[0]);
 		ImGui::SameLine();
 		ImGui::Checkbox("Ped", &included_entity_types[1]);

@@ -164,7 +164,7 @@ namespace big
 		{
 			if (g_mobile_service->personal_vehicles().empty())
 			{
-				ImGui::Text("No personal vehicles found, \nare you online?");
+				ImGui::TextUnformatted("No personal vehicles found, \nare you online?");
 			}
 			else
 			{

@@ -13,7 +13,7 @@ namespace lua::gui
 	{
 		if (m_font)
 			ImGui::PushFont(m_font);
-		ImGui::Text(m_text.data());
+		ImGui::TextUnformatted(m_text.data());
 		if (m_font)
 			ImGui::PopFont();
 	}

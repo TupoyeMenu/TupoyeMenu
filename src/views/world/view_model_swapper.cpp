@@ -15,9 +15,9 @@ namespace big
 {
 	void view::model_swapper()
 	{
-		ImGui::Text("Models that have already been created will not be affected much.");
-		ImGui::Text("Prefix 0x for hexadecimal hash.");
-		ImGui::Text("Use context menu to copy entity hash.");
+		ImGui::TextUnformatted("Models that have already been created will not be affected much.");
+		ImGui::TextUnformatted("Prefix 0x for hexadecimal hash.");
+		ImGui::TextUnformatted("Use context menu to copy entity hash.");
 
 		static char dst_text[256];
 		static char src_text[256];

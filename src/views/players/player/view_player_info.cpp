@@ -58,7 +58,7 @@ namespace big
 		CPlayerInfo* player_info = g_player_service->get_selected()->get_player_info();
 		CPed* cped               = g_player_service->get_selected()->get_ped();
 
-		ImGui::Text(title.c_str());
+		ImGui::TextUnformatted(title.c_str());
 		ImGui::Checkbox("Spectate", &g.player.spectating);
 
 		ImGui::Text("Player ID: %d", g_player_service->get_selected()->id());
@@ -74,7 +74,7 @@ namespace big
 
 		if (player_info != nullptr)
 		{
-			ImGui::Text("Host token: %u", player_info->m_net_player_data.m_host_token);
+			ImGui::Text("Host token: %llu", player_info->m_net_player_data.m_host_token);
 			ImGui::Text("Wanted Level: %d", player_info->m_wanted_level);
 		}
 
@@ -201,7 +201,7 @@ namespace big
 		{
 			if (ImGui::TreeNode("Net Info"))
 			{
-				ImGui::Text("Rockstar ID: %d", net_player_data->m_gamer_handle.m_rockstar_id);
+				ImGui::Text("Rockstar ID: %llu", net_player_data->m_gamer_handle.m_rockstar_id);
 
 				ImGui::SameLine();
 
@@ -237,9 +237,9 @@ namespace big
 				else
 				{
 					if (net_player_data->m_force_relays)
-						ImGui::Text("IP Address: Hidden");
+						ImGui::TextUnformatted("IP Address: Hidden");
 					else
-						ImGui::Text("IP Address: Unknown");
+						ImGui::TextUnformatted("IP Address: Unknown");
 
 					auto cxn_type = g_player_service->get_selected()->get_connection_peer() ?
 					    g_player_service->get_selected()->get_connection_peer()->m_peer_address.m_connection_type :
@@ -293,10 +293,10 @@ namespace big
 				{
 					if (!current_player->infractions.empty())
 					{
-						ImGui::Text("Infractions:");
+						ImGui::TextUnformatted("Infractions:");
 						for (auto& infraction : current_player->infractions)
 						{
-							ImGui::BulletText(current_player->get_infraction_description(infraction));
+							ImGui::BulletText("%s", current_player->get_infraction_description(infraction));
 						}
 					}
 
@@ -376,9 +376,9 @@ namespace big
 				if (ImGui::TreeNode("Weapon Info"))
 				{
 					ImGui::Text("Weapon Name: %s",
-					    g_gta_data_service->weapon_by_hash(cped->m_weapon_manager->m_selected_weapon_hash).m_name);
+					    g_gta_data_service->weapon_by_hash(cped->m_weapon_manager->m_selected_weapon_hash).m_name.c_str());
 					ImGui::Text("Weapon Display Name: %s",
-					    g_gta_data_service->weapon_by_hash(cped->m_weapon_manager->m_selected_weapon_hash).m_display_name);
+					    g_gta_data_service->weapon_by_hash(cped->m_weapon_manager->m_selected_weapon_hash).m_display_name.c_str());
 					if (cped->m_weapon_manager->m_weapon_info != nullptr)
 					{
 						ImGui::Text("Weapon Damage: %f", cped->m_weapon_manager->m_weapon_info->m_damage);
@@ -426,9 +426,9 @@ namespace big
 
 				ImGui::Text("CEO Name: %s", boss_goon.GangName);
 				ImGui::Text("MC Name: %s", boss_goon.ClubhouseName);
-				ImGui::Text("Money In Wallet: %llu", stats.WalletBalance);
-				ImGui::Text("Money In Bank: %llu", stats.Money - stats.WalletBalance);
-				ImGui::Text("Total Money: %llu", stats.Money);
+				ImGui::Text("Money In Wallet: %d", stats.WalletBalance);
+				ImGui::Text("Money In Bank: %d", stats.Money - stats.WalletBalance);
+				ImGui::Text("Total Money: %d", stats.Money);
 				ImGui::Text("Rank: %d (RP %d)", stats.Rank, stats.RP);
 				ImGui::Text("K/D Ratio: %f", stats.KdRatio);
 				ImGui::Text("Kills On Players: %d", stats.KillsOnPlayers);

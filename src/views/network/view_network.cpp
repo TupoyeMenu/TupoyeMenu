@@ -31,7 +31,7 @@ namespace big
 {
 	void view::network()
 	{
-		ImGui::Text("Session Joiner");
+		ImGui::TextUnformatted("Session Joiner");
 		static uint64_t rid = 0;
 		ImGui::InputScalar("Input RID", ImGuiDataType_U64, &rid);
 		components::button("Join by RID", [] {

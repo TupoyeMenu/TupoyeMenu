@@ -14,7 +14,7 @@ namespace big
 {
 	void view::blackhole()
 	{
-		ImGui::Text("Blackhole");
+		ImGui::TextUnformatted("Blackhole");
 		
 		components::command_checkbox<"blackhole">();
 

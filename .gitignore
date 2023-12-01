@@ -6,9 +6,9 @@
 
 # output directory
 build/
+build_clang/
 build_mingw/
 build_msvc/
-build_clang/
 out/
 __pycache__/
 
@@ -33,3 +33,7 @@ version.cpp
 
 # generated documentation
 docs/
+<<<<<<< HEAD
+=======
+
+>>>>>>> feat-mingw-build

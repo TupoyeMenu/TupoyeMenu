@@ -26,7 +26,7 @@ namespace big
 {
 	void view::fun_vehicle()
 	{
-		ImGui::Text("Seat Changer");
+		ImGui::TextUnformatted("Seat Changer");
 		{
 			static std::map<int, bool> seats;
 			static bool ready = true;
@@ -57,7 +57,7 @@ namespace big
 
 			if (seats.size() == 0)
 			{
-				ImGui::Text("Please enter a vehicle.");
+				ImGui::TextUnformatted("Please enter a vehicle.");
 			}
 			else
 			{
@@ -148,15 +148,15 @@ namespace big
 		{
 			if (g_local_player == nullptr || g_local_player->m_vehicle == nullptr)
 			{
-				ImGui::Text("Please enter a vehicle.");
+				ImGui::TextUnformatted("Please enter a vehicle.");
 			}
 			else if (g.vehicle.keep_vehicle_clean)
 			{
-				ImGui::Text("Keep Vehicle Clean is turned on, disable it to change the dirt level.");
+				ImGui::TextUnformatted("Keep Vehicle Clean is turned on, disable it to change the dirt level.");
 			}
 			else if (g.vehicle.keep_vehicle_repaired)
 			{
-				ImGui::Text("Keep Vehicle Repaired is turned on, disable it to change the vehicle health.");
+				ImGui::TextUnformatted("Keep Vehicle Repaired is turned on, disable it to change the vehicle health.");
 			}
 			else
 			{
@@ -332,18 +332,10 @@ namespace big
 				ImGui::InputFloat("Range##rocket", &g.vehicle.vehicle_ammo_special.rocket_range, 50, 100, "%.1f");
 				ImGui::InputFloat("Lock-on Range", &g.vehicle.vehicle_ammo_special.rocket_lock_on_range, 50, 100, "%.1f");
 				ImGui::InputFloat("Lock-on Time", &g.vehicle.vehicle_ammo_special.rocket_time_before_homing, 0.01, 0.1, "%.2f");
-				ImGui::InputFloat("Time Between Shots##rocket",
-				    &g.vehicle.vehicle_ammo_special.rocket_time_between_shots,
-				    0.001,
-				    0.1,
-				    "%.3f");
+				ImGui::InputFloat("Time Between Shots##rocket", &g.vehicle.vehicle_ammo_special.rocket_time_between_shots, 0.001, 0.1, "%.3f");
 				ImGui::SameLine();
 				components::help_marker("Time taken to fire consecutive shots on the same side. Related to rate of fire.");
-				ImGui::InputFloat("Alternate Wait Time##rocket",
-				    &g.vehicle.vehicle_ammo_special.rocket_alternate_wait_time,
-				    0.001,
-				    0.1,
-				    "%.3f");
+				ImGui::InputFloat("Alternate Wait Time##rocket", &g.vehicle.vehicle_ammo_special.rocket_alternate_wait_time, 0.001, 0.1, "%.3f");
 				ImGui::SameLine();
 				components::help_marker("Time taken to switch between sides. Related to rate of fire.");
 				ImGui::InputFloat("Life Time", &g.vehicle.vehicle_ammo_special.rocket_lifetime, 0.1, 1, "%.1f");

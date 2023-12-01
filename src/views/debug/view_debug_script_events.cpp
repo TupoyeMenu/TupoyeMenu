@@ -23,7 +23,7 @@ namespace big
 		static int event_player_bits;
 		static bool event_everyone = false;
 
-		ImGui::Text("Script Argument Count:");
+		ImGui::TextUnformatted("Script Argument Count:");
 		ImGui::InputInt("###script_event_arg_count", &event_arg_count);
 		if (event_arg_count > 32)
 			event_arg_count = 32;
@@ -59,7 +59,7 @@ namespace big
 		ImGui::Checkbox("Send to everyone", &event_everyone);
 		if (!event_everyone)
 		{
-			ImGui::Text("Player ID:");
+			ImGui::TextUnformatted("Player ID:");
 			ImGui::InputInt("###player_bits", &event_player_bits);
 		}
 

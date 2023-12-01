@@ -28,7 +28,7 @@ namespace big
 		static char name_buf[32];
 		static char search[64];
 		static char session_info[0x100]{};
-		ImGui::Text(std::format("{}: {}", "Total sessions found", g_matchmaking_service->get_num_found_sessions()).c_str());
+		ImGui::Text("Total sessions found: %i", g_matchmaking_service->get_num_found_sessions());
 
 		if (ImGui::BeginListBox("###sessions", ImVec2(300, -ImGui::GetFrameHeight())))
 		{
@@ -53,13 +53,13 @@ namespace big
 							"Region", regions[session.attributes.region].name,
 						    "Language", languages[session.attributes.language].name,
 						    "Host Rockstar ID", session.info.m_net_player_data.m_gamer_handle.m_rockstar_id);
-						ImGui::SetTooltip(tool_tip.c_str());
+						ImGui::SetTooltip("%s", tool_tip.c_str());
 					}
 				}
 			}
 			else
 			{
-				ImGui::Text("No sessions");
+				ImGui::TextUnformatted("No sessions");
 			}
 
 			ImGui::EndListBox();
@@ -78,7 +78,7 @@ namespace big
 				ImGui::Text("Language: %s", languages[session.attributes.language].name);
 
 				auto& data = session.info.m_net_player_data;
-				ImGui::Text("Host Rockstar ID: %d", data.m_gamer_handle.m_rockstar_id);
+				ImGui::Text("Host Rockstar ID: %llu", data.m_gamer_handle.m_rockstar_id);
 
 				components::button("Copy Session Info", [] {
 					ImGui::SetClipboardText(session_info);

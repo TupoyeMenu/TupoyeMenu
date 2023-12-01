@@ -33,9 +33,9 @@ namespace big
 
 		if (!selected_module.expired())
 		{
-			ImGui::Text(std::format("{}: {}", "Scripts Registered", selected_module.lock()->m_registered_scripts.size()).c_str());
-			ImGui::Text(std::format("{}: {}", "Memory Patches Registered", selected_module.lock()->m_registered_patches.size()).c_str());
-			ImGui::Text(std::format("{}: {}", "GUI Tabs Registered", selected_module.lock()->m_gui.size()).c_str());
+			ImGui::Text("%s: %zu", "Scripts Registered", selected_module.lock()->m_registered_scripts.size());
+			ImGui::Text("%s: %zu", "Memory Patches Registered", selected_module.lock()->m_registered_patches.size());
+			ImGui::Text("%s: %zu", "GUI Tabs Registered", selected_module.lock()->m_gui.size());
 
 			if (components::button("Reload"))
 			{

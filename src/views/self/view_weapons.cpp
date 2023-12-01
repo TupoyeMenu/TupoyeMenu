@@ -40,7 +40,7 @@ namespace big
 
 	void view::weapons()
 	{
-		ImGui::Text("Ammo");
+		ImGui::TextUnformatted("Ammo");
 
 		ImGui::BeginGroup();
 		components::command_checkbox<"infammo">();
@@ -225,7 +225,7 @@ namespace big
 						weapon_component attachment_component = g_gta_data_service->weapon_component_by_name(attachment);
 						std::string attachment_name = attachment_component.m_display_name;
 						Hash attachment_hash        = attachment_component.m_hash;
-						if (attachment_hash == NULL)
+						if (attachment_hash == 0)
 						{
 							attachment_name = attachment;
 							attachment_hash = rage::joaat(attachment);
@@ -309,7 +309,7 @@ namespace big
 			components::button("Set Loadout", [] {
 				persist_weapons::set_weapon_loadout(selected_loadout);
 			});
-			ImGui::Text(std::format("{}: {}:", "Current Loadout", g.persist_weapons.weapon_loadout_file).data());
+			ImGui::Text("%s: %s:", "Current Loadout", g.persist_weapons.weapon_loadout_file.c_str());
 			ImGui::EndGroup();
 			ImGui::PopItemWidth();
 			ImGui::TreePop();
@@ -319,9 +319,10 @@ namespace big
 			ImGui::PushID(2);
 			ImGui::Checkbox("Enabled", &g.weapons.enable_weapon_hotkeys);
 			ImGui::PopID();
-			ImGui::Checkbox("Enabled##weapon_hotkeys", &g.weapons.enable_weapon_hotkeys);
-			ImGui::SameLine();
-			components::help_marker("This will select the next weapon in the hotkey list.\nThe first weapon in the list is the first weapon it will select, then the second is the one it will select after and so on.\nAfter the end of the list, it will wrap back to the first weapon.");
+			if (ImGui::IsItemHovered())
+			{
+				ImGui::SetTooltip("%s", "This will select the next weapon in the hotkey list.\nThe first weapon in the list is the first weapon it will select, then the second is the one it will select after and so on.\nAfter the end of the list, it will wrap back to the first weapon.");
+			}
 
 			static int selected_key = 0;
 			const char* const keys[]{"1", "2", "3", "4", "5", "6"};
@@ -360,8 +361,8 @@ namespace big
 					}
 					ImGui::SameLine();
 					components::button("Set To Current Weapon", [&weapon_hash] {
-						WEAPON::GET_CURRENT_PED_WEAPON(self::ped, &weapon_hash, NULL);
-						if (weapon_hash == NULL)
+						WEAPON::GET_CURRENT_PED_WEAPON(self::ped, &weapon_hash, 0);
+						if (weapon_hash == 0)
 						{
 							WEAPON::GET_CURRENT_PED_VEHICLE_WEAPON(self::ped, &weapon_hash);
 						}

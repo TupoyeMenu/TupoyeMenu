@@ -15,7 +15,7 @@ namespace big
 {
 	void draw_pair_option(const std::string_view name, decltype(g.notifications.gta_thread_kill)& option)
 	{
-		ImGui::Text(name.data());
+		ImGui::TextUnformatted(name.data());
 
 		ImGui::PushID(name.data());
 		ImGui::Checkbox("Log", &option.log);
@@ -128,7 +128,7 @@ namespace big
 
 		ImGui::SeparatorText("Network Player Manager");
 
-		ImGui::Text("Player Join");
+		ImGui::TextUnformatted("Player Join");
 
 		ImGui::Checkbox("Above Map", &g.notifications.player_join.above_map);
 		ImGui::Checkbox("Log", &g.notifications.player_join.log);

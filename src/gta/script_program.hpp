@@ -9,6 +9,8 @@
  */
 
 #pragma once
+#include <cstdint>
+#include <list>
 #include "base.hpp"
 #include "fwddec.hpp"
 #include "joaat.hpp"

@@ -16,7 +16,7 @@ namespace big
 	void view::view_player_misc()
 	{
 		std::string title = std::format("Player Misc Options: {}", g_player_service->get_selected()->get_name());
-		ImGui::Text(title.c_str());
+		ImGui::TextUnformatted(title.c_str());
 
 		components::player_command_button<"joinceo">(g_player_service->get_selected());
 		components::player_command_button<"enterint">(g_player_service->get_selected());

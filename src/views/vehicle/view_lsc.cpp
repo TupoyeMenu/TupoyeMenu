@@ -48,7 +48,7 @@ namespace big
 				player_vehicle = 0;
 
 				selected_slot = -1;
-				ImGui::Text("Please enter a vehicle.");
+				ImGui::TextUnformatted("Please enter a vehicle.");
 				return;
 			}
 		}
