@@ -10,17 +10,9 @@
  */
 
 #pragma once
-#include "core/scr_globals.hpp"
-#include "entity.hpp"
 #include "gta/enums.hpp"
-#include "gta/joaat.hpp"
-#include "gta/vehicle_values.hpp"
-#include "math.hpp"
-#include "natives.hpp"
-#include "pointers.hpp"
-#include "script.hpp"
+#include "memory/byte_patch.hpp"
 #include "script_global.hpp"
-#include "gta/enums.hpp"
 
 namespace big::vehicle
 {

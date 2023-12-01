@@ -11,13 +11,14 @@
 
 #pragma once
 #include "entity.hpp"
-#include "vehicle.hpp"
 #include "gta/enums.hpp"
 #include "math.hpp"
 #include "natives.hpp"
 #include "outfit.hpp"
 #include "pointers.hpp"
+#include "script.hpp"
 #include "services/players/player_service.hpp"
+#include "vehicle.hpp"
 
 namespace big::ped
 {
@@ -238,7 +239,7 @@ namespace big::ped
 		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 5, true); // Always fight.
 
 		PED::SET_PED_CAN_RAGDOLL_FROM_PLAYER_IMPACT(ped, false);
-		PED::SET_RAGDOLL_BLOCKING_FLAGS(ped, 5); // Don't ragoll from fire and bullets.
+		PED::SET_RAGDOLL_BLOCKING_FLAGS(ped, 5);          // Don't ragoll from fire and bullets.
 		TASK::TASK_COMBAT_PED(ped, ped_to_attack, 0, 16); // 16 allows to fight armed peds.
 	}
 
@@ -279,10 +280,10 @@ namespace big::ped
 		Vehicle veh = vehicle::spawn(RAGE_JOAAT("oppressor2"), pos, heading, true, false, true);
 		VEHICLE::SET_VEHICLE_ENGINE_ON(veh, true, true, false);
 		vehicle::max_vehicle(veh);
-		ENTITY::SET_ENTITY_PROOFS(veh, false, true, true, false, false, false, false, false);  // Fire and explosion proof.
+		ENTITY::SET_ENTITY_PROOFS(veh, false, true, true, false, false, false, false, false); // Fire and explosion proof.
 
 		Ped ped = ped::spawn_in_vehicle(RAGE_JOAAT("u_m_m_jesus_01"), veh, true);
-		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 3, false); // Never leave the vehicle.
+		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 3, false);   // Never leave the vehicle.
 		PED::SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE(ped, 1); // Disable knock off vehicle.
 		ENTITY::SET_ENTITY_PROOFS(ped, false, true, true, false, false, false, false, false); // Fire and explosion proof.
 		WEAPON::GIVE_WEAPON_TO_PED(ped, RAGE_JOAAT("WEAPON_RAILGUN"), 9999, true, true);
@@ -399,7 +400,7 @@ namespace big::ped
 	{
 		if (load_animation_dict(animDict.data()))
 		{
-			if(pos.x == 0 && pos.y == 0 && pos.z == 0)
+			if (pos.x == 0 && pos.y == 0 && pos.z == 0)
 				TASK::TASK_PLAY_ANIM(ped, animDict.data(), animName.data(), speed, speedMultiplier, duration, flag, playbackRate, lockPos, lockPos, lockPos);
 			else
 				TASK::TASK_PLAY_ANIM_ADVANCED(ped, animDict.data(), animName.data(), pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, speed, speedMultiplier, duration, flag, playbackRate, lockPos, ik_flags);

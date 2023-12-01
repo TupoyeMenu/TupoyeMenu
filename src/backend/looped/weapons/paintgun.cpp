@@ -1,6 +1,7 @@
 #include "backend/looped/looped.hpp"
 #include "core/enums.hpp"
 #include "gta/enums.hpp"
+#include "natives.hpp"
 #include "util/entity.hpp"
 
 namespace big
@@ -30,7 +31,6 @@ namespace big
 			red   = std::clamp(red, 0.f, 255.f);
 			green = std::clamp(green, 0.f, 255.f);
 			blue  = std::clamp(blue, 0.f, 255.f);
-
 		}
 
 		if (g.weapons.paintgun.rainbow)
@@ -40,7 +40,8 @@ namespace big
 
 		if (g.weapons.custom_weapon == CustomWeapon::PAINT_GUN && (!g.self.custom_weapon_stop || WEAPON::IS_PED_ARMED(self::ped, 4 | 2)))
 		{
-			Vector3 c; entity::raycast(&c);
+			Vector3 c;
+			entity::raycast(&c);
 
 			if (PAD::IS_DISABLED_CONTROL_PRESSED(0, (int)ControllerInputs::INPUT_AIM))
 			{
@@ -55,7 +56,7 @@ namespace big
 					    -1, //true
 					    0,
 					    1.f,
-					    0.f, // always 0
+					    0.f,  // always 0
 					    0.5f, //size x
 					    0.4f, //size y
 					    col.x,

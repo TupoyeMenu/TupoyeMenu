@@ -1,9 +1,11 @@
 #include "backend/looped/looped.hpp"
+#include "gta/joaat.hpp"
+#include "pointers.hpp"
 #include "util/vehicle.hpp"
 
+#include <vehicle/CVehicleDriveByMetadataMgr.hpp>
 #include <vehicle/CVehicleModelInfo.hpp>
 #include <vehicle/CVehicleSeatMetadataMgr.hpp>
-#include <vehicle/CVehicleDriveByMetadataMgr.hpp>
 
 namespace big
 {
@@ -43,7 +45,8 @@ namespace big
 			seat_info->m_rear_right->m_drive_by_info = defaults->m_driveby_standard_rear_right;
 
 		if (g_pointers->m_gta.m_driveby_metadata_mgr->m_drive_by_weapon_groups->m_drive_by_default
-		        ->m_driveby_default_one_handed_weapon_group_names.size() == 1)
+		        ->m_driveby_default_one_handed_weapon_group_names.size()
+		    == 1)
 		{
 			one_handed_groups.append({RAGE_JOAAT("GROUP_MG"), RAGE_JOAAT("GROUP_RIFLE"), RAGE_JOAAT("GROUP_SHOTGUN"), RAGE_JOAAT("GROUP_HEAVY"), RAGE_JOAAT("GROUP_SNIPER"), RAGE_JOAAT("GROUP_SMG")});
 			g_pointers->m_gta.m_driveby_metadata_mgr->m_drive_by_weapon_groups->m_drive_by_default->m_driveby_default_one_handed_weapon_group_names = one_handed_groups;

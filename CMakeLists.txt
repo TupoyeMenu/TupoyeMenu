@@ -19,10 +19,6 @@ include(scripts/json.cmake)
 include(scripts/zydis.cmake)
 include(scripts/lua.cmake)
 
-if (NOT MINGW)
-    include(scripts/cpr.cmake) 
-endif()
-
 message("\nFetching custom modules")
 include(scripts/imgui.cmake)
 include(scripts/gtav-classes.cmake)

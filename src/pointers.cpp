@@ -916,8 +916,8 @@ namespace big
 		main_batch.add("CP", "48 8B C8 EB 02 33 C9 48 85 C9 74 26", [](memory::handle ptr) {
 			g_pointers->m_gta.m_camera_pool = ptr.sub(9).rip().as<GenericPool**>();
 		});
+#endif // ENABLE_ASI_LOADER
 
-#endif // ENABLE_ASI_LOADER \
     // Linux DX Error Fix
 		main_batch.add("LDEF", "40 55 48 8B EC 48 83 EC 60 48 8B 0D", [](memory::handle ptr) {
 			g_pointers->m_gta.m_linux_dx_error_fix = ptr.as<PVOID>();

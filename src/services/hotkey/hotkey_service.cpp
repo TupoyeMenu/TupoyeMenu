@@ -11,6 +11,7 @@
 #include "hotkey_service.hpp"
 
 #include "fiber_pool.hpp"
+#include "gta/script_thread.hpp"
 #include "gui.hpp"
 #include "network/ChatData.hpp"
 #include "pointers.hpp"
@@ -110,7 +111,7 @@ namespace big
 		if (state == eKeyState::RELEASE || state == eKeyState::DOWN)
 		{
 			auto& hotkey_map = m_hotkeys[state == eKeyState::RELEASE];
-			for (auto [ it, end ] = hotkey_map.equal_range(key); it != end; ++it)
+			for (auto [it, end] = hotkey_map.equal_range(key); it != end; ++it)
 			{
 				if (auto& hotkey = it->second; hotkey.can_exec())
 				{

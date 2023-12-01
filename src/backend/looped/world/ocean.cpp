@@ -89,6 +89,6 @@ namespace big
 		}
 	};
 
-	modify_ocean g_modify_ocean("modifyocean", "BACKEND_LOOPED_WORLD_MODIFY_OCEAN", "BACKEND_LOOPED_WORLD_MODIFY_OCEAN_DESC", g.world.ocean.modify_ocean);
-	bool_command g_disable_ocean("disableocean", "BACKEND_LOOPED_WORLD_DISABLE_OCEAN", "BACKEND_LOOPED_WORLD_DISABLE_OCEAN_DESC", g.world.ocean.disable_ocean);
+	modify_ocean g_modify_ocean("modifyocean", "Modify Ocean", "Modifies the world's ocean. This is local and cannot be seen by other players.", g.world.ocean.modify_ocean);
+	bool_command g_disable_ocean("disableocean", "Disable Ocean", "Removes the ocean from the world.", g.world.ocean.disable_ocean);
 }

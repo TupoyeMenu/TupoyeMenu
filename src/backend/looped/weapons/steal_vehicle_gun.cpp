@@ -1,6 +1,8 @@
 #include "backend/looped/looped.hpp"
 #include "core/enums.hpp"
 #include "gta/enums.hpp"
+#include "natives.hpp"
+#include "script.hpp"
 #include "util/entity.hpp"
 
 namespace big

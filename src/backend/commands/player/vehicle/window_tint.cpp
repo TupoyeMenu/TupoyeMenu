@@ -3,6 +3,7 @@
 #include "pointers.hpp"
 #include "util/teleport.hpp"
 #include "util/vehicle.hpp"
+#include "gta/vehicle_values.hpp"
 
 namespace big
 {

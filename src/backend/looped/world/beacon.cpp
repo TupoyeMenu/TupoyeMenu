@@ -101,6 +101,6 @@ namespace big
 		}
 	};
 
-	waypoint_beacon g_waypoint_beacon("waypointbeacon", "BACKEND_LOOPED_WORLD_BEACON_WAYPOINT", "BACKEND_LOOPED_WORLD_BEACON_WAYPOINT_DESC", g.world.waypoint_n_objective.waypoint_beacon);
-	objective_beacon g_objective_beacon("objectivebeacon", "BACKEND_LOOPED_WORLD_BEACON_OBJECTIVE", "BACKEND_LOOPED_WORLD_BEACON_OBJECTIVE_DESC", g.world.waypoint_n_objective.objective_beacon);
+	waypoint_beacon g_waypoint_beacon("waypointbeacon", "Waypoint Beacon", "Displays a vertical beam of light at your waypoint.", g.world.waypoint_n_objective.waypoint_beacon);
+	objective_beacon g_objective_beacon("objectivebeacon", "Objective Beacon", "Displays a vertical beam of light at your objective.", g.world.waypoint_n_objective.objective_beacon);
 }

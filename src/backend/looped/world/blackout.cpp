@@ -24,5 +24,5 @@ namespace big
 		}
 	};
 
-	blackout g_blackout("blackout", "BACKEND_LOOPED_WORLD_BLACKOUT", "BACKEND_LOOPED_WORLD_BLACKOUT_DESC", g.world.blackout);
+	blackout g_blackout("blackout", "Blackout", "While active, all emissive textures, street lights, building lights, vehicle lights, etc will all be turned off.", g.world.blackout);
 }

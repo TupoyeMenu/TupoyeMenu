@@ -39,9 +39,6 @@ namespace big
 		if (ImGui::Hotkey("Bring PV", &g.settings.hotkeys.bringvehicle))
 			g_hotkey_service->update_hotkey("bringpv", g.settings.hotkeys.bringvehicle);
 
-		if (ImGui::Hotkey("Toggle No Clip", &g.settings.hotkeys.noclip))
-			g_hotkey_service->update_hotkey("noclip", g.settings.hotkeys.noclip);
-
 		ImGui::SeparatorText("Movement");
 		if (ImGui::Hotkey("Toggle Noclip", &g.settings.hotkeys.noclip))
 			g_hotkey_service->update_hotkey("noclip", g.settings.hotkeys.noclip);

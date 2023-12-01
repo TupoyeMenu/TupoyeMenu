@@ -12,6 +12,7 @@
 #include "fiber_pool.hpp"
 #include "natives.hpp"
 #include "script.hpp"
+#include "util/entity.hpp"
 #include "util/vehicle.hpp"
 #include "views/view.hpp"
 

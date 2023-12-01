@@ -1,5 +1,15 @@
 #include "vehicle.hpp"
 
+#include "core/scr_globals.hpp"
+#include "entity.hpp"
+#include "gta/joaat.hpp"
+#include "gta/vehicle_values.hpp"
+#include "math.hpp"
+#include "natives.hpp"
+#include "pointers.hpp"
+#include "script.hpp"
+#include "pools.hpp"
+
 namespace big::vehicle
 {
 	/**

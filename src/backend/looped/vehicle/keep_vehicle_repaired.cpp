@@ -1,6 +1,8 @@
 #include "backend/looped_command.hpp"
 #include "natives.hpp"
 #include "util/vehicle.hpp"
+#include "util/entity.hpp"
+#include "pointers.hpp"
 
 namespace big
 {

@@ -11,6 +11,7 @@
 #include "model_preview_service.hpp"
 
 #include "fiber_pool.hpp"
+#include "gta/vehicle_values.hpp"
 #include "gui.hpp"
 #include "thread_pool.hpp"
 #include "util/ped.hpp"

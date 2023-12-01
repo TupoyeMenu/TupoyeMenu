@@ -10,9 +10,9 @@ namespace big
 		virtual void on_tick() override
 		{
 			if (self::veh != 0)
-				ENTITY::SET_ENTITY_MAX_SPEED(self::veh, INT32_MAX);
+				ENTITY::SET_ENTITY_MAX_SPEED(self::veh, 999999999999.f);
 			else
-				ENTITY::SET_ENTITY_MAX_SPEED(self::ped, INT32_MAX);
+				ENTITY::SET_ENTITY_MAX_SPEED(self::ped, 999999999999.f);
 		}
 
 		virtual void on_disable() override

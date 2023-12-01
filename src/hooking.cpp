@@ -157,7 +157,7 @@ namespace big
 
 		detour_hook_helper::add<hooks::read_bits_single>("RBS", (void*)g_pointers->m_gta.m_read_bits_single);
 
-		detour_hook_helper::add<hooks::get_dlc_hash>("GDH", g_pointers->m_gta.m_get_dlc_hash);
+		detour_hook_helper::add<hooks::get_dlc_hash>("GDH", (void*)g_pointers->m_gta.m_get_dlc_hash);
 
 		g_hooking = this;
 	}

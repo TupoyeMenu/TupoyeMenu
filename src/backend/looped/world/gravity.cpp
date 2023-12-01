@@ -22,5 +22,5 @@ namespace big
 		}
 	};
 
-	modify_gravity g_modify_gravity("modifygravity", "BACKEND_LOOPED_WORLD_MODIFY_GRAVITY", "BACKEND_LOOPED_WORLD_MODIFY_GRAVITY_DESC", g.world.gravity.modify_gravity);
+	modify_gravity g_modify_gravity("modifygravity", "Modify Gravity", "Modifies the world's gravity. This doesn't affect other players.", g.world.gravity.modify_gravity);
 }

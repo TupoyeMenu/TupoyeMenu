@@ -1,5 +1,12 @@
 #include "entity.hpp"
 
+#include "gta_util.hpp"
+#include "math.hpp"
+#include "natives.hpp"
+#include "pools.hpp"
+#include "script.hpp"
+#include "services/players/player_service.hpp"
+
 namespace big::entity
 {
 	/**
