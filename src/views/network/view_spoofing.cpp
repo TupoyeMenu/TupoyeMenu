@@ -55,7 +55,7 @@ namespace big
 		if (g.spoofing.spoof_bad_sport)
 		{
 			ImGui::SameLine();
-			if (ImGui::Combo("###badsport_select", &g.spoofing.badsport_type, "Clean Player\0Dirty Player\0Bad Sport"))
+			if (ImGui::Combo("###badsport_select", &g.spoofing.badsport_type, "Clean Player\0Dirty Player\0Bad Sport\0"))
 			{
 				*g_pointers->m_gta.m_force_player_card_refresh = true;
 			}
@@ -181,5 +181,7 @@ namespace big
 			ImGui::SameLine();
 			ImGui::Checkbox("Badsport", &g.spoofing.session_bad_sport);
 		}
+
+		components::command_checkbox<"overridegamehashes">();
 	}
 }

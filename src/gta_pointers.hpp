@@ -374,6 +374,10 @@ namespace big
 		bool* m_is_social_club_overlay_active;
 
 		functions::get_ped_bone m_get_ped_bone;
+
+		char** m_game_checksum_data;
+		functions::get_dlc_hash m_get_dlc_hash;
+		void** m_dlc_manager;
 	};
 #pragma pack(pop)
 	static_assert(sizeof(gta_pointers) % 8 == 0, "Pointers are not properly aligned");

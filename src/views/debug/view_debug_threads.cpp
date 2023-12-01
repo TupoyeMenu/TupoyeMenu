@@ -114,7 +114,7 @@ namespace big
 					}
 				}
 			}
-			ImGui::Combo("State", (int*)&selected_thread->m_context.m_state, "RUNNING\0WAITING\0KILLED\0PAUSED\0STATE_4");
+			ImGui::Combo("State", (int*)&selected_thread->m_context.m_state, "RUNNING\0WAITING\0KILLED\0PAUSED\0STATE_4\0");
 
 			ImGui::TextUnformatted("Script Pointer: ");
 			ImGui::SameLine();

@@ -168,9 +168,9 @@ namespace big
 
 		if (ImGui::TreeNode("Sorting"))
 		{
-			ImGui::Combo("Sort By", &g.session_browser.sort_method, "Off\0Player Count");
+			ImGui::Combo("Sort By", &g.session_browser.sort_method, "Off\0Player Count\0");
 			if (g.session_browser.sort_method != 0)
-				ImGui::Combo("Direction", &g.session_browser.sort_direction, "Ascending\0Descending");
+				ImGui::Combo("Direction", &g.session_browser.sort_direction, "Ascending\0Descending\0");
 			ImGui::TreePop();
 		}
 
