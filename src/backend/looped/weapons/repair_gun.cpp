@@ -24,11 +24,13 @@ namespace big
 						}
 						else
 						{
-							g_notification_service->push_warning("Weapons", "Entity is not a vehicle.");
+							g_notification_service->push_warning("Repair Gun", "Entity is not a vehicle.");
 						}
 					}
 					else
-						g_notification_service->push_warning("Weapons", "No entity found.");
+					{
+						g_notification_service->push_warning("Repair Gun", "No entity found.");
+					}
 				}
 			}
 		}

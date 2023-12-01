@@ -14,5 +14,5 @@ namespace big
 		}
 	};
 
-	teleport_to_waypoint g_teleport_to_waypoint("waypointtp", "Teleport To Waypoint", "Teleports you to your waypoint", 0);
+	teleport_to_waypoint g_teleport_to_waypoint("waypointtp", "Teleport to Waypoint", "Teleports you to the waypoint blip.", 0);
 }

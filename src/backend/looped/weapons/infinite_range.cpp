@@ -46,5 +46,5 @@ namespace big
 		}
 	};
 
-	infinite_range g_infinite_range("infrange", "Infinite Range", "Kill anything at any distance", g.weapons.infinite_range);
+	infinite_range g_infinite_range("infrange", "No Weapon Range", "Weapon's bullet has no distance limit.", g.weapons.infinite_range);
 }

@@ -182,64 +182,65 @@ namespace big
 
 		struct reactions
 		{
-			reaction bounty{"Bounty", "Blocked Bounty from %s", "%s tried to set a bounty on me!"};
-			interloper_reaction blame_explode{"Blame Explode", "%s blamed %s for explosion", "%s blamed %s for explosion", false, false};
-			reaction ceo_kick{"CEO Kick", "Blocked CEO Kick from %s", "%s tried to kick me from my CEO!"};
-			reaction ceo_money{"CEO Money", "Blocked CEO Money from %s", "%s tried to drop money on me!"};
-			reaction clear_wanted_level{"Clear Wanted Level", "Blocked Clear Wanted Level from %s", "%s tried to clear my wanted level!"};
-			reaction crash{"Crash", "Blocked Crash from %s", "%s tried to crash me!"};
-			reaction end_session_kick{"End Session Kick", "Blocked End Session Kick from %s", "%s tried to kick me out!"};
-			reaction fake_deposit{"Fake Deposit", "Blocked Fake Deposit from %s", "%s tried to show me a fake money notification!"};
-			reaction force_mission{"Force Mission", "Blocked Force Mission from %s", "%s tried to force me into a mission!"};
-			reaction force_teleport{"Force Teleport", "Blocked Force Teleport from %s", "%s tried to teleport me!"};
-			reaction gta_banner{"GTA Banner", "Blocked GTA Banner from %s", "Blocked GTA Banner from %s"}; // please don't enable this
-			reaction kick_from_interior{"Kick From Interior", "Blocked Kick From Interior from %s", "%s tried to kick me from my interior!"};
-			reaction mc_teleport{"MC Teleport", "Blocked MC Teleport from %s", "%s tried to teleport me!"};
-			reaction network_bail{"Network Bail", "Blocked Network Bail from %s", "%s tried to kick me out!"};
-			reaction personal_vehicle_destroyed{"Personal Vehicle Destroyed", "Blocked Personal Vehicle Destroyed from %s", "%s tried to show me a fake insurance notification!"};
-			reaction remote_off_radar{"Remote Off Radar", "Blocked Remote Off Radar from %s", "%s tried to give me off radar!"};
-			reaction rotate_cam{"Rotate Cam", "Blocked Rotate Cam from %s", "%s tried to mess with my camera!"};
-			reaction send_to_cutscene{"Send To Cutscene", "Blocked Send To Cutscene from %s", "%s tried to force me into a cutscene!"};
-			reaction send_to_location{"Send To Location", "Blocked Send To Location from %s", "%s tried to send me to Cayo Perico!"};
-			reaction send_to_interior{"Send To Interior", "Blocked Send To Interior from %s", "%s tried to send me to an interior!"};
-			reaction sound_spam{"Sound Spam", "Blocked Sound Spam from %s", "%s tried to spam annoying sounds at me!"};
-			reaction spectate_notification{"Spectate Notification", "Blocked Spectate Notification from %s", "Blocked Spectate Notification from %s"};
-			reaction give_collectible{"Give Collectible", "Blocked Give Collectible from %s", "%s tried to give me a collectible!"};
-			reaction transaction_error{"Transaction Error", "Blocked Transaction Error from %s", "%s tried to show me a transaction error!"};
-			reaction tse_freeze{"TSE Freeze", "Blocked TSE Freeze from %s", "%s tried to softlock my game!"};
-			reaction tse_sender_mismatch{"TSE Sender Mismatch", "Blocked TSE Sender Mismatch from %s", "Blocked TSE Sender Mismatch from %s"};
-			reaction vehicle_kick{"Vehicle Kick", "Blocked Vehicle Kick from %s", "%s tried to kick me from my vehicle!"};
-			reaction teleport_to_warehouse{"Teleport To Warehouse", "Blocked Teleport To Warehouse from %s", "%s tried to teleport me to a warehouse!"};
-			reaction start_activity{"Start Activity", "Blocked Start Activity from %s", "Blocked Start Activity from %s"};
-			reaction start_script{"Start Script", "Blocked Start Script from %s", "Blocked Start Script from %s"};
-			reaction null_function_kick{"Null Function Kick", "Blocked Null Function Kick from %s", "%s tried to kick me out!"};
-			reaction destroy_personal_vehicle{"Destroy Personal Vehicle", "Blocked Destroy Personal Vehicle from %s", "%s tried to destroy my personal vehicle!"};
-			reaction trigger_business_raid{"Trigger Business Raid", "Blocked Trigger Business Raid from %s", "%s tried to trigger a business raid!"};
-			reaction turn_into_beast{"Turn Into Beast", "Blocked Turn Into Beast from %s", "%s tried to turn me into the beast!"};
-			reaction remote_wanted_level{"Remote Wanted Level", "Blocked Remote Wanted Level from %s", "%s tried to give me a wanted level!"};
-			interloper_reaction remote_wanted_level_others{"Remote Wanted Level On Other Players", "%s is attempting to give a wanted level to %s!", "%s is attempting to give a wanted level to %s!", false, false};
+			// first constructor param is an internal identifier for the event
+			// it's never shown in the UI
+			reaction bounty{"Bounty", "Blocked Bounty from {}", "{} tried to set a bounty on me!"};
+			reaction ceo_kick{"CEO Kick", "Blocked CEO Kick from {}", "{} tried to kick me from my CEO!"};
+			reaction ceo_money{"CEO Money", "Blocked CEO Money from {}", "{} tried to drop money on me!"};
+			reaction clear_wanted_level{"Clear Wanted Level", "Blocked Clear Wanted Level from {}", "{} tried to clear my wanted level!"};
+			reaction crash{"Crash", "Blocked Crash from {}", "{} tried to crash me!"};
+			reaction end_session_kick{"End Session Kick", "Blocked End Session Kick from {}", "{} tried to kick me out!"};
+			reaction fake_deposit{"Fake Deposit", "Blocked Fake Deposit from {}", "{} tried to show me a fake money notification!"};
+			reaction force_mission{"Force Mission", "Blocked Force Mission from {}", "{} tried to force me into a mission!"};
+			reaction force_teleport{"Force Teleport", "Blocked Force Teleport from {}", "{} tried to teleport me!"};
+			reaction gta_banner{"GTA Banner", "Blocked GTA Banner from {}", "Blocked GTA Banner from {}"}; // please don't enable this
+			reaction kick_from_interior{"Kick From Interior", "Blocked Kick From Interior from {}", "{} tried to kick me from my interior!"};
+			reaction mc_teleport{"MC Teleport", "Blocked MC Teleport from {}", "{} tried to teleport me!"};
+			reaction network_bail{"Network Bail", "Blocked Network Bail from {}", "{} tried to kick me out!"};
+			reaction personal_vehicle_destroyed{"Personal Vehicle Destroyed", "Blocked Personal Vehicle Destroyed from {}", "{} tried to show me a fake insurance notification!"};
+			reaction remote_off_radar{"Remote Off Radar", "Blocked Remote Off Radar from {}", "{} tried to give me off radar!"};
+			reaction rotate_cam{"Rotate Cam", "Blocked Rotate Cam from {}", "{} tried to mess with my camera!"};
+			reaction send_to_cutscene{"Send To Cutscene", "Blocked Send To Cutscene from {}", "{} tried to force me into a cutscene!"};
+			reaction send_to_location{"Send To Location", "Blocked Send To Location from {}", "{} tried to send me to Cayo Perico!"};
+			reaction send_to_interior{"Send To Interior", "Blocked Send To Interior from {}", "{} tried to send me to an interior!"};
+			reaction sound_spam{"Sound Spam", "Blocked Sound Spam from {}", "{} tried to spam annoying sounds at me!"};
+			reaction spectate_notification{"Spectate Notification", "Blocked Spectate Notification from {}", "Blocked Spectate Notification from {}"};
+			reaction give_collectible{"Give Collectible", "Blocked Give Collectible from {}", "{} tried to give me a collectible!"};
+			reaction transaction_error{"Transaction Error", "Blocked Transaction Error from {}", "{} tried to show me a transaction error!"};
+			reaction tse_freeze{"TSE Freeze", "Blocked TSE Freeze from {}", "{} tried to softlock my game!"};
+			reaction tse_sender_mismatch{"TSE Sender Mismatch", "Blocked TSE Sender Mismatch from {}", "Blocked TSE Sender Mismatch from {}"};
+			reaction vehicle_kick{"Vehicle Kick", "Blocked Vehicle Kick from {}", "{} tried to kick me from my vehicle!"};
+			reaction teleport_to_warehouse{"Teleport To Warehouse", "Blocked Teleport To Warehouse from {}", "{} tried to teleport me to a warehouse!"};
+			reaction start_activity{"Start Activity", "Blocked Start Activity from {}", "Blocked Start Activity from {}"};
+			reaction start_script{"Start Script", "Blocked Start Script from {}", "Blocked Start Script from {}"};
+			reaction null_function_kick{"Null Function Kick", "Blocked Null Function Kick from {}", "{} tried to kick me out!"};
+			reaction destroy_personal_vehicle{"Destroy Personal Vehicle", "Blocked Destroy Personal Vehicle from {}", "{} tried to destroy my personal vehicle!"};
+			reaction trigger_business_raid{"Trigger Business Raid", "Blocked Trigger Business Raid from {}", "{} tried to trigger a business raid!"};
+			reaction turn_into_beast{"Turn Into Beast", "Blocked Turn Into Beast from {}", "{} tried to turn me into the beast!"};
+			reaction remote_wanted_level{"Remote Wanted Level", "Blocked Remote Wanted Level from {}", "{} tried to give me a wanted level!"};
+			interloper_reaction remote_wanted_level_others{"Remote Wanted Level On Other Players", "{} is attempting to give a wanted level to {}!", "{} is attempting to give a wanted level to {}!", false, false};
 
-			reaction clear_ped_tasks{"Clear Ped Tasks", "Blocked Clear Ped Tasks from %s", "%s tried to freeze me!"};
-			reaction remote_ragdoll{"Remote Ragdoll", "Blocked Remote Ragdoll from %s", "%s tried to ragdoll me!"};
-			reaction kick_vote{"Kick Vote", "%s is voting to kick you!", "%s is voting to kick me!"};
-			reaction report_cash_spawn{"Cash Spawn", "%s is spawning cash!", "%s is spawning cash!"};
-			reaction modder_detection{"Modder Detection", "%s is detected as a modder!", "%s is detected as a modder!"};
-			reaction game_anti_cheat_modder_detection{"Game Anti-Cheat Modder Detection", "%s is detected as a modder by the game anti-cheat!", "%s is detected as a modder by the game anti-cheat!"};
-			reaction request_control_event{"Request Control Event", "Blocked Request Control Event from %s", "%s tried to mess with my vehicle!"};
-			reaction report{"Report", "Blocked Report from %s", "%s tried to report me!"};
-			reaction spectate{"Spectate", "%s is spectating you", "%s is spectating me!"};
-			interloper_reaction spectate_others{"Spectate Others", "%s is spectating %s!", "%s is spectating %s!", false, false};
+			reaction clear_ped_tasks{"Clear Ped Tasks", "Blocked Clear Ped Tasks from {}", "{} tried to freeze me!"};
+			reaction remote_ragdoll{"Remote Ragdoll", "Blocked Remote Ragdoll from {}", "{} tried to ragdoll me!"};
+			reaction kick_vote{"Kick Vote", "{} is voting to kick you!", "{} is voting to kick me!"};
+			reaction report_cash_spawn{"Cash Spawn", "{} is spawning cash!", "{} is spawning cash!"};
+			reaction modder_detection{"Modder Detection", "{} is detected as a modder!", "{} is detected as a modder!"};
+			reaction game_anti_cheat_modder_detection{"Game Anti-Cheat Modder Detection", "{} is detected as a modder by the game anti-cheat!", "{} is detected as a modder by the game anti-cheat!"};
+			reaction request_control_event{"Request Control Event", "Blocked Request Control Event from {}", "{} tried to mess with my vehicle!"};
+			reaction report{"Report", "Blocked Report from {}", "{} tried to report me!"};
+			reaction spectate{"Spectate", "{} is spectating you", "{} is spectating me!"};
+			interloper_reaction spectate_others{"Spectate Others", "{} is spectating {}!", "{} is spectating {}!", false, false};
 
-			reaction gamer_instruction_kick{"Gamer Instruction Kick", "Blocked Gamer Instruction Kick from %s", "%s tried to kick me out!"};
-
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(reactions, bounty, blame_explode, ceo_money, ceo_kick, clear_wanted_level, crash, end_session_kick, fake_deposit, force_mission, force_teleport, gta_banner, kick_from_interior, mc_teleport, network_bail, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate_notification, give_collectible, transaction_error, tse_freeze, tse_sender_mismatch, vehicle_kick, teleport_to_warehouse, trigger_business_raid, start_activity, start_script, null_function_kick, destroy_personal_vehicle, clear_ped_tasks, turn_into_beast, remote_wanted_level, remote_wanted_level_others, remote_ragdoll, kick_vote, report_cash_spawn, modder_detection, game_anti_cheat_modder_detection, request_control_event, report, gamer_instruction_kick, send_to_interior, spectate, spectate_others)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(reactions, bounty, ceo_money, ceo_kick, clear_wanted_level, crash, end_session_kick, fake_deposit, force_mission, force_teleport, gta_banner, kick_from_interior, mc_teleport, network_bail, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate_notification, give_collectible, transaction_error, tse_freeze, tse_sender_mismatch, vehicle_kick, teleport_to_warehouse, trigger_business_raid, start_activity, start_script, null_function_kick, destroy_personal_vehicle, clear_ped_tasks, turn_into_beast, remote_wanted_level, remote_wanted_level_others, remote_ragdoll, kick_vote, report_cash_spawn, modder_detection, game_anti_cheat_modder_detection, request_control_event, report, send_to_interior, spectate, spectate_others)
 		} reactions{};
 
 		struct player
 		{
-			bool spectating = false;
+			bool spectating            = false;
+			bool override_cam_distance = false;
+			int cam_distance           = 10;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(player, spectating)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(player, spectating, override_cam_distance, cam_distance)
 		} player{};
 
 		struct player_db
@@ -383,6 +384,8 @@ namespace big
 			bool join_in_sctv_slots                = false;
 			bool lock_session                      = false;
 			bool allow_friends_into_locked_session = false;
+			bool trust_friends                     = false;
+			bool trust_session                     = false;
 
 			const char chat_command_prefix = '/';
 			const char chat_output_prefix  = '>';
@@ -423,7 +426,7 @@ namespace big
 
 			bool fast_join = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, log_chat_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, join_in_sctv_slots, kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty, lock_session, fast_join, unhide_players_from_player_list, allow_friends_into_locked_session)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, log_chat_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, is_team, join_in_sctv_slots, kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty, lock_session, fast_join, unhide_players_from_player_list, allow_friends_into_locked_session, trust_friends)
 		} session{};
 
 		struct settings
@@ -510,6 +513,33 @@ namespace big
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(water, part_water)
 			} water{};
 
+			struct gravity
+			{
+				bool modify_gravity   = false;
+				float current_gravity = 9.8f;
+
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(gravity, modify_gravity, current_gravity)
+			} gravity{};
+
+			struct ocean
+			{
+				bool modify_ocean   = false;
+				bool disable_ocean	= false;
+				int ocean_opacity	= 100;
+
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(ocean, modify_ocean, disable_ocean, ocean_opacity)
+			} ocean{};
+
+			struct waypoint_n_objective
+			{
+				bool waypoint_beacon            = false;
+				bool objective_beacon           = false;
+				float waypoint_beacon_color[3]  = {1, 0, 1};
+				float objective_beacon_color[3] = {1, 1, 0};
+
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(waypoint_n_objective, waypoint_beacon, objective_beacon, objective_beacon_color, waypoint_beacon_color)
+			} waypoint_n_objective{};
+
 			struct spawn_ped
 			{
 				bool preview_ped       = false;
@@ -573,8 +603,10 @@ namespace big
 			bool override_weather = false;
 			int local_weather     = 0;
 
-			bool blackout = false;
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(world, blackout, water, spawn_ped, custom_time, blackhole, model_swapper, local_weather, override_weather)
+			bool blackout    = false;
+			bool ground_snow = false;
+
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(world, water, spawn_ped, custom_time, blackhole, model_swapper, nearby, local_weather, override_weather, blackout, ground_snow)
 		} world{};
 
 		struct spoofing
@@ -871,7 +903,6 @@ namespace big
 		struct esp
 		{
 			bool enabled                    = true;
-			bool hide_self                  = true;
 			float global_render_distance[2] = {0.f, 600.f};
 			float tracer_render_distance[2] = {200.f, 600.f};
 			float box_render_distance[2]    = {0.f, 150.f};
@@ -892,7 +923,7 @@ namespace big
 			ImU32 default_color             = 4285713522;
 			ImU32 friend_color              = 4293244509;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(esp, enabled, hide_self, global_render_distance, tracer_render_distance, box_render_distance, tracer, tracer_draw_position, box, health, armor, god, distance, name, change_esp_color_from_dist, scale_health_from_dist, scale_armor_from_dist, distance_threshold, enemy_color, enemy_near_color, default_color, friend_color)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(esp, enabled, global_render_distance, tracer_render_distance, box_render_distance, tracer, tracer_draw_position, box, health, armor, god, distance, name, change_esp_color_from_dist, scale_health_from_dist, scale_armor_from_dist, distance_threshold, enemy_color, enemy_near_color, default_color, friend_color)
 		} esp{};
 
 		struct session_browser

@@ -9,7 +9,6 @@
  */
 
 #include "core/data/bullet_impact_types.hpp"
-#include "core/data/custom_weapons.hpp"
 #include "core/data/special_ammo_types.hpp"
 #include "fiber_pool.hpp"
 #include "gta/joaat.hpp"
@@ -21,6 +20,24 @@
 
 namespace big
 {
+	struct custom_weapon
+	{
+		big::CustomWeapon id;
+		const std::string_view name;
+	};
+
+	const custom_weapon custom_weapons[] = {
+	    {big::CustomWeapon::NONE, "No Weapon"},
+	    {big::CustomWeapon::CAGE_GUN, "Cage Gun"},
+	    {big::CustomWeapon::DELETE_GUN, "Delete Gun"},
+	    {big::CustomWeapon::GRAVITY_GUN, "Gravity Gun"},
+	    {big::CustomWeapon::STEAL_VEHICLE_GUN, "Steal Vehicle Gun"},
+	    {big::CustomWeapon::REPAIR_GUN, "Repair Gun"},
+	    {big::CustomWeapon::VEHICLE_GUN, "Vehicle Gun"},
+	    {big::CustomWeapon::TP_GUN, "Teleporter Gun"},
+	    {big::CustomWeapon::PAINT_GUN, "Paint Gun"},
+	};
+
 	void view::weapons()
 	{
 		ImGui::Text("Ammo");
@@ -29,7 +46,7 @@ namespace big
 		components::command_checkbox<"infammo">();
 		components::command_checkbox<"infrange">();
 		ImGui::Checkbox("Increase C4 Limit (Max = 50)", &g.weapons.increased_c4_limit);
-		ImGui::Checkbox("Allow Weapons In Interiors", &g.weapons.interior_weapon);
+		components::command_checkbox<"allowwepsinside">();
 		components::command_checkbox<"rapidfire">();
 
 		ImGui::EndGroup();
@@ -114,14 +131,14 @@ namespace big
 
 		ImGui::SeparatorText("Custom Weapons");
 
-		ImGui::Checkbox("Custom Gun only fires when weapon is out", &g.self.custom_weapon_stop);
+		ImGui::Checkbox("Custom Gun only fires when the weapon is out", &g.self.custom_weapon_stop);
 		CustomWeapon selected = g.weapons.custom_weapon;
 
-		if (ImGui::BeginCombo("Weapon", custom_weapons[(int)selected].name))
+		if (ImGui::BeginCombo("Weapon", custom_weapons[(int)selected].name.data()))
 		{
 			for (const custom_weapon& weapon : custom_weapons)
 			{
-				if (ImGui::Selectable(weapon.name, weapon.id == selected))
+				if (ImGui::Selectable(weapon.name.data(), weapon.id == selected))
 				{
 					g.weapons.custom_weapon = weapon.id;
 				}
@@ -259,7 +276,9 @@ namespace big
 		}
 		if (ImGui::TreeNode("Persist Weapons"))
 		{
-			ImGui::Checkbox("Enabled##persist_weapons", &g.persist_weapons.enabled);
+			ImGui::PushID(1);
+			ImGui::Checkbox("Enabled", &g.persist_weapons.enabled);
+			ImGui::PopID();
 
 			static std::string selected_loadout = g.persist_weapons.weapon_loadout_file;
 			ImGui::PushItemWidth(250);
@@ -290,16 +309,19 @@ namespace big
 			components::button("Set Loadout", [] {
 				persist_weapons::set_weapon_loadout(selected_loadout);
 			});
-			ImGui::Text(std::format("Current Loadout: {}:", g.persist_weapons.weapon_loadout_file).data());
+			ImGui::Text(std::format("{}: {}:", "Current Loadout", g.persist_weapons.weapon_loadout_file).data());
 			ImGui::EndGroup();
 			ImGui::PopItemWidth();
 			ImGui::TreePop();
 		}
 		if (ImGui::TreeNode("Weapon Hotkeys"))
 		{
+			ImGui::PushID(2);
+			ImGui::Checkbox("Enabled", &g.weapons.enable_weapon_hotkeys);
+			ImGui::PopID();
 			ImGui::Checkbox("Enabled##weapon_hotkeys", &g.weapons.enable_weapon_hotkeys);
 			ImGui::SameLine();
-			components::help_marker("This will select the next weapon in the hotkey list.\r\nThe first weapon in the list is the first weapon it will select, then the second is the one it will select after and so on.\r\nAfter the end of the list, it will wrap back to the first weapon.");
+			components::help_marker("This will select the next weapon in the hotkey list.\nThe first weapon in the list is the first weapon it will select, then the second is the one it will select after and so on.\nAfter the end of the list, it will wrap back to the first weapon.");
 
 			static int selected_key = 0;
 			const char* const keys[]{"1", "2", "3", "4", "5", "6"};

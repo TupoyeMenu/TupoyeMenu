@@ -1,3 +1,5 @@
+#include "backend/bool_command.hpp"
+#include "backend/int_command.hpp"
 #include "backend/looped/looped.hpp"
 #include "natives.hpp"
 #include "services/players/player_service.hpp"
@@ -41,6 +43,12 @@ namespace big
 
 		STREAMING::SET_FOCUS_ENTITY(target);
 
+		if (g.player.override_cam_distance)
+			CAM::SET_THIRD_PERSON_CAM_ORBIT_DISTANCE_LIMITS_THIS_UPDATE(1.f, (float)g.player.cam_distance);
+
 		bReset = false;
 	}
+
+	bool_command g_override_cam_distance("overridecamdistance", "Override Camera Distance", "Modify the spectate camera's distance from the player", g.player.override_cam_distance);
+	int_command g_override_cam_distance_int("overridecamdistanceint", "Distance", "The distance between the camera and the player", g.player.cam_distance, 1, 200);
 }

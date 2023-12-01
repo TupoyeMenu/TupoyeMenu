@@ -115,7 +115,7 @@ namespace big
 		components::button("QUB3D", [] {
 			scripts::start_launcher_script(224);
 		});
-		components::button("Camhedz", [] {
+		components::button("CAMHEDZ", [] {
 			scripts::start_launcher_script(225);
 		});
 		ImGui::EndGroup();
@@ -124,7 +124,7 @@ namespace big
 		components::button("Ghost Hunt", [] {
 			scripts::start_launcher_script(174);
 		});
-		components::button("Possesed Animals", [] {
+		components::button("Possessed Animals", [] {
 			scripts::start_launcher_script(179);
 		});
 		ImGui::EndGroup();

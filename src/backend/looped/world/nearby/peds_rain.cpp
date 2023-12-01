@@ -26,6 +26,5 @@ namespace big
 		}
 	};
 
-	ped_rain g_ped_rain("pedrain", "Rain Peds", "Will pour down and rain nearby peds", g.world.nearby.ped_rain);
-
+	ped_rain g_ped_rain("pedrain", "Rain Peds", "Will make random peds in the area rain from the sky.", g.world.nearby.ped_rain);
 }

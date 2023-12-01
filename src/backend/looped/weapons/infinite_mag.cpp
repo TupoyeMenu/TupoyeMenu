@@ -21,5 +21,5 @@ namespace big
 		}
 	};
 
-	infinite_mag g_infinite_mag("infclip", "Infinite Clip", "Shoot forever without needing to reload", g.weapons.infinite_mag);
+	infinite_mag g_infinite_mag("infclip", "Infinite Magazine", "Weapon magazine never decreases.", g.weapons.infinite_mag);
 }

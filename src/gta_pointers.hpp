@@ -10,6 +10,8 @@
  */
 
 #pragma once
+#include "function_types.hpp"
+
 #include <memory/handle.hpp>
 
 class CCommunications;
@@ -40,7 +42,11 @@ namespace rage
 
 	class GenericPool;
 	class VehiclePool;
+	struct game_skeleton;
 }
+
+template<typename T>
+class HashTable;
 
 namespace big
 {
@@ -81,6 +87,8 @@ namespace big
 		CPedFactory** m_ped_factory;
 		CNetworkPlayerMgr** m_network_player_mgr;
 		CNetworkObjectMgr** m_network_object_mgr;
+		rage::game_skeleton* m_game_skeleton;
+		void (*m_nullsub)();
 
 		functions::ptr_to_handle m_ptr_to_handle;
 		functions::handle_to_ptr m_handle_to_ptr;
@@ -105,6 +113,10 @@ namespace big
 		int* m_resolution_y;
 
 		uint32_t* m_region_code;
+
+		uint64_t m_ocean_quads;
+		float* m_gravity_level;
+		functions::set_gravity_level m_set_gravity_level;
 
 		PVOID m_world_model_spawn_bypass;
 		PVOID m_native_return;
@@ -171,6 +183,11 @@ namespace big
 		functions::start_get_session_by_gamer_handle m_start_get_session_by_gamer_handle;
 		functions::start_matchmaking_find_sessions m_start_matchmaking_find_sessions;
 		functions::join_session_by_info m_join_session_by_info;
+
+		functions::invite_player_by_gamer_handle m_invite_player_by_gamer_handle;
+		functions::add_friend_by_gamer_handle m_add_friend_by_gamer_handle;
+		functions::show_profile_by_gamer_handle m_show_profile_by_gamer_handle;
+		uint64_t m_network_config;
 
 		functions::reset_network_complaints m_reset_network_complaints;
 
@@ -355,6 +372,8 @@ namespace big
 		PVOID m_decal_manager;
 
 		bool* m_is_social_club_overlay_active;
+
+		functions::get_ped_bone m_get_ped_bone;
 	};
 #pragma pack(pop)
 	static_assert(sizeof(gta_pointers) % 8 == 0, "Pointers are not properly aligned");

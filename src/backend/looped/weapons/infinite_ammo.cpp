@@ -18,5 +18,5 @@ namespace big
 		}
 	};
 
-	infinite_ammo g_infinite_ammo("infammo", "Infinite Ammo", "Never run out of ammo again", g.weapons.infinite_ammo);
+	infinite_ammo g_infinite_ammo("infammo", "Infinite Ammo", "", g.weapons.infinite_ammo);
 }

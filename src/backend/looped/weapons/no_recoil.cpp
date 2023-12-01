@@ -54,5 +54,5 @@ namespace big
 		}
 	};
 
-	no_recoil g_no_recoil("norecoil", "No Recoil", "Removes weapon recoil when shooting", g.weapons.no_recoil);
+	no_recoil g_no_recoil("norecoil", "No Recoil", "Eliminates view movement when firing a weapon.", g.weapons.no_recoil);
 }

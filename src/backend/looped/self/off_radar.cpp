@@ -27,6 +27,6 @@ namespace big
 		}
 	};
 
-	off_radar g_off_radar("otr", "Off Radar", "Hides your blip from other players", g.self.off_radar);
+	off_radar g_off_radar("otr", "Off The Radar", "Hides your blip from other players", g.self.off_radar);
 	bool_command ghost_org("ghostorg", "Ghost Org", "Use Ghost Organization instead of standard off radar.", g.self.ghost_org);
 }

@@ -62,5 +62,5 @@ namespace big
 		}
 	};
 
-	rapid_fire g_rapid_fire("rapidfire", "Rapid Fire", "Makes your weapon fire insanely fast", g.weapons.rapid_fire);
+	rapid_fire g_rapid_fire("rapidfire", "Rapid Fire", "Maxes out the rate of fire for every weapon.", g.weapons.rapid_fire);
 }

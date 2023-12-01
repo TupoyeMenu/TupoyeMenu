@@ -38,5 +38,5 @@ namespace big
 		}
 	};
 
-	auto_disarm g_auto_disarm("autodisarm", "Auto Disarm", "Disarm nearby pedestrians", g.world.nearby.auto_disarm.enable);
+	auto_disarm g_auto_disarm("autodisarm", "Remove All Ped Guns", "Removes all nearby ped's weapons.", g.world.nearby.auto_disarm.enable);
 }

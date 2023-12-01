@@ -18,5 +18,5 @@ namespace big
 			g_notification_service->push("Empty Session", "Completed");
 		}
 	};
-	empty_session g_empty_session("emptysession", "Empty Session", "Removes everyone from the session", 0);
+	empty_session g_empty_session("emptysession", "Empty Session", "Removes everyone from the session.", 0);
 }

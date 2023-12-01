@@ -29,21 +29,21 @@ namespace big
 			{
 				view::debug_script_events();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("DEBUG_TAB_SCRIPT_EVENTS"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("Script Events"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Globals"))
 			{
 				view::debug_globals();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("DEBUG_TAB_GLOBALS"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("Globals"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Locals"))
 			{
 				view::debug_locals();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("DEBUG_TAB_LOCALS"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("Locals"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Animations"))
@@ -57,7 +57,7 @@ namespace big
 			{
 				view::debug_misc();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("DEBUG_TAB_MISC"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("Misc"));
 				ImGui::EndTabItem();
 			}
 

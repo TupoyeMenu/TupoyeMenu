@@ -35,8 +35,10 @@ namespace big
 			}
 		};
 		
-		if(animations::has_anim_list_been_populated())
-			ImGui::Text(std::format("There are {} dictionaries with {} animations in memory", animations::anim_dict_count(), animations::total_anim_count()).data());
+		if (animations::has_anim_list_been_populated())
+		{
+			ImGui::Text("There are %d dictionaries with %d animations in memory.", animations::anim_dict_count(), animations::total_anim_count());
+		}
 
 		components::button("Fetch All Anims", [] {
 			animations::fetch_all_anims();

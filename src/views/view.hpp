@@ -64,6 +64,9 @@ namespace big
 		static void ambient();
 		static void time_and_weather();
 		static void network_tabs();
+		static void gravity();
+		static void ocean();
+		static void waypoint_and_objective();
 		static void spoofing();
 		static void teleport();
 		static void custom_teleport();
@@ -75,6 +78,7 @@ namespace big
 		static void creator();
 		static void blackhole();
 		static void model_swapper();
+		static void xml_maps();
 		static void gta_cache();
 		static void lua_scripts();
 		static void vfx();

@@ -33,5 +33,5 @@ namespace big
 		}
 	};
 
-	downgrade_vehicle g_downgrade_vehicle("downgradeveh", "Downgrade Vehicle", "Removes all upgrades", 0);
+	downgrade_vehicle g_downgrade_vehicle("downgradeveh", "Downgrade Vehicle", "Removes all the vehicle's upgrades and mods.", 0);
 }

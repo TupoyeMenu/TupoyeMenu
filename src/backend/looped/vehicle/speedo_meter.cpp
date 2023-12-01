@@ -1,3 +1,14 @@
+/**
+ * @file speedo_meter.cpp
+ * 
+ * @copyright GNU General Public License Version 2.
+ * This file is part of YimMenu.
+ * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
+ * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
+ * 
+ */
+
 #include "backend/bool_command.hpp"
 #include "backend/looped/looped.hpp"
 #include "backend/looped_command.hpp"
@@ -58,13 +69,12 @@ namespace big
 				    g.vehicle.speedo_meter.y + .08f,
 				    1);
 			}
+
+			GRAPHICS::SET_SCRIPT_GFX_DRAW_ORDER(1);
 		}
 	};
 
-	speedo_meter
-	    g_speedo_meter("speedometer", "Speedometer", "Enable/disable the speedo meter for vehicles.", g.vehicle.speedo_meter.enabled);
-	bool_command g_speedo_meter_gears("speedometergears", "Show current gear", "Adds the current gear the vehicle is in to the speedo meter.",
-	    g.vehicle.speedo_meter.show_current_gear);
-	bool_command g_speedo_meter_left_side("speedometerleftside", "Align to left", "Aligns the speedo meter text to the left instead of to the right.",
-	    g.vehicle.speedo_meter.left_side);
+	speedo_meter g_speedo_meter("speedometer", "Speedometer", "Enable/disable the speedo meter for vehicles.", g.vehicle.speedo_meter.enabled);
+	bool_command g_speedo_meter_gears("speedometergears", "Show current gear", "Adds the current gear the vehicle is in to the speedo meter.", g.vehicle.speedo_meter.show_current_gear);
+	bool_command g_speedo_meter_left_side("speedometerleftside", "Align to left", "Aligns the speedo meter text to the left instead of to the right.", g.vehicle.speedo_meter.left_side);
 }

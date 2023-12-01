@@ -14,7 +14,7 @@ namespace big
 	void view::lua_scripts()
 	{
 		ImGui::PushItemWidth(250);
-		components::sub_title("Loaded Lua Scipts");
+		components::sub_title("Loaded Lua Scripts");
 
 		if (ImGui::BeginListBox("##empty", ImVec2(200, 200)))
 		{
@@ -33,9 +33,9 @@ namespace big
 
 		if (!selected_module.expired())
 		{
-			ImGui::Text("Scripts Registered: %d", selected_module.lock()->m_registered_scripts.size());
-			ImGui::Text("Memory Patches Registered: %d", selected_module.lock()->m_registered_patches.size());
-			ImGui::Text("GUI Tabs Registered: %d", selected_module.lock()->m_gui.size());
+			ImGui::Text(std::format("{}: {}", "Scripts Registered", selected_module.lock()->m_registered_scripts.size()).c_str());
+			ImGui::Text(std::format("{}: {}", "Memory Patches Registered", selected_module.lock()->m_registered_patches.size()).c_str());
+			ImGui::Text(std::format("{}: {}", "GUI Tabs Registered", selected_module.lock()->m_gui.size()).c_str());
 
 			if (components::button("Reload"))
 			{

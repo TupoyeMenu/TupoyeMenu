@@ -72,7 +72,6 @@ namespace big
 	{
 		components::title("Reactions");
 		draw_reaction(g.reactions.bounty);
-		draw_interloper_reaction(g.reactions.blame_explode);
 		draw_reaction(g.reactions.ceo_kick);
 		draw_reaction(g.reactions.ceo_money);
 		draw_reaction(g.reactions.clear_wanted_level);
@@ -118,8 +117,6 @@ namespace big
 		draw_reaction(g.reactions.request_control_event);
 		draw_reaction(g.reactions.spectate);
 		draw_interloper_reaction(g.reactions.spectate_others);
-		ImGui::Separator();
-		draw_reaction(g.reactions.gamer_instruction_kick);
 
 		ImGui::Separator();
 

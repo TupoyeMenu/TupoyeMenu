@@ -52,6 +52,27 @@ body:
       - Other (please mention in "Additional context")
   validations:
     required: false
+- type: dropdown
+  attributes:
+    label: Language
+    description: Which language do you have GTA 5 set to?
+    multiple: false
+    options:
+      - English
+      - French
+      - Italian
+      - German
+      - Spanish
+      - Japanese
+      - Russian
+      - Polish
+      - Brazilian Portuguese
+      - Traditional Chinese
+      - Simplified Chinese
+      - Latin American Spanish
+      - Korean
+  validations:
+    required: true
 - type: textarea
   attributes:
     label: Additional context

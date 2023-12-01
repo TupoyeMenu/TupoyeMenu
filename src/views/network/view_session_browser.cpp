@@ -28,8 +28,7 @@ namespace big
 		static char name_buf[32];
 		static char search[64];
 		static char session_info[0x100]{};
-
-		ImGui::Text(std::format("Total sessions found: {}", g_matchmaking_service->get_num_found_sessions()).data());
+		ImGui::Text(std::format("{}: {}", "Total sessions found", g_matchmaking_service->get_num_found_sessions()).c_str());
 
 		if (ImGui::BeginListBox("###sessions", ImVec2(300, -ImGui::GetFrameHeight())))
 		{
@@ -50,12 +49,11 @@ namespace big
 
 					if (ImGui::IsItemHovered())
 					{
-						ImGui::SetTooltip(std::format("Num Players: {}\nRegion: {}\nLanguage: {}\nHost: {}",
-						    session.attributes.player_count,
-						    regions[session.attributes.region].name,
-						    languages[session.attributes.language].name,
-						    session.info.m_net_player_data.m_gamer_handle.m_rockstar_id)
-						                      .c_str());
+						auto tool_tip = std::format("{}: {}\n{}: {}\n{}: {}\n{}: {}", "Number of Players", session.attributes.player_count,
+							"Region", regions[session.attributes.region].name,
+						    "Language", languages[session.attributes.language].name,
+						    "Host Rockstar ID", session.info.m_net_player_data.m_gamer_handle.m_rockstar_id);
+						ImGui::SetTooltip(tool_tip.c_str());
 					}
 				}
 			}
@@ -161,7 +159,8 @@ namespace big
 			if (g.session_browser.pool_filter_enabled)
 			{
 				ImGui::SameLine();
-				ImGui::Combo("###pooltype", &g.session_browser.pool_filter, "Normal\0Bad Sport");
+				static const std::string pool_filter_options = std::string("Normal") + '\0' + std::string("Bad Sport");
+				ImGui::Combo("###pooltype", &g.session_browser.pool_filter, pool_filter_options.c_str());
 			}
 
 			ImGui::TreePop();

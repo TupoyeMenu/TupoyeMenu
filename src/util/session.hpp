@@ -9,7 +9,7 @@
  */
 
 #pragma once
-#include "core/data/session_types.hpp"
+#include "core/data/infractions.hpp"
 #include "fiber_pool.hpp"
 #include "gta/joaat.hpp"
 #include "gta_util.hpp"
@@ -63,7 +63,7 @@ namespace big::session
 		else
 		{
 			*scr_globals::session.at(2).as<int*>() = 0;
-			*scr_globals::session2.as<int*>()       = (int)session;
+			*scr_globals::session2.as<int*>()      = (int)session;
 		}
 
 		*scr_globals::session.as<int*>() = 1;
@@ -78,7 +78,7 @@ namespace big::session
 		}
 
 		scr_functions::reset_session_data({true, true});
-		*scr_globals::session3.as<int*>()   = 0;
+		*scr_globals::session3.as<int*>() = 0;
 		*scr_globals::session4.as<int*>() = 1;
 		*scr_globals::session5.as<int*>() = 32;
 
@@ -166,26 +166,63 @@ namespace big::session
 		g_notification_service->push_error("RID Joiner", "Target player is offline?");
 	}
 
+	inline void invite_by_rockstar_id(uint64_t rid)
+	{
+		rage::rlGamerHandle player_handle(rid);
+
+		bool success = g_pointers->m_gta.m_invite_player_by_gamer_handle(g_pointers->m_gta.m_network_config, &player_handle, 1, 0, 0, 0);
+
+		if (!success)
+			return g_notification_service->push_error("Network", "Target player could not be invited, they might be offline?");
+
+		g_notification_service->push_success("Network", "Target player has been invited to your session!");
+	}
+
+	inline void show_profile_by_rockstar_id(uint64_t rid)
+	{
+		rage::rlGamerHandle player_handle(rid);
+
+		g_pointers->m_gta.m_show_profile_by_gamer_handle(&player_handle);
+	}
+
+	inline void add_friend_by_rockstar_id(uint64_t rid)
+	{
+		rage::rlGamerHandle player_handle(rid);
+
+		g_pointers->m_gta.m_add_friend_by_gamer_handle(&player_handle, 0);
+	}
+
+
 	/**
 	 * @brief Adds player to the database and assigns infraction.
 	 * 
 	 * @param player Player to add infraction to.
 	 * @param infraction Infraction to add.
+	 * @param custom_reason Text of the infration.
 	 */
-	inline void add_infraction(player_ptr player, Infraction infraction)
+	inline void add_infraction(player_ptr player, Infraction infraction, const std::string& custom_reason = "")
 	{
 		if (g.debug.fuzzer.enabled)
 			return;
-
-		LOG(INFO) << std::format("Anti-Cheat: {} - {}", player->get_name(), infraction_desc[infraction]);
+		if ((player->is_friend() && g.session.trust_friends) || player->is_trusted || g.session.trust_session)
+			return;
 
 		auto plyr = g_player_database_service->get_or_create_player(player);
 		if (!plyr->infractions.contains((int)infraction))
 		{
 			plyr->is_modder   = true;
 			player->is_modder = true;
+
+			LOG(INFO) << std::format("Anti-Cheat: {} - {}", player->get_name(), plyr->get_infraction_description((int)infraction));
+
 			plyr->infractions.insert((int)infraction);
+			if (infraction == Infraction::CUSTOM_REASON)
+			{
+				plyr->custom_infraction_reason += plyr->custom_infraction_reason.size() ? (std::string(", ") + custom_reason) : custom_reason;
+			}
+
 			g_player_database_service->save();
+
 			g.reactions.modder_detection.process(player);
 		}
 	}

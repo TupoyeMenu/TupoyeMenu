@@ -30,7 +30,5 @@ namespace big
 		}
 	};
 
-	vehicle_rain g_vehicle_rain("vehiclerain", "Rain Vehicles", "Drops surrounding vehicles, vehicles can hit and kill you!",
-	    g.world.nearby.veh_rain);
-
+	vehicle_rain g_vehicle_rain("vehiclerain", "Rain Vehicles", "Will make random vehicles in the area rain from the sky.",g.world.nearby.veh_rain);
 }

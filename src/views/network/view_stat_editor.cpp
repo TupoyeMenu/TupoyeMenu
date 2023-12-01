@@ -204,6 +204,7 @@ namespace big
 			break;
 			case INCREMENT:
 			{
+
 				components::input_text("Stat", stat_increment_text, sizeof(stat_increment_text), ImGuiInputTextFlags_None, [] {
 					g.stat_editor.stat.increment_text = stat_increment_text;
 				});
@@ -477,8 +478,8 @@ namespace big
 				    helper::packed_stat_get_bool(packed_stat_bool_text).c_str());
 		});
 
-		components::sub_title(std::format("Posix Time: {}-{}-{} {}:{}:{}", year, month, day, hour, minute, second));
-		components::sub_title(std::format("Character Index: {}", self::char_index));
+		components::sub_title(std::format("{}: {}-{}-{} {}:{}:{}", "POSIX Time", year, month, day, hour, minute, second));
+		components::sub_title(std::format("{}: {}", "Character Index", self::char_index));
 		components::sub_title("Be aware of stat limits, use with caution, modifying some stats are risky.");
 
 		if (ImGui::BeginTabBar("##stat_editor_tab_bar"))

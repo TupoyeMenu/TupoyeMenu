@@ -28,7 +28,7 @@ namespace big
             const auto hash = args.get<rage::joaat_t>(0);
 			if (!STREAMING::IS_MODEL_IN_CDIMAGE(hash) || !STREAMING::IS_MODEL_A_VEHICLE(hash))
 			{
-				ctx->report_error("Specified model is invalid");
+				ctx->report_error("Specified model is invalid.");
 				return;
 			}
 
@@ -42,7 +42,7 @@ namespace big
 
 			if (veh == 0)
 			{
-				g_notification_service->push_error("Vehicle", "Unable to spawn vehicle");
+				g_notification_service->push_error("Spawn Vehicle", "Unable to spawn vehicle");
 			}
 			else
 			{
@@ -60,7 +60,7 @@ namespace big
 		}
 	};
 
-	spawn_vehicle g_spawn_vehicle("spawn", "Spawn Vehicle", "Spawn a vehicle with the specified model", 1);
+	spawn_vehicle g_spawn_vehicle("spawn", "Spawn Vehicle", "Spawn a vehicle with the specified model.", 1);
 	bool_command g_spawn_maxed("spawnmaxed", "Spawn Maxed", "Controls whether the vehicle spawned will have its mods maxed out",
 	    g.spawn_vehicle.spawn_maxed);
 	bool_command g_spawn_inside("spawnin", "Spawn Inside", "Controls whether the player should be set inside the vehicle after it spawns",

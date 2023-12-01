@@ -18,7 +18,7 @@ namespace big
 	class packet
 	{
 	public:
-		char m_data[0x4000]{};
+		char m_data[0x400]{};
 		rage::datBitBuffer m_buffer;
 
 		packet();

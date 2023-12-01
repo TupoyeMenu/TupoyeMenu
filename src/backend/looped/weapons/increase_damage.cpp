@@ -34,5 +34,5 @@ namespace big
 	};
 
 	increased_damage
-	    g_increased_damage("incrdamage", "Damage Override", "Sets your damage to whatever you want", g.weapons.increase_damage);
+	    g_increased_damage("incrdamage", "Damage Override", "Sets the damage of your weapons.", g.weapons.increase_damage);
 }
