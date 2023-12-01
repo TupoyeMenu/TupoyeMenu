@@ -1,14 +1,3 @@
-/**
- * @file view_debug_locals.cpp
- * @brief In game script local editor.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "gta_util.hpp"
 #include "gui/components/components.hpp"
 #include "script_local.hpp"
@@ -235,35 +224,18 @@ namespace big
 		auto local_thread = gta_util::find_script_thread(rage::joaat(local_test.script_name));
 
 		if (local_thread == nullptr)
-			ImGui::Text("Script does not exist.");
+			ImGui::TextUnformatted("Script does not exist.");
 
 		ImGui::PushItemWidth(200.f);
 
 		if (ImGui::InputScalar("Local", ImGuiDataType_U16, &local_test.local_index))
 			local_laddie = script_local(local_thread, local_test.local_index);
 
-		ImGui::PopItemWidth();
-
 		for (int i = 0; i < local_test.local_appendages.size(); i++)
 		{
-			static local_debug local_test{};
-			static script_local local_laddie = script_local(local_test.local_index);
-
-			ImGui::SetNextItemWidth(300.f);
-
-			components::input_text("Script Name", local_test.script_name);
-
-			auto local_thread = gta_util::find_script_thread(rage::joaat(local_test.script_name));
-
-			if (local_thread == nullptr)
-				ImGui::Text("Script does not exist.");
-
-			ImGui::PushItemWidth(200.f);
-
-			if (ImGui::InputScalar("Local", ImGuiDataType_U16, &local_test.local_index))
-				local_laddie = script_local(local_thread, local_test.local_index);
-
-			for (int i = 0; i < local_test.local_appendages.size(); i++)
+			auto item = local_test.local_appendages[i];
+			ImGui::PushID(i + item.type);
+			switch (item.type)
 			{
 			case LocalAppendageType_At:
 				ImGui::InputScalar("At", ImGuiDataType_U16, &local_test.local_appendages[i].index);
@@ -271,7 +243,7 @@ namespace big
 				ImGui::InputScalar("Size", ImGuiDataType_U16, &local_test.local_appendages[i].size);
 				break;
 			case LocalAppendageType_ReadLocal:
-				ImGui::Text(std::format("{} {}", "Read Local", item.local_name).c_str());
+				ImGui::Text("%s %s", "Read Local", item.local_name.c_str());
 				ImGui::SameLine();
 				ImGui::InputScalar("Size", ImGuiDataType_U16, &local_test.local_appendages[i].size);
 				break;
@@ -284,13 +256,13 @@ namespace big
 			ImGui::PopID();
 		}
 
-			ImGui::PopItemWidth();
+		ImGui::PopItemWidth();
 
-			if (ImGui::Button("Add Offset"))
-				local_test.local_appendages.push_back({LocalAppendageType_At, 0LL, 0ULL});
-			ImGui::SameLine();
-			if (ImGui::Button("Add Read Player Id"))
-				local_test.local_appendages.push_back({LocalAppendageType_PlayerId, 0LL, 0ULL});
+		if (ImGui::Button("Add Offset"))
+			local_test.local_appendages.push_back({LocalAppendageType_At, 0LL, 0ULL});
+		ImGui::SameLine();
+		if (ImGui::Button("Add Read Player Id"))
+			local_test.local_appendages.push_back({LocalAppendageType_PlayerId, 0LL, 0ULL});
 
 		if (local_test.local_appendages.size() > 0 && ImGui::Button("Remove Offset"))
 			local_test.local_appendages.pop_back();
@@ -351,7 +323,7 @@ namespace big
 		}
 		else
 		{
-			ImGui::Text("Invalid Local data read.");
+			ImGui::TextUnformatted("Invalid Local data read.");
 		}
 
 		ImGui::PopItemWidth();
@@ -361,7 +333,7 @@ namespace big
 
 		auto locals = list_locals();
 		static std::string selected_local;
-		ImGui::Text("Saved Locals");
+		ImGui::TextUnformatted("Saved Locals");
 		if (ImGui::BeginListBox("##savedlocals", ImVec2(200, 250)))
 		{
 			for (auto pair : locals)
