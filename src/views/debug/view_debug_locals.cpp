@@ -91,21 +91,39 @@ namespace big
 			if (item.type == LocalAppendageType_At)
 			{
 				if (item.size != 0)
+				{
 					local_to_read = local_to_read.at(item.index, item.size);
+				}
 				else
+				{
 					local_to_read = local_to_read.at(item.index);
+				}
 			}
 			else if (item.type == LocalAppendageType_ReadLocal)
 			{
 				local_debug local_read;
 				load_local_menu(item.local_name, local_read);
-				if (auto ptr = get_local_ptr(local_thread, local_read))
+				if (auto ptr = (PINT)get_local_ptr(local_thread, local_read))
+				{
+					auto value = *ptr;
+					if (value < 0 || value > INT16_MAX)
+					{
+						LOG(WARNING) << item.local_name << " was out of bounds for a Read Local.";
+						continue;
+					}
 					if (item.size != 0)
-						local_to_read = local_to_read.at(*ptr, item.size);
+					{
+						local_to_read = local_to_read.at(value, item.size);
+					}
 					else
-						local_to_read = local_to_read.at(*ptr);
+					{
+						local_to_read = local_to_read.at(value);
+					}
+				}
 				else
+				{
 					LOG(WARNING) << "Failed to read " << item.local_name << "for get_local_ptr";
+				}
 			}
 			else if (item.type == LocalAppendageType_PlayerId)
 			{
@@ -228,9 +246,24 @@ namespace big
 
 		for (int i = 0; i < local_test.local_appendages.size(); i++)
 		{
-			auto item = local_test.local_appendages[i];
-			ImGui::PushID(i + item.type);
-			switch (item.type)
+			static local_debug local_test{};
+			static script_local local_laddie = script_local(local_test.local_index);
+
+			ImGui::SetNextItemWidth(300.f);
+
+			components::input_text("Script Name", local_test.script_name);
+
+			auto local_thread = gta_util::find_script_thread(rage::joaat(local_test.script_name));
+
+			if (local_thread == nullptr)
+				ImGui::Text("Script does not exist.");
+
+			ImGui::PushItemWidth(200.f);
+
+			if (ImGui::InputScalar("Local", ImGuiDataType_U16, &local_test.local_index))
+				local_laddie = script_local(local_thread, local_test.local_index);
+
+			for (int i = 0; i < local_test.local_appendages.size(); i++)
 			{
 			case LocalAppendageType_At:
 				ImGui::InputScalar("At", ImGuiDataType_U16, &local_test.local_appendages[i].index);
@@ -251,11 +284,13 @@ namespace big
 			ImGui::PopID();
 		}
 
-		if (ImGui::Button("Add Offset"))
-			local_test.local_appendages.push_back({LocalAppendageType_At, 0LL, 0ULL});
-		ImGui::SameLine();
-		if (ImGui::Button("Add Read Player Id"))
-			local_test.local_appendages.push_back({LocalAppendageType_PlayerId, 0LL, 0ULL});
+			ImGui::PopItemWidth();
+
+			if (ImGui::Button("Add Offset"))
+				local_test.local_appendages.push_back({LocalAppendageType_At, 0LL, 0ULL});
+			ImGui::SameLine();
+			if (ImGui::Button("Add Read Player Id"))
+				local_test.local_appendages.push_back({LocalAppendageType_PlayerId, 0LL, 0ULL});
 
 		if (local_test.local_appendages.size() > 0 && ImGui::Button("Remove Offset"))
 			local_test.local_appendages.pop_back();

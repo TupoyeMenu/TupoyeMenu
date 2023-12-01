@@ -17,7 +17,7 @@ namespace big
 	{
 	public:
 		constexpr script_global(std::size_t index) :
-			m_index(index)
+		    m_index(index)
 		{
 		}
 
@@ -45,6 +45,5 @@ namespace big
 	private:
 		void* get() const;
 		std::size_t m_index;
-
 	};
 }

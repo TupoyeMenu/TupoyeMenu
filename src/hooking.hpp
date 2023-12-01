@@ -10,14 +10,15 @@
 
 #pragma once
 #include "MinHook.h"
+#include "call_hook.hpp"
 #include "common.hpp"
 #include "detour_hook.hpp"
 #include "gta/enums.hpp"
 #include "gta/fwddec.hpp"
+#include "gta/json_serializer.hpp"
 #include "gta/script_thread.hpp"
 #include "vmt_hook.hpp"
 #include "vtable_hook.hpp"
-#include "call_hook.hpp"
 
 #include <network/netConnection.hpp>
 
@@ -140,11 +141,12 @@ namespace big
 		static void serialize_take_off_ped_variation_task(ClonedTakeOffPedVariationInfo* info, rage::CSyncDataBase* serializer);
 		static void serialize_parachute_task(__int64 info, rage::CSyncDataBase* serializer);
 
-		static void queue_dependency(void* dependency);
+		static int queue_dependency(void* a1, int a2, int64_t dependency);
+
+		static bool prepare_metric_for_sending(rage::json_serializer* bit_buffer, int unk, int time, rage::rlMetric* metric);
 
 		static int linux_dx_error_fix();
 
-		static bool prepare_metric_for_sending(rage::datBitBuffer* bit_buffer, int unk, int time, rage::rlMetric* metric);
 		static bool http_start_request(void* request, const char* uri);
 
 		static bool received_array_update(rage::netArrayHandlerBase* array, CNetGamePlayer* sender, rage::datBitBuffer* buffer, int size, int16_t cycle);
@@ -197,7 +199,6 @@ namespace big
 		static bool sync_reader_serialize_array(void* _this, void* array, int size);
 
 		static bool remove_player_from_sender_list(void* list, uint64_t rockstar_id);
-		static void game_skeleton_update(__int64 skeleton, int type);
 	};
 
 	class minhook_keepalive
@@ -287,8 +288,6 @@ namespace big
 
 		vmt_hook m_swapchain_hook;
 		vtable_hook m_sync_data_reader_hook;
-		call_hook m_remove_player_from_sender_list_caller_1_hook;
-		call_hook m_remove_player_from_sender_list_caller_2_hook;
 
 		WNDPROC m_og_wndproc = nullptr;
 

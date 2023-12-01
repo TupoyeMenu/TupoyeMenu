@@ -15,6 +15,8 @@
 #include "hooking.hpp"
 #include "memory/all.hpp"
 #include "rage/atSingleton.hpp"
+#include "rage/gameSkeleton.hpp"
+#include "sc_pointers_layout_info.hpp"
 #include "security/RageSecurity.hpp"
 
 #ifdef ENABLE_SOCIALCLUB
@@ -1023,7 +1025,7 @@ namespace big
         // Queue Dependency
         {
             "QD",
-            "48 89 5C 24 ? 57 48 83 EC ? 0F B6 99",
+            "48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 20 8B F2 49 8B F8",
             [](memory::handle ptr)
             {
                 g_pointers->m_gta.m_queue_dependency = ptr.as<PVOID>();
@@ -1469,15 +1471,6 @@ namespace big
                 g_pointers->m_gta.m_delete_object = ptr.as<functions::delete_object>();
             }
         },
-        // Remove Player From Sender List
-        {
-            "RPFSL",
-            "48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 20 33 F6 48 8B FA 48 8B D9 66 39 71 08 76",
-            [](memory::handle ptr)
-            {
-                g_pointers->m_gta.m_remove_player_from_sender_list = ptr.as<functions::remove_player_from_sender_list>();
-            }
-        },
         // Max Wanted Level
         {
             "MWL",
@@ -1737,31 +1730,31 @@ namespace big
                 g_pointers->m_gta.m_is_social_club_overlay_active = ptr.add(2).rip().as<bool*>();
             }
         },
-        // Remove Player From Sender List Caller 1
+        // Game Skeleton
         {
-            "RPFSLC1",
-            "E8 ? ? ? ? 84 C0 74 0D B0 01 EB 1E",
+            "GS",
+            "48 8D 0D ? ? ? ? BA ? ? ? ? 74 05 BA ? ? ? ? E8 ? ? ? ? E8 ? ? ? ? C6 05 ? ? ? ? ? 48 8D 0D ? ? ? ? BA ? ? ? ? 84 DB 75 05 BA ? ? ? ? E8 ? ? ? ? 48 8B CD C6 05 ? ? ? ? ? E8 ? ? ? ? 84",
             [](memory::handle ptr)
             {
-                g_pointers->m_gta.m_remove_player_from_sender_list_caller_1 = ptr.as<PVOID>();
+                g_pointers->m_gta.m_game_skeleton = ptr.add(3).rip().as<rage::game_skeleton*>();
             }
         },
-        // Remove Player From Sender List Caller 2
+        // Nullsub
         {
-            "RPFSLC2",
-            "E8 ? ? ? ? 84 C0 74 0A B0 01 EB 08",
+            "NS",
+            "C3",
             [](memory::handle ptr)
             {
-                g_pointers->m_gta.m_remove_player_from_sender_list_caller_2 = ptr.as<PVOID>();
+                g_pointers->m_gta.m_nullsub = ptr.as<void(*)()>();
             }
         },
-        // Game Skeleton Update
+        // Get Ped Bone
         {
-            "GSU",
-            "40 53 48 83 EC 20 48 8B 81 40 01",
+            "GPB",
+            "48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 83 EC 60 48 8B 01 41 8B E8 48 8B F2",
             [](memory::handle ptr)
             {
-                g_pointers->m_gta.m_game_skeleton_update = ptr.as<PVOID>();
+                g_pointers->m_gta.m_get_ped_bone = ptr.as<functions::get_ped_bone>();
             }
         }
         >(); // don't leave a trailing comma at the end

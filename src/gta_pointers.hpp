@@ -10,8 +10,9 @@
  */
 
 #pragma once
-#include <memory/handle.hpp>
 #include "function_types.hpp"
+
+#include <memory/handle.hpp>
 
 class CCommunications;
 class FriendRegistry;
@@ -41,6 +42,7 @@ namespace rage
 
 	class GenericPool;
 	class VehiclePool;
+	struct game_skeleton;
 }
 
 template<typename T>
@@ -85,6 +87,8 @@ namespace big
 		CPedFactory** m_ped_factory;
 		CNetworkPlayerMgr** m_network_player_mgr;
 		CNetworkObjectMgr** m_network_object_mgr;
+		rage::game_skeleton* m_game_skeleton;
+		void (*m_nullsub)();
 
 		functions::ptr_to_handle m_ptr_to_handle;
 		functions::handle_to_ptr m_handle_to_ptr;
@@ -369,11 +373,7 @@ namespace big
 
 		bool* m_is_social_club_overlay_active;
 
-		functions::remove_player_from_sender_list m_remove_player_from_sender_list;
-		PVOID m_remove_player_from_sender_list_caller_1;
-		PVOID m_remove_player_from_sender_list_caller_2;
-
-		PVOID m_game_skeleton_update;
+		functions::get_ped_bone m_get_ped_bone;
 	};
 #pragma pack(pop)
 	static_assert(sizeof(gta_pointers) % 8 == 0, "Pointers are not properly aligned");

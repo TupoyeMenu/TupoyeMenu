@@ -46,7 +46,7 @@ namespace big
 		components::command_checkbox<"infammo">();
 		components::command_checkbox<"infrange">();
 		ImGui::Checkbox("Increase C4 Limit (Max = 50)", &g.weapons.increased_c4_limit);
-		ImGui::Checkbox("Allow Weapons In Interiors", &g.weapons.interior_weapon);
+		components::command_checkbox<"allowwepsinside">();
 		components::command_checkbox<"rapidfire">();
 
 		ImGui::EndGroup();
