@@ -334,12 +334,10 @@ namespace big
 		components::input_text("Name", new_name, sizeof(new_name));
 		ImGui::InputScalar("Rockstar ID", ImGuiDataType_S64, &new_rockstar_id);
 
-#ifndef __clang__ // ! FIXME What?
 		if (ImGui::Button("Add"))
 		{
 			current_player = g_player_database_service->add_player(new_rockstar_id, new_name);
 			g_player_database_service->save();
 		}
-#endif
 	}
 }

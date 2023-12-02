@@ -191,6 +191,8 @@ namespace big
 
 		functions::reset_network_complaints m_reset_network_complaints;
 
+		PVOID m_get_pool_type;
+
 		functions::fidevice_get_device m_fidevice_get_device;
 		functions::fipackfile_ctor m_fipackfile_ctor;
 		functions::fipackfile_dtor m_fipackfile_dtor;

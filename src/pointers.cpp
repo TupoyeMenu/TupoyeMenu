@@ -320,6 +320,12 @@ namespace big
 			g_pointers->m_gta.m_reset_network_complaints = ptr.add(1).rip().as<functions::reset_network_complaints>();
 		});
 
+		// Get Pool Type
+		main_batch.add("GPT", "48 89 5C 24 ? 57 48 83 EC 20 48 8B 1D ? ? ? ? BA", [](memory::handle ptr)
+		{
+			g_pointers->m_gta.m_get_pool_type = ptr.as<PVOID>();
+		});
+
 		// fiDevice Get Device
 		main_batch.add("FDGD", "41 B8 07 00 00 00 48 8B F1 E8", [](memory::handle ptr) {
 			g_pointers->m_gta.m_fidevice_get_device = ptr.sub(0x1F).as<functions::fidevice_get_device>();
@@ -987,7 +993,7 @@ namespace big
 		});
 
 		// Nullsub
-		main_batch.add("NS", "C3", [](memory::handle ptr) {
+		main_batch.add("NS", "90 C3", [](memory::handle ptr) {
 			g_pointers->m_gta.m_nullsub = ptr.as<void (*)()>();
 		});
 

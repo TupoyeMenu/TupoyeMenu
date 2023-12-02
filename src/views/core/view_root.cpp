@@ -32,6 +32,8 @@ namespace big
 		if (g.window.about)
 			view::about_view();
 
+		g_lua_manager->draw_independent_gui();
+
 		view::menu_bar();
 	}
 }
