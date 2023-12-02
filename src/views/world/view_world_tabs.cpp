@@ -23,21 +23,14 @@ namespace big
 			{
 				view::world();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("World"));
-				ImGui::EndTabItem();
-			}
-			if (ImGui::BeginTabItem("Time And Weather"))
-			{
-				view::time_and_weather();
-				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("Time And Weather"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_WORLD"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Spawn Ped"))
 			{
 				view::spawn_ped();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("Spawn Ped"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SPAWN_PED"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Embient Population"))
@@ -51,28 +44,35 @@ namespace big
 			{
 				view::creator();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("Creator"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_CREATOR"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Blackhole"))
 			{
 				view::blackhole();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("Blackhole"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_BLACKHOLE"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Model Swapper"))
 			{
 				view::model_swapper();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("Model Swapper"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_MODEL_SWAPPER"));
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("VFX"))
 			{
 				view::vfx();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("VFX"));
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_VFX"));
+				ImGui::EndTabItem();
+			}
+			if (ImGui::BeginTabItem("XML"))
+			{
+				view::xml_maps();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_XML_MAPS"));
 				ImGui::EndTabItem();
 			}
 

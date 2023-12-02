@@ -9,7 +9,20 @@ namespace big
 {
 	void view::world()
 	{
-		ImGui::TextUnformatted("Peds");
+		ImGui::SeparatorText("Time And Weather");
+		{
+			view::time_and_weather();
+		}
+
+		ImGui::SeparatorText("Gravity");
+		{
+			view::gravity();
+		}
+
+		ImGui::SeparatorText("Ocean");
+		{
+			view::ocean();
+		}
 
 		ImGui::SeparatorText("Ocean");
 		{
