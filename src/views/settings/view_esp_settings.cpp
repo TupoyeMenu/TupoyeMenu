@@ -33,20 +33,21 @@ namespace big
 		}
 
 		ImGui::Checkbox("Box ESP", &g.esp.box);
-		if (g.esp.box)
-		{
-			ImGui::TextUnformatted("Box Render Distance (min, max)");
-			ImGui::SliderFloat2("###Box Render Distance",
-			    g.esp.box_render_distance,
-			    g.esp.global_render_distance[0],
-			    g.esp.global_render_distance[1]);
-		}
+		ImGui::BeginDisabled(!g.esp.box);
+		ImGui::TextUnformatted("Box Render Distance (min, max)");
+		ImGui::SliderFloat2("###Box Render Distance", g.esp.box_render_distance, g.esp.global_render_distance[0], g.esp.global_render_distance[1]);
+		ImGui::EndDisabled();
 
 		ImGui::Checkbox("Show Player Name", &g.esp.name);
 		ImGui::Checkbox("Show Player Distance", &g.esp.distance);
 		ImGui::Checkbox("Show Player Godmode", &g.esp.god);
 		ImGui::Checkbox("Show Player Health", &g.esp.health);
 		ImGui::Checkbox("Show Player Armor", &g.esp.armor);
+
+		ImGui::Checkbox("Object ESP", &g.esp.object_esp);
+		ImGui::BeginDisabled(!g.esp.object_esp);
+		ImGui::Checkbox("Show G's Cache Boxes", &g.esp.show_gs_cache_boxes);
+		ImGui::EndDisabled();
 
 		ImGui::Checkbox("Should ESP Color Change with Distance", &g.esp.change_esp_color_from_dist);
 		if (g.esp.health)

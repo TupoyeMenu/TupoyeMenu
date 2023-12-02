@@ -700,14 +700,18 @@ namespace big
 		main_batch.add("PEP", "4C 8B 35 ? ? ? ? B8 ? ? ? ? 0F 57 F6 89 05 ? ? ? ? 49 63 76 10 4C 8B FE 85 F6 0F 84 ? ? ? ? 49 8B 46 08 49 FF CF FF CE 42 0F B6 0C 38", [](memory::handle ptr) {
 			g_pointers->m_gta.m_ped_pool = ptr.add(3).rip().as<GenericPool**>();
 		});
+
 		// Prop Pool
-		main_batch.add("PRP", "48 8B 0D ? ? ? ? 49 8B D0 E8 ? ? ? ? 39 03 EB 19 41 80 78 ? ? 75 15 48 8B 0D ? ? ? ? 49 8B D0 E8 ? ? ? ? 39 43 04", [](memory::handle ptr) {
+		main_batch.add("PRP", "48 8B 05 ? ? ? ? 0F B7 50 10 48 8B 05", [](memory::handle ptr) {
 			g_pointers->m_gta.m_prop_pool = ptr.add(3).rip().as<GenericPool**>();
+			g_pointers->m_gta.m_pickup_pool = ptr.add(0xE).rip().as<GenericPool**>();
 		});
+
 		// Vehicle Pool
 		main_batch.add("VEP", "4C 8B 25 ? ? ? ? 8B 29 33 F6 49 8B 04 24 33 DB 4C 8D 71 08 44 8B 78 08 45 85 FF 0F 8E ? ? ? ? 4D 8B 0C 24 41 3B 59 08 7D 29 49 8B 51 30 44 8B C3 8B CB 49 C1 E8 05 83 E1 1F 44 8B D3 42 8B 04 82", [](memory::handle ptr) {
 			g_pointers->m_gta.m_vehicle_pool = ptr.add(3).rip().as<VehiclePool***>();
 		});
+
 		// NetFilter Handle Message
 		main_batch.add("NHM", "40 55 56 57 41 54 41 55 41 56 41 57 48 81 EC 50 01 00 00 48 8D 6C 24 30", [](memory::handle ptr) {
 			g_pointers->m_gta.m_netfilter_handle_message = ptr.as<PVOID>();
@@ -913,18 +917,13 @@ namespace big
 			g_pointers->m_gta.m_register_file = ptr.add(5).as<functions::register_file_t>();
 		});
 
-		// Pickup Pool
-		main_batch.add("PiP", "4C 8B 05 ? ? ? ? 40 8A F2 8B E9", [](memory::handle ptr) {
-			g_pointers->m_gta.m_pickup_pool = ptr.add(3).rip().as<GenericPool**>();
-		});
-
 		// Camera Pool
 		main_batch.add("CP", "48 8B C8 EB 02 33 C9 48 85 C9 74 26", [](memory::handle ptr) {
 			g_pointers->m_gta.m_camera_pool = ptr.sub(9).rip().as<GenericPool**>();
 		});
 #endif // ENABLE_ASI_LOADER
 
-    // Linux DX Error Fix
+	    // Linux DX Error Fix
 		main_batch.add("LDEF", "40 55 48 8B EC 48 83 EC 60 48 8B 0D", [](memory::handle ptr) {
 			g_pointers->m_gta.m_linux_dx_error_fix = ptr.as<PVOID>();
 		});

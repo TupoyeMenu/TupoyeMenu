@@ -300,9 +300,9 @@ namespace big
 
 		GenericPool** m_ped_pool;
 		GenericPool** m_prop_pool;
+		GenericPool** m_pickup_pool;
 		VehiclePool*** m_vehicle_pool;
 #ifdef ENABLE_ASI_LOADER
-		GenericPool** m_pickup_pool;
 		GenericPool** m_camera_pool;
 #endif // ENABLE_ASI_LOADER
 
