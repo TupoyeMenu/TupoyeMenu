@@ -18,6 +18,8 @@
 #include "bindings/stats.hpp"
 #include "bindings/tunables.hpp"
 #include "bindings/vector.hpp"
+#include "bindings/weapons.hpp"
+#include "bindings/vehicles.hpp"
 #include "file_manager.hpp"
 #include "script_mgr.hpp"
 
@@ -207,6 +209,8 @@ namespace big
 		lua::imgui::bind(m_state, m_state.globals());
 		lua::entities::bind(m_state);
 		lua::stats::bind(m_state);
+		lua::weapons::bind(m_state);
+		lua::vehicles::bind(m_state);
 	}
 
 	void lua_module::load_and_call_script()

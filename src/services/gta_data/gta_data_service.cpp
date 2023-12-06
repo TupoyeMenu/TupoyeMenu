@@ -83,7 +83,7 @@ namespace big
 	const ped_item& gta_data_service::ped_by_hash(uint32_t hash)
 	{
 		for (const auto& [name, ped] : m_peds)
-			if (rage::joaat(name) == hash)
+			if (ped.m_hash == hash)
 				return ped;
 		return gta_data_service::empty_ped;
 	}
@@ -91,7 +91,7 @@ namespace big
 	const vehicle_item& gta_data_service::vehicle_by_hash(uint32_t hash)
 	{
 		for (const auto& [name, veh] : m_vehicles)
-			if (rage::joaat(name) == hash)
+			if (veh.m_hash == hash)
 				return veh;
 		return gta_data_service::empty_vehicle;
 	}
@@ -99,7 +99,7 @@ namespace big
 	const weapon_item& gta_data_service::weapon_by_hash(uint32_t hash)
 	{
 		for (const auto& [name, weapon] : m_weapons_cache.weapon_map)
-			if (rage::joaat(name) == hash)
+			if (weapon.m_hash == hash)
 				return weapon;
 		return gta_data_service::empty_weapon;
 	}

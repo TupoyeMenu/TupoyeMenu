@@ -225,6 +225,18 @@ namespace big
 
 			ImGui::EndCombo();
 		}
+		ImGui::SeparatorText("Vehicle Abilities");
+		{
+			components::command_checkbox<"modifyvehicleability">();
+
+			if (g.vehicle.abilities.enabled)
+			{
+				components::command_checkbox<"rocketability">();
+				components::command_checkbox<"jumpability">();
+				components::command_checkbox<"parachuteability">();
+				components::command_checkbox<"rampability">();
+			}
+		}
 
 		ImGui::SeparatorText("Vehicle Fly");
 		{
