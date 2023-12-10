@@ -92,6 +92,7 @@ namespace big
 			{
 				g.esp.friend_color = ImGui::ColorConvertFloat4ToU32(col_friend);
 			}
+			ImGui::TreePop();
 		}
 
 		ImGui::EndDisabled();

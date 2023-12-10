@@ -108,6 +108,7 @@ namespace lua::event
 		        {"PlayerMgrShutdown", menu_event::PlayerMgrShutdown},
 		        {"ChatMessageReceived", menu_event::ChatMessageReceived},
 		        {"ScriptedGameEventReceived", menu_event::ScriptedGameEventReceived},
+		        {"SendMetric", menu_event::SendMetric},
 		    });
 
 

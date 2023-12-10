@@ -24,11 +24,6 @@ namespace big
 			view::ocean();
 		}
 
-		ImGui::SeparatorText("Ocean");
-		{
-			view::ocean();
-		}
-
 		ImGui::SeparatorText("Waypoint And Objective");
 		{
 			view::waypoint_and_objective();

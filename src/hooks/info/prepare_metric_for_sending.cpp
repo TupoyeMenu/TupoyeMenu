@@ -11,6 +11,10 @@
 #include "hooking.hpp"
 #include "rage/rlMetric.hpp"
 
+#if defined(ENABLE_LUA)
+#include "lua/lua_manager.hpp"
+#endif // ENABLE_LUA
+
 namespace big
 {
 	const auto bad_metrics = std::unordered_set<std::string_view>({
@@ -119,6 +123,10 @@ namespace big
 		{
 			LOG(INFO) << "METRIC: " << metric->get_name() << "; DATA: " << yim_serializer.get_string();
 		}
+
+#if defined(ENABLE_LUA)
+			g_lua_manager->trigger_event<menu_event::SendMetric>(yim_serializer.get_string());
+#endif // ENABLE_LUA
 
 		return g_hooking->get_original<prepare_metric_for_sending>()(serializer, unk, time, metric);
 	}

@@ -9,4 +9,5 @@ enum class menu_event
     ChatMessageReceived,
     ScriptedGameEventReceived,
     NetworkBail,
+    SendMetric,
 };

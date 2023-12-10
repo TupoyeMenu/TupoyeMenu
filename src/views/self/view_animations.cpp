@@ -61,10 +61,12 @@ namespace big
 			ImGui::SliderFloat("Blend in", &g_ped_animation_service.current_animation.blendin, -5, 10);
 			ImGui::SliderFloat("Blend out", &g_ped_animation_service.current_animation.blendout, -5, 10);
 			ImGui::InputInt("Duration in milliseconds", &g_ped_animation_service.current_animation.time_to_play);
+			ImGui::SameLine();
 			components::help_marker("-1 will make the duration indefinite, assuming it is looped");
 			ImGui::PopItemWidth();
 
 			ImGui::Checkbox("Ambient", &g_ped_animation_service.current_animation.ambient);
+			ImGui::SameLine();
 			components::help_marker("Current location and rotation will be saved and used");
 
 			if (g_ped_animation_service.current_animation.ambient)
@@ -95,8 +97,10 @@ namespace big
 			ImGui::CheckboxFlags("Uninterruptable", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::NOT_INTERRUPTABLE));
 			ImGui::CheckboxFlags("Only Upperbody", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::UPPERBODY));
 			ImGui::CheckboxFlags("Secondary", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::SECONDARY));
+			ImGui::SameLine();
 			components::help_marker("Allow primary animations to run simultaneously, such as walking.");
 			ImGui::CheckboxFlags("Realize Animation Orientation", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::REORIENT_WHEN_FINISHED));
+			ImGui::SameLine();
 			components::help_marker("Use the final orientation achieved in the animation.");
 			ImGui::CheckboxFlags("Hide Weapon", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::HIDE_WEAPON));
 
@@ -106,11 +110,14 @@ namespace big
 
 			//Sync flags
 			ImGui::CheckboxFlags("Sync In", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TAG_SYNC_IN));
+			ImGui::SameLine();
 			components::help_marker("Seamless transition into the animation, for example from walking.");
 
 			ImGui::CheckboxFlags("Sync Out", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TAG_SYNC_OUT));
+			ImGui::SameLine();
 			components::help_marker("Seamless transition out of the animation, for example to continue walking.");
 			ImGui::CheckboxFlags("Sync Continuous", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TAG_SYNC_CONTINUOUS));
+			ImGui::SameLine();
 			components::help_marker("Seamless transition during the animation, especially usefull for upperbody animations.");
 			ImGui::CheckboxFlags("Force Start", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::FORCE_START));
 			ImGui::CheckboxFlags("Disable Collision", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TURN_OFF_COLLISION));
@@ -177,6 +184,7 @@ namespace big
 		ImGui::SameLine();
 
 		ImGui::Checkbox("Prompt Ambient", &g.self.prompt_ambient_animations);
+		ImGui::SameLine();
 		components::help_marker("Ambient animations will be prompted if you are close to one.");
 
 		static std::string filter;

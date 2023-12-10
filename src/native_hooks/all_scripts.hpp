@@ -26,7 +26,7 @@ namespace big
 {
 	namespace all_scripts
 	{
-		void IS_DLC_PRESENT(rage::scrNativeCallContext* src)
+		inline void IS_DLC_PRESENT(rage::scrNativeCallContext* src)
 		{
 			const auto hash = src->get_arg<rage::joaat_t>(0);
 
@@ -69,7 +69,7 @@ namespace big
 				src->set_return_value<BOOL>(SOCIALCLUB::SC_TRANSITION_NEWS_SHOW_TIMED(src->get_arg<Any>(0), src->get_arg<Any>(0)));
 		}
 
-		void NETWORK_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(rage::scrNativeCallContext* src)
+		inline void NETWORK_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(rage::scrNativeCallContext* src)
 		{
 			if (src->get_arg<int>(2) != -1 && src->get_arg<uint32_t>(2) >= 0x100)
 			{
@@ -80,7 +80,7 @@ namespace big
 			NETWORK::NETWORK_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(src->get_arg<int>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2));
 		}
 
-		void NETWORK_TRY_TO_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(rage::scrNativeCallContext* src)
+		inline void NETWORK_TRY_TO_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(rage::scrNativeCallContext* src)
 		{
 			if (src->get_arg<int>(2) != -1 && src->get_arg<uint32_t>(2) >= 0x100)
 			{
@@ -92,7 +92,7 @@ namespace big
 			src->set_return_value<BOOL>(NETWORK::NETWORK_TRY_TO_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(src->get_arg<int>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2)));
 		}
 
-		void SET_CURRENT_PED_WEAPON(rage::scrNativeCallContext* src)
+		inline void SET_CURRENT_PED_WEAPON(rage::scrNativeCallContext* src)
 		{
 			const auto ped  = src->get_arg<Ped>(0);
 			const auto hash = src->get_arg<rage::joaat_t>(1);
@@ -103,7 +103,7 @@ namespace big
 			WEAPON::SET_CURRENT_PED_WEAPON(ped, hash, src->get_arg<int>(2));
 		}
 
-		void DISABLE_CONTROL_ACTION(rage::scrNativeCallContext* src)
+		inline void DISABLE_CONTROL_ACTION(rage::scrNativeCallContext* src)
 		{
 			const auto action = src->get_arg<ControllerInputs>(1);
 
@@ -173,7 +173,7 @@ namespace big
 			PAD::DISABLE_CONTROL_ACTION(src->get_arg<int>(0), (int)action, src->get_arg<int>(2));
 		}
 
-		void HUD_FORCE_WEAPON_WHEEL(rage::scrNativeCallContext* src)
+		inline void HUD_FORCE_WEAPON_WHEEL(rage::scrNativeCallContext* src)
 		{
 			if (g.weapons.interior_weapon && src->get_arg<BOOL>(0) == false)
 				return;
@@ -181,7 +181,7 @@ namespace big
 			HUD::HUD_FORCE_WEAPON_WHEEL(src->get_arg<BOOL>(0));
 		}
 
-		void NETWORK_OVERRIDE_CLOCK_TIME(rage::scrNativeCallContext* src)
+		inline void NETWORK_OVERRIDE_CLOCK_TIME(rage::scrNativeCallContext* src)
 		{
 			if (g.world.custom_time.override_time)
 				return;
@@ -189,7 +189,7 @@ namespace big
 			NETWORK::NETWORK_OVERRIDE_CLOCK_TIME(src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2));
 		}
 
-		void SET_ENTITY_HEALTH(rage::scrNativeCallContext* src)
+		inline void SET_ENTITY_HEALTH(rage::scrNativeCallContext* src)
 		{
 			Entity entity = src->get_arg<Entity>(0);
 			int health    = src->get_arg<int>(1);
@@ -201,7 +201,7 @@ namespace big
 			ENTITY::SET_ENTITY_HEALTH(entity, health, p2);
 		}
 
-		void APPLY_DAMAGE_TO_PED(rage::scrNativeCallContext* src)
+		inline void APPLY_DAMAGE_TO_PED(rage::scrNativeCallContext* src)
 		{
 			Ped ped                 = src->get_arg<Ped>(0);
 			int damage              = src->get_arg<int>(1);
@@ -214,17 +214,17 @@ namespace big
 			PED::APPLY_DAMAGE_TO_PED(ped, damage, damage_armor_first, p3);
 		}
 
-		void RETURN_TRUE(rage::scrNativeCallContext* src)
+		inline void RETURN_TRUE(rage::scrNativeCallContext* src)
 		{
 			src->set_return_value<BOOL>(TRUE);
 		}
 
-		void RETURN_FALSE(rage::scrNativeCallContext* src)
+		inline void RETURN_FALSE(rage::scrNativeCallContext* src)
 		{
 			src->set_return_value<BOOL>(FALSE);
 		}
 
-		void DO_NOTHING(rage::scrNativeCallContext* src)
+		inline void DO_NOTHING(rage::scrNativeCallContext* src)
 		{
 		}
 	}
