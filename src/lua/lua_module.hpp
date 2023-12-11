@@ -1,16 +1,16 @@
 #pragma once
+#include "../script.hpp"
 #include "bindings/gui/gui_element.hpp"
 #include "core/data/menu_event.hpp"
 #include "lua_patch.hpp"
-#include "sol.hpp"
-#include "core/data/menu_event.hpp"
-#include "../script.hpp"
 
 namespace big
 {
 	class lua_module
 	{
 		sol::state m_state;
+
+		sol::protected_function m_io_open;
 
 		std::filesystem::path m_module_path;
 
@@ -43,6 +43,7 @@ namespace big
 		void set_folder_for_lua_require(folder& scripts_folder);
 
 		void sandbox_lua_os_library();
+		void sandbox_lua_io_library();
 		void sandbox_lua_loads(folder& scripts_folder);
 
 		void init_lua_api(folder& scripts_folder);

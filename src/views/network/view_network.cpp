@@ -8,11 +8,12 @@
  * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "backend/bool_command.hpp"
 #include "core/data/apartment_names.hpp"
 #include "core/data/command_access_levels.hpp"
 #include "core/data/region_codes.hpp"
-#include "core/data/warehouse_names.hpp"
 #include "core/data/session_types.hpp"
+#include "core/data/warehouse_names.hpp"
 #include "fiber_pool.hpp"
 #include "gta_util.hpp"
 #include "hooking.hpp"
@@ -21,7 +22,6 @@
 #include "util/session.hpp"
 #include "util/toxic.hpp"
 #include "views/view.hpp"
-#include "backend/bool_command.hpp"
 
 #include <network/Network.hpp>
 #include <script/globals/GPBD_FM_3.hpp>
@@ -121,6 +121,11 @@ namespace big
 		}
 
 		ImGui::SeparatorText("Chat");
+		ImGui::Checkbox("Use Spam Timer", &g.session.use_spam_timer);
+		ImGui::BeginDisabled(!g.session.use_spam_timer);
+		ImGui::SliderFloat("Spam Timer", &g.session.spam_timer, 0.5f, 5.0f);
+		ImGui::SliderInt("Spam Text Length", &g.session.spam_length, 1, 256);
+		ImGui::EndDisabled();
 		ImGui::Checkbox("Auto-kick Chat Spammers", &g.session.kick_chat_spammers);
 		ImGui::Checkbox("Log Chat Messages", &g.session.log_chat_messages);
 		static char msg[256];
@@ -212,8 +217,14 @@ namespace big
 		ImGui::SameLine();
 		ImGui::Checkbox("Fix Vehicle", &g.session.vehicle_fix_all);
 
-		bool_command whitelist_friends("trustfriends", "Trust friends", "Friends won't be flagged as modders or taken actions by reactions", g.session.trust_friends);
-		bool_command whitelist_session("trustsession", "Trust this session", "Players in this session won't be flagged as modders or taken actions by reactions", g.session.trust_session);
+		bool_command whitelist_friends("trustfriends",
+		    "Trust friends",
+		    "Friends won't be flagged as modders or taken actions by reactions",
+		    g.session.trust_friends);
+		bool_command whitelist_session("trustsession",
+		    "Trust this session",
+		    "Players in this session won't be flagged as modders or taken actions by reactions",
+		    g.session.trust_session);
 
 		static int global_wanted_level = 0;
 

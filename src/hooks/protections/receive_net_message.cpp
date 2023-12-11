@@ -22,7 +22,7 @@
 #include "util/spam.hpp"
 
 #if defined(ENABLE_LUA)
-#include "lua/lua_manager.hpp"
+	#include "lua/lua_manager.hpp"
 #endif // ENABLE_LUA
 
 #include <network/Network.hpp>
@@ -116,53 +116,23 @@ namespace big
 			switch (msgType)
 			{
 			case rage::eNetMessage::MsgTextMessage:
-			{
-				char message[256];
-				buffer.ReadString(message, 256);
-
-				if (player->is_spammer)
-				{
-					return true;
-				}
-
-				if (spam::is_text_spam(message))
-				{
-					if (g.session.log_chat_messages)
-						spam::log_chat(message, player, true);
-
-					player->is_spammer = true;
-					return true;
-				}
-				else
-				{
-					if (g.session.log_chat_messages)
-						spam::log_chat(message, player, false);
-
-					if (g.session.chat_commands && message[0] == g.session.chat_command_prefix)
-						command::process(std::string(message + 1), std::make_shared<chat_command_context>(player));
-#if defined(ENABLE_LUA)
-					else
-						g_lua_manager->trigger_event<menu_event::ChatMessageReceived>(player->id(), message);
-#endif // ENABLE_LUA
-
-				}
-				break;
-			}
 			case rage::eNetMessage::MsgTextMessage2:
 			{
 				char message[256];
 				buffer.ReadString(message, 256);
+				bool is_team;
+				buffer.ReadBool(&is_team);
 
 				if (player->is_spammer)
 				{
 					return true;
 				}
 
-				if (spam::is_text_spam(message))
+				if (auto spam_reason = spam::is_text_spam(message, player))
 				{
 					if (g.session.log_chat_messages)
-						spam::log_chat(message, player, true);
-
+						spam::log_chat(message, player, spam_reason, is_team);
+					g_notification_service->push("Protections", std::format("{} {}", player->get_name(), "Is a spammer."));
 					player->is_spammer = true;
 					if (g.session.kick_chat_spammers
 					    && !(player->is_trusted || (player->is_friend() && g.session.trust_friends) || g.session.trust_session))
@@ -179,7 +149,7 @@ namespace big
 				else
 				{
 					if (g.session.log_chat_messages)
-						spam::log_chat(message, player, false);
+						spam::log_chat(message, player, SpamReason::NOT_A_SPAMMER, is_team);
 
 					if (g.session.chat_commands && message[0] == g.session.chat_command_prefix)
 						command::process(std::string(message + 1), std::make_shared<chat_command_context>(player));

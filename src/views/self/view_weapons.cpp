@@ -129,6 +129,9 @@ namespace big
 		components::command_checkbox<"incrdamage">();
 		ImGui::InputFloat("Damage", &g.weapons.increased_damage, .1, 10, "%.1f");
 
+		components::command_checkbox<"modifyexplosionradius">();
+		ImGui::InputFloat("Explosion Radius", &g.weapons.set_explosion_radius, .1, 200, "%.1f");
+
 		ImGui::SeparatorText("Custom Weapons");
 
 		ImGui::Checkbox("Custom Gun only fires when the weapon is out", &g.self.custom_weapon_stop);

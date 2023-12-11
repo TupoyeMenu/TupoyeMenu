@@ -81,6 +81,7 @@ namespace big
 		components::command_checkbox<"invis">();
 		if (g.self.invisibility)
 			components::command_checkbox<"localvis">(); // TODO: does nothing in SP
+		components::command_checkbox<"interactionmenufreedom">();
 
 		ImGui::EndGroup();
 

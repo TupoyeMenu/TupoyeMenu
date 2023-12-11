@@ -124,11 +124,11 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    auto pointers_instance = std::make_unique<pointers>();
 			    LOG(INFO) << "Pointers initialized.";
 
-			    while(!disable_anticheat_skeleton())
-				{
-					LOG(WARNING) << "Failed patching anticheat gameskeleton (injected too early?). Waiting 100ms and trying again";
-					std::this_thread::sleep_for(100ms);
-				}
+			    while (!disable_anticheat_skeleton())
+			    {
+				    LOG(WARNING) << "Failed patching anticheat gameskeleton (injected too early?). Waiting 100ms and trying again";
+				    std::this_thread::sleep_for(100ms);
+			    }
 			    LOG(INFO) << "Disabled anticheat gameskeleton.";
 
 			    auto byte_patch_manager_instance = std::make_unique<byte_patch_manager>();
@@ -159,7 +159,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    auto tunables_service_instance          = std::make_unique<tunables_service>();
 			    auto script_connection_service_instance = std::make_unique<script_connection_service>();
 			    auto xml_vehicles_service_instance      = std::make_unique<xml_vehicles_service>();
-				auto xml_maps_service_instance          = std::make_unique<xml_map_service>();
+			    auto xml_maps_service_instance          = std::make_unique<xml_map_service>();
 			    LOG(INFO) << "Registered service instances...";
 
 			    g_script_mgr.add_script(std::make_unique<script>(&gui::script_func, "GUI", false));
@@ -195,7 +195,8 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 #endif // ENABLE_ASI_LOADER
 
 #if defined(ENABLE_LUA)
-			    auto lua_manager_instance = std::make_unique<lua_manager>(g_file_manager.get_project_folder("scripts"));
+			    auto lua_manager_instance =
+			        std::make_unique<lua_manager>(g_file_manager.get_project_folder("scripts"), g_file_manager.get_project_folder("scripts_config"));
 			    LOG(INFO) << "Lua manager initialized.";
 #endif // ENABLE_LUA
 

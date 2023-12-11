@@ -6,6 +6,8 @@
 #include "services/outfit/outfit_service.hpp"
 #include "gta/enums.hpp"
 #include "gta/joaat.hpp"
+#include "core/scr_globals.hpp"
+#include "services/tunables/tunables_service.hpp"
 
 namespace big
 {
@@ -28,6 +30,11 @@ namespace big
 
 	void looped::self_persist_outfit()
 	{
+		//Disable clothing validation
+		*scr_globals::reset_clothing.as<PBOOL>() = FALSE;
+		if (auto tunable = g_tunables_service->get_tunable<PBOOL>(RAGE_JOAAT("DISABLE_CLOTHING_SAVE_SLOT_VALIDATION")))
+			*tunable = TRUE;
+
 		if (g.self.persist_outfit.empty())
 			return; //Off
 

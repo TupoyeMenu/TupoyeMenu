@@ -1,7 +1,5 @@
 #if defined (ENABLE_LUA)
 
-#include "lua/sol.hpp"
-
 namespace lua::global_table
 {
 	// Lua API: Table

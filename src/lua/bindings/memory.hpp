@@ -1,6 +1,5 @@
 #pragma once
 #include "lua/lua_module.hpp"
-#include "lua/sol.hpp"
 #include "memory/byte_patch.hpp"
 
 namespace lua::memory

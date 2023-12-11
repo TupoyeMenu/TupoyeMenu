@@ -39,7 +39,8 @@ namespace big
 			        false))
 				notify::draw_chat(msg, g_player_service->get_self()->get_name(), false);
 
-			spam::log_chat(msg, g_player_service->get_self(), false);
+			if (g.session.log_chat_messages)
+				spam::log_chat(msg, g_player_service->get_self(), SpamReason::NOT_A_SPAMMER, false);
 		});
 	}
 

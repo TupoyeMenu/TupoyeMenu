@@ -1,6 +1,5 @@
 #pragma once
 #include "services/tunables/tunables_service.hpp"
-#include "lua/sol.hpp"
 
 namespace lua::tunables
 {

@@ -41,8 +41,6 @@ namespace big::scr_globals
 
 	static inline const script_global dance_state(1950837);
 
-	static inline const script_global mobile(20483);
-
 	static inline const script_global transaction_overlimit(20483);
 
 	static inline const script_global stats(2359296);
@@ -58,12 +56,18 @@ namespace big::scr_globals
 
 	static inline const script_global gun_van(1956855);
 
+	static inline const script_global interaction_menu_access(2766623); // am_pi_menu -> PI_BIK_13_2_H -> global = true;
+
+	static inline const script_global disable_wasted_sound(2764735); // freemode -> AUDIO::PLAY_SOUND_FRONTEND(-1, "Wasted", "POWER_PLAY_General_Soundset", true);
+
 	static inline const script_global passive(1574582);
 
 	static inline const script_global property_garage(1945123);
 	static inline const script_global property_names(1312228);
 
 	static inline const script_global pickups(2765084);
+
+	static inline const script_global reset_clothing(103377); // freemode 75, &iLocal_.*, 2\);
 }
 
 namespace big::scr_locals

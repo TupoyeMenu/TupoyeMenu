@@ -91,7 +91,7 @@ namespace big
 				            VEHICLE::SET_VEHICLE_DIRT_LEVEL(m_handle, 0.f);
 			            }
 			            else
-				            g_notification_service->push_warning("Warning", "Failed to take control of vehicle.");
+				            g_notification_service->push_warning("Warning!", "Failed to take control of vehicle.");
 		        }},		     
 		        {"BURST TIRES",
 		            [this] {
@@ -163,7 +163,7 @@ namespace big
 		            [this] {
 			            PED::SET_PED_TO_RAGDOLL(m_handle, 2000, 2000, 0, 0, 0, 0);
 		        }},
-		        {"ANIMATION",
+		        {"Animation",
 		            [this] {
 						if(STREAMING::DOES_ANIM_DICT_EXIST(g_ped_animation_service.current_animation.dict.data()))
 							g_ped_animation_service.play_saved_ped_animation(g_ped_animation_service.current_animation, m_handle);
@@ -204,7 +204,7 @@ namespace big
 		            [this] {
 			            ped::steal_outfit(m_handle);
 		        }},
-		        {"KICK",
+		        {"Kick",
 		            [this] {
 				    static player_command* command = dynamic_cast<player_command*>(command::get(rage::consteval_joaat("multikick")));
 			            command->call(ped::get_player_from_ped(m_handle), {});
@@ -244,7 +244,7 @@ namespace big
 		            [this] {
 			            teleport::tp_on_top(m_handle, true);
 		        }},
-		        {"BRING",
+		        {"Bring",
 		            [this] {
 			            rage::fvector3 pos = *g_local_player->m_navigation->get_position();
 
@@ -270,7 +270,7 @@ namespace big
 			            FIRE::START_SCRIPT_FIRE(pos.x, pos.y, pos.z, 25, TRUE);
 			            FIRE::ADD_EXPLOSION(pos.x, pos.y, pos.z, eExplosionTag::MOLOTOV, 1, false, false, 0, false);
 		        }},
-		        {"DELETE",
+		        {"Delete",
 		            [this] {
 			            if (entity::take_control_of(m_handle))
 			            {

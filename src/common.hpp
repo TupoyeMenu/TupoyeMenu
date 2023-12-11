@@ -61,6 +61,9 @@
 
 #include "services/notifications/notification_service.hpp"
 
+#define SOL_ALL_SAFETIES_ON 1
+#include "lua/sol.hpp"
+
 // clang-format on
 
 namespace big
