@@ -133,8 +133,8 @@ namespace big
 		});
 
 		// Trigger Script Event
-		main_batch.add("TSE", "45 8B F0 41 8B F9 48 8B EA", [](memory::handle ptr) {
-			g_pointers->m_gta.m_trigger_script_event = ptr.sub(0x1C).as<decltype(gta_pointers::m_trigger_script_event)>();
+		main_batch.add("TSE", "48 8B C4 48 89 58 08 44 89 48 20 55 56 57 48 83 EC 30", [](memory::handle ptr) {
+			g_pointers->m_gta.m_trigger_script_event = ptr.as<decltype(gta_pointers::m_trigger_script_event)>();
 		});
 
 		// Received Event Hook
@@ -163,8 +163,8 @@ namespace big
 		});
 
 		// Read Bitbuffer Boolean
-		main_batch.add("RBB", "E8 ? ? ? ? 84 C0 74 41 48 8D 56 2C", [](memory::handle ptr) {
-			g_pointers->m_gta.m_read_bitbuf_bool = ptr.add(1).rip().as<decltype(gta_pointers::m_read_bitbuf_bool)>();
+		main_batch.add("RBB", "48 8B C4 48 89 58 08 55 56 57 48 83 EC 20 48 83 60", [](memory::handle ptr) {
+			g_pointers->m_gta.m_read_bitbuf_bool = ptr.as<decltype(gta_pointers::m_read_bitbuf_bool)>();
 		});
 
 		// Write Bitbuffer WORD/DWORD
@@ -436,7 +436,7 @@ namespace big
 		});
 
 		// Handle Join Request
-		main_batch.add("HJR", "48 8B C4 48 89 58 08 4C 89 48 20 4C 89 40 18 48 89 50 10 55 56 57 41 54 41 55 41 56 41 57 48 8D A8 C8 FE", [](memory::handle ptr) {
+		main_batch.add("HJR", "48 8B C4 48 89 58 08 4C 89 48 20 4C 89 40 18 48 89 50 10 55 56 57 41 54 41 55 41 56 41 57 48 8D A8 ? ? ? ? 48 81 EC ? ? ? ? 45 33 F6", [](memory::handle ptr) {
 			g_pointers->m_gta.m_handle_join_request = ptr.as<PVOID>();
 		});
 
@@ -656,7 +656,7 @@ namespace big
 		});
 
 		// Force Player Card Refresh
-		main_batch.add("FPCR", "44 38 2D ? ? ? ? 74 1D 44 00 A6 BB 07 00 00", [](memory::handle ptr) {
+		main_batch.add("FPCR", "C6 05 ? ? ? ? ? E8 ? ? ? ? 48 8B 6C 24", [](memory::handle ptr) {
 			g_pointers->m_gta.m_force_player_card_refresh = ptr.add(3).rip().as<bool*>();
 		});
 
@@ -713,12 +713,12 @@ namespace big
 		});
 
 		// NetFilter Handle Message
-		main_batch.add("NHM", "40 55 56 57 41 54 41 55 41 56 41 57 48 81 EC 50 01 00 00 48 8D 6C 24 30", [](memory::handle ptr) {
-			g_pointers->m_gta.m_netfilter_handle_message = ptr.as<PVOID>();
+		main_batch.add("NHM", "E9 ? ? ? ? 48 8D 81 ? ? ? ? 4C 39 08", [](memory::handle ptr) {
+			g_pointers->m_gta.m_netfilter_handle_message = ptr.add(1).rip().as<PVOID>();
 		});
 
 		// Handle Chat Message
-		main_batch.add("HCM", "4D 85 C9 0F 84 8D", [](memory::handle ptr) {
+		main_batch.add("HCM", "4D 85 C9 0F 84 ? ? ? ? 48 8B C4 48 89 58 08 48 89 70 10 48 89 78 18 55 41 54 41 55 41 56 41 57 48 8D A8", [](memory::handle ptr) {
 			g_pointers->m_gta.m_handle_chat_message = ptr.as<functions::handle_chat_message>();
 		});
 
@@ -1031,9 +1031,9 @@ namespace big
 		});
 
 		// Read Attribute Patch
-		socialclub_batch.add("RAP", "75 72 EB 23 80 F9 03", [](memory::handle ptr) {
+		socialclub_batch.add("RAP", "75 70 EB 23", [](memory::handle ptr) {
 			g_pointers->m_sc.m_read_attribute_patch   = ptr.as<PVOID>();
-			g_pointers->m_sc.m_read_attribute_patch_2 = ptr.add(0x74).as<PVOID>();
+			g_pointers->m_sc.m_read_attribute_patch_2 = ptr.add(0x72).as<PVOID>();
 		});
 
 		socialclub_batch.run(region);

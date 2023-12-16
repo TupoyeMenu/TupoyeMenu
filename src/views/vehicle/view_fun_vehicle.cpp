@@ -235,6 +235,7 @@ namespace big
 				components::command_checkbox<"jumpability">();
 				components::command_checkbox<"parachuteability">();
 				components::command_checkbox<"rampability">();
+				components::command_checkbox<"gliderability">();
 			}
 		}
 

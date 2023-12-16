@@ -21,6 +21,7 @@ namespace big
 		folder(const std::filesystem::path& folder_path = "");
 
 		file get_file(std::filesystem::path file_path) const;
+		folder get_folder(std::filesystem::path folder_path) const;
 		const std::filesystem::path get_path() const;
 
 	private:
