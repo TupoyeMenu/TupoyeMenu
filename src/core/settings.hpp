@@ -745,6 +745,7 @@ namespace big
 				bool rocket    = false;
 				bool parachute = false;
 				bool ramp      = false;
+				bool glider    = false;
 
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(abilities, enabled)
 			} abilities{};

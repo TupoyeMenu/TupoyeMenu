@@ -69,7 +69,7 @@ namespace big::functions
 	using get_native_handler = rage::scrNativeHandler (*)(rage::scrNativeRegistrationTable* registration_table, rage::scrNativeHash hash);
 	using fix_vectors = void (*)(rage::scrNativeCallContext* call_ctx);
 
-	using trigger_script_event = void (*)(int event_group, int64_t* args, int arg_count, int player_bits);
+	using trigger_script_event = void (*)(int event_group, int64_t* args, int arg_count, int player_bits, int event_id);
 
 	using increment_stat_event = bool (*)(uint64_t net_event_struct, int64_t sender, int64_t a3);
 

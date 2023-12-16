@@ -1,4 +1,3 @@
-#pragma once
 #include "vehicles.hpp"
 #include "services/gta_data/gta_data_service.hpp"
 
