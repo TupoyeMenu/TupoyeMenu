@@ -1,4 +1,3 @@
-#pragma once
 #include "weapons.hpp"
 #include "services/gta_data/gta_data_service.hpp"
 
