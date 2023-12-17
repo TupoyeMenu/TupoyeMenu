@@ -15,6 +15,7 @@
 #include "hooking.hpp"
 #include "packet.hpp"
 #include "services/player_database/player_database_service.hpp"
+#include "services/all_player_database/all_player_database_service.hpp"
 #include "services/players/player_service.hpp"
 #include "util/notify.hpp"
 #include "util/session.hpp"
@@ -114,6 +115,10 @@ namespace big
 				{
 					if (plyr->get_net_data()->m_gamer_handle.m_rockstar_id != 0)
 					{
+						// Log player to all player db.
+						if(g.debug.logs.all_players_logs)
+							g_all_player_database_service->get_or_create_player(plyr);
+
 						if (auto entry = g_player_database_service->get_player_by_rockstar_id(
 						        plyr->get_net_data()->m_gamer_handle.m_rockstar_id))
 						{
