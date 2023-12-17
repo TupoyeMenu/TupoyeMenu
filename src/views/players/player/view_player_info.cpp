@@ -364,10 +364,6 @@ namespace big
 				ImGui::Text("Pos X: %f, Y: %f, Z: %f", pos->x, pos->y, pos->z);
 
 				ImGui::Text("Distance: %f", math::distance_between_vectors(misc::fvector3_to_Vector3(*g_local_player->get_position()), misc::fvector3_to_Vector3(*cped->get_position())));
-				if (cped->m_vehicle != nullptr)
-					ImGui::Text("Speed: %f", cped->m_vehicle->get_speed());
-				else
-					ImGui::Text("Speed: %f", cped->get_speed());
 				ImGui::TreePop();
 			}
 
