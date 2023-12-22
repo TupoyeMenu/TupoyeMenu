@@ -100,8 +100,6 @@ namespace big
 				bool net_event_logs{};
 
 				bool remote_sound_logs{};
-
-				bool all_players_logs{};
 				
 				struct script_event
 				{
@@ -115,7 +113,7 @@ namespace big
 					NLOHMANN_DEFINE_TYPE_INTRUSIVE(script_event, logs, filter_player, player_id)
 				} script_event{};
 
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(logs, metric_logs, stupid_script_native_logs, packet_logs, net_event_logs, remote_sound_logs, all_players_logs, script_event)
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(logs, metric_logs, stupid_script_native_logs, packet_logs, net_event_logs, remote_sound_logs, script_event)
 			} logs{};
 
 			struct fuzzer

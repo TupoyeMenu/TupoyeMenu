@@ -30,7 +30,6 @@
 	#include "lua/lua_manager.hpp"
 #endif // ENABLE_LUA
 
-#include "services/all_player_database/all_player_database_service.hpp"
 #include "services/context_menu/context_menu_service.hpp"
 #include "services/custom_text/custom_text_service.hpp"
 #include "services/gta_data/gta_data_service.hpp"
@@ -154,7 +153,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    auto gta_data_service_instance            = std::make_unique<gta_data_service>();
 			    auto model_preview_service_instance       = std::make_unique<model_preview_service>();
 			    auto script_patcher_service_instance      = std::make_unique<script_patcher_service>();
-			    auto all_player_database_service_instance = std::make_unique<all_player_database_service>();
 			    auto player_database_service_instance     = std::make_unique<player_database_service>();
 			    auto hotkey_service_instance              = std::make_unique<hotkey_service>();
 			    auto matchmaking_service_instance         = std::make_unique<matchmaking_service>();
@@ -238,8 +236,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    LOG(INFO) << "Hotkey Service reset.";
 			    matchmaking_service_instance.reset();
 			    LOG(INFO) << "Matchmaking Service reset.";
-			    all_player_database_service_instance.reset();
-			    LOG(INFO) << "All Player Database Service reset.";
 			    player_database_service_instance.reset();
 			    LOG(INFO) << "Player Database Service reset.";
 			    script_patcher_service_instance.reset();

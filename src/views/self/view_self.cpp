@@ -54,6 +54,16 @@ namespace big
 		ImGui::BeginGroup();
 
 		components::command_checkbox<"noclip">();
+		components::options_modal("Noclip", [] { // TODO: This looks horrible, move or remove.
+			ImGui::Separator();
+
+			ImGui::BeginGroup();
+			ImGui::TextUnformatted("No Clip Movement Speed Multiplier While Aiming");
+			ImGui::SliderFloat("##noclipaimspeedmult", &g.self.noclip_aim_speed_multiplier, 0.1f, 1.0f);
+			ImGui::TextUnformatted("No Clip Movement Speed Multiplier");
+			ImGui::SliderFloat("##noclipspeedmult", &g.self.noclip_speed_multiplier, 1.f, 100.f);
+			ImGui::EndGroup();
+		});
 		components::command_checkbox<"freecam">();
 		components::command_checkbox<"noragdoll">();
 		components::command_checkbox<"fastrun">();
@@ -84,17 +94,6 @@ namespace big
 		components::command_checkbox<"interactionmenufreedom">();
 
 		ImGui::EndGroup();
-
-		components::options_modal("Noclip", [] {
-			ImGui::Separator();
-
-			ImGui::BeginGroup();
-			ImGui::TextUnformatted("No Clip Movement Speed Multiplier While Aiming");
-			ImGui::SliderFloat("##noclipaimspeedmult", &g.self.noclip_aim_speed_multiplier, 0.1f, 1.0f);
-			ImGui::TextUnformatted("No Clip Movement Speed Multiplier");
-			ImGui::SliderFloat("##noclipspeedmult", &g.self.noclip_speed_multiplier, 1.f, 100.f);
-			ImGui::EndGroup();
-		});
 
 		ImGui::SeparatorText("Proofs");
 
