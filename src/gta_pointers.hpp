@@ -375,7 +375,7 @@ namespace big
 
 		bool* m_is_social_club_overlay_active;
 
-		functions::get_ped_bone m_get_ped_bone;
+		functions::get_ped_seat m_get_ped_seat;
 
 		char** m_game_checksum_data;
 		functions::get_dlc_hash m_get_dlc_hash;

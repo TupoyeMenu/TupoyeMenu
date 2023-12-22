@@ -109,6 +109,7 @@ namespace lua::event
 		        {"ChatMessageReceived", menu_event::ChatMessageReceived},
 		        {"ScriptedGameEventReceived", menu_event::ScriptedGameEventReceived},
 		        {"SendMetric", menu_event::SendMetric},
+			{"NetworkBail", menu_event::NetworkBail},
 		    });
 
 

@@ -590,8 +590,8 @@ namespace big
 		}
 		case eNetworkEvents::REMOVE_WEAPON_EVENT:
 		{
-			int net_id    = buffer->Read<int>(13);
-			uint32_t hash = buffer->Read<uint32_t>(32);
+			std::int16_t net_id = buffer->Read<std::int16_t>(13);
+			Hash hash           = buffer->Read<Hash>(32);
 
 			if (hash == RAGE_JOAAT("WEAPON_UNARMED"))
 			{
@@ -602,8 +602,9 @@ namespace big
 
 			if (g_local_player && g_local_player->m_net_object && g_local_player->m_net_object->m_object_id == net_id)
 			{
+				weapon_item weapon = g_gta_data_service->weapon_by_hash(hash);
 				g_notification_service->push_warning("Protections",
-				    std::format("{} tried to remove a weapon.", source_player->get_name()));
+				    std::format("{} {} {}.", source_player->get_name(), "tried to remove our", weapon.m_display_name));
 				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 				return;
 			}
@@ -611,14 +612,16 @@ namespace big
 			buffer->Seek(0);
 			break;
 		}
-		case eNetworkEvents::REMOVE_ALL_WEAPONS_EVENT:
+		case eNetworkEvents::GIVE_WEAPON_EVENT:
 		{
-			int net_id = buffer->Read<int>(13);
+			std::int16_t net_id = buffer->Read<std::int16_t>(13);
+			Hash hash           = buffer->Read<Hash>(32);
 
 			if (g_local_player && g_local_player->m_net_object && g_local_player->m_net_object->m_object_id == net_id)
 			{
+				weapon_item weapon = g_gta_data_service->weapon_by_hash(hash);
 				g_notification_service->push_warning("Protections",
-				    std::format("{} tried to remove all weapons.", source_player->get_name()));
+				    std::format("{} {} {}.", source_player->get_name(), "tried to give us a", weapon.m_display_name));
 				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 				return;
 			}

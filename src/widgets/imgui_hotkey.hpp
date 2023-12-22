@@ -28,12 +28,11 @@ namespace ImGui
 		if (!ImGui::ItemAdd(total_bb, id, 0, ImGuiItemFlags_Inputable))
 			return false;
 
-		const bool focus_requested = (ImGui::GetItemStatusFlags() & ImGuiItemStatusFlags_FocusedByTabbing) || g.ActiveId == id;
+		const bool focus_requested = g.ActiveId == id;
 		//const bool focus_requested = ImGui::FocusableItemRegister(window, g.ActiveId == id, false);
 		//const bool focus_requested_by_code = focus_requested && (window->FocusIdxAllCounter == window->FocusIdxAllRequestCurrent);
 
-		const bool hovered = ImGui::ItemHoverable(frame_bb, id);
-
+		const bool hovered = ImGui::ItemHoverable(frame_bb, id, ImGuiItemFlags_None);
 		if (hovered)
 		{
 			ImGui::SetHoveredID(id);
