@@ -33,10 +33,6 @@ namespace big
 		m_scripts.clear();
 	}
 
-	void script_mgr::tick()
-	{
-		gta_util::execute_as_script(RAGE_JOAAT("main_persistent"), std::mem_fn(&script_mgr::tick_internal), this);
-	}
 
 	void script_mgr::ensure_main_fiber()
 	{
@@ -57,7 +53,7 @@ namespace big
 	}
 #endif // ENABLE_LUA
 
-	void script_mgr::tick_internal()
+	void script_mgr::tick()
 	{
 		static bool ensure_it = (ensure_main_fiber(), true);
 

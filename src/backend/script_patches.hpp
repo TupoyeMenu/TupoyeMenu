@@ -11,9 +11,9 @@
  */
 
 #pragma once
+#include "gta/joaat.hpp"
 #include "pointers.hpp"
 #include "services/script_patcher/script_patcher_service.hpp"
-#include "gta/joaat.hpp"
 
 #include <script/scrProgramTable.hpp>
 
@@ -116,24 +116,11 @@ namespace big
 		 * @authors Dayibbaba helped me find this function.
 		 * @return LEAVE 9, 0
 		 */
-		g_script_patcher_service->add_patch(
-		    {RAGE_JOAAT("freemode"), "stop freemode intro anim", "2D 09 53 00 00", 5, {0x2E, 0x09, 0x00}, &g.tunables.seamless_join});
-
-		/**
-		 * @brief Prevents freezing after we skiped the intro animation.
-		 * @code {.asm}
-		 * ; Can be found at:
-		 * ; Function hash: 0x48A59AF2
-		 * ; Has if (ENTITY::IS_ENTITY_PLAYING_ANIM(uParam0->f_122, animDict, animName, 3))
-		 * @endcode
-		 *
-		 * @return PUSH_CONST_1; LEAVE 1, 1
-		 */
 		g_script_patcher_service->add_patch({RAGE_JOAAT("freemode"),
-		    "stop freeze after intro skip",
-		    "2D 01 06 00 00 38 00 41 ? 56",
+		    "stop freemode intro anim",
+		    "2D 01 03 00 00 71 61 ? ? ? 42 ? 25",
 		    5,
-		    {0x72, 0x2E, 0x01, 0x01},
+		    {0x2E, 0x01, 0x00},
 		    &g.tunables.seamless_join});
 
 		for (auto& entry : *g_pointers->m_gta.m_script_program_table)

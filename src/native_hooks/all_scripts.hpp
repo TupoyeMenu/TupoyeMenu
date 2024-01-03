@@ -41,7 +41,7 @@ namespace big
 		inline void NETWORK_BAIL(rage::scrNativeCallContext* src)
 		{
 			if (g.debug.logs.stupid_script_native_logs)
-				LOG(VERBOSE) << std::format("NETWORK::NETWORK_BAIL({}, {}, {}); // In: {}", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2), SCRIPT::GET_THIS_SCRIPT_NAME());
+				LOGF(VERBOSE, "NETWORK::NETWORK_BAIL({}, {}, {}); // In: {}", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2), SCRIPT::GET_THIS_SCRIPT_NAME());
 
 #if defined (ENABLE_LUA)
 			auto event_ret = g_lua_manager->trigger_event<menu_event::NetworkBail, bool>(src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<int>(2), SCRIPT::GET_ID_OF_THIS_THREAD());
@@ -167,6 +167,7 @@ namespace big
 				case ControllerInputs::INPUT_VEH_PARACHUTE:
 				case ControllerInputs::INPUT_VEH_BIKE_WINGS:
 				case ControllerInputs::INPUT_VEH_TRANSFORM: return;
+				default: break;
 				}
 			}
 

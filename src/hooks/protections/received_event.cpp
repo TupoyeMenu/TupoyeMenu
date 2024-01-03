@@ -516,14 +516,14 @@ namespace big
 		}
 		case eNetworkEvents::REQUEST_CONTROL_EVENT:
 		{
-			int net_id = buffer->Read<int>(13);
+			auto net_id = buffer->Read<int>(13);
 			if (g_local_player && g_local_player->m_vehicle && g_local_player->m_vehicle->m_net_object
 			    && g_local_player->m_vehicle->m_net_object->m_object_id == net_id) //The request is for a vehicle we are currently in.
 			{
 				Vehicle personal_vehicle = mobile::mechanic::get_personal_vehicle();
 				Vehicle veh              = g_pointers->m_gta.m_ptr_to_handle(g_local_player->m_vehicle);
-				if (!NETWORK::NETWORK_IS_ACTIVITY_SESSION()     //If we're in Freemode.
-				    || personal_vehicle == veh                  //Or we're in our personal vehicle.
+				if (!NETWORK::NETWORK_IS_ACTIVITY_SESSION() //If we're in Freemode.
+				    || personal_vehicle == veh              //Or we're in our personal vehicle.
 				    || self::spawned_vehicles.contains(net_id)) // Or it's a vehicle we spawned.
 				{
 					if (g.protections.request_control)
@@ -559,7 +559,6 @@ namespace big
 
 				if (type == 0 || initial_length < min_length) // https://docs.fivem.net/natives/?_0xE832D760399EB220
 				{
-					// most definitely a crash
 					notify::crash_blocked(source_player, "rope");
 					g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 					return;
@@ -604,7 +603,7 @@ namespace big
 			{
 				weapon_item weapon = g_gta_data_service->weapon_by_hash(hash);
 				g_notification_service->push_warning("Protections",
-				    std::format("{} {} {}.", source_player->get_name(), "tried to remove our", weapon.m_display_name));
+					std::format("{} {} {}.", source_player->get_name(), "tried to remove our", weapon.m_display_name));
 				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 				return;
 			}
@@ -653,10 +652,12 @@ namespace big
 					g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 					return;
 				}
+
 				sync_type = object_type;
 			}
 
 			buffer->Seek(0);
+
 			if (count)
 			{
 				g.m_syncing_player      = source_player;

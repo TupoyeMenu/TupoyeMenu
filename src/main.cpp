@@ -126,8 +126,8 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 			    while (!disable_anticheat_skeleton())
 			    {
-				    LOG(WARNING) << "Failed patching anticheat gameskeleton (injected too early?). Waiting 100ms and trying again";
-				    std::this_thread::sleep_for(100ms);
+				    LOG(WARNING) << "Failed patching anticheat gameskeleton (injected too early?). Waiting 500ms and trying again";
+				    std::this_thread::sleep_for(500ms);
 			    }
 			    LOG(INFO) << "Disabled anticheat gameskeleton.";
 

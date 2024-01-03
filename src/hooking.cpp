@@ -60,8 +60,6 @@ namespace big
 			detour_hook_helper.m_detour_hook->set_target_and_create_hook(detour_hook_helper.m_on_hooking_available());
 		}
 
-		detour_hook_helper::add<hooks::run_script_threads>("SH", (void*)g_pointers->m_gta.m_run_script_threads);
-
 		detour_hook_helper::add<hooks::get_label_text>("GLT", (void*)g_pointers->m_gta.m_get_label_text);
 
 		detour_hook_helper::add<hooks::write_player_game_state_data_node>("WPGSDN", (void*)g_pointers->m_gta.m_write_player_game_state_data_node);
@@ -222,17 +220,5 @@ namespace big
 			m_detour_hook->enable();
 			MH_ApplyQueued();
 		}
-	}
-
-	bool hooks::run_script_threads(uint32_t ops_to_execute)
-	{
-		g_native_invoker.cache_handlers();
-
-		if (g_running)
-		{
-			g_script_mgr.tick();
-		}
-
-		return g_hooking->get_original<run_script_threads>()(ops_to_execute);
 	}
 }

@@ -86,6 +86,7 @@ namespace big
 
 			for (int i = 0; i < scripted_game_event->m_args_size; i++)
 				script_event_args.push_back(args[i]);
+
 			auto event_ret = g_lua_manager->trigger_event<menu_event::ScriptedGameEventReceived, bool>((int)player->m_player_id, script_event_args);
 			if (event_ret.has_value())
 				return true; // don't care, block event if any bool is returned
@@ -158,6 +159,7 @@ namespace big
 					return true;
 				}
 				break;
+			default: break;
 			}
 
 			break;
@@ -430,6 +432,8 @@ namespace big
 			}
 			break;
 		}
+
+		default: break;
 		}
 
 		// detect pasted menus setting args[1] to something other than PLAYER_ID()

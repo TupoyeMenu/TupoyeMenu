@@ -53,7 +53,6 @@ namespace big
 
 	private:
 		void ensure_main_fiber();
-		void tick_internal();
 
 	private:
 		std::recursive_mutex m_mutex;

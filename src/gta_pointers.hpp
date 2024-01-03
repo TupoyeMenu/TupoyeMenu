@@ -12,6 +12,7 @@
 #pragma once
 #include "function_types.hpp"
 
+#include <cstdint>
 #include <memory/handle.hpp>
 
 class CCommunications;
@@ -100,6 +101,7 @@ namespace big
 		rage::scrProgramTable* m_script_program_table;
 		functions::run_script_threads m_run_script_threads;
 		int64_t** m_script_globals;
+		uint32_t* m_frame_count;
 
 #ifdef ENABLE_ASI_LOADER
 		functions::register_file_t m_register_file;

@@ -330,7 +330,7 @@ namespace big
 #define LOG_FIELD_H(type, field) LOG(INFO) << "\t" << #field << ": " << HEX_TO_UPPER((((type*)(node))->field));
 #define LOG_FIELD(type, field) LOG(INFO) << "\t" << #field << ": " << ((((type*)(node))->field));
 #define LOG_FIELD_C(type, field) LOG(INFO) << "\t" << #field << ": " << (int)((((type*)(node))->field));
-#define LOG_FIELD_B(type, field) LOG(INFO) << "\t" << #field << ": " << ((((type*)(node))->field) ? "Yes" : "No");
+#define LOG_FIELD_B(type, field) LOG(INFO) << "\t" << #field << ": " << ((((type*)(node))->field) ? "YES" : "NO");
 #define LOG_FIELD_V3(type, field)                                                                                    \
 	LOG(INFO) << "\t" << #field << ": X: " << ((((type*)(node))->field)).x << " Y: " << ((((type*)(node))->field)).y \
 	          << " Z: " << ((((type*)(node))->field)).z;
@@ -1106,6 +1106,7 @@ namespace big
 		case eVehicleType::VEHICLE_TYPE_SUBMARINE: return eNetObjType::NET_OBJ_TYPE_SUBMARINE;
 		case eVehicleType::VEHICLE_TYPE_BOAT: return eNetObjType::NET_OBJ_TYPE_BOAT;
 		case eVehicleType::VEHICLE_TYPE_DRAFT: return eNetObjType::NET_OBJ_TYPE_AUTOMOBILE; // this appears to be unused
+		default: break;
 		}
 
 		return eNetObjType::NET_OBJ_TYPE_AUTOMOBILE;
@@ -1142,6 +1143,7 @@ namespace big
 			return g.m_syncing_object_type != eNetObjType::NET_OBJ_TYPE_SUBMARINE;
 		case eTaskTypeIndex::CTaskVehicleFleeAirborne:
 			return g.m_syncing_object_type != eNetObjType::NET_OBJ_TYPE_HELI && g.m_syncing_object_type != eNetObjType::NET_OBJ_TYPE_PLANE;
+		default: break;
 		}
 
 		return false;

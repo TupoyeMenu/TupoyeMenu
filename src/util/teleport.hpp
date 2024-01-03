@@ -87,7 +87,7 @@ namespace big::teleport
 		}
 		else
 		{
-			Vehicle hnd = vehicle::spawn(RAGE_JOAAT("VEHICLE_RCBANDITO"), *player->get_ped()->get_position(), 0.0f, true);
+			Vehicle hnd = vehicle::spawn(RAGE_JOAAT("rcbandito"), *player->get_ped()->get_position(), 0.0f, true);
 
 			if (!hnd)
 				return false;
@@ -107,7 +107,7 @@ namespace big::teleport
 
 			if ((player->is_valid() && PED::IS_PED_IN_ANY_VEHICLE(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(player->id()), false))
 			    || PLAYER::IS_REMOTE_PLAYER_IN_NON_CLONED_VEHICLE(player->id()))
-				g_pointers->m_gta.m_clear_ped_tasks_network(player->get_ped(), true);
+				g_pointers->m_gta.m_clear_ped_tasks_network(player->get_ped(), true); // This should never trigger.
 
 			for (int i = 0; i < 30; i++)
 			{

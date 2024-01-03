@@ -124,9 +124,7 @@ namespace big
 				buffer.ReadBool(&is_team);
 
 				if (player->is_spammer)
-				{
 					return true;
-				}
 
 				if (auto spam_reason = spam::is_text_spam(message, player))
 				{
@@ -249,6 +247,7 @@ namespace big
 
 				break;
 			}
+			default: break;
 			}
 		}
 		else
@@ -257,6 +256,7 @@ namespace big
 			{
 			case rage::eNetMessage::MsgScriptMigrateHost: return true;
 			case rage::eNetMessage::MsgRadioStationSyncRequest: return true;
+			default: break;
 			}
 		}
 

@@ -107,6 +107,11 @@ namespace big
 			g_pointers->m_gta.m_script_handler_mgr = ptr.add(3).rip().as<CGameScriptHandlerMgr**>();
 		});
 
+		// Frame Count
+		main_batch.add("FC", "8B 15 ? ? ? ? 41 FF CF", [](memory::handle ptr) {
+			g_pointers->m_gta.m_frame_count = ptr.add(2).rip().as<uint32_t*>();
+		});
+
 		// Swapchain
 		main_batch.add("S", "48 8B 0D ? ? ? ? 48 8B 01 44 8D 43 01 33 D2 FF 50 40 8B C8", [](memory::handle ptr) {
 			g_pointers->m_gta.m_swapchain = ptr.add(3).rip().as<IDXGISwapChain**>();

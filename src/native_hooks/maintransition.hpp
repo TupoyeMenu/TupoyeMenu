@@ -32,7 +32,7 @@ namespace big
 			else
 			{
 				if (g.debug.logs.stupid_script_native_logs)
-					LOG(VERBOSE) << std::format("NETWORK::NETWORK_SESSION_HOST({}, {}, {});", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<BOOL>(2));
+					LOGF(VERBOSE, "NETWORK::NETWORK_SESSION_HOST({}, {}, {});", src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<BOOL>(2));
 				src->set_return_value<BOOL>(NETWORK::NETWORK_SESSION_HOST(src->get_arg<int>(0), src->get_arg<int>(1), src->get_arg<BOOL>(2)));
 			}
 		};
@@ -79,14 +79,16 @@ namespace big
 		inline void ACTIVATE_FRONTEND_MENU(rage::scrNativeCallContext* src)
 		{
 			Hash menuhash = src->get_arg<Hash>(0);
+			BOOL togglePause = src->get_arg<BOOL>(1);
+			int component = src->get_arg<int>(2);
 			if (g.debug.logs.stupid_script_native_logs)
-				LOG(VERBOSE) << std::format("HUD::ACTIVATE_FRONTEND_MENU({}, {}, {});", menuhash, src->get_arg<BOOL>(1), src->get_arg<int>(2));
+				LOGF(VERBOSE, "HUD::ACTIVATE_FRONTEND_MENU({}, {}, {});", menuhash, togglePause, component);
 
 			if (g.tunables.seamless_join && menuhash != RAGE_JOAAT("FE_MENU_VERSION_EMPTY_NO_BACKGROUND"))
-				HUD::ACTIVATE_FRONTEND_MENU(menuhash, src->get_arg<BOOL>(1), src->get_arg<int>(2));
+				HUD::ACTIVATE_FRONTEND_MENU(menuhash, togglePause, component);
 
 			if (!g.tunables.seamless_join)
-				HUD::ACTIVATE_FRONTEND_MENU(menuhash, src->get_arg<BOOL>(1), src->get_arg<int>(2));
+				HUD::ACTIVATE_FRONTEND_MENU(menuhash, togglePause, component);
 		}
 
 		/**
@@ -95,20 +97,21 @@ namespace big
 		inline void RESTART_FRONTEND_MENU(rage::scrNativeCallContext* src)
 		{
 			Hash menuhash = src->get_arg<Hash>(0);
+			int p1 = src->get_arg<int>(1);
 
 			if (g.debug.logs.stupid_script_native_logs)
-				LOG(VERBOSE) << std::format("HUD::RESTART_FRONTEND_MENU({}, {});", menuhash, src->get_arg<int>(1));
+				LOGF(VERBOSE, "HUD::RESTART_FRONTEND_MENU({}, {});", menuhash, p1);
 
 			if (g.tunables.seamless_join)
 			{
 				if (menuhash != RAGE_JOAAT("FE_MENU_VERSION_EMPTY_NO_BACKGROUND"))
 				{
-					HUD::RESTART_FRONTEND_MENU(menuhash, src->get_arg<int>(1));
+					HUD::RESTART_FRONTEND_MENU(menuhash, p1);
 				}
 			}
 			else
 			{
-				HUD::RESTART_FRONTEND_MENU(menuhash, src->get_arg<int>(1));
+				HUD::RESTART_FRONTEND_MENU(menuhash, p1);
 			}
 		}
 
@@ -139,7 +142,9 @@ namespace big
 		 */
 		inline void SET_ENTITY_COORDS(rage::scrNativeCallContext* src)
 		{
-			if (!g.tunables.seamless_join || *scr_globals::transition_state.as<eTransitionState*>() == eTransitionState::TRANSITION_STATE_CONFIRM_FM_SESSION_JOINING || src->get_arg<Entity>(0) != self::ped)
+			if (!g.tunables.seamless_join
+			 || *scr_globals::transition_state.as<eTransitionState*>() == eTransitionState::TRANSITION_STATE_CONFIRM_FM_SESSION_JOINING // This check is for character selection if i remember correctly.
+			 || src->get_arg<Entity>(0) != self::ped)
 				ENTITY::SET_ENTITY_COORDS(src->get_arg<Entity>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<BOOL>(7));
 		}
 
@@ -158,7 +163,7 @@ namespace big
 		inline void SET_PLAYER_CONTROL(rage::scrNativeCallContext* src)
 		{
 			if (g.debug.logs.stupid_script_native_logs)
-				LOG(VERBOSE) << std::format("PLAYER::SET_PLAYER_CONTROL({}, {}, {});", src->get_arg<Player>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2));
+				LOGF(VERBOSE, "PLAYER::SET_PLAYER_CONTROL({}, {}, {});", src->get_arg<Player>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2));
 
 			if (!g.tunables.seamless_join)
 				PLAYER::SET_PLAYER_CONTROL(src->get_arg<Player>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2));
@@ -179,9 +184,9 @@ namespace big
 		inline void NETWORK_RESURRECT_LOCAL_PLAYER(rage::scrNativeCallContext* src)
 		{
 			if (g.debug.logs.stupid_script_native_logs)
-				LOG(VERBOSE) << std::format("NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER({}, {}, {}, {}, {}, {}, {}, {}, {});", src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
+				LOGF(VERBOSE, "NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER({}, {}, {}, {}, {}, {}, {}, {}, {});", src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
 
-			if (!g.tunables.seamless_join)
+			if (!g.tunables.seamless_join && PED::IS_PED_DEAD_OR_DYING(self::ped, 0))
 				NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER(src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
 		}
 
@@ -209,19 +214,6 @@ namespace big
 
 			if(!g.tunables.dont_unload_online_maps)
 				DLC::ON_ENTER_SP();
-		}
-
-		/**
-		 * 
-		 * @param src 
-		 */
-		inline void CLEAR_PED_TASKS_IMMEDIATELY(rage::scrNativeCallContext* src)
-		{
-			if (src->get_arg<Ped>(0) == self::ped && g.debug.logs.stupid_script_native_logs)
-				LOG(VERBOSE) << std::format("TASK::CLEAR_PED_TASKS_IMMEDIATELY({}); // In: {}", src->get_arg<Ped>(0), SCRIPT::GET_THIS_SCRIPT_NAME());
-
-			if (!g.tunables.seamless_join)
-				TASK::CLEAR_PED_TASKS_IMMEDIATELY(src->get_arg<Ped>(0));
 		}
 	}
 }
