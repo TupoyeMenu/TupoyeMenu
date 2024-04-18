@@ -10,17 +10,12 @@
 
 #pragma once
 #include "MinHook.h"
-#include "call_hook.hpp"
-#include "common.hpp"
+
 #include "detour_hook.hpp"
-#include "gta/enums.hpp"
-#include "gta/fwddec.hpp"
-#include "gta/json_serializer.hpp"
-#include "gta/script_thread.hpp"
 #include "vmt_hook.hpp"
 #include "vtable_hook.hpp"
 
-#include <network/netConnection.hpp>
+#include <network/netConnection.hpp> // cannot stub this
 
 class CPlayerGamerDataNode;
 class CPlayerGameStateDataNode;
@@ -49,6 +44,12 @@ class CNonPhysicalPlayerData;
 class TimecycleKeyframeData;
 class CPedTaskSpecificDataNode;
 class CPedTaskSequenceDataNode;
+class Network;
+class GtaThread;
+class CNetworkPlayerMgr;
+class CNetworkObjectMgr;
+
+enum class eAckCode : uint32_t;
 
 namespace rage
 {
@@ -62,6 +63,9 @@ namespace rage
 	class datBitBuffer;
 	class rlMetric;
 	class rlTaskStatus;
+	class netEventMgr;
+	class json_serializer;
+	class netGameEvent;
 }
 
 namespace big
@@ -198,7 +202,6 @@ namespace big
 		static bool sync_reader_serialize_vec3_signed(void* _this, rage::fvector3* vec, float divisor, int size);
 		static bool sync_reader_serialize_array(void* _this, void* array, int size);
 
-		static bool remove_player_from_sender_list(void* list, uint64_t rockstar_id);
 		static int get_dlc_hash(void* mgr, int seed);
 	};
 

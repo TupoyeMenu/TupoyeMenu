@@ -12,11 +12,7 @@
 #include "pointers.hpp"
 
 #include "gta_pointers_layout_info.hpp"
-#include "hooking.hpp"
 #include "memory/all.hpp"
-#include "rage/atSingleton.hpp"
-#include "rage/gameSkeleton.hpp"
-#include "security/RageSecurity.hpp"
 
 #ifdef ENABLE_SOCIALCLUB
 	#include "sc_pointers_layout_info.hpp"
@@ -915,18 +911,6 @@ namespace big
 			g_pointers->m_gta.m_script_vm_patch_5 = ptr;
 			g_pointers->m_gta.m_script_vm_patch_6 = ptr.add(0x26);
 		});
-
-#ifdef ENABLE_ASI_LOADER
-		//Register File
-		main_batch.add("RF", "40 88 7C 24 ? E8 ? ? ? ? 0F B7 44 24", [](memory::handle ptr) {
-			g_pointers->m_gta.m_register_file = ptr.add(5).as<functions::register_file_t>();
-		});
-
-		// Camera Pool
-		main_batch.add("CP", "48 8B C8 EB 02 33 C9 48 85 C9 74 26", [](memory::handle ptr) {
-			g_pointers->m_gta.m_camera_pool = ptr.sub(9).rip().as<GenericPool**>();
-		});
-#endif // ENABLE_ASI_LOADER
 
 	    // Linux DX Error Fix
 		main_batch.add("LDEF", "40 55 48 8B EC 48 83 EC 60 48 8B 0D", [](memory::handle ptr) {

@@ -1,28 +1,19 @@
-/**
- * @file native_hooks.hpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #pragma once
 #include "gta/joaat.hpp"
 #include "gta/script_thread.hpp"
-#include "vmt_hook.hpp"
+#include "hooking/vmt_hook.hpp"
+#include "natives.hpp"
 
 namespace big
 {
 	class native_hook final
 	{
 	public:
-		explicit native_hook(rage::scrProgram* program, const std::unordered_map<rage::scrNativeHash, rage::scrNativeHandler>& native_replacements);
+		explicit native_hook(rage::scrProgram* program, const std::unordered_map<NativeIndex, rage::scrNativeHandler>& native_replacements);
 		~native_hook();
 
 	private:
-		void hook_instance(rage::scrProgram* program, const std::unordered_map<rage::scrNativeHash, rage::scrNativeHandler>& native_replacements);
+		void hook_instance(rage::scrProgram* program, const std::unordered_map<NativeIndex, rage::scrNativeHandler>& native_replacements);
 		static void scrprogram_dtor(rage::scrProgram* this_, char free_memory);
 
 		rage::scrProgram* m_program;
@@ -34,7 +25,7 @@ namespace big
 	{
 		friend class native_hook;
 
-		using native_detour = std::pair<rage::scrNativeHash, rage::scrNativeHandler>;
+		using native_detour = std::pair<NativeIndex, rage::scrNativeHandler>;
 
 		std::unordered_map<rage::joaat_t, std::vector<native_detour>> m_native_registrations;
 		std::unordered_map<rage::scrProgram*, std::unique_ptr<native_hook>> m_native_hooks;
@@ -54,7 +45,7 @@ namespace big
 		 * @param hash Hash of the native to detour
 		 * @param detour Detour Function
 		 */
-		void add_native_detour(rage::scrNativeHash hash, rage::scrNativeHandler detour);
+		void add_native_detour(NativeIndex index, rage::scrNativeHandler detour);
 		/**
 		 * @brief Add a detour for a specifik script
 		 * 
@@ -62,7 +53,7 @@ namespace big
 		 * @param hash Hash of the native to detour
 		 * @param detour Detour Function
 		 */
-		void add_native_detour(rage::joaat_t script_hash, rage::scrNativeHash hash, rage::scrNativeHandler detour);
+		void add_native_detour(rage::joaat_t script_hash, NativeIndex index, rage::scrNativeHandler detour);
 
 		void hook_program(rage::scrProgram* program);
 	};

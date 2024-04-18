@@ -21,3 +21,15 @@ if(ENABLE_LUA)
     target_compile_definitions(TupoyeMenu PRIVATE ENABLE_LUA)
     target_link_libraries(TupoyeMenu PRIVATE lua_static)
 endif()
+
+# Optimizations
+if(MSVC)
+    if(OPTIMIZE)
+      set(CMAKE_MODULE_LINKER_FLAGS
+          "${CMAKE_MODULE_LINKER_FLAGS} /LTCG /OPT:REF,ICF /GUARD:NO")
+
+      set(CMAKE_CXX_FLAGS_RELWITHDEBINFO
+          "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /O2 /Oi /Ot /Oy /Ob3 /sdl- /GL /GF /GS- /Gw")
+      string(REPLACE "/Ob1" "/Ob3" CMAKE_CXX_FLAGS_RELWITHDEBINFO ${CMAKE_CXX_FLAGS_RELWITHDEBINFO})
+    endif()
+endif()

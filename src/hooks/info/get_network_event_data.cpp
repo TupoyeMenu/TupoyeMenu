@@ -9,7 +9,7 @@
  */
 
 #include "gta/net_game_event.hpp"
-#include "hooking.hpp"
+#include "hooking/hooking.hpp"
 #include "services/players/player_service.hpp"
 #include "util/globals.hpp"
 #include "util/misc.hpp"
@@ -160,6 +160,7 @@ namespace big
 			}
 			break;
 		}
+		default: break;
 		}
 
 		return g_hooking->get_original<get_network_event_data>()(unk, net_event);

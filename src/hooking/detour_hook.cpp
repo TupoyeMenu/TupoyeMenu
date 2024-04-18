@@ -10,7 +10,6 @@
 
 #include "detour_hook.hpp"
 
-#include "common.hpp"
 #include "memory/handle.hpp"
 
 #include <MinHook.h>

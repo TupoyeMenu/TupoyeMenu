@@ -1,20 +1,10 @@
 /**
  * @file function_types.hpp
  * @brief Function declarations for hooked functions.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 #pragma once
-#include "network/CNetComplaintMgr.hpp"
-#include "network/snSession.hpp"
-#include "rage/rlGamerInfo.hpp"
-#include "rage/rlSessionByGamerTaskResult.hpp"
-
 #include <rage/rlTaskStatus.hpp>
+#include <script/scrNativeHandler.hpp>
 
 class CMsgJoinResponse;
 class NetworkGameFilterMatchmakingComponent;
@@ -27,6 +17,9 @@ class GenericPool;
 class CGetPedSeatReturnClass;
 enum eVehicleGadgetType : uint32_t;
 enum class PedBones : uint16_t;
+class CNetComplaintMgr;
+class Network;
+class CNetworkObjectMgr;
 
 namespace rage
 {
@@ -51,6 +44,10 @@ namespace rage
 	class fwEntity;
 	class netGameEvent;
 	class netEventMgr;
+	class fiDevice;
+	class fiPackfile;
+	class scrNativeRegistrationTable;
+	class rlSessionByGamerTaskResult;
 	struct rlScTaskStatus
 	{
 		void* pad  = 0;
@@ -70,14 +67,17 @@ namespace big::functions
 	using get_native_handler = rage::scrNativeHandler (*)(rage::scrNativeRegistrationTable* registration_table, rage::scrNativeHash hash);
 	using fix_vectors = void (*)(rage::scrNativeCallContext* call_ctx);
 
+	using get_net_game_player = CNetGamePlayer* (*)(Player player);
+
 	using trigger_script_event = void (*)(int event_group, int64_t* args, int arg_count, int player_bits, int event_id);
+
 
 	using increment_stat_event = bool (*)(uint64_t net_event_struct, int64_t sender, int64_t a3);
 
 	using ptr_to_handle = Entity (*)(void*);
 	using handle_to_ptr = rage::CDynamicEntity* (*)(Entity);
 
-	using set_gravity_level					= void(*)(int level);
+	using set_gravity_level = void (*)(int level);
 
 	using check_chat_profanity              = int(__int64 chat_type, const char* input, const char** output);
 	using write_player_game_state_data_node = bool (*)(rage::netObject* plr, CPlayerGameStateDataNode* node);
@@ -87,6 +87,8 @@ namespace big::functions
 	using get_screen_coords_for_world_coords = bool (*)(float* world_coords, float* out_x, float* out_y);
 
 	using give_pickup_rewards = void (*)(int players, uint32_t hash);
+
+	using register_file_t = uint32_t* (*)(int*, const char*, bool, const char*, bool);
 
 	// Bitbuffer read/write START
 	using read_bitbuf_dword  = bool (*)(rage::datBitBuffer* buffer, PVOID read, int bits);
@@ -101,9 +103,6 @@ namespace big::functions
 	using write_bitbuf_array = bool (*)(rage::datBitBuffer* buffer, void* val, int bits, int unk);
 
 	// Bitbuffer read/write END
-
-	using register_file_t = uint32_t* (*)(int*, const char*, bool, const char*, bool);
-
 	// Received Event Signatures START
 	using send_event_ack = void (*)(rage::netEventMgr* event_manager, CNetGamePlayer* source_player, CNetGamePlayer* target_player, int event_index, int event_handled_bitset);
 	// Received Event Signatures END
@@ -136,9 +135,9 @@ namespace big::functions
 	using start_get_presence_attributes = bool (*)(int profile_index, rage::rlScHandle* handle, int num_handles, rage::rlQueryPresenceAttributesContext** contexts, int count, rage::rlScTaskStatus* state);
 	using join_session_by_info = bool (*)(Network* network, rage::rlSessionInfo* info, int unk, int flags, rage::rlGamerHandle* handles, int handlecount);
 
-	using invite_player_by_gamer_handle = bool(*)(uint64_t config, rage::rlGamerHandle* handle, int unk1, int unk2, int unk3, int unk4);
-	using add_friend_by_gamer_handle	= void(*)(rage::rlGamerHandle* handle, const char* unk);
-	using show_profile_by_gamer_handle	= void(*)(rage::rlGamerHandle* handle);
+	using invite_player_by_gamer_handle = bool (*)(uint64_t config, rage::rlGamerHandle* handle, int unk1, int unk2, int unk3, int unk4);
+	using add_friend_by_gamer_handle   = void (*)(rage::rlGamerHandle* handle, const char* unk);
+	using show_profile_by_gamer_handle = void (*)(rage::rlGamerHandle* handle);
 
 	using generate_uuid = bool (*)(uint64_t* uuid);
 
@@ -152,7 +151,7 @@ namespace big::functions
 
 	using send_chat_message = bool (*)(int64_t* send_chat_ptr, rage::rlGamerInfo* gamer_info, char* message, bool is_team);
 
-	using send_network_damage = void (*)(rage::CEntity* source, rage::CEntity* target, rage::fvector3* position, int hit_component, bool override_default_damage, int weapon_type, float override_damage, int tire_index, int suspension_index, int flags, uint32_t action_result_hash, std::int16_t action_result_id, int action_unk, bool hit_weapon, bool hit_weapon_ammo_attachment, bool silenced, bool unk, rage::fvector3* impact_direction);
+	using send_network_damage = void (*)(rage::CEntity* source, rage::CEntity* target, rage::fvector3* position, int hit_component, bool override_default_damage, int weapon_type, float override_damage, int tire_index, int suspension_index, int flags, uint32_t action_result_hash, int16_t action_result_id, int action_unk, bool hit_weapon, bool hit_weapon_ammo_attachment, bool silenced, bool unk, rage::fvector3* impact_direction);
 	using request_ragdoll = void (*)(uint16_t object_id);
 	using request_control = void (*)(rage::netObject* net_object);
 
@@ -171,7 +170,7 @@ namespace big::functions
 	using save_json_data = char* (*)(datafile_commands::SveFileObject* object, int* out_length, const char* reason);
 
 	using sync_network_time = bool (*)(rage::netConnectionManager* mgr, rage::netPeerAddress* addr, int connection_id, rage::netTimeSyncMsg* msg, int flags);
-	using send_packet = bool (*)(rage::netConnectionManager* mgr, rage::netPeerAddress* addr, int connection_id, void* data, int size, int flags);
+	using send_packet = bool (*)(rage::netConnectionManager* mgr, rage::netPeerAddress* adde, int connection_id, void* data, int size, int flags);
 	using connect_to_peer = bool (*)(rage::netConnectionManager* mgr, rage::rlGamerInfoBase* gamer_info, rage::snConnectToPeerTaskData* data, rage::snConnectToPeerTaskResult* result, rage::rlTaskStatus* status);
 
 	using clear_ped_tasks_network = void (*)(CPed* ped, bool immediately);
@@ -191,6 +190,7 @@ namespace big::functions
 
 	using update_presence_attribute_int = void (*)(void* presence_data, int profile_index, char* attr, uint64_t value);
 	using update_presence_attribute_string = void (*)(void* presence_data, int profile_index, char* attr, char* value);
+
 	using connection_manager_try_free_memory = void (*)(rage::netConnectionManager* mgr);
 	using remove_message_from_queue          = void (*)(rage::netMessageQueue* queue, rage::netQueuedMessage* message);
 	using remove_message_from_unacked_reliables = void (*)(void* list, uint16_t* unk);
@@ -210,8 +210,6 @@ namespace big::functions
 	using delete_object  = bool (*)(CObject* object, bool unk);
 
 	using decal_manager_remove = void (*)(PVOID manager, rage::fwEntity*, DWORD a3, DWORD64 a4, DWORD ignore_bitset);
-
-	using remove_player_from_sender_list = bool (*)(void* list, uint64_t* rockstar_id);
 
 	using get_ped_seat = CGetPedSeatReturnClass*(*)(PVOID seat_info, CPed* ped);
 	using get_dlc_hash = int(*)(void* dlc_mgr, int seed);

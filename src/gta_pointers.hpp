@@ -103,10 +103,6 @@ namespace big
 		int64_t** m_script_globals;
 		uint32_t* m_frame_count;
 
-#ifdef ENABLE_ASI_LOADER
-		functions::register_file_t m_register_file;
-#endif // ENABLE_ASI_LOADER
-
 		CGameScriptHandlerMgr** m_script_handler_mgr;
 
 		IDXGISwapChain** m_swapchain;
@@ -304,9 +300,6 @@ namespace big
 		GenericPool** m_prop_pool;
 		GenericPool** m_pickup_pool;
 		VehiclePool*** m_vehicle_pool;
-#ifdef ENABLE_ASI_LOADER
-		GenericPool** m_camera_pool;
-#endif // ENABLE_ASI_LOADER
 
 		PVOID m_netfilter_handle_message;
 

@@ -2,7 +2,7 @@
 #include "gta/enums.hpp"
 #include "natives.hpp"
 #include "pointers.hpp"
-#include "hooking.hpp"
+#include "hooking/hooking.hpp"
 
 namespace
 {

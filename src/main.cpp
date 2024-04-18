@@ -14,17 +14,13 @@
 #include "common.hpp"
 #include "fiber_pool.hpp"
 #include "gui.hpp"
-#include "hooking.hpp"
+#include "hooking/hooking.hpp"
 #include "logger/exception_handler.hpp"
 #include "native_hooks/native_hooks.hpp"
 #include "pointers.hpp"
 #include "rage/gameSkeleton.hpp"
 #include "renderer.hpp"
 #include "script_mgr.hpp"
-#ifdef ENABLE_ASI_LOADER
-	#include "asi_loader/asi_scripts.hpp"
-	#include "shv_runner.hpp"
-#endif // ENABLE_ASI_LOADER
 
 #if defined(ENABLE_LUA)
 	#include "lua/lua_manager.hpp"
@@ -163,9 +159,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    LOG(INFO) << "Registered service instances...";
 
 			    g_script_mgr.add_script(std::make_unique<script>(&gui::script_func, "GUI", false));
-#ifdef ENABLE_ASI_LOADER
-			    g_script_mgr.add_script(std::make_unique<script>(&shv_runner::script_func));
-#endif // ENABLE_ASI_LOADER
 
 			    g_script_mgr.add_script(std::make_unique<script>(&backend::loop, "Backend Loop", false));
 			    g_script_mgr.add_script(std::make_unique<script>(&backend::self_loop, "Self"));
@@ -189,11 +182,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    auto native_hooks_instance = std::make_unique<native_hooks>();
 			    LOG(INFO) << "Dynamic native hooker initialized.";
 
-#ifdef ENABLE_ASI_LOADER
-			    asi_loader::initialize();
-			    LOG(INFO) << "ASI Loader initialized.";
-#endif // ENABLE_ASI_LOADER
-
 #if defined(ENABLE_LUA)
 			    auto lua_manager_instance =
 			        std::make_unique<lua_manager>(g_file_manager.get_project_folder("scripts"), g_file_manager.get_project_folder("scripts_config"));
@@ -205,10 +193,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    while (g_running)
 				    std::this_thread::sleep_for(500ms);
 
-#ifdef ENABLE_ASI_LOADER
-			    shv_runner::shutdown();
-			    LOG(INFO) << "ASI plugins unloaded.";
-#endif // ENABLE_ASI_LOADER
 			    g_script_mgr.remove_all_scripts();
 			    LOG(INFO) << "Scripts unregistered.";
 

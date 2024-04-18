@@ -1,4 +1,7 @@
 #pragma once
+#include "gta/enums.hpp"
+#include "gta/joaat.hpp"
+#include "pointers.hpp"
 
 namespace big
 {

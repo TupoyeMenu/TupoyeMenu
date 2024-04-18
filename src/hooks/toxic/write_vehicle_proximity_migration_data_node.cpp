@@ -9,7 +9,7 @@
  */
 
 #include "gta/net_array.hpp"
-#include "hooking.hpp"
+#include "hooking/hooking.hpp"
 #include "script_global.hpp"
 #include "script_local.hpp"
 

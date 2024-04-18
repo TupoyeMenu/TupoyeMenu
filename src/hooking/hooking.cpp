@@ -1,28 +1,6 @@
-/**
- * @file hooking.cpp
- * @brief Hooking initialization.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>. 
- */
+#include "hooking/hooking.hpp"
 
-#include "hooking.hpp"
-
-#include "common.hpp"
-#include "function_types.hpp"
-#include "gta/script_thread.hpp"
-#include "gui.hpp"
-#include "memory/module.hpp"
-#include "natives.hpp"
 #include "pointers.hpp"
-#include "renderer.hpp"
-#include "script_mgr.hpp"
-
-#include <MinHook.h>
-#include <vehicle/CVehicle.hpp>
 
 namespace big
 {

@@ -3,7 +3,7 @@
 #include "network.hpp"
 
 #include "../../script.hpp"
-#include "hooking.hpp"
+#include "hooking/hooking.hpp"
 #include "pointers.hpp"
 #include "services/player_database/player_database_service.hpp"
 #include "util/notify.hpp"

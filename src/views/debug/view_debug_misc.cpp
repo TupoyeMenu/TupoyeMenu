@@ -12,7 +12,7 @@
 #include "gta/joaat.hpp"
 #include "gta_util.hpp"
 #include "gui/components/components.hpp"
-#include "hooking.hpp"
+#include "hooking/hooking.hpp"
 #include "natives.hpp"
 #include "network/Network.hpp"
 #include "pointers.hpp"

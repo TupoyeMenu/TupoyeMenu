@@ -9,7 +9,6 @@
  */
 
 #pragma once
-#include "crossmap.hpp"
 #include "file_manager.hpp"
 #include "memory/module.hpp"
 #include "pointers.hpp"
@@ -21,6 +20,9 @@ namespace big::system
 	 */
 	inline void dump_entry_points()
 	{
+		// TODO!
+		LOG(WARNING) << "Not implemented!";
+#if 0
 		DWORD64 base_address = memory::module("GTA5.exe").begin().as<DWORD64>();
 
 		const auto file_path = g_file_manager.get_project_file("./entrypoints.txt");
@@ -34,6 +36,7 @@ namespace big::system
 		}
 
 		file.close();
+#endif
 	}
 
 	/**

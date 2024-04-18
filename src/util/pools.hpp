@@ -33,13 +33,6 @@ namespace big::pools
 		return **g_pointers->m_gta.m_pickup_pool;
 	}
 
-#ifdef ENABLE_ASI_LOADER
-	inline auto& get_all_cameras()
-	{
-		return **g_pointers->m_gta.m_camera_pool;
-	}
-#endif
-
 	inline auto get_all_peds_array()
 	{
 		return get_all_peds().to_array();
@@ -59,11 +52,4 @@ namespace big::pools
 	{
 		return get_all_pickups().to_array();
 	}
-
-#ifdef ENABLE_ASI_LOADER	
-	inline auto get_all_cameras_array()
-	{
-		return get_all_cameras().to_array();
-	}
-#endif
 };

@@ -9,11 +9,10 @@
  */
 
 #include "core/scr_globals.hpp"
-#include "hooking.hpp"
+#include "hooking/hooking.hpp"
 #include "pointers.hpp"
 #include "gta_util.hpp"
 #include "script_mgr.hpp"
-#include "invoker.hpp"
 #include "services/script_patcher/script_patcher_service.hpp"
 
 #include <script/globals/GlobalPlayerBD.hpp>
@@ -72,7 +71,6 @@ namespace big
 	{
 		script_vm_guard guard(program);
 
-		g_native_invoker.cache_handlers();
 		if(g_running && ctx->m_state == rage::eThreadState::running && ctx->m_script_hash != RAGE_JOAAT("startup") && tmp_frame_count != *g_pointers->m_gta.m_frame_count)
 		{
 			tmp_frame_count = *g_pointers->m_gta.m_frame_count;

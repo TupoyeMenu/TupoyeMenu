@@ -15,9 +15,6 @@
 #include "renderer.hpp"
 #include "script.hpp"
 #include "views/view.hpp"
-#ifdef ENABLE_ASI_LOADER
-	#include "asi_loader/script_manager.hpp"
-#endif // ENABLE_ASI_LOADER
 
 #include <imgui.h>
 
@@ -46,11 +43,6 @@ namespace big
 				g.cmd_executor.enabled = false;
 			}
 		});
-#ifdef ENABLE_ASI_LOADER
-		g_renderer->add_wndproc_callback([this](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
-			script_manager::wndproc(hwnd, msg, wparam, lparam);
-		});
-#endif // ENABLE_ASI_LOADER
 
 		g_renderer->add_dx_callback(esp::draw, 2); // TODO: move to ESP service
 		g_renderer->add_dx_callback(view::context_menu, 1);

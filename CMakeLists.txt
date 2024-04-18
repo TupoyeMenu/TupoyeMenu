@@ -1,30 +1,29 @@
 cmake_minimum_required(VERSION 3.20)
 
 # Crosscompiling
-include(scripts/crosscompile.cmake)
+include(cmake/crosscompile.cmake)
 
 project(TupoyeMenu CXX ASM_MASM)
 
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 
 # Git commit embed
-include(scripts/git.cmake)
+include(cmake/git.cmake)
 
 # Fetch modules
 message("\nFetching modules")
-include(scripts/minhook.cmake)
-include(scripts/async-logger.cmake)
-include(scripts/pugixml.cmake)
-include(scripts/json.cmake)
-include(scripts/zydis.cmake)
-include(scripts/lua.cmake)
+include(cmake/minhook.cmake)
+include(cmake/async-logger.cmake)
+include(cmake/pugixml.cmake)
+include(cmake/json.cmake)
+include(cmake/lua.cmake)
 
 message("\nFetching custom modules")
-include(scripts/imgui.cmake)
-include(scripts/gtav-classes.cmake)
+include(cmake/imgui.cmake)
+include(cmake/gtav-classes.cmake)
 
 # Build options
-include(scripts/build_options.cmake)
+include(cmake/build_options.cmake)
 
 # TupoyeMenu
 message(STATUS "TupoyeMenu")
@@ -61,14 +60,15 @@ target_include_directories(TupoyeMenu PRIVATE
     "${json_SOURCE_DIR}/single_include"
     "${gtav_classes_SOURCE_DIR}"
     "${imgui_SOURCE_DIR}"
+    "${minhook_SOURCE_DIR}/src/hde"
 )
 
 
 target_precompile_headers(TupoyeMenu PRIVATE "${SRC_DIR}/common.hpp")
-target_link_libraries(TupoyeMenu PRIVATE pugixml minhook AsyncLogger dbghelp imgui Zydis lua_static d3dcompiler dwmapi winmm psapi)
+target_link_libraries(TupoyeMenu PRIVATE pugixml minhook AsyncLogger dbghelp imgui lua_static d3dcompiler dwmapi winmm psapi)
 
 # Actually use build options
-include(scripts/build_options_impl.cmake)
+include(cmake/build_options_impl.cmake)
 
 # Warnings as errors
 if(NOT CROSSCOMPILE)
