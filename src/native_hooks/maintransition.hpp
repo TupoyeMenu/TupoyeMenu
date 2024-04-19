@@ -2,12 +2,6 @@
  * @file maintransition.hpp
  * @brief Native hooks for the maintransition script.
  * Mosly contains seamless switch code.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of TupoyeMenu.
- * TupoyeMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * TupoyeMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with TupoyeMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
 #pragma once
@@ -186,7 +180,7 @@ namespace big
 			if (g.debug.logs.stupid_script_native_logs)
 				LOGF(VERBOSE, "NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER({}, {}, {}, {}, {}, {}, {}, {}, {});", src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
 
-			if (!g.tunables.seamless_join && PED::IS_PED_DEAD_OR_DYING(self::ped, 0))
+			if (!g.tunables.seamless_join)
 				NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER(src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
 		}
 
