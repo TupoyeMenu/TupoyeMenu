@@ -37,7 +37,7 @@ jobs:
         run: cmake --build ./build --config RelWithDebInfo --target TupoyeMenu --
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3Release
+        uses: actions/upload-artifact@v4
         with:
           name: binary
           path: build/TupoyeMenu.dll

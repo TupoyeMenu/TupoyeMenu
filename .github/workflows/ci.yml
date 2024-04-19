@@ -52,13 +52,13 @@ jobs:
         working-directory: build/
 
       - name: Upload DLL
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: binary
           path: build/TupoyeMenu-dev-*.dll
       
       - name: Upload PDB
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pdb
           path: build/TupoyeMenu-dev-*.pdb
