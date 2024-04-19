@@ -1,5 +1,17 @@
 name: CI
 
+on:
+  [push, pull_request]:
+    paths:
+      - src/**
+      - cmake/**
+      - CMakeLists.txt
+      - .github/workflows/ci.yml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   ci:
     runs-on: windows-latest
