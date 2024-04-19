@@ -1,4 +1,5 @@
 #include "backend/command.hpp"
+#include "lua/lua_manager.hpp"
 
 #include "backend/looped_command.hpp" 
 
@@ -13,6 +14,7 @@ namespace big
             for (auto& command : g_looped_commands)
 				if (command->is_enabled())
 					command->on_disable();
+			g_lua_manager->trigger_event<menu_event::MenuUnloaded>();
             g_running = false;
 		}
 	};

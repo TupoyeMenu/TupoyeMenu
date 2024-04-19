@@ -165,7 +165,7 @@ namespace big
 	{
 		for (int i = 0; i < 16; i++)
 		{
-			if (node->m_has_occupants[i] && node->m_occupants[i] == g_local_player->m_net_object->m_object_id)
+			if (g_local_player && node->m_has_occupants[i] && node->m_occupants[i] == g_local_player->m_net_object->m_object_id)
 				return true;
 		}
 
@@ -330,7 +330,7 @@ namespace big
 #define LOG_FIELD_H(type, field) LOG(INFO) << "\t" << #field << ": " << HEX_TO_UPPER((((type*)(node))->field));
 #define LOG_FIELD(type, field) LOG(INFO) << "\t" << #field << ": " << ((((type*)(node))->field));
 #define LOG_FIELD_C(type, field) LOG(INFO) << "\t" << #field << ": " << (int)((((type*)(node))->field));
-#define LOG_FIELD_B(type, field) LOG(INFO) << "\t" << #field << ": " << ((((type*)(node))->field) ? "YES" : "NO");
+#define LOG_FIELD_B(type, field) LOG(INFO) << "\t" << #field << ": " << ((((type*)(node))->field) ? "Yes" : "No");
 #define LOG_FIELD_V3(type, field)                                                                                    \
 	LOG(INFO) << "\t" << #field << ": X: " << ((((type*)(node))->field)).x << " Y: " << ((((type*)(node))->field)).y \
 	          << " Z: " << ((((type*)(node))->field)).z;
@@ -726,13 +726,9 @@ namespace big
 		case sync_node_id("CPlayerExtendedGameStateNode"):
 			LOG_FIELD(CPlayerExtendedGameStateNode, waypoint_x);
 			LOG_FIELD(CPlayerExtendedGameStateNode, waypoint_y);
-			LOG_FIELD_B(CPlayerExtendedGameStateNode, unk1);
-			LOG_FIELD_B(CPlayerExtendedGameStateNode, unk2);
-			LOG_FIELD_B(CPlayerExtendedGameStateNode, unk3);
-			LOG_FIELD_B(CPlayerExtendedGameStateNode, unk4);
-			LOG_FIELD_B(CPlayerExtendedGameStateNode, unk5);
-			LOG_FIELD_B(CPlayerExtendedGameStateNode, has_waypoint_data);
-			LOG_FIELD_B(CPlayerExtendedGameStateNode, is_waypoint_set);
+			LOG_FIELD(CPlayerExtendedGameStateNode, waypoint_entity);
+			LOG_FIELD(CPlayerExtendedGameStateNode, has_active_waypoint);
+			LOG_FIELD(CPlayerExtendedGameStateNode, owns_waypoint);
 			break;
 		case sync_node_id("CPlayerGameStateDataNode"):
 			LOG_FIELD(CPlayerGameStateDataNode, m_player_state);
@@ -1550,7 +1546,7 @@ namespace big
 				}
 				for (int i = 0; i < game_state_node->m_num_equiped_gadgets; i++)
 				{
-					if (game_state_node->m_gadget_hash[i] != RAGE_JOAAT("gadget_parachute") && game_state_node->m_gadget_hash[i] != RAGE_JOAAT("gadget_nightvision"))
+					if (game_state_node->m_gadget_hash[i] != "gadget_parachute"_J && game_state_node->m_gadget_hash[i] != "gadget_nightvision"_J)
 					{
 						notify::crash_blocked(sender, "invalid gadget");
 						return true;

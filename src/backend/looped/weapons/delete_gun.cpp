@@ -20,7 +20,7 @@ namespace big
 					{
 						if (ENTITY::IS_ENTITY_A_PED(entity) && PED::IS_PED_A_PLAYER(entity))
 						{
-							g_notification_service->push_error("Custom Weapons", "You cannot delete player entities.");
+							g_notification_service.push_error("Custom Weapons", "You cannot delete player entities.");
 						}
 						else
 						{
@@ -29,7 +29,7 @@ namespace big
 
 							if (dist > 500)
 							{
-								g_notification_service->push_error("Custom Weapons", "Entity is too far.");
+								g_notification_service.push_error("Custom Weapons", "Entity is too far.");
 							}
 							else
 							{
@@ -38,13 +38,13 @@ namespace big
 									entity::delete_entity(entity);
 								}
 								else
-									g_notification_service->push_error("Custom Weapons", "Failed to take control of entity.");
+									g_notification_service.push_error("Custom Weapons", "Failed to take control of entity.");
 							}
 						}
 					}
 					else
 					{
-						g_notification_service->push_error("Custom Weapons", "No entity found.");
+						g_notification_service.push_error("Custom Weapons", "No entity found.");
 					}
 				}
 			}

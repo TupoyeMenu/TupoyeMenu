@@ -119,6 +119,8 @@ namespace big
 
 		detour_hook_helper::add<hooks::netfilter_handle_message>("NHM", (void*)g_pointers->m_gta.m_netfilter_handle_message);
 
+		detour_hook_helper::add<hooks::task_fall_constructor>("TFC", g_pointers->m_gta.m_taskfall_constructor);
+
 		detour_hook_helper::add<hooks::log_error_message_box>("E0MBH", (void*)g_pointers->m_gta.m_error_message_box);
 
 		detour_hook_helper::add<hooks::send_non_physical_player_data>("SNPPD", (void*)g_pointers->m_gta.m_send_non_physical_player_data);
@@ -134,6 +136,10 @@ namespace big
 		detour_hook_helper::add<hooks::read_bits_single>("RBS", (void*)g_pointers->m_gta.m_read_bits_single);
 
 		detour_hook_helper::add<hooks::get_dlc_hash>("GDH", (void*)g_pointers->m_gta.m_get_dlc_hash);
+
+		detour_hook_helper::add<hooks::received_clone_remove>("RCR", (void*)g_pointers->m_gta.m_received_clone_remove);
+
+		detour_hook_helper::add<hooks::can_create_vehicle>("CCV", (void*)g_pointers->m_gta.m_can_create_vehicle);
 
 		g_hooking = this;
 	}

@@ -41,7 +41,8 @@ namespace big
 		components::options_modal(
 		    "Debug animations",
 		    [] {
-			    view::debug_animations(&g_ped_animation_service.current_animation.dict, &g_ped_animation_service.current_animation.anim);
+			    view::debug_animations(&g_ped_animation_service.current_animation.dict,
+			        &g_ped_animation_service.current_animation.anim);
 		    },
 		    true,
 		    "List From Debug");
@@ -93,16 +94,26 @@ namespace big
 			ImGui::BeginGroup(); //Regular flags
 
 			ImGui::CheckboxFlags("Looped", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::LOOPING));
-			ImGui::CheckboxFlags("Hold Last Frame", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::HOLD_LAST_FRAME));
-			ImGui::CheckboxFlags("Uninterruptable", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::NOT_INTERRUPTABLE));
-			ImGui::CheckboxFlags("Only Upperbody", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::UPPERBODY));
+			ImGui::CheckboxFlags("Hold Last Frame",
+			    reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags),
+			    static_cast<unsigned int>(animations::anim_flags::HOLD_LAST_FRAME));
+			ImGui::CheckboxFlags("Uninterruptable",
+			    reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags),
+			    static_cast<unsigned int>(animations::anim_flags::NOT_INTERRUPTABLE));
+			ImGui::CheckboxFlags("Only Upperbody",
+			    reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags),
+			    static_cast<unsigned int>(animations::anim_flags::UPPERBODY));
 			ImGui::CheckboxFlags("Secondary", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::SECONDARY));
 			ImGui::SameLine();
 			components::help_marker("Allow primary animations to run simultaneously, such as walking.");
-			ImGui::CheckboxFlags("Realize Animation Orientation", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::REORIENT_WHEN_FINISHED));
+			ImGui::CheckboxFlags("Realize Animation Orientation",
+			    reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags),
+			    static_cast<unsigned int>(animations::anim_flags::REORIENT_WHEN_FINISHED));
 			ImGui::SameLine();
 			components::help_marker("Use the final orientation achieved in the animation.");
-			ImGui::CheckboxFlags("Hide Weapon", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::HIDE_WEAPON));
+			ImGui::CheckboxFlags("Hide Weapon",
+			    reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags),
+			    static_cast<unsigned int>(animations::anim_flags::HIDE_WEAPON));
 
 			ImGui::EndGroup();
 			ImGui::SameLine();
@@ -116,13 +127,23 @@ namespace big
 			ImGui::CheckboxFlags("Sync Out", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TAG_SYNC_OUT));
 			ImGui::SameLine();
 			components::help_marker("Seamless transition out of the animation, for example to continue walking.");
-			ImGui::CheckboxFlags("Sync Continuous", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TAG_SYNC_CONTINUOUS));
+			ImGui::CheckboxFlags("Sync Continuous",
+			    reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags),
+			    static_cast<unsigned int>(animations::anim_flags::TAG_SYNC_CONTINUOUS));
 			ImGui::SameLine();
 			components::help_marker("Seamless transition during the animation, especially usefull for upperbody animations.");
-			ImGui::CheckboxFlags("Force Start", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::FORCE_START));
-			ImGui::CheckboxFlags("Disable Collision", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::TURN_OFF_COLLISION));
-			ImGui::CheckboxFlags("Override Physics", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::OVERRIDE_PHYSICS));
-			ImGui::CheckboxFlags("Ignore Gravity", reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags), static_cast<unsigned int>(animations::anim_flags::IGNORE_GRAVITY));
+			ImGui::CheckboxFlags("Force Start",
+			    reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags),
+			    static_cast<unsigned int>(animations::anim_flags::FORCE_START));
+			ImGui::CheckboxFlags("Disable Collision",
+			    reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags),
+			    static_cast<unsigned int>(animations::anim_flags::TURN_OFF_COLLISION));
+			ImGui::CheckboxFlags("Override Physics",
+			    reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags),
+			    static_cast<unsigned int>(animations::anim_flags::OVERRIDE_PHYSICS));
+			ImGui::CheckboxFlags("Ignore Gravity",
+			    reinterpret_cast<unsigned int*>(&g_ped_animation_service.current_animation.flags),
+			    static_cast<unsigned int>(animations::anim_flags::IGNORE_GRAVITY));
 
 			ImGui::EndGroup();
 
@@ -137,27 +158,27 @@ namespace big
 		static auto save_response = [=]() -> bool {
 			if (!STREAMING::DOES_ANIM_DICT_EXIST(g_ped_animation_service.current_animation.dict.data()))
 			{
-				g_notification_service->push_warning("Animations",
+				g_notification_service.push_warning("Animations",
 				    std::format("Dictionary with the name {} does not exist.", g_ped_animation_service.current_animation.dict));
 				return false;
 			}
 
 			if (g_ped_animation_service.get_animation_by_name(g_ped_animation_service.current_animation.name))
 			{
-				g_notification_service->push_warning("Animations",
-					std::format("Animation with the name {} already exists.", g_ped_animation_service.current_animation.name));
+				g_notification_service.push_warning("Animations",
+				    std::format("Animation with the name {} already exists.", g_ped_animation_service.current_animation.name));
 				return false;
 			}
 
 			if (category.empty())
 			{
-				g_notification_service->push_warning("Animations", "Category cannot be empty.");
+				g_notification_service.push_warning("Animations", "Category cannot be empty.");
 				return false;
 			}
 
 			if (g_ped_animation_service.current_animation.anim.empty())
 			{
-				g_notification_service->push_warning("Animations", "Animation name cannot be empty.");
+				g_notification_service.push_warning("Animations", "Animation name cannot be empty.");
 				return false;
 			}
 
@@ -250,7 +271,7 @@ namespace big
 						ImGui::Text("%s: %s\n%s: %s", "Dictionary", p.dict.c_str(), "Animation", p.anim.c_str());
 
 						if (p.ambient)
-							ImGui::BulletText("%s","Ambient Animation");
+							ImGui::BulletText("%s", "Ambient Animation");
 						ImGui::EndTooltip();
 					}
 				}

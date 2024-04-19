@@ -79,7 +79,7 @@ namespace big
 				         VEHICLE::SET_VEHICLE_ENGINE_ON(m_handle, false, true, false);
 			         }
 			         else
-				         g_notification_service->push_warning("Toxic", "Failed to take control of vehicle.");
+				         g_notification_service.push_warning("Toxic", "Failed to take control of vehicle.");
 		        }},
 		        {"FIX VEHICLE",
 		           [this] {
@@ -91,7 +91,7 @@ namespace big
 				            VEHICLE::SET_VEHICLE_DIRT_LEVEL(m_handle, 0.f);
 			            }
 			            else
-				            g_notification_service->push_warning("Warning!", "Failed to take control of vehicle.");
+				            g_notification_service.push_warning("Warning!", "Failed to take control of vehicle.");
 		        }},		     
 		        {"BURST TIRES",
 		            [this] {
@@ -105,7 +105,7 @@ namespace big
 				            }
 			            }
 			            else
-				            g_notification_service->push_warning("Toxic", "Failed to take control of vehicle.");
+				            g_notification_service.push_warning("Toxic", "Failed to take control of vehicle.");
 		        }},
 		        {"HALT",
 		            [this] {
@@ -114,27 +114,27 @@ namespace big
 				            VEHICLE::BRING_VEHICLE_TO_HALT(m_handle, 1, 5, true);
 			            }
 			            else
-				            g_notification_service->push_warning("Toxic", "Failed to take control of vehicle.");
+				            g_notification_service.push_warning("Toxic", "Failed to take control of vehicle.");
 		            }},
 		        {"BOOST",
 		            [this] {
 			            if (entity::take_control_of(m_handle))
 				            VEHICLE::SET_VEHICLE_FORWARD_SPEED(m_handle, 79);
 			            else
-				            g_notification_service->push_warning("Toxic", "Failed to take control of vehicle.");
+				            g_notification_service.push_warning("Toxic", "Failed to take control of vehicle.");
 		        }},
 		        {"LAUNCH",
 		            [this] {
 			            if (entity::take_control_of(m_handle))
 				            ENTITY::APPLY_FORCE_TO_ENTITY(m_handle, 1, 0.f, 0.f, 50000.f, 0.f, 0.f, 0.f, 0, 0, 1, 1, 0, 1);
 			            else
-				            g_notification_service->push_warning("Toxic", "Failed to take control of vehicle.");
+				            g_notification_service.push_warning("Toxic", "Failed to take control of vehicle.");
 		        }},
 		        {"EJECT",
 		            [this] {
 			            if (ped::get_player_from_ped(VEHICLE::GET_PED_IN_VEHICLE_SEAT(m_handle, -1, 0)) != NULL)
 			            {
-				            static player_command* command = dynamic_cast<player_command*>(command::get(rage::consteval_joaat("vehkick")));
+				            static player_command* command = dynamic_cast<player_command*>(command::get("vehkick"_J));
 				            command->call(ped::get_player_from_ped(VEHICLE::GET_PED_IN_VEHICLE_SEAT(m_handle, -1, 0)), {});
 			            }
 
@@ -184,8 +184,8 @@ namespace big
 			         PED::SET_PED_CONFIG_FLAG(m_handle, 394, true);
 			         PED::SET_PED_CONFIG_FLAG(m_handle, 400, true);
 			         PED::SET_PED_CONFIG_FLAG(m_handle, 134, true);
-			         WEAPON::GIVE_WEAPON_TO_PED(m_handle, RAGE_JOAAT("weapon_microsmg"), 9999, false, false);
-			         WEAPON::GIVE_WEAPON_TO_PED(m_handle, RAGE_JOAAT("weapon_carbinerifle"), 9999, false, true);
+			         WEAPON::GIVE_WEAPON_TO_PED(m_handle, "weapon_microsmg"_J, 9999, false, false);
+			         WEAPON::GIVE_WEAPON_TO_PED(m_handle, "weapon_carbinerifle"_J, 9999, false, true);
 			         TASK::TASK_COMBAT_HATED_TARGETS_AROUND_PED(self::ped, 100, 67108864);
 		        }}
 		    }};
@@ -206,17 +206,17 @@ namespace big
 		        }},
 		        {"Kick",
 		            [this] {
-				    static player_command* command = dynamic_cast<player_command*>(command::get(rage::consteval_joaat("multikick")));
+				    static player_command* command = dynamic_cast<player_command*>(command::get("multikick"_J));
 			            command->call(ped::get_player_from_ped(m_handle), {});
 			            script::get_current()->yield(500ms);
 		        }},
 		        {"DISARM",
 		            [this] {
-			            static player_command* command = dynamic_cast<player_command*>(command::get(rage::consteval_joaat("remweaps")));
+			            static player_command* command = dynamic_cast<player_command*>(command::get("remweaps"_J));
 			            command->call(ped::get_player_from_ped(m_handle), {});
 		        }},
 		        {"RAGDOLL", [this] {
-			         static player_command* command = dynamic_cast<player_command*>(command::get(rage::consteval_joaat("ragdoll")));
+			         static player_command* command = dynamic_cast<player_command*>(command::get("ragdoll"_J));
 			         command->call(ped::get_player_from_ped(m_handle), {});
 		        }}
 		    }};
@@ -227,7 +227,7 @@ namespace big
 		    {
 		        {"COPY HASH", [this] {
 			         ImGui::SetClipboardText(std::format("0x{:08X}", (rage::joaat_t)m_pointer->m_model_info->m_hash).c_str());
-			         g_notification_service->push("Context Menu",
+			         g_notification_service.push("Context Menu",
 			             std::format("Copy hash 0x{:08X}", (rage::joaat_t)m_pointer->m_model_info->m_hash).c_str());
 		        }},
 			{"EXPLODE",

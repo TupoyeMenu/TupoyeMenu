@@ -124,9 +124,11 @@ namespace big
 				int thread_id                  = 0;
 				std::int16_t syncing_object_id = -1;
 			} fuzzer{};
+
+			bool external_console = true;
 			bool window_hook = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(debug, logs, window_hook)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(debug, logs, external_console, window_hook)
 		} debug{};
 
 		struct tunables
@@ -293,8 +295,9 @@ namespace big
 			bool admin_check             = true;
 			bool kick_rejoin             = true;
 			bool force_relay_connections = false;
+			bool stop_traffic            = true;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(protections, script_events, rid_join, receive_pickup, request_control, admin_check, kick_rejoin, force_relay_connections)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(protections, script_events, rid_join, receive_pickup, request_control, admin_check, kick_rejoin, force_relay_connections, stop_traffic)
 		} protections{};
 
 		struct self
@@ -333,12 +336,12 @@ namespace big
 			bool proof_melee                  = false;
 			bool proof_explosion              = false;
 			bool proof_steam                  = false;
-			bool proof_drown                  = false;
 			bool proof_water                  = false;
 			uint32_t proof_mask               = 0;
 			bool mobile_radio                 = false;
 			bool fast_respawn                 = false;
 			bool auto_tp                      = false;
+			bool graceful_landing			  = false;
 			bool custom_weapon_stop           = true;
 			bool prompt_ambient_animations    = false;
 			std::string persist_outfit        = "";
@@ -360,7 +363,7 @@ namespace big
 			// do not save below entries
 			bool dance_mode = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(self, ipls, allow_ragdoll, clean_player, force_wanted_level, passive, free_cam, invisibility, local_visibility, never_wanted, no_ragdoll, noclip, noclip_aim_speed_multiplier, noclip_speed_multiplier, off_radar, super_run, no_collision, unlimited_oxygen, no_water_collision, wanted_level, god_mode, part_water, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_drown, proof_water, proof_mask, mobile_radio, fast_respawn, auto_tp, hud, custom_weapon_stop, prompt_ambient_animations, persist_outfit, persist_outfits_mis, interaction_menu_freedom)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(self, ipls, allow_ragdoll, clean_player, force_wanted_level, passive, free_cam, invisibility, local_visibility, never_wanted, no_ragdoll, noclip, noclip_aim_speed_multiplier, noclip_speed_multiplier, off_radar, super_run, no_collision, unlimited_oxygen, no_water_collision, wanted_level, god_mode, part_water, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_water, proof_mask, mobile_radio, fast_respawn, auto_tp, hud, custom_weapon_stop, prompt_ambient_animations, persist_outfit, persist_outfits_mis, interaction_menu_freedom, graceful_landing)
 		} self{};
 
 		struct session
@@ -435,6 +438,7 @@ namespace big
 
 		struct settings
 		{
+			bool onboarding_complete = false;
 			bool dev_dlc = false;
 
 			struct hotkeys
@@ -466,7 +470,7 @@ namespace big
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys, editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, teleport_pv, teleport_selected, noclip, vehicle_flymode, bringvehicle, invis, heal, fill_inventory, skip_cutscene, freecam, superrun, passive, invisveh, localinvisveh, fill_ammo, fast_quit, clear_wanted, cmd_excecutor)
 			} hotkeys{};
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(settings, hotkeys, dev_dlc)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(settings, hotkeys, dev_dlc, onboarding_complete)
 		} settings{};
 
 		struct spawn_vehicle
@@ -592,7 +596,7 @@ namespace big
 					NLOHMANN_DEFINE_TYPE_INTRUSIVE(auto_disarm, enable, neutralize)
 				} auto_disarm{};
 
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(nearby, ignore, ped_rain, veh_rain, high_alert, ped_rush, combative, auto_disarm)
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(nearby, ignore, high_alert, ped_rush, auto_disarm)
 			} nearby{};
 
 			struct model_swapper
@@ -938,15 +942,13 @@ namespace big
 			bool change_esp_color_from_dist = false;
 			bool scale_health_from_dist     = false;
 			bool scale_armor_from_dist      = false;
-			bool object_esp                 = false;
-			bool show_gs_cache_boxes        = false;
 			float distance_threshold[2]     = {100.f, 200.f};
 			ImU32 enemy_color               = 4281479904;
 			ImU32 enemy_near_color          = 4283794943;
 			ImU32 default_color             = 4285713522;
 			ImU32 friend_color              = 4293244509;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(esp, enabled, global_render_distance, tracer_render_distance, box_render_distance, tracer, tracer_draw_position, box, health, armor, god, distance, name, change_esp_color_from_dist, scale_health_from_dist, scale_armor_from_dist, object_esp, show_gs_cache_boxes, distance_threshold, enemy_color, enemy_near_color, default_color, friend_color)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(esp, enabled, global_render_distance, tracer_render_distance, box_render_distance, tracer, tracer_draw_position, box, health, armor, god, distance, name, change_esp_color_from_dist, scale_health_from_dist, scale_armor_from_dist, distance_threshold, enemy_color, enemy_near_color, default_color, friend_color)
 		} esp{};
 
 		struct session_browser

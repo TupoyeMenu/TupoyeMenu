@@ -10,11 +10,11 @@
 
 #pragma once
 #include "MinHook.h"
-
 #include "detour_hook.hpp"
 #include "vmt_hook.hpp"
 #include "vtable_hook.hpp"
 
+#include <gta/enums.hpp>
 #include <network/netConnection.hpp> // cannot stub this
 
 class CPlayerGamerDataNode;
@@ -165,6 +165,7 @@ namespace big
 		static void write_player_creation_data_node(rage::netObject* player, CPlayerCreationDataNode* node);
 		static void write_player_appearance_data_node(rage::netObject* player, CPlayerAppearanceDataNode* node);
 
+		static void* task_fall_constructor(uint64_t a1, int a2);
 		static CBaseModelInfo* get_model_info(rage::joaat_t hash, uint32_t* a2);
 
 		static int enumerate_audio_devices(CFoundDevice* found_devices, int count, int flags);
@@ -188,6 +189,8 @@ namespace big
 
 		static bool read_bits_single(void* data, int* out_value, int size, int offset);
 
+		static void received_clone_remove(CNetworkObjectMgr* mgr, CNetGamePlayer* src, CNetGamePlayer* dst, int16_t object_id, uint32_t ownership_token);
+
 		static bool sync_reader_serialize_dword(void* _this, uint32_t* dword, int size);
 		static bool sync_reader_serialize_word(void* _this, uint16_t* word, int size);
 		static bool sync_reader_serialize_byte(void* _this, uint8_t* byte, int size);
@@ -203,6 +206,7 @@ namespace big
 		static bool sync_reader_serialize_array(void* _this, void* array, int size);
 
 		static int get_dlc_hash(void* mgr, int seed);
+		static bool can_create_vehicle();
 	};
 
 	class minhook_keepalive

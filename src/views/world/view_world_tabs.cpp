@@ -23,56 +23,56 @@ namespace big
 			{
 				view::world();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_WORLD"));
+					g_lua_manager->draw_gui("World"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Spawn Ped"))
 			{
 				view::spawn_ped();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SPAWN_PED"));
+					g_lua_manager->draw_gui("Spawn Ped"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Embient Population"))
 			{
 				view::ambient();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("Embient Population"));
+					g_lua_manager->draw_gui("Embient Population"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Creator"))
 			{
 				view::creator();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_CREATOR"));
+					g_lua_manager->draw_gui("Creator"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Blackhole"))
 			{
 				view::blackhole();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_BLACKHOLE"));
+					g_lua_manager->draw_gui("Blackhole"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Model Swapper"))
 			{
 				view::model_swapper();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_MODEL_SWAPPER"));
+					g_lua_manager->draw_gui("Model Swapper"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("VFX"))
 			{
 				view::vfx();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_VFX"));
+					g_lua_manager->draw_gui("VFX"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("XML"))
 			{
 				view::xml_maps();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_XML_MAPS"));
+					g_lua_manager->draw_gui("XML Maps"_J);
 				ImGui::EndTabItem();
 			}
 

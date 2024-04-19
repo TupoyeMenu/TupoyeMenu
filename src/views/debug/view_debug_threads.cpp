@@ -1,12 +1,6 @@
 /**
  * @file view_debug_threads.cpp
  * @brief In game .ysc script thread monitor.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "core/data/all_script_names.hpp"
@@ -193,7 +187,7 @@ namespace big
 
 			if (MISC::GET_NUMBER_OF_FREE_STACKS_OF_THIS_SIZE(selected_stack_size) == 0)
 			{
-				g_notification_service->push_warning("Script Launcher", "No free stacks for this stack size");
+				g_notification_service.push_warning("Script Launcher", "No free stacks for this stack size");
 			}
 
 			while (!SCRIPT::HAS_SCRIPT_WITH_NAME_HASH_LOADED(hash))
@@ -217,7 +211,7 @@ namespace big
 
 			if (idx == -1)
 			{
-				g_notification_service->push_warning("Script Launcher", "This script cannot be started using am_launcher");
+				g_notification_service.push_warning("Script Launcher", "This script cannot be started using am_launcher");
 				return;
 			}
 

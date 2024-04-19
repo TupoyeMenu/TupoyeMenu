@@ -15,7 +15,7 @@ namespace big
 		for (const auto& [name, weapon] : g_gta_data_service->weapons())
 		{
 			Hash weapon_hash = weapon.m_hash;
-			if (weapon_hash != RAGE_JOAAT("WEAPON_UNARMED") && WEAPON::HAS_PED_GOT_WEAPON(player_ped, weapon_hash, false))
+			if (weapon_hash != "WEAPON_UNARMED"_J && WEAPON::HAS_PED_GOT_WEAPON(player_ped, weapon_hash, false))
 			{
 				weaponloadout_weapon_json weapon_loadout;
 				weapon_loadout.weapon = weapon_hash;
@@ -30,7 +30,7 @@ namespace big
 				weapon_json.weapons.push_back(weapon_loadout);
 			}
 		}
-		if (WEAPON::HAS_PED_GOT_WEAPON(player_ped, RAGE_JOAAT("GADGET_PARACHUTE"), false))
+		if (WEAPON::HAS_PED_GOT_WEAPON(player_ped, "GADGET_PARACHUTE"_J, false))
 		{
 			weapon_json.parachutes = 1;
 			int parachute_tint, parachute_pack_tint, reserve_pack_tint, smoke_trail[3]{};
@@ -115,7 +115,7 @@ namespace big
 			}
 			catch (std::exception& e)
 			{
-				g_notification_service->push_warning("Persist Weapons", "Failed to load JSON file from disk.");
+				g_notification_service.push_warning("Persist Weapons", "Failed to load JSON file from disk.");
 				LOG(WARNING) << "Persist Weapons failed to load JSON file: " << g.persist_weapons.weapon_loadout_file << " because " << e.what();
 			}
 		}
@@ -156,7 +156,7 @@ namespace big
 		for (auto weapon : loadout.weapons)
 		{
 			Hash weapon_hash = weapon.weapon;
-			bool is_gun      = (weapon.group != RAGE_JOAAT("GROUP_MELEE"));
+			bool is_gun      = (weapon.group != "GROUP_MELEE"_J);
 			if (WEAPON::HAS_PED_GOT_WEAPON(player_ped, weapon_hash, FALSE) == false
 			    || (is_gun && (WEAPON::GET_PED_WEAPON_TINT_INDEX(player_ped, weapon_hash) != weapon.tint || (WEAPON::GET_AMMO_IN_PED_WEAPON(player_ped, weapon_hash) == 0))))
 			{
@@ -164,7 +164,7 @@ namespace big
 				if (WEAPON::GET_MAX_AMMO(player_ped, weapon_hash, &maxAmmo) == FALSE)
 					maxAmmo = 9999;
 				WEAPON::GIVE_WEAPON_TO_PED(player_ped, weapon_hash, maxAmmo, FALSE, FALSE);
-				if (weapon.group != RAGE_JOAAT("GROUP_MELEE"))
+				if (weapon.group != "GROUP_MELEE"_J)
 				{
 					WEAPON::SET_PED_WEAPON_TINT_INDEX(player_ped, weapon_hash, weapon.tint);
 					for (auto component : g_gta_data_service->weapon_by_hash(weapon_hash).m_attachments)
@@ -177,7 +177,7 @@ namespace big
 		}
 		if (loadout.parachutes != 0)
 		{
-			WEAPON::GIVE_WEAPON_TO_PED(player_ped, RAGE_JOAAT("GADGET_PARACHUTE"), 1, FALSE, FALSE);
+			WEAPON::GIVE_WEAPON_TO_PED(player_ped, "GADGET_PARACHUTE"_J, 1, FALSE, FALSE);
 			PLAYER::SET_PLAYER_PARACHUTE_TINT_INDEX(player, loadout.parachute_tint);
 			PLAYER::SET_PLAYER_PARACHUTE_PACK_TINT_INDEX(player, loadout.parachute_pack_tint);
 			if (loadout.parachutes == 2)

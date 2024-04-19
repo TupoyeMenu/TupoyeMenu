@@ -60,10 +60,11 @@
 
 #include "services/notifications/notification_service.hpp"
 
-#include <script/types.hpp>
+#if defined(ENABLE_LUA)
+#include "lua/sol_include.hpp"
+#endif
 
-#define SOL_ALL_SAFETIES_ON 1
-#include "lua/sol.hpp"
+#include <script/types.hpp>
 
 // clang-format on
 

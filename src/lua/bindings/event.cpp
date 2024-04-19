@@ -1,10 +1,10 @@
-#if defined (ENABLE_LUA)
+#if defined(ENABLE_LUA)
 
-#include "event.hpp"
+	#include "event.hpp"
 
-#include "fiber_pool.hpp"
-#include "lua/lua_module.hpp"
-#include "script_mgr.hpp"
+	#include "fiber_pool.hpp"
+	#include "lua/lua_module.hpp"
+	#include "script_mgr.hpp"
 
 namespace lua::event
 {
@@ -81,6 +81,28 @@ namespace lua::event
 	// end)
 	// ```
 
+	// Lua API: Field
+	// Table: menu_event
+	// Field: MenuUnloaded: integer
+	// Event that is triggered when we unload YimMenu.
+	// **Example Usage:**
+	// ```lua
+	// event.register_handler(menu_event.MenuUnloaded, function ()
+	//     log.info("Menu unloaded.")
+	// end)
+	// ```
+
+	// Lua API: Field
+	// Table: menu_event
+	// Field: ScriptsReloaded: integer
+	// Event that is triggered when we reload the Lua scripts.
+	// **Example Usage:**
+	// ```lua
+	// event.register_handler(menu_event.ScriptsReloaded, function ()
+	//     log.info("Scripts reloaded.")
+	// end)
+	// ```
+
 	// Lua API: Table
 	// Name: event
 	// Table for responding to various events. The list of events is available in the menu_event table.
@@ -109,7 +131,9 @@ namespace lua::event
 		        {"ChatMessageReceived", menu_event::ChatMessageReceived},
 		        {"ScriptedGameEventReceived", menu_event::ScriptedGameEventReceived},
 		        {"SendMetric", menu_event::SendMetric},
-			{"NetworkBail", menu_event::NetworkBail},
+		        {"NetworkBail", menu_event::NetworkBail},
+		        {"MenuUnloaded", menu_event::MenuUnloaded},
+		        {"ScriptsReloaded", menu_event::ScriptsReloaded},
 		    });
 
 

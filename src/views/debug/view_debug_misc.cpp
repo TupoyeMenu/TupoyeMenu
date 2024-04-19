@@ -46,6 +46,8 @@ namespace big
 			NETWORK::NETWORK_BAIL(16, 0, 0);
 		});
 
+		components::command_checkbox<"external_console">();
+
 		components::button("Hide news", [] {
 			SOCIALCLUB::SC_TRANSITION_NEWS_END();
 		});
@@ -79,7 +81,7 @@ namespace big
 			if (pathfind::find_closest_vehicle_node(self::pos, safepos, heading, 0))
 				ENTITY::SET_ENTITY_COORDS(self::ped, safepos.x, safepos.y, safepos.z, 0, 0, 0, false);
 			else
-				g_notification_service->push_error("Find safe pos", "Failed to find a safe position");
+				g_notification_service.push_error("Find safe pos", "Failed to find a safe position");
 		});
 
 		ImGui::Checkbox("Always Control", &g.tunables.always_control);

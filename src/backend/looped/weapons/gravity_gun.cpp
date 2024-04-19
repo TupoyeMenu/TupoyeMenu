@@ -65,7 +65,7 @@ namespace big
 				{
 					if (ENTITY::IS_ENTITY_A_PED(ent_to_add) && PED::IS_PED_A_PLAYER(ent_to_add))
 					{
-						g_notification_service->push_warning("Custom Weapons", "You cannot move player entities.");
+						g_notification_service.push_warning("Custom Weapons", "You cannot move player entities.");
 					}
 					else
 					{
@@ -79,7 +79,7 @@ namespace big
 
 						if (temp_dist > 500)
 						{
-							g_notification_service->push_warning("Custom Weapons", "Entity is too far.");
+							g_notification_service.push_warning("Custom Weapons", "Entity is too far.");
 						}
 						else
 						{
@@ -87,7 +87,7 @@ namespace big
 							{
 								TASK::SET_HIGH_FALL_TASK(ent_to_add, 0, 0, 0);
 
-								g_notification_service->push_warning("Custom Weapons", "Entity set.");
+								g_notification_service.push_warning("Custom Weapons", "Entity set.");
 							}
 
 							ents.push_back(ent_to_add);
@@ -121,7 +121,7 @@ namespace big
 
 			ents.clear();
 
-			g_notification_service->push_success("Custom Weapons", "Entity released.");
+			g_notification_service.push_success("Custom Weapons", "Entity released.");
 		}
 	}
 }

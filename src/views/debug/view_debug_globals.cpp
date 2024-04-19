@@ -382,7 +382,7 @@ namespace big
 			}
 			else
 			{
-				g_notification_service->push_warning("Globals", "You cannot use Read Global with a non-integer type.");
+				g_notification_service.push_warning("Globals", "You cannot use Read Global with a non-integer type.");
 			}
 		}
 		ImGui::SameLine();

@@ -20,7 +20,7 @@ namespace big
 		{
 			Vector3 player_pos = self::pos;
 			teleport::to_coords(Vector3(10000, 10000, 50000));
-			Ped ped = ped::spawn(ePedType::PED_TYPE_PROSTITUTE, RAGE_JOAAT("slod_human"), 0, misc::fvector3_to_Vector3(*player->get_ped()->get_position()), 0);
+			Ped ped = ped::spawn(ePedType::PED_TYPE_PROSTITUTE, "slod_human"_J, 0, misc::fvector3_to_Vector3(*player->get_ped()->get_position()), 0);
 			entity::delete_entity(ped);
 			script::get_current()->yield(10s);
 			teleport::to_coords(player_pos);

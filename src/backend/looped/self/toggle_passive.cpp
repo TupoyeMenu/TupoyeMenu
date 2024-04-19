@@ -15,11 +15,11 @@ namespace big
 
 		virtual void on_tick() override
 		{
-			if (scr_globals::gpbd_fm_3.as<GPBD_FM_3*>()->Entries[self::id].BossGoon.Boss != -1 || gta_util::find_script_thread(RAGE_JOAAT("fm_mission_controller")) || gta_util::find_script_thread(RAGE_JOAAT("fm_mission_controller_2020")))
+			if (scr_globals::gpbd_fm_3.as<GPBD_FM_3*>()->Entries[self::id].BossGoon.Boss != -1 || gta_util::find_script_thread("fm_mission_controller"_J) || gta_util::find_script_thread("fm_mission_controller_2020"_J))
 			{
 				on_disable();
 				g.self.passive = false;
-				g_notification_service->push_warning("Passive Mode", "Disabled passive mode because you started mission or joined your company or motorcycle club.");
+				g_notification_service.push_warning("Passive Mode", "Disabled passive mode because you started mission or joined your company or motorcycle club.");
 				return;
 			}
 			*g_tunables_service->get_tunable<int*>(-29732167) = 0; // End Passive Time = 0s

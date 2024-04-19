@@ -1,7 +1,7 @@
 #include "services/custom_teleport/custom_teleport_service.hpp"
+#include "util/blip.hpp"
 #include "util/math.hpp"
 #include "util/teleport.hpp"
-#include "util/blip.hpp"
 #include "views/view.hpp"
 
 namespace big
@@ -31,9 +31,10 @@ namespace big
 
 	float get_distance_to_telelocation(telelocation t)
 	{
-		return math::distance_between_vectors(Vector3(t.x,t.y,t.z), Vector3(g_local_player->m_navigation->get_position()->x,
-		    g_local_player->m_navigation->get_position()->y,
-		    g_local_player->m_navigation->get_position()->z));
+		return math::distance_between_vectors(Vector3(t.x, t.y, t.z),
+		    Vector3(g_local_player->m_navigation->get_position()->x,
+		        g_local_player->m_navigation->get_position()->y,
+		        g_local_player->m_navigation->get_position()->z));
 	}
 
 	void view::custom_teleport()
@@ -77,11 +78,11 @@ namespace big
 		components::button("Save Current Location", [] {
 			if (new_location_name.empty())
 			{
-				g_notification_service->push_warning("Custom Teleport", "Please enter a valid name.");
+				g_notification_service.push_warning("Custom Teleport", "Please enter a valid name.");
 			}
 			else if (g_custom_teleport_service.get_saved_location_by_name(new_location_name))
 			{
-				g_notification_service->push_warning("Custom Teleport", std::format("Location with the name {} already exists.", new_location_name));
+				g_notification_service.push_warning("Custom Teleport", std::format("Location with the name {} already exists.", new_location_name));
 			}
 			else
 			{
@@ -89,14 +90,14 @@ namespace big
 				Entity teleport_entity = self::ped;
 				if (self::veh != 0)
 					teleport_entity = self::veh;
-				auto coords                  = ENTITY::GET_ENTITY_COORDS(teleport_entity, TRUE);
-				teleport_location.name       = new_location_name;
-				teleport_location.x          = coords.x;
-				teleport_location.y          = coords.y;
-				teleport_location.z          = coords.z;
-				teleport_location.yaw        = ENTITY::GET_ENTITY_HEADING(teleport_entity);
-				teleport_location.pitch      = CAM::GET_GAMEPLAY_CAM_RELATIVE_PITCH();
-				teleport_location.roll       = CAM::GET_GAMEPLAY_CAM_RELATIVE_HEADING();
+				auto coords             = ENTITY::GET_ENTITY_COORDS(teleport_entity, TRUE);
+				teleport_location.name  = new_location_name;
+				teleport_location.x     = coords.x;
+				teleport_location.y     = coords.y;
+				teleport_location.z     = coords.z;
+				teleport_location.yaw   = ENTITY::GET_ENTITY_HEADING(teleport_entity);
+				teleport_location.pitch = CAM::GET_GAMEPLAY_CAM_RELATIVE_PITCH();
+				teleport_location.roll  = CAM::GET_GAMEPLAY_CAM_RELATIVE_HEADING();
 				g_custom_teleport_service.save_new_location(category, teleport_location);
 			}
 		});
@@ -104,15 +105,15 @@ namespace big
 		components::button("Save highlighted blip.", [] {
 			if (new_location_name.empty())
 			{
-				g_notification_service->push_warning("Custom Teleport", "Please enter a valid name.");
+				g_notification_service.push_warning("Custom Teleport", "Please enter a valid name.");
 			}
 			else if (g_custom_teleport_service.get_saved_location_by_name(new_location_name))
 			{
-				g_notification_service->push_warning("Custom Teleport", std::format("Location with the name {} already exists.", new_location_name));
+				g_notification_service.push_warning("Custom Teleport", std::format("Location with the name {} already exists.", new_location_name));
 			}
 			else if (!*g_pointers->m_gta.m_is_session_started)
 			{
-				g_notification_service->push_warning("Custom Teleport", "You need to be online to use this feature.");
+				g_notification_service.push_warning("Custom Teleport", "You need to be online to use this feature.");
 				return;
 			}
 			else
@@ -121,7 +122,7 @@ namespace big
 				auto blip = blip::get_selected_blip();
 				if (blip == nullptr)
 				{
-					g_notification_service->push_warning("Custom Teleport", "Cannot find selected blip.");
+					g_notification_service.push_warning("Custom Teleport", "Cannot find selected blip.");
 					return;
 				}
 				teleport_location.name  = new_location_name;

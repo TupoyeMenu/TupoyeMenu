@@ -85,9 +85,9 @@ namespace big
 				});
 				ImGui::SameLine();
 				components::button("Join", [session] {
-					if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(RAGE_JOAAT("maintransition")) != 0 || STREAMING::IS_PLAYER_SWITCH_IN_PROGRESS())
+					if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH("maintransition"_J) != 0 || STREAMING::IS_PLAYER_SWITCH_IN_PROGRESS())
 					{
-						g_notification_service->push_error("Join Session", "Player switch in progress, wait a bit.");
+						g_notification_service.push_error("Join Session", "Player switch in progress, wait a bit.");
 						return;
 					}
 
@@ -183,7 +183,7 @@ namespace big
 			selected_session_idx = -1;
 
 			if (!g_matchmaking_service->matchmake())
-				g_notification_service->push_error("Matchmaking", "Matchmaking failed");
+				g_notification_service.push_error("Matchmaking", "Matchmaking failed");
 		});
 	}
 }

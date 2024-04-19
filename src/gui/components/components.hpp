@@ -57,11 +57,7 @@ namespace big
 		
 		static void command_button(const std::vector<uint64_t> args = {}, std::optional<const std::string_view> label_override = std::nullopt)
 		{
-#ifdef __clang__
 			static command* command = command::get(rage::joaat(cmd_str.value));
-#else
-			static command* command = command::get(rage::consteval_joaat(cmd_str.value));
-#endif // __clang__
 			if (command == nullptr)
 				return ImGui::TextUnformatted("INVALID COMMAND");
 
@@ -78,11 +74,7 @@ namespace big
 		template<template_str cmd_str, ImVec2 size = ImVec2(0, 0), ImVec4 color = ImVec4(0.172f, 0.380f, 0.909f, 1.f)> // TODO: Use GUI Color.
 		static void player_command_button(player_ptr player = g_player_service->get_selected(), const std::vector<uint64_t> args = {}, std::optional<const std::string_view> label_override = std::nullopt)
 		{
-#ifdef __clang__
 			static player_command* command = dynamic_cast<player_command*>(command::get(rage::joaat(cmd_str.value)));
-#else
-			static player_command* command = dynamic_cast<player_command*>(command::get(rage::consteval_joaat(cmd_str.value)));
-#endif // __clang__
 			if (command == nullptr)
 				return ImGui::TextUnformatted("INVALID COMMAND");
 
@@ -96,11 +88,7 @@ namespace big
 		template<template_str cmd_str>
 		static bool command_checkbox(std::optional<const std::string_view> label_override = std::nullopt)
 		{
-#ifdef __clang__
 			static bool_command* command = dynamic_cast<bool_command*>(command::get(rage::joaat(cmd_str.value)));
-#else
-			static bool_command* command = dynamic_cast<bool_command*>(command::get(rage::consteval_joaat(cmd_str.value)));
-#endif // __clang__
 			if (command == nullptr)
 			{
 				ImGui::TextUnformatted("INVALID COMMAND");
@@ -111,8 +99,11 @@ namespace big
 			if (updated)
 				command->refresh();
 
-			ImGui::SameLine();
-			help_marker(command->get_description());
+			if (!command->get_description().empty())
+			{
+				ImGui::SameLine();
+				help_marker(command->get_description());
+			}
 
 			return updated;
 		}
@@ -120,11 +111,7 @@ namespace big
 		template<template_str cmd_str>
 		static void command_int_slider(std::optional<const std::string_view> label_override = std::nullopt)
 		{
-#ifdef __clang__
 			static int_command* command = (int_command*)command::get(rage::joaat(cmd_str.value));
-#else
-			static int_command* command = (int_command*)command::get(rage::consteval_joaat(cmd_str.value));
-#endif // __clang__
 			if (command == nullptr)
 				return ImGui::TextUnformatted("INVALID COMMAND");
 
@@ -133,13 +120,17 @@ namespace big
 			    command->get_lower_bound(),
 			    command->get_upper_bound());
 
-			help_marker(command->get_description());
+			if (!command->get_description().empty())
+			{
+				ImGui::SameLine();
+				help_marker(command->get_description());
+			}
 		}
 
 		template<template_str cmd_str>
 		static void command_float_slider(std::optional<const std::string_view> label_override = std::nullopt)
 		{
-			static float_command* command = (float_command*)command::get(rage::consteval_joaat(cmd_str.value));
+			static float_command* command = (float_command*)command::get(rage::joaat(cmd_str.value));
 			if (command == nullptr)
 				return ImGui::TextUnformatted("INVALID COMMAND");
 
@@ -148,14 +139,17 @@ namespace big
 			    command->get_lower_bound(),
 			    command->get_upper_bound());
 
-			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("%s", command->get_description().c_str());
+			if (!command->get_description().empty())
+			{
+				ImGui::SameLine();
+				help_marker(command->get_description());
+			}
 		}
 
 		template<template_str cmd_str>
 		static void command_float_input(std::optional<const std::string_view> label_override = std::nullopt)
 		{
-			static float_command* command = (float_command*)command::get(rage::consteval_joaat(cmd_str.value));
+			static float_command* command = (float_command*)command::get(rage::joaat(cmd_str.value));
 			if (command == nullptr)
 				return ImGui::TextUnformatted("INVALID COMMAND");
 
@@ -164,8 +158,11 @@ namespace big
 			    command->get_lower_bound(),
 			    command->get_upper_bound());
 
-			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("%s", command->get_description().c_str());
+			if (!command->get_description().empty())
+			{
+				ImGui::SameLine();
+				help_marker(command->get_description());
+			}
 		}
 
 		template<ImVec2 size = ImVec2(0, 0), ImVec4 color = ImVec4(0.172f, 0.380f, 0.909f, 1.f)> // TODO: Use GUI Color.

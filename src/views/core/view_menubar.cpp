@@ -25,6 +25,7 @@ namespace big
 			{
 				if (ImGui::MenuItem("Unload Menu Clean"))
 				{
+					g_lua_manager->trigger_event<menu_event::MenuUnloaded>();
 					// allow to unload in the main title screen.
 					if (g_script_mgr.can_tick())
 					{

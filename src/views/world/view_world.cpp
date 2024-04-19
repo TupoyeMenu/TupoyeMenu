@@ -123,7 +123,7 @@ namespace big
 
 				quantity  = list.size();
 				remaining = quantity;
-				g_notification_service->push("Time And Weather", std::format("Deleting {} entities", quantity));
+				g_notification_service.push("Time And Weather", std::format("Deleting {} entities", quantity));
 				deleting   = true;
 				int failed = 0;
 
@@ -163,7 +163,7 @@ namespace big
 				}
 
 				if (failed > 0)
-					g_notification_service->push_warning("Time And Weather", std::format("Failed deleting {} entities", failed));
+					g_notification_service.push_warning("Time And Weather", std::format("Failed deleting {} entities", failed));
 
 				deleting = false;
 			});

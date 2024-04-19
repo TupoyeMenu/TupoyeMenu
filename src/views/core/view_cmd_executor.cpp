@@ -48,7 +48,7 @@ namespace big
 			ImGui::BeginChild("##scrolling_region_log", ImVec2(0, -footer_height_to_reserve), true, ImGuiWindowFlags_HorizontalScrollbar);
 			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1)); // Tighten spacing
 
-			for (auto msg : g_log->get_log_messages())
+			for (auto msg : g_log.get_log_messages())
 			{
 				ImGui::PushStyleColor(ImGuiCol_Text, get_log_color(msg->Level()));
 				ImGui::TextUnformatted(msg->Message().c_str());

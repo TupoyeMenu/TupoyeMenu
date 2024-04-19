@@ -1,13 +1,3 @@
-/**
- * @file view_blackhole.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "views/view.hpp"
 
 namespace big
@@ -30,11 +20,14 @@ namespace big
 		ImGui::SliderFloat("Scale", &g.world.blackhole.scale, 2.f, 12.f, "%.0f");
 
 		components::button("Set To Current Coordinates", [] {
-			const auto player_pos = g_local_player->get_position();
+			if (g_local_player)
+			{
+				const auto player_pos = g_local_player->get_position();
 
-			g.world.blackhole.pos.x = player_pos->x;
-			g.world.blackhole.pos.y = player_pos->y;
-			g.world.blackhole.pos.z = player_pos->z;
+				g.world.blackhole.pos.x = player_pos->x;
+				g.world.blackhole.pos.y = player_pos->y;
+				g.world.blackhole.pos.z = player_pos->z;
+			}
 		});
 
 		ImGui::SeparatorText("Hole Color");

@@ -14,11 +14,11 @@ namespace big
 
 	void default_command_context::report_output(const std::string& output) const
 	{
-		g_notification_service->push("Command", output);
+		g_notification_service.push("Command", output);
 	}
 
 	void default_command_context::report_error(const std::string& error) const
 	{
-		g_notification_service->push_error("Command", error);
+		g_notification_service.push_error("Command", error);
 	}
 }

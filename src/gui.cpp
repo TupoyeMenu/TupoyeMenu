@@ -1,18 +1,9 @@
-/**
- * @file gui.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "gui.hpp"
 
-#include "common.hpp"
 #include "natives.hpp"
-#include "renderer.hpp"
+#include "renderer/alphabet_types.hpp"
+#include "renderer/font_mgr.hpp"
+#include "renderer/renderer.hpp"
 #include "script.hpp"
 #include "views/view.hpp"
 
@@ -20,38 +11,65 @@
 
 namespace big
 {
+	/**
+	 * @brief The later an entry comes in this enum to higher up it comes in the z-index.
+	 */
+	enum eRenderPriority
+	{
+		// low priority
+		ESP,
+		CONTEXT_MENU,
+
+		// medium priority
+		MENU = 0x1000,
+		VEHICLE_CONTROL,
+
+		// high priority
+		INFO_OVERLAY = 0x2000,
+		CMD_EXECUTOR,
+
+		GTA_DATA_CACHE = 0x3000,
+		ONBOARDING,
+
+		// should remain in a league of its own
+		NOTIFICATIONS = 0x4000,
+	};
+
 	gui::gui() :
 	    m_is_open(false),
 	    m_override_mouse(false)
 	{
-		g_renderer->add_dx_callback(view::gta_data, -1);
-		g_renderer->add_dx_callback(view::notifications, -2);
-		g_renderer->add_dx_callback(view::overlay, -3);
-		g_renderer->add_dx_callback(view::cmd_executor, -4);
-		g_renderer->add_dx_callback(
+		g_renderer.add_dx_callback(view::notifications, eRenderPriority::NOTIFICATIONS);
+		g_renderer.add_dx_callback(view::onboarding, eRenderPriority::ONBOARDING);
+		g_renderer.add_dx_callback(view::gta_data, eRenderPriority::GTA_DATA_CACHE);
+		g_renderer.add_dx_callback(view::cmd_executor, eRenderPriority::CMD_EXECUTOR);
+		g_renderer.add_dx_callback(view::overlay, eRenderPriority::INFO_OVERLAY);
+
+		g_renderer.add_dx_callback(esp::draw, eRenderPriority::ESP); // TODO: move to ESP service
+		g_renderer.add_dx_callback(view::context_menu, eRenderPriority::CONTEXT_MENU);
+
+		g_renderer.add_dx_callback(
 		    [this] {
 			    dx_on_tick();
 		    },
-		    -5);
+		    eRenderPriority::MENU);
 
-		g_renderer->add_wndproc_callback([this](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+		g_renderer.add_wndproc_callback([this](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 			wndproc(hwnd, msg, wparam, lparam);
 		});
-		g_renderer->add_wndproc_callback([](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+		g_renderer.add_wndproc_callback([](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 			if (g.cmd_executor.enabled && msg == WM_KEYUP && wparam == VK_ESCAPE)
 			{
 				g.cmd_executor.enabled = false;
 			}
 		});
 
-		g_renderer->add_dx_callback(esp::draw, 2); // TODO: move to ESP service
-		g_renderer->add_dx_callback(view::context_menu, 1);
-
 
 		dx_init();
 
 		g_gui = this;
-		g_renderer->rescale(g.window.gui_scale);
+		g_renderer.rescale(g.window.gui_scale);
+		g_renderer.get_font_mgr().update_required_alphabet_type(eAlphabetType::LATIN);
 	}
 
 	gui::~gui()

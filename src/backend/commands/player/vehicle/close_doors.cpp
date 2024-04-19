@@ -14,7 +14,7 @@ namespace big
 
 			if (!PED::IS_PED_IN_ANY_VEHICLE(ped, true))
 			{
-				g_notification_service->push_warning("Toxic", "Target player is not in a vehicle.");
+				g_notification_service.push_warning("Toxic", "Target player is not in a vehicle.");
 			}
 			else
 			{
@@ -26,7 +26,7 @@ namespace big
 				}
 				else
 				{
-					g_notification_service->push_warning("Toxic", "Failed to take control of player vehicle.");
+					g_notification_service.push_warning("Toxic", "Failed to take control of player vehicle.");
 				}
 			}
 		}

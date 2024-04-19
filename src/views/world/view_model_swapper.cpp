@@ -1,13 +1,3 @@
-/**
- * @file view_model_swapper.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "pointers.hpp"
 #include "views/view.hpp"
 
@@ -40,7 +30,7 @@ namespace big
 			std::lock_guard lock(g.world.model_swapper.m);
 			if (dst_text[0] == '\0' || src_text[0] == '\0')
 			{
-				g_notification_service->push_error("Model Swapper", "Wrong Input");
+				g_notification_service.push_error("Model Swapper", "Wrong Input");
 				return;
 			}
 			std::string str = dst_text;
@@ -68,7 +58,7 @@ namespace big
 			if (!g.world.model_swapper.models.size() || selected_index < 0
 			    || selected_index >= g.world.model_swapper.models.size())
 			{
-				g_notification_service->push_error("Model Swapper", "Invalid Index");
+				g_notification_service.push_error("Model Swapper", "Invalid Index");
 				return;
 			}
 			g.world.model_swapper.models.erase(std::begin(g.world.model_swapper.models) + selected_index);

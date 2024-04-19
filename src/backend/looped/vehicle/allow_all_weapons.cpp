@@ -28,10 +28,10 @@ namespace big
 			{
 				for (auto drive_by_anim_info : seat_info->anim_info->m_drive_by_anim_infos)
 				{
-					if (drive_by_anim_info->m_weapon_groups->m_groups.size() == 7 && drive_by_anim_info->m_weapon_groups->m_groups.contains(RAGE_JOAAT("GROUP_PISTOL")))
+					if (drive_by_anim_info->m_weapon_groups->m_groups.size() == 7 && drive_by_anim_info->m_weapon_groups->m_groups.contains("GROUP_PISTOL"_J))
 					{
 						drive_by_anim_info->m_weapon_groups->m_groups.clear();
-						drive_by_anim_info->m_weapon_groups->m_groups.append({RAGE_JOAAT("GROUP_PISTOL")});
+						drive_by_anim_info->m_weapon_groups->m_groups.append({"GROUP_PISTOL"_J});
 					}
 				}
 			}
@@ -45,10 +45,10 @@ namespace big
 
 		for (auto drive_by_anim_info : seat_info->anim_info->m_drive_by_anim_infos)
 		{
-			if (drive_by_anim_info->m_weapon_groups->m_groups.size() != 7 && drive_by_anim_info->m_weapon_groups->m_groups.contains(RAGE_JOAAT("GROUP_PISTOL")))
+			if (drive_by_anim_info->m_weapon_groups->m_groups.size() != 7 && drive_by_anim_info->m_weapon_groups->m_groups.contains("GROUP_PISTOL"_J))
 			{
 				drive_by_anim_info->m_weapon_groups->m_groups.clear();
-				drive_by_anim_info->m_weapon_groups->m_groups.append({RAGE_JOAAT("GROUP_PISTOL"), RAGE_JOAAT("GROUP_MG"), RAGE_JOAAT("GROUP_RIFLE"), RAGE_JOAAT("GROUP_SHOTGUN"), RAGE_JOAAT("GROUP_HEAVY"), RAGE_JOAAT("GROUP_SNIPER"), RAGE_JOAAT("GROUP_SMG")});
+				drive_by_anim_info->m_weapon_groups->m_groups.append({"GROUP_PISTOL"_J, "GROUP_MG"_J, "GROUP_RIFLE"_J, "GROUP_SHOTGUN"_J, "GROUP_HEAVY"_J, "GROUP_SNIPER"_J, "GROUP_SMG"_J});
 			}
 		}
 

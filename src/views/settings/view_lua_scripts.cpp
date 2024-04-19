@@ -17,8 +17,11 @@ namespace big
 
 		if (components::button("Reload All"))
 		{
-			g_lua_manager->unload_all_modules();
-			g_lua_manager->load_all_modules();
+			g_fiber_pool->queue_job([] {
+				g_lua_manager->trigger_event<menu_event::ScriptsReloaded>();
+				g_lua_manager->unload_all_modules();
+				g_lua_manager->load_all_modules();
+			});
 		}
 		ImGui::SameLine();
 		ImGui::Checkbox("Auto Reload Changed Scripts", &g.lua.enable_auto_reload_changed_scripts);

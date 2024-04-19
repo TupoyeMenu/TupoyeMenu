@@ -1,12 +1,6 @@
 /**
  * @file ped.hpp
  * @brief Basic ped related functions.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
 #pragma once
@@ -29,7 +23,7 @@ namespace big::ped
 	 */
 	inline void cage_ped(Ped ped)
 	{
-		Hash hash = RAGE_JOAAT("prop_gold_cont_01");
+		Hash hash = "prop_gold_cont_01"_J;
 
 		Vector3 location = ENTITY::GET_ENTITY_COORDS(ped, true);
 		OBJECT::CREATE_OBJECT(hash, location.x, location.y, location.z - 1.f, true, false, false);
@@ -58,24 +52,19 @@ namespace big::ped
 	 */
 	inline bool change_player_model(const Hash hash)
 	{
-		for (uint8_t i = 0; !STREAMING::HAS_MODEL_LOADED(hash) && i < 100; i++)
+		if (entity::request_model(hash))
 		{
-			STREAMING::REQUEST_MODEL(hash);
+			self::ped = PLAYER::PLAYER_PED_ID();
+			PLAYER::SET_PLAYER_MODEL(self::id, hash);
 			script::get_current()->yield();
+			STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
+			for (int i = 0; i < 12; i++)
+			{
+				PED::SET_PED_COMPONENT_VARIATION(self::ped, i, PED::GET_PED_DRAWABLE_VARIATION(self::ped, i), PED::GET_PED_TEXTURE_VARIATION(self::ped, i), PED::GET_PED_PALETTE_VARIATION(self::ped, i));
+			}
+			return true;	
 		}
-		if (!STREAMING::HAS_MODEL_LOADED(hash))
-		{
-			return false;
-		}
-		PLAYER::SET_PLAYER_MODEL(self::id, hash);
-		self::ped = PLAYER::PLAYER_PED_ID();
-		script::get_current()->yield();
-		STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
-		for (int i = 0; i < 12; i++)
-		{
-			PED::SET_PED_COMPONENT_VARIATION(self::ped, i, PED::GET_PED_DRAWABLE_VARIATION(self::ped, i), PED::GET_PED_TEXTURE_VARIATION(self::ped, i), PED::GET_PED_PALETTE_VARIATION(self::ped, i));
-		}
-		return true;
+		return false;
 	}
 
 	/**
@@ -133,7 +122,8 @@ namespace big::ped
 			auto ptr = g_pointers->m_gta.m_handle_to_ptr(ped);
 			if (!ptr)
 				return;
-			g_pointers->m_gta.m_send_network_damage(g_player_service->get_self()->get_ped(), ptr, ptr->get_position(), 0, true, RAGE_JOAAT("weapon_explosion"), 10000.0f, 2, 0, (1 << 4), 0, 0, 0, false, false, true, true, nullptr);
+
+			g_pointers->m_gta.m_send_network_damage(g_player_service->get_self()->get_ped(), ptr, ptr->get_position(), 0, true, "weapon_explosion"_J, 10000.0f, 2, 0, (1 << 4), 0, 0, 0, false, false, true, true, nullptr);
 		}
 	}
 
@@ -167,7 +157,7 @@ namespace big::ped
 		}
 		if (!STREAMING::HAS_MODEL_LOADED(hash))
 		{
-			g_notification_service->push_warning("Spawn", "Failed to spawn model, did you give an incorrect model?");
+			g_notification_service.push_warning("Spawn", "Failed to spawn model, did you give an incorrect model?");
 
 			return -1;
 		}
@@ -194,29 +184,22 @@ namespace big::ped
 	 */
 	inline Ped spawn(ePedType pedType, Hash hash, Ped clone, Vector3 location, float heading, bool is_networked = true)
 	{
-		for (uint8_t i = 0; !STREAMING::HAS_MODEL_LOADED(hash) && i < 100; i++)
+		if (entity::request_model(hash))
 		{
-			STREAMING::REQUEST_MODEL(hash);
-			script::get_current()->yield();
+			Ped ped = PED::CREATE_PED(pedType, hash, location.x, location.y, location.z, heading, is_networked, false);
+
+		    script::get_current()->yield();
+
+		    if (clone)
+		    {
+		        PED::CLONE_PED_TO_TARGET(clone, ped);
+		    }
+
+		    STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
+
+		    return ped;	
 		}
-
-		if (!STREAMING::HAS_MODEL_LOADED(hash))
-		{
-			return 0;
-		}
-
-		auto ped = PED::CREATE_PED(pedType, hash, location.x, location.y, location.z, heading, is_networked, false);
-
-		script::get_current()->yield();
-
-		if (clone)
-		{
-			PED::CLONE_PED_TO_TARGET(clone, ped);
-		}
-
-		STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
-
-		return ped;
+		return 0;
 	}
 
 	/**
@@ -232,7 +215,7 @@ namespace big::ped
 	 */
 	inline void set_attacker_ped_flags(Ped ped, Ped ped_to_attack)
 	{
-		PED::SET_PED_RELATIONSHIP_GROUP_HASH(ped, RAGE_JOAAT("HATES_PLAYER"));
+		PED::SET_PED_RELATIONSHIP_GROUP_HASH(ped, "HATES_PLAYER"_J);
 		PED::SET_PED_HEARING_RANGE(ped, 5000.f);
 		PED::SET_PED_CONFIG_FLAG(ped, 281, true); // Disables the dumb scripted dying animation.
 
@@ -254,13 +237,13 @@ namespace big::ped
 		Ped ped;
 		Vector3 pos = ENTITY::GET_ENTITY_COORDS(ped_to_attack, false) + Vector3(0, 0, 1);
 		if (PED::IS_PED_IN_ANY_VEHICLE(ped_to_attack, false))
-			ped = ped::spawn_in_vehicle(ePedType::PED_TYPE_CRIMINAL, RAGE_JOAAT("u_m_m_jesus_01"), true);
+			ped = ped::spawn_in_vehicle(ePedType::PED_TYPE_CRIMINAL, "u_m_m_jesus_01"_J, true);
 		else
-			ped = ped::spawn(ePedType::PED_TYPE_CRIMINAL, RAGE_JOAAT("u_m_m_jesus_01"), 0, pos, 0);
+			ped = ped::spawn(ePedType::PED_TYPE_CRIMINAL, "u_m_m_jesus_01"_J, 0, pos, 0);
 
 		ENTITY::SET_ENTITY_PROOFS(ped, false, true, true, false, false, false, false, false);
-		WEAPON::GIVE_WEAPON_TO_PED(ped, RAGE_JOAAT("WEAPON_RAILGUN"), 9999, true, true);
-		PED::SET_PED_FIRING_PATTERN(ped, RAGE_JOAAT("FIRING_PATTERN_FULL_AUTO"));
+		WEAPON::GIVE_WEAPON_TO_PED(ped, "WEAPON_RAILGUN"_J, 9999, true, true);
+		PED::SET_PED_FIRING_PATTERN(ped, "FIRING_PATTERN_FULL_AUTO"_J);
 		ped::set_attacker_ped_flags(ped, ped_to_attack);
 
 		return ped;
@@ -277,17 +260,17 @@ namespace big::ped
 		Vector3 pos = ENTITY::GET_ENTITY_COORDS(ped_to_attack, false) + Vector3(0, 0, 5);
 		float heading = ENTITY::GET_ENTITY_HEADING(PED::IS_PED_IN_ANY_VEHICLE(ped_to_attack, false) ? PED::GET_VEHICLE_PED_IS_IN(ped_to_attack, false) : ped_to_attack);
 
-		Vehicle veh = vehicle::spawn(RAGE_JOAAT("oppressor2"), pos, heading, true, false, true);
+		Vehicle veh = vehicle::spawn("oppressor2"_J, pos, heading, true, false, true);
 		VEHICLE::SET_VEHICLE_ENGINE_ON(veh, true, true, false);
 		vehicle::max_vehicle(veh);
 		ENTITY::SET_ENTITY_PROOFS(veh, false, true, true, false, false, false, false, false); // Fire and explosion proof.
 
-		Ped ped = ped::spawn_in_vehicle(RAGE_JOAAT("u_m_m_jesus_01"), veh, true);
+		Ped ped = ped::spawn_in_vehicle("u_m_m_jesus_01"_J, veh, true);
 		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 3, false);   // Never leave the vehicle.
 		PED::SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE(ped, 1); // Disable knock off vehicle.
 		ENTITY::SET_ENTITY_PROOFS(ped, false, true, true, false, false, false, false, false); // Fire and explosion proof.
-		WEAPON::GIVE_WEAPON_TO_PED(ped, RAGE_JOAAT("WEAPON_RAILGUN"), 9999, true, true);
-		PED::SET_PED_FIRING_PATTERN(ped, RAGE_JOAAT("FIRING_PATTERN_FULL_AUTO"));
+		WEAPON::GIVE_WEAPON_TO_PED(ped, "WEAPON_RAILGUN"_J, 9999, true, true);
+		PED::SET_PED_FIRING_PATTERN(ped, "FIRING_PATTERN_FULL_AUTO"_J);
 		ped::set_attacker_ped_flags(ped, ped_to_attack);
 
 		return ped;
@@ -309,11 +292,11 @@ namespace big::ped
 		VEHICLE::SET_VEHICLE_ENGINE_ON(veh, true, true, false);
 		VEHICLE::CONTROL_LANDING_GEAR(veh, 3);
 
-		Ped ped = ped::spawn_in_vehicle(RAGE_JOAAT("u_m_m_jesus_01"), veh, true);
+		Ped ped = ped::spawn_in_vehicle("u_m_m_jesus_01"_J, veh, true);
 		PED::SET_PED_COMBAT_ATTRIBUTES(ped, 3, false);
 		TASK::TASK_PLANE_MISSION(ped, veh, PED::GET_VEHICLE_PED_IS_IN(ped_to_attack, false), ped_to_attack, 0, 0, 0, 6, 150.f, 0.f, 0.f, 2500.f, -200.f, -1.f);
-		WEAPON::GIVE_WEAPON_TO_PED(ped, RAGE_JOAAT("WEAPON_RAILGUN"), 9999, true, true);
-		PED::SET_PED_FIRING_PATTERN(ped, RAGE_JOAAT("FIRING_PATTERN_FULL_AUTO"));
+		WEAPON::GIVE_WEAPON_TO_PED(ped, "WEAPON_RAILGUN"_J, 9999, true, true);
+		PED::SET_PED_FIRING_PATTERN(ped, "FIRING_PATTERN_FULL_AUTO"_J);
 		ped::set_attacker_ped_flags(ped, ped_to_attack);
 
 		return ped;

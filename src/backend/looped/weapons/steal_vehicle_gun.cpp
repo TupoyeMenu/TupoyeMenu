@@ -33,12 +33,12 @@ namespace big
 						}
 						else
 						{
-							g_notification_service->push_warning("Steal Vehicle Gun", "Entity is not a vehicle.");
+							g_notification_service.push_warning("Steal Vehicle Gun", "Entity is not a vehicle.");
 						}
 					}
 					else
 					{
-						g_notification_service->push_warning("Steal Vehicle Gun", "No entity found.");
+						g_notification_service.push_warning("Steal Vehicle Gun", "No entity found.");
 					}
 				}
 			}

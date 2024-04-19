@@ -1,11 +1,5 @@
 /**
  * @file view_session.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "backend/bool_command.hpp"
@@ -17,9 +11,10 @@
 #include "fiber_pool.hpp"
 #include "gta_util.hpp"
 #include "hooking/hooking.hpp"
-#include "util/notify.hpp"
+#include "util/chat.hpp"
 #include "util/scripts.hpp"
 #include "util/session.hpp"
+#include "util/troll.hpp"
 #include "util/toxic.hpp"
 #include "views/view.hpp"
 
@@ -45,7 +40,7 @@ namespace big
 			if (g_pointers->m_gta.m_decode_session_info(&info, base64, nullptr))
 				session::join_session(info);
 			else
-				g_notification_service->push_error("Join", "Session info is invalid");
+				g_notification_service.push_error("Join", "Session info is invalid");
 		});
 		ImGui::SameLine();
 		components::button("Copy Session Info", [] {
@@ -136,11 +131,7 @@ namespace big
 		components::button("Send", [] {
 			if (const auto net_game_player = gta_util::get_network_player_mgr()->m_local_net_player; net_game_player)
 			{
-				if (g_hooking->get_original<hooks::send_chat_message>()(*g_pointers->m_gta.m_send_chat_ptr,
-				        net_game_player->get_net_data(),
-				        msg,
-				        g.chat.local))
-					notify::draw_chat(msg, net_game_player->get_name(), g.chat.local);
+				chat::send_message(msg, nullptr, true, g.session.is_team);
 			}
 		});
 
@@ -186,12 +177,12 @@ namespace big
 		{
 			if (g.session.force_script_host)
 				g_fiber_pool->queue_job([] {
-					scripts::force_host(RAGE_JOAAT("freemode"));
-					if (auto script = gta_util::find_script_thread(RAGE_JOAAT("freemode")); script && script->m_net_component)
+					scripts::force_host("freemode"_J);
+					if (auto script = gta_util::find_script_thread("freemode"_J); script && script->m_net_component)
 						((CGameScriptHandlerNetComponent*)script->m_net_component)->block_host_migration(true);
 
-					scripts::force_host(RAGE_JOAAT("fmmc_launcher"));
-					if (auto script = gta_util::find_script_thread(RAGE_JOAAT("fmmc_launcher")); script && script->m_net_component)
+					scripts::force_host("fmmc_launcher"_J);
+					if (auto script = gta_util::find_script_thread("fmmc_launcher"_J); script && script->m_net_component)
 						((CGameScriptHandlerNetComponent*)script->m_net_component)->block_host_migration(true);
 				});
 		}
@@ -282,6 +273,16 @@ namespace big
 			components::command_button<"sextall">({}, "Send Sexts");
 			ImGui::SameLine();
 			components::command_button<"fakebanall">({}, "Send Fake Ban Messages");
+
+			ImGui::SeparatorText("Bounty");
+			static int value = 10000;
+			ImGui::SliderInt("##bountyvalue", &value, 0, 10000);
+			components::command_checkbox<"anonbounty">();
+			components::button("Bounty All", [] {
+				g_player_service->iterate([](auto& plyr) {
+					troll::set_bounty_on_player(plyr.second, value, g.session.anonymous_bounty);
+				});
+			});
 
 			ImGui::TreePop();
 		}

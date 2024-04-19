@@ -1,12 +1,6 @@
 /**
  * @file mobile.hpp
  * @brief Triggers for in game services.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
 #pragma once
@@ -152,7 +146,7 @@ namespace big::mobile
 		inline void summon_vehicle_by_index(int veh_idx)
 		{
 			if (*scr_globals::freemode_global.at(985).as<int*>() != -1)
-				return g_notification_service->push_warning("Vehicle", "Mechanic is not ready to deliver a vehicle right now.");
+				return g_notification_service.push_warning("Vehicle", "Mechanic is not ready to deliver a vehicle right now.");
 
 			if (g.clone_pv.spawn_inside && self::veh)
 				TASK::CLEAR_PED_TASKS_IMMEDIATELY(PLAYER::PLAYER_PED_ID());
@@ -174,7 +168,7 @@ namespace big::mobile
 
 			script::get_current()->yield(100ms);
 
-			GtaThread* freemode_thread = gta_util::find_script_thread(RAGE_JOAAT("freemode"));
+			GtaThread* freemode_thread = gta_util::find_script_thread("freemode"_J);
 			if (freemode_thread)
 			{
 				// regex to find this shit easily
@@ -218,10 +212,10 @@ namespace big::mobile
 			{
 				*scr_globals::gun_van.as<Vector3*>() = spawn_point;
 
-				return g_notification_service->push_success("Mobile", "The Gun Van is now spawned near your location, keep in mind that this is local and cannot be seen by other players.");
+				return g_notification_service.push_success("Mobile", "The Gun Van is now spawned near your location, keep in mind that this is local and cannot be seen by other players.");
 			}
 
-			g_notification_service->push_warning("Mobile", "Couldn't find a suitable spawn point for the Gun Van, try moving to a different location.");
+			g_notification_service.push_warning("Mobile", "Couldn't find a suitable spawn point for the Gun Van, try moving to a different location.");
 		}
 	}
 }

@@ -18,7 +18,7 @@ namespace big
 
 			if (!PED::IS_PED_IN_ANY_VEHICLE(player_ped, true))
 			{
-				g_notification_service->push_warning("Toxic", "Target player is not in a vehicle.");
+				g_notification_service.push_warning("Toxic", "Target player is not in a vehicle.");
 			}
 			else
 			{

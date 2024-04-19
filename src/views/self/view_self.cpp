@@ -1,13 +1,3 @@
-/**
- * @file view_self.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "core/data/hud_component_names.hpp"
 #include "fiber_pool.hpp"
 #include "imgui.h"
@@ -48,6 +38,7 @@ namespace big
 		components::command_checkbox<"mobileradio">();
 		ImGui::Checkbox("Disable Help Text", &g.tunables.disable_help_text);
 		components::command_checkbox<"fastrespawn">();
+		ImGui::Checkbox("Dance Mode", &g.self.dance_mode);
 
 		ImGui::EndGroup();
 		ImGui::SameLine();
@@ -73,8 +64,8 @@ namespace big
 		// clang-format off
 		ImGui::BeginDisabled(!*g_pointers->m_gta.m_is_session_started ||
 			gpbd_fm_3->Entries[self::id].BossGoon.Boss != -1 ||
-			gta_util::find_script_thread(RAGE_JOAAT("fm_mission_controller")) ||
-			gta_util::find_script_thread(RAGE_JOAAT("fm_mission_controller_2020")));
+			gta_util::find_script_thread("fm_mission_controller"_J) ||
+			gta_util::find_script_thread("fm_mission_controller_2020"_J));
 		// clang-format on
 		components::command_checkbox<"passive">();
 		ImGui::EndDisabled();
@@ -85,7 +76,7 @@ namespace big
 
 		components::command_checkbox<"cleanloop">();
 		components::command_checkbox<"nocollision">();
-		ImGui::Checkbox("Dance Mode", &g.self.dance_mode);
+		components::command_checkbox<"gracefullanding">();
 		components::command_checkbox<"infoxy">();    //
 		components::command_checkbox<"walkunder">(); // WTF Who namend this??
 		components::command_checkbox<"invis">();
@@ -105,7 +96,6 @@ namespace big
 			g.self.proof_melee     = true;
 			g.self.proof_explosion = true;
 			g.self.proof_steam     = true;
-			g.self.proof_drown     = true;
 			g.self.proof_water     = true;
 		}
 
@@ -119,7 +109,6 @@ namespace big
 			g.self.proof_melee     = false;
 			g.self.proof_explosion = false;
 			g.self.proof_steam     = false;
-			g.self.proof_drown     = false;
 			g.self.proof_water     = false;
 		}
 
@@ -146,7 +135,6 @@ namespace big
 		ImGui::SameLine();
 		ImGui::BeginGroup();
 
-		ImGui::Checkbox("Drown", &g.self.proof_drown);
 		ImGui::Checkbox("Water", &g.self.proof_water);
 
 		ImGui::EndGroup();
@@ -247,10 +235,6 @@ namespace big
 		if (g.self.proof_steam)
 		{
 			g.self.proof_mask |= static_cast<int>(eEntityProofs::STEAM);
-		}
-		if (g.self.proof_drown)
-		{
-			g.self.proof_mask |= static_cast<int>(eEntityProofs::DROWN);
 		}
 		if (g.self.proof_water)
 		{

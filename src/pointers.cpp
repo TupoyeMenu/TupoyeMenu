@@ -1,18 +1,13 @@
 /**
  * @file pointers.cpp
  * @brief Patterns for game functions.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "pointers.hpp"
 
 #include "gta_pointers_layout_info.hpp"
 #include "memory/all.hpp"
+#include "sc_pointers_layout_info.hpp"
 
 #ifdef ENABLE_SOCIALCLUB
 	#include "sc_pointers_layout_info.hpp"
@@ -322,8 +317,7 @@ namespace big
 		});
 
 		// Get Pool Type
-		main_batch.add("GPT", "48 89 5C 24 ? 57 48 83 EC 20 48 8B 1D ? ? ? ? BA", [](memory::handle ptr)
-		{
+		main_batch.add("GPT", "48 89 5C 24 ? 57 48 83 EC 20 48 8B 1D ? ? ? ? BA", [](memory::handle ptr) {
 			g_pointers->m_gta.m_get_pool_type = ptr.as<PVOID>();
 		});
 
@@ -704,8 +698,7 @@ namespace big
 
 		// Prop Pool
 		main_batch.add("PRP", "48 8B 05 ? ? ? ? 0F B7 50 10 48 8B 05", [](memory::handle ptr) {
-			g_pointers->m_gta.m_prop_pool = ptr.add(3).rip().as<GenericPool**>();
-			g_pointers->m_gta.m_pickup_pool = ptr.add(0xE).rip().as<GenericPool**>();
+			g_pointers->m_gta.m_prop_pool   = ptr.add(3).rip().as<GenericPool**>();
 		});
 
 		// Vehicle Pool
@@ -912,7 +905,7 @@ namespace big
 			g_pointers->m_gta.m_script_vm_patch_6 = ptr.add(0x26);
 		});
 
-	    // Linux DX Error Fix
+		// Linux DX Error Fix
 		main_batch.add("LDEF", "40 55 48 8B EC 48 83 EC 60 48 8B 0D", [](memory::handle ptr) {
 			g_pointers->m_gta.m_linux_dx_error_fix = ptr.as<PVOID>();
 		});
@@ -990,6 +983,21 @@ namespace big
 			g_pointers->m_gta.m_get_ped_seat = ptr.add(1).rip().as<functions::get_ped_seat>();
 		});
 
+		// RECEIVED_CLONE_REMOVE
+		main_batch.add("RCR", "48 8B C4 48 89 58 08 48 89 68 10 48 89 70 18 48 89 78 20 41 54 41 56 41 57 48 83 EC 50 4C 8B F2 4D 8B E0", [](memory::handle ptr) {
+			g_pointers->m_gta.m_received_clone_remove = ptr.as<functions::received_clone_remove>();
+		});
+
+		// CWeaponInfoManager
+		main_batch.add("CWIM", "0F B7 15 ? ? ? ? ? 33 D2 2B D3 78 ? ? 8B 1D", [](memory::handle ptr) {
+			g_pointers->m_gta.m_weapon_info_manager = ptr.add(3).rip().sub(72).as<CWeaponInfoManager*>();
+		});
+
+		// Can Create Vehicle
+		main_batch.add("CCV", "8B 0D ? ? ? ? 39 0D ? ? ? ? 0F 9C C0", [](memory::handle ptr) {
+			g_pointers->m_gta.m_can_create_vehicle = ptr.as<functions::can_create_vehicle>();
+		});
+
 		// Game Checksum Data
 		main_batch.add("GCD", "48 8B 15 ? ? ? ? 48 8B C2 48 0B C7", [](memory::handle ptr) {
 			g_pointers->m_gta.m_game_checksum_data = ptr.add(3).rip().as<char**>();
@@ -1008,7 +1016,7 @@ namespace big
 		memory::batch socialclub_batch;
 		// Presence Data
 		// Update instructions: Scan 48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 41 56 41 57 48 83 EC 40 41 8B E9 and xref it to get to the vtable. Xref the vtable and generate a new signature
-		socialclub_batch.add("PD", "48 8D 05 ? ? ? ? 48 8B D9 48 89 01 48 83 C1 08 E8 ? ? ? ? 33 C0", [](memory::handle ptr) {
+		socialclub_batch.add("PD",  "48 8D 05 ? ? ? ? 48 8B F9 48 89 01 48 83 C1 08 E8 ? ? ? ? 33 C0", [](memory::handle ptr) {
 			auto presence_data_vft = ptr.add(3).rip().as<PVOID*>();
 			g_pointers->m_sc.m_update_presence_attribute_int = (functions::update_presence_attribute_int)presence_data_vft[1];
 			g_pointers->m_sc.m_update_presence_attribute_string = (functions::update_presence_attribute_string)presence_data_vft[3];
@@ -1021,8 +1029,11 @@ namespace big
 
 		// Read Attribute Patch
 		socialclub_batch.add("RAP", "75 70 EB 23", [](memory::handle ptr) {
-			g_pointers->m_sc.m_read_attribute_patch   = ptr.as<PVOID>();
-			g_pointers->m_sc.m_read_attribute_patch_2 = ptr.add(0x72).as<PVOID>();
+			g_pointers->m_sc.m_read_attribute_patch = ptr.as<PVOID>();
+		});
+		// Read Attribute Patch 2
+		socialclub_batch.add("RAP2", "32 C0 EB ? C7 83", [](memory::handle ptr) {
+			g_pointers->m_sc.m_read_attribute_patch_2 = ptr.as<PVOID>();
 		});
 
 		socialclub_batch.run(region);

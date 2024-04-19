@@ -15,9 +15,9 @@ namespace big
 			if (veh == 0)
 			{
 				if (g.player.spectating)
-					g_notification_service->push_warning("Remote Control", "Target player is not in a vehicle.");
+					g_notification_service.push_warning("Remote Control", "Target player is not in a vehicle.");
 				else
-					g_notification_service->push_warning("Remote Control", std::format("{} {}", "Target player is not in a vehicle.", "Try spectating the player.").c_str());
+					g_notification_service.push_warning("Remote Control", std::format("{} {}", "Target player is not in a vehicle.", "Try spectating the player.").c_str());
 				return;
 			}
 

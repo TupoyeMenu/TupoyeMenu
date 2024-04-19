@@ -1,13 +1,3 @@
-/**
- * @file view_esp_settings.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "views/view.hpp"
 
 namespace big
@@ -43,11 +33,6 @@ namespace big
 		ImGui::Checkbox("Show Player Godmode", &g.esp.god);
 		ImGui::Checkbox("Show Player Health", &g.esp.health);
 		ImGui::Checkbox("Show Player Armor", &g.esp.armor);
-
-		ImGui::Checkbox("Object ESP", &g.esp.object_esp);
-		ImGui::BeginDisabled(!g.esp.object_esp);
-		ImGui::Checkbox("Show G's Cache Boxes", &g.esp.show_gs_cache_boxes);
-		ImGui::EndDisabled();
 
 		ImGui::Checkbox("Should ESP Color Change with Distance", &g.esp.change_esp_color_from_dist);
 		if (g.esp.health)

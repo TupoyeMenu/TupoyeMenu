@@ -1,15 +1,7 @@
-/**
- * @file view_settings.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
 
 #include "core/data/language_codes.hpp"
 #include "pointers.hpp"
+#include "renderer/renderer.hpp"
 #include "script_mgr.hpp"
 #include "thread_pool.hpp"
 #include "views/view.hpp"
@@ -29,7 +21,7 @@ namespace big
 		g_script_mgr.for_each_script([](const auto& script) {
 			if (script->is_toggleable())
 				if (ImGui::Checkbox(script->name(), script->toggle_ptr()))
-					g_notification_service->push(std::string(script->name()).append(" script"), script->is_enabled() ? "Resumed" : "Halted");
+					g_notification_service.push(std::string(script->name()).append(" script"), script->is_enabled() ? "Resumed" : "Halted");
 		});
 
 		ImGui::EndGroup();

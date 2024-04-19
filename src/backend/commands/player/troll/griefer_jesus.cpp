@@ -49,7 +49,7 @@ namespace big
 		virtual void execute(player_ptr player, const command_arguments& _args, const std::shared_ptr<command_context> ctx) override
 		{
             Ped player_ped = PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(player->id());
-			ped::spawn_griefer_jet(player_ped, RAGE_JOAAT("lazer"));
+			ped::spawn_griefer_jet(player_ped, "lazer"_J);
 		}
 	};
 

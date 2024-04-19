@@ -23,8 +23,8 @@ namespace big::vehicle
 	{
 		switch (speed_unit)
 		{
-		case SpeedUnit::KMPH: return mps * 3.6f; break;
-		case SpeedUnit::MIPH: return mps * 2.2369f; break;
+		case SpeedUnit::KMPH: return mps * 3.6f;
+		case SpeedUnit::MIPH: return mps * 2.2369f;
 		}
 
 		return mps;
@@ -41,8 +41,8 @@ namespace big::vehicle
 	{
 		switch (speed_unit)
 		{
-		case SpeedUnit::KMPH: return speed / 3.6f; break;
-		case SpeedUnit::MIPH: return speed / 2.2369f; break;
+		case SpeedUnit::KMPH: return speed / 3.6f;
+		case SpeedUnit::MIPH: return speed / 2.2369f;
 		}
 
 		return speed;
@@ -81,7 +81,7 @@ namespace big::vehicle
 	 * @param veh Vehicle to set for.
 	 * @param is_stolen Set's vehicle stolen flag.
 	 */
-	void set_mp_bitset(Vehicle veh, bool is_stolen = false)
+	void set_mp_bitset(Vehicle veh, bool is_stolen)
 	{
 		DECORATOR::DECOR_SET_INT(veh, "MPBitset", 0);
 		auto networkId = NETWORK::VEH_TO_NET(veh);
@@ -103,14 +103,14 @@ namespace big::vehicle
 	void bring(Vehicle veh, Vector3 location, bool put_in, int seatIdx)
 	{
 		if (!ENTITY::IS_ENTITY_A_VEHICLE(veh))
-			return g_notification_service->push_error("Vehicle", "Vehicle is not a valid one.");
+			return g_notification_service.push_error("Vehicle", "Entity is not a vehicle.");
 
 		Vector3 vecVehicleLocation = ENTITY::GET_ENTITY_COORDS(veh, true);
 		entity::load_ground_at_3dcoord(vecVehicleLocation);
 
 		if (!entity::take_control_of(veh))
-			return g_notification_service->push_warning("Vehicle", "Failed to take control of remote vehicle.");
-		Ped ped = self::ped;
+			return g_notification_service.push_warning("Vehicle", "Failed to take control of vehicle.");
+		auto ped = self::ped;
 
 		ENTITY::SET_ENTITY_COORDS(veh, location.x, location.y, location.z + 1.f, 0, 0, 0, 0);
 		ENTITY::SET_ENTITY_HEADING(veh, ENTITY::GET_ENTITY_HEADING(ped));
@@ -124,7 +124,7 @@ namespace big::vehicle
 
 			if (driver_ped != 0)
 			{
-				if (PED::GET_PED_TYPE(driver_ped) == ePedType::PED_TYPE_NETWORK_PLAYER)
+				if (PED::GET_PED_TYPE(driver_ped) == PED_TYPE_NETWORK_PLAYER)
 				{
 					TASK::CLEAR_PED_TASKS_IMMEDIATELY(driver_ped);
 				}
@@ -232,27 +232,20 @@ namespace big::vehicle
 	 */
 	Vehicle spawn(Hash hash, Vector3 location, float heading, bool is_networked, bool script_veh, bool is_stolen)
 	{
-		for (uint8_t i = 0; !STREAMING::HAS_MODEL_LOADED(hash) && i < 100; i++)
+		if (entity::request_model(hash))
 		{
-			STREAMING::REQUEST_MODEL(hash);
-			script::get_current()->yield();
+			auto veh = VEHICLE::CREATE_VEHICLE(hash, location.x, location.y, location.z, heading, is_networked, script_veh, false);
+
+			STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
+
+			if (is_networked && *g_pointers->m_gta.m_is_session_started)
+			{
+				set_mp_bitset(veh);
+			}
+
+			return veh;
 		}
-
-		if (!STREAMING::HAS_MODEL_LOADED(hash))
-		{
-			return 0;
-		}
-
-		auto veh = VEHICLE::CREATE_VEHICLE(hash, location.x, location.y, location.z, heading, is_networked, script_veh, false);
-
-		STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
-
-		if (*g_pointers->m_gta.m_is_session_started)
-		{
-			set_mp_bitset(veh, is_stolen);
-		}
-
-		return veh;
+		return 0;
 	}
 
 	Vehicle clone_from_vehicle_data(std::map<int, int32_t>& data, Vector3 location, float heading)
@@ -306,7 +299,7 @@ namespace big::vehicle
 			return 0;
 		}
 
-		auto veh = vehicle::get_closest_to_location(tmpLocation, 200);
+		auto veh = get_closest_to_location(tmpLocation, 200);
 		if (veh == 0)
 		{
 			return 0;
@@ -461,9 +454,9 @@ namespace big::vehicle
 	/**
 	 * @todo Implement clan logos.
 	 */
-	Vehicle clone_from_owned_mods(std::map<int, int32_t> owned_mods, Vector3 location, float heading, bool is_networked)
+	Vehicle clone_from_owned_mods(std::map<int, int32_t> owned_mods, Vector3 location, float heading, bool is_networked, bool is_script_vehicle)
 	{
-		auto vehicle = spawn(owned_mods[MOD_MODEL_HASH], location, heading, is_networked);
+		auto vehicle = spawn(owned_mods[MOD_MODEL_HASH], location, heading, is_networked, is_script_vehicle);
 		if (vehicle == 0)
 		{
 			return 0;
@@ -478,12 +471,12 @@ namespace big::vehicle
 		}
 
 		VEHICLE::SET_VEHICLE_MOD_KIT(vehicle, 0);
-		script::get_current()->yield(10ms);
+		//script::get_current()->yield(10ms);
 
 		VEHICLE::SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX(vehicle, owned_mods[MOD_PLATE_STYLE]);
 		VEHICLE::SET_VEHICLE_WINDOW_TINT(vehicle, owned_mods[MOD_WINDOW_TINT]);
 		VEHICLE::SET_VEHICLE_WHEEL_TYPE(vehicle, owned_mods[MOD_WHEEL_TYPE]);
-		script::get_current()->yield(10ms);
+		//script::get_current()->yield(10ms);
 
 		VEHICLE::SET_VEHICLE_COLOURS(vehicle, owned_mods[MOD_PRIMARY_COL], owned_mods[MOD_SECONDARY_COL]);
 		VEHICLE::SET_VEHICLE_EXTRA_COLOURS(vehicle, owned_mods[MOD_PEARLESCENT_COL], owned_mods[MOD_WHEEL_COL]);
@@ -653,8 +646,6 @@ namespace big::vehicle
 
 	void max_vehicle(Vehicle veh)
 	{
-		Hash model = ENTITY::GET_ENTITY_MODEL(veh);
-
 		VEHICLE::SET_VEHICLE_MOD_KIT(veh, 0);
 
 		VEHICLE::TOGGLE_VEHICLE_MOD(veh, MOD_TURBO, TRUE);
@@ -730,7 +721,7 @@ namespace big::vehicle
 		if (current_vehicle)
 			VEHICLE::SET_VEHICLE_ENGINE_ON(current_vehicle, state, immediately, disable_auto_start);
 		else
-			return g_notification_service->push_warning("Vehicle", "Please enter a vehicle.");
+			return g_notification_service.push_warning("Vehicle", "Please enter a vehicle.");
 	}
 
 	/**
@@ -752,7 +743,7 @@ namespace big::vehicle
 	{
 		if (!entity::take_control_of(veh, 4000))
 		{
-			g_notification_service->push_warning("Remote Control", "Failed to take control of remote vehicle.");
+			g_notification_service.push_warning("Remote Control", "Failed to take control of vehicle.");
 			return false;
 		}
 
@@ -818,7 +809,7 @@ namespace big::vehicle
 		case MOD_PLATEHOLDER: return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S0");
 		case MOD_VANITYPLATES: return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S1");
 		case MOD_TRIMDESIGN:
-			if (model == RAGE_JOAAT("sultanrs"))
+			if (model == "sultanrs"_J)
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S2b");
 			else
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S2");
@@ -835,48 +826,48 @@ namespace big::vehicle
 		case MOD_HYDRO: return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S13");
 		case MOD_ENGINEBLOCK: return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S14");
 		case MOD_AIRFILTER:
-			if (model == RAGE_JOAAT("sultanrs"))
+			if (model == "sultanrs"_J)
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S15b");
 			else
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S15");
 		case MOD_STRUTS:
-			if (model == RAGE_JOAAT("sultanrs") || model == RAGE_JOAAT("banshee2"))
+			if (model == "sultanrs"_J || model == "banshee2"_J)
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S16b");
 			else
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S16");
 		case MOD_ARCHCOVER:
-			if (model == RAGE_JOAAT("sultanrs"))
+			if (model == "sultanrs"_J)
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S17b");
 			else
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S17");
 		case MOD_AERIALS:
-			if (model == RAGE_JOAAT("sultanrs"))
+			if (model == "sultanrs"_J)
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S18b");
-			else if (model == RAGE_JOAAT("btype3"))
+			else if (model == "btype3"_J)
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S18c");
 			else
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S18");
 		case MOD_TRIM:
-			if (model == RAGE_JOAAT("sultanrs"))
+			if (model == "sultanrs"_J)
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S19b");
-			else if (model == RAGE_JOAAT("btype3"))
+			else if (model == "btype3"_J)
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S19c");
-			else if (model == RAGE_JOAAT("virgo2"))
+			else if (model == "virgo2"_J)
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S19d");
 			else
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S19");
 		case MOD_TANK:
-			if (model == RAGE_JOAAT("slamvan3"))
+			if (model == "slamvan3"_J)
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S27");
 			else
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S20");
 		case MOD_WINDOWS:
-			if (model == RAGE_JOAAT("btype3"))
+			if (model == "btype3"_J)
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S21b");
 			else
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S21");
 		case MOD_DOORS:
-			if (model == RAGE_JOAAT("slamvan3"))
+			if (model == "slamvan3"_J)
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("SLVAN3_RDOOR");
 			else
 				return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMM_MOD_S22");
@@ -1002,9 +993,9 @@ namespace big::vehicle
 			case MOD_STRUTS:
 				switch (model)
 				{
-				case RAGE_JOAAT("banshee"):
-				case RAGE_JOAAT("banshee2"):
-				case RAGE_JOAAT("sultanrs"): return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMOD_COL5_41");
+				case "banshee"_J:
+				case "banshee2"_J:
+				case "sultanrs"_J: return HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION("CMOD_COL5_41");
 				}
 				break;
 			}
@@ -1026,13 +1017,10 @@ namespace big::vehicle
 					VEHICLE::SET_VEHICLE_INDIVIDUAL_DOORS_LOCKED(veh, i, (int)state);
 				return VEHICLE::GET_VEHICLE_DOOR_LOCK_STATUS(veh) == (int)state;
 			}
-			else
-			{
-				if (VEHICLE::GET_IS_DOOR_VALID(veh, (int)doorId))
-					VEHICLE::SET_VEHICLE_INDIVIDUAL_DOORS_LOCKED(veh, (int)doorId, (int)state);
+			if (VEHICLE::GET_IS_DOOR_VALID(veh, (int)doorId))
+				VEHICLE::SET_VEHICLE_INDIVIDUAL_DOORS_LOCKED(veh, (int)doorId, (int)state);
 
-				return VEHICLE::GET_VEHICLE_INDIVIDUAL_DOOR_LOCK_STATUS(veh, (int)doorId) == (int)state;
-			}
+			return VEHICLE::GET_VEHICLE_INDIVIDUAL_DOOR_LOCK_STATUS(veh, (int)doorId) == (int)state;
 		}
 
 		return false;

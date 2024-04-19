@@ -71,7 +71,7 @@ namespace big
 	{
 		script_vm_guard guard(program);
 
-		if(g_running && ctx->m_state == rage::eThreadState::running && ctx->m_script_hash != RAGE_JOAAT("startup") && tmp_frame_count != *g_pointers->m_gta.m_frame_count)
+		if(g_running && ctx->m_state == rage::eThreadState::running && ctx->m_script_hash != "startup"_J && tmp_frame_count != *g_pointers->m_gta.m_frame_count)
 		{
 			tmp_frame_count = *g_pointers->m_gta.m_frame_count;
 			gta_util::execute_as_script(ctx->m_script_hash, std::mem_fn(&script_mgr::tick), g_script_mgr);

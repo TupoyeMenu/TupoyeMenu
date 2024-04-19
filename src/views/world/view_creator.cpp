@@ -1,12 +1,6 @@
 /**
  * @file view_creator.cpp
  * @brief Options for in game mission creator.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "fiber_pool.hpp"
@@ -83,19 +77,19 @@ namespace big
 		ImGui::SeparatorText("Launch Creator");
 		ImGui::BeginGroup();
 		components::button("Race", [] {
-			scripts::start_creator_script(RAGE_JOAAT("fm_race_creator"));
+			scripts::start_creator_script("fm_race_creator"_J);
 		});
 		ImGui::SameLine();
 		components::button("Capture", [] {
-			scripts::start_creator_script(RAGE_JOAAT("fm_capture_creator"));
+			scripts::start_creator_script("fm_capture_creator"_J);
 		});
 		ImGui::SameLine();
 		components::button("Deathmatch", [] {
-			scripts::start_creator_script(RAGE_JOAAT("fm_deathmatch_creator"));
+			scripts::start_creator_script("fm_deathmatch_creator"_J);
 		});
 		ImGui::SameLine();
 		components::button("LTS", [] {
-			scripts::start_creator_script(RAGE_JOAAT("fm_lts_creator"));
+			scripts::start_creator_script("fm_lts_creator"_J);
 		});
 		ImGui::EndGroup();
 

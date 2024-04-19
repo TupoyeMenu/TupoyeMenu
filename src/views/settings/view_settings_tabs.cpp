@@ -22,14 +22,14 @@ namespace big
 			{
 				view::settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SETTINGS"));
+					g_lua_manager->draw_gui("Settings"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Hotkeys"))
 			{
 				view::hotkey_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_HOTKEY_SETTINGS"));
+					g_lua_manager->draw_gui("Hotkeys"_J);
 				ImGui::EndTabItem();
 			}
 #if defined (ENABLE_LUA)
@@ -37,7 +37,7 @@ namespace big
 			{
 				view::lua_scripts();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_LUA_SCRIPTS"));
+					g_lua_manager->draw_gui("Lua Scripts"_J);
 				ImGui::EndTabItem();
 			}
 #endif // ENABLE_LUA
@@ -45,42 +45,42 @@ namespace big
 			{
 				view::context_menu_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_CONTEXT_MENU_SETTINGS"));
+					g_lua_manager->draw_gui("GUI_TAB_CONTEXT_MENU_SETTINGS"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("ESP"))
 			{
 				view::esp_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_ESP_SETTINGS"));
+					g_lua_manager->draw_gui("ESP"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("GUI"))
 			{
 				view::gui_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_GUI_SETTINGS"));
+					g_lua_manager->draw_gui("GUI"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Reactions"))
 			{
 				view::reaction_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_REACTION_SETTINGS"));
+					g_lua_manager->draw_gui("Reactions"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Protection"))
 			{
 				view::protection_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_PROTECTION_SETTINGS"));
+					g_lua_manager->draw_gui("Protection"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("GTA Cache"))
 			{
 				view::gta_cache();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_GTA_CACHE_SETTINGS"));
+					g_lua_manager->draw_gui("GTA Cache"_J);
 				ImGui::EndTabItem();
 			}
 

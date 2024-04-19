@@ -70,7 +70,7 @@ namespace big
 		file_out << j.dump(4);
 		file_out.close();
 
-		g_notification_service->push_success("Custom Teleport", std::format("Succesfully saved location {}", t.name));
+		g_notification_service.push_success("Custom Teleport", std::format("Succesfully saved location {}", t.name));
 
 		return true;
 	}

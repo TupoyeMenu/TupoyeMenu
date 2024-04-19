@@ -21,7 +21,7 @@ namespace big
 		{
 			const auto hash = src->get_arg<rage::joaat_t>(0);
 
-			if (hash == RAGE_JOAAT("director_mode") || hash == RAGE_JOAAT("main"))
+			if (hash == "director_mode"_J || hash == "main"_J)
 			{
 				src->set_return_value(0);
 				return;
@@ -81,7 +81,7 @@ namespace big
 					});
 				}
 
-				if (SCRIPT::GET_HASH_OF_THIS_SCRIPT_NAME() == RAGE_JOAAT("freemode") && g.session.fast_join)
+				if (SCRIPT::GET_HASH_OF_THIS_SCRIPT_NAME() == "freemode"_J && g.session.fast_join)
 				{
 					scr_functions::set_freemode_session_active({});
 					src->set_return_value<BOOL>(TRUE);

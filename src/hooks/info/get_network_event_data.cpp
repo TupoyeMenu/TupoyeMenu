@@ -1,13 +1,3 @@
-/**
- * @file get_network_event_data.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "gta/net_game_event.hpp"
 #include "hooking/hooking.hpp"
 #include "services/players/player_service.hpp"
@@ -69,16 +59,16 @@ namespace big
 		{
 		case rage::eEventNetworkType::CEventNetworkRemovedFromSessionDueToComplaints:
 		{
-			if (g.protections.kick_rejoin && !NETWORK::NETWORK_IS_ACTIVITY_SESSION() && SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(RAGE_JOAAT("maintransition")) == 0 && !STREAMING::IS_PLAYER_SWITCH_IN_PROGRESS())
+			if (g.protections.kick_rejoin && !NETWORK::NETWORK_IS_ACTIVITY_SESSION() && SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH("maintransition"_J) == 0 && !STREAMING::IS_PLAYER_SWITCH_IN_PROGRESS())
 			{
 				g_fiber_pool->queue_job([] {
 					session::join_session(gta_util::get_network()->m_last_joined_session.m_session_info);
 				});
-				g_notification_service->push_warning("Kicked", "You have been desync kicked. Rejoining previous session...");
+				g_notification_service.push_warning("Kicked", "You have been desync kicked. Rejoining previous session...");
 			}
 			else
 			{
-				g_notification_service->push_warning("Kicked", "You have been desync kicked.");
+				g_notification_service.push_warning("Kicked", "You have been desync kicked.");
 			}
 			break;
 		}
@@ -87,9 +77,9 @@ namespace big
 			rage::sEntityDamagedData damage_data;
 			net_event->get_extra_information(&damage_data, sizeof(damage_data));
 
-			if (damage_data.m_weapon_used == RAGE_JOAAT("WEAPON_STICKYBOMB") || damage_data.m_weapon_used == RAGE_JOAAT("VEHICLE_WEAPON_MINE_KINETIC_RC")
-			    || damage_data.m_weapon_used == RAGE_JOAAT("VEHICLE_WEAPON_MINE_EMP_RC") || damage_data.m_weapon_used == RAGE_JOAAT("VEHICLE_WEAPON_MINE_KINETIC")
-			    || damage_data.m_weapon_used == RAGE_JOAAT("VEHICLE_WEAPON_MINE_EMP") || damage_data.m_weapon_used == RAGE_JOAAT("VEHICLE_WEAPON_MINE_SPIKE"))
+			if (damage_data.m_weapon_used == "WEAPON_STICKYBOMB"_J || damage_data.m_weapon_used == "VEHICLE_WEAPON_MINE_KINETIC_RC"_J
+			    || damage_data.m_weapon_used == "VEHICLE_WEAPON_MINE_EMP_RC"_J || damage_data.m_weapon_used == "VEHICLE_WEAPON_MINE_KINETIC"_J
+			    || damage_data.m_weapon_used == "VEHICLE_WEAPON_MINE_EMP"_J || damage_data.m_weapon_used == "VEHICLE_WEAPON_MINE_SPIKE"_J)
 				break;
 
 			if (auto damager = g_pointers->m_gta.m_handle_to_ptr(damage_data.m_damager_index);
@@ -110,8 +100,8 @@ namespace big
 					{
 						if (auto vehicle = player->get_current_vehicle())
 							if (auto model_info = vehicle->m_model_info)
-								if (model_info->m_hash == RAGE_JOAAT("rcbandito") || model_info->m_hash == RAGE_JOAAT("minitank")
-								    || model_info->m_hash == RAGE_JOAAT("kosatka"))
+								if (model_info->m_hash == "rcbandito"_J || model_info->m_hash == "minitank"_J
+								    || model_info->m_hash == "kosatka"_J)
 									break;
 					}
 
@@ -139,8 +129,8 @@ namespace big
 							if (!reinterpret_cast<CPed*>(victim)->m_player_info)
 								break;
 
-							if (damage_data.m_weapon_used == RAGE_JOAAT("WEAPON_EXPLOSION") || damage_data.m_weapon_used == RAGE_JOAAT("WEAPON_RAMMED_BY_CAR")
-							    || damage_data.m_weapon_used == RAGE_JOAAT("WEAPON_RUN_OVER_BY_CAR"))
+							if (damage_data.m_weapon_used == "WEAPON_EXPLOSION"_J || damage_data.m_weapon_used == "WEAPON_RAMMED_BY_CAR"_J
+							    || damage_data.m_weapon_used == "WEAPON_RUN_OVER_BY_CAR"_J)
 								break;
 
 							session::add_infraction(player, Infraction::ATTACKING_WITH_INVISIBILITY);

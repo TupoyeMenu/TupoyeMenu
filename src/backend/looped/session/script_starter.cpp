@@ -15,7 +15,7 @@ namespace big
         {
             if (((self::pos.x >= -800.f && self::pos.y >= 5300.f) && self::pos.x <= 640.f) && self::pos.y <= 5800.f)
             {
-                Hash hash = RAGE_JOAAT("cablecar");
+                Hash hash = "cablecar"_J;
                 if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(hash) == 0)
                 {
                     scripts::request_script(hash);

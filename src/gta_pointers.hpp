@@ -1,12 +1,6 @@
 /**
  * @file gta_pointers.hpp
  * @brief GTA5.exe pointer declarations.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
 #pragma once
@@ -28,6 +22,7 @@ class CVehicleDriveByMetadataMgr;
 class CBlipList;
 class TimecycleKeyframeData;
 class CTrainConfig;
+class CWeaponInfoManager;
 
 namespace rage
 {
@@ -56,6 +51,8 @@ namespace big
 	struct gta_pointers
 	{
 		memory::handle m_max_wanted_level;
+
+		PVOID m_world_model_spawn_bypass;
 
 		memory::handle m_blame_explode;
 
@@ -116,7 +113,6 @@ namespace big
 		float* m_gravity_level;
 		functions::set_gravity_level m_set_gravity_level;
 
-		PVOID m_world_model_spawn_bypass;
 		PVOID m_native_return;
 		PVOID m_get_label_text;
 		functions::check_chat_profanity* m_check_chat_profanity;
@@ -288,6 +284,8 @@ namespace big
 
 		PVOID m_allow_weapons_in_vehicle;
 
+		PVOID m_taskfall_constructor;
+
 		PVOID m_write_vehicle_proximity_migration_data_node;
 		functions::migrate_object m_migrate_object;
 
@@ -298,7 +296,6 @@ namespace big
 
 		GenericPool** m_ped_pool;
 		GenericPool** m_prop_pool;
-		GenericPool** m_pickup_pool;
 		VehiclePool*** m_vehicle_pool;
 
 		PVOID m_netfilter_handle_message;
@@ -375,6 +372,12 @@ namespace big
 		char** m_game_checksum_data;
 		functions::get_dlc_hash m_get_dlc_hash;
 		void** m_dlc_manager;
+
+		functions::received_clone_remove m_received_clone_remove;
+
+		CWeaponInfoManager* m_weapon_info_manager;
+
+		functions::can_create_vehicle m_can_create_vehicle;
 	};
 #pragma pack(pop)
 	static_assert(sizeof(gta_pointers) % 8 == 0, "Pointers are not properly aligned");

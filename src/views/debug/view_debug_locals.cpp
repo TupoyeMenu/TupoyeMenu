@@ -402,7 +402,7 @@ namespace big
 			}
 			else
 			{
-				g_notification_service->push_warning("Locals", "You cannot use Read Local with a non-integer type.");
+				g_notification_service.push_warning("Locals", "You cannot use Read Local with a non-integer type.");
 			}
 		}
 		ImGui::SameLine();

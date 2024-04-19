@@ -34,16 +34,6 @@
 
 namespace big::session
 {
-	static void gamer_handle_serialize(rage::rlGamerHandle& hnd, rage::datBitBuffer& buf)
-	{
-		buf.Write<uint8_t>(*reinterpret_cast<uint8_t*>(&hnd.m_platform), 8);
-		if (*reinterpret_cast<uint8_t*>(&hnd.m_platform) == 3)
-		{
-			buf.WriteInt64(*(int64_t*)&hnd.m_rockstar_id, 64);
-			buf.Write<uint8_t>(*reinterpret_cast<uint8_t*>(reinterpret_cast<__int64>(&hnd) + 9), 8);
-		}
-	}
-
 	/**
 	 * @brief Join session by type.
 	 * 
@@ -51,9 +41,9 @@ namespace big::session
 	 */
 	inline void join_type(eSessionType session)
 	{
-		SCRIPT::REQUEST_SCRIPT_WITH_NAME_HASH(RAGE_JOAAT("pausemenu_multiplayer"));
+		SCRIPT::REQUEST_SCRIPT_WITH_NAME_HASH("pausemenu_multiplayer"_J);
 
-		while (!SCRIPT::HAS_SCRIPT_WITH_NAME_HASH_LOADED(RAGE_JOAAT("pausemenu_multiplayer")))
+		while (!SCRIPT::HAS_SCRIPT_WITH_NAME_HASH_LOADED("pausemenu_multiplayer"_J))
 			script::get_current()->yield();
 
 		*scr_globals::sctv_spectator.as<int*>() = (session == eSessionType::SC_TV ? 1 : 0); // If SCTV then enable spectator mode
@@ -82,14 +72,14 @@ namespace big::session
 		*scr_globals::session4.as<int*>() = 1;
 		*scr_globals::session5.as<int*>() = 32;
 
-		if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(RAGE_JOAAT("maintransition")) == 0)
+		if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH("maintransition"_J) == 0)
 		{
 			*scr_globals::session6.as<int*>() = 1;
 			script::get_current()->yield(500ms);
 			*scr_globals::session.as<int*>() = 0;
 		}
 
-		SCRIPT::SET_SCRIPT_WITH_NAME_HASH_AS_NO_LONGER_NEEDED(RAGE_JOAAT("pausemenu_multiplayer"));
+		SCRIPT::SET_SCRIPT_WITH_NAME_HASH_AS_NO_LONGER_NEEDED("pausemenu_multiplayer"_J);
 	}
 
 	inline void set_fm_event_index(int index)
@@ -117,19 +107,19 @@ namespace big::session
 	 */
 	inline void join_session(const rage::rlSessionInfo& info)
 	{
-		if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(RAGE_JOAAT("maintransition")) != 0 || STREAMING::IS_PLAYER_SWITCH_IN_PROGRESS())
+		if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH("maintransition"_J) != 0 || STREAMING::IS_PLAYER_SWITCH_IN_PROGRESS())
 		{
-			g_notification_service->push_error("RID Joiner", "Player switch in progress, wait a bit.");
+			g_notification_service.push_error("RID Joiner", "Player switch in progress, wait a bit.");
 			return;
 		}
 
 		g.session.join_queued = true;
 		g.session.info        = info;
 		session::join_type(eSessionType::NEW_PUBLIC);
-		if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(RAGE_JOAAT("maintransition")) == 0)
+		if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH("maintransition"_J) == 0)
 		{
 			g.session.join_queued = false;
-			g_notification_service->push_error("RID Joiner", "Unable to launch maintransition");
+			g_notification_service.push_error("RID Joiner", "Unable to launch maintransition");
 		}
 		return;
 	}
@@ -140,9 +130,9 @@ namespace big::session
 	*/
 	inline void join_by_rockstar_id(uint64_t rid)
 	{
-		if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(RAGE_JOAAT("maintransition")) != 0 || STREAMING::IS_PLAYER_SWITCH_IN_PROGRESS())
+		if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH("maintransition"_J) != 0 || STREAMING::IS_PLAYER_SWITCH_IN_PROGRESS())
 		{
-			g_notification_service->push_error("RID Joiner", "Player switch in progress, wait a bit.");
+			g_notification_service.push_error("RID Joiner", "Player switch in progress, wait a bit.");
 			return;
 		}
 
@@ -163,7 +153,7 @@ namespace big::session
 			}
 		}
 
-		g_notification_service->push_error("RID Joiner", "Target player is offline?");
+		g_notification_service.push_error("RID Joiner", "Target player is offline?");
 	}
 
 	inline void invite_by_rockstar_id(uint64_t rid)
@@ -173,9 +163,9 @@ namespace big::session
 		bool success = g_pointers->m_gta.m_invite_player_by_gamer_handle(g_pointers->m_gta.m_network_config, &player_handle, 1, 0, 0, 0);
 
 		if (!success)
-			return g_notification_service->push_error("Network", "Target player could not be invited, they might be offline?");
+			return g_notification_service.push_error("Network", "Target player could not be invited, they might be offline?");
 
-		g_notification_service->push_success("Network", "Target player has been invited to your session!");
+		g_notification_service.push_success("Network", "Target player has been invited to your session!");
 	}
 
 	inline void show_profile_by_rockstar_id(uint64_t rid)

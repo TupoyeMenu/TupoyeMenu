@@ -119,10 +119,6 @@ namespace big
 			{
 				mode_str += "Steam, ";
 			}
-			if (ped_damage_bits & (uint32_t)eEntityProofs::DROWN)
-			{
-				mode_str += "Drown, ";
-			}
 			if (ped_damage_bits & (uint32_t)eEntityProofs::WATER)
 			{
 				mode_str += "Water";
@@ -174,10 +170,6 @@ namespace big
 				if (veh_damage_bits & (uint32_t)eEntityProofs::STEAM)
 				{
 					mode_str += "Steam, ";
-				}
-				if (veh_damage_bits & (uint32_t)eEntityProofs::DROWN)
-				{
-					mode_str += "Drown, ";
 				}
 				if (veh_damage_bits & (uint32_t)eEntityProofs::WATER)
 				{

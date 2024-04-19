@@ -1,13 +1,3 @@
-/**
- * @file view_player_troll.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "util/teleport.hpp"
 #include "util/troll.hpp"
 #include "util/vehicle.hpp"
@@ -39,8 +29,10 @@ namespace big
 		ImGui::SameLine();
 		components::command_checkbox<"anonbounty">();
 		ImGui::SameLine();
+		ImGui::PushID("setbounty");
 		components::button("Set", [] {
 			troll::set_bounty_on_player(g_player_service->get_selected(), bounty_value, g.session.anonymous_bounty);
 		});
+		ImGui::PopID();
 	}
 }

@@ -64,7 +64,7 @@ namespace big::teleport
 
 		if (ENTITY::IS_ENTITY_DEAD(ent, true))
 		{
-			g_notification_service->push_warning("Teleport", "Target player is dead.");
+			g_notification_service.push_warning("Teleport", "Player is dead, you can't teleport them.");
 			return false;
 		}
 
@@ -81,13 +81,15 @@ namespace big::teleport
 				}
 			}
 			else
-				g_notification_service->push_warning("Teleport", "Failed to take control of player vehicle.");
+			{
+				g_notification_service.push_warning("Teleport", "Failed to take control of entity.");
+			}
 
 			return true;
 		}
 		else
 		{
-			Vehicle hnd = vehicle::spawn(RAGE_JOAAT("rcbandito"), *player->get_ped()->get_position(), 0.0f, true);
+			Vehicle hnd = vehicle::spawn("rcbandito"_J, *player->get_ped()->get_position(), 0.0f, true);
 
 			if (!hnd)
 				return false;
@@ -156,7 +158,7 @@ namespace big::teleport
 	{
 		if (!ENTITY::IS_ENTITY_A_VEHICLE(veh))
 		{
-			g_notification_service->push_warning("Teleport", "No valid vehicle could be found.");
+			g_notification_service.push_warning("Teleport", "Invalid Vehicle");
 
 			return false;
 		}
@@ -169,7 +171,7 @@ namespace big::teleport
 
 		if (seat_index == 255)
 		{
-			g_notification_service->push_warning("Teleport", "No seats are free in the player vehicle.");
+			g_notification_service.push_warning("Teleport", "There are no seats available in this vehicle for you.");
 
 			return false;
 		}
@@ -243,7 +245,7 @@ namespace big::teleport
 	{
 		if (!to_blip((int)BlipIcons::Waypoint))
 		{
-			g_notification_service->push_warning("Teleport", "Failed to find waypoint position.");
+			g_notification_service.push_warning("Teleport", "No waypoint found.");
 
 			return false;
 		}
@@ -261,7 +263,7 @@ namespace big::teleport
 
 		if (!blip::get_objective_location(location))
 		{
-			g_notification_service->push_warning("Teleport", "Failed to find objective position");
+			g_notification_service.push_warning("Teleport", "No objective found.");
 			return false;
 		}
 
@@ -274,14 +276,14 @@ namespace big::teleport
 	{
 		if (!*g_pointers->m_gta.m_is_session_started)
 		{
-			g_notification_service->push_warning("Teleport", "You need to be online to use this feature.");
+			g_notification_service.push_warning("Teleport", "You need to be online to use this feature.");
 			return false;
 		}
 
 		auto blip = blip::get_selected_blip();
 		if (blip == nullptr)
 		{
-			g_notification_service->push_warning("Teleport", "There is no blip selected on your map to teleport to.");
+			g_notification_service.push_warning("Teleport", "There is no blip selected on your map to teleport to.");
 			return false;
 		}
 		Entity entity = self::ped;

@@ -29,35 +29,35 @@ namespace big
 				{
 					view::view_player_info();
 					if (g_lua_manager)
-						g_lua_manager->draw_gui(RAGE_JOAAT("INFO"));
+						g_lua_manager->draw_gui("INFO"_J);
 					ImGui::EndTabItem();
 				}
 				if (ImGui::BeginTabItem("Troll"))
 				{
 					view::view_player_troll();
 					if (g_lua_manager)
-						g_lua_manager->draw_gui(RAGE_JOAAT("TROLL"));
+						g_lua_manager->draw_gui("TROLL"_J);
 					ImGui::EndTabItem();
 				}
 				if (ImGui::BeginTabItem("Vehicle"))
 				{
 					view::view_player_vehicle();
 					if (g_lua_manager)
-						g_lua_manager->draw_gui(RAGE_JOAAT("VEHICLE"));
+						g_lua_manager->draw_gui("VEHICLE"_J);
 					ImGui::EndTabItem();
 				}
 				if (ImGui::BeginTabItem("Misc"))
 				{
 					view::view_player_misc();
 					if (g_lua_manager)
-						g_lua_manager->draw_gui(RAGE_JOAAT("MISC"));
+						g_lua_manager->draw_gui("MISC"_J);
 					ImGui::EndTabItem();
 				}
 				if (ImGui::BeginTabItem("Toxic"))
 				{
 					view::view_player_toxic();
 					if (g_lua_manager)
-						g_lua_manager->draw_gui(RAGE_JOAAT("TOXIC"));
+						g_lua_manager->draw_gui("TOXIC"_J);
 					ImGui::EndTabItem();
 				}
 
@@ -69,7 +69,7 @@ namespace big
 				{
 					view::view_player_kicks_and_crashes();
 					if (g_lua_manager)
-						g_lua_manager->draw_gui(RAGE_JOAAT("KICK"));
+						g_lua_manager->draw_gui("KICK"_J);
 					ImGui::EndTabItem();
 				}
 

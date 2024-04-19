@@ -33,7 +33,7 @@ namespace big
 			LOG(WARNING) << "BLOCKED_SCRIPT_EVENT From: " << player_name << " Event Type: " << protection_type;
 
 		if (should_notify)
-			g_notification_service->push_warning("Script Event Protection",
+			g_notification_service.push_warning("Script Event Protection",
 			    std::format("From: {}\nEvent Type: {}", player_name.data(), protection_type.data()));
 	}
 
@@ -72,7 +72,8 @@ namespace big
 
 	bool hooks::scripted_game_event(CScriptedGameEvent* scripted_game_event, CNetGamePlayer* player)
 	{
-		const auto args = scripted_game_event->m_args;
+		const auto args       = scripted_game_event->m_args;
+		const auto args_count = scripted_game_event->m_args_size / 8;
 
 		const auto hash        = static_cast<eRemoteEvent>(args[0]);
 		const auto player_name = player->get_name();
@@ -84,8 +85,8 @@ namespace big
 		{
 			std::vector<int32_t> script_event_args;
 
-			script_event_args.reserve(scripted_game_event->m_args_size);
-			for (int i = 0; i < scripted_game_event->m_args_size; i++)
+			script_event_args.reserve(args_count);
+			for (int i = 0; i < args_count; i++)
 				script_event_args.push_back(args[i]);
 
 			auto event_ret = g_lua_manager->trigger_event<menu_event::ScriptedGameEventReceived, bool>((int)player->m_player_id, script_event_args);
@@ -153,7 +154,7 @@ namespace big
 				session::add_infraction(plyr, Infraction::TRIED_CRASH_PLAYER); // stand user detected
 				return true;
 			case eRemoteEvent::NotificationCrash2:
-				if (!gta_util::find_script_thread(RAGE_JOAAT("gb_salvage")))
+				if (!gta_util::find_script_thread("gb_salvage"_J))
 				{
 					// This looks like it's meant to trigger a sound crash by spamming too many notifications. We've already patched it, but the notifications are still annoying
 					session::add_infraction(plyr, Infraction::TRIED_CRASH_PLAYER); // stand user detected
@@ -408,7 +409,7 @@ namespace big
 			break;
 		case eRemoteEvent::TriggerCEORaid:
 		{
-			if (auto script = gta_util::find_script_thread(RAGE_JOAAT("freemode")))
+			if (auto script = gta_util::find_script_thread("freemode"_J))
 			{
 				if (script->m_net_component && ((CGameScriptHandlerNetComponent*)script->m_net_component)->m_host
 				    && ((CGameScriptHandlerNetComponent*)script->m_net_component)->m_host->m_net_game_player != player)
@@ -422,7 +423,7 @@ namespace big
 		case eRemoteEvent::StartScriptProceed:
 		{
 			// TODO: Breaks stuff
-			if (auto script = gta_util::find_script_thread(RAGE_JOAAT("freemode")))
+			if (auto script = gta_util::find_script_thread("freemode"_J))
 			{
 				if (script->m_net_component && ((CGameScriptHandlerNetComponent*)script->m_net_component)->m_host
 				    && ((CGameScriptHandlerNetComponent*)script->m_net_component)->m_host->m_net_game_player != player)
@@ -450,7 +451,7 @@ namespace big
 		    && (!g.debug.logs.script_event.filter_player || g.debug.logs.script_event.player_id == player->m_player_id))
 		{
 			std::string script_args = "{ ";
-			for (std::size_t i = 0; i < scripted_game_event->m_args_size; i++)
+			for (int i = 0; i < args_count; i++)
 			{
 				if (i)
 					script_args += ", ";

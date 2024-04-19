@@ -33,5 +33,6 @@ namespace memory
 	protected:
 		handle m_base;
 		std::size_t m_size;
+		DWORD m_timestamp;
 	};
 }

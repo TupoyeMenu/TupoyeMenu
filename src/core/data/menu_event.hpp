@@ -10,4 +10,6 @@ enum class menu_event
     ScriptedGameEventReceived,
     NetworkBail,
     SendMetric,
+    MenuUnloaded,
+    ScriptsReloaded,
 };

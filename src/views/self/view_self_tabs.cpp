@@ -23,42 +23,42 @@ namespace big
 			{
 				view::self();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SELF"));
+					g_lua_manager->draw_gui("GUI_TAB_SELF"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Weapons"))
 			{
 				view::weapons();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_WEAPONS"));
+					g_lua_manager->draw_gui("GUI_TAB_WEAPONS"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Mobile"))
 			{
 				view::mobile();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_MOBILE"));
+					g_lua_manager->draw_gui("GUI_TAB_MOBILE"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Teleport"))
 			{
 				view::teleport();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_TELEPORT"));
+					g_lua_manager->draw_gui("GUI_TAB_TELEPORT"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Custom Teleport"))
 			{
 				view::custom_teleport();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_CUSTOM_TELEPORT"));
+					g_lua_manager->draw_gui("GUI_TAB_CUSTOM_TELEPORT"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Outfit Editor"))
 			{
 				view::outfit_editor();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_OUTFIT_EDITOR"));
+					g_lua_manager->draw_gui("GUI_TAB_OUTFIT_EDITOR"_J);
 				ImGui::EndTabItem();
 			}
 			if (*g_pointers->m_gta.m_script_globals && ImGui::BeginTabItem("Outfit Slots"))
@@ -66,14 +66,14 @@ namespace big
 			{
 				view::outfit_slots();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_OUTFIT_SLOTS"));
+					g_lua_manager->draw_gui("GUI_TAB_OUTFIT_SLOTS"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Animations"))
 			{
 				view::animations();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_ANIMATIONS"));
+					g_lua_manager->draw_gui("GUI_TAB_ANIMATIONS"_J);
 				ImGui::EndTabItem();
 			}
 

@@ -1,12 +1,6 @@
 /**
  * @file view_missions.cpp
  * @brief Starting freemode session events.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "core/scr_globals.hpp"
@@ -83,16 +77,16 @@ namespace big
 
 		ImGui::BeginGroup();
 		components::button("One-On-One Deathmatch", [] {
-			scripts::start_launcher_script(204);
+			scripts::start_launcher_script(216);
 		});
 		components::button("Impromptu Race", [] {
 			scripts::start_launcher_script(16);
 		});
 		components::button("Flight School", [] {
-			scripts::start_launcher_script(203);
+			scripts::start_launcher_script(215);
 		});
 		components::button("Golf", [] {
-			scripts::start_launcher_script(200);
+			scripts::start_launcher_script(212);
 		});
 		components::button("Tutorial", [] {
 			scripts::start_launcher_script(20);
@@ -104,43 +98,34 @@ namespace big
 
 		ImGui::BeginGroup();
 		components::button("Gunslinger", [] {
-			scripts::start_launcher_script(218);
+			scripts::start_launcher_script(230);
 		});
 		components::button("Space Monkey", [] {
-			scripts::start_launcher_script(223);
+			scripts::start_launcher_script(235);
 		});
 		components::button("Wizard", [] {
-			scripts::start_launcher_script(219);
+			scripts::start_launcher_script(231);
 		});
 		components::button("QUB3D", [] {
-			scripts::start_launcher_script(224);
+			scripts::start_launcher_script(236);
 		});
 		components::button("CAMHEDZ", [] {
-			scripts::start_launcher_script(225);
-		});
-		ImGui::EndGroup();
-
-		ImGui::BeginGroup();
-		components::button("Ghost Hunt", [] {
-			scripts::start_launcher_script(174);
-		});
-		components::button("Possessed Animals", [] {
-			scripts::start_launcher_script(179);
+			scripts::start_launcher_script(237);
 		});
 		ImGui::EndGroup();
 
 		ImGui::SeparatorText("Current Event");
 
-		if (check_script(RAGE_JOAAT("am_criminal_damage")))
+		if (check_script("am_criminal_damage"_J))
 			render_criminal_damage_ui();
 
-		if (check_script(RAGE_JOAAT("am_cp_collection")))
+		if (check_script("am_cp_collection"_J))
 			render_cp_collection_ui();
 
-		if (check_script(RAGE_JOAAT("am_king_of_the_castle")))
+		if (check_script("am_king_of_the_castle"_J))
 			render_king_of_the_castle_ui();
 
-		if (check_script(RAGE_JOAAT("am_hunt_the_beast")))
+		if (check_script("am_hunt_the_beast"_J))
 			render_hunt_the_beast_ui();
 
 		if (!mission_found)

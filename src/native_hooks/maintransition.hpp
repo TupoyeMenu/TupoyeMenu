@@ -84,7 +84,7 @@ namespace big
 			if (g.debug.logs.stupid_script_native_logs)
 				LOGF(VERBOSE, "HUD::ACTIVATE_FRONTEND_MENU({}, {}, {});", menuhash, togglePause, component);
 
-			if (g.tunables.seamless_join && menuhash != RAGE_JOAAT("FE_MENU_VERSION_EMPTY_NO_BACKGROUND"))
+			if (g.tunables.seamless_join && menuhash != "FE_MENU_VERSION_EMPTY_NO_BACKGROUND"_J)
 				HUD::ACTIVATE_FRONTEND_MENU(menuhash, togglePause, component);
 
 			if (!g.tunables.seamless_join)
@@ -104,7 +104,7 @@ namespace big
 
 			if (g.tunables.seamless_join)
 			{
-				if (menuhash != RAGE_JOAAT("FE_MENU_VERSION_EMPTY_NO_BACKGROUND"))
+				if (menuhash != "FE_MENU_VERSION_EMPTY_NO_BACKGROUND"_J)
 				{
 					HUD::RESTART_FRONTEND_MENU(menuhash, p1);
 				}

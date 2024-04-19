@@ -23,28 +23,28 @@ namespace big
 			{
 				view::vehicle();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_VEHICLE"));
+					g_lua_manager->draw_gui("GUI_TAB_VEHICLE"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("LS Customs"))
 			{
 				view::lsc();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_LSC"));
+					g_lua_manager->draw_gui("GUI_TAB_LSC"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Spawn Vehicle"))
 			{
 				view::spawn_vehicle();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_SPAWN_VEHICLE"));
+					g_lua_manager->draw_gui("GUI_TAB_SPAWN_VEHICLE"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Fun Features"))
 			{
 				view::fun_vehicle();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui(RAGE_JOAAT("GUI_TAB_VEHICLE_FUN_FEATURES"));
+					g_lua_manager->draw_gui("GUI_TAB_VEHICLE_FUN_FEATURES"_J);
 				ImGui::EndTabItem();
 			}
 
