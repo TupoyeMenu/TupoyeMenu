@@ -1,4 +1,3 @@
-#include "imgui.h"
 #include "gui.hpp"
 #include "renderer/renderer.hpp"
 #include "views/view.hpp"
@@ -78,6 +77,8 @@ namespace big
 		ImGui::Checkbox("Show Game Version", &g.window.ingame_overlay.show_game_versions);
 
 		ImGui::EndGroup();
+
+		ImGui::Checkbox("Format Money", &g.window.gui.format_money);
 
 		if (g.window.ingame_overlay.show_indicators)
 		{

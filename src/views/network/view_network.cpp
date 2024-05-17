@@ -1,8 +1,3 @@
-/**
- * @file view_session.cpp
- */
-
-#include "backend/bool_command.hpp"
 #include "core/data/apartment_names.hpp"
 #include "core/data/command_access_levels.hpp"
 #include "core/data/region_codes.hpp"

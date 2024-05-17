@@ -171,8 +171,6 @@ namespace big
 			ImGui::Checkbox("Kill Loop", &g_player_service->get_selected()->kill_loop);
 			ImGui::SameLine();
 			ImGui::Checkbox("Explosion Loop", &g_player_service->get_selected()->explosion_loop);
-			ImGui::SameLine();
-			ImGui::Checkbox("Freeze Loop", &g_player_service->get_selected()->freeze_loop);
 
 			ImGui::Checkbox("Ragdoll Loop", &g_player_service->get_selected()->ragdoll_loop);
 			ImGui::SameLine();

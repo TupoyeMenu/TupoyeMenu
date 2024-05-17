@@ -22,6 +22,7 @@ namespace big::vehicle
 	void bring(Vehicle veh, Vector3 location, bool put_in = true, int seatIdx = -1);
 	Vehicle get_closest_to_location(Vector3 location, float range);
 	bool set_plate(Vehicle veh, const char* plate);
+	void repair_engine_from_water(Vehicle veh);
 	bool repair(Vehicle veh);
 	Vehicle spawn(Hash hash, Vector3 location, float heading, bool is_networked = true, bool script_veh = false, bool is_stolen = false);
 	Vehicle clone_from_vehicle_data(std::map<int, int32_t>& data, Vector3 location, float heading);
@@ -37,7 +38,7 @@ namespace big::vehicle
 	const char* get_mod_name(Hash model, Vehicle vehicle, int mod_slot, int mod, int mod_count);
 	const char* get_mod_slot_name(Hash model, Vehicle vehicle, int mod_slot);
 	extern const std::map<int, const char*> horn_map;
-	
+
 	/*
 	 Set doorId to eDoorId::VEH_EXT_DOOR_INVALID_ID or simply -1 to apply to all vehicle doors.
 	*/

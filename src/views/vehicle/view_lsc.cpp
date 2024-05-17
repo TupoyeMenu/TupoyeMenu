@@ -187,10 +187,6 @@ namespace big
 			});
 		}
 
-		components::button("Start LS Customs", [] {
-			g.vehicle.ls_customs = true;
-		});
-		ImGui::SameLine();
 		if (components::button("Max Vehicle"))
 		{
 			g_fiber_pool->queue_job([] {
@@ -422,7 +418,7 @@ namespace big
 		}
 
 		int item_counter = 0;
-		for (int extra = MOD_EXTRA_0; extra >= MOD_EXTRA_14; extra--)
+		for (int extra = MOD_EXTRA_1; extra >= MOD_EXTRA_14; extra--)
 		{
 			if (owned_mods.find(extra) != owned_mods.end())
 			{
@@ -433,7 +429,7 @@ namespace big
 				}
 				if ((item_counter % 5) != 0)
 					ImGui::SameLine();
-				int gta_extra_id      = (extra - MOD_EXTRA_0) * -1;
+				int gta_extra_id      = (extra - MOD_EXTRA_1) * -1;
 				auto name             = std::format("{}: #{}", "Extra", gta_extra_id);
 				bool is_extra_enabled = owned_mods[extra] == 1;
 				if (ImGui::Checkbox(name.c_str(), &is_extra_enabled))

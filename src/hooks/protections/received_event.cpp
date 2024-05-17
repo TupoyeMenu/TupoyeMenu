@@ -353,14 +353,14 @@ namespace big
 
 	void hooks::received_event(rage::netEventMgr* event_manager, CNetGamePlayer* source_player, CNetGamePlayer* target_player, uint16_t event_id, int event_index, int event_handled_bitset, int buffer_size, rage::datBitBuffer* buffer)
 	{
-		if (event_id > 91u)
+		if (event_id > 91u) [[unlikely]]
 		{
 			g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 			return;
 		}
 
 		const auto event_name = *(char**)((DWORD64)event_manager + 8 * event_id + 243376);
-		if (event_name == nullptr || source_player == nullptr || source_player->m_player_id < 0 || source_player->m_player_id >= 32)
+		if (event_name == nullptr || source_player == nullptr || source_player->m_player_id < 0 || source_player->m_player_id >= 32) [[unlikely]]
 		{
 			g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 			return;
@@ -376,7 +376,7 @@ namespace big
 			    event_id);
 		}
 
-		if (plyr && plyr->block_net_events)
+		if (plyr && plyr->block_net_events) [[unlikely]]
 		{
 			g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
 			return;
@@ -436,18 +436,24 @@ namespace big
 		case eNetworkEvents::SCRIPTED_GAME_EVENT:
 		{
 			const auto scripted_game_event = std::make_unique<CScriptedGameEvent>();
+
 			buffer->ReadDword(&scripted_game_event->m_args_size, 32);
-			if (scripted_game_event->m_args_size - 1 <= 0x1AF)
-				buffer->ReadArray(&scripted_game_event->m_args, 8 * scripted_game_event->m_args_size);
+			if (scripted_game_event->m_args_size > sizeof(scripted_game_event->m_args))
+			{
+				notify::crash_blocked(source_player, "out of bounds tse args size");
+				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+				return;
+			}
+
+			buffer->ReadArray(&scripted_game_event->m_args, 8 * scripted_game_event->m_args_size);
 
 			if (hooks::scripted_game_event(scripted_game_event.get(), source_player))
 			{
 				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
-
 				return;
 			}
-			buffer->Seek(0);
 
+			buffer->Seek(0);
 			break;
 		}
 		case eNetworkEvents::NETWORK_CLEAR_PED_TASKS_EVENT:
@@ -516,6 +522,13 @@ namespace big
 				    || personal_vehicle == veh              //Or we're in our personal vehicle.
 				    || self::spawned_vehicles.contains(net_id)) // Or it's a vehicle we spawned.
 				{
+					auto plyr = g_player_service->get_by_id(source_player->m_player_id);
+					// Let trusted friends and players request control (e.g., they want to hook us to their tow-truck or something)
+					if (plyr && (plyr->is_trusted || (g.session.trust_friends && plyr->is_friend())))
+					{
+						return;
+					}
+
 					if (g_local_player->m_vehicle->m_driver != source_player->m_player_info->m_ped) //This will block hackers who are not in the car but still want control.
 					{
 						if (g.protections.request_control)

@@ -80,11 +80,9 @@ namespace big
 		detour_hook_helper::add<hooks::send_chat_message>("SCM", (void*)g_pointers->m_gta.m_send_chat_message);
 
 		detour_hook_helper::add<hooks::process_matchmaking_find_response>("PMFR", (void*)g_pointers->m_gta.m_process_matchmaking_find_response);
-		detour_hook_helper::add<hooks::serialize_player_data_msg>("SJPD", (void*)g_pointers->m_gta.m_serialize_player_data_msg);
 
 		detour_hook_helper::add<hooks::serialize_join_request_message>("SJRM", (void*)g_pointers->m_gta.m_serialize_join_request_message);
-
-		detour_hook_helper::add<hooks::start_matchmaking_find_sessions>("SMFS", (void*)g_pointers->m_gta.m_start_matchmaking_find_sessions);
+		detour_hook_helper::add<hooks::serialize_join_request_message_2>("SJRM2", (void*)g_pointers->m_gta.m_serialize_join_request_message_2);
 
 		detour_hook_helper::add<hooks::broadcast_net_array>("BNA", (void*)g_pointers->m_gta.m_broadcast_net_array);
 
@@ -127,7 +125,7 @@ namespace big
 
 		detour_hook_helper::add<hooks::update_timecycle_keyframe_data>("UTCKD", g_pointers->m_gta.m_timecycle_keyframe_override);
 
-		detour_hook_helper::add<hooks::allocate_memory_reliable>("AMR", g_pointers->m_gta.m_allocate_memory_reliable);
+		detour_hook_helper::add<hooks::allocate_memory_reliable>("AMR", (void*)g_pointers->m_gta.m_allocate_memory_reliable);
 
 		detour_hook_helper::add<hooks::render_ped>("RP", (void*)g_pointers->m_gta.m_render_ped);
 		detour_hook_helper::add<hooks::render_entity>("RE", (void*)g_pointers->m_gta.m_render_entity);
@@ -141,6 +139,12 @@ namespace big
 
 		detour_hook_helper::add<hooks::can_create_vehicle>("CCV", (void*)g_pointers->m_gta.m_can_create_vehicle);
 
+		detour_hook_helper::add<hooks::format_int>("FI", (void*)g_pointers->m_gta.m_format_int);
+
+		detour_hook_helper::add<hooks::searchlight_crash>("SLC", (void*)g_pointers->m_gta.m_searchlight_crash);
+
+		detour_hook_helper::add<hooks::write_physical_script_game_state_data_node>("WPSGSDN", (void*)g_pointers->m_gta.m_write_physical_script_game_state_data_node);
+  
 		g_hooking = this;
 	}
 

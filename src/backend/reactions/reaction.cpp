@@ -33,7 +33,7 @@ namespace big
 		if (kick)
 		{
 			g_fiber_pool->queue_job([player] {
-				dynamic_cast<player_command*>(command::get("multikick"_J))->call(player, {});
+				dynamic_cast<player_command*>(command::get("smartkick"_J))->call(player, {});
 			});
 		}
 
@@ -56,8 +56,7 @@ namespace big
 
 		if (log)
 		{
-			uint64_t rockstar_id = player->get_net_data() == nullptr ? 0 : player->get_net_data()->m_gamer_handle.m_rockstar_id;
-			LOGF(WARNING, "Received {} from {} ({})", m_event_name, player->get_name(), rockstar_id);
+			LOGF(WARNING, "Received {} from {} ({})", m_event_name, player->get_name(), player->get_rockstar_id());
 		}
 
 		if (announce_in_chat)
@@ -76,5 +75,26 @@ namespace big
 		}
 
 		process_common(player);
+	}
+
+	// This function provides the same notification capabilities as process, but without further kick/timeout actions
+	// Probably no point announcing to chat, either
+	void reaction::only_notify(player_ptr player)
+	{
+		if (!player->is_valid())
+			return;
+		if ((player->is_friend() && g.session.trust_friends) || player->is_trusted || g.session.trust_session)
+			return;
+
+		if (log)
+		{
+			LOGF(WARNING, "Received {} from {} ({})", m_event_name, player->get_name(), player->get_rockstar_id());
+		}
+
+		if (notify)
+		{
+			// Use a different notification since the default start_script reaction is "Blocked Start Script"
+			g_notification_service.push_warning("Protections", std::format("Allowed Start Script from {}", player->get_name()));
+		}
 	}
 }

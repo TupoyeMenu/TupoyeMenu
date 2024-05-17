@@ -1,23 +1,14 @@
-/**
- * @file script_event_handler.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "backend/player_command.hpp"
 #include "gta/net_game_event.hpp"
 #include "gta/script_handler.hpp"
 #include "gta_util.hpp"
 #include "hooking/hooking.hpp"
 #include "util/math.hpp"
+#include "util/script_database.hpp"
 #include "util/session.hpp"
 
 #if defined(ENABLE_LUA)
-#include "lua/lua_manager.hpp"
+	#include "lua/lua_manager.hpp"
 #endif // ENABLE_LUA
 
 #include <network/CNetGamePlayer.hpp>
@@ -25,8 +16,11 @@
 #include <script/globals/GPBD_FM_3.hpp>
 #include <script/globals/GlobalPlayerBD.hpp>
 
+
 namespace big
 {
+	static const script_protection_DB script_database;
+
 	void format_string(std::string_view player_name, std::string_view protection_type, bool should_log, bool should_notify)
 	{
 		if (should_log)
@@ -141,6 +135,13 @@ namespace big
 				g.reactions.crash.process(plyr);
 				return true;
 			}
+			if (args[3] == -4640169 && args[7] == -36565476 && args[8] == -53105203)
+			{
+				session::add_infraction(plyr, Infraction::TRIED_CRASH_PLAYER);
+				g.reactions.crash.process(plyr);
+
+				return true;
+			}
 			break;
 		}
 		case eRemoteEvent::Notification:
@@ -220,12 +221,28 @@ namespace big
 			}
 			break;
 		case eRemoteEvent::TSECommand:
-			if (g.protections.script_events.rotate_cam && static_cast<eRemoteEvent>(args[3]) == eRemoteEvent::TSECommandRotateCam && !NETWORK::NETWORK_IS_ACTIVITY_SESSION())
+		{
+			if (NETWORK::NETWORK_IS_ACTIVITY_SESSION())
+				break;
+
+			if (g.protections.script_events.rotate_cam && static_cast<eRemoteEvent>(args[3]) == eRemoteEvent::TSECommandRotateCam)
 			{
 				g.reactions.rotate_cam.process(plyr);
 				return true;
 			}
+
+			if (g.protections.script_events.sound_spam && static_cast<eRemoteEvent>(args[3]) == eRemoteEvent::TSECommandSound)
+			{
+				if (!plyr || plyr->m_play_sound_rate_limit_tse.process())
+				{
+					if (plyr->m_play_sound_rate_limit_tse.exceeded_last_process())
+						g.reactions.sound_spam.process(plyr);
+					return true;
+				}
+			}
+
 			break;
+		}
 		case eRemoteEvent::SendToCayoPerico:
 			if (g.protections.script_events.send_to_location && args[4] == 0)
 			{
@@ -397,9 +414,7 @@ namespace big
 
 			break;
 		}
-		case eRemoteEvent::DestroyPersonalVehicle:
-			g.reactions.destroy_personal_vehicle.process(plyr);
-			return true;
+		case eRemoteEvent::DestroyPersonalVehicle: g.reactions.destroy_personal_vehicle.process(plyr); return true;
 		case eRemoteEvent::KickFromInterior:
 			if (scr_globals::globalplayer_bd.as<GlobalPlayerBD*>()->Entries[self::id].SimpleInteriorData.Owner != plyr->id())
 			{
@@ -434,12 +449,34 @@ namespace big
 			}
 			break;
 		}
+		case eRemoteEvent::StartScriptBegin:
+		{
+			auto script_id = args[3];
 
+			protection_status protection_status = script_database.get_protection_status(script_id);
+
+			if (protection_status == protection_status::BLOCK_ALWAYS)
+			{
+				g.reactions.start_script.process(plyr);
+				return true;
+			}
+
+			if (!NETWORK::NETWORK_IS_ACTIVITY_SESSION() && protection_status == protection_status::BLOCK_IN_FREEMODE)
+			{
+				g.reactions.start_script.process(plyr);
+				return true;
+			}
+
+			if (protection_status == protection_status::ALLOWED_NOTIFY)
+			{
+				g.reactions.start_script.only_notify(plyr);
+			}
+		}
 		default: break;
 		}
 
 		// detect pasted menus setting args[1] to something other than PLAYER_ID()
-		if (*(int*)&args[1] != player->m_player_id && player->m_player_id != -1)
+		if (*(int*)&args[1] != player->m_player_id && player->m_player_id != -1) [[unlikely]]
 		{
 			LOG(INFO) << "Hash = " << (int)args[0];
 			LOG(INFO) << "Sender = " << args[1];
@@ -448,24 +485,31 @@ namespace big
 		}
 
 		if (g.debug.logs.script_event.logs
-		    && (!g.debug.logs.script_event.filter_player || g.debug.logs.script_event.player_id == player->m_player_id))
+		    && (!g.debug.logs.script_event.filter_player || g.debug.logs.script_event.player_id == player->m_player_id)) [[unlikely]]
 		{
-			std::string script_args = "{ ";
+			std::stringstream output;
+			output << "Script Event From: " << player->get_name() << " (" << plyr->get_rockstar_id() << ") Args: { ";
 			for (int i = 0; i < args_count; i++)
 			{
 				if (i)
-					script_args += ", ";
+					output << ", ";
 
-				script_args += std::to_string((int)args[i]);
+				output << (int)args[i];
 			}
-			script_args += " };";
+			output << " }; ";
 
-			LOG(VERBOSE) << "Script Event:\n"
-			             << "\tPlayer: " << player->get_name() << "\n"
-			             << "\tArgs: " << script_args;
+			auto now        = std::chrono::system_clock::now();
+			auto ms         = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
+			auto timer      = std::chrono::system_clock::to_time_t(now);
+			auto local_time = *std::localtime(&timer);
+
+			static std::ofstream log(g_file_manager.get_project_file("./script_events.log").get_path(), std::ios::app);
+			log << "[" << std::put_time(&local_time, "%m/%d/%Y %I:%M:%S") << ":" << std::setfill('0') << std::setw(3) << ms.count() << " " << std::put_time(&local_time, "%p") << "] "
+			    << output.str() << std::endl;
+			log.flush();
 		}
 
-		if (g.debug.logs.script_event.block_all)
+		if (g.debug.logs.script_event.block_all) [[unlikely]]
 			return true;
 
 		return false;

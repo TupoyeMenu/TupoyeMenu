@@ -224,6 +224,7 @@ namespace big
 				if (data.m_hash == model)
 				{
 					model_str = name.data();
+					break;
 				}
 			}
 		}
@@ -234,6 +235,7 @@ namespace big
 				if (data.m_hash == model)
 				{
 					model_str = name.data();
+					break;
 				}
 			}
 		}
@@ -404,7 +406,6 @@ namespace big
 			LOG_FIELD_B(CObjectCreationDataNode, m_player_wants_control);
 			LOG_FIELD_B(CObjectCreationDataNode, m_has_init_physics);
 			LOG_FIELD_B(CObjectCreationDataNode, m_script_grabbed_from_world);
-			LOG_FIELD_B(CObjectCreationDataNode, m_has_frag_group);
 			LOG_FIELD_B(CObjectCreationDataNode, m_is_broken);
 			LOG_FIELD_B(CObjectCreationDataNode, m_has_exploded);
 			LOG_FIELD_B(CObjectCreationDataNode, m_keep_registered);
@@ -436,8 +437,8 @@ namespace big
 			break;
 		case sync_node_id("CDynamicEntityGameStateDataNode"):
 			LOG_FIELD(CDynamicEntityGameStateDataNode, m_interior_index);
-			LOG_FIELD_B(CDynamicEntityGameStateDataNode, unk_00C4);
-			LOG_FIELD_B(CDynamicEntityGameStateDataNode, unk_00C5);
+			LOG_FIELD_B(CDynamicEntityGameStateDataNode, m_loads_collisions);
+			LOG_FIELD_B(CDynamicEntityGameStateDataNode, m_retained);
 			LOG_FIELD(CDynamicEntityGameStateDataNode, m_decor_count);
 			for (int i = 0; i < ((CDynamicEntityGameStateDataNode*)node)->m_decor_count; i++)
 			{
@@ -645,13 +646,13 @@ namespace big
 			LOG_FIELD_B(CPhysicalAttachDataNode, m_is_cargo_vehicle);
 			break;
 		case sync_node_id("CPhysicalHealthDataNode"):
-			LOG_FIELD_B(CPhysicalHealthDataNode, unk_00C0);
+			LOG_FIELD_B(CPhysicalHealthDataNode, m_has_max_health);
 			LOG_FIELD_B(CPhysicalHealthDataNode, m_has_max_health_changed);
 			LOG_FIELD(CPhysicalHealthDataNode, m_max_health);
 			LOG_FIELD(CPhysicalHealthDataNode, m_current_health);
 			LOG_FIELD_NI(CPhysicalHealthDataNode, m_weapon_damage_entity);
 			LOG_FIELD_H(CPhysicalHealthDataNode, m_weapon_damage_hash);
-			LOG_FIELD(CPhysicalHealthDataNode, unk_00D8);
+			LOG_FIELD(CPhysicalHealthDataNode, m_last_damaged_material_id);
 			break;
 		case sync_node_id("CPhysicalMigrationDataNode"):
 			LOG_FIELD_B(CPhysicalMigrationDataNode, m_unk);
@@ -810,8 +811,8 @@ namespace big
 			LOG_FIELD(CPlayerGameStateDataNode, m_voice_channel);
 			LOG_FIELD_B(CPlayerGameStateDataNode, m_is_overriding_voice_proximity);
 			LOG_FIELD(CPlayerGameStateDataNode, m_voice_proximity_x);
-			LOG_FIELD(CPlayerGameStateDataNode, m_voice_proximity_x);
-			LOG_FIELD(CPlayerGameStateDataNode, m_voice_proximity_x);
+			LOG_FIELD(CPlayerGameStateDataNode, m_voice_proximity_y);
+			LOG_FIELD(CPlayerGameStateDataNode, m_voice_proximity_z);
 			LOG_FIELD(CPlayerGameStateDataNode, m_voice_proximity_radius_maybe);
 			LOG_FIELD(CPlayerGameStateDataNode, unk_0150);
 			LOG_FIELD(CPlayerGameStateDataNode, m_vehicle_weapon_index);
@@ -943,8 +944,8 @@ namespace big
 			LOG_FIELD_B(CPhysicalGameStateDataNode, m_flag2);
 			LOG_FIELD_B(CPhysicalGameStateDataNode, m_flag3);
 			LOG_FIELD_B(CPhysicalGameStateDataNode, m_flag4);
-			LOG_FIELD(CPhysicalGameStateDataNode, m_val1);
-			LOG_FIELD(CPhysicalGameStateDataNode, m_unk204);
+			LOG_FIELD(CPhysicalGameStateDataNode, m_alpha_type);
+			LOG_FIELD(CPhysicalGameStateDataNode, m_custom_fade_duration);
 			LOG_FIELD_B(CPhysicalGameStateDataNode, m_unk5);
 			break;
 		case sync_node_id("CPhysicalScriptGameStateDataNode"):
@@ -968,7 +969,6 @@ namespace big
 			LOG_FIELD_B(CPhysicalScriptGameStateDataNode, m_visible_in_cutscene);
 			LOG_FIELD_B(CPhysicalScriptGameStateDataNode, m_visible_in_cutscene_remain_hack);
 			LOG_FIELD_B(CPhysicalScriptGameStateDataNode, m_pickup_by_cargobob_disabled);
-			LOG_FIELD_B(CPhysicalScriptGameStateDataNode, m_godmode);
 			LOG_FIELD(CPhysicalScriptGameStateDataNode, m_relationship_group);
 			LOG_FIELD(CPhysicalScriptGameStateDataNode, m_always_cloned_for_players);
 			LOG_FIELD_B(CPhysicalScriptGameStateDataNode, m_trigger_damage_event_for_zero_damage);
@@ -1679,7 +1679,7 @@ namespace big
 		static bool init = ([] { sync_node_finder::init(); }(), true);
 
 		veh_creation_model = std::nullopt;
-		if (tree->m_child_node_count && tree->m_next_sync_node && check_node(tree->m_next_sync_node, g.m_syncing_player, object))
+		if (tree->m_child_node_count && tree->m_next_sync_node && check_node(tree->m_next_sync_node, g.m_syncing_player, object)) [[unlikely]]
 		{
 			return false;
 		}

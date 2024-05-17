@@ -297,13 +297,9 @@ namespace big
 		});
 
 		// Get Label Text
-		main_batch.add("GLT", "75 ? E8 ? ? ? ? 8B 0D ? ? ? ? 65 48 8B 04 25 ? ? ? ? BA ? ? ? ? 48 8B 04 C8 8B 0C 02 D1 E9", [](memory::handle ptr) {
-			g_pointers->m_gta.m_get_label_text = ptr.sub(19).as<PVOID>();
-		});
-
-		// Multiplayer chat filter
-		main_batch.add("MCF", "E8 ? ? ? ? 83 F8 FF 75 B9", [](memory::handle ptr) {
-			g_pointers->m_gta.m_check_chat_profanity = ptr.add(1).rip().as<decltype(gta_pointers::m_check_chat_profanity)>();
+		main_batch.add("GLT", "48 8D 0D ? ? ? ? E8 ? ? ? ? 45 33 C9 41 B0 ? B2", [](memory::handle ptr) {
+			g_pointers->m_gta.m_ctext_file_ptr = ptr.add(3).rip().as<PVOID>();
+			g_pointers->m_gta.m_get_label_text = ptr.add(8).rip().as<PVOID>();
 		});
 
 		// Network
@@ -455,14 +451,14 @@ namespace big
 			g_pointers->m_gta.m_process_matchmaking_find_response = ptr.as<PVOID>();
 		});
 
-		// Serialize Player Data Message
-		main_batch.add("SPDM", "48 89 5C 24 08 48 89 74 24 10 48 89 7C 24 18 41 56 48 83 EC 20 BF 01 00 00 00", [](memory::handle ptr) {
-			g_pointers->m_gta.m_serialize_player_data_msg = ptr.as<PVOID>();
-		});
-
 		// Serialize Join Request Message
 		main_batch.add("SJRM", "E8 ? ? ? ? 84 C0 0F 84 9B 00 00 00 49 8D 8F 48 11 00 00", [](memory::handle ptr) {
 			g_pointers->m_gta.m_serialize_join_request_message = ptr.add(1).rip().as<PVOID>();
+		});
+
+		// Serialize Join Request Message 2
+		main_batch.add("SJRM2", "E8 ? ? ? ? 48 8D 8D 08 01 00 00 8A D8", [](memory::handle ptr) {
+			g_pointers->m_gta.m_serialize_join_request_message_2 = ptr.add(1).rip().as<PVOID>();
 		});
 
 		// Send Network Damage
@@ -704,6 +700,11 @@ namespace big
 		// Vehicle Pool
 		main_batch.add("VEP", "4C 8B 25 ? ? ? ? 8B 29 33 F6 49 8B 04 24 33 DB 4C 8D 71 08 44 8B 78 08 45 85 FF 0F 8E ? ? ? ? 4D 8B 0C 24 41 3B 59 08 7D 29 49 8B 51 30 44 8B C3 8B CB 49 C1 E8 05 83 E1 1F 44 8B D3 42 8B 04 82", [](memory::handle ptr) {
 			g_pointers->m_gta.m_vehicle_pool = ptr.add(3).rip().as<VehiclePool***>();
+		});
+
+		// Task Fall Constructor
+		main_batch.add("TFC", "E8 ? ? ? ? B3 04 08 98 A0", [](memory::handle ptr) {
+			g_pointers->m_gta.m_taskfall_constructor = ptr.add(1).rip().as<PVOID>();
 		});
 
 		// NetFilter Handle Message
@@ -996,6 +997,27 @@ namespace big
 		// Can Create Vehicle
 		main_batch.add("CCV", "8B 0D ? ? ? ? 39 0D ? ? ? ? 0F 9C C0", [](memory::handle ptr) {
 			g_pointers->m_gta.m_can_create_vehicle = ptr.as<functions::can_create_vehicle>();
+		});
+
+		// Format Integer
+		main_batch.add("FI", "48 83 EC ? 44 88 4C 24", [](memory::handle ptr) {
+			g_pointers->m_gta.m_format_int = ptr.as<PVOID>();
+		});
+
+		// Write Physical Script Game State Data Node
+		main_batch.add("WPSGSDN", "48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 41 56 41 57 48 83 EC 20 4C 8D B1 D0 FE", [](memory::handle ptr) {
+			g_pointers->m_gta.m_write_physical_script_game_state_data_node = ptr.as<PVOID>();
+		});
+
+		// Searchlight Crash
+        	main_batch.add("SLC", "0F 29 70 E8 0F 29 78 D8 48 8B F9 48 8B CA", [](memory::handle ptr) {
+			g_pointers->m_gta.m_searchlight_crash = ptr.sub(0x1E).as<PVOID>();
+			g_pointers->m_gta.m_get_unk_weapon = ptr.add(0x28).rip().as<functions::get_unk_weapon>();
+		});
+
+		// Clone Create Pool
+		main_batch.add("CCP", "48 8B 0D ? ? ? ? 45 33 C9 BA ? ? ? ? 41", [](memory::handle ptr) {
+			g_pointers->m_gta.m_clone_create_pool = ptr.add(3).rip().as<GenericPool**>();
 		});
 
 		// Game Checksum Data

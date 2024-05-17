@@ -47,6 +47,8 @@ namespace big
 		ImGui::SameLine(); components::help_marker("This prevents any pickup from the ground such as unwanted money drops.\nAttention: Normal pickups are also no longer possible.");
 		ImGui::Checkbox("Kick Rejoin", &g.protections.kick_rejoin);
 		ImGui::Checkbox("Block Traffic Manipulation", &g.protections.stop_traffic);
+		ImGui::Checkbox("Teleport To Warehouse", &g.protections.script_events.teleport_to_warehouse);
+		ImGui::Checkbox("Start Activity", &g.protections.script_events.start_activity);
 		ImGui::EndGroup();
 
 		ImGui::SameLine();
@@ -59,6 +61,8 @@ namespace big
 		ImGui::Checkbox("Wanted Level", &g.protections.script_events.clear_wanted_level);
 		ImGui::Checkbox("Request Controll", &g.protections.request_control);
 		components::command_checkbox<"forcerelays">();
+		ImGui::Checkbox("Desync Kick", &g.protections.desync_kick);
+		ImGui::Checkbox("Give collectible", &g.protections.script_events.give_collectible);
 		ImGui::EndGroup();
 
 		ImGui::SeparatorText("Options");

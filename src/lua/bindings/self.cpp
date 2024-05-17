@@ -1,4 +1,3 @@
-#pragma once
 #include "self.hpp"
 
 namespace lua_self = self;

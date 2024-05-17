@@ -79,7 +79,6 @@ namespace big::functions
 
 	using set_gravity_level = void (*)(int level);
 
-	using check_chat_profanity              = int(__int64 chat_type, const char* input, const char** output);
 	using write_player_game_state_data_node = bool (*)(rage::netObject* plr, CPlayerGameStateDataNode* node);
 
 	using get_gameplay_cam_coords = Vector3 (*)();
@@ -217,4 +216,6 @@ namespace big::functions
 	using received_clone_remove = void (*)(CNetworkObjectMgr*, CNetGamePlayer*, CNetGamePlayer*, int16_t, uint32_t);
 
 	using can_create_vehicle = bool (*)();
+
+	using get_unk_weapon = void* (*) (CPed*);
 }

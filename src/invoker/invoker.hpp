@@ -3,6 +3,10 @@
 
 #include <script/scrNativeHandler.hpp>
 
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wunknown-attributes"
+#endif
+
 namespace big
 {
 	class custom_call_context : public rage::scrNativeCallContext
@@ -32,16 +36,17 @@ namespace big
 			m_call_context.reset();
 		}
 
-		template<int index, bool fix_vectors>
+		template<int index, bool should_fix_vectors>
 		constexpr void end_call()
 		{
 			// TODO: try to get rid of this
-			if (!m_are_handlers_cached)
+			[[assume((cache_handlers(), m_are_handlers_cached == true))]];
+			if (!m_are_handlers_cached) [[unlikely]]
 				cache_handlers();
 
 			m_handlers[index](&m_call_context);
-			if constexpr (fix_vectors)
-				this->fix_vectors();
+			if constexpr (should_fix_vectors)
+				fix_vectors();
 		}
 
 		template<typename T>
@@ -68,7 +73,8 @@ namespace big
 
 		static rage::scrNativeHandler* get_handlers()
 		{
-			if (!m_are_handlers_cached)
+			[[assume((cache_handlers(), m_are_handlers_cached == true))]];
+			if (!m_are_handlers_cached) [[unlikely]]
 				cache_handlers();
 
 			return m_handlers;

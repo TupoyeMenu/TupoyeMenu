@@ -41,10 +41,10 @@ jobs:
           key: ${{ runner.os }}-build
 
       - name: Generate CMake project
-        run: cmake -DCMAKE_BUILD_TYPE=Release -S. -Bbuild -G Ninja -DGEN_PDB=ON
+        run: cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D OPTIMIZE=YES -S. -Bbuild -G Ninja
 
       - name: Build 64bit release DLL
-        run: cmake --build ./build --config Release --target TupoyeMenu --
+        run: cmake --build ./build --config RelWithDebInfo --target TupoyeMenu --
 
       - name: Check if DLL got built
         run: if (-Not (Test-Path -path "build/TupoyeMenu.dll")) {throw 1}
@@ -52,19 +52,20 @@ jobs:
       - name: Rename DLL to TupoyeMenu-dev-{GITHUB_SHA}.dll
         run: |
           del TupoyeMenu-dev-*.dll
-          ren TupoyeMenu.dll TupoyeMenu-dev-${{github.sha}}.dll
           del TupoyeMenu-dev-*.pdb
-          ren TupoyeMenu.pdb TupoyeMenu-dev-${{github.sha}}.pdb
+          ren TupoyeMenu.dll TupoyeMenu-dev-${{github.sha}}.dll
+          ren TupoyeMenu.pdb TupoyeMenu.pdb
         working-directory: build/
 
-      - name: Upload DLL
-        uses: actions/upload-artifact@v4
+      - name: Upload Artifact (dll)
+        uses: actions/upload-artifact@v3
         with:
           name: binary
-          path: build/TupoyeMenu-dev-*.dll
-      
-      - name: Upload PDB
-        uses: actions/upload-artifact@v4
+          path: |
+            build/TupoyeMenu-dev-*.dll
+      - name: Upload Artifact (pdb)
+        uses: actions/upload-artifact@v3
         with:
           name: pdb
-          path: build/TupoyeMenu-dev-*.pdb
+          path: |
+            build/TupoyeMenu.pdb

@@ -106,7 +106,7 @@ namespace big
 		populate_ip();
 
 		rage::scrThread* thread = (rage::scrThread*)new uint8_t[sizeof(rage::scrThread)];
-		memcpy(thread, rage::tlsContext::get()->m_script_thread, sizeof(rage::scrThread));
+		memcpy((void*)thread, (void*)rage::tlsContext::get()->m_script_thread, sizeof(rage::scrThread));
 
 		void* stack                       = new uint64_t[25000];
 		thread->m_stack                   = (rage::scrValue*)stack;

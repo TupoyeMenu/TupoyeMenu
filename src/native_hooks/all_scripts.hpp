@@ -71,7 +71,7 @@ namespace big
 
 		inline void NETWORK_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(rage::scrNativeCallContext* src)
 		{
-			if (src->get_arg<int>(2) != -1 && src->get_arg<uint32_t>(2) >= 0x100)
+			if (src->get_arg<int>(2) != -1 && src->get_arg<uint32_t>(2) >= 0x100) [[unlikely]]
 			{
 				notify::crash_blocked(nullptr, "out of bounds instance id");
 				return;
@@ -82,7 +82,7 @@ namespace big
 
 		inline void NETWORK_TRY_TO_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(rage::scrNativeCallContext* src)
 		{
-			if (src->get_arg<int>(2) != -1 && src->get_arg<uint32_t>(2) >= 0x100)
+			if (src->get_arg<int>(2) != -1 && src->get_arg<uint32_t>(2) >= 0x100) [[unlikely]]
 			{
 				notify::crash_blocked(nullptr, "out of bounds instance id");
 				src->set_return_value<BOOL>(FALSE);

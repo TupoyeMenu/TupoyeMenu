@@ -20,7 +20,7 @@ namespace big
 	bool hooks::handle_join_request(Network* network, rage::snSession* session, rage::rlGamerInfo* player_info, CJoinRequestContext* ctx, BOOL is_transition_session)
 	{
 		LOG(VERBOSE) << player_info->m_name << " " << is_transition_session;
-		if (auto player = g_player_database_service->get_player_by_rockstar_id(player_info->m_gamer_handle.m_rockstar_id); player)
+		if (auto player = g_player_database_service->get_player_by_rockstar_id(player_info->m_gamer_handle.m_rockstar_id); player) [[unlikely]]
 		{
 			if (player->block_join)
 			{
@@ -28,7 +28,7 @@ namespace big
 				CMsgJoinResponse response{};
 				response.m_status_code = player->block_join_reason;
 				g_pointers->m_gta.m_write_join_response_data(&response, ctx->m_join_response_data, 512, &ctx->m_join_response_size);
-				//g_notification_service.push("Block Join", std::format("Blocked {} from joining", player->name));
+				g_notification_service.push("Block Join", std::format("Blocked {} from joining", player->name));
 				return false;
 			}
 			if (player->force_allow_join)
@@ -37,7 +37,7 @@ namespace big
 				CMsgJoinResponse response{};
 				response.m_status_code = 0;
 				g_pointers->m_gta.m_write_join_response_data(&response, ctx->m_join_response_data, 512, &ctx->m_join_response_size);
-				//g_notification_service.push("Force Allow Join", std::format("Allowed {} to join", player->name));
+				g_notification_service.push("Force Allow Join", std::format("Allowed {} to join", player->name));
 				return true;
 			}
 		}

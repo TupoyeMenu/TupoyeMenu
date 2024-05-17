@@ -23,6 +23,9 @@ class CBlipList;
 class TimecycleKeyframeData;
 class CTrainConfig;
 class CWeaponInfoManager;
+class CGameScriptHandlerMgr;
+class CPedFactory;
+class GtaThread;
 
 namespace rage
 {
@@ -39,6 +42,7 @@ namespace rage
 	class GenericPool;
 	class VehiclePool;
 	struct game_skeleton;
+	class scrProgramTable;
 }
 
 template<typename T>
@@ -114,8 +118,8 @@ namespace big
 		functions::set_gravity_level m_set_gravity_level;
 
 		PVOID m_native_return;
+		PVOID m_ctext_file_ptr;
 		PVOID m_get_label_text;
-		functions::check_chat_profanity* m_check_chat_profanity;
 		functions::write_player_game_state_data_node m_write_player_game_state_data_node;
 
 		ChatData** m_chat_data;
@@ -221,9 +225,9 @@ namespace big
 		PVOID m_sort_session_details;
 
 		PVOID m_process_matchmaking_find_response;
-		PVOID m_serialize_player_data_msg;
 
 		PVOID m_serialize_join_request_message;
+		PVOID m_serialize_join_request_message_2;
 
 		functions::give_pickup_rewards m_give_pickup_rewards;
 		functions::send_network_damage m_send_network_damage;
@@ -378,6 +382,15 @@ namespace big
 		CWeaponInfoManager* m_weapon_info_manager;
 
 		functions::can_create_vehicle m_can_create_vehicle;
+
+		PVOID m_format_int;
+    
+		PVOID m_searchlight_crash;
+		functions::get_unk_weapon m_get_unk_weapon;
+
+		GenericPool** m_clone_create_pool; // this is not a normal pool
+		
+		PVOID m_write_physical_script_game_state_data_node;
 	};
 #pragma pack(pop)
 	static_assert(sizeof(gta_pointers) % 8 == 0, "Pointers are not properly aligned");

@@ -1,13 +1,3 @@
-/**
- * @file view_player_database.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "core/data/block_join_reasons.hpp"
 #include "core/data/command_access_levels.hpp"
 #include "core/data/infractions.hpp"
@@ -275,6 +265,33 @@ namespace big
 			ImGui::EndChild();
 		}
 
+		if (ImGui::Button("Remove Untrusted"))
+		{
+			ImGui::OpenPopup("##removeuntrusted");
+		}
+
+		if (ImGui::BeginPopupModal("##removeuntrusted"))
+		{
+			ImGui::Text("Are you sure?");
+
+			if (ImGui::Button("Yes"))
+			{
+				g_player_database_service->set_selected(nullptr);
+				g_player_database_service->remove_untrusted_players();
+				g_player_database_service->save();
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("No"))
+			{
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
+
+		ImGui::SameLine();
+
 		if (ImGui::Button("Remove All"))
 		{
 			ImGui::OpenPopup("##removeall");
@@ -300,8 +317,6 @@ namespace big
 
 			ImGui::EndPopup();
 		}
-
-		ImGui::SameLine();
 
 		components::button("Reload Player Online States", [] {
 			g_player_database_service->update_player_states();

@@ -28,7 +28,7 @@ namespace big
 	bool has_scrollbar = false;
 	static void player_button(const player_ptr& plyr)
 	{
-		if (plyr == nullptr)
+		if (plyr == nullptr || !plyr->is_valid())
 			return;
 
 		bool selected_player = plyr == g_player_service->get_selected();
@@ -77,12 +77,9 @@ namespace big
 			g_player_service->set_selected(plyr);
 			g.window.player = true;
 		}
-		if (ImGui::IsItemHovered()
-		    && g_player_database_service->get_player_by_rockstar_id(plyr->get_net_data()->m_gamer_handle.m_rockstar_id) != nullptr)
+		if (auto rockstar_id = plyr->get_rockstar_id(); ImGui::IsItemHovered() && g_player_database_service->get_player_by_rockstar_id(rockstar_id) != nullptr)
 		{
-			auto sorted_player =
-			    g_player_database_service->get_player_by_rockstar_id(plyr->get_net_data()->m_gamer_handle.m_rockstar_id);
-
+			auto sorted_player = g_player_database_service->get_player_by_rockstar_id(rockstar_id);
 			if (!sorted_player->infractions.empty())
 			{
 				ImGui::BeginTooltip();

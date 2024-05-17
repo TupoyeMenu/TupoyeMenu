@@ -9,6 +9,8 @@
 
 namespace big
 {
+	extern bool user_updated_wanted_level;
+
 	void view::self()
 	{
 		components::command_button<"suicide">();
@@ -139,22 +141,27 @@ namespace big
 
 		ImGui::EndGroup();
 
-		ImGui::SeparatorText("Police");
+		ImGui::SeparatorText("Wanted Level");
 
 		ImGui::Checkbox("Never Wanted", &g.self.never_wanted);
 		ImGui::SameLine();
-		components::command_button<"clearwantedlvl">();
+		components::help_marker("You will never gain any wanted stars");
 
+		// Only show all the other stuff like clear wanted, force wanted, and the slider if we don't have never_wanted enabled, since never_wanted overrides all of that
 		if (!g.self.never_wanted)
 		{
+			ImGui::SameLine();
+			components::command_button<"clearwantedself">();
+
+			// Most ImGui widgets return true when they've been changed, so this is useful to prevent us from overwriting the wanted level's natural decay/progression if we're not keeping it locked
+			ImGui::SetNextItemWidth(200);
+			user_updated_wanted_level = ImGui::SliderInt("###wanted_level", &g.self.wanted_level, 0, 5);
+			ImGui::SameLine();
+			components::help_marker("Sets current wanted level; use with Force Wanted Level to lock it at the selected value");
+			ImGui::SameLine();
 			ImGui::Checkbox("Force Wanted Level", &g.self.force_wanted_level);
 			ImGui::SameLine();
 			components::help_marker("Keep a specific wanted level active on yourself");
-			ImGui::TextUnformatted("Wanted Level");
-			if (ImGui::SliderInt("###wanted_level", &g.self.wanted_level, 0, 5) && !g.self.force_wanted_level && g_local_player != nullptr)
-			{
-				g_local_player->m_player_info->m_wanted_level = g.self.wanted_level;
-			}
 		}
 
 		ImGui::SeparatorText("HUD");

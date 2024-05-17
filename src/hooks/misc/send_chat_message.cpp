@@ -17,20 +17,12 @@
 #include "services/players/player_service.hpp"
 #include "util/chat.hpp"
 
-#if defined(ENABLE_LUA)
-#include "lua/lua_manager.hpp"
-#endif // ENABLE_LUA
-
 namespace big
 {
 	bool hooks::send_chat_message(void* team_mgr, rage::rlGamerInfo* local_gamer_info, char* message, bool is_team)
 	{
 		if (g.session.chat_commands && message[0] == g.session.chat_command_prefix)
 			command::process(std::string(message + 1), std::make_shared<chat_command_context>(g_player_service->get_self()));
-#if defined(ENABLE_LUA)
-		else
-			g_lua_manager->trigger_event<menu_event::ChatMessageReceived>(self::id, message);
-#endif // ENABLE_LUA
 
 		chat::send_message(message, nullptr, false, is_team);
 

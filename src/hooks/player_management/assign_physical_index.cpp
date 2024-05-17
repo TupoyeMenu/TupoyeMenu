@@ -40,17 +40,15 @@ namespace big
 				g_lua_manager->trigger_event<menu_event::PlayerLeave>(net_player_data->m_name);
 #endif // ENABLE_LUA
 
+				auto rockstar_id = net_player_data->m_gamer_handle.m_rockstar_id;
+
 				if (g.notifications.player_leave.log)
-					LOG(INFO) << "Player left '" << net_player_data->m_name << "' freeing slot #" << (int)player->m_player_id
-					          << " with Rockstar ID: " << net_player_data->m_gamer_handle.m_rockstar_id;
+					LOG(INFO) << "Player left '" << net_player_data->m_name << "' freeing slot #" << (int)player->m_player_id << " with Rockstar ID: " << rockstar_id;
 
 				if (g.notifications.player_leave.notify)
 				{
 					g_notification_service.push("Player Left",
-					    std::format("{} freeing slot {} with Rockstar ID: {}",
-					        net_player_data->m_name,
-					        player->m_player_id,
-					        net_player_data->m_gamer_handle.m_rockstar_id));
+					    std::format("{} freeing slot {} with Rockstar ID: {}", net_player_data->m_name, player->m_player_id, rockstar_id));
 				}
 			}
 
@@ -102,10 +100,9 @@ namespace big
 			g_fiber_pool->queue_job([id] {
 				if (auto plyr = g_player_service->get_by_id(id))
 				{
-					if (plyr->get_net_data()->m_gamer_handle.m_rockstar_id != 0)
+					if (auto rockstar_id = plyr->get_rockstar_id(); rockstar_id != 0)
 					{
-						if (auto entry = g_player_database_service->get_player_by_rockstar_id(
-						        plyr->get_net_data()->m_gamer_handle.m_rockstar_id))
+						if (auto entry = g_player_database_service->get_player_by_rockstar_id(rockstar_id))
 						{
 							plyr->is_trusted = entry->is_trusted;
 							if (!(plyr->is_friend() && g.session.trust_friends))
@@ -146,7 +143,7 @@ namespace big
 						}
 						else
 						{
-							dynamic_cast<player_command*>(command::get("multikick"_J))->call(plyr, {});
+							dynamic_cast<player_command*>(command::get("smartkick"_J))->call(plyr, {});
 							g_notification_service.push_warning("Lobby Lock",
 							    std::format("A player with the name of {} has been denied entry", plyr->get_net_data()->m_name));
 						}
@@ -155,6 +152,16 @@ namespace big
 					if (is_spoofed_host_token(plyr->get_net_data()->m_host_token))
 					{
 						session::add_infraction(plyr, Infraction::SPOOFED_HOST_TOKEN);
+					}
+
+					if (g_player_service->get_self()->is_host() && plyr->get_net_data()->m_nat_type == 0)
+					{
+						session::add_infraction(plyr, Infraction::DESYNC_PROTECTION);
+					}
+
+					if (plyr->is_host() && plyr->get_net_data()->m_nat_type == 0)
+					{
+						session::add_infraction(plyr, Infraction::DESYNC_PROTECTION); // some broken menus may do this
 					}
 				}
 			});

@@ -47,6 +47,7 @@ namespace big
 		components::command_checkbox<"infclip">();
 		ImGui::Checkbox("Increase Flare Limit (Max = 50)", &g.weapons.increased_flare_limit);
 		components::command_checkbox<"vehallweapons">();
+		components::command_checkbox<"infinitevehammo">();
 
 		ImGui::Checkbox("Enable Special Ammo", &g.weapons.ammo_special.toggle);
 		components::options_modal("Special ammo", [] {
@@ -88,6 +89,8 @@ namespace big
 				ImGui::EndCombo();
 			}
 		});
+
+		components::command_checkbox<"enablemk1variants">();
 
 		ImGui::EndGroup();
 
@@ -170,6 +173,7 @@ namespace big
 			{
 				ImGui::ColorEdit4("Paint Gun Color", g.weapons.paintgun.col);
 			}
+		default: break;
 		}
 
 		ImGui::Separator();

@@ -61,7 +61,7 @@ namespace big
 				std::unique_lock lock(m_lock);
 				m_job_stack.push({func, location});
 
-				if (m_allocated_thread_count - m_busy_threads < m_job_stack.size())
+				if (m_allocated_thread_count - m_busy_threads < m_job_stack.size()) [[unlikely]]
 				{
 					LOG(WARNING) << "Thread pool potentially starved, resizing to accommodate for load.";
 
@@ -89,9 +89,9 @@ namespace big
 				return !m_job_stack.empty() || !m_accept_jobs;
 			});
 
-			if (!m_accept_jobs)
+			if (!m_accept_jobs) [[unlikely]]
 				break;
-			if (m_job_stack.empty())
+			if (m_job_stack.empty()) [[likely]]
 				continue;
 
 			thread_pool_job job = m_job_stack.top();

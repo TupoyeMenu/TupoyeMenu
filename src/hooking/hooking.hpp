@@ -48,6 +48,7 @@ class Network;
 class GtaThread;
 class CNetworkPlayerMgr;
 class CNetworkObjectMgr;
+class CPhysicalScriptGameStateDataNode;
 
 enum class eAckCode : uint32_t;
 
@@ -133,8 +134,8 @@ namespace big
 
 		static bool process_matchmaking_find_response(void* _this, void* unused, rage::JSONNode* node, int* unk);
 
-		static bool serialize_player_data_msg(CNetGamePlayerDataMsg* msg, rage::datBitBuffer* buffer);
 		static bool serialize_join_request_message(RemoteGamerInfoMsg* info, void* data, int size, int* bits_serialized);
+		static bool serialize_join_request_message_2(__int64 msg, void* buf, int size, int* bits_serialized);
 
 		static bool start_matchmaking_find_sessions(int profile_index, int available_slots, NetworkGameFilterMatchmakingComponent* filter, unsigned int max_sessions, rage::rlSessionInfo* results, int* num_sessions_found, rage::rlTaskStatus* status);
 
@@ -207,6 +208,12 @@ namespace big
 
 		static int get_dlc_hash(void* mgr, int seed);
 		static bool can_create_vehicle();
+
+		static void format_int(int64_t integer_to_format, char* format_string, size_t size_always_64, bool use_commas);
+
+		static void searchlight_crash(void* a1, CPed* ped);
+
+		static void write_physical_script_game_state_data_node(rage::CPhysical* this_ptr, CPhysicalScriptGameStateDataNode* node);
 	};
 
 	class minhook_keepalive

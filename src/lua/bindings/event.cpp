@@ -60,12 +60,15 @@ namespace lua::event
 	// Lua API: Field
 	// Table: menu_event
 	// Field: ChatMessageReceived: integer
-	// Event that is triggered when we receive a in-game chat message.
+	// Event that is triggered when we receive or send an in-game chat message.
 	// **Example Usage:**
 	// ```lua
-	// event.register_handler(menu_event.ChatMessageReceived, function (player_id, chat_message)
+	// event.register_handler(menu_event.ChatMessageReceived, function (player_id, chat_message, target_id, draw, is_team)
 	//     log.info(player_id)
 	//     log.info(chat_message)
+	//     log.info(target_id)
+	//     log.info(draw)
+	//     log.info(is_team)
 	// end)
 	// ```
 

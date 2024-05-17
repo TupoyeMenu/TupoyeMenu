@@ -3,19 +3,12 @@
  * @brief Options to kick or crash selected player.
  * @note Define `ENABLE_CRASHES` to enable crashes.
  * @todo Fully remove crashes.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "util/ped.hpp"
-#include "util/teleport.hpp"
-#include "util/toxic.hpp"
-#include "util/vehicle.hpp"
+#include "gta_util.hpp"
 #include "views/view.hpp"
+
+#include <network/Network.hpp>
 
 namespace big
 {
@@ -28,7 +21,7 @@ namespace big
 		};
 
 		if (!g_player_service->get_self()->is_host())
-				ImGui::TextUnformatted("Host and breakup kick require session host");
+			ImGui::TextUnformatted("Host and breakup kick require session host");
 
 		ImGui::BeginDisabled(!g_player_service->get_self()->is_host());
 
@@ -39,7 +32,7 @@ namespace big
 
 		ImGui::EndDisabled();
 
-		components::player_command_button<"multikick">(g_player_service->get_selected());
+		components::player_command_button<"smartkick">(g_player_service->get_selected());
 		ImGui::SameLine();
 		components::player_command_button<"nfkick">(g_player_service->get_selected());
 

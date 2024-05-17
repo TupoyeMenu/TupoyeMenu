@@ -1,13 +1,3 @@
-/**
- * @file view_spoofing.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "core/data/blip_types.hpp"
 #include "core/data/language_codes.hpp"
 #include "core/data/pool_types.hpp"
@@ -113,6 +103,11 @@ namespace big
 			ImGui::EndCombo();
 		}
 
+		ImGui::SeparatorText("Hide Features");
+		ImGui::Checkbox("Hide God Mode", &g.spoofing.spoof_hide_god);
+		ImGui::Checkbox("Hide Vehicle God Mode", &g.spoofing.spoof_hide_veh_god);
+		ImGui::Checkbox("Hide Spectate", &g.spoofing.spoof_hide_spectate);
+
 		ImGui::SeparatorText("Crew Spoof");
 
 		ImGui::Checkbox("Spoof Crew", &g.spoofing.spoof_crew_data);
@@ -175,13 +170,11 @@ namespace big
 			ImGui::InputInt("###player_count", &g.spoofing.session_player_count);
 		}
 
-		ImGui::Checkbox("Spoof Session Bad Sport Status", &g.spoofing.spoof_session_bad_sport_status);
-		if (g.spoofing.spoof_session_bad_sport_status)
-		{
-			ImGui::SameLine();
-			ImGui::Checkbox("Badsport", &g.spoofing.session_bad_sport);
-		}
-
-		components::command_checkbox<"overridegamehashes">();
+		components::small_text("Spoof Session Bad Sport Status");
+		ImGui::RadioButton("Default", &g.spoofing.spoof_session_bad_sport_status, 0);
+		ImGui::SameLine();
+		ImGui::RadioButton("Good Sport", &g.spoofing.spoof_session_bad_sport_status, 1);
+		ImGui::SameLine();
+		ImGui::RadioButton("Bad Sport", &g.spoofing.spoof_session_bad_sport_status, 2);
 	}
 }

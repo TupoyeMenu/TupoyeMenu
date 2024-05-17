@@ -1,12 +1,6 @@
 /**
  * @file view_debug_misc.cpp
  * @brief Miscellaneous debug options.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "gta/joaat.hpp"
@@ -35,6 +29,10 @@ namespace big
 		ImGui::SameLine();
 		components::button("Load SP Map", [] {
 			DLC::ON_ENTER_SP();
+		});
+
+		components::button("Start LS Customs", [] {
+			g.vehicle.ls_customs = true;
 		});
 
 		if (components::button("Dump entrypoints"))
@@ -125,7 +123,8 @@ namespace big
 
 		ImGui::Checkbox("Log Stupid Native Hooks", &g.debug.logs.stupid_script_native_logs);
 
-		ImGui::Checkbox("Log Packets", &g.debug.logs.packet_logs);
+		static const char* options[]{"Off", "All", "Filters"};
+		ImGui::Combo("Log Packets", (int*)&g.debug.logs.packet_logs, options, IM_ARRAYSIZE(options));
 		ImGui::Checkbox("Log Net Events", &g.debug.logs.net_event_logs);
 
 		ImGui::Checkbox("Log Remote Sounds", &g.debug.logs.remote_sound_logs);

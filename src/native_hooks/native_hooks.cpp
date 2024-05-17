@@ -22,6 +22,7 @@
 #include "maintransition.hpp"
 #include "shop_controller.hpp"
 #include "tunables.hpp"
+#include "am_pi_menu.hpp"
 
 #include <script/scrProgram.hpp>
 #include <script/scrProgramTable.hpp>
@@ -109,6 +110,7 @@ namespace big
 		add_native_detour(NativeIndex::DISABLE_CONTROL_ACTION, all_scripts::DISABLE_CONTROL_ACTION);
 		add_native_detour(NativeIndex::HUD_FORCE_WEAPON_WHEEL, all_scripts::HUD_FORCE_WEAPON_WHEEL);
 		add_native_detour(NativeIndex::NETWORK_CASINO_CAN_BET, all_scripts::RETURN_TRUE); // bypass casino country restrictions
+		add_native_detour(NativeIndex::SC_PROFANITY_GET_STRING_STATUS, all_scripts::RETURN_FALSE); // bypass SC profanity checks
 		add_native_detour(NativeIndex::NETWORK_OVERRIDE_CLOCK_TIME, all_scripts::NETWORK_OVERRIDE_CLOCK_TIME);
 		add_native_detour(NativeIndex::SET_ENTITY_HEALTH, all_scripts::SET_ENTITY_HEALTH);
 		add_native_detour(NativeIndex::APPLY_DAMAGE_TO_PED, all_scripts::APPLY_DAMAGE_TO_PED);
@@ -118,6 +120,7 @@ namespace big
 
 		add_native_detour("shop_controller"_J, NativeIndex::IS_PED_SHOOTING, all_scripts::RETURN_FALSE); // prevent exploit reports
 		add_native_detour("shop_controller"_J, NativeIndex::SET_WARNING_MESSAGE_WITH_HEADER, shop_controller::SET_WARNING_MESSAGE_WITH_HEADER);
+		add_native_detour("shop_controller"_J, NativeIndex::SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT, shop_controller::SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT);
 
 		add_native_detour("carmod_shop"_J, NativeIndex::SET_ENTITY_COORDS, carmod_shop::SET_ENTITY_COORDS);
 		add_native_detour("carmod_shop"_J, NativeIndex::SET_ENTITY_HEADING, carmod_shop::SET_ENTITY_HEADING);
@@ -147,12 +150,15 @@ namespace big
 		add_native_detour("freemode"_J, NativeIndex::SET_BIGMAP_ACTIVE, freemode::SET_BIGMAP_ACTIVE);
 		add_native_detour("freemode"_J, NativeIndex::SET_BLIP_DISPLAY, freemode::SET_BLIP_DISPLAY);
 		add_native_detour("freemode"_J, NativeIndex::NETWORK_HAS_RECEIVED_HOST_BROADCAST_DATA, freemode::NETWORK_HAS_RECEIVED_HOST_BROADCAST_DATA);
+		add_native_detour("freemode"_J, NativeIndex::REMOVE_WEAPON_FROM_PED, freemode::REMOVE_WEAPON_FROM_PED);
 
 		add_native_detour("fmmc_launcher"_J, NativeIndex::NETWORK_HAS_RECEIVED_HOST_BROADCAST_DATA, freemode::NETWORK_HAS_RECEIVED_HOST_BROADCAST_DATA);
 		add_native_detour("fmmc_launcher"_J, NativeIndex::SET_ENTITY_COORDS, maintransition::SET_ENTITY_COORDS);
 
 		add_native_detour("am_launcher"_J, NativeIndex::START_NEW_SCRIPT_WITH_ARGS, am_launcher::START_NEW_SCRIPT_WITH_ARGS);
 		add_native_detour("am_launcher"_J, NativeIndex::NETWORK_HAS_RECEIVED_HOST_BROADCAST_DATA, freemode::NETWORK_HAS_RECEIVED_HOST_BROADCAST_DATA);
+
+		add_native_detour("am_pi_menu"_J, NativeIndex::DISPLAY_ONSCREEN_KEYBOARD, am_pi_menu::DISPLAY_ONSCREEN_KEYBOARD);
 
 		add_native_detour("fm_race_creator"_J, NativeIndex::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH, creator::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH);
 		add_native_detour("fm_capture_creator"_J, NativeIndex::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH, creator::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH);

@@ -1,13 +1,3 @@
-/**
- * @file view_teleport.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "core/data/ipls.hpp"
 #include "fiber_pool.hpp"
 #include "imgui.h"
@@ -101,7 +91,7 @@ namespace big
 		ImGui::SeparatorText("IPL");
 
 		static int current_select = 0;
-		static int last_select    = current_select;
+		static int last_select    = -1;
 
 		ImGui::SetNextItemWidth(400);
 		if (ImGui::BeginCombo("##Ipllocation", ipls[current_select].friendly_name))
@@ -127,18 +117,22 @@ namespace big
 			if (current_select != last_select)
 			{
 				// Unload previously loaded IPL of the last selection
-				for (auto& ipl_name_unload : ipls[last_select].ipl_names)
+				// If this is our first time loading an IPL (especially the first one in the list, then don't unload anything)
+				if (last_select != -1)
 				{
-					if (STREAMING::IS_IPL_ACTIVE(ipl_name_unload))
+					for (auto& ipl_name_unload : ipls[last_select].ipl_names)
 					{
-						STREAMING::REMOVE_IPL(ipl_name_unload);
+						if (STREAMING::IS_IPL_ACTIVE(ipl_name_unload))
+						{
+							STREAMING::REMOVE_IPL(ipl_name_unload);
+						}
 					}
-				}
 
-				// Load previously deleted IPLs of the last selection
-				for (auto& ipl_name_load : ipls[last_select].ipl_names_remove)
-				{
-					STREAMING::REQUEST_IPL(ipl_name_load);
+					// Load previously deleted IPLs of the last selection
+					for (auto& ipl_name_load : ipls[last_select].ipl_names_remove)
+					{
+						STREAMING::REQUEST_IPL(ipl_name_load);
+					}
 				}
 
 				// Load new IPLs of the current selection
