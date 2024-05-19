@@ -84,6 +84,8 @@ namespace big
 		detour_hook_helper::add<hooks::serialize_join_request_message>("SJRM", (void*)g_pointers->m_gta.m_serialize_join_request_message);
 		detour_hook_helper::add<hooks::serialize_join_request_message_2>("SJRM2", (void*)g_pointers->m_gta.m_serialize_join_request_message_2);
 
+		detour_hook_helper::add<hooks::start_matchmaking_find_sessions>("SMFS", (void*)g_pointers->m_gta.m_start_matchmaking_find_sessions);
+
 		detour_hook_helper::add<hooks::broadcast_net_array>("BNA", (void*)g_pointers->m_gta.m_broadcast_net_array);
 
 		detour_hook_helper::add<hooks::send_session_matchmaking_attributes>("SSMA", (void*)g_pointers->m_gta.m_send_session_matchmaking_attributes);
@@ -123,7 +125,7 @@ namespace big
 
 		detour_hook_helper::add<hooks::send_non_physical_player_data>("SNPPD", (void*)g_pointers->m_gta.m_send_non_physical_player_data);
 
-		detour_hook_helper::add<hooks::update_timecycle_keyframe_data>("UTCKD", g_pointers->m_gta.m_timecycle_keyframe_override);
+		detour_hook_helper::add<hooks::update_timecycle_keyframe_data>("UTCKD", (void*)g_pointers->m_gta.m_timecycle_keyframe_override);
 
 		detour_hook_helper::add<hooks::allocate_memory_reliable>("AMR", (void*)g_pointers->m_gta.m_allocate_memory_reliable);
 

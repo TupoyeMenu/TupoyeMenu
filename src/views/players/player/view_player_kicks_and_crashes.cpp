@@ -33,8 +33,6 @@ namespace big
 		ImGui::EndDisabled();
 
 		components::player_command_button<"smartkick">(g_player_service->get_selected());
-		ImGui::SameLine();
-		components::player_command_button<"nfkick">(g_player_service->get_selected());
 
 		components::player_command_button<"oomkick">(g_player_service->get_selected());
 		ImGui::SameLine();
@@ -46,7 +44,7 @@ namespace big
 
 #ifdef ENABLE_CRASHES
 		ImGui::SeparatorText("Crashes (shit)");
-		components::player_command_button<"slodpedcrash">(g_player_service->get_selected());
+		components::player_command_button<"invalidmodelcrash">(g_player_service->get_selected());
 		components::player_command_button<"tsecrash">(g_player_service->get_selected());
 #endif // ENABLE_CRASHES
 	}

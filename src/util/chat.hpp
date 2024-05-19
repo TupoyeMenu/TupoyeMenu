@@ -285,7 +285,7 @@ namespace big::chat
 		}
 
 #if defined(ENABLE_LUA)
-		g_lua_manager->trigger_event<menu_event::ChatMessageReceived>(self::id, message, target->id(), draw, is_team);
+		g_lua_manager->trigger_event<menu_event::ChatMessageReceived>(self::id, message, target == nullptr ? -1 : target->id(), draw, is_team);
 #endif // ENABLE_LUA
 
 		if (draw)

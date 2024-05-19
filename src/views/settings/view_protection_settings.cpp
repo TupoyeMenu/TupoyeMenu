@@ -22,6 +22,7 @@ namespace big
 		ImGui::Checkbox("Force Teleport", &g.protections.script_events.force_teleport);
 		ImGui::Checkbox("GTA Banner", &g.protections.script_events.gta_banner);
 		ImGui::Checkbox("MC Teleport", &g.protections.script_events.mc_teleport);
+		ImGui::Checkbox("Teleport To Warehouse", &g.protections.script_events.teleport_to_warehouse);
 #ifndef ENABLE_SOCIALCLUB
 		ImGui::BeginDisabled(true);
 #endif // ENABLE_SOCIALCLUB
@@ -32,6 +33,7 @@ namespace big
 		ImGui::SameLine(); components::help_marker("This feature is currently disabled, Enable `ENABLE_SOCIALCLUB` to enable.");
 #endif // ENABLE_SOCIALCLUB
 		ImGui::Checkbox("Admin Check", &g.protections.admin_check);
+		ImGui::Checkbox("Start Activity", &g.protections.script_events.start_activity);
 		ImGui::EndGroup();
 
 		ImGui::SameLine();
@@ -47,8 +49,6 @@ namespace big
 		ImGui::SameLine(); components::help_marker("This prevents any pickup from the ground such as unwanted money drops.\nAttention: Normal pickups are also no longer possible.");
 		ImGui::Checkbox("Kick Rejoin", &g.protections.kick_rejoin);
 		ImGui::Checkbox("Block Traffic Manipulation", &g.protections.stop_traffic);
-		ImGui::Checkbox("Teleport To Warehouse", &g.protections.script_events.teleport_to_warehouse);
-		ImGui::Checkbox("Start Activity", &g.protections.script_events.start_activity);
 		ImGui::EndGroup();
 
 		ImGui::SameLine();
