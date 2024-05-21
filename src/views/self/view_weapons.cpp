@@ -38,6 +38,7 @@ namespace big
 		ImGui::Checkbox("Increase C4 Limit (Max = 50)", &g.weapons.increased_c4_limit);
 		components::command_checkbox<"allowwepsinside">();
 		components::command_checkbox<"rapidfire">();
+		components::command_checkbox<"enablemk1variants">();
 
 		ImGui::EndGroup();
 		ImGui::SameLine();
@@ -89,8 +90,6 @@ namespace big
 				ImGui::EndCombo();
 			}
 		});
-
-		components::command_checkbox<"enablemk1variants">();
 
 		ImGui::EndGroup();
 

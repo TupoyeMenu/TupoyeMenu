@@ -40,7 +40,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: binary
-          path: build/TupoyeMenu.dll
+          path: |
+            build/TupoyeMenu.dll
+            build/TupoyeMenu.pdb
 
       - name: Generate Build Info
         id: var
@@ -71,7 +73,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: binary
 

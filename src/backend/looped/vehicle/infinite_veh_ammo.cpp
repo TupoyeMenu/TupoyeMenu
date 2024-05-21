@@ -36,5 +36,5 @@ namespace big
 		}
 	};
 
-	infinite_veh_ammo g_infinite_veh_ammo("infinitevehammo", "VEHICLE_INFINITE_AMMO", "VEHICLE_INFINITE_AMMO_DESC", g.vehicle.infinite_veh_ammo);
+	infinite_veh_ammo g_infinite_veh_ammo("infinitevehammo", "Vehicle Infinite Ammo", "Infinite vehicle rockets, bombs, and countermeasures", g.vehicle.infinite_veh_ammo);
 }

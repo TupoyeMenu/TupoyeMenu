@@ -129,6 +129,8 @@ namespace big
 
 		ImGui::Checkbox("Log Remote Sounds", &g.debug.logs.remote_sound_logs);
 
+		ImGui::Checkbox("Log HTTP Requests", &g.debug.logs.http_requests);
+
 		ImGui::Checkbox("Log Metrics", &g.debug.logs.metric_logs);
 
 		if (ImGui::TreeNode("Script Event Logging"))
