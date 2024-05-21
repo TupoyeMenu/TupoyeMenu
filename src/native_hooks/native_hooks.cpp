@@ -1,12 +1,6 @@
 /**
  * @file native_hooks.cpp
  * @brief Hooks to native functions.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "native_hooks.hpp"
@@ -132,6 +126,10 @@ namespace big
 		add_native_detour("maintransition"_J, NativeIndex::IS_SWITCH_TO_MULTI_FIRSTPART_FINISHED, maintransition::IS_SWITCH_TO_MULTI_FIRSTPART_FINISHED); // This hook lets you stop player-switch in "Pre-HUD Checks"
 		add_native_detour("maintransition"_J, NativeIndex::SET_FOCUS_ENTITY, maintransition::SET_FOCUS_ENTITY); // Prevets map from unloading.
 		add_native_detour("maintransition"_J, NativeIndex::HIDE_HUD_AND_RADAR_THIS_FRAME, maintransition::HIDE_HUD_AND_RADAR_THIS_FRAME); // Draw hud and radar in transition. (Doesn't work.)
+		add_native_detour("main_persistent"_J, NativeIndex::HIDE_HUD_AND_RADAR_THIS_FRAME, maintransition::HIDE_HUD_AND_RADAR_THIS_FRAME); // Draw hud and radar in transition. (Doesn't work.)
+		add_native_detour("maintransition"_J, NativeIndex::HIDE_HUD_COMPONENT_THIS_FRAME, maintransition::HIDE_HUD_COMPONENT_THIS_FRAME); // Draw hud and radar in transition. (Doesn't work.)
+		add_native_detour("main_persistent"_J, NativeIndex::HIDE_HUD_COMPONENT_THIS_FRAME, maintransition::HIDE_HUD_COMPONENT_THIS_FRAME); // Draw hud and radar in transition. (Doesn't work.)
+		add_native_detour("maintransition"_J, NativeIndex::HIDE_SCRIPTED_HUD_COMPONENT_THIS_FRAME, maintransition::HIDE_SCRIPTED_HUD_COMPONENT_THIS_FRAME); // Draw hud and radar in transition. (Doesn't work.)
 		add_native_detour("maintransition"_J, NativeIndex::ACTIVATE_FRONTEND_MENU, maintransition::ACTIVATE_FRONTEND_MENU); // Let's you controll your ped when going sp to mp.
 		add_native_detour("maintransition"_J, NativeIndex::RESTART_FRONTEND_MENU, maintransition::RESTART_FRONTEND_MENU); // Let's you controll your ped when going sp to mp.
 		add_native_detour("maintransition"_J, NativeIndex::TOGGLE_PAUSED_RENDERPHASES, maintransition::TOGGLE_PAUSED_RENDERPHASES); // Prevents the game from freezing your screen.
@@ -141,6 +139,14 @@ namespace big
 		add_native_detour("maintransition"_J, NativeIndex::SET_PLAYER_CONTROL, maintransition::SET_PLAYER_CONTROL); // Allows controll in session switch.
 		add_native_detour("maintransition"_J, NativeIndex::FREEZE_ENTITY_POSITION, maintransition::FREEZE_ENTITY_POSITION); // Allows controll in session switch.
 		add_native_detour("maintransition"_J, NativeIndex::NETWORK_RESURRECT_LOCAL_PLAYER, maintransition::NETWORK_RESURRECT_LOCAL_PLAYER); // Prevents player from teleporting after switch.
+		add_native_detour("maintransition"_J, NativeIndex::CLEAR_PED_TASKS_IMMEDIATELY, maintransition::CLEAR_PED_TASKS_IMMEDIATELY); // Prevents player stopping after player switch.
+		add_native_detour("freemode"_J, NativeIndex::CLEAR_PED_TASKS_IMMEDIATELY, maintransition::CLEAR_PED_TASKS_IMMEDIATELY); // Prevents player stopping after player switch.
+		add_native_detour("main_persistent"_J, NativeIndex::CLEAR_PED_TASKS_IMMEDIATELY, maintransition::CLEAR_PED_TASKS_IMMEDIATELY); // Prevents player stopping after player switch.
+		add_native_detour("freemode"_J, NativeIndex::CLEAR_PED_TASKS_IMMEDIATELY, maintransition::CLEAR_PED_TASKS_IMMEDIATELY); // Prevents player stopping after player switch.
+		add_native_detour("maintransition"_J,  NativeIndex::DELETE_VEHICLE, maintransition::DELETE_VEHICLE); // Don't delete our vehicle
+		add_native_detour("main_persistent"_J, NativeIndex::DELETE_VEHICLE, maintransition::DELETE_VEHICLE); // Don't delete our vehicle
+		add_native_detour("maintransition"_J,  NativeIndex::CLEAR_AREA_OF_VEHICLES, maintransition::CLEAR_AREA_OF_VEHICLES); // Don't delete our vehicle
+		add_native_detour("main_persistent"_J, NativeIndex::CLEAR_AREA_OF_VEHICLES, maintransition::CLEAR_AREA_OF_VEHICLES); // Don't delete our vehicle
 		add_native_detour("maintransition"_J, NativeIndex::GET_EVER_HAD_BAD_PACK_ORDER, maintransition::GET_EVER_HAD_BAD_PACK_ORDER); // Prevent weird reloading when using custom dlcs.
 		add_native_detour("maintransition"_J, NativeIndex::ON_ENTER_SP, maintransition::ON_ENTER_SP); // Prevent single player map from loading when going back from online.
 

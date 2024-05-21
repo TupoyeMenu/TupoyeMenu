@@ -720,6 +720,16 @@ namespace big
 			buffer->Seek(0);
 			break;
 		}
+		case eNetworkEvents::NETWORK_PTFX_EVENT:
+		{
+			if (plyr && (plyr->m_ptfx_rate_limit.process() || plyr->block_ptfx))
+			{
+				g_pointers->m_gta.m_send_event_ack(event_manager, source_player, target_player, event_index, event_handled_bitset);
+				return;
+			}
+
+			break;
+		}
 		case eNetworkEvents::EXPLOSION_EVENT:
 		{
 			if (plyr && plyr->block_explosions)

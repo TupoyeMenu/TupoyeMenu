@@ -3,6 +3,7 @@
 #include "backend/reactions/reaction.hpp"
 #include "enums.hpp"
 #include "file_manager.hpp"
+#include "renderer/alphabet_types.hpp"
 
 #include <bitset>
 #include <rage/rlSessionInfo.hpp>
@@ -857,6 +858,7 @@ namespace big
 			ImU32 button_color     = 4293353517;
 			ImU32 frame_color      = 2939499829;
 			float gui_scale        = 1.f;
+			eAlphabetType alphabet = eAlphabetType::LATIN;
 
 			ImFont* font_title     = nullptr;
 			ImFont* font_sub_title = nullptr;

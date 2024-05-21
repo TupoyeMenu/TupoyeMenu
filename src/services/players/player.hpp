@@ -78,6 +78,7 @@ namespace big
 		rate_limiter m_host_migration_rate_limit{2s, 15};
 		rate_limiter m_play_sound_rate_limit{1s, 10};
 		rate_limiter m_play_sound_rate_limit_tse{5s, 2};
+		rate_limiter m_ptfx_rate_limit{1s, 3};
 		rate_limiter m_invites_rate_limit{10s, 2};
 		rate_limiter m_radio_request_rate_limit{5s, 2};
 
@@ -103,6 +104,7 @@ namespace big
 		bool block_clone_create = false;
 		bool block_clone_sync   = false;
 		bool block_net_events   = false;
+		bool block_ptfx         = false;
 		bool log_clones         = false;
 		bool log_network_events = false;
 

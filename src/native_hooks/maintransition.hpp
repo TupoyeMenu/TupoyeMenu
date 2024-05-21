@@ -6,6 +6,8 @@
 
 #pragma once
 #include "core/enums.hpp"
+#include "core/scr_globals.hpp"
+#include "gta/enums.hpp"
 #include "gta_util.hpp"
 #include "native_hooks.hpp"
 #include "natives.hpp"
@@ -66,47 +68,54 @@ namespace big
 			if (!g.tunables.seamless_join)
 				HUD::HIDE_HUD_AND_RADAR_THIS_FRAME();
 		}
+		/**
+		 * @brief Draw hud and radar in transition.
+		 * @bug Doesn't work.
+		 */
+		inline void HIDE_HUD_COMPONENT_THIS_FRAME(rage::scrNativeCallContext* src)
+		{
+			if (!g.tunables.seamless_join)
+				HUD::HIDE_HUD_COMPONENT_THIS_FRAME(src->get_arg<int>(0));
+		}
+		/**
+		 * @brief Draw hud and radar in transition.
+		 * @bug Doesn't work.
+		 */
+		inline void HIDE_SCRIPTED_HUD_COMPONENT_THIS_FRAME(rage::scrNativeCallContext* src)
+		{
+			if (!g.tunables.seamless_join)
+				HUD::HIDE_SCRIPTED_HUD_COMPONENT_THIS_FRAME(src->get_arg<int>(0));
+		}
 
 		/**
 		 * @brief Let's you controll your ped when going sp to mp.
 		 */
 		inline void ACTIVATE_FRONTEND_MENU(rage::scrNativeCallContext* src)
 		{
-			Hash menuhash = src->get_arg<Hash>(0);
+			Hash menuhash    = src->get_arg<Hash>(0);
 			BOOL togglePause = src->get_arg<BOOL>(1);
-			int component = src->get_arg<int>(2);
+			int component    = src->get_arg<int>(2);
 			if (g.debug.logs.stupid_script_native_logs)
 				LOGF(VERBOSE, "HUD::ACTIVATE_FRONTEND_MENU({}, {}, {});", menuhash, togglePause, component);
 
-			if (g.tunables.seamless_join && menuhash != "FE_MENU_VERSION_EMPTY_NO_BACKGROUND"_J)
-				HUD::ACTIVATE_FRONTEND_MENU(menuhash, togglePause, component);
-
-			if (!g.tunables.seamless_join)
+			if (!g.tunables.seamless_join || menuhash != "FE_MENU_VERSION_EMPTY_NO_BACKGROUND"_J)
 				HUD::ACTIVATE_FRONTEND_MENU(menuhash, togglePause, component);
 		}
 
 		/**
 		 * @brief Let's you controll your ped when going sp to mp.
+		 * @note I have not seen this get called at all. Can probably be removed.
 		 */
 		inline void RESTART_FRONTEND_MENU(rage::scrNativeCallContext* src)
 		{
 			Hash menuhash = src->get_arg<Hash>(0);
-			int p1 = src->get_arg<int>(1);
+			int p1        = src->get_arg<int>(1);
 
 			if (g.debug.logs.stupid_script_native_logs)
 				LOGF(VERBOSE, "HUD::RESTART_FRONTEND_MENU({}, {});", menuhash, p1);
 
-			if (g.tunables.seamless_join)
-			{
-				if (menuhash != "FE_MENU_VERSION_EMPTY_NO_BACKGROUND"_J)
-				{
-					HUD::RESTART_FRONTEND_MENU(menuhash, p1);
-				}
-			}
-			else
-			{
+			if (!g.tunables.seamless_join || menuhash != "FE_MENU_VERSION_EMPTY_NO_BACKGROUND"_J)
 				HUD::RESTART_FRONTEND_MENU(menuhash, p1);
-			}
 		}
 
 		/**
@@ -136,9 +145,8 @@ namespace big
 		 */
 		inline void SET_ENTITY_COORDS(rage::scrNativeCallContext* src)
 		{
-			if (!g.tunables.seamless_join
-			 || *scr_globals::transition_state.as<eTransitionState*>() == eTransitionState::TRANSITION_STATE_CONFIRM_FM_SESSION_JOINING // This check is for character selection if i remember correctly.
-			 || src->get_arg<Entity>(0) != self::ped)
+			if (!g.tunables.seamless_join || *scr_globals::transition_state.as<eTransitionState*>() == eTransitionState::TRANSITION_STATE_CONFIRM_FM_SESSION_JOINING // This check is for character selection if i remember correctly.
+			    || src->get_arg<Entity>(0) != self::ped)
 				ENTITY::SET_ENTITY_COORDS(src->get_arg<Entity>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<BOOL>(7));
 		}
 
@@ -184,6 +192,53 @@ namespace big
 				NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER(src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
 		}
 
+		/**
+		 * @brief Prevents player stopping after player switch.
+		 */
+		inline void CLEAR_PED_TASKS_IMMEDIATELY(rage::scrNativeCallContext* src)
+		{
+			if (g.debug.logs.stupid_script_native_logs)
+				LOGF(VERBOSE, "TASK::CLEAR_PED_TASKS_IMMEDIATELY({});", src->get_arg<int>(0));
+
+			const auto state = *scr_globals::transition_state.as<eTransitionState*>();
+
+			if (!g.tunables.seamless_join || src->get_arg<int>(0) != self::ped || state == eTransitionState::TRANSITION_STATE_EMPTY || state == eTransitionState::TRANSITION_STATE_TERMINATE_MAINTRANSITION)
+				TASK::CLEAR_PED_TASKS_IMMEDIATELY(src->get_arg<int>(0));
+		}
+
+		/**
+		 * @brief Temporary hook to see what is going on with animations.
+		 */
+		inline void IS_ENTITY_PLAYING_ANIM(rage::scrNativeCallContext* src)
+		{
+			if (g.debug.logs.stupid_script_native_logs)
+				LOGF(VERBOSE, "ENTITY::IS_ENTITY_PLAYING_ANIM({}, {}, {}, {});", src->get_arg<int>(0), src->get_arg<const char*>(1), src->get_arg<const char*>(2), src->get_arg<int>(3));
+
+			src->set_return_value<BOOL>(ENTITY::IS_ENTITY_PLAYING_ANIM(src->get_arg<int>(0), src->get_arg<const char*>(1), src->get_arg<const char*>(2), src->get_arg<int>(3)));
+		}
+
+		/**
+		 * @brief Don't delete our vehicle
+		 */
+		inline void DELETE_VEHICLE(rage::scrNativeCallContext* src)
+		{
+			if (!g.tunables.seamless_join || (src->get_arg<Vehicle*>(0) != nullptr && *src->get_arg<Vehicle*>(0) != self::veh))
+				VEHICLE::DELETE_VEHICLE(src->get_arg<Vehicle*>(0));
+		}
+		/**
+		 * @brief Don't delete our vehicle
+		 */
+		inline void CLEAR_AREA_OF_VEHICLES(rage::scrNativeCallContext* src)
+		{
+			if (g.debug.logs.stupid_script_native_logs)
+				LOGF(VERBOSE, "MISC::CLEAR_AREA_OF_VEHICLES({}, {}, {}, {}, {}, {}, {}, {}, {}, {});", src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<BOOL>(7), src->get_arg<BOOL>(8), src->get_arg<BOOL>(9), src->get_arg<Any>(10));
+
+			const auto state = *scr_globals::transition_state.as<eTransitionState*>();
+
+			if (!g.tunables.seamless_join || state == eTransitionState::TRANSITION_STATE_EMPTY || state == eTransitionState::TRANSITION_STATE_TERMINATE_MAINTRANSITION)
+				MISC::CLEAR_AREA_OF_VEHICLES(src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<BOOL>(7), src->get_arg<BOOL>(8), src->get_arg<BOOL>(9), src->get_arg<Any>(10));
+		}
+
 		//
 		// PLAYER_SWITCH END
 		//
@@ -206,7 +261,7 @@ namespace big
 			if (g.debug.logs.stupid_script_native_logs)
 				LOG(VERBOSE) << "DLC::ON_ENTER_SP();";
 
-			if(!g.tunables.dont_unload_online_maps)
+			if (!g.tunables.dont_unload_online_maps)
 				DLC::ON_ENTER_SP();
 		}
 	}

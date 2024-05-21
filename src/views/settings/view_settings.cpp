@@ -1,9 +1,11 @@
 
 #include "core/data/language_codes.hpp"
 #include "pointers.hpp"
+#include "renderer/alphabet_types.hpp"
 #include "renderer/renderer.hpp"
 #include "script_mgr.hpp"
 #include "thread_pool.hpp"
+#include "core/data/alphabet_types.hpp"
 #include "views/view.hpp"
 
 namespace big
@@ -65,6 +67,23 @@ namespace big
 				}
 			}
 
+			ImGui::EndCombo();
+		}
+
+		if (ImGui::BeginCombo("Menu Alphabet", alphabet_types[(int)g.window.alphabet]))
+		{
+			for (int i = 1; i < alphabet_types.size(); i++)
+			{
+				if (ImGui::Selectable(alphabet_types[i], i == (int)g.window.alphabet))
+				{
+					g.window.alphabet = (eAlphabetType)i;
+					g_renderer.get_font_mgr().update_required_alphabet_type(g.window.alphabet);
+				}
+				if (i == (int)g.window.alphabet)
+				{
+					ImGui::SetItemDefaultFocus();
+				}
+			}
 			ImGui::EndCombo();
 		}
 

@@ -149,8 +149,7 @@ namespace big
 			if (g.session_browser.pool_filter_enabled)
 			{
 				ImGui::SameLine();
-				static const std::string pool_filter_options = std::string("Normal") + '\0' + std::string("Bad Sport");
-				ImGui::Combo("###pooltype", &g.session_browser.pool_filter, pool_filter_options.c_str());
+				ImGui::Combo("###pooltype", &g.session_browser.pool_filter, "Normal\0Bad Sport\0");
 			}
 
 			ImGui::TreePop();

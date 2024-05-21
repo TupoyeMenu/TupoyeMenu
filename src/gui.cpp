@@ -69,7 +69,7 @@ namespace big
 
 		g_gui = this;
 		g_renderer.rescale(g.window.gui_scale);
-		g_renderer.get_font_mgr().update_required_alphabet_type(eAlphabetType::LATIN);
+		g_renderer.get_font_mgr().update_required_alphabet_type(g.window.alphabet);
 	}
 
 	gui::~gui()
