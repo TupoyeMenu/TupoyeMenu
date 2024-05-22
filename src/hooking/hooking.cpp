@@ -40,8 +40,6 @@ namespace big
 
 		detour_hook_helper::add<hooks::get_label_text>("GLT", (void*)g_pointers->m_gta.m_get_label_text);
 
-		detour_hook_helper::add<hooks::write_player_game_state_data_node>("WPGSDN", (void*)g_pointers->m_gta.m_write_player_game_state_data_node);
-
 		detour_hook_helper::add<hooks::gta_thread_start>("GTS", (void*)g_pointers->m_gta.m_gta_thread_start);
 		detour_hook_helper::add<hooks::gta_thread_kill>("GTK", (void*)g_pointers->m_gta.m_gta_thread_kill);
 		detour_hook_helper::add<hooks::init_native_tables>("INT", (void*)g_pointers->m_gta.m_init_native_tables);
@@ -61,7 +59,6 @@ namespace big
 		detour_hook_helper::add<hooks::can_apply_data>("CAD", (void*)g_pointers->m_gta.m_can_apply_data);
 
 		detour_hook_helper::add<hooks::get_network_event_data>("GNED", (void*)g_pointers->m_gta.m_get_network_event_data);
-		detour_hook_helper::add<hooks::write_player_gamer_data_node>("WPGDN", (void*)g_pointers->m_gta.m_write_player_gamer_data_node);
 
 		detour_hook_helper::add<hooks::invalid_decal>("IDC", (void*)g_pointers->m_gta.m_invalid_decal_crash);
 		detour_hook_helper::add<hooks::task_parachute_object>("TPO", (void*)g_pointers->m_gta.m_task_parachute_object);
@@ -104,13 +101,8 @@ namespace big
 
 		detour_hook_helper::add<hooks::receive_pickup>("RPI", (void*)g_pointers->m_gta.m_receive_pickup);
 
-		detour_hook_helper::add<hooks::write_player_camera_data_node>("WPCDN", (void*)g_pointers->m_gta.m_write_player_camera_data_node);
-
 		detour_hook_helper::add<hooks::send_player_card_stats>("SPCS", (void*)g_pointers->m_gta.m_send_player_card_stats);
 		detour_hook_helper::add<hooks::serialize_stats>("SS", (void*)g_pointers->m_gta.m_serialize_stats);
-
-		detour_hook_helper::add<hooks::write_player_creation_data_node>("WPCDN", (void*)g_pointers->m_gta.m_write_player_creation_data_node);
-		detour_hook_helper::add<hooks::write_player_appearance_data_node>("WPADN", (void*)g_pointers->m_gta.m_write_player_appearance_data_node);
 
 		detour_hook_helper::add<hooks::get_model_info>("GMI", (void*)g_pointers->m_gta.m_get_model_info);
 
@@ -145,8 +137,9 @@ namespace big
 
 		detour_hook_helper::add<hooks::searchlight_crash>("SLC", (void*)g_pointers->m_gta.m_searchlight_crash);
 
-		detour_hook_helper::add<hooks::write_physical_script_game_state_data_node>("WPSGSDN", (void*)g_pointers->m_gta.m_write_physical_script_game_state_data_node);
-  
+		detour_hook_helper::add<hooks::write_node_data>("WND", g_pointers->m_gta.m_write_node_data);
+		detour_hook_helper::add<hooks::can_send_node_to_player>("CSNTP", g_pointers->m_gta.m_can_send_node_to_player);
+		detour_hook_helper::add<hooks::write_node>("WN", g_pointers->m_gta.m_write_node);
 		g_hooking = this;
 	}
 

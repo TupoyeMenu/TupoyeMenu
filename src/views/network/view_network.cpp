@@ -203,6 +203,9 @@ namespace big
 		ImGui::SameLine();
 		ImGui::Checkbox("Fix Vehicle", &g.session.vehicle_fix_all);
 
+		components::command_checkbox<"harass">();
+		ImGui::Checkbox("Spam Killfeed", &g.session.spam_killfeed);
+
 		bool_command whitelist_friends("trustfriends",
 		    "Trust friends",
 		    "Friends won't be flagged as modders or taken actions by reactions",

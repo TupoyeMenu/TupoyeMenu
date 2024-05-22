@@ -305,7 +305,7 @@ namespace rage
 			float max   = (1 << length) - 1;
 			int integer = (int)((value / divisor) * max);
 
-			Write<int>(length, integer);
+			Write<int>(integer, length);
 		}
 
 		inline float ReadSignedFloat(int length, float divisor)
@@ -321,7 +321,7 @@ namespace rage
 			float max   = (1 << (length - 1)) - 1;
 			int integer = (int)((value / divisor) * max);
 
-			WriteSigned<int>(length, integer);
+			WriteSigned<int>(integer, length);
 		}
 
 	public:

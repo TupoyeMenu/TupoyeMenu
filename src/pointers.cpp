@@ -188,11 +188,6 @@ namespace big
 			g_pointers->m_gta.m_write_bitbuf_array = ptr.add(1).rip().as<decltype(gta_pointers::m_write_bitbuf_array)>();
 		});
 
-		// Write Player Game State Data Node
-		main_batch.add("WPGSDN", "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 54 41 55 41 56 41 57 48 83 EC 30 0F B7 81", [](memory::handle ptr) {
-			g_pointers->m_gta.m_write_player_game_state_data_node = ptr.as<functions::write_player_game_state_data_node>();
-		});
-
 		// Ptr To Handle
 		main_batch.add("PTH", "48 8B F9 48 83 C1 10 33 DB", [](memory::handle ptr) {
 			g_pointers->m_gta.m_ptr_to_handle = ptr.sub(0x15).as<decltype(gta_pointers::m_ptr_to_handle)>();
@@ -236,11 +231,6 @@ namespace big
 		// Give Pickup Reward
 		main_batch.add("GPR", "48 8B C8 33 C0 48 85 C9 74 0A 44 8B C3 8B D7 E8", [](memory::handle ptr) {
 			g_pointers->m_gta.m_give_pickup_rewards = ptr.sub(0x28).as<decltype(gta_pointers::m_give_pickup_rewards)>();
-		});
-
-		// Write Player Gamer Data Node
-		main_batch.add("WPGDN", "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC 20 48 81 C1 ? ? ? ? 48 8B DA E8", [](memory::handle ptr) {
-			g_pointers->m_gta.m_write_player_gamer_data_node = ptr.as<PVOID>();
 		});
 
 		// Receive Net Message
@@ -626,11 +616,6 @@ namespace big
 			g_pointers->m_gta.m_receive_pickup = ptr.as<PVOID>();
 		});
 
-		// Write Player Camera Data Node
-		main_batch.add("WPCDN", "48 8B C4 48 89 58 20 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 B0 48 81 EC 50 01 00 00 4C", [](memory::handle ptr) {
-			g_pointers->m_gta.m_write_player_camera_data_node = ptr.as<PVOID>();
-		});
-
 		// Send Player Card Stats
 		main_batch.add("SPCS", "48 89 5C 24 08 57 48 83 EC 30 48 83 64 24 20 00 48 8B DA 41", [](memory::handle ptr) {
 			g_pointers->m_gta.m_send_player_card_stats = ptr.as<PVOID>();
@@ -644,16 +629,6 @@ namespace big
 		// Serialize Stats
 		main_batch.add("SS", "48 89 5C 24 08 48 89 74 24 10 48 89 7C 24 20 55 41 54 41 55 41 56 41 57 48 8B EC 48 83 EC 50 45", [](memory::handle ptr) {
 			g_pointers->m_gta.m_serialize_stats = ptr.as<PVOID>();
-		});
-
-		// Write Player Creation Data Node
-		main_batch.add("WPCDN", "48 83 EC 38 48 8B 81 F0", [](memory::handle ptr) {
-			g_pointers->m_gta.m_write_player_creation_data_node = ptr.as<PVOID>();
-		});
-
-		// Write Player Appearance Data Node
-		main_batch.add("WPADN", "48 8B C4 48 89 50 10 48 89 48 08 53", [](memory::handle ptr) {
-			g_pointers->m_gta.m_write_player_appearance_data_node = ptr.as<PVOID>();
 		});
 
 		// Allow Weapons In Vehicle
@@ -684,7 +659,7 @@ namespace big
 
 		// Prop Pool
 		main_batch.add("PRP", "48 8B 05 ? ? ? ? 0F B7 50 10 48 8B 05", [](memory::handle ptr) {
-			g_pointers->m_gta.m_prop_pool   = ptr.add(3).rip().as<GenericPool**>();
+			g_pointers->m_gta.m_prop_pool = ptr.add(3).rip().as<GenericPool**>();
 		});
 
 		// Vehicle Pool
@@ -908,8 +883,8 @@ namespace big
 
 		// ERROR message box
 		main_batch.add("E0MB", "E8 ? ? ? ? 33 F6 EB 0F", [](memory::handle ptr) {
-			ptr = ptr.add(1).rip();
-			g_pointers->m_gta.m_error_message_box = ptr.add(7).rip().as<PVOID>();
+			ptr                                     = ptr.add(1).rip();
+			g_pointers->m_gta.m_error_message_box   = ptr.add(7).rip().as<PVOID>();
 			g_pointers->m_gta.m_error_message_box_2 = ptr.as<PVOID>();
 		});
 
@@ -996,15 +971,29 @@ namespace big
 			g_pointers->m_gta.m_format_int = ptr.as<PVOID>();
 		});
 
-		// Write Physical Script Game State Data Node
-		main_batch.add("WPSGSDN", "48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 41 56 41 57 48 83 EC 20 4C 8D B1 D0 FE", [](memory::handle ptr) {
-			g_pointers->m_gta.m_write_physical_script_game_state_data_node = ptr.as<PVOID>();
+		// Write Node Data
+		main_batch.add("WND", "48 8B 89 A8 00 00 00 4C 8B 11 49 FF 62 10", [](memory::handle ptr) {
+			g_pointers->m_gta.m_write_node_data = ptr.as<PVOID>();
+		});
+		// Can Send Node To Player
+		main_batch.add("CSNTP", "44 8B C3 FF 90 B0 00 00 00", [](memory::handle ptr) {
+			g_pointers->m_gta.m_can_send_node_to_player = ptr.sub(0x2E).as<PVOID>();
+		});
+
+		// Write Node
+		main_batch.add("WN", "49 89 43 C8 E8 E2 FB 50 00", [](memory::handle ptr) {
+			g_pointers->m_gta.m_write_node = ptr.sub(0x49).as<PVOID>();
+		});
+
+		// Get Sector Data
+		main_batch.add("GSD", "40 53 48 83 EC 20 F3 0F 10 59 08", [](memory::handle ptr) {
+			g_pointers->m_gta.m_get_sector_data = ptr.as<functions::get_sector_data>();
 		});
 
 		// Searchlight Crash
-        	main_batch.add("SLC", "0F 29 70 E8 0F 29 78 D8 48 8B F9 48 8B CA", [](memory::handle ptr) {
+		main_batch.add("SLC", "0F 29 70 E8 0F 29 78 D8 48 8B F9 48 8B CA", [](memory::handle ptr) {
 			g_pointers->m_gta.m_searchlight_crash = ptr.sub(0x1E).as<PVOID>();
-			g_pointers->m_gta.m_get_searchlight = ptr.add(0x28).rip().as<functions::get_searchlight>();
+			g_pointers->m_gta.m_get_searchlight   = ptr.add(0x28).rip().as<functions::get_searchlight>();
 		});
 
 		// Vehicle Allocator
@@ -1030,7 +1019,7 @@ namespace big
 		memory::batch socialclub_batch;
 		// Presence Data
 		// Update instructions: Scan 48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 41 56 41 57 48 83 EC 40 41 8B E9 and xref it to get to the vtable. Xref the vtable and generate a new signature
-		socialclub_batch.add("PD",  "48 8D 05 ? ? ? ? 48 8B F9 48 89 01 48 83 C1 08 E8 ? ? ? ? 33 C0", [](memory::handle ptr) {
+		socialclub_batch.add("PD", "48 8D 05 ? ? ? ? 48 8B F9 48 89 01 48 83 C1 08 E8 ? ? ? ? 33 C0", [](memory::handle ptr) {
 			auto presence_data_vft = ptr.add(3).rip().as<PVOID*>();
 			g_pointers->m_sc.m_update_presence_attribute_int = (functions::update_presence_attribute_int)presence_data_vft[1];
 			g_pointers->m_sc.m_update_presence_attribute_string = (functions::update_presence_attribute_string)presence_data_vft[3];

@@ -178,6 +178,8 @@ namespace big
 			ImGui::SameLine();
 			components::help_marker("Also brings the player out of godmode if the event isn't blocked");
 
+			ImGui::Checkbox("Spam Killfeed", &g_player_service->get_selected()->spam_killfeed);
+
 			ImGui::TreePop();
 		}
 
