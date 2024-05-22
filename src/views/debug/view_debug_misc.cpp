@@ -124,14 +124,13 @@ namespace big
 		ImGui::Checkbox("Log Stupid Native Hooks", &g.debug.logs.stupid_script_native_logs);
 
 		static const char* options[]{"Off", "All", "Filters"};
+		ImGui::Combo("Log Metrics", (int*)&g.debug.logs.metric_logs, options, IM_ARRAYSIZE(options));
 		ImGui::Combo("Log Packets", (int*)&g.debug.logs.packet_logs, options, IM_ARRAYSIZE(options));
 		ImGui::Checkbox("Log Net Events", &g.debug.logs.net_event_logs);
 
 		ImGui::Checkbox("Log Remote Sounds", &g.debug.logs.remote_sound_logs);
 
 		ImGui::Checkbox("Log HTTP Requests", &g.debug.logs.http_requests);
-
-		ImGui::Checkbox("Log Metrics", &g.debug.logs.metric_logs);
 
 		if (ImGui::TreeNode("Script Event Logging"))
 		{

@@ -12,6 +12,8 @@
 #include "pointers.hpp"
 #include "natives.hpp"
 
+#include <random>
+
 namespace big::math
 {
 	inline float deg_to_rad(float deg)
@@ -72,5 +74,27 @@ namespace big::math
 		    7);
 		SHAPETEST::GET_SHAPE_TEST_RESULT(ray, &hit, &end_coords, &surface_normal, &hit_entity);
 		return end_coords;
+	}
+
+	// [0, max_value)
+	template<typename T = int>
+	inline T rand(T max_value)
+	{
+		static std::random_device seed;
+		static std::mt19937 gen{seed()};
+		std::uniform_int_distribution<T> dist{0, max_value - 1};
+
+		return dist(gen);
+	}
+
+	// [min_value, max_value]
+	template<typename T = int>
+	inline T rand(T min_value, T max_value)
+	{
+		static std::random_device seed;
+		static std::mt19937 gen{seed()};
+		std::uniform_int_distribution<T> dist{min_value, max_value};
+
+		return dist(gen);
 	}
 }

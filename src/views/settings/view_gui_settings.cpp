@@ -79,6 +79,8 @@ namespace big
 		ImGui::EndGroup();
 
 		ImGui::Checkbox("Format Money", &g.window.gui.format_money);
+		ImGui::SameLine();
+		ImGui::Checkbox("Show Metric Warnings", &g.notifications.warn_metric);
 
 		if (g.window.ingame_overlay.show_indicators)
 		{

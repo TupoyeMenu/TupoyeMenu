@@ -63,7 +63,6 @@ namespace big
 		detour_hook_helper::add<hooks::get_network_event_data>("GNED", (void*)g_pointers->m_gta.m_get_network_event_data);
 		detour_hook_helper::add<hooks::write_player_gamer_data_node>("WPGDN", (void*)g_pointers->m_gta.m_write_player_gamer_data_node);
 
-		detour_hook_helper::add<hooks::invalid_mods_crash_detour>("IMCD", (void*)g_pointers->m_gta.m_invalid_mods_crash_detour);
 		detour_hook_helper::add<hooks::invalid_decal>("IDC", (void*)g_pointers->m_gta.m_invalid_decal_crash);
 		detour_hook_helper::add<hooks::task_parachute_object>("TPO", (void*)g_pointers->m_gta.m_task_parachute_object);
 		detour_hook_helper::add<hooks::task_ambient_clips>("TAC", (void*)g_pointers->m_gta.m_task_ambient_clips);
@@ -121,8 +120,6 @@ namespace big
 
 		detour_hook_helper::add<hooks::task_fall_constructor>("TFC", g_pointers->m_gta.m_taskfall_constructor);
 
-		detour_hook_helper::add<hooks::log_error_message_box>("E0MBH", (void*)g_pointers->m_gta.m_error_message_box);
-
 		detour_hook_helper::add<hooks::send_non_physical_player_data>("SNPPD", (void*)g_pointers->m_gta.m_send_non_physical_player_data);
 
 		detour_hook_helper::add<hooks::update_timecycle_keyframe_data>("UTCKD", (void*)g_pointers->m_gta.m_timecycle_keyframe_override);
@@ -132,6 +129,9 @@ namespace big
 		detour_hook_helper::add<hooks::render_ped>("RP", (void*)g_pointers->m_gta.m_render_ped);
 		detour_hook_helper::add<hooks::render_entity>("RE", (void*)g_pointers->m_gta.m_render_entity);
 		detour_hook_helper::add<hooks::render_big_ped>("RBP", (void*)g_pointers->m_gta.m_render_big_ped);
+
+		detour_hook_helper::add<hooks::log_error_message_box>("E0MBH", g_pointers->m_gta.m_error_message_box);
+		detour_hook_helper::add<hooks::log_error_message_box_2>("E0MBH2", g_pointers->m_gta.m_error_message_box_2);
 
 		detour_hook_helper::add<hooks::read_bits_single>("RBS", (void*)g_pointers->m_gta.m_read_bits_single);
 

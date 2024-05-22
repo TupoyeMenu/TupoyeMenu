@@ -116,6 +116,11 @@ namespace ImGui
 		    true,
 		    style.FrameRounding);
 
+		if (*k < 0 || *k > VK_RMENU)
+		{
+			*k = 0;
+		}
+
 		if (*k != 0 && g.ActiveId != id)
 		{
 			strcpy_s(buf_display, key_names[*k]);

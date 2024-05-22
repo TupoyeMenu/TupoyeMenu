@@ -16,29 +16,27 @@ namespace big::protection
 		return false;
 	}
 
-	constexpr auto crash_peds = {"slod_human"_J, "slod_small_quadped"_J, "slod_large_quadped"_J};
+	static const std::unordered_set<uint32_t> crash_peds = {"slod_human"_J, "slod_small_quadped"_J, "slod_large_quadped"_J};
 	bool is_crash_ped(rage::joaat_t model)
 	{
-		for (auto iterator : crash_peds)
-			if (iterator == model)
-				return true;
+		if (crash_peds.contains(model))
+			return true;
 		if (!model_info::is_model_of_type(model, eModelType::Ped, eModelType::OnlineOnlyPed))
 			return true;
 		return false;
 	}
 
-	constexpr auto crash_vehicles = {"arbitergt"_J, "astron2"_J, "cyclone2"_J, "ignus2"_J, "s95"_J};
+	static const std::unordered_set<uint32_t> crash_vehicles = {"arbitergt"_J, "astron2"_J, "cyclone2"_J, "ignus2"_J, "s95"_J};
 	bool is_crash_vehicle(rage::joaat_t model)
 	{
-		for (auto iterator : crash_vehicles)
-			if (iterator == model)
-				return true;
+		if (crash_vehicles.contains(model))
+			return true;
 		if (!model_info::is_model_of_type(model, eModelType::Vehicle, eModelType::Unk133))
 			return true;
 		return false;
 	}
 
-	constexpr auto valid_player_models = {
+	static const std::unordered_set<uint32_t> valid_player_models = {
 	    "mp_m_freemode_01"_J,
 	    "mp_f_freemode_01"_J,
 	    "u_m_m_filmdirector"_J,
@@ -79,9 +77,6 @@ namespace big::protection
 	};
 	bool is_valid_player_model(rage::joaat_t model)
 	{
-		for (auto iterator : valid_player_models)
-			if (iterator == model)
-				return true;
-		return false;
+		return valid_player_models.contains(model);
 	}
 }

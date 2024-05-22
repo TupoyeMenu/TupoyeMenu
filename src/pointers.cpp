@@ -72,11 +72,6 @@ namespace big
 			g_pointers->m_gta.m_get_native_handler        = ptr.add(12).rip().as<functions::get_native_handler>();
 		});
 
-		// Fix Vectors
-		main_batch.add("FV", "83 79 18 00 48 8B D1 74 4A FF 4A 18 48 63 4A 18 48 8D 41 04 48 8B 4C CA", [](memory::handle ptr) {
-			g_pointers->m_gta.m_fix_vectors = ptr.as<functions::fix_vectors>();
-		});
-
 		// Script Threads
 		main_batch.add("ST", "45 33 F6 8B E9 85 C9 B8", [](memory::handle ptr) {
 			g_pointers->m_gta.m_script_threads = ptr.sub(4).rip().sub(8).as<decltype(gta_pointers::m_script_threads)>();
@@ -339,11 +334,6 @@ namespace big
 			g_pointers->m_gta.m_fipackfile_close_archive = ptr.add(0xD).rip().as<functions::fipackfile_close_archive>();
 			g_pointers->m_gta.m_fipackfile_open_archive  = ptr.add(0x34).rip().as<functions::fipackfile_open_archive>();
 			g_pointers->m_gta.m_fipackfile_mount         = ptr.add(0x47).rip().as<functions::fipackfile_mount>();
-		});
-
-		// Invalid Mods Crash Detour
-		main_batch.add("IMCD", "E8 ? ? ? ? 40 88 7C 24 ? 49 89 9C 24", [](memory::handle ptr) {
-			g_pointers->m_gta.m_invalid_mods_crash_detour = ptr.add(1).rip().as<PVOID>();
 		});
 
 		// Send Chat Ptr
@@ -917,8 +907,10 @@ namespace big
 		});
 
 		// ERROR message box
-		main_batch.add("E0MB", "E8 ? ? ? ? CC FF 15", [](memory::handle ptr) {
-			g_pointers->m_gta.m_error_message_box = ptr.add(1).rip().as<PVOID>();
+		main_batch.add("E0MB", "E8 ? ? ? ? 33 F6 EB 0F", [](memory::handle ptr) {
+			ptr = ptr.add(1).rip();
+			g_pointers->m_gta.m_error_message_box = ptr.add(7).rip().as<PVOID>();
+			g_pointers->m_gta.m_error_message_box_2 = ptr.as<PVOID>();
 		});
 
 		// Get title caption for ERROR message box
@@ -1012,12 +1004,12 @@ namespace big
 		// Searchlight Crash
         	main_batch.add("SLC", "0F 29 70 E8 0F 29 78 D8 48 8B F9 48 8B CA", [](memory::handle ptr) {
 			g_pointers->m_gta.m_searchlight_crash = ptr.sub(0x1E).as<PVOID>();
-			g_pointers->m_gta.m_get_unk_weapon = ptr.add(0x28).rip().as<functions::get_unk_weapon>();
+			g_pointers->m_gta.m_get_searchlight = ptr.add(0x28).rip().as<functions::get_searchlight>();
 		});
 
-		// Clone Create Pool
-		main_batch.add("CCP", "48 8B 0D ? ? ? ? 45 33 C9 BA ? ? ? ? 41", [](memory::handle ptr) {
-			g_pointers->m_gta.m_clone_create_pool = ptr.add(3).rip().as<GenericPool**>();
+		// Vehicle Allocator
+		main_batch.add("VA", "48 8B 0D ? ? ? ? 45 33 C9 BA ? ? ? ? 41", [](memory::handle ptr) {
+			g_pointers->m_gta.m_vehicle_allocator = ptr.add(3).rip().as<GenericPool**>();
 		});
 
 		// Game Checksum Data

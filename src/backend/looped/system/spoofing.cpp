@@ -2,13 +2,12 @@
 #include "core/scr_globals.hpp"
 #include "gta_util.hpp"
 #include "natives.hpp"
+#include "util/math.hpp"
 
 #include <network/CCommunications.hpp>
 #include <network/Network.hpp>
 #include <script/globals/GPBD_FM.hpp>
 #include <script/globals/GlobalPlayerBD.hpp>
-
-#include <random>
 
 namespace big
 {
@@ -20,12 +19,7 @@ namespace big
 			uint64_t host_token;
 			g_pointers->m_gta.m_generate_uuid(&host_token);
 
-			// TODO: Wait until https://github.com/YimMenu/YimMenu/pull/3146 is merged and switch this to a template function.
-			static std::random_device seed;
-			static std::mt19937 gen{seed()};
-			std::uniform_int_distribution<uint64_t> dist{100000000, 10000000000};
-
-			host_token = g.session.force_session_host ? (dist(gen)) : host_token;
+			host_token = g.session.force_session_host ? math::rand<uint64_t>(100000000000, 10000000000000) : host_token;
 
 			*g_pointers->m_gta.m_host_token = host_token;
 

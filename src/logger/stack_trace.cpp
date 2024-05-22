@@ -1,13 +1,3 @@
-/**
- * @file stack_trace.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "stack_trace.hpp"
 
 #include "gta/script_thread.hpp"
@@ -40,6 +30,9 @@ namespace big
 		std::lock_guard lock(m);
 
 		m_totally_not_exception_info = totally_not_exception_info;
+
+		m_dump.str("");
+		m_dump.clear();
 
 		m_dump << exception_code_to_string(totally_not_exception_info->ExceptionRecord->ExceptionCode) << '\n';
 
@@ -87,7 +80,7 @@ namespace big
 			{
 				auto mod_info = module_info(table_entry->FullDllName.Buffer, table_entry->DllBase);
 
-				m_dump << mod_info.m_path.filename().string() << " Base Address: " << HEX_TO_UPPER(mod_info.m_base)
+				m_dump << mod_info.m_name << " Base Address: " << HEX_TO_UPPER(mod_info.m_base)
 				       << " Size: " << mod_info.m_size << '\n';
 
 				m_modules.emplace_back(std::move(mod_info));
@@ -138,29 +131,39 @@ namespace big
 
 		for (size_t i = 0; i < m_frame_pointers.size() && m_frame_pointers[i]; ++i)
 		{
-			const auto addr = m_frame_pointers[i];
+			const auto addr        = m_frame_pointers[i];
+			const auto module_info = get_module_by_address(addr);
 
 			m_dump << "\n[" << i << "]\t";
 			if (SymFromAddr(GetCurrentProcess(), addr, &displacement64, symbol))
 			{
 				if (SymGetLineFromAddr64(GetCurrentProcess(), addr, &displacement, &line))
 				{
-					m_dump << line.FileName << " L: " << line.LineNumber << " " << std::string_view(symbol->Name, symbol->NameLen);
+					m_dump << line.FileName << " L: " << line.LineNumber << ' ' << std::string_view(symbol->Name, symbol->NameLen);
 
 					continue;
 				}
-				const auto module_info = get_module_by_address(addr);
+				
+				if (module_info)
+				{
+					m_dump << module_info->m_name << ' ' << std::string_view(symbol->Name, symbol->NameLen);
 
-				if (module_info->m_base == (uint64_t)GetModuleHandle(0))
-					m_dump << module_info->m_path.filename().string() << " " << std::string_view(symbol->Name, symbol->NameLen) << " ("
-					       << module_info->m_path.filename().string() << "+" << HEX_TO_UPPER(addr - module_info->m_base) << ")";
-				else
-					m_dump << module_info->m_path.filename().string() << " " << std::string_view(symbol->Name, symbol->NameLen);
+					continue;
+				}
+
+				m_dump << HEX_TO_UPPER(addr) << ' ' << std::string_view(symbol->Name, symbol->NameLen);
 
 				continue;
 			}
-			const auto module_info = get_module_by_address(addr);
-			m_dump << module_info->m_path.filename().string() << "+" << HEX_TO_UPPER(addr - module_info->m_base) << " " << HEX_TO_UPPER(addr);
+			
+			if (module_info)
+			{
+				m_dump << module_info->m_name << '+' << HEX_TO_UPPER(addr - module_info->m_base) << ' ' << HEX_TO_UPPER(addr);
+				
+				continue;
+			}
+
+			m_dump << HEX_TO_UPPER(addr);
 		}
 	}
 
@@ -177,6 +180,7 @@ namespace big
 		if (m_totally_not_exception_info->ExceptionRecord->ExceptionCode == msvc_exception_code)
 		{
 			m_dump
+			    << '\n'
 			    << reinterpret_cast<const std::exception*>(m_totally_not_exception_info->ExceptionRecord->ExceptionInformation[1])->what() << '\n';
 		}
 	}
