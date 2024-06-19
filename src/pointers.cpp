@@ -31,18 +31,14 @@ namespace big
 		});
 
 		// Ocean Quads
-		main_batch.add("OQ", "74 41 4C 8B 05 ? ? ?", [](memory::handle ptr) {
+		main_batch.add("OQ", "74 41 4C 8B 05", [](memory::handle ptr) {
 			g_pointers->m_gta.m_ocean_quads = ptr.add(5).rip().as<uint64_t>();
-		});
-
-		// Gravity Level
-		main_batch.add("GL", "48 8D 0D ? ? ? ? F3 0F 10 04 81 F3 0F 11 05", [](memory::handle ptr) {
-			g_pointers->m_gta.m_gravity_level = ptr.add(3).rip().as<float*>();
 		});
 
 		// Set Gravity Level
 		main_batch.add("SGL", "48 83 EC ? 83 F9 ? 77 ? 48 63 C1 48 8D 0D", [](memory::handle ptr) {
 			g_pointers->m_gta.m_set_gravity_level = ptr.as<functions::set_gravity_level>();
+			g_pointers->m_gta.m_gravity_level = ptr.add(15).rip().as<float*>();
 		});
 
 		// Game State

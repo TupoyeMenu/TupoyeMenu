@@ -81,6 +81,11 @@ namespace big
 		ImGui::Checkbox("Seamless Join", &g.tunables.seamless_join);
 		ImGui::SameLine();
 		components::help_marker("Allows you move freely while in session transition.");
+		ImGui::Checkbox("Fast Join", &g.session.fast_join);
+		ImGui::SameLine();
+		components::help_marker("This WILL break jobs");
+
+
 
 		ImGui::Checkbox("Don't unload online maps", &g.tunables.dont_unload_online_maps);
 		ImGui::SameLine();
@@ -183,12 +188,6 @@ namespace big
 		}
 		ImGui::SameLine();
 		components::help_marker("This might break freemode missions and interiors. Use with caution");
-
-		ImGui::SameLine();
-
-		ImGui::Checkbox("Fast Join", &g.session.fast_join);
-		ImGui::SameLine();
-		components::help_marker("This WILL break jobs");
 
 		ImGui::SeparatorText("All Players");
 		ImGui::Checkbox("Off The Radar", &g.session.off_radar_all);

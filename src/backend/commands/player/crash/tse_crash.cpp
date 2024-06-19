@@ -17,6 +17,9 @@ namespace big
 			return CommandAccessLevel::ADMIN;
 		}
 
+		/**
+		 * @todo Fix crashing yourself every time you use this.
+		 */
 		virtual void execute(player_ptr player, const command_arguments& _args, const std::shared_ptr<command_context> ctx) override
 		{
 			int64_t args1[] = { (int64_t)eRemoteEvent::Crash, (int64_t)self::id };
@@ -27,12 +30,6 @@ namespace big
 
 			int64_t args3[] = { (int64_t)eRemoteEvent::Crash3, (int64_t)self::id, -4640169, (int64_t)NAN, (int64_t)NAN, (int64_t)NAN, -36565476, -53105203}; // No idea if it works or not.
 			g_pointers->m_gta.m_trigger_script_event(1, args3, sizeof(args3) / sizeof(args3[0]), 1 << player->id(), (int)eRemoteEvent::Crash3);
-
-			for(int i; i < 32; i++)
-			{
-				int64_t args5[] = { (int64_t)eRemoteEvent::TSECommand, (int64_t)self::id, (int)eRemoteEvent::TSECommandSound, math::rand(9999) }; // No idea if it works or not.
-				g_pointers->m_gta.m_trigger_script_event(1, args5, sizeof(args5) / sizeof(args5[0]), 1 << player->id(), (int)eRemoteEvent::Crash3);
-			}
 
 			int64_t args6[] = { (int64_t)eRemoteEvent::MCTeleport, (int64_t)self::id, rand() % INT32_MAX, rand() % INT32_MAX };
 			g_pointers->m_gta.m_trigger_script_event(1, args6, sizeof(args6) / sizeof(args6[0]), 1 << player->id(), (int)eRemoteEvent::MCTeleport);

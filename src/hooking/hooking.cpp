@@ -128,6 +128,7 @@ namespace big
 		detour_hook_helper::add<hooks::read_bits_single>("RBS", (void*)g_pointers->m_gta.m_read_bits_single);
 
 		detour_hook_helper::add<hooks::get_dlc_hash>("GDH", (void*)g_pointers->m_gta.m_get_dlc_hash);
+		detour_hook_helper::add<hooks::get_pool_type>("GPT", (void*)g_pointers->m_gta.m_get_pool_type);
 
 		detour_hook_helper::add<hooks::received_clone_remove>("RCR", (void*)g_pointers->m_gta.m_received_clone_remove);
 

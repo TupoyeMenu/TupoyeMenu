@@ -138,7 +138,7 @@ namespace big
 			}
 		}
 
-		components::small_text("Start New Script");
+		ImGui::SeparatorText("Start New Script");
 
 		if (ImGui::BeginCombo("Script", selected_script))
 		{
