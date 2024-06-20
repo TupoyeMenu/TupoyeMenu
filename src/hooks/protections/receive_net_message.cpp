@@ -76,7 +76,7 @@ namespace big
 
 	bool hooks::receive_net_message(void* netConnectionManager, void* a2, rage::netConnection::InFrame* frame)
 	{
-		if (frame->get_event_type() != rage::netConnection::InFrame::EventType::FrameReceived)
+		if (frame->get_event_type() != rage::netEvent::Type::FrameReceived)
 			return g_hooking->get_original<hooks::receive_net_message>()(netConnectionManager, a2, frame);
 
 		if (frame->m_data == nullptr || frame->m_length == 0)

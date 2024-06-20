@@ -29,6 +29,7 @@ namespace big
 				g_notification_service.push_warning("Protections", "Low vehicle allocator size");
 				return;
 			}
+		default: break;
 		}
 
 		auto plyr = g_player_service->get_by_id(src->m_player_id);

@@ -41,8 +41,11 @@ namespace big
 
 		if (notify)
 		{
+			auto a_name = attacker->get_name();
+			auto v_name = victim->get_name();
+
 			g_notification_service.push_warning("Protections",
-			    std::vformat(m_notify_message, std::make_format_args(attacker->get_name(), victim->get_name())));
+			    std::vformat(m_notify_message, std::make_format_args(a_name, v_name)));
 		}
 
 		process_common(attacker);

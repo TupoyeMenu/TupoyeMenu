@@ -25,7 +25,7 @@ namespace big
 
 			if (block_joins)
 			{
-				entry->block_join = true;
+				entry->block_join        = true;
 				entry->block_join_reason = block_join_reason;
 				g_player_database_service->save();
 			}
@@ -64,17 +64,16 @@ namespace big
 		{
 			auto p_name = player->get_name();
 
-			auto msg = std::format("{} {}",
-			    g.session.chat_output_prefix,
-			    std::vformat(m_announce_message, std::make_format_args(player->get_name())));
+			auto msg = std::format("{} {}", g.session.chat_output_prefix, std::vformat(m_announce_message, std::make_format_args(p_name)));
 
 			chat::send_message(msg);
 		}
 
 		if (notify)
 		{
-			g_notification_service.push_warning("Protections",
-			    std::vformat(m_notify_message, std::make_format_args(player->get_name())));
+			auto p_name = player->get_name();
+
+			g_notification_service.push_warning("Protections", std::vformat(m_notify_message, std::make_format_args(p_name)));
 		}
 
 		process_common(player);

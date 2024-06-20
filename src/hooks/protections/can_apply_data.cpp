@@ -1118,6 +1118,7 @@ namespace big
 				return ped->get_ped_type() == ePedType::PED_TYPE_ANIMAL;
 
 			break;
+		default: break;
 		}
 
 		return false;

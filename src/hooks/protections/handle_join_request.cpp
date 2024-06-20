@@ -40,7 +40,7 @@ namespace big
 		if (block_join)
 		{
 			send_response(db_player->block_join_reason);
-			g_notification_service.push("Block Join", std::vformat("Blocked {} from joining", std::make_format_args(player_name)));
+			g_notification_service.push("Block Join", std::format("Blocked {} from joining", player_name));
 			return false;
 		}
 		else if (force_allow_join)
@@ -53,12 +53,12 @@ namespace big
 		{
 			if ((is_friend && g.session.allow_friends_into_locked_session) || is_trusted)
 			{
-				g_notification_service.push_success("Lobby Lock", std::vformat("A friend or trusted player with the name of {} has been allowed to join the locked session", std::make_format_args(player_name)));
+				g_notification_service.push_success("Lobby Lock", std::format("A friend or trusted player with the name of {} has been allowed to join the locked session", player_name));
 			}
 			else
 			{
 				send_response();
-				g_notification_service.push_warning("Lobby Lock", std::vformat("A player with the name of {} has been denied entry", std::make_format_args(player_name)));
+				g_notification_service.push_warning("Lobby Lock", std::format("A player with the name of {} has been denied entry", player_name));
 				return false;
 			}
 		}

@@ -371,9 +371,9 @@ namespace big
 			&& ownerNetId != player->m_player_info->m_ped->m_net_object->m_object_id && !offset_object)
 		{
 			g_notification_service.push_error("Warning!",
-				std::vformat("{} blamed {} for explosion",
-					std::make_format_args(player->get_name(),
-						reinterpret_cast<CPed*>(entity)->m_player_info->m_net_player_data.m_name)));
+				std::format("{} blamed {} for explosion",
+					player->get_name(),
+						reinterpret_cast<CPed*>(entity)->m_player_info->m_net_player_data.m_name));
 			// too many false positives, disabling it
 			//session::add_infraction(g_player_service->get_by_id(player->m_player_id), Infraction::BLAME_EXPLOSION_DETECTED);
 			return;
