@@ -15,6 +15,8 @@ namespace big
 
 		if (plyr && plyr->block_join && *g_pointers->m_gta.m_is_session_started)
 		{
+			auto p_name = plyr->get_name();
+
 			data->m_bubble_id = 10;
 			g_notification_service.push("Block Join", std::format("Trying to prevent {} from joining...", plyr->get_name()));
 		}

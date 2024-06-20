@@ -84,8 +84,6 @@ namespace big
 
 		detour_hook_helper::add<hooks::broadcast_net_array>("BNA", (void*)g_pointers->m_gta.m_broadcast_net_array);
 
-		detour_hook_helper::add<hooks::send_session_matchmaking_attributes>("SSMA", (void*)g_pointers->m_gta.m_send_session_matchmaking_attributes);
-
 		detour_hook_helper::add<hooks::serialize_take_off_ped_variation_task>("STOPVT", (void*)g_pointers->m_gta.m_serialize_take_off_ped_variation_task);
 		detour_hook_helper::add<hooks::serialize_parachute_task>("SPT", (void*)g_pointers->m_gta.m_serialize_parachute_task);
 
@@ -138,6 +136,12 @@ namespace big
 
 		detour_hook_helper::add<hooks::searchlight_crash>("SLC", (void*)g_pointers->m_gta.m_searchlight_crash);
 
+		detour_hook_helper::add<hooks::advertise_session>("AS", g_pointers->m_gta.m_advertise_session);
+		detour_hook_helper::add<hooks::update_session_advertisement>("USA", g_pointers->m_gta.m_update_session_advertisement);
+		detour_hook_helper::add<hooks::unadvertise_session>("US", g_pointers->m_gta.m_unadvertise_session);
+		detour_hook_helper::add<hooks::send_session_detail_msg>("SSDM", g_pointers->m_gta.m_send_session_detail_msg);
+
+  
 		detour_hook_helper::add<hooks::write_node_data>("WND", g_pointers->m_gta.m_write_node_data);
 		detour_hook_helper::add<hooks::can_send_node_to_player>("CSNTP", g_pointers->m_gta.m_can_send_node_to_player);
 		detour_hook_helper::add<hooks::write_node>("WN", g_pointers->m_gta.m_write_node);

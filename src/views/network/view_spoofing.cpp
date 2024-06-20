@@ -18,6 +18,7 @@ namespace big
 	{
 		ImGui::TextUnformatted("Detection Avoidance");
 		ImGui::Checkbox("Hide God Mode", &g.spoofing.spoof_hide_god);
+		ImGui::Checkbox("Hide Vehicle God Mode", &g.spoofing.spoof_hide_veh_god);
 		ImGui::Checkbox("Hide Spectate", &g.spoofing.spoof_hide_spectate);
 
 		ImGui::SeparatorText("Player List Spoof");
@@ -106,13 +107,7 @@ namespace big
 			ImGui::EndCombo();
 		}
 
-		ImGui::SeparatorText("Hide Features");
-		ImGui::Checkbox("Hide God Mode", &g.spoofing.spoof_hide_god);
-		ImGui::Checkbox("Hide Vehicle God Mode", &g.spoofing.spoof_hide_veh_god);
-		ImGui::Checkbox("Hide Spectate", &g.spoofing.spoof_hide_spectate);
-
 		ImGui::SeparatorText("Crew Spoof");
-
 		ImGui::Checkbox("Spoof Crew", &g.spoofing.spoof_crew_data);
 
 		constexpr size_t crew_tag_size = RTL_FIELD_SIZE(ClanData, m_clan_tag);
@@ -179,6 +174,18 @@ namespace big
 		ImGui::RadioButton("Good Sport", &g.spoofing.spoof_session_bad_sport_status, 1);
 		ImGui::SameLine();
 		ImGui::RadioButton("Bad Sport", &g.spoofing.spoof_session_bad_sport_status, 2);
+
+		ImGui::SeparatorText("Session Multiplexer");
+
+		ImGui::Checkbox("Multiplex Session", &g.spoofing.multiplex_session);
+		ImGui::SameLine();
+		components::help_marker("Makes your session much more visible to other players by hosting multiple instances of it. High values may fill your session in seconds. Use at your own risk");
+		if (g.spoofing.multiplex_session)
+		{
+			ImGui::SameLine();
+			ImGui::SliderInt("###multiplex_cnt", &g.spoofing.multiplex_count, 2, 5);
+		}
+		components::command_checkbox<"32players">();
 
 		ImGui::Separator();
 		components::small_text("Press \"Reset game hashes\" then Enable \"Override game hashes\", this will allow you to load custom rpfs and enter public sessions.\nYou will need to disable \"Override game hashes\" then reset and re-enable when the game updates.");

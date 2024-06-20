@@ -121,7 +121,6 @@ namespace big
 		ImGui::SliderFloat("Spam Timer", &g.session.spam_timer, 0.5f, 5.0f);
 		ImGui::SliderInt("Spam Text Length", &g.session.spam_length, 1, 256);
 		ImGui::EndDisabled();
-		ImGui::Checkbox("Auto-kick Chat Spammers", &g.session.kick_chat_spammers);
 		ImGui::Checkbox("Log Chat Messages", &g.session.log_chat_messages);
 		static char msg[256];
 		components::input_text("##message", msg, sizeof(msg));
@@ -203,6 +202,7 @@ namespace big
 		ImGui::Checkbox("Fix Vehicle", &g.session.vehicle_fix_all);
 
 		components::command_checkbox<"harass">();
+		ImGui::SameLine();
 		ImGui::Checkbox("Spam Killfeed", &g.session.spam_killfeed);
 
 		bool_command whitelist_friends("trustfriends",
@@ -427,6 +427,8 @@ namespace big
 		components::script_patch_checkbox("Block Muggers", &g.session.block_muggers, "For the entire session");
 
 		components::script_patch_checkbox("Block CEO Raids", &g.session.block_ceo_raids, "For the entire session");
+		ImGui::SameLine();
+		components::command_checkbox<"blockceos">();
 
 		ImGui::EndGroup();
 	}

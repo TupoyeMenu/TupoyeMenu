@@ -1,21 +1,8 @@
-/**
- * @file view_esp.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "view_esp.hpp"
 
-#include "gta_util.hpp"
 #include "pointers.hpp"
 #include "services/players/player_service.hpp"
 #include "util/math.hpp"
-#include "util/misc.hpp"
-#include "gta/enums.hpp"
 
 namespace big
 {
@@ -91,10 +78,11 @@ namespace big
 			}
 
 			draw_list->AddText(name_pos, esp_color, name_str.c_str());
+			const bool in_god    = ped_damage_bits & (uint32_t)eEntityProofs::GOD;
 			std::string mode_str = "";
 			if (g.esp.god)
 			{
-				if (ped_damage_bits & (uint32_t)eEntityProofs::GOD)
+				if (in_god)
 				{
 					mode_str = "GOD";
 				}
@@ -102,21 +90,23 @@ namespace big
 				{
 					if (ped_damage_bits & (uint32_t)eEntityProofs::BULLET)
 					{
-						mode_str += " BULLET";
+						mode_str = "BULLET";
 					}
 					if (ped_damage_bits & (uint32_t)eEntityProofs::EXPLOSION)
 					{
-						mode_str += " EXPLOSION";
+						if (!mode_str.empty())
+							mode_str += ", ";
+						mode_str += "Explosion";
 					}
 				}
-			}
 
-			if (auto player_vehicle = plyr->get_current_vehicle();
-				player_vehicle &&
-				(plyr->get_ped()->m_ped_task_flag & (uint32_t)ePedTask::TASK_DRIVING) &&
-				(player_vehicle->m_damage_bits & (uint32_t)eEntityProofs::GOD))
+				if (auto player_vehicle = plyr->get_current_vehicle(); player_vehicle && (plyr->get_ped()->m_ped_task_flag & (uint32_t)ePedTask::TASK_DRIVING)
+				    && (player_vehicle->m_damage_bits & (uint32_t)eEntityProofs::GOD))
 			{
-				mode_str =+ "Vehicle God Mode";
+					if (!mode_str.empty())
+						mode_str += ", ";
+					mode_str += "VEH GOD";
+				}
 			}
 
 			if (!mode_str.empty())
@@ -126,7 +116,7 @@ namespace big
 				    mode_str.c_str());
 			}
 
-			if (!(ped_damage_bits & (uint32_t)eEntityProofs::GOD))
+			if (!in_god)
 			{
 				if (g.esp.health)
 				{

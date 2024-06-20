@@ -23,6 +23,10 @@ namespace big
 		virtual void on_tick() override
 		{
 			Vehicle vehicle = self::veh;
+			static bool player_fpv_warned = false;
+
+			if (!vehicle)
+				return;
 
 			if (last_vehicle != vehicle)
 			{
@@ -32,10 +36,51 @@ namespace big
 				last_vehicle = vehicle;
 			}
 
-			if (vehicle)
+			if (CAM::GET_FOLLOW_VEHICLE_CAM_VIEW_MODE() == CameraMode::FIRST_PERSON)
 			{
-				Vector3 cam_pos = CAM::GET_GAMEPLAY_CAM_ROT(0);
-				ENTITY::SET_ENTITY_ROTATION(vehicle, cam_pos.x, cam_pos.y, cam_pos.z, 1, true);
+				if (!player_fpv_warned)
+				{
+					g_notification_service.push_warning("Flying Vehicle", "First-person view is currently unsupported in Vehicle Fly mode.");
+					player_fpv_warned = true;
+				}
+
+				// Kick us out of FPV when in fly mode
+				CAM::SET_FOLLOW_VEHICLE_CAM_VIEW_MODE(CameraMode::THIRD_PERSON_NEAR);
+
+				return;
+			}
+			else
+			{
+				// Reset the warning, so it only shows up once each time the player enters FPV mode
+				player_fpv_warned = false;
+			}
+
+			Vector3 cam_rot = CAM::GET_GAMEPLAY_CAM_ROT(0);
+
+			/*
+			* Leaving this for experimentation in the future, but vehicle flying in first person needs fixing
+				
+			Vector3 car_rot;
+			Vector3 rotation_delta;
+ 
+			if (CAM::GET_FOLLOW_PED_CAM_VIEW_MODE() == CameraMode::FIRST_PERSON)
+			{
+
+				car_rot = ENTITY::GET_ENTITY_ROTATION(vehicle, 0);
+				rotation_delta.x = (cam_rot.x - car_rot.x) / 360.0f;
+				rotation_delta.y = (cam_rot.y - car_rot.y) / 360.0f;
+				rotation_delta.z = (cam_rot.z - car_rot.z) / 360.0f;
+
+				Vector3 new_rot = {car_rot.x + rotation_delta.x, car_rot.y + rotation_delta.y, car_rot.z + rotation_delta.z};
+
+				ENTITY::SET_ENTITY_ROTATION(vehicle, new_rot.x, new_rot.y, new_rot.z, 0, true);
+			}
+			else
+			{
+				ENTITY::SET_ENTITY_ROTATION(vehicle, cam_rot.x, cam_rot.y, cam_rot.z, 0, true);
+			}*/
+
+			ENTITY::SET_ENTITY_ROTATION(vehicle, cam_rot.x, cam_rot.y, cam_rot.z, 0, true);
 				ENTITY::SET_ENTITY_COLLISION(vehicle, !g.vehicle.fly.no_collision, true);
 
 				float locspeed = g.vehicle.fly.speed;
@@ -115,7 +160,6 @@ namespace big
 
 				VEHICLE::SET_VEHICLE_GRAVITY(vehicle, false);
 			}
-		}
 
 		virtual void on_disable() override
 		{

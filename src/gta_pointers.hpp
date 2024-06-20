@@ -54,8 +54,6 @@ namespace big
 #pragma pack(push, 1)
 	struct gta_pointers
 	{
-		memory::handle m_max_wanted_level;
-
 		PVOID m_world_model_spawn_bypass;
 
 		memory::handle m_blame_explode;
@@ -96,6 +94,7 @@ namespace big
 		functions::handle_to_ptr m_handle_to_ptr;
 		rage::scrNativeRegistrationTable* m_native_registration_table;
 		functions::get_native_handler m_get_native_handler;
+		functions::fix_vectors m_fix_vectors;
 
 		rage::atArray<GtaThread*>* m_script_threads;
 		rage::scrProgramTable* m_script_program_table;
@@ -243,8 +242,6 @@ namespace big
 
 		PVOID m_http_start_request;
 
-		PVOID m_send_session_matchmaking_attributes;
-
 		PVOID m_serialize_take_off_ped_variation_task;
 		PVOID m_serialize_parachute_task;
 
@@ -385,6 +382,13 @@ namespace big
 		PVOID m_can_send_node_to_player;
 		PVOID m_write_node;
 		functions::get_sector_data m_get_sector_data;
+
+		PVOID m_advertise_session;
+		PVOID m_update_session_advertisement;
+		PVOID m_unadvertise_session;
+		PVOID m_send_session_detail_msg;
+
+		PVOID m_session_request_patch;
 	};
 #pragma pack(pop)
 	static_assert(sizeof(gta_pointers) % 8 == 0, "Pointers are not properly aligned");

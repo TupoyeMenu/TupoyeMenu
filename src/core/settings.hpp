@@ -237,9 +237,10 @@ namespace big
 			reaction request_control_event{"Request Control Event", "Blocked Request Control Event from {}", "{} tried to mess with my vehicle!"};
 			reaction report{"Report", "Blocked Report from {}", "{} tried to report me!"};
 			reaction spectate{"Spectate", "{} is spectating you", "{} is spectating me!"};
+			reaction chat_spam{"Chat Spam", "Blocked Chat Spam from {}", "{} is spammer"};
 			interloper_reaction spectate_others{"Spectate Others", "{} is spectating {}!", "{} is spectating {}!", false, false};
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(reactions, bounty, ceo_money, ceo_kick, clear_wanted_level, crash, end_session_kick, fake_deposit, force_mission, force_teleport, gta_banner, kick_from_interior, mc_teleport, network_bail, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate_notification, give_collectible, transaction_error, tse_freeze, tse_sender_mismatch, vehicle_kick, teleport_to_warehouse, trigger_business_raid, start_activity, start_script, null_function_kick, destroy_personal_vehicle, clear_ped_tasks, turn_into_beast, remote_wanted_level, remote_wanted_level_others, remote_ragdoll, kick_vote, report_cash_spawn, modder_detection, game_anti_cheat_modder_detection, request_control_event, report, send_to_interior, spectate, spectate_others)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(reactions, bounty, ceo_money, ceo_kick, clear_wanted_level, crash, end_session_kick, fake_deposit, force_mission, force_teleport, gta_banner, kick_from_interior, mc_teleport, network_bail, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate_notification, give_collectible, transaction_error, tse_freeze, tse_sender_mismatch, vehicle_kick, teleport_to_warehouse, trigger_business_raid, start_activity, start_script, null_function_kick, destroy_personal_vehicle, clear_ped_tasks, turn_into_beast, remote_wanted_level, remote_wanted_level_others, remote_ragdoll, kick_vote, report_cash_spawn, modder_detection, game_anti_cheat_modder_detection, request_control_event, report, send_to_interior, spectate, chat_spam, spectate_others)
 		} reactions{};
 
 		struct player
@@ -407,7 +408,6 @@ namespace big
 			bool chat_commands                                   = false;
 			CommandAccessLevel chat_command_default_access_level = CommandAccessLevel::NONE;
 
-			bool kick_chat_spammers          = false;
 			bool kick_host_when_forcing_host = false;
 
 			bool explosion_karma = false;
@@ -422,6 +422,7 @@ namespace big
 			bool block_jobs           = false;
 			bool block_muggers        = false;
 			bool block_ceo_raids      = false;
+			bool block_ceo_creation   = false;
 
 			int send_to_apartment_idx = 1;
 			int send_to_warehouse_idx = 1;
@@ -442,7 +443,7 @@ namespace big
 
 			bool fast_join = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, log_chat_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, is_team, join_in_sctv_slots, kick_chat_spammers, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty, lock_session, fast_join, unhide_players_from_player_list, allow_friends_into_locked_session, trust_friends, use_spam_timer, spam_timer, spam_length)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, log_chat_messages, decloak_players, force_session_host, force_script_host, player_magnet_enabled, player_magnet_count, is_team, join_in_sctv_slots, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, block_ceo_creation, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty, lock_session, fast_join, unhide_players_from_player_list, allow_friends_into_locked_session, trust_friends, use_spam_timer, spam_timer, spam_length)
 		} session{};
 
 		struct settings
@@ -668,13 +669,16 @@ namespace big
 			bool spoof_session_player_count     = false;
 			int session_player_count            = 25;
 			int spoof_session_bad_sport_status  = 0;
+			bool multiplex_session              = false;
+			int multiplex_count                 = 2;
+			bool increase_player_limit          = false;
 
 			bool override_game_hashes = false;
 			std::string game_checksum_data_b64 = "";
 			int game_dlc_checksum = -1;
 			int last_game_version = -1;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(spoofing, hide_from_player_list, pool_type, spoof_blip, blip_type, spoof_rank, rank, spoof_job_points, job_points, spoof_kd_ratio, kd_ratio, spoof_bad_sport, badsport_type, spoof_player_model, player_model, spoof_cheater, spoof_hide_god, spoof_hide_veh_god, spoof_hide_spectate, spoof_crew_data, crew_tag, rockstar_crew, square_crew_tag, spoof_session_region_type, session_region_type, spoof_session_language, session_language, spoof_session_player_count, session_player_count, spoof_session_bad_sport_status, override_game_hashes, game_checksum_data_b64, game_dlc_checksum, last_game_version)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(spoofing, hide_from_player_list, pool_type, spoof_blip, blip_type, spoof_rank, rank, spoof_job_points, job_points, spoof_kd_ratio, kd_ratio, spoof_bad_sport, badsport_type, spoof_player_model, player_model, spoof_cheater, spoof_hide_god, spoof_hide_veh_god, spoof_hide_spectate, spoof_crew_data, crew_tag, rockstar_crew, square_crew_tag, spoof_session_region_type, session_region_type, spoof_session_language, session_language, spoof_session_player_count, session_player_count, spoof_session_bad_sport_status, multiplex_session, multiplex_count, increase_player_limit, override_game_hashes, game_checksum_data_b64, game_dlc_checksum, last_game_version)
 		} spoofing{};
 
 		struct vehicle
@@ -908,7 +912,7 @@ namespace big
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(gui, format_money)
 			} gui{};
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, background_color, main, users, player, ingame_overlay, text_color, button_color, frame_color, demo, gui_scale, gui)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, background_color, main, users, player, ingame_overlay, text_color, button_color, frame_color, demo, gui_scale, gui, alphabet)
 		} window{};
 
 		struct context_menu

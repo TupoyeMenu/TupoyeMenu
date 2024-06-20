@@ -229,6 +229,8 @@ namespace big
 				toxic::start_activity(g_player_service->get_selected(), eActivityType::GunrunningDefend);
 			});
 
+			components::player_command_button<"breakgame">(g_player_service->get_selected(), {});
+
 			components::player_command_button<"sext">(g_player_service->get_selected(), {});
 			ImGui::SameLine();
 			components::player_command_button<"fakeban">(g_player_service->get_selected(), {});

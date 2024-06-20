@@ -104,6 +104,10 @@ namespace big
 		if (!get_msg_type(msgType, buffer))
 			return g_hooking->get_original<hooks::receive_net_message>()(netConnectionManager, a2, frame);
 
+
+		if (msgType == rage::eNetMessage::MsgRoamingJoinBubbleAck)
+			return true;
+
 		if (player)
 		{
 			switch (msgType)
@@ -127,10 +131,10 @@ namespace big
 						chat::log_chat(message, player, spam_reason, is_team);
 					g_notification_service.push("Protections", std::format("{} {}", player->get_name(), "Is a spammer."));
 					player->is_spammer = true;
-					if (g.session.kick_chat_spammers
-					    && !(player->is_trusted || (player->is_friend() && g.session.trust_friends) || g.session.trust_session))
+					if (!(player->is_trusted || (player->is_friend() && g.session.trust_friends) || g.session.trust_session))
 					{
-						dynamic_cast<player_command*>(command::get("smartkick"_J))->call(player, {});
+						session::add_infraction(player, Infraction::CHAT_SPAM);
+						g.reactions.chat_spam.process(player);
 					}
 					return true;
 				}
@@ -229,6 +233,11 @@ namespace big
 
 				break;
 			}
+			case rage::eNetMessage::MsgRoamingInitialBubble:
+			{
+				LOG(WARNING) << "Shouldn't get this again";
+				return true;
+			}
 			default: break;
 			}
 		}
@@ -239,15 +248,35 @@ namespace big
 			case rage::eNetMessage::MsgScriptMigrateHost: return true;
 			case rage::eNetMessage::MsgRadioStationSyncRequest:
 			{
-				static rate_limiter unk_player_radio_requests{2s, 2};
+				static rate_limiter unk_player_radio_requests{1s, 6};
 
 				if (unk_player_radio_requests.process())
 				{
 					if (unk_player_radio_requests.exceeded_last_process())
 					{
-						g_notification_service.push_error("Protections", "{} tried to OOM kick you!");
+						g_notification_service.push_error("Protections", "Unknown player tried to OOM kick you!");
 					}
 					return true;
+				}
+				break;
+			}
+			case rage::eNetMessage::MsgTextMessage: return true;
+			case rage::eNetMessage::MsgNonPhysicalData:
+			{
+				buffer.Read<int>(7); // size
+				int bubble = buffer.Read<int>(4);
+				int player = buffer.Read<int>(6);
+
+
+				if (g_player_service->get_self() && g_player_service->get_self()->id() == player)
+				{
+					LOG(WARNING) << "We're being replaced";
+					return true;
+				}
+
+				if (bubble != 0)
+				{
+					LOG(WARNING) << "Wrong bubble: " << bubble;
 				}
 				break;
 			}

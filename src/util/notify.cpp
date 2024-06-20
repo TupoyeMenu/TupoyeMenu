@@ -1,12 +1,8 @@
 #include "notify.hpp"
 #include "chat.hpp"
-#include "fiber_pool.hpp"
-#include "gta/enums.hpp"
 #include "hooking/hooking.hpp"
 #include "natives.hpp"
 #include "network/CNetGamePlayer.hpp"
-#include "network/ChatData.hpp"
-#include "pointers.hpp"
 #include "script.hpp"
 #include "services/players/player_service.hpp"
 

@@ -586,8 +586,8 @@ namespace big
 				g_model_preview_service->stop_preview();
 			}
 		}
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("%s", "Shows a render of what you have highlighted in front of you.");
+		ImGui::SameLine();
+		components::help_marker("Shows a render of what you have highlighted in front of you.");
 
 		ImGui::Checkbox("Invincible", &g.world.spawn_ped.spawn_invincible);
 		ImGui::Checkbox("Invisible", &g.world.spawn_ped.spawn_invisible);
@@ -654,8 +654,8 @@ namespace big
 			g.spoofing.player_model       = ped_model_buf;
 		});
 
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("%s", "This WILL break freemode missions and jobs!");
+		ImGui::SameLine();
+		components::help_marker("This WILL break freemode missions and jobs!");
 
 		if (g.spoofing.spoof_player_model)
 		{

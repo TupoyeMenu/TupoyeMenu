@@ -19,13 +19,14 @@ namespace big
 
 	void reaction::process_common(player_ptr player)
 	{
-		if (add_to_player_db)
+		if (add_to_player_db || block_joins)
 		{
 			auto entry = g_player_database_service->get_or_create_player(player);
 
 			if (block_joins)
 			{
 				entry->block_join = true;
+				entry->block_join_reason = block_join_reason;
 				g_player_database_service->save();
 			}
 		}
@@ -61,6 +62,8 @@ namespace big
 
 		if (announce_in_chat)
 		{
+			auto p_name = player->get_name();
+
 			auto msg = std::format("{} {}",
 			    g.session.chat_output_prefix,
 			    std::vformat(m_announce_message, std::make_format_args(player->get_name())));
@@ -93,6 +96,8 @@ namespace big
 
 		if (notify)
 		{
+			auto p_name = player->get_name();
+
 			// Use a different notification since the default start_script reaction is "Blocked Start Script"
 			g_notification_service.push_warning("Protections", std::format("Allowed Start Script from {}", player->get_name()));
 		}

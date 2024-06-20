@@ -321,10 +321,8 @@ namespace big
 			ImGui::PushID(2);
 			ImGui::Checkbox("Enabled", &g.weapons.enable_weapon_hotkeys);
 			ImGui::PopID();
-			if (ImGui::IsItemHovered())
-			{
-				ImGui::SetTooltip("%s", "This will select the next weapon in the hotkey list.\nThe first weapon in the list is the first weapon it will select, then the second is the one it will select after and so on.\nAfter the end of the list, it will wrap back to the first weapon.");
-			}
+			ImGui::SameLine();
+			components::help_marker("This will select the next weapon in the hotkey list.\nThe first weapon in the list is the first weapon it will select, then the second is the one it will select after and so on.\nAfter the end of the list, it will wrap back to the first weapon.");
 
 			static int selected_key = 0;
 			const char* const keys[]{"1", "2", "3", "4", "5", "6"};

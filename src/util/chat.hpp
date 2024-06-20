@@ -14,6 +14,7 @@
 #include <script/HudColor.hpp>
 #include <script/globals/GPBD_FM_3.hpp>
 
+
 namespace
 {
 	static void gamer_handle_serialize(rage::rlGamerHandle& hnd, rage::datBitBuffer& buf)
@@ -28,21 +29,16 @@ namespace
 
 	static const char* spam_texts[] = {
 	    "qq", //a chinese chat app
-	    "QQ",
-	    "WWW.",
 	    "www.",
 	    ".cn",
-	    ".CN",
 	    ".cc",
-	    ".CC",
-	    ".TOP",
-	    ".COM",
+	    ".com",
 	    ".top",
 	    "\xE3\x80\x90", //left bracket in Chinese input method
-	    "/Menu",
-	    "Money/",
-	    "Money\\\\",
-	    "Money\\",
+	    "/menu",
+	    "money/",
+	    "money\\\\",
+	    "money\\",
 	    ".gg",
 	    "--->",
 	    "shopgta5",
@@ -55,23 +51,25 @@ namespace
 	    "<font s",
 	    "sellix.io",
 	    "ezcars",
-	    "PLANO INICIAL", // "initial plan"
-	    "REP +",
-	    "20R$", // Brazil currency?
+	    "plano inicial", // "initial plan"
+	    "rep +",
+	    "20r$", // Brazil currency?
 	    "l55.me",
-	    "TRUSTPILOT",
+	    "trustpilot",
 	    "cashlounge",
-	    "Fast Delivery",
+	    "fast delivery",
 	    "yosativa",
 	    "rich2day",
-	    "LevelLifters",
+	    "levellifters",
 	    ". com",
 	    "$1,000,000,000",
-	    "Instant Delivery",
-	    "0 Ban Risk",
-	    "Discord For Cheap Money",
+	    "instant delivery",
+	    "0 ban risk",
+	    "discord for cheap money",
 	    "10-30m",
-	    "Discord todo",
+	    "hey guys! tired of being poor?",
+	    "gta cash",
+	    "discord todo",
 	    "\xE6\x89\xA3\xE6\x89\xA3",             // QQ
 	    "\xE4\xBC\xA0\xE5\xAA\x92",             // AV
 	    "\xE8\x96\x87\xE4\xBF\xA1",             // Wechat
@@ -115,6 +113,7 @@ namespace
 	    "\xE5\x81\xB7\xE6\x8B\x8D",             // AV
 	    "\xE4\xBC\xA0\xE7\x85\xA4",             // AV
 	    "\xE4\xB9\xB1\xE8\xAE\xBA",             // AV
+	    "\xE6\x83\x85\xE8\x89\xB2",             // Erotic
 	};
 }
 
@@ -142,9 +141,14 @@ namespace big::chat
 			}
 		}
 		for (auto e : spam_texts)
-			if (strstr(text, e) != 0)
+		{
+			std::string e_str(e);
+			std::transform(e_str.begin(), e_str.end(), e_str.begin(), ::tolower);
+			std::string text_str(text);
+			std::transform(text_str.begin(), text_str.end(), text_str.begin(), ::tolower);
+			if (strstr(text_str.c_str(), e_str.c_str()) != 0)
 				return SpamReason::STATIC_DETECTION;
-
+		}
 		return SpamReason::NOT_A_SPAMMER;
 	}
 

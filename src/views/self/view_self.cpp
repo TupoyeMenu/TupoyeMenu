@@ -1,5 +1,6 @@
 #include "core/data/hud_component_names.hpp"
 #include "fiber_pool.hpp"
+#include "gui/components/components.hpp"
 #include "imgui.h"
 #include "util/entity.hpp"
 #include "util/scripts.hpp"
@@ -142,10 +143,7 @@ namespace big
 		ImGui::EndGroup();
 
 		ImGui::SeparatorText("Wanted Level");
-
-		ImGui::Checkbox("Never Wanted", &g.self.never_wanted);
-		ImGui::SameLine();
-		components::help_marker("You will never gain any wanted stars");
+		components::command_checkbox<"neverwanted">();
 
 		// Only show all the other stuff like clear wanted, force wanted, and the slider if we don't have never_wanted enabled, since never_wanted overrides all of that
 		if (!g.self.never_wanted)
@@ -156,6 +154,7 @@ namespace big
 			// Most ImGui widgets return true when they've been changed, so this is useful to prevent us from overwriting the wanted level's natural decay/progression if we're not keeping it locked
 			ImGui::SetNextItemWidth(200);
 			user_updated_wanted_level = ImGui::SliderInt("###wanted_level", &g.self.wanted_level, 0, 5);
+
 			ImGui::SameLine();
 			components::help_marker("Sets current wanted level; use with Force Wanted Level to lock it at the selected value");
 			ImGui::SameLine();
