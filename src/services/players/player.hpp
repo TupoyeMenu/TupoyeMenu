@@ -84,10 +84,8 @@ namespace big
 		rate_limiter m_radio_station_change_rate_limit{1s, 3};
 
 		bool block_radio_requests = false;
-
-		int m_num_spawned_permanent_vehicles = 0;
-
-		bool m_block_permanent_vehicles = false;
+		bool received_object_id_request = false;
+		bool received_object_id_response = false;
 
 		bool is_modder        = false;
 		bool is_trusted       = false;
@@ -116,6 +114,7 @@ namespace big
 
 		int spectating_player = -1;
 
+		menu_settings::script_block_opts script_block_opts{};
 	protected:
 		bool equals(const CNetGamePlayer* net_game_player) const;
 

@@ -41,7 +41,7 @@ namespace big
 			player_icons += FONT_ICON_FRIEND;
 		if (const auto ped = plyr->get_ped(); ped != nullptr)
 		{
-			if (ped->m_ped_task_flag & (uint8_t)ePedTask::TASK_DRIVING)
+			if (ped->m_ped_task_flag & (uint8_t)ePedTask::TASK_DRIVING || PLAYER::IS_REMOTE_PLAYER_IN_NON_CLONED_VEHICLE(plyr->id()))
 				player_icons += FONT_ICON_VEHICLE;
 			if (ped->m_damage_bits & (uint32_t)eEntityProofs::GOD)
 				player_icons += FONT_ICON_GODMODE;

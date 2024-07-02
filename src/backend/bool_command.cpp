@@ -72,7 +72,7 @@ namespace big
 		{
 			m_toggle       = true;
 			m_last_enabled = true;
-			g_fiber_pool->queue_job([this] {
+			g_fiber_pool->execute_on_game_thread([this] {
 				on_enable();
 			});
 		}
@@ -84,7 +84,7 @@ namespace big
 		{
 			m_toggle       = false;
 			m_last_enabled = false;
-			g_fiber_pool->queue_job([this] {
+			g_fiber_pool->execute_on_game_thread([this] {
 				on_disable();
 			});
 		}
@@ -95,14 +95,14 @@ namespace big
 		if (m_toggle && !m_last_enabled)
 		{
 			m_last_enabled = true;
-			g_fiber_pool->queue_job([this] {
+			g_fiber_pool->execute_on_game_thread([this] {
 				on_enable();
 			});
 		}
 		else if (!m_toggle && m_last_enabled)
 		{
 			m_last_enabled = false;
-			g_fiber_pool->queue_job([this] {
+			g_fiber_pool->execute_on_game_thread([this] {
 				on_disable();
 			});
 		}

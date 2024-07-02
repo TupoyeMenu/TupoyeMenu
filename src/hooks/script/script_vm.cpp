@@ -1,17 +1,8 @@
-/**
- * @file script_vm.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "core/scr_globals.hpp"
+#include "gta/joaat.hpp"
+#include "gta_util.hpp"
 #include "hooking/hooking.hpp"
 #include "pointers.hpp"
-#include "gta_util.hpp"
 #include "script_mgr.hpp"
 #include "services/script_patcher/script_patcher_service.hpp"
 
@@ -71,7 +62,8 @@ namespace big
 	{
 		script_vm_guard guard(program);
 
-		if(g_running && ctx->m_state == rage::eThreadState::running && ctx->m_script_hash != "startup"_J && tmp_frame_count != *g_pointers->m_gta.m_frame_count)
+		if (g_running && ctx->m_state == rage::eThreadState::running && ctx->m_script_hash != "startup"_J
+		    && tmp_frame_count != *g_pointers->m_gta.m_frame_count)
 		{
 			tmp_frame_count = *g_pointers->m_gta.m_frame_count;
 			gta_util::execute_as_script(ctx->m_script_hash, std::mem_fn(&script_mgr::tick), g_script_mgr);

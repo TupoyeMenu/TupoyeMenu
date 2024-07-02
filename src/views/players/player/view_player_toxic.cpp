@@ -15,9 +15,7 @@ namespace big
 {
 	void view::view_player_toxic()
 	{
-		std::string title = std::format("Player Toxic Options: {}", g_player_service->get_selected()->get_name());
-
-		ImGui::TextUnformatted(title.c_str());
+		ImGui::Text("Player Toxic Options: %s", g_player_service->get_selected()->get_name());
 
 		if (ImGui::TreeNode("Ped"))
 		{
@@ -104,6 +102,8 @@ namespace big
 			components::player_command_button<"interiortp">(g_player_service->get_selected(), {160}, "TP To Freakshop");
 			ImGui::SameLine();
 			components::player_command_button<"interiortp">(g_player_service->get_selected(), {161}, "TP To Multi Floor Garage");
+			ImGui::SameLine();
+			components::player_command_button<"interiortp">(g_player_service->get_selected(), {161}, "TP To Arcade");
 
 			if (g_player_service->get_selected()->get_ped())
 			{

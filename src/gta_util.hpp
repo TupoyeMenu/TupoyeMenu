@@ -1,21 +1,16 @@
-/**
- * @file gta_util.hpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #pragma once
-#include "gta/script_thread.hpp"
 #include "pointers.hpp"
 #include "script/tlsContext.hpp"
 
+#include <script/GtaThread.hpp>
 #include <network/CNetworkPlayerMgr.hpp>
 #include <ped/CPedFactory.hpp>
 #include <script/scrProgramTable.hpp>
+
+namespace rage
+{
+	class netObjectIds;
+}
 
 namespace big::gta_util
 {
@@ -62,6 +57,14 @@ namespace big::gta_util
 	inline Network* get_network()
 	{
 		return *g_pointers->m_gta.m_network;
+	}
+
+	inline rage::netObjectIds* get_net_object_ids()
+	{
+		if (!*g_pointers->m_gta.m_network_object_mgr)
+			return nullptr;
+
+		return (rage::netObjectIds*)(((std::uintptr_t)*g_pointers->m_gta.m_network_object_mgr) + *g_pointers->m_gta.m_object_ids_offset); // TODO: map out CNetworkObjectMgr eventually
 	}
 
 	template<typename F, typename... Args>

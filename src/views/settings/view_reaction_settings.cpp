@@ -24,14 +24,25 @@ namespace big
 		ImGui::BeginDisabled(!reaction.block_joins);
 		if (ImGui::BeginCombo("Block Join Alert", block_join_reasons[reaction.block_join_reason]))
 		{
-			for (const auto& [key, value] : block_join_reasons)
+			block_join_reason_t i = block_join_reason_t::UNK_0;
+			for (const auto& reason_str : block_join_reasons)
 			{
-				bool is_selected = (reaction.block_join_reason == key);
+				if (reason_str != "")
+				{
+					const bool is_selected = reaction.block_join_reason == i;
 
-				if (ImGui::Selectable(value, is_selected))
-					reaction.block_join_reason = key;
-				if (is_selected)
-					ImGui::SetItemDefaultFocus();
+					if (ImGui::Selectable(reason_str, is_selected))
+					{
+						reaction.block_join_reason = i;
+					}
+
+					if (is_selected)
+					{
+						ImGui::SetItemDefaultFocus();
+					}
+				}
+
+				i++;
 			}
 			ImGui::EndCombo();
 		}
@@ -76,12 +87,14 @@ namespace big
 	{
 		components::title("Reactions");
 		draw_reaction(g.reactions.bounty);
+		draw_reaction(g.reactions.break_game);
 		draw_reaction(g.reactions.ceo_kick);
 		draw_reaction(g.reactions.ceo_money);
 		draw_reaction(g.reactions.chat_spam);
 		draw_reaction(g.reactions.clear_ped_tasks);
 		draw_reaction(g.reactions.clear_wanted_level);
 		draw_reaction(g.reactions.crash);
+		draw_reaction(g.reactions.delete_vehicle);
 		draw_reaction(g.reactions.destroy_personal_vehicle);
 		draw_reaction(g.reactions.end_session_kick);
 		draw_reaction(g.reactions.fake_deposit);

@@ -6,6 +6,7 @@
 #pragma once
 #include "entity.hpp"
 #include "gta/enums.hpp"
+#include "gta/joaat.hpp"
 #include "math.hpp"
 #include "natives.hpp"
 #include "outfit.hpp"
@@ -13,6 +14,7 @@
 #include "script.hpp"
 #include "services/players/player_service.hpp"
 #include "vehicle.hpp"
+#include "script.hpp"
 
 namespace big::ped
 {
@@ -89,6 +91,26 @@ namespace big::ped
 		return true;
 	}
 
+	inline void clone_ped(const Ped src, const Ped target)
+	{
+		PED::CLONE_PED_TO_TARGET(src, target);
+		auto src_ptr = g_pointers->m_gta.m_handle_to_ptr(src);
+		auto dst_ptr = g_pointers->m_gta.m_handle_to_ptr(target);
+
+		if (src_ptr && dst_ptr)
+		{
+			for (auto container = src_ptr->m_extension_container; container; container = container->m_next)
+			{
+				if (container->m_entry && container->m_entry->get_id() == 0xB)
+				{
+					g_pointers->m_gta.m_set_head_blend_data(reinterpret_cast<CPed*>(dst_ptr), reinterpret_cast<CHeadBlendData*>(container->m_entry));
+					break;
+				}
+			}
+		}
+	}
+
+
 	/**
 	 * @brief Sets your local ped to be the same as target ped.
 	 * 
@@ -100,9 +122,12 @@ namespace big::ped
 		const int current_health = ENTITY::GET_ENTITY_HEALTH(self::ped);
 		const int current_armor  = PED::GET_PED_ARMOUR(self::ped);
 
+		if (ENTITY::GET_ENTITY_MODEL(target) != ENTITY::GET_ENTITY_MODEL(self::id))
+		{
 		PLAYER::SET_PLAYER_MODEL(self::id, ENTITY::GET_ENTITY_MODEL(target));
 		script::get_current()->yield();
-		PED::CLONE_PED_TO_TARGET(target, self::ped);
+		}
+		clone_ped(target, self::ped);
 		ENTITY::SET_ENTITY_MAX_HEALTH(self::ped, max_health);
 		ENTITY::SET_ENTITY_HEALTH(self::ped, current_health, 0, 0);
 		PED::SET_PED_ARMOUR(self::ped, current_armor);
@@ -192,7 +217,7 @@ namespace big::ped
 
 		    if (clone)
 		    {
-		        PED::CLONE_PED_TO_TARGET(clone, ped);
+				clone_ped(clone, ped);
 		    }
 
 		    STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);

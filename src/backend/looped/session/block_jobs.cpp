@@ -1,5 +1,6 @@
 #include "backend/looped/looped.hpp"
 #include "core/scr_globals.hpp"
+#include "gta/joaat.hpp"
 #include "gta_util.hpp"
 #include "natives.hpp"
 #include "pointers.hpp"
@@ -18,7 +19,7 @@ namespace big
 			{
 				auto fmmc = gta_util::find_script_thread("fmmc_launcher"_J);
 				*script_local(fmmc->m_stack, scr_locals::fmmc_launcher::broadcast_idx).at(47).at(7).as<int*>() = (-1 & ~(1 << self::id));
-				bLastBlockJobsEnabled                                                                          = true;
+				bLastBlockJobsEnabled = true;
 			}
 		}
 		else if (bLastBlockJobsEnabled && !used)

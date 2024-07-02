@@ -1,12 +1,6 @@
 /**
  * @file view_player_info.cpp
  * @brief Information about selected player.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "core/data/block_join_reasons.hpp"
@@ -53,6 +47,12 @@ namespace big
 		return "Unknown";
 	}
 
+	void add_flag_separator(std::string& mode_str)
+	{
+		if (!mode_str.empty())
+			mode_str += ", ";
+	}
+
 	void view::view_player_info()
 	{
 		std::string title        = std::format("Player Info: {}", g_player_service->get_selected()->get_name());
@@ -76,6 +76,10 @@ namespace big
 		if (player_info != nullptr)
 		{
 			ImGui::Text("Host token: %llu", player_info->m_net_player_data.m_host_token);
+			if (ImGui::Button("Copy##HostToken"))
+				{
+					ImGui::SetClipboardText(std::format("{:X}", g_player_service->get_selected()->get_net_data()->m_host_token).data());
+				}
 			ImGui::Text("Wanted Level: %d", player_info->m_wanted_level);
 		}
 
@@ -98,31 +102,43 @@ namespace big
 		{
 			if (ped_damage_bits & (uint32_t)eEntityProofs::BULLET)
 			{
-				mode_str += "Bullet, ";
+				add_flag_separator(mode_str);
+				mode_str += "Bullet";
 			}
 			if (ped_damage_bits & (uint32_t)eEntityProofs::FIRE)
 			{
-				mode_str += "Fire, ";
+				add_flag_separator(mode_str);
+				mode_str += "Fire";
 			}
 			if (ped_damage_bits & (uint32_t)eEntityProofs::COLLISION)
 			{
-				mode_str += "Collision, ";
+				add_flag_separator(mode_str);
+				mode_str += "Collision";
 			}
 			if (ped_damage_bits & (uint32_t)eEntityProofs::MELEE)
 			{
-				mode_str += "Melee, ";
+				add_flag_separator(mode_str);
+				mode_str += "Melee";
 			}
 			if (ped_damage_bits & (uint32_t)eEntityProofs::EXPLOSION)
 			{
-				mode_str += "Explosion, ";
+				add_flag_separator(mode_str);
+				mode_str += "Explosion";
 			}
 			if (ped_damage_bits & (uint32_t)eEntityProofs::STEAM)
 			{
-				mode_str += "Steam, ";
+				add_flag_separator(mode_str);
+				mode_str += "Steam";
 			}
 			if (ped_damage_bits & (uint32_t)eEntityProofs::WATER)
 			{
+				add_flag_separator(mode_str);
 				mode_str += "Water";
+			}
+			if(cped->m_health > 328 || cped->m_maxhealth > 328)
+			{
+				add_flag_separator(mode_str);
+				mode_str += "Health Too High";
 			}
 		}
 
@@ -150,30 +166,37 @@ namespace big
 			{
 				if (veh_damage_bits & (uint32_t)eEntityProofs::BULLET)
 				{
-					mode_str += "Bullet, ";
+					add_flag_separator(mode_str);
+					mode_str += "Bullet";
 				}
 				if (veh_damage_bits & (uint32_t)eEntityProofs::FIRE)
 				{
-					mode_str += "Fire, ";
+					add_flag_separator(mode_str);
+					mode_str += "Fire";
 				}
 				if (veh_damage_bits & (uint32_t)eEntityProofs::COLLISION)
 				{
-					mode_str += "Collision, ";
+					add_flag_separator(mode_str);
+					mode_str += "Collision";
 				}
 				if (veh_damage_bits & (uint32_t)eEntityProofs::MELEE)
 				{
-					mode_str += "Melee, ";
+					add_flag_separator(mode_str);
+					mode_str += "Melee";
 				}
 				if (veh_damage_bits & (uint32_t)eEntityProofs::EXPLOSION)
 				{
-					mode_str += "Explosion, ";
+					add_flag_separator(mode_str);
+					mode_str += "Explosion";
 				}
 				if (veh_damage_bits & (uint32_t)eEntityProofs::STEAM)
 				{
-					mode_str += "Steam, ";
+					add_flag_separator(mode_str);
+					mode_str += "Steam";
 				}
 				if (veh_damage_bits & (uint32_t)eEntityProofs::WATER)
 				{
+					add_flag_separator(mode_str);
 					mode_str += "Water";
 				}
 			}
@@ -229,7 +252,7 @@ namespace big
 				}
 				else
 				{
-					if (net_player_data->m_force_relays)
+					if (net_player_data->m_force_relays) // TODO: does this actually do anything?
 						ImGui::TextUnformatted("IP Address: Hidden");
 					else
 						ImGui::TextUnformatted("IP Address: Unknown");
@@ -304,24 +327,33 @@ namespace big
 						g_player_database_service->save();
 					}
 
+					ImGui::BeginDisabled(!current_player->block_join);
+
 					if (ImGui::BeginCombo("Block Join Alert", block_join_reasons[current_player->block_join_reason]))
 					{
-						for (const auto& reason : block_join_reasons)
+						block_join_reason_t i = block_join_reason_t::UNK_0;
+						for (const auto& reason_str : block_join_reasons)
 						{
-							if (ImGui::Selectable(reason.second, reason.first == current_player->block_join_reason))
+							if (reason_str != "")
 							{
-								current_player->block_join_reason = reason.first;
-								g_player_database_service->save();
+								const bool is_selected = current_player->block_join_reason == i;
+
+								if (ImGui::Selectable(reason_str, is_selected))
+								{
+									current_player->block_join_reason = i;
+								}
+
+								if (is_selected)
+								{
+									ImGui::SetItemDefaultFocus();
+								}
 							}
 
-							if (reason.first == current_player->block_join_reason)
-							{
-								ImGui::SetItemDefaultFocus();
-							}
+							i++;
 						}
-
 						ImGui::EndCombo();
 					}
+					ImGui::EndDisabled();
 
 					if (ImGui::BeginCombo("Chat Command Permissions",
 					        COMMAND_ACCESS_LEVELS[g_player_service->get_selected()->command_access_level.value_or(

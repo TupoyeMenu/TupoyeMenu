@@ -16,6 +16,10 @@ namespace big
 	char note_buffer[1024];
 	bool notes_dirty = false;
 	std::shared_ptr<persistent_player> current_player;
+	bool filter_modder                            = false;
+	bool filter_trust                             = false;
+	bool filter_block_join                        = false;
+	bool filter_track_player                      = false;
 
 	ImVec4 get_player_color(persistent_player& player)
 	{
@@ -29,12 +33,25 @@ namespace big
 			return ImVec4(0.f, 1.f, 0.f, 1.f);
 	}
 
-	void draw_player_db_entry(std::shared_ptr<persistent_player> player, const std::string& lower_search)
+	bool apply_filters(const std::shared_ptr<persistent_player>& player)
+	{
+		if (filter_modder && !player->is_modder)
+			return false;
+		if (filter_trust && !player->is_trusted)
+			return false;
+		if (filter_block_join && !player->block_join)
+			return false;
+		if (filter_track_player && !player->notify_online)
+			return false;
+		return true;
+	}
+
+	void draw_player_db_entry(const std::shared_ptr<persistent_player>& player, const std::string& lower_search)
 	{
 		std::string name = player->name;
 		std::transform(name.begin(), name.end(), name.begin(), ::tolower);
 
-		if (lower_search.empty() || name.find(lower_search) != std::string::npos)
+		if ((lower_search.empty() || name.find(lower_search) != std::string::npos) && apply_filters(player))
 		{
 			ImGui::PushID(player->rockstar_id);
 
@@ -136,18 +153,26 @@ namespace big
 
 				if (ImGui::BeginCombo("Block Join Alert", block_join_reasons[current_player->block_join_reason]))
 				{
-					for (const auto& reason : block_join_reasons)
+					block_join_reason_t i = block_join_reason_t::UNK_0;
+					for (const auto& reason_str : block_join_reasons)
 					{
-						if (ImGui::Selectable(reason.second, reason.first == current_player->block_join_reason))
+						if (reason_str != "")
 						{
-							current_player->block_join_reason = reason.first;
+							const bool is_selected = current_player->block_join_reason == i;
+
+							if (ImGui::Selectable(reason_str, is_selected))
+							{
+								current_player->block_join_reason = i;
 							g_player_database_service->save();
 						}
 
-						if (reason.first == current_player->block_join_reason)
+							if (is_selected)
 						{
 							ImGui::SetItemDefaultFocus();
 						}
+					}
+
+						i++;
 					}
 
 					ImGui::EndCombo();
@@ -234,7 +259,7 @@ namespace big
 						    && !selected->game_mode_id.empty())
 						{
 							ImGui::SameLine();
-							components::button("VIEW_DEBUG_LOCALS_FETCH", [] {
+							components::button("Fetch", [] {
 								current_player->game_mode_name =
 								    player_database_service::get_name_by_content_id(current_player->game_mode_id);
 							});
@@ -265,19 +290,19 @@ namespace big
 			ImGui::EndChild();
 		}
 
-		if (ImGui::Button("Remove Untrusted"))
+		if (ImGui::Button("Remove Filtered"))
 		{
-			ImGui::OpenPopup("##removeuntrusted");
+			ImGui::OpenPopup("##removefiltered");
 		}
 
-		if (ImGui::BeginPopupModal("##removeuntrusted"))
+		if (ImGui::BeginPopupModal("##removefiltered"))
 		{
 			ImGui::Text("Are you sure?");
 
 			if (ImGui::Button("Yes"))
 			{
 				g_player_database_service->set_selected(nullptr);
-				g_player_database_service->remove_untrusted_players();
+				g_player_database_service->remove_filtered_players(filter_modder, filter_trust, filter_block_join, filter_track_player);
 				g_player_database_service->save();
 				ImGui::CloseCurrentPopup();
 			}
@@ -337,6 +362,15 @@ namespace big
 			ImGui::Checkbox("Notify On Become Host", &g.player_db.notify_on_become_host);
 			ImGui::Checkbox("Notify On Job Lobby Change", &g.player_db.notify_on_transition_change);
 			ImGui::Checkbox("Notify On Mission Change", &g.player_db.notify_on_mission_change);
+			ImGui::TreePop();
+		}
+		if (ImGui::TreeNode("Filters"))
+		{
+			ImGui::Checkbox("Is Modder", &filter_modder);
+			ImGui::Checkbox("Trust", &filter_trust);
+			ImGui::Checkbox("Block Join", &filter_block_join);
+			ImGui::Checkbox("Track Player", &filter_track_player);
+
 			ImGui::TreePop();
 		}
 

@@ -54,6 +54,8 @@ namespace big
 	    "COLLECTIBLE",
 	    "FIRST_VEH",
 	    "RANK_UP",
+		"COMMS_TEXT", 
+		"BLAST",
 	});
 
 	std::string hex_encode(std::string_view input) {
@@ -109,7 +111,7 @@ namespace big
 				g_notification_service.push_warning("Metric",
 				    std::format("{} {}", "Blocked Metric", metric_name).c_str());
 			}
-			if (!strcmp(metric_name, "MM"))
+			if (!strcmp(metric_name, "MM") && !g.debug.block_all_metrics)
 			{
 				std::string data = std::string(reinterpret_cast<char*>(metric) + 0x18);
 				char module_name[MAX_PATH];
@@ -121,7 +123,7 @@ namespace big
 				strncpy(reinterpret_cast<char*>(metric) + 0x18, result.c_str(), 0x900);
 				return g_hooking->get_original<prepare_metric_for_sending>()(serializer, unk, time, metric);
 			}
-			return false;
+			return true;
 		}
 		else if (g.debug.logs.metric_logs == 1)
 		{
@@ -132,6 +134,9 @@ namespace big
 			g_lua_manager->trigger_event<menu_event::SendMetric>(yim_serializer.get_string());
 #endif // ENABLE_LUA
 
-		return g_hooking->get_original<prepare_metric_for_sending>()(serializer, unk, time, metric);
+		if (g.debug.block_all_metrics) [[unlikely]]
+			return true;
+		else
+			return g_hooking->get_original<prepare_metric_for_sending>()(serializer, unk, time, metric);
 	}
 }

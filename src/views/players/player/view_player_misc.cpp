@@ -6,8 +6,7 @@ namespace big
 {
 	void view::view_player_misc()
 	{
-		std::string title = std::format("Player Misc Options: {}", g_player_service->get_selected()->get_name());
-		ImGui::TextUnformatted(title.c_str());
+		ImGui::Text("Player Misc Options: %s", g_player_service->get_selected()->get_name());
 
 		components::player_command_button<"joinceo">(g_player_service->get_selected());
 		components::player_command_button<"enterint">(g_player_service->get_selected());
@@ -22,6 +21,8 @@ namespace big
 		components::player_command_button<"givearmor">(g_player_service->get_selected());
 		ImGui::SameLine();
 		components::player_command_button<"giveammo">(g_player_service->get_selected());
+		ImGui::SameLine();
+		components::player_command_button<"giveweaps">(g_player_service->get_selected(), {});
 
 		ImGui::Checkbox("Off The Radar", &g_player_service->get_selected()->off_radar);
 		ImGui::Checkbox("Never Wanted", &g_player_service->get_selected()->never_wanted);

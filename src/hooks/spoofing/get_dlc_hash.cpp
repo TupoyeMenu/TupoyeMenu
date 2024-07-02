@@ -2,11 +2,11 @@
 
 namespace big
 {
-	// seed should always be 0
-	int hooks::get_dlc_hash(void* mgr, int seed)
+	std::uint32_t hooks::get_dlc_hash(void* mgr, std::uint32_t seed)
 	{
-		if (g.spoofing.override_game_hashes)
-			return g.spoofing.game_dlc_checksum;
+		if (g.spoofing.spoof_dlc_hash)
+			return g.spoofing.dlc_hash;
+
 		return g_hooking->get_original<hooks::get_dlc_hash>()(mgr, seed);
 	}
 }

@@ -4,6 +4,8 @@
 #include "natives.hpp"
 #include "script.hpp"
 #include "util/entity.hpp"
+#include "natives.hpp"
+#include "script.hpp"
 
 namespace big
 {

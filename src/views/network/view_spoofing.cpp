@@ -187,19 +187,41 @@ namespace big
 		}
 		components::command_checkbox<"32players">();
 
-		ImGui::Separator();
-		components::small_text("Press \"Reset game hashes\" then Enable \"Override game hashes\", this will allow you to load custom rpfs and enter public sessions.\nYou will need to disable \"Override game hashes\" then reset and re-enable when the game updates.");
-		ImGui::Checkbox("Override game hashes", &g.spoofing.override_game_hashes);
-		components::input_text("Checksum data", g.spoofing.game_checksum_data_b64, ImGuiInputTextFlags_ReadOnly);
-		ImGui::InputInt("DLC Checksum", &g.spoofing.game_dlc_checksum);
-		components::button("Reset game hashes", []
+		ImGui::SeparatorText("Spoof Data Hashes");
+
+		components::command_checkbox<"spoofdatahash">();
+		if (g.spoofing.spoof_game_data_hash)
 		{
-			constexpr static int checksum_block_size = 0xF4;
-			size_t out_size;
-			auto encoded = base64::base64_encode((const unsigned char*)*g_pointers->m_gta.m_game_checksum_data, checksum_block_size, out_size);
-			g.spoofing.game_checksum_data_b64 = std::string(encoded.get(), out_size);
-			g.spoofing.game_dlc_checksum = g_hooking->get_original<hooks::get_dlc_hash>()(*g_pointers->m_gta.m_dlc_manager, 0);
-			g.spoofing.last_game_version = std::stoi(g_pointers->m_gta.m_game_version);
-		});
+			ImGui::SameLine();
+			components::command_button<"storecurrenthash">();
+
+			if (ImGui::TreeNode("Data Hashes"))
+			{
+				for (int i = 0; i < 15; i++)
+				{
+					ImGui::PushID(i);
+					ImGui::SetNextItemWidth(200);
+					if (ImGui::InputScalar("##data_hash_value", ImGuiDataType_U32, &g.spoofing.game_data_hash[i], nullptr, nullptr, "%08X", ImGuiInputTextFlags_CharsHexadecimal | ImGuiInputTextFlags_CharsUppercase))
+					{
+						g.spoofing.game_data_hash_dirty = true;
+					}
+					ImGui::PopID();
+
+					if (((i - 1) % 3) != 0 && i != 14)
+					{
+						ImGui::SameLine();
+					}
+				}
+				ImGui::TreePop();
+			}
+		}
+
+		components::command_checkbox<"spoofdlchash">();
+		if (g.spoofing.spoof_dlc_hash)
+		{
+			ImGui::SameLine();
+			components::command_button<"storedlchash">();
+			ImGui::InputScalar("Value", ImGuiDataType_U32, &g.spoofing.dlc_hash, nullptr, nullptr, "%08X", ImGuiInputTextFlags_CharsHexadecimal | ImGuiInputTextFlags_CharsUppercase);
+		}
 	}
 }
