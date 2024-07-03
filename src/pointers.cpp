@@ -1023,8 +1023,8 @@ namespace big
 		});
 		// Get DLC Hash & DLC Manager
 		main_batch.add("GDH&DM", "74 0B 41 BC 10", [](memory::handle ptr) {
-			g_pointers->m_gta.m_dlc_manager  = ptr.add(0x11).rip().as<void**>();
-			g_pointers->m_gta.m_get_dlc_hash = ptr.add(0xA).rip().as<PVOID>();
+			g_pointers->m_gta.m_dlc_manager  = ptr.sub(0x11).rip().as<void**>();
+			g_pointers->m_gta.m_get_dlc_hash = ptr.sub(0xA).rip().as<PVOID>();
 		});
 		// Add Gamer To Session
 		main_batch.add("AGTS", "7C E8 EB 23", [](memory::handle ptr) {

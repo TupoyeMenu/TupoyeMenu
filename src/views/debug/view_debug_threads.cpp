@@ -211,7 +211,7 @@ namespace big
 				return;
 			}
 
-			scripts::start_launcher_script(idx);
+				scripts::start_launcher_script(hash);
 		});
 
 		ImGui::EndGroup();

@@ -59,7 +59,7 @@ namespace big
 		    {"carmod_shop"_J, "carmod_shop1", "2D 02 10 00 00 2C", 5, {0x71, 0x2E, 0x02, 0x01}, &g.vehicle.ls_customs});
 		g_script_patcher_service->add_patch(
 		    {"carmod_shop"_J, "carmod_shop2", "2D 00 B8 00 00", 5, {0x2E, 0x00, 0x00}, &g.vehicle.ls_customs});
-		g_script_patcher_service->add_patch({"carmod_shop"_J, "allow all vehicles", "2D 03 16 00 00 5D", 5, {0x72, 0x2E, 0x03, 0x01}, nullptr}); // allow all vehicles
+		// g_script_patcher_service->add_patch({"carmod_shop"_J, "allow all vehicles", "2D 03 16 00 00 5D", 5, {0x72, 0x2E, 0x03, 0x01}, nullptr}); // allow all vehicles
 		g_script_patcher_service->add_patch({"carmod_shop"_J, "allow all vehicles 2", "2D 03 07 00 00 71 38 02", 5, {0x72, 0x2E, 0x03, 0x01}, nullptr}); // allow all vehicles 2
 
 		/**
