@@ -47,10 +47,11 @@ namespace big
 		return "Unknown";
 	}
 
-	void add_flag_separator(std::string& mode_str)
+	void add_damage_flag(std::string& mode_str, const std::string& name)
 	{
 		if (!mode_str.empty())
 			mode_str += ", ";
+		mode_str += name;
 	}
 
 	void view::view_player_info()
@@ -86,12 +87,16 @@ namespace big
 		uint32_t ped_damage_bits = 0;
 		uint32_t ped_task_flag   = 0;
 		uint32_t veh_damage_bits = 0;
+		float ped_health         = 0.f;
+		float ped_max_health     = 0.f;
 		std::string mode_str     = "";
 
 		if (CPed* ped = g_player_service->get_selected()->get_ped())
 		{
 			ped_damage_bits = ped->m_damage_bits;
 			ped_task_flag   = ped->m_ped_task_flag;
+			ped_health   = ped->m_health;
+			ped_max_health   = ped->m_maxhealth;
 		}
 
 		if (ped_damage_bits & (uint32_t)eEntityProofs::GOD)
@@ -102,43 +107,35 @@ namespace big
 		{
 			if (ped_damage_bits & (uint32_t)eEntityProofs::BULLET)
 			{
-				add_flag_separator(mode_str);
-				mode_str += "Bullet";
+				add_damage_flag(mode_str, "Bullet");
 			}
 			if (ped_damage_bits & (uint32_t)eEntityProofs::FIRE)
 			{
-				add_flag_separator(mode_str);
-				mode_str += "Fire";
+				add_damage_flag(mode_str, "Fire");
 			}
 			if (ped_damage_bits & (uint32_t)eEntityProofs::COLLISION)
 			{
-				add_flag_separator(mode_str);
-				mode_str += "Collision";
+				add_damage_flag(mode_str, "Collision");
 			}
 			if (ped_damage_bits & (uint32_t)eEntityProofs::MELEE)
 			{
-				add_flag_separator(mode_str);
-				mode_str += "Melee";
+				add_damage_flag(mode_str, "Melee");
 			}
 			if (ped_damage_bits & (uint32_t)eEntityProofs::EXPLOSION)
 			{
-				add_flag_separator(mode_str);
-				mode_str += "Explosion";
+				add_damage_flag(mode_str, "Explosion");
 			}
 			if (ped_damage_bits & (uint32_t)eEntityProofs::STEAM)
 			{
-				add_flag_separator(mode_str);
-				mode_str += "Steam";
+				add_damage_flag(mode_str, "Steam");
 			}
 			if (ped_damage_bits & (uint32_t)eEntityProofs::WATER)
 			{
-				add_flag_separator(mode_str);
-				mode_str += "Water";
+				add_damage_flag(mode_str, "Water");
 			}
-			if(cped->m_health > 328 || cped->m_maxhealth > 328)
+			if(ped_health > 328 || ped_max_health > 328)
 			{
-				add_flag_separator(mode_str);
-				mode_str += "Health Too High";
+				add_damage_flag(mode_str, "Health Too High");
 			}
 		}
 
@@ -166,38 +163,31 @@ namespace big
 			{
 				if (veh_damage_bits & (uint32_t)eEntityProofs::BULLET)
 				{
-					add_flag_separator(mode_str);
-					mode_str += "Bullet";
+					add_damage_flag(mode_str, "Bullet");
 				}
 				if (veh_damage_bits & (uint32_t)eEntityProofs::FIRE)
 				{
-					add_flag_separator(mode_str);
-					mode_str += "Fire";
+					add_damage_flag(mode_str, "Fire");
 				}
 				if (veh_damage_bits & (uint32_t)eEntityProofs::COLLISION)
 				{
-					add_flag_separator(mode_str);
-					mode_str += "Collision";
+					add_damage_flag(mode_str, "Collision");
 				}
 				if (veh_damage_bits & (uint32_t)eEntityProofs::MELEE)
 				{
-					add_flag_separator(mode_str);
-					mode_str += "Melee";
+					add_damage_flag(mode_str, "Melee");
 				}
 				if (veh_damage_bits & (uint32_t)eEntityProofs::EXPLOSION)
 				{
-					add_flag_separator(mode_str);
-					mode_str += "Explosion";
+					add_damage_flag(mode_str, "Explosion");
 				}
 				if (veh_damage_bits & (uint32_t)eEntityProofs::STEAM)
 				{
-					add_flag_separator(mode_str);
-					mode_str += "Steam";
+					add_damage_flag(mode_str, "Steam");
 				}
 				if (veh_damage_bits & (uint32_t)eEntityProofs::WATER)
 				{
-					add_flag_separator(mode_str);
-					mode_str += "Water";
+					add_damage_flag(mode_str, "Water");
 				}
 			}
 

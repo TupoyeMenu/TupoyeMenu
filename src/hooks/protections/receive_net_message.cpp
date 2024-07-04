@@ -397,7 +397,7 @@ namespace big
 					{
 						session::add_infraction(player, Infraction::TRIED_KICK_PLAYER);
 						g_notification_service.push_error("Protections",
-						    std::vformat("{} tried to OOM kick you!", std::make_format_args(player->get_name())));
+						    std::format("{} tried to OOM kick you!", player->get_name()));
 						player->block_radio_requests = true;
 					}
 					return true;
@@ -412,7 +412,7 @@ namespace big
 					if (unk_player_radio_requests.exceeded_last_process())
 					{
 						g_notification_service.push_error("Protections",
-						    std::vformat("{} tried to OOM kick you!", std::make_format_args(peer->m_info.name)));
+						    std::format("{} tried to OOM kick you!", peer->m_info.name));
 					}
 					return true;
 				}
@@ -728,7 +728,7 @@ namespace big
 				{
 					session::add_infraction(player, Infraction::TRIED_KICK_PLAYER);
 					g_notification_service.push_error("Protections",
-					    std::vformat("{} tried to OOM kick you!", std::make_format_args(player->get_name())));
+					    std::format("{} tried to OOM kick you!", player->get_name()));
 				}
 				return true;
 			}
