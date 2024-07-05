@@ -23,6 +23,7 @@ namespace rage
             unk1   = 0;
             curlen = 0;
             unk4   = 1;
+            unk5   = 0;
             flags  = 0;
         }
 

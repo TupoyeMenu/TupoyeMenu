@@ -16,14 +16,14 @@ namespace big
 			{
 				view::network();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Network"_J);
+					g_lua_manager->draw_gui("GUI_TAB_NETWORK"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Spoofing"))
 			{
 				view::spoofing();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Spoofing"_J);
+					g_lua_manager->draw_gui("GUI_TAB_SPOOFING"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Chat"))
@@ -37,7 +37,14 @@ namespace big
 			{
 				view::missions();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Missions"_J);
+					g_lua_manager->draw_gui("GUI_TAB_MISSIONS"_J);
+				ImGui::EndTabItem();
+			}
+			if (ImGui::BeginTabItem("Controls"))
+			{
+				view::network_controls();
+				if (g_lua_manager)
+					g_lua_manager->draw_gui("GUI_TAB_NETWORK_CONTROLS"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Player Database"))
@@ -51,14 +58,14 @@ namespace big
 			{
 				view::session_browser();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Session Browser"_J);
+					g_lua_manager->draw_gui("GUI_TAB_SESSION_BROWSER"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Stat Editor"))
 			{
 				view::stat_editor();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Stat Editor"_J);
+					g_lua_manager->draw_gui("GUI_TAB_STAT_EDITOR"_J);
 				ImGui::EndTabItem();
 			}
 

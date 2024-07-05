@@ -726,6 +726,8 @@ namespace big
 			{
 				if (player->m_host_migration_rate_limit.exceeded_last_process())
 				{
+					auto p_name = player->get_name();
+
 					session::add_infraction(player, Infraction::TRIED_KICK_PLAYER);
 					g_notification_service.push_error("Protections",
 					    std::format("{} tried to OOM kick you!", player->get_name()));

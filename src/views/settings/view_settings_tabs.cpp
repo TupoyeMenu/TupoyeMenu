@@ -1,12 +1,6 @@
 /**
  * @file view_settings_tabs.cpp
  * @brief Settings tab bar.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of TupoyeMenu.
- * TupoyeMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * TupoyeMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with TupoyeMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "lua/lua_manager.hpp"
@@ -22,14 +16,14 @@ namespace big
 			{
 				view::settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Settings"_J);
+					g_lua_manager->draw_gui("GUI_TAB_SETTINGS"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Hotkeys"))
 			{
 				view::hotkey_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Hotkeys"_J);
+					g_lua_manager->draw_gui("GUI_TAB_HOTKEY_SETTINGS"_J);
 				ImGui::EndTabItem();
 			}
 #if defined (ENABLE_LUA)
@@ -37,7 +31,7 @@ namespace big
 			{
 				view::lua_scripts();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Lua Scripts"_J);
+					g_lua_manager->draw_gui("GUI_TAB_LUA_SCRIPTS"_J);
 				ImGui::EndTabItem();
 			}
 #endif // ENABLE_LUA
@@ -52,35 +46,35 @@ namespace big
 			{
 				view::esp_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("ESP"_J);
+					g_lua_manager->draw_gui("GUI_TAB_ESP_SETTINGS"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("GUI"))
 			{
 				view::gui_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("GUI"_J);
+					g_lua_manager->draw_gui("GUI_TAB_GUI_SETTINGS"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Reactions"))
 			{
 				view::reaction_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Reactions"_J);
+					g_lua_manager->draw_gui("GUI_TAB_REACTION_SETTINGS"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Protection"))
 			{
 				view::protection_settings();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Protection"_J);
+					g_lua_manager->draw_gui("GUI_TAB_PROTECTION_SETTINGS"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("GTA Cache"))
 			{
 				view::gta_cache();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("GTA Cache"_J);
+					g_lua_manager->draw_gui("GUI_TAB_GTA_CACHE_SETTINGS"_J);
 				ImGui::EndTabItem();
 			}
 

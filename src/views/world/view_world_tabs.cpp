@@ -1,13 +1,6 @@
 /**
  * @file view_world_tabs.cpp
  * @brief World options tab bar.
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of TupoyeMenu.
- * TupoyeMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * TupoyeMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with TupoyeMenu. If not, see <https://www.gnu.org/licenses/>.
- * 
  */
 
 #include "lua/lua_manager.hpp"
@@ -23,14 +16,14 @@ namespace big
 			{
 				view::world();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("World"_J);
+					g_lua_manager->draw_gui("GUI_TAB_WORLD"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Spawn Ped"))
 			{
 				view::spawn_ped();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Spawn Ped"_J);
+					g_lua_manager->draw_gui("GUI_TAB_SPAWN_PED"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Embient Population"))
@@ -44,35 +37,35 @@ namespace big
 			{
 				view::creator();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Creator"_J);
+					g_lua_manager->draw_gui("GUI_TAB_CREATOR"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Blackhole"))
 			{
 				view::blackhole();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Blackhole"_J);
+					g_lua_manager->draw_gui("GUI_TAB_BLACKHOLE"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Model Swapper"))
 			{
 				view::model_swapper();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Model Swapper"_J);
+					g_lua_manager->draw_gui("GUI_TAB_MODEL_SWAPPER"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("VFX"))
 			{
 				view::vfx();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("VFX"_J);
+					g_lua_manager->draw_gui("GUI_TAB_VFX"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("XML"))
 			{
 				view::xml_maps();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("XML Maps"_J);
+					g_lua_manager->draw_gui("GUI_TAB_XML_MAPS"_J);
 				ImGui::EndTabItem();
 			}
 

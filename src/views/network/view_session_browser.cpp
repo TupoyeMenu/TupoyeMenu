@@ -166,9 +166,9 @@ namespace big
 				ImGui::Combo("###pooltype", &g.session_browser.pool_filter, "Normal\0Bad Sport\0");
 			}
 
-			ImGui::Checkbox("FILTER_MULTIPLEXED_SESSIONS", &g.session_browser.filter_multiplexed_sessions);
+			ImGui::Checkbox("Filter Multiplexed Sessions", &g.session_browser.filter_multiplexed_sessions);
 			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("FILTER_MULTIPLEXED_SESSIONS_DESC");
+				ImGui::SetTooltip("FILTER_MULTIPLEXED_SESSIONS_DESC, this has no translation, even in YimMenu. If it does please open an issue in TupoyeMenu");
       
 			ImGui::Checkbox("Exclude Modder Sessions", &g.session_browser.exclude_modder_sessions);
 			if (ImGui::IsItemHovered())
