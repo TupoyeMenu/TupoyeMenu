@@ -4,6 +4,7 @@
 #include "pointers.hpp"
 #include "script.hpp"
 #include "services/matchmaking/matchmaking_service.hpp"
+#include "services/player_database/player_database_service.hpp"
 #include "util/session.hpp"
 #include "views/view.hpp"
 
@@ -31,7 +32,19 @@ namespace big
 					if (!session.is_valid)
 						continue;
 
-					if (components::selectable(std::to_string(session.info.m_session_token), i == selected_session_idx))
+					std::string session_str;
+					if (session.attributes.multiplex_count > 1)
+						session_str = std::format("{:X} (x{})", session.info.m_session_token, session.attributes.multiplex_count);
+					else
+						session_str = std::format("{:X}", session.info.m_session_token);
+
+					auto host_rid = session.info.m_net_player_data.m_gamer_handle.m_rockstar_id;
+					auto player = g_player_database_service->get_player_by_rockstar_id(host_rid);
+
+					if (g.session_browser.exclude_modder_sessions && player && player->block_join)
+						continue;
+
+					if (components::selectable(session_str, i == selected_session_idx))
 					{
 						selected_session_idx = i;
 						g_pointers->m_gta.m_encode_session_info(&session.info, session_info, 0xA9, nullptr);
@@ -42,7 +55,7 @@ namespace big
 						auto tool_tip = std::format("Number of Players: {}\nRegion: {}\nLanguage: {}\nHost Rockstar ID: {}\nDiscriminator: {:X}", session.attributes.player_count,
 							regions[session.attributes.region].name,
 						    languages[session.attributes.language].name,
-						    session.info.m_net_player_data.m_gamer_handle.m_rockstar_id,
+						    session.info.m_net_player_data.m_gamer_handle.m_rockstar_id, // TODO: this is not accurate
 						    session.attributes.discriminator);
 						ImGui::SetTooltip("%s", tool_tip.c_str());
 					}
@@ -153,6 +166,14 @@ namespace big
 				ImGui::Combo("###pooltype", &g.session_browser.pool_filter, "Normal\0Bad Sport\0");
 			}
 
+			ImGui::Checkbox("Filter Multiplexed Sessions", &g.session_browser.filter_multiplexed_sessions);
+			if (ImGui::IsItemHovered())
+				ImGui::SetTooltip("FILTER_MULTIPLEXED_SESSIONS_DESC, this has no translation, even in YimMenu. If it does please open an issue in TupoyeMenu");
+      
+			ImGui::Checkbox("Exclude Modder Sessions", &g.session_browser.exclude_modder_sessions);
+			if (ImGui::IsItemHovered())
+				ImGui::SetTooltip("Excludes hosts that you have blocked in the Player Database");
+
 			ImGui::TreePop();
 		}
 
@@ -164,8 +185,7 @@ namespace big
 			ImGui::TreePop();
 		}
 
-		if (ImGui::Checkbox("Replace Game Matchmaking", &g.session_browser.replace_game_matchmaking))
-			;
+		ImGui::Checkbox("Replace Game Matchmaking", &g.session_browser.replace_game_matchmaking);
 		ImGui::SameLine();
 		components::help_marker("This will replace the default game matchmaking with a custom one that will use the filters and sorting set here");
 

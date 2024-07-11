@@ -140,9 +140,14 @@ namespace big
 		const auto timestamp = std::format("{0:%H:%M:%S}", msg->Timestamp());
 		const auto& location = msg->Location();
 		const auto level     = msg->Level();
+		const auto stream    = msg->Stream();
 
 		const auto file = std::filesystem::path(location.file_name()).filename().string();
 
+		if (stream)
+			m_console_out << "[" << timestamp << "][" << stream->get()->Name() << "]" << ADD_COLOR_TO_STREAM(color) << "[" << get_level_string(level) << "/" << file << ":"
+			              << location.line() << "] " << RESET_STREAM_COLOR << msg->Message() << std::flush;
+		else
 		m_console_out << "[" << timestamp << "]" << ADD_COLOR_TO_STREAM(color) << "[" << get_level_string(level) << "/" << file << ":"
 		              << location.line() << "] " << RESET_STREAM_COLOR << msg->Message() << std::flush;
 	}
@@ -159,11 +164,16 @@ namespace big
 		const auto timestamp = std::format("{0:%H:%M:%S}", msg->Timestamp());
 		const auto& location = msg->Location();
 		const auto level     = msg->Level();
+		const auto stream    = msg->Stream();
 
 		const auto file = std::filesystem::path(location.file_name()).filename().string();
 
+		if (stream)
+			m_console_out << "[" << timestamp << "][" << stream->get()->Name() << "]"
+			                 "[" << get_level_string(level) << "/" << file << ":" << location.line() << "] " << msg->Message() << std::flush;
+		else
 		m_console_out << "[" << timestamp << "]"
-		              << "[" << get_level_string(level) << "/" << file << ":" << location.line() << "] " << msg->Message() << std::flush;
+					         "[" << get_level_string(level) << "/" << file << ":" << location.line() << "] " << msg->Message() << std::flush;
 	}
 
 	void logger::format_file(const LogMessagePtr msg)
@@ -174,11 +184,16 @@ namespace big
 		const auto timestamp = std::format("{0:%H:%M:%S}", msg->Timestamp());
 		const auto& location = msg->Location();
 		const auto level     = msg->Level();
+		const auto stream    = msg->Stream();
 
 		const auto file = std::filesystem::path(location.file_name()).filename().string();
 
+		if (stream)
+			m_file_out << "[" << timestamp << "][" << stream->get()->Name() << "]"
+			              "[" << get_level_string(level) << "/" << file << ":" << location.line() << "] " << msg->Message() << std::flush;
+		else
 		m_file_out << "[" << timestamp << "]"
-		           << "[" << get_level_string(level) << "/" << file << ":" << location.line() << "] " << msg->Message() << std::flush;
+					      "[" << get_level_string(level) << "/" << file << ":" << location.line() << "] " << msg->Message() << std::flush;
 	}
 
 	void logger::format_log(const LogMessagePtr msg)

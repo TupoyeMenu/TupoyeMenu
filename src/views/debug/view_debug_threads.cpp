@@ -8,7 +8,6 @@
 #include "fiber_pool.hpp"
 #include "gta/joaat.hpp"
 #include "gta/script_handler.hpp"
-#include "gta/script_thread.hpp"
 #include "gta_util.hpp"
 #include "gui/components/components.hpp"
 #include "natives.hpp"
@@ -19,6 +18,8 @@
 #include "util/scripts.hpp"
 #include "util/system.hpp"
 #include "views/view.hpp"
+
+#include <script/GtaThread.hpp>
 
 static GtaThread* selected_thread;
 
@@ -99,11 +100,6 @@ namespace big
 					{
 						components::button("Take Control", [net_handler] {
 							net_handler->send_host_migration_event(g_player_service->get_self()->get_net_game_player());
-							script::get_current()->yield(10ms);
-							if (selected_thread->m_stack && selected_thread->m_net_component)
-							{
-								net_handler->block_host_migration(true);
-							}
 						});
 					}
 				}
@@ -215,7 +211,7 @@ namespace big
 				return;
 			}
 
-			scripts::start_launcher_script(idx);
+				scripts::start_launcher_script(hash);
 		});
 
 		ImGui::EndGroup();

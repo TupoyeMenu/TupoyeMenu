@@ -1,8 +1,8 @@
 #include "stack_trace.hpp"
 
-#include "gta/script_thread.hpp"
 #include "memory/module.hpp"
 
+#include <script/GtaThread.hpp>
 #include <dbghelp.h>
 #include <winternl.h>
 

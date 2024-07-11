@@ -3,6 +3,8 @@
 #include "gta/enums.hpp"
 #include "natives.hpp"
 #include "util/entity.hpp"
+#include "util/math.hpp"
+#include "natives.hpp"
 
 namespace big
 {

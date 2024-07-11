@@ -3,6 +3,7 @@
 #include "gta/enums.hpp"
 #include "util/entity.hpp"
 #include "util/ped.hpp"
+#include "natives.hpp"
 
 namespace big
 {

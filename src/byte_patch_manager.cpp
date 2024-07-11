@@ -1,13 +1,3 @@
-/**
- * @file byte_patch_manager.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "byte_patch_manager.hpp"
 
 #include "gta/net_array.hpp"
@@ -17,9 +7,6 @@
 #include "util/explosion_anti_cheat_bypass.hpp"
 #include "util/vehicle.hpp"
 #include "util/world_model.hpp"
-
-extern "C" void sound_overload_detour();
-uint64_t g_sound_overload_ret_addr;
 
 namespace big
 {
@@ -34,6 +21,8 @@ namespace big
 		// Patch blocked explosions
 		explosion_anti_cheat_bypass::m_can_blame_others =
 		    memory::byte_patch::make(g_pointers->m_gta.m_blame_explode.as<uint16_t*>(), 0xE990).get();
+		explosion_anti_cheat_bypass::m_set_script_flag =
+		    memory::byte_patch::make(g_pointers->m_gta.m_blame_explode.sub(0x63).as<uint32_t*>(), 0x90909090).get();
 		explosion_anti_cheat_bypass::m_can_use_blocked_explosions =
 		    memory::byte_patch::make(g_pointers->m_gta.m_explosion_patch.sub(12).as<uint16_t*>(), 0x9090).get();
 
@@ -47,12 +36,6 @@ namespace big
 
 		// Disable cheat activated netevent when creator warping
 		memory::byte_patch::make(g_pointers->m_gta.m_creator_warp_cheat_triggered_patch.as<uint8_t*>(), 0xEB)->apply();
-
-		// Setup inline hook for sound overload crash protection
-		g_sound_overload_ret_addr = g_pointers->m_gta.m_sound_overload_detour.add(13 + 15).as<decltype(g_sound_overload_ret_addr)>();
-		std::vector<byte> bytes = {0xFF, 0x25, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x90}; // far jump opcode + a nop opcode
-		*(void**)(bytes.data() + 6) = (void*)sound_overload_detour;
-		memory::byte_patch::make(g_pointers->m_gta.m_sound_overload_detour.add(13).as<void*>(), bytes)->apply();
 
 		// Disable collision when enabled
 		vehicle::disable_collisions::m_patch =

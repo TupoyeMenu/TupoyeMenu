@@ -2,11 +2,15 @@
 
 #include "pointers.hpp"
 
+#include <player/CNonPhysicalPlayerData.hpp>
+#include <network/CNetGamePlayer.hpp>
+
 namespace big
 {
 	hooking::hooking() :
 	    m_swapchain_hook(*g_pointers->m_gta.m_swapchain, hooks::swapchain_num_funcs),
-	    m_sync_data_reader_hook(g_pointers->m_gta.m_sync_data_reader_vtable, 27)
+	    m_sync_data_reader_hook(g_pointers->m_gta.m_sync_data_reader_vtable, 27),
+	    m_error_packet_memmove_hook(g_pointers->m_gta.m_error_packet_memmove, (void*)hooks::error_packet_memmove)
 	{
 		m_swapchain_hook.hook(hooks::swapchain_present_index, (void*)&hooks::swapchain_present);
 		m_swapchain_hook.hook(hooks::swapchain_resizebuffers_index, (void*)&hooks::swapchain_resizebuffers);
@@ -108,7 +112,7 @@ namespace big
 
 		detour_hook_helper::add<hooks::netfilter_handle_message>("NHM", (void*)g_pointers->m_gta.m_netfilter_handle_message);
 
-		detour_hook_helper::add<hooks::task_fall_constructor>("TFC", g_pointers->m_gta.m_taskfall_constructor);
+		detour_hook_helper::add<hooks::task_fall_constructor>("TFC", (void*)g_pointers->m_gta.m_taskfall_constructor);
 
 		detour_hook_helper::add<hooks::send_non_physical_player_data>("SNPPD", (void*)g_pointers->m_gta.m_send_non_physical_player_data);
 
@@ -125,7 +129,6 @@ namespace big
 
 		detour_hook_helper::add<hooks::read_bits_single>("RBS", (void*)g_pointers->m_gta.m_read_bits_single);
 
-		detour_hook_helper::add<hooks::get_dlc_hash>("GDH", (void*)g_pointers->m_gta.m_get_dlc_hash);
 		detour_hook_helper::add<hooks::get_pool_type>("GPT", (void*)g_pointers->m_gta.m_get_pool_type);
 
 		detour_hook_helper::add<hooks::received_clone_remove>("RCR", (void*)g_pointers->m_gta.m_received_clone_remove);
@@ -136,15 +139,21 @@ namespace big
 
 		detour_hook_helper::add<hooks::searchlight_crash>("SLC", (void*)g_pointers->m_gta.m_searchlight_crash);
 
-		detour_hook_helper::add<hooks::advertise_session>("AS", g_pointers->m_gta.m_advertise_session);
-		detour_hook_helper::add<hooks::update_session_advertisement>("USA", g_pointers->m_gta.m_update_session_advertisement);
-		detour_hook_helper::add<hooks::unadvertise_session>("US", g_pointers->m_gta.m_unadvertise_session);
-		detour_hook_helper::add<hooks::send_session_detail_msg>("SSDM", g_pointers->m_gta.m_send_session_detail_msg);
+		detour_hook_helper::add<hooks::advertise_session>("AS", (void*)g_pointers->m_gta.m_advertise_session);
+		detour_hook_helper::add<hooks::update_session_advertisement>("USA", (void*)g_pointers->m_gta.m_update_session_advertisement);
+		detour_hook_helper::add<hooks::unadvertise_session>("US", (void*)g_pointers->m_gta.m_unadvertise_session);
+		detour_hook_helper::add<hooks::send_session_detail_msg>("SSDM", (void*)g_pointers->m_gta.m_send_session_detail_msg);
 
-  
-		detour_hook_helper::add<hooks::write_node_data>("WND", g_pointers->m_gta.m_write_node_data);
-		detour_hook_helper::add<hooks::can_send_node_to_player>("CSNTP", g_pointers->m_gta.m_can_send_node_to_player);
-		detour_hook_helper::add<hooks::write_node>("WN", g_pointers->m_gta.m_write_node);
+		detour_hook_helper::add<hooks::write_node_data>("WND", (void*)g_pointers->m_gta.m_write_node_data);
+		detour_hook_helper::add<hooks::can_send_node_to_player>("CSNTP", (void*)g_pointers->m_gta.m_can_send_node_to_player);
+		detour_hook_helper::add<hooks::write_node>("WN", (void*)g_pointers->m_gta.m_write_node);
+
+		detour_hook_helper::add<hooks::get_dlc_hash>("GDLCH", (void*)g_pointers->m_gta.m_get_dlc_hash);
+
+		detour_hook_helper::add<hooks::add_gamer_to_session>("AGTS", (void*)g_pointers->m_gta.m_add_gamer_to_session);
+
+		detour_hook_helper::add<hooks::create_pool_item>("CPI", (void*)g_pointers->m_gta.m_create_pool_item);
+
 		g_hooking = this;
 	}
 
@@ -162,6 +171,7 @@ namespace big
 	{
 		m_swapchain_hook.enable();
 		m_sync_data_reader_hook.enable();
+		m_error_packet_memmove_hook.enable();
 		m_og_wndproc = WNDPROC(SetWindowLongPtrW(g_pointers->m_hwnd, GWLP_WNDPROC, LONG_PTR(&hooks::wndproc)));
 
 		for (auto& detour_hook_helper : m_detour_hook_helpers)
@@ -184,6 +194,7 @@ namespace big
 		}
 
 		SetWindowLongPtrW(g_pointers->m_hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(m_og_wndproc));
+		m_error_packet_memmove_hook.disable();
 		m_sync_data_reader_hook.disable();
 		m_swapchain_hook.disable();
 

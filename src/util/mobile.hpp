@@ -6,13 +6,12 @@
 #pragma once
 #include "core/enums.hpp"
 #include "core/scr_globals.hpp"
-#include "globals.hpp"
+#include "gta/joaat.hpp"
 #include "gta_util.hpp"
 #include "misc.hpp"
 #include "natives.hpp"
 #include "notify.hpp"
 #include "script.hpp"
-#include "core/scr_globals.hpp"
 #include "script_local.hpp"
 #include "vehicle.hpp"
 
@@ -35,27 +34,27 @@ namespace big::mobile
 	{
 		inline void request_ammo_drop()
 		{
-			*scr_globals::freemode_global.at(891).as<int*>() = 1;
+			*scr_globals::freemode_global.at(906).as<int*>() = 1;
 		}
 
 		inline void request_boat_pickup()
 		{
-			*scr_globals::freemode_global.at(892).as<int*>() = 1;
+			*scr_globals::freemode_global.at(907).as<int*>() = 1;
 		}
 
 		inline void request_helicopter_pickup()
 		{
-			*scr_globals::freemode_global.at(893).as<int*>() = 1;
+			*scr_globals::freemode_global.at(908).as<int*>() = 1;
 		}
 
 		inline void request_backup_helicopter()
 		{
-			*scr_globals::freemode_global.at(4491).as<int*>() = 1;
+			*scr_globals::freemode_global.at(4506).as<int*>() = 1;
 		}
 
 		inline void request_airstrike()
 		{
-			*scr_globals::freemode_global.at(4492).as<int*>() = 1;
+			*scr_globals::freemode_global.at(4507).as<int*>() = 1;
 		}
 	}
 
@@ -94,12 +93,12 @@ namespace big::mobile
 	{
 		inline void request_bullshark_testosterone()
 		{
-			*scr_globals::freemode_properties.at(3694).as<int*>() = 1;
+			*scr_globals::freemode_properties.at(3733).as<int*>() = 1;
 		}
 
 		inline void request_ballistic_armor() //i think this is a ceo ability atleast?
 		{
-			*scr_globals::freemode_global.at(896).as<int*>() = 1;
+			*scr_globals::freemode_global.at(906).as<int*>() = 1;
 		}
 	}
 
@@ -107,32 +106,32 @@ namespace big::mobile
 	{
 		inline void request_avenger()
 		{
-			*scr_globals::freemode_global.at(938).as<int*>() = 1;
+			*scr_globals::freemode_global.at(953).as<int*>() = 1;
 		}
 
 		inline void request_kosatka()
 		{
-			*scr_globals::freemode_global.at(960).as<int*>() = 1;
+			*scr_globals::freemode_global.at(975).as<int*>() = 1;
 		}
 
 		inline void request_mobile_operations_center()
 		{
-			*scr_globals::freemode_global.at(930).as<int*>() = 1;
+			*scr_globals::freemode_global.at(945).as<int*>() = 1;
 		}
 
 		inline void request_terrorbyte()
 		{
-			*scr_globals::freemode_global.at(943).as<int*>() = 1;
+			*scr_globals::freemode_global.at(958).as<int*>() = 1;
 		}
 
 		inline void request_acidlab()
 		{
-			*scr_globals::freemode_global.at(944).as<int*>() = 1;
+			*scr_globals::freemode_global.at(959).as<int*>() = 1;
 		}
 
 		inline void request_acidlab_bike()
 		{
-			*scr_globals::freemode_global.at(994).as<int*>() = 1;
+			*scr_globals::freemode_global.at(1009).as<int*>() = 1;
 		}
 	}
 
@@ -140,12 +139,12 @@ namespace big::mobile
 	{
 		inline Vehicle get_personal_vehicle()
 		{
-			return *scr_globals::freemode_global.at(299).as<Vehicle*>();
+			return *scr_globals::freemode_global.at(301).as<Vehicle*>();
 		}
 
 		inline void summon_vehicle_by_index(int veh_idx)
 		{
-			if (*scr_globals::freemode_global.at(985).as<int*>() != -1)
+			if (*scr_globals::freemode_global.at(1000).as<int*>() != -1)
 				return g_notification_service.push_warning("Vehicle", "Mechanic is not ready to deliver a vehicle right now.");
 
 			if (g.clone_pv.spawn_inside && self::veh)
@@ -160,11 +159,11 @@ namespace big::mobile
 			// only do this when spawn inside is enabled otherwise the vehicle will spawn relatively far away from players
 			if (g.clone_pv.spawn_inside)
 			{
-				*scr_globals::freemode_global.at(942).as<int*>() = 1; // disable vehicle node distance check
+				*scr_globals::freemode_global.at(957).as<int*>() = 1; // disable vehicle node distance check
 			}
-			*scr_globals::freemode_global.at(928).as<int*>() = 1;     // tell freemode to spawn our vehicle
-			*scr_globals::freemode_global.at(988).as<int*>() = 0;     // required
-			*scr_globals::freemode_global.at(985).as<int*>() = veh_idx;
+			*scr_globals::freemode_global.at(943).as<int*>()  = 1; // tell freemode to spawn our vehicle
+			*scr_globals::freemode_global.at(1003).as<int*>() = 0; // required
+			*scr_globals::freemode_global.at(1000).as<int*>() = veh_idx;
 
 			script::get_current()->yield(100ms);
 
@@ -179,7 +178,7 @@ namespace big::mobile
 			}
 
 			// blocking call till vehicle is delivered
-			notify::busy_spinner("Delivering vehicle...", scr_globals::freemode_global.at(985).as<int*>(), -1);
+			notify::busy_spinner("Delivering vehicle...", scr_globals::freemode_global.at(1000).as<int*>(), -1);
 
 			if (g.clone_pv.spawn_inside)
 			{
@@ -192,7 +191,7 @@ namespace big::mobile
 	{
 		inline void request_taxi()
 		{
-			*scr_globals::freemode_global.at(853).as<int*>() = 1;
+			*scr_globals::freemode_global.at(868).as<int*>() = 1;
 		}
 
 		inline void request_gun_van()

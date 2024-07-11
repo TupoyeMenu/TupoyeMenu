@@ -14,8 +14,7 @@ namespace big
 {
 	void view::view_player_kicks_and_crashes()
 	{
-		std::string title = std::format("Player Kick Options: {}", g_player_service->get_selected()->get_name());
-		ImGui::TextUnformatted(title.c_str());
+		ImGui::Text("Player Kick Options: %s", g_player_service->get_selected()->get_name());
 		auto const is_session_host = [] {
 			return gta_util::get_network()->m_game_session_ptr->is_host();
 		};
@@ -27,8 +26,6 @@ namespace big
 
 		components::player_command_button<"hostkick">(g_player_service->get_selected());
 		components::player_command_button<"breakup">(g_player_service->get_selected());
-		ImGui::SameLine();
-		components::command_checkbox<"breakupcheating">();
 
 		ImGui::EndDisabled();
 

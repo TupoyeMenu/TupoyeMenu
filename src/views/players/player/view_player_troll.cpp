@@ -7,12 +7,17 @@ namespace big
 {
 	void view::view_player_troll()
 	{
-		std::string title = std::format("Player Troll Options: {}", g_player_service->get_selected()->get_name());
-		ImGui::TextUnformatted(title.c_str());
+		ImGui::Text("Player Troll Options: %s", g_player_service->get_selected()->get_name());
 
 		components::player_command_button<"playertp">(g_player_service->get_selected());
 		ImGui::SameLine();
 		components::player_command_button<"bring">(g_player_service->get_selected());
+		ImGui::SameLine();
+		components::button("TP To Waypoint", [] {
+			Vector3 location;
+			if (blip::get_blip_location(location, (int)BlipIcons::Waypoint))
+				entity::load_ground_at_3dcoord(location), teleport::teleport_player_to_coords(g_player_service->get_selected(), location);
+		});
 
 		components::player_command_button<"playervehtp">(g_player_service->get_selected());
 		components::player_command_button<"rcplayer">(g_player_service->get_selected());

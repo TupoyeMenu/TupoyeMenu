@@ -55,7 +55,6 @@ namespace big
 
 		ImGui::BeginGroup();
 		ImGui::Checkbox("Start Activity", &g.protections.script_events.start_activity);
-		ImGui::Checkbox("Send SMS", &g.protections.script_events.send_sms);
 		ImGui::Checkbox("Spectate", &g.protections.script_events.spectate);
 		ImGui::Checkbox("Vehicle Kick", &g.protections.script_events.vehicle_kick);
 		ImGui::Checkbox("Wanted Level", &g.protections.script_events.clear_wanted_level);

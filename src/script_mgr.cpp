@@ -1,9 +1,10 @@
 #include "script_mgr.hpp"
 
-#include "gta/script_thread.hpp"
 #include "gta_util.hpp"
 #include "pointers.hpp"
-#include "script/tlsContext.hpp"
+
+#include <script/tlsContext.hpp>
+#include <script/GtaThread.hpp>
 
 namespace big
 {

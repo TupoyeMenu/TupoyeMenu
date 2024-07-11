@@ -1,4 +1,5 @@
 #include "backend/looped/looped.hpp"
+#include "gta/joaat.hpp"
 #include "gta_util.hpp"
 #include "natives.hpp"
 #include "pointers.hpp"

@@ -28,14 +28,9 @@ namespace big
 			cmd.m_num_peers  = 1;
 			cmd.m_handles[0] = player->get_net_data()->m_gamer_handle;
 
-			if (g.session.show_cheating_message)
-				cmd.m_unk = 19;
-
 			g_pointers->m_gta.m_handle_remove_gamer_cmd(gta_util::get_network()->m_game_session_ptr, player->get_session_player(), &cmd);
 		}
 	};
 
 	breakup_kick g_breakup_kick("breakup", "Breakup Kick", "Nearly unblockable but could be detected by others", 0, false);
-	bool_command g_show_cheating_message("breakupcheating", "Show Cheating Message", "Shows a \"was detected cheating and has been removed from the session\" instead of the usual leave message when the player gets kicked",
-	    g.session.show_cheating_message);
 }

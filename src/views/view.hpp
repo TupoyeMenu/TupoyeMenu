@@ -41,6 +41,8 @@ namespace big
 		static void animations();
 		static void network();
 		static void settings_tabs();
+		static void network_controls();
+		static void chat();
 		static void missions();
 		static void player_database();
 		static void session_browser();

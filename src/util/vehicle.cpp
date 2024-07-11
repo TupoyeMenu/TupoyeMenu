@@ -1,4 +1,5 @@
 #include "vehicle.hpp"
+#include "pools.hpp"
 
 #include "core/scr_globals.hpp"
 #include "entity.hpp"

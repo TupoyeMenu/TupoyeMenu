@@ -1,8 +1,9 @@
 #pragma once
 #include "gta/joaat.hpp"
-#include "gta/script_thread.hpp"
 #include "hooking/vmt_hook.hpp"
 #include "natives.hpp"
+
+#include <script/GtaThread.hpp>
 
 namespace big
 {
