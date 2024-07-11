@@ -150,7 +150,7 @@ namespace big::session
 	{
 		rage::rlGamerHandle player_handle(rid);
 
-		bool success = g_pointers->m_gta.m_invite_player_by_gamer_handle(g_pointers->m_gta.m_network_config, &player_handle, 1, 0, 0, 0);
+		bool success = g_pointers->m_gta.m_invite_player_by_gamer_handle(*g_pointers->m_gta.m_network, &player_handle, 1, nullptr, nullptr, nullptr);
 
 		if (!success)
 			return g_notification_service.push_error("Network", "RID_JOINER_INVITE_OFFLINE");

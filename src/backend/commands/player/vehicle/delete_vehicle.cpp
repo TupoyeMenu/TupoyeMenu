@@ -23,5 +23,5 @@ namespace big
 		}
 	};
 
-	delete_vehicle g_delete_vehicle("deleteveh", "BACKEND_DELETE_VEHICLE", "BACKEND_DELETE_VEHICLE_DESC", 0);
+	delete_vehicle g_delete_vehicle("deleteveh", "Delete Vehicle", "Delete the player's vehicle", 0);
 }

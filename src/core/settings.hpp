@@ -204,13 +204,10 @@ namespace big
 
 			pair send_net_info_to_lobby{};
 			pair transaction_rate_limit{};
-			pair mismatch_sync_type{};
-			pair out_of_allowed_range_sync_type{};
-			pair invalid_sync{};
 
 			bool warn_metric = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(notifications, gta_thread_kill, gta_thread_start, network_player_mgr_init, network_player_mgr_shutdown, player_join, player_leave, send_net_info_to_lobby, transaction_rate_limit, mismatch_sync_type, out_of_allowed_range_sync_type, invalid_sync, warn_metric)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(notifications, gta_thread_kill, gta_thread_start, network_player_mgr_init, network_player_mgr_shutdown, player_join, player_leave, send_net_info_to_lobby, transaction_rate_limit, warn_metric)
 		} notifications{};
 
 		struct reactions
@@ -317,9 +314,8 @@ namespace big
 				bool vehicle_kick               = false;
 				bool teleport_to_warehouse      = true;
 				bool start_activity             = true;
-				bool send_sms                   = true;
 
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(script_events, bounty, ceo_money, clear_wanted_level, force_mission, force_teleport, gta_banner, mc_teleport, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate, give_collectible, vehicle_kick, teleport_to_warehouse, start_activity, send_sms)
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(script_events, bounty, ceo_money, clear_wanted_level, force_mission, force_teleport, gta_banner, mc_teleport, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate, give_collectible, vehicle_kick, teleport_to_warehouse, start_activity)
 			} script_events{};
 
 			bool rid_join                = false;
@@ -363,7 +359,6 @@ namespace big
 			bool no_water_collision           = false;
 			int wanted_level                  = 0;
 			bool god_mode                     = false;
-			bool part_water                   = false;
 			bool proof_bullet                 = false;
 			bool proof_fire                   = false;
 			bool proof_collision              = false;
@@ -397,7 +392,7 @@ namespace big
 			// do not save below entries
 			bool dance_mode = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(self, ipls, allow_ragdoll, clean_player, never_wanted, force_wanted_level, passive, free_cam, invisibility, local_visibility, no_ragdoll, noclip, noclip_aim_speed_multiplier, noclip_speed_multiplier, off_radar, super_run, no_collision, unlimited_oxygen, no_water_collision, wanted_level, god_mode, part_water, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_water, proof_mask, mobile_radio, fast_respawn, auto_tp, hud, custom_weapon_stop, prompt_ambient_animations, persist_outfit, persist_outfits_mis, interaction_menu_freedom, graceful_landing)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(self, ipls, allow_ragdoll, clean_player, never_wanted, force_wanted_level, passive, free_cam, invisibility, local_visibility, no_ragdoll, noclip, noclip_aim_speed_multiplier, noclip_speed_multiplier, off_radar, super_run, no_collision, unlimited_oxygen, no_water_collision, wanted_level, god_mode, proof_bullet, proof_fire, proof_collision, proof_melee, proof_explosion, proof_steam, proof_water, proof_mask, mobile_radio, fast_respawn, auto_tp, hud, custom_weapon_stop, prompt_ambient_animations, persist_outfit, persist_outfits_mis, interaction_menu_freedom, graceful_landing)
 		} self{};
 
 		struct session
@@ -470,12 +465,11 @@ namespace big
 			bool harass_players   = false;
 			bool spam_killfeed    = false;
 
-			bool show_cheating_message = false;
 			bool anonymous_bounty      = true;
 
 			bool fast_join = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, log_chat_messages, decloak_players, spoof_host_token_type, custom_host_token, hide_token_spoofing_when_host, force_script_host, player_magnet_enabled, player_magnet_count, is_team, join_in_sctv_slots, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, block_ceo_creation, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, show_cheating_message, anonymous_bounty, lock_session, fast_join, unhide_players_from_player_list, allow_friends_into_locked_session, trust_friends, use_spam_timer, spam_timer, spam_length, script_block_opts)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, log_chat_messages, decloak_players, spoof_host_token_type, custom_host_token, hide_token_spoofing_when_host, force_script_host, player_magnet_enabled, player_magnet_count, is_team, join_in_sctv_slots, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, block_ceo_creation, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, anonymous_bounty, lock_session, fast_join, unhide_players_from_player_list, allow_friends_into_locked_session, trust_friends, use_spam_timer, spam_timer, spam_length, script_block_opts)
 		} session{};
 
 		struct settings
@@ -509,7 +503,7 @@ namespace big
 				int clear_wanted         = 0;
 				int cmd_excecutor        = 'U';
 
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys, editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, teleport_pv, teleport_selected, noclip, vehicle_flymode, bringvehicle, invis, heal, fill_inventory, skip_cutscene, freecam, superrun, passive, invisveh, localinvisveh, fill_ammo, fast_quit, clear_wanted, cmd_excecutor)
+				NLOHMANN_DEFINE_TYPE_INTRUSIVE(hotkeys, editing_menu_toggle, menu_toggle, teleport_waypoint, teleport_objective, teleport_selected, teleport_pv, noclip, vehicle_flymode, bringvehicle, invis, heal, fill_inventory, skip_cutscene, freecam, superrun, passive, invisveh, localinvisveh, fill_ammo, fast_quit, clear_wanted, cmd_excecutor)
 			} hotkeys{};
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(settings, hotkeys, dev_dlc, onboarding_complete)
@@ -555,13 +549,6 @@ namespace big
 				bool drive_train  = false;
 				bool derail_train = false;
 			} train{};
-
-			struct water
-			{
-				bool part_water = false;
-
-				NLOHMANN_DEFINE_TYPE_INTRUSIVE(water, part_water)
-			} water{};
 
 			struct gravity
 			{
@@ -657,7 +644,7 @@ namespace big
 			bool blackout    = false;
 			bool ground_snow = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(world, water, spawn_ped, custom_time, blackhole, model_swapper, nearby, local_weather, override_weather, blackout, ground_snow)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(world, spawn_ped, custom_time, blackhole, model_swapper, nearby, local_weather, override_weather, blackout, ground_snow)
 		} world{};
 
 		struct spoofing
@@ -682,7 +669,6 @@ namespace big
 
 			bool spoof_player_model   = false;
 			std::string player_model  = "";
-			std::string player_outfit = "";
 
 			bool spoof_cheater = false;
 

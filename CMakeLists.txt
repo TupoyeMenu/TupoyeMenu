@@ -12,6 +12,7 @@ include(cmake/git.cmake)
 
 # Fetch modules
 message("\nFetching modules")
+include(cmake/asmjit.cmake)
 include(cmake/minhook.cmake)
 include(cmake/async-logger.cmake)
 include(cmake/pugixml.cmake)
@@ -61,11 +62,12 @@ target_include_directories(TupoyeMenu PRIVATE
     "${gtav_classes_SOURCE_DIR}"
     "${imgui_SOURCE_DIR}"
     "${minhook_SOURCE_DIR}/src/hde"
+    "${asmjit_SOURCE_DIR}/src"
 )
 
 
 target_precompile_headers(TupoyeMenu PRIVATE "${SRC_DIR}/common.hpp")
-target_link_libraries(TupoyeMenu PRIVATE pugixml minhook AsyncLogger dbghelp imgui lua_static d3dcompiler dwmapi winmm psapi)
+target_link_libraries(TupoyeMenu PRIVATE pugixml minhook AsyncLogger dbghelp imgui lua_static asmjit::asmjit d3dcompiler dwmapi winmm psapi)
 
 # Actually use build options
 include(cmake/build_options_impl.cmake)

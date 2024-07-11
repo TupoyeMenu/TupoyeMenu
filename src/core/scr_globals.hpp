@@ -8,7 +8,7 @@ namespace big::scr_globals
 	static inline const script_global gsbd_fm(1845281);
 	static inline const script_global gsbd_kicking(1877042);
 	static inline const script_global gsbd_fm_events(1916617);
-	static inline const script_global gsbd_block_c(2657971);
+	static inline const script_global gsbd_block_c(2652592);
 	static inline const script_global gsbd_property_instances(1936863);
 
 	static inline const script_global globalplayer_bd(2657971);
@@ -71,7 +71,7 @@ namespace big::scr_locals
 {
 	namespace am_hunt_the_beast
 	{
-		constexpr static auto broadcast_idx        = 607;  // (bParam0) != 0;
+		constexpr static auto broadcast_idx        = 604;  // (bParam0) != 0;
 		constexpr static auto player_broadcast_idx = 2588; // if (NETWORK::PARTICIPANT_ID_TO_INT() != -1)
 	}
 
@@ -117,6 +117,6 @@ namespace big::scr_locals
 		inline static script_local enabled_state(2097); //P"51 ? ? 71 51 ? ? 71 51 ? ? 71 61 ? ? ?" +1 W="enabled_state"
 		inline static script_local ready(2048);         //P"51 ? ? 50 ? ? 2A" +1 W="ready"
 		inline static auto vehicle_state  = 638;        //P"4F ? ? 46 ? ? 4F ? ?" +4 W ="vehicle_state"
-		inline static auto vehicle_ent_id = 409; //P"4F ? ? 47 ? ? 39 ? 55 ? ? 38 ? 73" +4 W ="vehicle_ent_id"
+		inline static auto vehicle_ent_id = 409;        //P"4F ? ? 47 ? ? 39 ? 55 ? ? 38 ? 73" +4 W ="vehicle_ent_id"
 	}
 }
