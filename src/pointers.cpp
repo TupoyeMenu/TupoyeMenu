@@ -928,7 +928,7 @@ namespace big
 		});
 
 		// Nullsub
-		main_batch.add("NS", "90 C3", [](memory::handle ptr) {
+		main_batch.add("NS", "90 C3 CC", [](memory::handle ptr) {
 			g_pointers->m_gta.m_nullsub = ptr.as<void (*)()>();
 		});
 
