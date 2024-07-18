@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.20)
 # Crosscompiling
 include(cmake/crosscompile.cmake)
 
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
 project(TupoyeMenu CXX ASM_MASM)
 
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
