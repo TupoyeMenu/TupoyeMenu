@@ -1,5 +1,6 @@
 #pragma once
 #include "../script.hpp"
+#include "bindings/gui.hpp"
 #include "bindings/gui/gui_element.hpp"
 #include "core/data/menu_event.hpp"
 #include "lua/bindings/runtime_func_t.hpp"
@@ -30,6 +31,8 @@ namespace big
 
 		std::vector<std::shared_ptr<lua::gui::gui_element>> m_independent_gui;
 		std::unordered_map<rage::joaat_t, std::vector<std::shared_ptr<lua::gui::gui_element>>> m_gui;
+		std::vector<std::shared_ptr<lua::gui::tab>> m_gui_tabs;
+		std::unordered_map<rage::joaat_t, std::vector<std::shared_ptr<lua::gui::tab>>> m_tab_to_sub_tabs;
 		std::unordered_map<menu_event, std::vector<sol::protected_function>> m_event_callbacks;
 		std::vector<void*> m_allocated_memory;
 

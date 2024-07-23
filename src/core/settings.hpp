@@ -219,7 +219,7 @@ namespace big
 			reaction ceo_money{"CEO Money", "Blocked CEO Money from {}", "{} tried to drop money on me!"};
 			reaction clear_wanted_level{"Clear Wanted Level", "Blocked Clear Wanted Level from {}", "{} tried to clear my wanted level!"};
 			reaction crash{"Crash", "Blocked Crash from {}", "{} tried to crash me!"};
-			reaction delete_vehicle{"Delete Vehicle", "REACTION_DELETE_VEHICLE_NOTIFY", "REACTION_DELETE_VEHICLE_ANNOUNCE"};
+			reaction delete_vehicle{"Delete Vehicle", "Blocked {} from deleting our vehicle.", "REACTION_DELETE_VEHICLE_ANNOUNCE"};
 			reaction end_session_kick{"End Session Kick", "Blocked End Session Kick from {}", "{} tried to kick me out!"};
 			reaction fake_deposit{"Fake Deposit", "Blocked Fake Deposit from {}", "{} tried to show me a fake money notification!"};
 			reaction force_mission{"Force Mission", "Blocked Force Mission from {}", "{} tried to force me into a mission!"};

@@ -23,6 +23,10 @@ namespace big
 		folder m_scripts_folder;
 		folder m_scripts_config_folder;
 
+	private:
+		void draw_tab(rage::joaat_t tab_hash, std::shared_ptr<big::lua_module> module);
+		void draw_child_tabs(rage::joaat_t tab_hash, std::shared_ptr<big::lua_module> module, bool draw_tab_bar = false);
+
 	public:
 		lua_manager(folder scripts_folder, folder scripts_config_folder);
 		~lua_manager();
@@ -54,6 +58,8 @@ namespace big
 		bool has_gui_to_draw(rage::joaat_t tab_hash);
 		void draw_independent_gui();
 		void draw_gui(rage::joaat_t tab_hash);
+		void draw_child_tabs_external(rage::joaat_t tab_hash);
+		void draw_tabs();
 
 		bool dynamic_hook_pre_callbacks(const uintptr_t target_func_ptr, lua::memory::type_info_t return_type, lua::memory::runtime_func_t::return_value_t* return_value, std::vector<lua::memory::type_info_t> param_types, const lua::memory::runtime_func_t::parameters_t* params, const uint8_t param_count);
 		void dynamic_hook_post_callbacks(const uintptr_t target_func_ptr, lua::memory::type_info_t return_type, lua::memory::runtime_func_t::return_value_t* return_value, std::vector<lua::memory::type_info_t> param_types, const lua::memory::runtime_func_t::parameters_t* params, const uint8_t param_count);

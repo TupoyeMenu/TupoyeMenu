@@ -1,8 +1,11 @@
-#if defined (ENABLE_LUA)
+#include "lua/sol_include.hpp"
 
-#include "gui.hpp"
+#include <memory>
+#if defined(ENABLE_LUA)
 
-#include "../../gui.hpp"
+	#include "../../gui.hpp"
+	#include "lua/lua_module.hpp"
+	#include "lua/bindings/gui.hpp"
 
 namespace lua::gui
 {
@@ -24,6 +27,16 @@ namespace lua::gui
 	{
 		return m_tab_hash;
 	}
+	const std::string& tab::name() const
+	{
+		return m_tab_name;
+	}
+
+	static void add_to_existing_tab(const rage::joaat_t existing_tab_hash, const std::shared_ptr<tab> new_tab, const sol::this_state& state)
+	{
+		big::lua_module* module = sol::state_view(state)["!this"];
+		module->m_tab_to_sub_tabs[existing_tab_hash].push_back(new_tab);
+	}
 
 	void tab::clear(sol::this_state state)
 	{
@@ -31,6 +44,13 @@ namespace lua::gui
 
 		if (module->m_gui.contains(m_tab_hash))
 			module->m_gui[m_tab_hash] = {};
+	}
+
+	tab tab::add_tab(const std::string& name, sol::this_state state)
+	{
+		const auto sub_tab = std::make_shared<tab>(name);
+		add_to_existing_tab(hash(), sub_tab, state);
+		return *sub_tab.get();
 	}
 
 	lua::gui::button* tab::add_button(const std::string& name, sol::protected_function callback, sol::this_state state)
@@ -116,7 +136,24 @@ namespace lua::gui
 	// Returns: tab: A tab instance which corresponds to the tab in the GUI.
 	static tab get_tab(const std::string& tab_name, sol::this_state state)
 	{
-		return tab(rage::joaat(tab_name));
+		return tab(tab_name);
+	}
+
+	// Lua API: Function
+	// Table: gui
+	// Name: add_tab
+	// Param: tab_name: string: Name of the tab to add.
+	// Returns: tab: A tab instance which corresponds to the new tab in the GUI.
+	static tab add_tab(const std::string& tab_name, sol::this_state state)
+	{
+		auto new_tab = std::make_unique<tab>(tab_name);
+		auto tab_ptr = new_tab.get();
+
+		big::lua_module* module = sol::state_view(state)["!this"];
+
+		module->m_gui_tabs.push_back(std::move(new_tab));
+
+		return *tab_ptr;
 	}
 
 	// Lua API: Function
@@ -203,6 +240,7 @@ namespace lua::gui
 	{
 		auto ns            = state["gui"].get_or_create<sol::table>();
 		ns["get_tab"]      = get_tab;
+		ns["add_tab"]      = add_tab;
 		ns["show_success"] = show_success;
 		ns["show_message"] = show_message;
 		ns["show_warning"] = show_warning;
@@ -248,6 +286,7 @@ namespace lua::gui
 
 		auto tab_ut                = ns.new_usertype<tab>("tab");
 		tab_ut["clear"]            = &tab::clear;
+		tab_ut["add_tab"]          = &tab::add_tab;
 		tab_ut["add_button"]       = &tab::add_button;
 		tab_ut["add_text"]         = &tab::add_text;
 		tab_ut["add_checkbox"]     = &tab::add_checkbox;
