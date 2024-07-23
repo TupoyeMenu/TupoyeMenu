@@ -78,6 +78,9 @@ namespace big
 				ImGui::EndTabItem();
 			}
 
+			if (g_lua_manager)
+				g_lua_manager->draw_child_tabs_external("GUI_TAB_SETTINGS"_J);
+
 			ImGui::EndTabBar();
 		}
 	}

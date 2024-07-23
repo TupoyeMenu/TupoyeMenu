@@ -1,4 +1,8 @@
-#include "pointers.hpp"
+
+#if defined (ENABLE_LUA)
+#include "lua/lua_manager.hpp"
+#endif
+
 #include "views/view.hpp"
 
 namespace big
@@ -39,6 +43,10 @@ namespace big
 					view::debug_tabs();
 					ImGui::EndTabItem();
 				}
+
+#if defined (ENABLE_LUA)
+				g_lua_manager->draw_tabs();
+#endif
 
 				ImGui::EndTabBar();
 			}

@@ -16,28 +16,28 @@ namespace big
 			{
 				view::debug_threads();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Threads"_J);
+					g_lua_manager->draw_gui("VIEW_DEBUG_THREADS"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Script Events"))
 			{
 				view::debug_script_events();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Script Events"_J);
+					g_lua_manager->draw_gui("DEBUG_TAB_SCRIPT_EVENTS"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Globals"))
 			{
 				view::debug_globals();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Globals"_J);
+					g_lua_manager->draw_gui("DEBUG_TAB_GLOBALS"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Locals"))
 			{
 				view::debug_locals();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Locals"_J);
+					g_lua_manager->draw_gui("DEBUG_TAB_LOCALS"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Animations"))
@@ -51,9 +51,12 @@ namespace big
 			{
 				view::debug_misc();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Misc"_J);
+					g_lua_manager->draw_gui("DEBUG_TAB_MISC"_J);
 				ImGui::EndTabItem();
 			}
+
+			if (g_lua_manager)
+				g_lua_manager->draw_child_tabs_external("GUI_TAB_DEBUG"_J);
 
 			ImGui::EndTabBar();
 		}

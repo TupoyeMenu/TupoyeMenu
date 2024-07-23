@@ -1,7 +1,6 @@
 #pragma once
 #include "gui/button.hpp"
 #include "gui/checkbox.hpp"
-#include "gui/gui_element.hpp"
 #include "gui/input_float.hpp"
 #include "gui/input_int.hpp"
 #include "gui/input_string.hpp"
@@ -9,7 +8,6 @@
 #include "gui/sameline.hpp"
 #include "gui/separator.hpp"
 #include "gui/text.hpp"
-#include "lua/lua_module.hpp"
 
 namespace lua::gui
 {
@@ -19,20 +17,29 @@ namespace lua::gui
 	class tab
 	{
 		rage::joaat_t m_tab_hash;
+		std::string m_tab_name;
 
 	public:
-		tab(rage::joaat_t hash) :
-			m_tab_hash(hash)
+		tab(const std::string& name) :
+			m_tab_hash(rage::joaat(name)),
+			m_tab_name(name)
 		{
 		}
 
 		rage::joaat_t hash() const;
+		const std::string& name() const;
 
 		// Lua API: Function
 		// Class: tab
 		// Name: clear
 		// Clear the tab of all its custom lua content that you own.
 		void clear(sol::this_state state);
+
+		// Lua API: Function
+		// Class: tab
+		// Name: add_tab
+		// Add a sub tab to this tab.
+		tab add_tab(const std::string& name, sol::this_state state);
 
 		// Lua API: Function
 		// Class: tab

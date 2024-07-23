@@ -423,7 +423,6 @@ namespace big
 					ImGui::TreePop();
 				}
 			}
-		}
 
 		if (ImGui::TreeNode("Global Stats"))
 		{
@@ -455,6 +454,8 @@ namespace big
 			}
 
 			ImGui::TreePop();
+		}
+
 		}
 	}
 }
