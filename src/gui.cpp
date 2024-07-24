@@ -1,5 +1,6 @@
 #include "gui.hpp"
 
+#include "backend/bool_command.hpp"
 #include "natives.hpp"
 #include "renderer/alphabet_types.hpp"
 #include "renderer/font_mgr.hpp"
@@ -60,7 +61,7 @@ namespace big
 		g_renderer.add_wndproc_callback([](HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 			if (g.cmd_executor.enabled && msg == WM_KEYUP && wparam == VK_ESCAPE)
 			{
-				g.cmd_executor.enabled = false;
+				bool_command::get("cmdexecutor"_J)->call({});
 			}
 		});
 

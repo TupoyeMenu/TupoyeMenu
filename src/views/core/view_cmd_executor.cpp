@@ -1,4 +1,6 @@
-#include "backend/context/default_command_context.hpp"
+#include "backend/bool_command.hpp"
+#include "backend/context/console_command_context.hpp"
+#include "gui.hpp"
 #include "pointers.hpp"
 #include "util/string_operations.hpp"
 #include "views/view.hpp"
@@ -47,6 +49,18 @@ namespace big
 			return nullptr;
 		}
 	};
+
+	ImVec4 get_log_color(const eLogLevel level)
+	{
+		switch (level)
+		{
+		case VERBOSE: return ImVec4(0.0f, 0.44f, 0.85f, 1.0f);
+		case INFO: return ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+		case WARNING: return ImVec4(1.0f, 0.7f, 0.0f, 1.0f);
+		case FATAL: return ImVec4(1.0f, 0.4f, 0.4f, 1.0f);
+		}
+		return ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	}
 
 	static void clean_buffer(std::string& buffer)
 	{
@@ -585,131 +599,180 @@ namespace big
 		float screen_x = (float)*g_pointers->m_gta.m_resolution_x;
 		float screen_y = (float)*g_pointers->m_gta.m_resolution_y;
 
-		ImGui::SetNextWindowPos(ImVec2(screen_x * 0.25f, screen_y * 0.2f), ImGuiCond_Always);
-		ImGui::SetNextWindowBgAlpha(0.65f);
-		ImGui::SetNextWindowSize({screen_x * 0.5f, -1});
+		ImGui::SetNextWindowPos(ImVec2(screen_x * 0.25f, screen_y * 0.2f), ImGuiCond_FirstUseEver);
+		ImGui::SetNextWindowSize({screen_x * 0.5f, -1}, ImGuiCond_FirstUseEver);
 
-		if (ImGui::Begin("cmd_executor", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoMouseInputs))
+		if (ImGui::Begin("Console", &g.cmd_executor.enabled))
 		{
-			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {10.f, 15.f});
-			components::sub_title("YimMenu Command Executor");
+			g_fiber_pool->queue_job([] { // Disable control here because we are not always focused.
+				PAD::DISABLE_ALL_CONTROL_ACTIONS(0);
+				PAD::DISABLE_ALL_CONTROL_ACTIONS(2);
+			});
+
+			
+			const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing();
+			ImGui::BeginChild("##scrolling_region_log", ImVec2(0, -footer_height_to_reserve), true, ImGuiWindowFlags_HorizontalScrollbar);
+			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1)); // Tighten spacing
+
+			for (auto msg : g_log.get_log_messages())
+			{
+				ImGui::PushStyleColor(ImGuiCol_Text, get_log_color(msg->Level()));
+				ImGui::TextUnformatted(msg->Message().c_str());
+				ImGui::PopStyleColor();
+			}
+
+			if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+				ImGui::SetScrollHereY(1.0f);
+
+			ImGui::PopStyleVar();
+			ImGui::EndChild();
+
+			ImGui::Separator();
 
 			// set focus by default on input box
 			ImGui::SetKeyboardFocusHere(0);
 			ImGui::SetNextItemWidth((screen_x * 0.5f) - 30.f);
+			bool reset_focus = false;
 			s_buffer = serialized_buffer(command_buffer); // Update serialized buffer every frame
 			if (components::input_text_with_hint("", "Type your command", command_buffer, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCompletion | ImGuiInputTextFlags_CallbackHistory | ImGuiInputTextFlags_CallbackAlways, nullptr, input_callback))
 			{
 				if (!s_buffer.get_command_of_index(cursor_pos))
 					return;
 
-				if (command::process(command_buffer, std::make_shared<default_command_context>(), false))
+				if (command::process(command_buffer, std::make_shared<console_command_context>(), false))
 				{
-					g.cmd_executor.enabled = false;
+					reset_focus = true;
 					add_to_last_used_commands(command_buffer);
 					command_buffer      = {};
 					selected_suggestion = std::string();
 				}
 			}
 
-			if (!command_buffer.empty())
+			if(reset_focus)
 			{
-				get_appropriate_suggestion(command_buffer, auto_fill_suggestion);
-
-				if (auto_fill_suggestion != command_buffer)
-					ImGui::Text("Suggestion: %s", auto_fill_suggestion.data());
+				reset_focus = false;
+				ImGui::SetKeyboardFocusHere(-1);
 			}
 
-			components::small_text("You can execute several commands at the same time by separating them with ");
-			components::small_text("Navigate the suggestions with the UP/DOWN arrow keys and append using the TAB key.");
-			ImGui::Separator();
-			ImGui::Spacing();
+			bool is_input_text_active = ImGui::IsItemActive();
+			if (is_input_text_active)
+				ImGui::OpenPopup("##autocomplete");
 
-			if (suggestion_is_history)
-				components::sub_title("Command History");
 
-			if (current_suggestion_list.size() > 0)
+			ImGui::SetNextWindowPos(ImVec2(ImGui::GetItemRectMin().x, ImGui::GetItemRectMax().y));
+			if (ImGui::BeginPopup("##autocomplete", ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_ChildWindow))
 			{
-				for (auto suggestion : current_suggestion_list)
+				if (!command_buffer.empty())
 				{
-					components::selectable(suggestion, suggestion == selected_suggestion);
+					get_appropriate_suggestion(command_buffer, auto_fill_suggestion);
 				}
-			}
-			else
-			{
-				components::small_text("No suggestions found.");
-			}
 
-			// Show history if buffer is empty
-			if (command_buffer.empty())
-			{
-				suggestion_is_history = true;
-
-				if (!g.cmd.command_history.empty())
+				if (current_suggestion_list.size() > 0)
 				{
-					current_suggestion_list = deque_to_vector(g.cmd.command_history);
-				}
-			}
-			// If buffer isn't empty, we rely on the serialized buffer to suggest arguments or commands
-			else
-			{
-				suggestion_is_history = false;
-				auto current_scope    = s_buffer.get_command_scope(cursor_pos);
-
-				if (!current_scope)
-					goto VIEW_END;
-
-				auto argument = current_scope->get_argument(cursor_pos);
-
-				if (!argument)
-					goto VIEW_END;
-
-				auto current_command = current_scope->cmd;
-
-				if (argument->is_argument && current_command)
-				{
-					auto argument_suggestions = current_command->get_argument_suggestions(argument->index);
-					if (argument_suggestions != std::nullopt)
+					for (auto suggestion : current_suggestion_list)
 					{
-						auto filtered_suggestions = suggestion_list_filtered(argument_suggestions.value(), argument->name);
-						if (filtered_suggestions.size() > 10)
-						{
-							current_suggestion_list =
-							    std::vector<std::string>(filtered_suggestions.begin(), filtered_suggestions.begin() + 10);
-						}
-						else
-						{
-							current_suggestion_list = filtered_suggestions;
-						}
+						components::selectable(suggestion, suggestion == selected_suggestion);
 					}
 				}
+
+				// Show history if buffer is empty
+				if (command_buffer.empty())
+				{
+					suggestion_is_history = true;
+
+					if (!g.cmd.command_history.empty())
+					{
+						current_suggestion_list = deque_to_vector(g.cmd.command_history);
+					}
+				}
+				// If buffer isn't empty, we rely on the serialized buffer to suggest arguments or commands
 				else
 				{
-					auto all_commands = g_commands;
-					std::vector<std::string> command_names{};
-					for (auto& [hash, cmd] : all_commands)
+					suggestion_is_history = false;
+					auto current_scope    = s_buffer.get_command_scope(cursor_pos);
+
+					if (!current_scope)
 					{
-						if (cmd && cmd->get_name().length() > 0)
-							command_names.push_back(cmd->get_name());
+						ImGui::EndPopup();
+						goto VIEW_END;
 					}
 
-					auto filtered_commands = suggestion_list_filtered(command_names, argument->name);
-					if (filtered_commands.size() > 10)
+					auto argument = current_scope->get_argument(cursor_pos);
+
+					if (!argument)
 					{
-						current_suggestion_list = std::vector<std::string>(filtered_commands.begin(), filtered_commands.begin() + 10);
+						ImGui::EndPopup();
+						goto VIEW_END;
+					}
+
+					auto current_command = current_scope->cmd;
+
+					if (argument->is_argument && current_command)
+					{
+						auto argument_suggestions = current_command->get_argument_suggestions(argument->index);
+						if (argument_suggestions != std::nullopt)
+						{
+							auto filtered_suggestions = suggestion_list_filtered(argument_suggestions.value(), argument->name);
+							if (filtered_suggestions.size() > 10)
+							{
+								current_suggestion_list =
+									std::vector<std::string>(filtered_suggestions.begin(), filtered_suggestions.begin() + 10);
+							}
+							else
+							{
+								current_suggestion_list = filtered_suggestions;
+							}
+						}
 					}
 					else
 					{
-						current_suggestion_list = filtered_commands;
+						auto all_commands = g_commands;
+						std::vector<std::string> command_names{};
+						for (auto& [hash, cmd] : all_commands)
+						{
+							if (cmd && cmd->get_name().length() > 0)
+								command_names.push_back(cmd->get_name());
+						}
+
+						auto filtered_commands = suggestion_list_filtered(command_names, argument->name);
+						if (filtered_commands.size() > 10)
+						{
+							current_suggestion_list = std::vector<std::string>(filtered_commands.begin(), filtered_commands.begin() + 10);
+						}
+						else
+						{
+							current_suggestion_list = filtered_commands;
+						}
 					}
 				}
+
+				if (!is_input_text_active && !ImGui::IsWindowFocused())
+					ImGui::CloseCurrentPopup();
+
+				ImGui::EndPopup();
 			}
-		VIEW_END:
-			ImGui::PopStyleVar();
 		}
+
+		VIEW_END:
 
 		ImGui::End();
 	}
 
-	bool_command g_cmd_executor("cmdexecutor", "Toggle Command Executor", "Toggles the command executor window", g.cmd_executor.enabled, false);
+	class cmd_executor : bool_command
+	{
+		using bool_command::bool_command;
+
+		virtual void on_enable() override
+		{
+			g_gui->override_mouse(true);
+		}
+
+		virtual void on_disable() override
+		{
+			g_gui->override_mouse(false);
+		}
+
+	};
+
+	cmd_executor g_cmd_executor("cmdexecutor", "Toggle Command Executor", "Toggles the command executor window", g.cmd_executor.enabled, false);
 }

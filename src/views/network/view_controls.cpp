@@ -46,7 +46,6 @@ namespace big
 		ImGui::SameLine();
 
 		ImGui::BeginGroup();
-		components::command_button<"errorall">({});
 		components::command_button<"ceoraidall">({});
 		components::button("Trigger MC Raid", [] {
 			g_player_service->iterate([](auto& plyr) {
