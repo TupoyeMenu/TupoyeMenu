@@ -8,8 +8,6 @@
  * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
  */
 #include "core/data/weathers.hpp"
-#include "fiber_pool.hpp"
-#include "util/session.hpp"
 #include "views/view.hpp"
 
 namespace big

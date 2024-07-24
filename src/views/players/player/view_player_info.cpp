@@ -434,7 +434,7 @@ namespace big
 				auto& boss_goon = scr_globals::gpbd_fm_3.as<GPBD_FM_3*>()->Entries[id].BossGoon;
 
 				if (boss_goon.Language >= 0 && boss_goon.Language < 13)
-					ImGui::Text("Language: %s", languages[boss_goon.Language].name);
+					ImGui::Text("Language: %s", languages.at((eGameLanguage)boss_goon.Language).data());
 
 				ImGui::Text("CEO Name: %s", boss_goon.GangName);
 				ImGui::Text("MC Name: %s", boss_goon.ClubhouseName);

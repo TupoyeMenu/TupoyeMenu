@@ -1,6 +1,5 @@
 #include "backend/command.hpp"
 #include "backend/context/chat_command_context.hpp"
-#include "backend/player_command.hpp"
 #include "core/data/packet_types.hpp"
 #include "gta/enums.hpp"
 #include "gta/net_game_event.hpp"
@@ -8,7 +7,6 @@
 #include "gta_util.hpp"
 #include "hooking/hooking.hpp"
 #include "natives.hpp"
-#include "script/scriptIdBase.hpp"
 #include "services/players/player_service.hpp"
 #include "util/chat.hpp"
 #include "util/session.hpp"
@@ -396,8 +394,7 @@ namespace big
 					if (player->m_radio_request_rate_limit.exceeded_last_process())
 					{
 						session::add_infraction(player, Infraction::TRIED_KICK_PLAYER);
-						g_notification_service.push_error("Protections",
-						    std::format("{} tried to OOM kick you!", player->get_name()));
+						g.reactions.kick.process(player);
 						player->block_radio_requests = true;
 					}
 					return true;
@@ -412,7 +409,7 @@ namespace big
 					if (unk_player_radio_requests.exceeded_last_process())
 					{
 						g_notification_service.push_error("Protections",
-						    std::format("{} tried to OOM kick you!", peer->m_info.name));
+						    std::format("Blocked Kick from {}", peer->m_info.name));
 					}
 					return true;
 				}
@@ -558,7 +555,7 @@ namespace big
 		case rage::eNetMessage::MsgRoamingInitialBubble:
 		{
 			// should not get this after the host has joined
-			if (player && g_player_service->get_self()->id() != -1)
+			if (player && g_player_service->get_self()->id() != (uint8_t)-1)
 			{
 				LOGF(stream::net_messages,
 				    WARNING,
@@ -682,7 +679,8 @@ namespace big
 				return true;
 			}
 
-			if (g_player_service->get_self() && g_player_service->get_self()->id() != -1 && g_player_service->get_self()->id() == player_id) [[unlikely]]
+			if (g_player_service->get_self() && g_player_service->get_self()->id() != (uint8_t)-1
+			    && g_player_service->get_self()->id() == player_id) [[unlikely]]
 			{
 				LOGF(stream::net_messages,
 				    VERBOSE,
@@ -727,8 +725,7 @@ namespace big
 				if (player->m_host_migration_rate_limit.exceeded_last_process())
 				{
 					session::add_infraction(player, Infraction::TRIED_KICK_PLAYER);
-					g_notification_service.push_error("Protections",
-					    std::format("{} tried to OOM kick you!", player->get_name()));
+					g.reactions.kick.process(player);
 				}
 				return true;
 			}

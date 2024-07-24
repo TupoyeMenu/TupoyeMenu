@@ -5,21 +5,17 @@
 
 #include "native_hooks.hpp"
 
-#include "invoker/crossmap.hpp"
-
 #include "all_scripts.hpp"
 #include "am_launcher.hpp"
 #include "carmod_shop.hpp"
 #include "creator.hpp"
 #include "freemode.hpp"
-#include "gta_util.hpp"
 #include "maintransition.hpp"
 #include "shop_controller.hpp"
 #include "tunables.hpp"
 #include "am_pi_menu.hpp"
 
 #include <script/scrProgram.hpp>
-#include <script/scrProgramTable.hpp>
 
 namespace big
 {

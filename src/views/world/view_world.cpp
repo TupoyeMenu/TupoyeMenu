@@ -1,6 +1,5 @@
 #include "pointers.hpp"
 #include "util/entity.hpp"
-#include "util/notify.hpp"
 #include "util/ped.hpp"
 #include "util/vehicle.hpp"
 #include "views/view.hpp"
@@ -50,12 +49,12 @@ namespace big
 
 		// Nearby Ped Loops / Toggles
 		components::command_checkbox<"pedsignore">();
-		ImGui::SameLine(140.f);
+		ImGui::SameLine();
 		components::command_checkbox<"pedrain">();
-		ImGui::SameLine(265.f);
+		ImGui::SameLine();
 		components::command_checkbox<"riotmode">();
 		components::command_checkbox<"highalert">();
-		ImGui::SameLine(140.f);
+		ImGui::SameLine();
 		components::command_checkbox<"pedrush">();
 		ImGui::SameLine();
 		components::command_checkbox<"autodisarm">();

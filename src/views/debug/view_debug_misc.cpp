@@ -3,17 +3,11 @@
  * @brief Miscellaneous debug options.
  */
 
-#include "gta/joaat.hpp"
-#include "gta_util.hpp"
 #include "gui/components/components.hpp"
 #include "hooking/hooking.hpp"
 #include "natives.hpp"
-#include "network/Network.hpp"
+#include "network/CNetworkPlayerMgr.hpp"
 #include "pointers.hpp"
-#include "script.hpp"
-#include "script_global.hpp"
-#include "thread_pool.hpp"
-#include "util/misc.hpp"
 #include "util/pathfind.hpp"
 #include "util/ped.hpp"
 #include "util/system.hpp"

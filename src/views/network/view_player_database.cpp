@@ -1,11 +1,8 @@
 #include "core/data/block_join_reasons.hpp"
 #include "core/data/command_access_levels.hpp"
-#include "core/data/infractions.hpp"
-#include "fiber_pool.hpp"
 #include "gta/enums.hpp"
 #include "pointers.hpp"
 #include "services/player_database/player_database_service.hpp"
-#include "services/players/player_service.hpp"
 #include "util/session.hpp"
 #include "views/view.hpp"
 
@@ -16,10 +13,10 @@ namespace big
 	char note_buffer[1024];
 	bool notes_dirty = false;
 	std::shared_ptr<persistent_player> current_player;
-	bool filter_modder                            = false;
-	bool filter_trust                             = false;
-	bool filter_block_join                        = false;
-	bool filter_track_player                      = false;
+	bool filter_modder       = false;
+	bool filter_trust        = false;
+	bool filter_block_join   = false;
+	bool filter_track_player = false;
 
 	ImVec4 get_player_color(persistent_player& player)
 	{
@@ -141,7 +138,7 @@ namespace big
 
 				if (ImGui::InputScalar("Rockstar ID", ImGuiDataType_S64, &current_player->rockstar_id)
 				    || ImGui::Checkbox("Is Modder", &current_player->is_modder)
-					|| ImGui::Checkbox("Trust Player", &current_player->is_trusted)
+				    || ImGui::Checkbox("Trust Player", &current_player->is_trusted)
 				    || ImGui::Checkbox("Force Allow Join", &current_player->force_allow_join)
 				    || ImGui::Checkbox("Block Join", &current_player->block_join)
 				    || ImGui::Checkbox("Track Player", &current_player->notify_online))
@@ -151,6 +148,7 @@ namespace big
 					g_player_database_service->save();
 				}
 
+				ImGui::SetNextItemWidth(250);
 				if (ImGui::BeginCombo("Block Join Alert", block_join_reasons[current_player->block_join_reason]))
 				{
 					block_join_reason_t i = block_join_reason_t::UNK_0;
@@ -163,14 +161,14 @@ namespace big
 							if (ImGui::Selectable(reason_str, is_selected))
 							{
 								current_player->block_join_reason = i;
-							g_player_database_service->save();
-						}
+								g_player_database_service->save();
+							}
 
 							if (is_selected)
-						{
-							ImGui::SetItemDefaultFocus();
+							{
+								ImGui::SetItemDefaultFocus();
+							}
 						}
-					}
 
 						i++;
 					}
@@ -181,6 +179,7 @@ namespace big
 				ImGui::SameLine();
 				components::help_marker("Only works as host");
 
+				ImGui::SetNextItemWidth(250);
 				if (ImGui::BeginCombo("Chat Command Permissions",
 				        COMMAND_ACCESS_LEVELS[current_player->command_access_level.value_or(g.session.chat_command_default_access_level)]))
 				{
@@ -224,7 +223,7 @@ namespace big
 				components::help_marker("Anyone trying to join you will join this player instead if they are active. The preference input will control redirect priority if multiple players with join redirect are active");
 
 				ImGui::BeginDisabled(!current_player->join_redirect);
-					ImGui::InputInt("Preference", &current_player->join_redirect_preference);
+				ImGui::InputInt("Preference", &current_player->join_redirect_preference);
 				ImGui::EndDisabled();
 
 				ImGui::SameLine();

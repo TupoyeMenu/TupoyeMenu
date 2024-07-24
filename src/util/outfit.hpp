@@ -1,13 +1,3 @@
-/**
- * @file outfit.hpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #pragma once
 #include "core/scr_globals.hpp"
 
@@ -56,16 +46,16 @@ namespace big::outfit
 	{
 		if(item->drawable_id > item->drawable_id_max)
 			item->drawable_id = item->drawable_id_max;
-		if(item->drawable_id < -1)
-			item->drawable_id = -1;
+		if(item->drawable_id < 0)
+			item->drawable_id = 0;
 	}
 
 	inline void check_bounds_texture(outfit_t* item)
 	{
 		if(item->texture_id > item->texture_id_max)
 			item->texture_id = item->texture_id_max;
-		if(item->texture_id < -1)
-			item->texture_id = -1;
+		if(item->texture_id < 0)
+			item->texture_id = 0;
 	}
 
 	// usually each update increases 1//

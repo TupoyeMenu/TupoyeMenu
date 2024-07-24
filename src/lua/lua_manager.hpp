@@ -1,7 +1,5 @@
 #pragma once
 #if defined (ENABLE_LUA)
-#include "bindings/memory.hpp"
-#include "core/enums.hpp"
 #include "lua_module.hpp"
 #endif // ENABLE_LUA
 

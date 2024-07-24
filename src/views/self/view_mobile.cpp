@@ -3,9 +3,6 @@
  * @brief Options from an in game mobile phone.
  */
 
-#include "core/data/phone_types.hpp"
-#include "fiber_pool.hpp"
-#include "services/mobile/mobile_service.hpp"
 #include "util/mobile.hpp"
 #include "views/view.hpp"
 

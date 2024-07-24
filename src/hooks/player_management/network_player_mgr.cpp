@@ -1,6 +1,5 @@
 #include "core/data/menu_event.hpp"
 #include "hooking/hooking.hpp"
-#include "pointers.hpp"
 #include "services/players/player_service.hpp"
 
 #if defined(ENABLE_LUA)

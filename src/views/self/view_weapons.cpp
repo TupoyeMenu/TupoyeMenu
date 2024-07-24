@@ -1,9 +1,7 @@
 #include "core/data/bullet_impact_types.hpp"
 #include "core/data/special_ammo_types.hpp"
-#include "fiber_pool.hpp"
 #include "gta/joaat.hpp"
 #include "natives.hpp"
-#include "pointers.hpp"
 #include "services/gta_data/gta_data_service.hpp"
 #include "services/persist_weapons/persist_weapons.hpp"
 #include "views/view.hpp"
@@ -98,6 +96,8 @@ namespace big
 		components::command_checkbox<"norecoil">();
 		ImGui::SameLine();
 		components::command_checkbox<"nospread">();
+		ImGui::SameLine();
+		components::command_checkbox<"nosway">();
 
 		components::button("Get All Weapons", [] {
 			for (const auto& [_, weapon] : g_gta_data_service->weapons())
@@ -311,7 +311,7 @@ namespace big
 			components::button("Set Loadout", [] {
 				persist_weapons::set_weapon_loadout(selected_loadout);
 			});
-			ImGui::Text("%s: %s:", "Current Loadout", g.persist_weapons.weapon_loadout_file.c_str());
+			ImGui::Text("Current Loadout: %s:", g.persist_weapons.weapon_loadout_file.c_str());
 			ImGui::EndGroup();
 			ImGui::PopItemWidth();
 			ImGui::TreePop();

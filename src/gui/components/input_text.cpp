@@ -11,7 +11,6 @@
 #include "fiber_pool.hpp"
 #include "gui/components/components.hpp"
 #include "misc/cpp/imgui_stdlib.h"
-#include "natives.hpp"
 
 namespace big
 {

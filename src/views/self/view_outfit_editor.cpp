@@ -1,5 +1,4 @@
 #include "natives.hpp"
-#include "pointers.hpp"
 #include "util/outfit.hpp"
 #include "util/ped.hpp"
 #include "views/view.hpp"
@@ -31,6 +30,8 @@ namespace big
 				item.texture_id_max = PED::GET_NUMBER_OF_PED_PROP_TEXTURE_VARIATIONS(self::ped, item.id, item.drawable_id) - 1;
 			}
 		});
+
+		components::sub_title("Press CTRL + Left Click to directly edit the sliders.");
 
 		components::button("Random Component", [] {
 			ped::set_ped_random_component_variation(self::ped);
@@ -105,14 +106,17 @@ namespace big
 		for (auto& item : components.items)
 		{
 			ImGui::SetNextItemWidth(120);
-			if (ImGui::InputInt(std::format("{} [0,{}]##1", item.label, item.drawable_id_max).c_str(), &item.drawable_id))
+			if (item.drawable_id_max <= 0)
+				ImGui::BeginDisabled();
+			if (ImGui::SliderInt(std::format("{} [0,{}]##1", item.label, item.drawable_id_max).c_str(), &item.drawable_id, 0, item.drawable_id_max))
 			{
-				outfit::check_bounds_drawable(&item); // The game does this on it's own but seems to crash if we call OOB values to fast.
-
+				//outfit::check_bounds_drawable(&item); // The game does this on its own, but seems to crash if we call OOB values to fast. (-1 is not a valid scenario)
 				g_fiber_pool->queue_job([item] {
 					PED::SET_PED_COMPONENT_VARIATION(self::ped, item.id, item.drawable_id, 0, PED::GET_PED_PALETTE_VARIATION(self::ped, item.id));
 				});
 			}
+			if (item.drawable_id_max <= 0)
+				ImGui::EndDisabled();
 		}
 		ImGui::EndGroup();
 
@@ -122,14 +126,17 @@ namespace big
 		for (auto& item : components.items)
 		{
 			ImGui::SetNextItemWidth(120);
-			if (ImGui::InputInt(std::format("{} {} [0,{}]##2", item.label, "TEX", item.texture_id_max).c_str(), &item.texture_id))
+			if (item.texture_id_max <= 0)
+				ImGui::BeginDisabled();
+			if (ImGui::SliderInt(std::format("{} {} [0,{}]##2", item.label, "TEX", item.texture_id_max).c_str(), &item.texture_id, 0, item.texture_id_max))
 			{
-				outfit::check_bounds_texture(&item); // The game does this on it's own but seems to crash if we call OOB values to fast.
-
+				//outfit::check_bounds_drawable(&item); // The game does this on its own, but seems to crash if we call OOB values to fast. (-1 is not a valid scenario)
 				g_fiber_pool->queue_job([item] {
 					PED::SET_PED_COMPONENT_VARIATION(self::ped, item.id, item.drawable_id, item.texture_id, PED::GET_PED_PALETTE_VARIATION(self::ped, item.id));
 				});
 			}
+			if (item.texture_id_max <= 0)
+				ImGui::EndDisabled();
 		}
 		ImGui::EndGroup();
 
@@ -139,10 +146,11 @@ namespace big
 		for (auto& item : props.items)
 		{
 			ImGui::SetNextItemWidth(120);
-			if (ImGui::InputInt(std::format("{} [0,{}]##3", item.label, item.drawable_id_max).c_str(), &item.drawable_id))
+			if (item.drawable_id_max <= 0)
+				ImGui::BeginDisabled();
+			if (ImGui::SliderInt(std::format("{} [0,{}]##3", item.label, item.drawable_id_max).c_str(), &item.drawable_id, -1, item.drawable_id_max))
 			{
-				outfit::check_bounds_drawable(&item); // The game does this on it's own but seems to crash if we call OOB values to fast.
-
+				//outfit::check_bounds_drawable(&item); // The game does this on its own, but seems to crash if we call OOB values to fast. (-1 is only used here as a magic number to signal the removal of the prop.)
 				g_fiber_pool->queue_job([item] {
 					if (item.drawable_id == -1)
 						PED::CLEAR_PED_PROP(self::ped, item.id, 1);
@@ -150,6 +158,8 @@ namespace big
 						PED::SET_PED_PROP_INDEX(self::ped, item.id, item.drawable_id, 0, TRUE, 1);
 				});
 			}
+			if (item.drawable_id_max <= 0)
+				ImGui::EndDisabled();
 		}
 		ImGui::EndGroup();
 
@@ -159,14 +169,17 @@ namespace big
 		for (auto& item : props.items)
 		{
 			ImGui::SetNextItemWidth(120);
-			if (ImGui::InputInt(std::format("{} {} [0,{}]##4", item.label, "TEX", item.texture_id_max).c_str(), &item.texture_id))
+			if (item.texture_id_max <= 0)
+				ImGui::BeginDisabled();
+			if (ImGui::SliderInt(std::format("{} {} [0,{}]##4", item.label, "TEX", item.texture_id_max).c_str(), &item.texture_id, 0, item.texture_id_max))
 			{
-				outfit::check_bounds_texture(&item); // The game does this on it's own but seems to crash if we call OOB values to fast.
-
+				//outfit::check_bounds_drawable(&item); // The game does this on its own, but seems to crash if we call OOB values to fast. (-1 is not a valid scenario)
 				g_fiber_pool->queue_job([item] {
 					PED::SET_PED_PROP_INDEX(self::ped, item.id, item.drawable_id, item.texture_id, TRUE, 1);
 				});
 			}
+			if (item.texture_id_max <= 0)
+				ImGui::EndDisabled();
 		}
 		ImGui::EndGroup();
 
@@ -237,7 +250,7 @@ namespace big
 		}
 		ImGui::SameLine();
 		ImGui::Checkbox("Disable During Missions?", &g.self.persist_outfits_mis);
-		ImGui::Text("%s: %s", "Current Persisted Outfit", g.self.persist_outfit.c_str());
+		ImGui::Text("Current Persisted Outfit: %s", g.self.persist_outfit.c_str());
 		ImGui::EndGroup();
 	}
 }

@@ -1,14 +1,10 @@
 #include "core/data/language_codes.hpp"
 #include "core/data/region_codes.hpp"
-#include "fiber_pool.hpp"
 #include "pointers.hpp"
-#include "script.hpp"
 #include "services/matchmaking/matchmaking_service.hpp"
 #include "services/player_database/player_database_service.hpp"
 #include "util/session.hpp"
 #include "views/view.hpp"
-
-#include <network/Network.hpp>
 
 namespace big
 {
@@ -39,9 +35,10 @@ namespace big
 						session_str = std::format("{:X}", session.info.m_session_token);
 
 					auto host_rid = session.info.m_net_player_data.m_gamer_handle.m_rockstar_id;
-					auto player = g_player_database_service->get_player_by_rockstar_id(host_rid);
+					auto player   = g_player_database_service->get_player_by_rockstar_id(host_rid);
 
-					if (g.session_browser.exclude_modder_sessions && player && player->block_join)
+					if ((g.session_browser.exclude_modder_sessions && player && player->block_join)
+					    || (g.session_browser.filter_multiplexed_sessions && session.attributes.multiplex_count > 1))
 						continue;
 
 					if (components::selectable(session_str, i == selected_session_idx))
@@ -52,9 +49,10 @@ namespace big
 
 					if (ImGui::IsItemHovered())
 					{
-						auto tool_tip = std::format("Number of Players: {}\nRegion: {}\nLanguage: {}\nHost Rockstar ID: {}\nDiscriminator: {:X}", session.attributes.player_count,
-							regions[session.attributes.region].name,
-						    languages[session.attributes.language].name,
+						auto tool_tip = std::format("Number of Players: {}\nRegion: {}\nLanguage: {}\nHost Rockstar ID: {}\nDiscriminator: {:X}",
+						    session.attributes.player_count,
+						    regions[session.attributes.region].name,
+						    languages.at((eGameLanguage)session.attributes.language),
 						    session.info.m_net_player_data.m_gamer_handle.m_rockstar_id, // TODO: this is not accurate
 						    session.attributes.discriminator);
 						ImGui::SetTooltip("%s", tool_tip.c_str());
@@ -79,7 +77,7 @@ namespace big
 				ImGui::Text("Num Players: %d", session.attributes.player_count);
 				ImGui::Text("Discriminator: 0x%X", session.attributes.discriminator);
 				ImGui::Text("Region: %s", regions[session.attributes.region].name);
-				ImGui::Text("Language: %s", languages[session.attributes.language].name);
+				ImGui::Text("Language: %s", languages.at((eGameLanguage)session.attributes.language).data());
 
 				auto& data = session.info.m_net_player_data;
 				ImGui::Text("Host Rockstar ID: %llu", data.m_gamer_handle.m_rockstar_id);
@@ -87,7 +85,7 @@ namespace big
 				components::button("Copy Session Info", [] {
 					ImGui::SetClipboardText(session_info);
 				});
-				ImGui::SameLine();
+
 				components::button("Join", [session] {
 					if (SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH("maintransition"_J) != 0 || STREAMING::IS_PLAYER_SWITCH_IN_PROGRESS())
 					{
@@ -138,13 +136,13 @@ namespace big
 			{
 				ImGui::SameLine();
 
-				if (ImGui::BeginCombo("###language_select", languages[g.session_browser.language_filter].name))
+				if (ImGui::BeginCombo("###language_select", languages.at(g.session_browser.language_filter).data()))
 				{
-					for (const auto& language : languages)
+					for (const auto& [id, language] : languages)
 					{
-						if (ImGui::Selectable(language.name, g.session_browser.language_filter == language.id))
+						if (ImGui::Selectable(language.data(), g.session_browser.language_filter == id))
 						{
-							g.session_browser.language_filter = language.id;
+							g.session_browser.language_filter = id;
 						};
 					}
 					ImGui::EndCombo();
@@ -168,8 +166,8 @@ namespace big
 
 			ImGui::Checkbox("Filter Multiplexed Sessions", &g.session_browser.filter_multiplexed_sessions);
 			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("FILTER_MULTIPLEXED_SESSIONS_DESC, this has no translation, even in YimMenu. If it does please open an issue in TupoyeMenu");
-      
+				ImGui::SetTooltip("Removes advertised sessions");
+
 			ImGui::Checkbox("Exclude Modder Sessions", &g.session_browser.exclude_modder_sessions);
 			if (ImGui::IsItemHovered())
 				ImGui::SetTooltip("Excludes hosts that you have blocked in the Player Database");

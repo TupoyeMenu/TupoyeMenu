@@ -1,12 +1,12 @@
 #include "byte_patch_manager.hpp"
 
 #include "gta/net_array.hpp"
-#include "hooking/hooking.hpp"
 #include "memory/byte_patch.hpp"
 #include "pointers.hpp"
 #include "util/explosion_anti_cheat_bypass.hpp"
 #include "util/vehicle.hpp"
 #include "util/world_model.hpp"
+#include "backend/commands/weapons/no_sway.hpp"
 
 namespace big
 {
@@ -81,6 +81,8 @@ namespace big
 
 		// Always send the special ability event
 		memory::byte_patch::make(g_pointers->m_gta.m_activate_special_ability_patch, std::to_array({0xB0, 0x01, 0xC3}))->apply();
+
+		weapons::m_no_sway_patch = memory::byte_patch::make(g_pointers->m_gta.m_scope_sway_function, std::vector{0xEB}).get();
 	}
 
 	byte_patch_manager::byte_patch_manager()

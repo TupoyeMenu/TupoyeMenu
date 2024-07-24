@@ -1,7 +1,4 @@
 #if defined (ENABLE_LUA)
-
-#include "command.hpp"
-
 #include "backend/command.hpp"
 #include "backend/player_command.hpp"
 #include "network.hpp" // for convert_sequence

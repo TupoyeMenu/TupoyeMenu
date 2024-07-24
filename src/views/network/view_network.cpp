@@ -1,19 +1,16 @@
 ﻿#include "core/data/apartment_names.hpp"
 #include "core/data/region_codes.hpp"
 #include "core/data/warehouse_names.hpp"
-#include "fiber_pool.hpp"
 #include "gta_util.hpp"
 #include "gui/components/components.hpp"
 #include "hooking/hooking.hpp"
 #include "util/session.hpp"
-#include "util/troll.hpp"
 #include "util/toxic.hpp"
 #include "views/view.hpp"
 #include "backend/bool_command.hpp"
 
 #include <network/Network.hpp>
 #include <script/globals/GPBD_FM_3.hpp>
-#include <script/globals/GlobalPlayerBD.hpp>
 
 
 namespace big
@@ -86,7 +83,7 @@ namespace big
 			ImGui::EndCombo();
 		}
 		ImGui::SameLine();
-		components::help_marker("SESSION_SELECT_COMBO_DESC, This does not have a translation because YimMenu doesn't have it.");
+		components::help_marker("Select your region for the session");
 
 		ImGui::Separator();
 

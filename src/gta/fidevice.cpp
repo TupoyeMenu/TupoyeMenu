@@ -10,7 +10,6 @@
 
 #include "fidevice.hpp"
 
-#include "hooking/hooking.hpp"
 #include "pointers.hpp"
 
 namespace rage

@@ -6,17 +6,11 @@
 #include "core/data/all_script_names.hpp"
 #include "core/data/stack_sizes.hpp"
 #include "fiber_pool.hpp"
-#include "gta/joaat.hpp"
 #include "gta/script_handler.hpp"
-#include "gta_util.hpp"
 #include "gui/components/components.hpp"
 #include "natives.hpp"
-#include "network/Network.hpp"
 #include "script.hpp"
-#include "script_global.hpp"
-#include "util/misc.hpp"
 #include "util/scripts.hpp"
-#include "util/system.hpp"
 #include "views/view.hpp"
 
 #include <script/GtaThread.hpp>
@@ -26,7 +20,7 @@ static GtaThread* selected_thread;
 static int selected_stack_size             = 128;
 static int free_stacks                     = -1;
 static const char* selected_stack_size_str = "MULTIPLAYER_MISSION";
-static const char* selected_script         = "<SELECT>";
+static const char* selected_script         = "";
 
 static std::chrono::high_resolution_clock::time_point last_stack_update_time{};
 
@@ -98,9 +92,12 @@ namespace big
 
 					if (!net_handler->is_local_player_host())
 					{
-						components::button("Take Control", [net_handler] {
-							net_handler->send_host_migration_event(g_player_service->get_self()->get_net_game_player());
-						});
+						if (ImGui::SmallButton("Take Control"))
+						{
+							g_fiber_pool->queue_job([net_handler] {
+								net_handler->send_host_migration_event(g_player_service->get_self()->get_net_game_player());
+							});
+						}
 					}
 				}
 			}
@@ -108,14 +105,14 @@ namespace big
 
 			ImGui::TextUnformatted("Script Pointer: ");
 			ImGui::SameLine();
-			if (ImGui::Button(std::format("0x{:X}", (DWORD64)selected_thread).c_str()))
+			if (ImGui::SmallButton(std::format("0x{:X}", (DWORD64)selected_thread).c_str()))
 				ImGui::SetClipboardText(std::format("0x{:X}", (DWORD64)selected_thread).c_str());
 
 			ImGui::Text("m_safe_for_network_game: %s", selected_thread->m_safe_for_network_game ? "Yes" : "No");
 			ImGui::Text("m_can_be_paused: %s", selected_thread->m_can_be_paused ? "Yes" : "No");
 			ImGui::TextUnformatted("Stack Pointer: ");
 			ImGui::SameLine();
-			if (ImGui::Button(std::format("0x{:X}", (DWORD64)selected_thread->m_stack).c_str()))
+			if (ImGui::SmallButton(std::format("0x{:X}", (DWORD64)selected_thread->m_stack).c_str()))
 				ImGui::SetClipboardText(std::format("0x{:X}", (DWORD64)selected_thread->m_stack).c_str());
 			ImGui::Text("Internal Stack Pointer: %d Stack Size: %d",
 			    selected_thread->m_context.m_stack_pointer,
@@ -136,21 +133,30 @@ namespace big
 
 		ImGui::SeparatorText("Start New Script");
 
-		if (ImGui::BeginCombo("Script", selected_script))
+		static std::string search_script = "";
+		components::input_text_with_hint("Script", "Search", search_script, ImGuiInputTextFlags_None);
+
+		if (ImGui::BeginListBox("##scripts"))
 		{
-			for (auto script : all_script_names)
+			std::string lower_search = search_script;
+			std::transform(lower_search.begin(), lower_search.end(), lower_search.begin(), ::tolower);
+
+			for (auto& script : all_script_names)
 			{
-				if (ImGui::Selectable(script, script == selected_script))
+				std::string lower_script = script;
+				std::transform(lower_script.begin(), lower_script.end(), lower_script.begin(), ::tolower);
+
+				if (lower_script.find(lower_search) != std::string::npos)
 				{
-					selected_script = script;
+					if (ImGui::Selectable(script, selected_script == script))
+					{
+						selected_script = script;
+						search_script   = script;
+					}
 				}
-
-				if (script == selected_script)
-					ImGui::SetItemDefaultFocus();
 			}
-			ImGui::EndCombo();
+			ImGui::EndListBox();
 		}
-
 		if (ImGui::BeginCombo("Stack Size", selected_stack_size_str))
 		{
 			for (auto& p : stack_sizes)
@@ -211,7 +217,7 @@ namespace big
 				return;
 			}
 
-				scripts::start_launcher_script(hash);
+			scripts::start_launcher_script(hash);
 		});
 
 		ImGui::EndGroup();

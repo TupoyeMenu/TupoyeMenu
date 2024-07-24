@@ -1,9 +1,6 @@
 #if defined (ENABLE_LUA)
 
-#include "stats.hpp"
-
 #include "natives.hpp"
-#include "gta/joaat.hpp"
 
 namespace lua::stats
 {

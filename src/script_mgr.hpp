@@ -9,7 +9,6 @@
  */
 
 #pragma once
-#include "common.hpp"
 #include "lua/lua_manager.hpp"
 #include "script.hpp"
 

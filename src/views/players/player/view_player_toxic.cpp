@@ -5,10 +5,8 @@
 
 #include "core/data/apartment_names.hpp"
 #include "core/data/warehouse_names.hpp"
-#include "util/ped.hpp"
 #include "util/teleport.hpp"
 #include "util/toxic.hpp"
-#include "util/vehicle.hpp"
 #include "views/view.hpp"
 
 namespace big

@@ -1,10 +1,7 @@
 #include "core/data/hud_component_names.hpp"
-#include "fiber_pool.hpp"
-#include "gui/components/components.hpp"
-#include "imgui.h"
-#include "util/entity.hpp"
-#include "util/scripts.hpp"
 #include "views/view.hpp"
+#include "core/scr_globals.hpp"
+#include "gta_util.hpp"
 
 #include <script/globals/GPBD_FM_3.hpp>
 

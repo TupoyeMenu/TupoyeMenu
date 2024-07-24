@@ -2,7 +2,6 @@
 
 #include "locals.hpp"
 #include "memory.hpp"
-#include "vector.hpp"
 
 namespace lua::locals
 {

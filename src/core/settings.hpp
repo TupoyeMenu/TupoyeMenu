@@ -1,11 +1,13 @@
 #pragma once
 #include "backend/reactions/interloper_reaction.hpp"
 #include "backend/reactions/reaction.hpp"
+#include "core/data/language_codes.hpp"
 #include "enums.hpp"
 #include "file_manager.hpp"
 #include "renderer/alphabet_types.hpp"
 
 #include <bitset>
+#include <ped/CPedBoneInfo.hpp>
 #include <rage/rlSessionInfo.hpp>
 #include <weapon/CAmmoInfo.hpp>
 #include <weapon/CAmmoRocketInfo.hpp>
@@ -153,8 +155,8 @@ namespace big
 				std::int16_t syncing_object_id = -1;
 			} fuzzer{};
 
-			bool external_console = true;
-			bool window_hook = false;
+			bool external_console  = true;
+			bool window_hook       = false;
 			bool block_all_metrics = false;
 
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(debug, logs, external_console, window_hook, block_all_metrics)
@@ -219,12 +221,13 @@ namespace big
 			reaction ceo_money{"CEO Money", "Blocked CEO Money from {}", "{} tried to drop money on me!"};
 			reaction clear_wanted_level{"Clear Wanted Level", "Blocked Clear Wanted Level from {}", "{} tried to clear my wanted level!"};
 			reaction crash{"Crash", "Blocked Crash from {}", "{} tried to crash me!"};
-			reaction delete_vehicle{"Delete Vehicle", "Blocked {} from deleting our vehicle.", "REACTION_DELETE_VEHICLE_ANNOUNCE"};
+			reaction delete_vehicle{"Delete Vehicle", "Blocked {} from deleting our vehicle.", "{} tried to delete my vehicle!"};
 			reaction end_session_kick{"End Session Kick", "Blocked End Session Kick from {}", "{} tried to kick me out!"};
 			reaction fake_deposit{"Fake Deposit", "Blocked Fake Deposit from {}", "{} tried to show me a fake money notification!"};
 			reaction force_mission{"Force Mission", "Blocked Force Mission from {}", "{} tried to force me into a mission!"};
 			reaction force_teleport{"Force Teleport", "Blocked Force Teleport from {}", "{} tried to teleport me!"};
 			reaction gta_banner{"GTA Banner", "Blocked GTA Banner from {}", "Blocked GTA Banner from {}"}; // please don't enable this
+			reaction kick{"Network Kicks", "Blocked Kick from {}", "{} tried to kick me out!"};
 			reaction kick_from_interior{"Kick From Interior", "Blocked Kick From Interior from {}", "{} tried to kick me from my interior!"};
 			reaction mc_teleport{"MC Teleport", "Blocked MC Teleport from {}", "{} tried to teleport me!"};
 			reaction network_bail{"Network Bail", "Blocked Network Bail from {}", "{} tried to kick me out!"};
@@ -263,7 +266,7 @@ namespace big
 			reaction spectate{"Spectate", "{} is spectating you", "{} is spectating me!"};
 			interloper_reaction spectate_others{"Spectate Others", "{} is spectating {}!", "{} is spectating {}!", false, false};
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(reactions, bounty, break_game, ceo_money, ceo_kick, clear_wanted_level, crash, delete_vehicle, end_session_kick, fake_deposit, force_mission, force_teleport, gta_banner, kick_from_interior, mc_teleport, network_bail, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate_notification, give_collectible, transaction_error, tse_freeze, tse_sender_mismatch, vehicle_kick, teleport_to_warehouse, trigger_business_raid, start_activity, start_script, null_function_kick, destroy_personal_vehicle, clear_ped_tasks, turn_into_beast, remote_wanted_level, remote_wanted_level_others, remote_ragdoll, kick_vote, report_cash_spawn, modder_detection, game_anti_cheat_modder_detection, request_control_event, report, send_to_interior, chat_spam, spectate, spectate_others)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(reactions, bounty, break_game, ceo_money, ceo_kick, clear_wanted_level, crash, delete_vehicle, end_session_kick, fake_deposit, force_mission, force_teleport, gta_banner, kick, kick_from_interior, mc_teleport, network_bail, personal_vehicle_destroyed, remote_off_radar, rotate_cam, send_to_cutscene, send_to_location, sound_spam, spectate_notification, give_collectible, transaction_error, tse_freeze, tse_sender_mismatch, vehicle_kick, teleport_to_warehouse, trigger_business_raid, start_activity, start_script, null_function_kick, destroy_personal_vehicle, clear_ped_tasks, turn_into_beast, remote_wanted_level, remote_wanted_level_others, remote_ragdoll, kick_vote, report_cash_spawn, modder_detection, game_anti_cheat_modder_detection, request_control_event, report, send_to_interior, chat_spam, spectate, spectate_others)
 		} reactions{};
 
 		struct player
@@ -684,7 +687,7 @@ namespace big
 			bool spoof_session_region_type      = false;
 			int session_region_type             = 0;
 			bool spoof_session_language         = false;
-			int session_language                = 0;
+			eGameLanguage session_language      = eGameLanguage::ENGLISH;
 			bool spoof_session_player_count     = false;
 			int session_player_count            = 25;
 			int spoof_session_bad_sport_status  = 0;
@@ -864,6 +867,7 @@ namespace big
 			bool modify_explosion_radius  = false;
 			bool no_recoil                = false;
 			bool no_spread                = false;
+			bool no_sway                  = false;
 			std::string vehicle_gun_model = "bus";
 			bool increased_c4_limit       = false;
 			bool increased_flare_limit    = false;
@@ -874,7 +878,7 @@ namespace big
 			bool enable_mk1_variants      = false;
 			std::map<int, std::vector<uint32_t>> weapon_hotkeys{};
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(weapons, ammo_special, custom_weapon, infinite_ammo, always_full_ammo, infinite_mag, increased_damage, increase_damage, set_explosion_radius, modify_explosion_radius, no_recoil, no_spread, vehicle_gun_model, increased_c4_limit, increased_flare_limit, rapid_fire, gravity_gun, paintgun, interior_weapon, infinite_range, enable_weapon_hotkeys, weapon_hotkeys, enable_mk1_variants)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(weapons, ammo_special, custom_weapon, infinite_ammo, always_full_ammo, infinite_mag, increased_damage, increase_damage, set_explosion_radius, modify_explosion_radius, no_recoil, no_spread, vehicle_gun_model, increased_c4_limit, increased_flare_limit, rapid_fire, gravity_gun, paintgun, interior_weapon, infinite_range, enable_weapon_hotkeys, weapon_hotkeys, enable_mk1_variants, no_sway)
 		} weapons{};
 
 		struct window
@@ -1005,7 +1009,7 @@ namespace big
 			int region_filter          = 0;
 
 			bool language_filter_enabled = false;
-			int language_filter          = 0;
+			eGameLanguage language_filter = eGameLanguage::ENGLISH;
 
 			bool pool_filter_enabled = false;
 			int pool_filter          = 0;
@@ -1118,7 +1122,13 @@ namespace big
 			NLOHMANN_DEFINE_TYPE_INTRUSIVE(vfx, enable_custom_sky_color, azimuth_east, azimuth_west, azimuth_transition, zenith, stars_intensity)
 		} vfx{};
 
-		NLOHMANN_DEFINE_TYPE_INTRUSIVE(menu_settings, debug, tunables, notifications, player, player_db, protections, self, session, settings, spawn_vehicle, clone_pv, persist_car, spoofing, vehicle, weapons, window, context_menu, esp, session_browser, ugc, reactions, world, stat_editor, lua, persist_weapons, vfx)
+		struct cmd
+		{
+			std::deque<std::string> command_history;
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(cmd, command_history)
+		} cmd{};
+
+		NLOHMANN_DEFINE_TYPE_INTRUSIVE(menu_settings, debug, tunables, notifications, player, player_db, protections, self, session, settings, spawn_vehicle, clone_pv, persist_car, spoofing, vehicle, weapons, window, context_menu, esp, session_browser, ugc, reactions, world, stat_editor, lua, persist_weapons, vfx, cmd)
 	};
 
 	inline auto g = menu_settings();

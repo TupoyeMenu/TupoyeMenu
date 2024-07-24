@@ -1,6 +1,5 @@
 #include "util/teleport.hpp"
 #include "util/troll.hpp"
-#include "util/vehicle.hpp"
 #include "views/view.hpp"
 
 namespace big

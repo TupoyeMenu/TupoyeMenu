@@ -1,4 +1,4 @@
-#include "self.hpp"
+#if defined (ENABLE_LUA)
 
 namespace lua_self = self;
 
@@ -64,3 +64,5 @@ namespace lua::self
 		ns["get_veh"] = get_veh;
 	}
 }
+
+#endif // ENABLE_LUA

@@ -9,8 +9,6 @@
  */
 
 #include "file.hpp"
-
-#include "common.hpp"
 #include "file_manager.hpp"
 
 namespace big

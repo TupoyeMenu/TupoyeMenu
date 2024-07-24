@@ -1,10 +1,5 @@
 #include "core/data/ipls.hpp"
-#include "fiber_pool.hpp"
-#include "imgui.h"
-#include "util/globals.hpp"
-#include "util/mobile.hpp"
 #include "util/teleport.hpp"
-#include "util/vehicle.hpp"
 #include "views/view.hpp"
 
 namespace big

@@ -1,7 +1,5 @@
 #if defined (ENABLE_LUA)
 
-#include "log.hpp"
-
 namespace lua::log
 {
 	// Lua API: Table

@@ -1,13 +1,3 @@
-/**
- * @file player_database_service.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "player_database_service.hpp"
 
 #include "backend/bool_command.hpp"
@@ -19,7 +9,7 @@
 
 namespace big
 {
-	bool_command g_player_db_auto_update_online_states("player_db_auto_update_states", "AUTO_UPDATE_STATES", "AUTO_UPDATE_STATES_DESC",
+	bool_command g_player_db_auto_update_online_states("player_db_auto_update_states", "Auto Update Tracked Player States", "Toggling this feature will automatically update the tracked players' online states every minute. You must enable this for join redirect to work",
 	    g.player_db.update_player_online_states);
 
 	const char* player_database_service::get_name_by_content_id(const std::string& content_id)
@@ -223,7 +213,7 @@ namespace big
 			m_sorted_players.erase(lower);
 		}
 
-		auto player    = std::make_shared<persistent_player>(name.data(), rid);
+		auto player = std::make_shared<persistent_player>(name.data(), rid);
 
 		m_players[rid] = player;
 
@@ -347,7 +337,7 @@ namespace big
 					updating = true;
 					g_fiber_pool->queue_job([this] {
 						update_player_states(true);
-						updating = false;
+						updating    = false;
 						last_update = std::chrono::high_resolution_clock::now();
 					});
 				}
@@ -560,9 +550,8 @@ namespace big
 		case GSType::Job: return "In Mission";
 		case GSType::Public: return "Public";
 		case GSType::Modder: return "Unknown (Concealed By Modder)";
+		default: return "Unknown";
 		}
-
-		return "Unknown";
 	}
 
 	const char* player_database_service::get_game_mode_str(GameMode mode)
@@ -578,9 +567,8 @@ namespace big
 		case GameMode::Golf: return "Golf";
 		case GameMode::Tennis: return "Tennis";
 		case GameMode::ShootingRange: return "Shooting Range";
+		default: return "Unknown";
 		}
-
-		return "Unknown";
 	}
 
 	bool player_database_service::can_fetch_name(GameMode mode)
@@ -591,8 +579,7 @@ namespace big
 		case GameMode::Deathmatch:
 		case GameMode::Race:
 		case GameMode::Survival: return true;
+		default: return false;
 		}
-
-		return false;
 	}
 }

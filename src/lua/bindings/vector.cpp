@@ -1,7 +1,5 @@
 #if defined (ENABLE_LUA)
 
-#include "vector.hpp"
-
 namespace lua::vector
 {
 	void bind(sol::state& state)

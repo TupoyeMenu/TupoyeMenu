@@ -1,9 +1,6 @@
 #if defined (ENABLE_LUA)
-
-#include "globals.hpp"
 #include "memory.hpp"
 #include "script_global.hpp"
-#include "vector.hpp"
 
 namespace lua::globals
 {

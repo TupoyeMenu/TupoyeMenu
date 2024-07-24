@@ -1,9 +1,8 @@
 #include "matchmaking_service.hpp"
 
-#include "hooking/hooking.hpp"
-#include "pointers.hpp"
-#include "script.hpp"
 #include "fiber_pool.hpp"
+#include "hooking/hooking.hpp"
+#include "script.hpp"
 
 #include <network/Network.hpp>
 
@@ -25,7 +24,7 @@ namespace big
 			attributes->m_param_values[4] = g.spoofing.session_region_type;
 
 		if (g.spoofing.spoof_session_language)
-			attributes->m_param_values[3] = g.spoofing.session_language;
+			attributes->m_param_values[3] = (uint32_t)g.spoofing.session_language;
 
 		if (g.spoofing.spoof_session_player_count && g.spoofing.increase_player_limit)
 			attributes->m_param_values[2] = std::min(29, g.spoofing.session_player_count);
@@ -101,7 +100,7 @@ namespace big
 						m_found_sessions[i].is_valid = false;
 
 					if (g.session_browser.language_filter_enabled
-					    && m_found_sessions[i].attributes.language != g.session_browser.language_filter)
+					    && (eGameLanguage)m_found_sessions[i].attributes.language != g.session_browser.language_filter)
 						m_found_sessions[i].is_valid = false;
 
 					if (g.session_browser.player_count_filter_enabled
@@ -193,7 +192,7 @@ namespace big
 			std::uint32_t id_hash             = rage::joaat(primary_id.m_data1);
 
 			// m_data1 is generated from m_data2 and m_data3
-			m_multiplexed_sessions.emplace(id_hash, std::vector<MatchmakingId>{ });
+			m_multiplexed_sessions.emplace(id_hash, std::vector<MatchmakingId>{});
 
 			// create multiplex advertisements
 			for (int i = 0; i < (g.spoofing.multiplex_count - 1); i++)
@@ -264,7 +263,6 @@ namespace big
 						LOG(WARNING) << __FUNCTION__ << ": update_session_advertisement failed for multiplex task " << i;
 						return;
 					}
-
 				});
 				i++;
 			}

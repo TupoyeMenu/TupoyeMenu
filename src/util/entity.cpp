@@ -148,8 +148,7 @@ namespace big::entity
 	bool raycast(Entity* ent)
 	{
 		BOOL hit;
-		Vector3 endCoords;
-		Vector3 surfaceNormal;
+		Vector3 dontCare;
 
 		Vector3 camCoords = CAM::GET_GAMEPLAY_CAM_COORD();
 		Vector3 rot       = CAM::GET_GAMEPLAY_CAM_ROT(2);
@@ -160,7 +159,7 @@ namespace big::entity
 		farCoords.y = camCoords.y + dir.y * 1000;
 		farCoords.z = camCoords.z + dir.z * 1000;
 
-		int ray = SHAPETEST::START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE(camCoords.x,
+		auto shape_test  = SHAPETEST::START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE(camCoords.x,
 		    camCoords.y,
 		    camCoords.z,
 		    farCoords.x,
@@ -169,9 +168,9 @@ namespace big::entity
 		    -1,
 		    0,
 		    7);
-		SHAPETEST::GET_SHAPE_TEST_RESULT(ray, &hit, &endCoords, &surfaceNormal, ent);
+		auto test_result = SHAPETEST::GET_SHAPE_TEST_RESULT(shape_test, &hit, &dontCare, &dontCare, ent);
 
-		return (bool)hit;
+		return (test_result == 2 && hit == TRUE);
 	}
 
 	bool raycast(Vector3* endcoor)

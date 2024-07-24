@@ -1,10 +1,5 @@
 #if defined(ENABLE_LUA)
-
-	#include "event.hpp"
-
-	#include "fiber_pool.hpp"
 	#include "lua/lua_module.hpp"
-	#include "script_mgr.hpp"
 
 namespace lua::event
 {

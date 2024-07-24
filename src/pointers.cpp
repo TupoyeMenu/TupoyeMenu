@@ -5,13 +5,7 @@
 
 #include "pointers.hpp"
 
-#include "gta_pointers_layout_info.hpp"
-#include "memory/all.hpp"
-#include "sc_pointers_layout_info.hpp"
-
-#ifdef ENABLE_SOCIALCLUB
-	#include "sc_pointers_layout_info.hpp"
-#endif // ENABLE_SOCIALCLUB
+#include "memory/batch.hpp"
 
 namespace big
 {
@@ -680,7 +674,7 @@ namespace big
 
 		// Language & Update Language
 		main_batch.add("L&UL", "83 3D ? ? ? ? ? 44 8B C3", [](memory::handle ptr) {
-			g_pointers->m_gta.m_language        = ptr.add(2).rip().add(1).as<int*>();
+			g_pointers->m_gta.m_language        = ptr.add(2).rip().add(1).as<eGameLanguage*>();
 			g_pointers->m_gta.m_update_language = ptr.add(0x38).rip().as<functions::update_language>();
 		});
 
@@ -952,6 +946,16 @@ namespace big
 			g_pointers->m_gta.m_can_create_vehicle = ptr.as<functions::can_create_vehicle>();
 		});
 
+		// Cam Gameplay Director
+		main_batch.add("CGD", "48 8B 05 ? ? ? ? 38 98 ? ? ? ? 8A C3", [](memory::handle ptr) {
+			g_pointers->m_gta.m_cam_gameplay_director = ptr.add(3).rip().as<uintptr_t*>();
+		});
+
+		// Cam Gameplay Director Update
+		main_batch.add("CGDU", "E9 CD 09 00 00", [](memory::handle ptr) {
+			g_pointers->m_gta.m_cam_gameplay_director_update = ptr.sub(0x32).as<functions::cam_gameplay_directory_update>();
+		});
+
 		// Format Integer
 		main_batch.add("FI", "48 83 EC ? 44 88 4C 24", [](memory::handle ptr) {
 			g_pointers->m_gta.m_format_int = ptr.as<PVOID>();
@@ -1040,6 +1044,11 @@ namespace big
 		// Create Pool Item
 		main_batch.add("CPI", "18 83 F9 FF 75", [](memory::handle ptr) {
 			g_pointers->m_gta.m_create_pool_item = ptr.sub(0x6).as<PVOID>();
+		});
+
+		// Scope Sway Function
+		main_batch.add("SSF", "74 ? F3 0F 10 15 ? ? ? ? 41 B9 ? ? ? ? 48 8B D0 48 8B CF 44 89 7C 24", [](memory::handle ptr) {
+			g_pointers->m_gta.m_scope_sway_function = ptr.as<PVOID>();
 		});
 
 

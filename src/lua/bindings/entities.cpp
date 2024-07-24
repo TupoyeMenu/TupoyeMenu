@@ -1,7 +1,4 @@
 #if defined (ENABLE_LUA)
-
-#include "entities.hpp"
-
 #include "util/entity.hpp"
 #include "util/pools.hpp"
 

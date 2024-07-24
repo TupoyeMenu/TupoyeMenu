@@ -1,9 +1,6 @@
 #include "stack_trace.hpp"
 
-#include "memory/module.hpp"
-
-#include <script/GtaThread.hpp>
-#include <dbghelp.h>
+#include <DbgHelp.h>
 #include <winternl.h>
 
 namespace big
