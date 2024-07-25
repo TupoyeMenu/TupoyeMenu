@@ -53,6 +53,7 @@ namespace big
 		static void spawn_vehicle();
 		static void pv();
 		static void xml_vehicles();
+		static void persist_car();
 		static void fun_vehicle();
 		static void spawn_ped();
 		static void world_tabs();
