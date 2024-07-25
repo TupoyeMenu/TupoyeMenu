@@ -8,7 +8,7 @@
 #include "util/ped.hpp"
 #include "util/teleport.hpp"
 
-    namespace big
+namespace big
 {
 	struct context_option
 	{
@@ -239,7 +239,7 @@
 		            [this] {
 			            teleport::tp_on_top(m_handle, true);
 		            }},
-		        {"Bring",
+		        {"BRING",
 		            [this] {
 			            rage::fvector3 pos = *g_local_player->m_navigation->get_position();
 
