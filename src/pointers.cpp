@@ -1051,6 +1051,10 @@ namespace big
 			g_pointers->m_gta.m_scope_sway_function = ptr.as<PVOID>();
 		});
 
+		// Report Myself Sender
+		main_batch.add("RPS", "E8 ? ? ? ? 33 C0 87 83 90 02 00 00", [](memory::handle ptr) {
+			g_pointers->m_gta.m_report_myself_sender = ptr.add(1).rip().as<PVOID>();
+		});
 
 		main_batch.run(region);
 	}

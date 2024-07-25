@@ -75,7 +75,6 @@ namespace memory
 		std::unique_ptr<byte[]> m_value;
 		std::unique_ptr<byte[]> m_original_bytes;
 		std::size_t m_size;
-		DWORD m_old_protect;
 
 		friend bool operator==(const std::shared_ptr<byte_patch>& a, const byte_patch* b);
 	};

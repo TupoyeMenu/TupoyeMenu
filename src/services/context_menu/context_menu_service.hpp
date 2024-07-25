@@ -8,7 +8,7 @@
 #include "util/ped.hpp"
 #include "util/teleport.hpp"
 
-namespace big
+    namespace big
 {
 	struct context_option
 	{
@@ -105,7 +105,7 @@ namespace big
 			            else
 				            g_notification_service.push_warning("Toxic", "Failed to take control of vehicle.");
 		            }},
-				{"COPY VEHICLE",
+		        {"COPY VEHICLE",
 		            [this] {
 			            Vehicle v = persist_car_service::clone_ped_car(PLAYER::PLAYER_PED_ID(), m_handle);
 			            script::get_current()->yield();
@@ -145,7 +145,7 @@ namespace big
 		    {},
 		    {{"DISARM",
 		         [this] {
-			         for (auto& [_, weapon] : g_gta_data_service->weapons())
+			         for (auto& [_, weapon] : g_gta_data_service.weapons())
 				         WEAPON::REMOVE_WEAPON_FROM_PED(m_handle, weapon.m_hash);
 		         }},
 		        {"KILL",
@@ -160,9 +160,13 @@ namespace big
 		            [this] {
 			            // TODO: maybe inform the user of this behavior
 			            if (STREAMING::DOES_ANIM_DICT_EXIST(g_ped_animation_service.current_animation.dict.data()))
+			            {
 				            g_ped_animation_service.play_saved_ped_animation(g_ped_animation_service.current_animation, m_handle);
+			            }
 			            else
+			            {
 				            ped::ped_play_animation(m_handle, "mini@strip_club@private_dance@part1", "priv_dance_p1", 3.5f, -4.0f, -1, 1);
+			            }
 		            }},
 		        {"RECRUIT", [this] {
 			         TASK::CLEAR_PED_TASKS(m_handle);
@@ -261,7 +265,7 @@ namespace big
 			            FIRE::START_SCRIPT_FIRE(pos.x, pos.y, pos.z, 25, TRUE);
 			            FIRE::ADD_EXPLOSION(pos.x, pos.y, pos.z, eExplosionTag::MOLOTOV, 1, false, false, 0, false);
 		            }},
-		        {"Delete", [this] {
+		        {"DELETE", [this] {
 			         if (entity::take_control_of(m_handle))
 			         {
 				         entity::delete_entity(m_handle);

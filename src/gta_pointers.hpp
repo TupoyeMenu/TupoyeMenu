@@ -407,6 +407,8 @@ namespace big
 		PVOID m_create_pool_item;
 
 		PVOID m_scope_sway_function;
+
+		PVOID m_report_myself_sender;
 	};
 #pragma pack(pop)
 	static_assert(sizeof(gta_pointers) % 8 == 0, "Pointers are not properly aligned");

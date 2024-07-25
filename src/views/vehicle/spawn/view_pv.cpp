@@ -53,7 +53,7 @@ namespace big
 
 
 		static int selected_class = -1;
-		const auto& class_arr     = g_gta_data_service->vehicle_classes();
+		const auto& class_arr     = g_gta_data_service.vehicle_classes();
 
 		ImGui::SetNextItemWidth(300.f);
 		if (ImGui::BeginCombo("Vehicle Class", selected_class == -1 ? "All" : class_arr[selected_class].c_str()))
@@ -122,7 +122,7 @@ namespace big
 			{
 				const auto& label        = it.first;
 				const auto& personal_veh = it.second;
-				const auto& item         = g_gta_data_service->vehicle_by_hash(personal_veh->get_hash());
+				const auto& item         = g_gta_data_service.vehicle_by_hash(personal_veh->get_hash());
 
 				std::string vehicle_class        = item.m_vehicle_class;
 				std::string display_name         = label;

@@ -32,7 +32,7 @@ namespace big
 		});
 
 		static int selected_class = -1;
-		const auto& class_arr     = g_gta_data_service->vehicle_classes();
+		const auto& class_arr     = g_gta_data_service.vehicle_classes();
 
 		ImGui::SetNextItemWidth(300.f);
 		if (ImGui::BeginCombo("Vehicle Class", selected_class == -1 ? "All" : class_arr[selected_class].c_str()))
@@ -88,9 +88,9 @@ namespace big
 		});
 		vehicle_map calculated_map{};
 
-		if (g_gta_data_service->vehicles().size() > 0)
+		if (g_gta_data_service.vehicles().size() > 0)
 		{
-			for (auto& item : g_gta_data_service->vehicles())
+			for (auto& item : g_gta_data_service.vehicles())
 			{
 				const auto& vehicle = item.second;
 
@@ -104,7 +104,8 @@ namespace big
 				std::string lower_search = search;
 				std::transform(lower_search.begin(), lower_search.end(), lower_search.begin(), tolower);
 
-				if ((selected_class == -1 || class_arr[selected_class] == clazz) && (display_name.find(lower_search) != std::string::npos || display_manufacturer.find(lower_search) != std::string::npos))
+				if ((selected_class == -1 || class_arr[selected_class] == clazz)
+				    && (display_name.find(lower_search) != std::string::npos || display_manufacturer.find(lower_search) != std::string::npos))
 				{
 					calculated_map.emplace(item);
 				}
@@ -134,7 +135,7 @@ namespace big
 
 				if (veh_hash)
 				{
-					const auto& item = g_gta_data_service->vehicle_by_hash(veh_hash);
+					const auto& item = g_gta_data_service.vehicle_by_hash(veh_hash);
 
 					components::selectable(std::format("Current Vehicle [{}]", item.m_display_name), false, [] {
 						if (self::veh)
@@ -188,8 +189,7 @@ namespace big
 					const auto& vehicle = item.second;
 					ImGui::PushID(vehicle.m_hash);
 					components::selectable(vehicle.m_display_name, false, [&vehicle] {
-						const auto spawn_location =
-						    vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside, vehicle.m_hash);
+						const auto spawn_location = vehicle::get_spawn_location(g.spawn_vehicle.spawn_inside, vehicle.m_hash);
 						const auto spawn_heading = ENTITY::GET_ENTITY_HEADING(self::ped);
 
 						auto veh = vehicle::spawn(vehicle.m_hash, spawn_location, spawn_heading);
