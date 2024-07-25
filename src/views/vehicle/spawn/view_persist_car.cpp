@@ -1,4 +1,5 @@
 #include "fiber_pool.hpp"
+#include "gui/components/components.hpp"
 #include "services/vehicle/persist_car_service.hpp"
 #include "services/model_preview/model_preview_service.hpp"
 #include "util/teleport.hpp"
@@ -78,12 +79,12 @@ namespace big
 				g_model_preview_service->stop_preview();
 			}
 		}
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("Shows a render of what you have highlighted in front of you.");
+		ImGui::SameLine();
+		components::help_marker("Shows a render of what you have highlighted in front of you.");
 		ImGui::SameLine();
 		ImGui::Checkbox("Spawn Inside", &g.persist_car.spawn_inside);
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("Controls whether the player should be set inside the vehicle after it spawns");
+		ImGui::SameLine();
+		components::help_marker("Controls whether the player should be set inside the vehicle after it spawns");
 
 		ImGui::SetNextItemWidth(300.f);
 		auto folder_display = g.persist_car.persist_vehicle_sub_folder.empty() ?
@@ -164,8 +165,8 @@ namespace big
 		ImGui::InputText("##vehiclefilename", vehicle_file_name_input, IM_ARRAYSIZE(vehicle_file_name_input));
 		if (ImGui::IsItemActive())
 			g.self.hud.typing = TYPING_TICKS;
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("Ex: My Cool Car");
+		ImGui::SameLine();
+		components::help_marker("Ex: My Cool Car");
 
 		if (g.persist_car.persist_vehicle_sub_folder.empty())
 		{
@@ -175,8 +176,8 @@ namespace big
 			ImGui::InputText("##foldername", save_folder, IM_ARRAYSIZE(save_folder));
 			if (ImGui::IsItemActive())
 				g.self.hud.typing = TYPING_TICKS;
-			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Ex: My Cool Car Collection (Leave this blank for Root)");
+			ImGui::SameLine();
+			components::help_marker("Ex: My Cool Car Collection (Leave this blank for Root)");
 
 			components::button("Save Vehicle", [] {
 				if (vehicle_file_name_input[0] == '\0')

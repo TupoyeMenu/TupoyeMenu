@@ -65,6 +65,7 @@ namespace big
 
 		static constexpr auto clan_logo_key = "clan_logo";
 
+		static bool is_attached_to_anything(Vehicle vehicle);
 
 		static Vehicle spawn_vehicle_full(nlohmann::json vehicle_json, Ped ped, const std::optional<Vector3>& spawn_coords = std::nullopt);
 		static Vehicle spawn_vehicle(nlohmann::json vehicle_json, Ped ped, const std::optional<Vector3>& spawn_coords);

@@ -11,6 +11,43 @@
 
 namespace big
 {
+	bool persist_car_service::is_attached_to_anything(Vehicle vehicle)
+	{
+		for (auto obj : pools::get_all_props())
+		{
+			const auto object = g_pointers->m_gta.m_ptr_to_handle(obj);
+			if (!object)
+				break;
+
+			if (!ENTITY::IS_ENTITY_ATTACHED_TO_ENTITY(vehicle, object))
+				continue;
+
+			return true;
+		};
+
+		Vehicle trailer;
+		VEHICLE::GET_VEHICLE_TRAILER_VEHICLE(vehicle, &trailer);
+		for (auto obj : pools::get_all_vehicles())
+		{
+			const auto object = g_pointers->m_gta.m_ptr_to_handle(obj);
+			if (!object)
+				break;
+
+			if (!ENTITY::IS_ENTITY_ATTACHED_TO_ENTITY(vehicle, object))
+				continue;
+
+			if (object == VEHICLE::GET_ENTITY_ATTACHED_TO_TOW_TRUCK(vehicle) || VEHICLE::IS_VEHICLE_ATTACHED_TO_TOW_TRUCK(object, vehicle))
+				continue;
+
+			if (object == trailer || VEHICLE::IS_VEHICLE_ATTACHED_TO_TRAILER(object))
+				continue;
+
+			return true;
+		};
+
+		return false;
+	}
+
 	void persist_car_service::save_vehicle(Vehicle vehicle, std::string_view file_name, std::string folder_name)
 	{
 		if (!ENTITY::DOES_ENTITY_EXIST(vehicle) || !ENTITY::IS_ENTITY_A_VEHICLE(vehicle))
@@ -150,61 +187,67 @@ namespace big
 	{
 		const auto vehicle = spawn_vehicle_json(vehicle_json, ped, spawn_coords);
 
-		std::vector<nlohmann::json> model_attachments = vehicle_json[model_attachments_key];
-		for (const auto& j : model_attachments)
+		if(!vehicle_json[model_attachments_key].is_null())
 		{
-			const auto attachment = j.get<model_attachment>();
-			const auto object     = world_model::spawn(attachment.model_hash);
-			if (object)
+			std::vector<nlohmann::json> model_attachments = vehicle_json[model_attachments_key];
+			for (const auto& j : model_attachments)
 			{
-				ENTITY::ATTACH_ENTITY_TO_ENTITY(object,
-				    vehicle,
-				    0,
-				    attachment.position.x,
-				    attachment.position.y,
-				    attachment.position.z,
-				    attachment.rotation.x,
-				    attachment.rotation.y,
-				    attachment.rotation.z,
-				    false,
-				    false,
-				    false,
-				    false,
-				    0,
-				    true,
-				    0);
+				const auto attachment = j.get<model_attachment>();
+				const auto object     = world_model::spawn(attachment.model_hash);
+				if (object)
+				{
+					ENTITY::ATTACH_ENTITY_TO_ENTITY(object,
+						vehicle,
+						0,
+						attachment.position.x,
+						attachment.position.y,
+						attachment.position.z,
+						attachment.rotation.x,
+						attachment.rotation.y,
+						attachment.rotation.z,
+						false,
+						false,
+						false,
+						false,
+						0,
+						true,
+						0);
 
-				ENTITY::SET_ENTITY_VISIBLE(object, attachment.is_visible, 0);
-				ENTITY::SET_ENTITY_COLLISION(object, attachment.has_collision, true);
+					ENTITY::SET_ENTITY_VISIBLE(object, attachment.is_visible, 0);
+					ENTITY::SET_ENTITY_COLLISION(object, attachment.has_collision, true);
+				}
 			}
 		}
 
-		std::vector<nlohmann::json> vehicle_attachments = vehicle_json[vehicle_attachments_key];
-		for (const auto& j : vehicle_attachments)
+		if(!vehicle_json[vehicle_attachments_key].is_null())
 		{
-			const auto vehicle_to_attach = spawn_vehicle_json(j[vehicle_key], ped);
-			auto attachment              = j[model_attachment_key].get<big::model_attachment>();
-			ENTITY::ATTACH_ENTITY_TO_ENTITY(vehicle_to_attach,
-			    vehicle,
-			    0,
-			    attachment.position.x,
-			    attachment.position.y,
-			    attachment.position.z,
-			    attachment.rotation.x,
-			    attachment.rotation.y,
-			    attachment.rotation.z,
+			std::vector<nlohmann::json> vehicle_attachments = vehicle_json[vehicle_attachments_key];
+			for (const auto& j : vehicle_attachments)
+			{
+				const auto vehicle_to_attach = spawn_vehicle_json(j[vehicle_key], ped);
+				auto attachment              = j[model_attachment_key].get<big::model_attachment>();
+				ENTITY::ATTACH_ENTITY_TO_ENTITY(vehicle_to_attach,
+					vehicle,
+					0,
+					attachment.position.x,
+					attachment.position.y,
+					attachment.position.z,
+					attachment.rotation.x,
+					attachment.rotation.y,
+					attachment.rotation.z,
 
-			    false,
-			    false,
-			    false,
-			    false,
-			    0,
-			    true,
-			    0);
+					false,
+					false,
+					false,
+					false,
+					0,
+					true,
+					0);
 
-			ENTITY::SET_ENTITY_VISIBLE(vehicle_to_attach, attachment.is_visible, 0);
-			ENTITY::SET_ENTITY_COLLISION(vehicle_to_attach, attachment.has_collision, true);
-			VEHICLE::SET_VEHICLE_IS_CONSIDERED_BY_PLAYER(vehicle_to_attach, false);
+				ENTITY::SET_ENTITY_VISIBLE(vehicle_to_attach, attachment.is_visible, 0);
+				ENTITY::SET_ENTITY_COLLISION(vehicle_to_attach, attachment.has_collision, true);
+				VEHICLE::SET_VEHICLE_IS_CONSIDERED_BY_PLAYER(vehicle_to_attach, false);
+			}
 		}
 
 		return vehicle;
@@ -339,15 +382,24 @@ namespace big
 
 	nlohmann::json persist_car_service::get_full_vehicle_json(Vehicle vehicle)
 	{
-		// The car needs to be rotated at (0, 0, 0) for the relative offset calculations to be accurate.
-		ENTITY::SET_ENTITY_ROTATION(vehicle, 0, 0, 0, 0, true);
-		script::get_current()->yield();
-		ENTITY::SET_ENTITY_ROTATION(vehicle, 0, 0, 0, 0, true);
-
 		nlohmann::json vehicle_json = get_vehicle_json(vehicle);
 
-		vehicle_json[model_attachments_key]   = get_model_attachments(vehicle);
-		vehicle_json[vehicle_attachments_key] = get_vehicle_attachents(vehicle);
+		if(is_attached_to_anything(vehicle))
+		{
+			// The car needs to be rotated at (0, 0, 0) for the relative offset calculations to be accurate.
+			ENTITY::SET_ENTITY_ROTATION(vehicle, 0, 0, 0, 0, true);
+			script::get_current()->yield();
+			ENTITY::SET_ENTITY_ROTATION(vehicle, 0, 0, 0, 0, true);
+
+			vehicle_json[model_attachments_key]   = get_model_attachments(vehicle);
+			vehicle_json[vehicle_attachments_key] = get_vehicle_attachents(vehicle);
+		}
+		else
+		{
+			// YimMenu will crash if the file is missing model_attachments_key or vehicle_attachments_key.
+			vehicle_json[model_attachments_key] = nlohmann::json::array();
+			vehicle_json[vehicle_attachments_key] = nlohmann::json::array();
+		}
 
 		Vehicle tow = VEHICLE::GET_ENTITY_ATTACHED_TO_TOW_TRUCK(vehicle);
 		if (ENTITY::DOES_ENTITY_EXIST(tow))
