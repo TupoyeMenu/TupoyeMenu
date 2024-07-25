@@ -389,9 +389,9 @@ namespace big
 				if (ImGui::TreeNode("Weapon Info"))
 				{
 					ImGui::Text("Weapon Name: %s",
-					    g_gta_data_service->weapon_by_hash(cped->m_weapon_manager->m_selected_weapon_hash).m_name.c_str());
+					    g_gta_data_service.weapon_by_hash(cped->m_weapon_manager->m_selected_weapon_hash).m_name.c_str());
 					ImGui::Text("Weapon Display Name: %s",
-					    g_gta_data_service->weapon_by_hash(cped->m_weapon_manager->m_selected_weapon_hash).m_display_name.c_str());
+					    g_gta_data_service.weapon_by_hash(cped->m_weapon_manager->m_selected_weapon_hash).m_display_name.c_str());
 					if (cped->m_weapon_manager->m_weapon_info != nullptr)
 					{
 						ImGui::Text("Weapon Damage: %f", cped->m_weapon_manager->m_weapon_info->m_damage);

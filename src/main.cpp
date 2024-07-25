@@ -202,13 +202,14 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    auto hooking_instance = std::make_unique<hooking>();
 			    LOG(INFO) << "Hooking initialized.";
 
+			    g_gta_data_service.init();
+
 			    auto context_menu_service_instance        = std::make_unique<context_menu_service>();
 			    auto custom_text_service_instance         = std::make_unique<custom_text_service>();
 			    auto mobile_service_instance              = std::make_unique<mobile_service>();
 			    auto notification_service_instance        = std::make_unique<notification_service>();
 			    auto pickup_service_instance              = std::make_unique<pickup_service>();
 			    auto player_service_instance              = std::make_unique<player_service>();
-			    auto gta_data_service_instance            = std::make_unique<gta_data_service>();
 			    auto model_preview_service_instance       = std::make_unique<model_preview_service>();
 			    auto script_patcher_service_instance      = std::make_unique<script_patcher_service>();
 			    auto player_database_service_instance     = std::make_unique<player_database_service>();
@@ -293,8 +294,6 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			    LOG(INFO) << "Player Database Service reset.";
 			    script_patcher_service_instance.reset();
 			    LOG(INFO) << "Script Patcher Service reset.";
-			    gta_data_service_instance.reset();
-			    LOG(INFO) << "GTA Data Service reset.";
 			    model_preview_service_instance.reset();
 			    LOG(INFO) << "Model Preview Service reset.";
 			    mobile_service_instance.reset();

@@ -5,18 +5,18 @@ namespace big
 {
 	void view::gta_cache()
 	{
-		auto ped_count = g_gta_data_service->peds().size();
-		auto veh_count = g_gta_data_service->vehicles().size();
-		auto wep_count = g_gta_data_service->weapons().size();
-		auto wep_comp_count = g_gta_data_service->weapon_components().size();
+		auto ped_count      = g_gta_data_service.peds().size();
+		auto veh_count      = g_gta_data_service.vehicles().size();
+		auto wep_count      = g_gta_data_service.weapons().size();
+		auto wep_comp_count = g_gta_data_service.weapon_components().size();
 
 		ImGui::TextUnformatted("GTA cache stats:");
 		ImGui::Text("Peds Cached: %zu\nVehicles Cached: %zu\nWeapons Cached: %zu\nWeapon Components Cached: %zu", ped_count, veh_count, wep_count, wep_comp_count);
 
 		if (components::button("Rebuild Cache"))
 		{
-			g_gta_data_service->set_state(eGtaDataUpdateState::NEEDS_UPDATE);
-			g_gta_data_service->update_now();
+			g_gta_data_service.set_state(eGtaDataUpdateState::NEEDS_UPDATE);
+			g_gta_data_service.update_now();
 		}
 	}
 }

@@ -100,7 +100,7 @@ namespace big
 		components::command_checkbox<"nosway">();
 
 		components::button("Get All Weapons", [] {
-			for (const auto& [_, weapon] : g_gta_data_service->weapons())
+			for (const auto& [_, weapon] : g_gta_data_service.weapons())
 			{
 				WEAPON::GIVE_DELAYED_WEAPON_TO_PED(self::ped, weapon.m_hash, 9999, false);
 			}
@@ -185,7 +185,7 @@ namespace big
 			if (ImGui::BeginCombo("Weapons", selected_weapon.c_str()))
 			{
 				std::map<std::string, weapon_item> sorted_map;
-				for (const auto& [_, weapon] : g_gta_data_service->weapons())
+				for (const auto& [_, weapon] : g_gta_data_service.weapons())
 				{
 					sorted_map.emplace(weapon.m_display_name, weapon);
 				}
@@ -219,12 +219,12 @@ namespace big
 			ImGui::PushItemWidth(250);
 			if (ImGui::BeginCombo("Attachments", selected_weapon_attachment.c_str()))
 			{
-				weapon_item weapon = g_gta_data_service->weapon_by_hash(selected_weapon_hash);
+				weapon_item weapon = g_gta_data_service.weapon_by_hash(selected_weapon_hash);
 				if (!weapon.m_attachments.empty())
 				{
 					for (std::string attachment : weapon.m_attachments)
 					{
-						weapon_component attachment_component = g_gta_data_service->weapon_component_by_name(attachment);
+						weapon_component attachment_component = g_gta_data_service.weapon_component_by_name(attachment);
 						std::string attachment_name = attachment_component.m_display_name;
 						Hash attachment_hash        = attachment_component.m_hash;
 						if (attachment_hash == 0)
@@ -337,16 +337,16 @@ namespace big
 				for (auto& weapon_hash : g.weapons.weapon_hotkeys[selected_key])
 				{
 					ImGui::PushID(counter);
-					weapon_item weapon = g_gta_data_service->weapon_by_hash(weapon_hash);
+					weapon_item weapon = g_gta_data_service.weapon_by_hash(weapon_hash);
 					ImGui::PushItemWidth(300);
 					if (ImGui::BeginCombo("Weapons", weapon.m_display_name.c_str()))
 					{
 						std::map<std::string, weapon_item> sorted_map;
-						for (const auto& [_, weapon_iter] : g_gta_data_service->weapons())
+						for (const auto& [_, weapon_iter] : g_gta_data_service.weapons())
 						{
 							sorted_map.emplace(weapon_iter.m_display_name, weapon_iter);
 						}
-						for (const auto& [_, weapon_iter] : g_gta_data_service->weapons())
+						for (const auto& [_, weapon_iter] : g_gta_data_service.weapons())
 						{
 							if (weapon_iter.m_display_name == "NULL")
 							{
