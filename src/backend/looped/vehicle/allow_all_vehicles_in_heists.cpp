@@ -18,13 +18,11 @@ namespace big
 			{
 				if (auto tunable_ptr = g_tunables_service->get_tunable<PBOOL>(tunable_hash)) [[likely]]
 				{
-					if (*tunable_ptr != FALSE)
-					{
+					if (*tunable_ptr != FALSE) [[unlikely]]
 						*tunable_ptr = FALSE;
 					}
 				}
 			}
-		}
 	};
 
 	allvehsinheists g_allvehsinheists("allvehsinheists", "Allow All Vehicles", "Allows All Vehicles that have been banned from being used in heists or missions.", g.vehicle.all_vehs_in_heists);

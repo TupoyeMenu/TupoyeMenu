@@ -125,6 +125,7 @@ namespace big
 		components::command_checkbox<"modifyexplosionradius">();
 		ImGui::InputFloat("Explosion Radius", &g.weapons.set_explosion_radius, .1, 200, "%.1f");
 
+		ImGui::PushID("custom_weapon_view");
 		ImGui::SeparatorText("Custom Weapons");
 
 		ImGui::Checkbox("Custom Gun only fires when the weapon is out", &g.self.custom_weapon_stop);
@@ -147,6 +148,7 @@ namespace big
 
 			ImGui::EndCombo();
 		}
+		ImGui::PopID();
 
 		switch (selected)
 		{
@@ -177,6 +179,7 @@ namespace big
 
 		ImGui::Separator();
 
+		ImGui::PushID("ammunation_view");
 		if (ImGui::TreeNode("Ammunation"))
 		{
 			static Hash selected_weapon_hash, selected_weapon_attachment_hash{};
@@ -276,6 +279,7 @@ namespace big
 			});
 			ImGui::TreePop();
 		}
+		ImGui::PopID();
 		if (ImGui::TreeNode("Persist Weapons"))
 		{
 			ImGui::PushID(1);

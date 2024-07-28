@@ -40,11 +40,11 @@ namespace big
 					g_lua_manager->draw_gui("DEBUG_TAB_LOCALS"_J);
 				ImGui::EndTabItem();
 			}
-			if (ImGui::BeginTabItem("Animations"))
+			if (ImGui::BeginTabItem("Tunables"))
 			{
-				view::debug_animations();
+				view::debug_tunables();
 				if (g_lua_manager)
-					g_lua_manager->draw_gui("Animations"_J);
+					g_lua_manager->draw_gui("DEBUG_TAB_TUNABLES"_J);
 				ImGui::EndTabItem();
 			}
 			if (ImGui::BeginTabItem("Misc"))

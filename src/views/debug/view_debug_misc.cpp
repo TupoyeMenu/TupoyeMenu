@@ -9,7 +9,6 @@
 #include "network/CNetworkPlayerMgr.hpp"
 #include "pointers.hpp"
 #include "util/pathfind.hpp"
-#include "util/ped.hpp"
 #include "util/system.hpp"
 #include "views/view.hpp"
 
@@ -96,21 +95,6 @@ namespace big
 		if (components::button("Reset"))
 		{
 			g_fiber_pool->reset();
-		}
-
-		if (ImGui::TreeNode("Animation player"))
-		{
-			static char dict[100], anim[100];
-
-			ImGui::PushItemWidth(200);
-			components::input_text_with_hint("##dictionary", "Dict", dict, IM_ARRAYSIZE(dict));
-			components::input_text_with_hint("##animation", "Animation", anim, IM_ARRAYSIZE(anim));
-			if (ImGui::Button("Play animation"))
-				g_fiber_pool->queue_job([=] {
-					ped::ped_play_animation(self::ped, dict, anim);
-				});
-			ImGui::PopItemWidth();
-			ImGui::TreePop();
 		}
 
 		ImGui::SeparatorText("Log Toggles");
