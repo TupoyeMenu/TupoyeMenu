@@ -1,13 +1,3 @@
-/**
- * @file model_preview_service.cpp
- * 
- * @copyright GNU General Public License Version 2.
- * This file is part of YimMenu.
- * YimMenu is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
- * YimMenu is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with YimMenu. If not, see <https://www.gnu.org/licenses/>.
- */
-
 #include "model_preview_service.hpp"
 
 #include "fiber_pool.hpp"
@@ -15,6 +5,8 @@
 #include "gui.hpp"
 #include "util/ped.hpp"
 #include "util/vehicle.hpp"
+
+#include "services/vehicle/persist_car_service.hpp"
 
 namespace big
 {
@@ -151,6 +143,10 @@ namespace big
 						{
 							m_current_ent = vehicle::clone_from_owned_mods(m_veh_owned_mods, location, 0.f, false);
 						}
+					}
+					else if (!m_current_persisted_vehicle_name.empty())
+					{
+						m_current_ent = persist_car_service::preview_vehicle(m_current_persisted_vehicle_name, g.persist_car.persist_vehicle_sub_folder, location);
 					}
 
 					if (m_current_ent)

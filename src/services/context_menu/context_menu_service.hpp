@@ -1,9 +1,9 @@
 #pragma once
-#include "backend/command.hpp"
 #include "backend/player_command.hpp"
 #include "natives.hpp"
 #include "services/gta_data/gta_data_service.hpp"
 #include "services/ped_animations/ped_animations_service.hpp"
+#include "services/vehicle/persist_car_service.hpp"
 #include "util/entity.hpp"
 #include "util/ped.hpp"
 #include "util/teleport.hpp"
@@ -104,6 +104,12 @@ namespace big
 			            }
 			            else
 				            g_notification_service.push_warning("Toxic", "Failed to take control of vehicle.");
+		            }},
+		        {"COPY VEHICLE",
+		            [this] {
+			            Vehicle v = persist_car_service::clone_ped_car(PLAYER::PLAYER_PED_ID(), m_handle);
+			            script::get_current()->yield();
+			            PED::SET_PED_INTO_VEHICLE(PLAYER::PLAYER_PED_ID(), v, -1);
 		            }},
 		        {"BOOST",
 		            [this] {
@@ -233,7 +239,7 @@ namespace big
 		            [this] {
 			            teleport::tp_on_top(m_handle, true);
 		            }},
-		        {"Bring",
+		        {"BRING",
 		            [this] {
 			            rage::fvector3 pos = *g_local_player->m_navigation->get_position();
 

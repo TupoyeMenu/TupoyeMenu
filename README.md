@@ -12,7 +12,7 @@ TupoyeMenu-lite is based of off [TupoyeMenu](https://github.com/TupoyeMenu/Tupoy
 
 - [TupoyeMenu-lite](#tupoyemenu-lite)
   - [Table of contents](#table-of-contents)
-  - [Changes from TupoyeMenu](#changes-from-tupoyemenu)
+  - [Changes from YimMenu](#changes-from-yimmenu)
     - [Removed](#removed)
     - [Reworked](#reworked)
   - [How to compile TupoyeMenu](#how-to-compile-tupoyemenu)
@@ -22,35 +22,31 @@ TupoyeMenu-lite is based of off [TupoyeMenu](https://github.com/TupoyeMenu/Tupoy
   - [Credits](#credits)
   - [Donate](#donate)
 
-## Changes from TupoyeMenu
+## Changes from YimMenu
 ### Removed
-| Feature          | Reason                 |
-|------------------|------------------------|
-| cpr and related  | Bloat                  |
-| HUD color        | Low quality?           |
-| Superman         | Low quality            |
-| Super jump       | Low quality            |
-| Beast jump       | Low quality            |
-| Part Water       | Useless                |
-| Train features   | Useless, doesn't work? |
-| Ped flag debug   | Low quality bloat?     |
-| Persist car      | Low quality, bloat     |
-| Translations     | Bloat, pain to maintain, unreadable code, cpr dependent, internet dependent, learn English |
-| Handling editor  | Bloat?                 |
-| Fancy spinner    | Bloat, only used once  |
-| Custom chat      | Low quality            |
-| Show transaction error | Breaks game play for no reason |
-| PTFX             | Useless bloat          |
-| Voice chat audio | Useless bloat          |
-| Orbital drone    | Bloat                  |
-| Vehicle Controller | Bloat                |
-| Squad Spawner    | Bloat?                 |
-| Aim-bot & trigger-bot | Bloat, cheats bad, L, noob, low quality, useless, cringe, learn how to aim |
+| Feature                | Reason                                                                                     |
+| ---------------------- | ------------------------------------------------------------------------------------------ |
+| cpr and related        | Bloat                                                                                      |
+| HUD color              | Low quality?                                                                               |
+| Superman               | Low quality                                                                                |
+| Super jump             | To lazy to bring back                                                                      |
+| Beast jump             | To lazy to bring back                                                                      |
+| Part Water             | Useless                                                                                    |
+| Train features         | Useless, doesn't work?                                                                     |
+| Translations           | Bloat, pain to maintain, unreadable code, cpr dependent, internet dependent, learn English |
+| Handling editor        | Bloat?                                                                                     |
+| Show transaction error | Breaks game play for no reason                                                             |
+| PTFX                   | Useless bloat                                                                              |
+| Voice chat audio       | Useless bloat                                                                              |
+| Orbital drone          | Bloat                                                                                      |
+| Vehicle Controller     | Bloat                                                                                      |
+| Squad Spawner          | Bloat?                                                                                     |
+| Aim-bot & trigger-bot  | Bloat, cheats bad, L, noob, low quality, useless, cringe, learn how to aim                 |
 
 ### Reworked
-| Feature | Reason                                   | Description   |
-|---------|------------------------------------------|---------------|
-| GUI     | Bloated, pain to navigate, inconsistent  | Reworked GUI for easier navigation and better look |
+| Feature | Reason                                  | Description                                        |
+| ------- | --------------------------------------- | -------------------------------------------------- |
+| GUI     | Bloated, pain to navigate, inconsistent | Reworked GUI for easier navigation and better look |
 
 
 ## How to compile TupoyeMenu
