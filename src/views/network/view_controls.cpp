@@ -1,5 +1,6 @@
 ﻿#include "fiber_pool.hpp"
 #include "gta_util.hpp"
+#include "gui/components/components.hpp"
 #include "util/troll.hpp"
 #include "util/toxic.hpp"
 #include "views/view.hpp"
@@ -170,11 +171,18 @@ namespace big
 
 		ImGui::EndDisabled();
 
-		//if (g.session.force_session_host)
-		//{
-		//	ImGui::SameLine();
-		//	ImGui::Checkbox("Kick Host During Join", &g.session.kick_host_when_forcing_host);
-		//}
+		if (g.session.spoof_host_token_type != 0)
+		{
+			ImGui::Checkbox("Kick Host During Join", &g.session.kick_host_when_forcing_host);
+
+			if (g.session.kick_host_when_forcing_host)
+			{
+				ImGui::SameLine();
+				ImGui::Checkbox("Exclude Modders from Kick Host", &g.session.exclude_modders_from_kick_host);
+				ImGui::SameLine();
+				components::help_marker("Excluding modder hosts from the kick\nCheck your reactions so they don't kick the host upon joining");
+			}
+		}
 
 		ImGui::Checkbox("Force Script Host", &g.session.force_script_host);
 		ImGui::SameLine();

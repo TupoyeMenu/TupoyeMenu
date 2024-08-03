@@ -1,4 +1,5 @@
-﻿#include "core/data/apartment_names.hpp"
+﻿#include "backend/bool_command.hpp"
+#include "core/data/apartment_names.hpp"
 #include "core/data/region_codes.hpp"
 #include "core/data/warehouse_names.hpp"
 #include "gta_util.hpp"
@@ -7,7 +8,6 @@
 #include "util/session.hpp"
 #include "util/toxic.hpp"
 #include "views/view.hpp"
-#include "backend/bool_command.hpp"
 
 #include <network/Network.hpp>
 #include <script/globals/GPBD_FM_3.hpp>
@@ -27,16 +27,16 @@ namespace big
 
 		ImGui::BeginGroup();
 		static uint64_t rid = 0;
-		static char username[20];
-		static char base64[500]{};
 		
 		ImGui::SetNextItemWidth(200);
-		ImGui::InputScalar("##inputrid", ImGuiDataType_U64, &rid);
+		bool rid_submitted = ImGui::InputScalar("##inputrid", ImGuiDataType_U64, &rid, nullptr, nullptr, nullptr, ImGuiInputTextFlags_EnterReturnsTrue);
 		ImGui::SameLine();
-		components::button("Join by RID", [] {
+		if(components::button("Join by RID") || rid_submitted)
+		{
 			session::join_by_rockstar_id(rid);
-		});
+		}
 
+		static char base64[500]{};
 		ImGui::SetNextItemWidth(200);
 		components::input_text_with_hint("##sessioninfoinput", "Session Info", base64, sizeof(base64));
 		ImGui::SameLine();

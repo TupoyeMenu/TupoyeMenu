@@ -216,7 +216,7 @@ namespace big
 		{
 			// first constructor param is an internal identifier for the event
 			reaction bounty{"Bounty", "Blocked Bounty from {}", "{} tried to set a bounty on me!"};
-			reaction break_game{"Break Game", "REACTION_BREAK_GAME_NOTIFY", "REACTION_BREAK_GAME_ANNOUNCE"};
+			reaction break_game{"Break Game", "Blocked Break Game from {}", "{} tried to break my game!"};
 			reaction ceo_kick{"CEO Kick", "Blocked CEO Kick from {}", "{} tried to kick me from my CEO!"};
 			reaction ceo_money{"CEO Money", "Blocked CEO Money from {}", "{} tried to drop money on me!"};
 			reaction clear_wanted_level{"Clear Wanted Level", "Blocked Clear Wanted Level from {}", "{} tried to clear my wanted level!"};
@@ -435,6 +435,7 @@ namespace big
 			CommandAccessLevel chat_command_default_access_level = CommandAccessLevel::NONE;
 
 			bool kick_host_when_forcing_host = false;
+			bool exclude_modders_from_kick_host = false;
 
 			bool explosion_karma = false;
 			bool damage_karma    = false;
@@ -472,7 +473,7 @@ namespace big
 
 			bool fast_join = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, log_chat_messages, decloak_players, spoof_host_token_type, custom_host_token, hide_token_spoofing_when_host, force_script_host, player_magnet_enabled, player_magnet_count, is_team, join_in_sctv_slots, kick_host_when_forcing_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, block_ceo_creation, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, anonymous_bounty, lock_session, fast_join, unhide_players_from_player_list, allow_friends_into_locked_session, trust_friends, use_spam_timer, spam_timer, spam_length, script_block_opts)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, log_chat_messages, decloak_players, spoof_host_token_type, custom_host_token, hide_token_spoofing_when_host, force_script_host, player_magnet_enabled, player_magnet_count, is_team, join_in_sctv_slots, kick_host_when_forcing_host, exclude_modders_from_kick_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, block_ceo_creation, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, anonymous_bounty, lock_session, fast_join, unhide_players_from_player_list, allow_friends_into_locked_session, trust_friends, use_spam_timer, spam_timer, spam_length, script_block_opts)
 		} session{};
 
 		struct settings

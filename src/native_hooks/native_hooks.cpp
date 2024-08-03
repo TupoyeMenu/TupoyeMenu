@@ -7,13 +7,13 @@
 
 #include "all_scripts.hpp"
 #include "am_launcher.hpp"
+#include "am_pi_menu.hpp"
 #include "carmod_shop.hpp"
 #include "creator.hpp"
 #include "freemode.hpp"
 #include "maintransition.hpp"
 #include "shop_controller.hpp"
 #include "tunables.hpp"
-#include "am_pi_menu.hpp"
 
 #include <script/scrProgram.hpp>
 
@@ -116,8 +116,6 @@ namespace big
 		add_native_detour("carmod_shop"_J, NativeIndex::SET_ENTITY_COORDS, carmod_shop::SET_ENTITY_COORDS);
 		add_native_detour("carmod_shop"_J, NativeIndex::SET_ENTITY_HEADING, carmod_shop::SET_ENTITY_HEADING);
 		add_native_detour("carmod_shop"_J, NativeIndex::SET_VEHICLE_LIGHTS, carmod_shop::SET_VEHICLE_LIGHTS);
-		add_native_detour("carmod_shop"_J, NativeIndex::STAT_GET_INT, carmod_shop::STAT_GET_INT);
-		add_native_detour("carmod_shop"_J, NativeIndex::STAT_SET_INT, carmod_shop::STAT_SET_INT);
 		add_native_detour("carmod_shop"_J, NativeIndex::DISABLE_ALL_CONTROL_ACTIONS, carmod_shop::DISABLE_ALL_CONTROL_ACTIONS);
 		add_native_detour("maintransition"_J, NativeIndex::NETWORK_SESSION_HOST, maintransition::NETWORK_SESSION_HOST); // RID Joiner from https://github.com/YimMenu/YimMenu/issues/172
 		add_native_detour("maintransition"_J, NativeIndex::IS_SWITCH_TO_MULTI_FIRSTPART_FINISHED, maintransition::IS_SWITCH_TO_MULTI_FIRSTPART_FINISHED); // This hook lets you stop player-switch in "Pre-HUD Checks"
