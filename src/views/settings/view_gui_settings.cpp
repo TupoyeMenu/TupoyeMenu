@@ -6,8 +6,13 @@ namespace big
 	void view::gui_settings()
 	{
 		ImGui::TextUnformatted("UI Scale");
-		if (ImGui::SliderFloat("##gui-scale", &g.window.gui_scale, 0.75f, 1.5f, "%.2f"))
+		static auto gui_scale = g.window.gui_scale;
+		ImGui::SliderFloat("##gui-scale", &gui_scale, 0.75f, 1.5f, "%.2f");
+		if (ImGui::IsItemDeactivatedAfterEdit())
+		{
+			g.window.gui_scale = gui_scale;
 			g_renderer.rescale(g.window.gui_scale);
+		}
 		ImGui::SameLine();
 		components::help_marker("Changing the UI scale in game will crash wine users.");
 

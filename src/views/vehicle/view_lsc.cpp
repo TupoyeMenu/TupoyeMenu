@@ -544,19 +544,19 @@ namespace big
 			if (ImGui::Selectable("Pearlescent", color_to_change == 2))
 			{
 				color_to_change = 2;
-				color_type      = 4;
+				color_type      = 6;
 			}
 
 			if (ImGui::Selectable("Interior", color_to_change == 3))
 			{
 				color_to_change = 3;
-				color_type      = 6;
+				color_type      = 9;
 			}
 
 			if (ImGui::Selectable("Dashboard", color_to_change == 4))
 			{
 				color_to_change = 4;
-				color_type      = 7;
+				color_type      = 10;
 			}
 
 			if (!owned_mods[MOD_TYRE_SMOKE])
@@ -576,7 +576,7 @@ namespace big
 			if (ImGui::Selectable("Wheel Color", color_to_change == 6))
 			{
 				color_to_change = 6;
-				color_type      = 5;
+				color_type      = 7;
 			}
 
 			if (!owned_mods[MOD_XENON_LIGHTS])
@@ -587,7 +587,7 @@ namespace big
 			if (ImGui::Selectable("Headlight", color_to_change == 7))
 			{
 				color_to_change = 7;
-				color_type      = 9;
+				color_type      = 11;
 			}
 			ImGui::PopID();
 			if (!owned_mods[MOD_XENON_LIGHTS])
@@ -607,7 +607,7 @@ namespace big
 
 		if (color_to_change == 0 || color_to_change == 1)
 		{
-			if (color_type > 3)
+			if (color_type > 5)
 			{
 				color_type = 8;
 			}
@@ -651,6 +651,14 @@ namespace big
 				if (ImGui::Selectable("Metals", color_type == 3))
 				{
 					color_type = 3;
+				}
+				if (ImGui::Selectable("Util", color_type == 4))
+				{
+					color_type = 4;
+				}
+				if (ImGui::Selectable("Worn", color_type == 5))
+				{
+					color_type = 5;
 				}
 				ImGui::EndListBox();
 			}
@@ -772,16 +780,16 @@ namespace big
 			int selected_color = 0;
 			switch (color_type)
 			{
-			case 4: selected_color = owned_mods[MOD_PEARLESCENT_COL]; break;
-			case 5: selected_color = owned_mods[MOD_WHEEL_COL]; break;
-			case 6: selected_color = owned_mods[MOD_INTERIOR_COL]; break;
-			case 7: selected_color = owned_mods[MOD_DASHBOARD_COL]; break;
-			case 9: selected_color = owned_mods[MOD_XENON_COL]; break;
+			case 6: selected_color = owned_mods[MOD_PEARLESCENT_COL]; break;
+			case 7: selected_color = owned_mods[MOD_WHEEL_COL]; break;
+			case 9: selected_color = owned_mods[MOD_INTERIOR_COL]; break;
+			case 10: selected_color = owned_mods[MOD_DASHBOARD_COL]; break;
+			case 11: selected_color = owned_mods[MOD_XENON_COL]; break;
 			default:
 				selected_color = (color_to_change == 0) ? owned_mods[MOD_PRIMARY_COL] : owned_mods[MOD_SECONDARY_COL];
 			}
 
-			if (color_type != 9)
+			if (color_type != 11)
 			{
 				ImGui::SameLine();
 			}
@@ -881,7 +889,55 @@ namespace big
 					}
 					break;
 				}
-				case 4: //Pearlescent
+				case 4: //Util
+				{
+					for (const auto& [color, name] : lsc_util_colors)
+					{
+						if (ImGui::Selectable(name.c_str(), selected_color == color))
+						{
+							selected_color = color;
+
+							if (color_to_change == 0)
+							{
+								owned_mods[MOD_PRIMARY_COL] = color;
+							}
+							else
+							{
+								owned_mods[MOD_SECONDARY_COL] = color;
+							}
+
+							g_fiber_pool->queue_job([] {
+								VEHICLE::SET_VEHICLE_COLOURS(player_vehicle, owned_mods[MOD_PRIMARY_COL], owned_mods[MOD_SECONDARY_COL]);
+							});
+						}
+					}
+					break;
+				}	
+				case 5: //Worn
+				{
+					for (const auto& [color, name] : lsc_worn_colors)
+					{
+						if (ImGui::Selectable(name.c_str(), selected_color == color))
+						{
+							selected_color = color;
+
+							if (color_to_change == 0)
+							{
+								owned_mods[MOD_PRIMARY_COL] = color;
+							}
+							else
+							{
+								owned_mods[MOD_SECONDARY_COL] = color;
+							}
+
+							g_fiber_pool->queue_job([] {
+								VEHICLE::SET_VEHICLE_COLOURS(player_vehicle, owned_mods[MOD_PRIMARY_COL], owned_mods[MOD_SECONDARY_COL]);
+							});
+						}
+					}
+					break;
+				}
+				case 6: //Pearlescent
 				{
 					for (const auto& [color, name] : lsc_classic_colors)
 					{
@@ -897,7 +953,7 @@ namespace big
 					}
 					break;
 				}
-				case 5: //Wheel Color
+				case 7: //Wheel Color
 				{
 					for (const auto& [color, name] : lsc_classic_colors)
 					{
@@ -913,7 +969,7 @@ namespace big
 					}
 					break;
 				}
-				case 6: //Interior Color
+				case 9: //Interior Color
 				{
 					for (const auto& [color, name] : lsc_classic_colors)
 					{
@@ -929,7 +985,7 @@ namespace big
 					}
 					break;
 				}
-				case 7: //Dashboard Color
+				case 10: //Dashboard Color
 				{
 					for (const auto& [color, name] : lsc_classic_colors)
 					{
@@ -945,7 +1001,7 @@ namespace big
 					}
 					break;
 				}
-				case 9: //Headlight Color
+				case 11: //Headlight Color
 				{
 					for (const auto& [color, name] : lsc_headlight_colors)
 					{
