@@ -290,8 +290,7 @@ namespace big
 						Hash attachment_hash                  = attachment_component.m_hash;
 						if (attachment_hash == NULL)
 						{
-							attachment_name = attachment;
-							attachment_hash = rage::joaat(attachment);
+							continue;
 						}
 						bool is_selected         = attachment_hash == selected_weapon_attachment_hash;
 						std::string display_name = attachment_name.append("##").append(std::to_string(attachment_hash));
@@ -300,6 +299,8 @@ namespace big
 							selected_weapon_attachment      = attachment_name;
 							selected_weapon_attachment_hash = attachment_hash;
 						}
+						if (ImGui::IsItemHovered())
+							ImGui::SetTooltip(attachment_component.m_display_desc.c_str());
 						if (is_selected)
 						{
 							ImGui::SetItemDefaultFocus();

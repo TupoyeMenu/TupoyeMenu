@@ -256,9 +256,12 @@ namespace big
 		hash_array mapped_weapons;
 		hash_array mapped_components;
 
+		int mp_weapons_thread_id = 0;
+
 		std::vector<ped_item> peds;
 		std::vector<vehicle_item> vehicles;
-		std::vector<weapon_item> weapons;
+		//std::vector<weapon_item> weapons;
+		std::unordered_map<Hash, weapon_item> weapons;
 		std::vector<weapon_component> weapon_components;
 
 		constexpr auto exists = [](const hash_array& arr, uint32_t val) -> bool {
@@ -307,7 +310,7 @@ namespace big
 			}
 			else if (const auto file_str = path.string(); file_str.find("weaponcomponents") != std::string::npos && path.extension() == ".meta")
 			{
-				rpf_wrapper.read_xml_file(path, [&exists, &weapon_components, &mapped_components](pugi::xml_document& doc) {
+				rpf_wrapper.read_xml_file(path, [&exists, &weapon_components, &mapped_components, &mp_weapons_thread_id](pugi::xml_document& doc) {
 					const auto& items = doc.select_nodes("/CWeaponComponentInfoBlob/Infos/*[self::Item[@type='CWeaponComponentInfo'] or self::Item[@type='CWeaponComponentFlashLightInfo'] or self::Item[@type='CWeaponComponentScopeInfo'] or self::Item[@type='CWeaponComponentSuppressorInfo'] or self::Item[@type='CWeaponComponentVariantModelInfo'] or self::Item[@type='CWeaponComponentClipInfo']]");
 					for (const auto& item_node : items)
 					{
@@ -315,7 +318,7 @@ namespace big
 						const std::string name = item.child("Name").text().as_string();
 						const auto hash        = rage::joaat(name);
 
-						if (!name.starts_with("COMPONENT"))
+						if (!name.starts_with("COMPONENT") || name.ends_with("MK2_UPGRADE"))
 						{
 							continue;
 						}
@@ -329,9 +332,49 @@ namespace big
 						std::string LocName = item.child("LocName").text().as_string();
 						std::string LocDesc = item.child("LocDesc").text().as_string();
 
-						if (LocName.ends_with("INVALID") || LocName.ends_with("RAIL"))
-						{
+						if (LocName.ends_with("RAIL"))
 							continue;
+
+						if (LocName.ends_with("INVALID"))
+						{
+							constexpr Hash script_hash = "MP_Weapons"_J;
+							if (!SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(script_hash))
+							{
+								while (!SCRIPT::HAS_SCRIPT_WITH_NAME_HASH_LOADED(script_hash))
+								{
+									SCRIPT::REQUEST_SCRIPT_WITH_NAME_HASH(script_hash);
+									script::get_current()->yield(10ms);
+								}
+								mp_weapons_thread_id = SYSTEM::START_NEW_SCRIPT_WITH_NAME_HASH(script_hash, 1424);
+								auto thread          = gta_util::find_script_thread_by_id(mp_weapons_thread_id);
+								if (thread)
+									thread->m_context.m_state = rage::eThreadState::unk_3;
+								else
+									LOG(FATAL) << "Failed to find MP_Weapons script!";
+								SCRIPT::SET_SCRIPT_WITH_NAME_HASH_AS_NO_LONGER_NEEDED(script_hash);
+							}
+
+							Hash weapon_hash = 0;
+							if (name.starts_with("COMPONENT_KNIFE"))
+								weapon_hash = "WEAPON_KNIFE"_J;
+							else if (name.starts_with("COMPONENT_KNUCKLE"))
+								weapon_hash = "WEAPON_KNUCKLE"_J;
+							else if (name.starts_with("COMPONENT_BAT"))
+								weapon_hash = "WEAPON_BAT"_J;
+							const auto display_string = scr_functions::get_component_name_string.call<const char*>(hash, weapon_hash);
+							if (display_string == nullptr)
+								continue;
+							LocName = display_string;
+						}
+
+						if (LocName.ends_with("INVALID"))
+							continue;
+
+						if (LocDesc.ends_with("INVALID"))
+						{
+							const auto display_string = scr_functions::get_component_desc_string.call<const char*>(hash, 0);
+							if (display_string != nullptr)
+								LocDesc = display_string;
 						}
 
 						weapon_component component;
@@ -358,9 +401,8 @@ namespace big
 						if (hash == "WEAPON_BIRD_CRAP"_J)
 							continue;
 
-						if (exists(mapped_weapons, hash))
-							continue;
-						mapped_weapons.emplace_back(hash);
+						if (!exists(mapped_weapons, hash))
+							mapped_weapons.emplace_back(hash);
 
 						const auto human_name_hash = item.child("HumanNameHash").text().as_string();
 						if (std::strcmp(human_name_hash, "WT_INVALID") == 0 || std::strcmp(human_name_hash, "WT_VEHMINE") == 0)
@@ -435,7 +477,7 @@ namespace big
 
 						weapon.m_hash = hash;
 
-						weapons.emplace_back(std::move(weapon));
+						weapons[hash] = weapon;
 					skip:
 						continue;
 					}
@@ -475,6 +517,11 @@ namespace big
 			yim_fipackfile::for_each_fipackfile();
 		}
 
+		if (mp_weapons_thread_id != 0)
+		{
+			SCRIPT::TERMINATE_THREAD(mp_weapons_thread_id);
+		}
+
 		static bool translate_label = false;
 
 		g_fiber_pool->queue_job([&] {
@@ -488,7 +535,7 @@ namespace big
 			}
 			for (auto& item : weapons)
 			{
-				item.m_display_name = HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION(item.m_display_name.c_str());
+				item.second.m_display_name = HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION(item.second.m_display_name.c_str());
 			}
 			for (auto& item : weapon_components)
 			{
@@ -555,8 +602,8 @@ namespace big
 				m_weapons_cache.weapon_map.clear();
 				for (auto weapon : weapons)
 				{
-					add_if_not_exists(m_weapon_types, weapon.m_weapon_type);
-					m_weapons_cache.weapon_map.insert({weapon.m_name, weapon});
+					add_if_not_exists(m_weapon_types, weapon.second.m_weapon_type);
+					m_weapons_cache.weapon_map.insert({weapon.second.m_name, weapon.second});
 				}
 
 				m_weapons_cache.weapon_components.clear();
