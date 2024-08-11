@@ -2,6 +2,7 @@
 
 #include "file_manager.hpp"
 #include "pointers.hpp"
+#include "script.hpp"
 #include "util/ped.hpp"
 #include "util/vehicle.hpp"
 #include "util/world_model.hpp"

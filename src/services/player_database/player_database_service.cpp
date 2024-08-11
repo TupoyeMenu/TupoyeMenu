@@ -1,11 +1,16 @@
 #include "player_database_service.hpp"
 
 #include "backend/bool_command.hpp"
+#include "fiber_pool.hpp"
 #include "file_manager.hpp"
 #include "gta/enums.hpp"
 #include "hooking/hooking.hpp"
 #include "pointers.hpp"
-#include "util/session.hpp"
+#include "script.hpp"
+#include "thread_pool.hpp"
+
+#include <rage/rlQueryPresenceAttributesContext.hpp>
+#include <rage/rlScHandle.hpp>
 
 namespace big
 {
@@ -33,7 +38,8 @@ namespace big
 		if (!player.notify_online)
 			return;
 
-		if (g.player_db.notify_when_joinable && !is_joinable_session(player.session_type, player.game_mode) && is_joinable_session(new_session_type, player.game_mode))
+		if (g.player_db.notify_when_joinable && !is_joinable_session(player.session_type, player.game_mode)
+		    && is_joinable_session(new_session_type, player.game_mode))
 		{
 			g_notification_service.push_success("Player DB", std::format("{} is now in a joinable session", player.name));
 		}
@@ -41,7 +47,8 @@ namespace big
 		{
 			g_notification_service.push_success("Player DB", std::format("{} is now online", player.name));
 		}
-		else if (g.player_db.notify_when_unjoinable && is_joinable_session(player.session_type, player.game_mode) && !is_joinable_session(new_session_type, player.game_mode) && new_session_type != GSType::Invalid)
+		else if (g.player_db.notify_when_unjoinable && is_joinable_session(player.session_type, player.game_mode)
+		    && !is_joinable_session(new_session_type, player.game_mode) && new_session_type != GSType::Invalid)
 		{
 			g_notification_service.push("Player DB", std::format("{} is no longer in a joinable session", player.name));
 		}

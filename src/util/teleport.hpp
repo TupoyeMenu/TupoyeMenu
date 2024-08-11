@@ -6,6 +6,7 @@
 #pragma once
 #include "blip.hpp"
 #include "entity.hpp"
+#include "fiber_pool.hpp"
 #include "gta/enums.hpp"
 #include "services/players/player_service.hpp"
 #include "vehicle.hpp"
@@ -109,20 +110,28 @@ namespace big::teleport
 			{
 				script::get_current()->yield(25ms);
 
-				if (auto ptr = (rage::CDynamicEntity*)g_pointers->m_gta.m_handle_to_ptr(hnd))
-				{
-					if (auto netobj = ptr->m_net_object)
-					{
-						g_pointers->m_gta.m_migrate_object(player->get_net_game_player(), netobj, 3);
-					}
-				}
+				auto ptr = (rage::CDynamicEntity*)g_pointers->m_gta.m_handle_to_ptr(hnd);
+
+				if (!ptr || !ptr->m_net_object)
+					break;
+
+				auto plyr = player->get_net_game_player();
+
+				if (!plyr)
+					break;
+
+				g_pointers->m_gta.m_migrate_object(plyr, ptr->m_net_object, 3);
 
 				auto new_coords = ENTITY::GET_ENTITY_COORDS(hnd, true);
 				if (SYSTEM::VDIST2(coords.x, coords.y, coords.z, new_coords.x, new_coords.y, new_coords.z) < 20 * 20 && VEHICLE::GET_PED_IN_VEHICLE_SEAT(hnd, 0, true) == ent)
 					break;
 			}
 
-			entity::delete_entity(hnd);
+			g_fiber_pool->queue_job([hnd] {
+				auto ent = hnd;
+				entity::take_control_of(ent);
+				entity::delete_entity(ent);
+			});
 
 			std::erase_if(g.m_remote_player_teleports, [veh_id](auto& obj) {
 				return obj.first == veh_id;
@@ -200,7 +209,7 @@ namespace big::teleport
 		if (!blip::get_blip_location(location, sprite, color))
 			return false;
 
-		if (sprite == (int)BlipIcons::Waypoint)
+		if (sprite == (int)BlipIcons::RADAR_WAYPOINT)
 			entity::load_ground_at_3dcoord(location);
 
 		to_coords(location);
@@ -237,7 +246,7 @@ namespace big::teleport
 	 */
 	inline bool to_waypoint()
 	{
-		if (!to_blip((int)BlipIcons::Waypoint))
+		if (!to_blip((int)BlipIcons::RADAR_WAYPOINT))
 		{
 			g_notification_service.push_warning("Teleport", "No waypoint found.");
 

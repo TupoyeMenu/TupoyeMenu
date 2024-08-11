@@ -52,5 +52,7 @@ namespace big
 		components::player_command_button<"sshuntleft">(g_player_service->get_selected(), {});
 		ImGui::SameLine();
 		components::player_command_button<"sshuntright">(g_player_service->get_selected(), {});
+
+		components::player_command_button<"cloneplayercar">(g_player_service->get_selected(), {});
 	}
 }

@@ -4,10 +4,9 @@
  */
 
 #pragma once
-#include "natives.hpp"
-#include "pointers.hpp"
-#include "script.hpp"
 #include "entity.hpp"
+#include "memory/byte_patch.hpp"
+#include "natives.hpp"
 
 struct world_model_bypass
 {

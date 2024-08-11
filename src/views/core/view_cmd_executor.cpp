@@ -637,7 +637,7 @@ namespace big
 			if (components::input_text_with_hint("", "Type your command", command_buffer, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCompletion | ImGuiInputTextFlags_CallbackHistory | ImGuiInputTextFlags_CallbackAlways, nullptr, input_callback))
 			{
 				if (!s_buffer.get_command_of_index(cursor_pos))
-					return;
+					goto VIEW_END;
 
 				if (command::process(command_buffer, std::make_shared<console_command_context>(), false))
 				{

@@ -52,7 +52,6 @@ namespace big
 			looped::ragdoll_mp();
 			looped::self_wanted();
 			looped::self_hud();
-			looped::self_dance_mode();
 			looped::self_persist_outfit();
 
 			script::get_current()->yield();
@@ -151,21 +150,9 @@ namespace big
 		}
 	}
 
-	void backend::lscustoms_loop()
-	{
-		LOG(INFO) << "Starting script: Ls customs";
-
-		while (g_running)
-		{
-			looped::vehicle_ls_customs();
-
-			script::get_current()->yield();
-		}
-	}
-
 	void backend::rainbowpaint_loop()
 	{
-		LOG(INFO) << "Starting script: Rainbow paint";
+		LOG(INFO) << "Starting script: Rainbow Paint";
 
 		while (g_running)
 		{

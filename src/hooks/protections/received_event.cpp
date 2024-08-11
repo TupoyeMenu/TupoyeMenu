@@ -10,6 +10,7 @@
 
 #include <base/CObject.hpp>
 #include <network/CNetGamePlayer.hpp>
+#include <script/globals/GlobalPlayerBD.hpp>
 
 namespace big
 {

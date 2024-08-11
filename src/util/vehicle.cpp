@@ -1,5 +1,6 @@
 #include "vehicle.hpp"
 #include "pools.hpp"
+#include "script_function.hpp"
 
 #include "core/scr_globals.hpp"
 #include "entity.hpp"
@@ -560,7 +561,7 @@ namespace big::vehicle
 		/*
 		if (owned_mods[MOD_HAS_CLAN_LOGO] != 0)
 		{
-			vehicle_helper::add_clan_logo_to_vehicle(vehicle, self::ped);
+			scr_functions::add_clan_logo_to_vehicle.call<bool>(&vehicle, self::id);
 		}
 		*/
 

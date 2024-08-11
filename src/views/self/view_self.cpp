@@ -38,7 +38,6 @@ namespace big
 		components::command_checkbox<"mobileradio">();
 		ImGui::Checkbox("Disable Help Text", &g.tunables.disable_help_text);
 		components::command_checkbox<"fastrespawn">();
-		ImGui::Checkbox("Dance Mode", &g.self.dance_mode);
 
 		ImGui::EndGroup();
 		ImGui::SameLine();

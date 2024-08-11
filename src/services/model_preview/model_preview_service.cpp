@@ -5,6 +5,7 @@
 #include "gui.hpp"
 #include "util/ped.hpp"
 #include "util/vehicle.hpp"
+#include "script.hpp"
 
 #include "services/vehicle/persist_car_service.hpp"
 

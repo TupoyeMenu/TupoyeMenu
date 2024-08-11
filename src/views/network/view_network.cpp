@@ -21,19 +21,23 @@ namespace big
 		const char* name;
 	};
 
+	static uint64_t rid = 0;
+
 	void render_join_game()
 	{
 		ImGui::SeparatorText("Join Game");
 
 		ImGui::BeginGroup();
-		static uint64_t rid = 0;
 		
 		ImGui::SetNextItemWidth(200);
 		bool rid_submitted = ImGui::InputScalar("##inputrid", ImGuiDataType_U64, &rid, nullptr, nullptr, nullptr, ImGuiInputTextFlags_EnterReturnsTrue);
 		ImGui::SameLine();
 		if(components::button("Join by RID") || rid_submitted)
 		{
-			session::join_by_rockstar_id(rid);
+			const auto rid_lambda = rid;
+			g_fiber_pool->queue_job([rid_lambda]() {
+				session::join_by_rockstar_id(rid_lambda);
+			});
 		}
 
 		static char base64[500]{};

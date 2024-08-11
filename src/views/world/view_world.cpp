@@ -1,4 +1,5 @@
 #include "pointers.hpp"
+#include "script.hpp"
 #include "util/entity.hpp"
 #include "util/ped.hpp"
 #include "util/vehicle.hpp"

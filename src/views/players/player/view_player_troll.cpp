@@ -14,7 +14,7 @@ namespace big
 		ImGui::SameLine();
 		components::button("TP To Waypoint", [] {
 			Vector3 location;
-			if (blip::get_blip_location(location, (int)BlipIcons::Waypoint))
+			if (blip::get_blip_location(location, (int)BlipIcons::RADAR_WAYPOINT))
 				entity::load_ground_at_3dcoord(location), teleport::teleport_player_to_coords(g_player_service->get_selected(), location);
 		});
 

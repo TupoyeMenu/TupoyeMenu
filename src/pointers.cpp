@@ -7,6 +7,8 @@
 
 #include "memory/batch.hpp"
 
+#define GTA_VERSION_TARGET "1.69-3274"
+
 namespace big
 {
 	void pointers::get_gta_batch(memory::module region)
@@ -264,6 +266,11 @@ namespace big
 		// Read Bitbuffer Into Sync Tree
 		main_batch.add("RBIST", "E8 ? ? ? ? 48 8B BC 24 B0 00 00 00", [](memory::handle ptr) {
 			g_pointers->m_gta.m_read_bitbuffer_into_sync_tree = ptr.add(1).rip().as<functions::read_bitbuffer_into_sync_tree>();
+		});
+
+		// Update Sync Tree
+		main_batch.add("UST", "E8 ? ? ? ? 45 84 ED 75 1B", [](memory::handle ptr) {
+			g_pointers->m_gta.m_update_sync_tree = ptr.add(1).rip().as<PVOID>();
 		});
 
 		// Model Hash Table
@@ -1069,6 +1076,16 @@ namespace big
 		// Begin Scaleform Movie Method
 		main_batch.add("BS", "48 83 EC 38 4C 8B C2 8B 51 04", [](memory::handle ptr) {
 			g_pointers->m_gta.m_begin_scaleform = ptr.as<functions::begin_scaleform>();
+		});
+
+		// Is Ped Enemies With
+		main_batch.add("IPEW", "E8 ? ? ? ? 45 8A FE 84 C0", [](memory::handle ptr) {
+			g_pointers->m_gta.m_is_ped_enemies_with = ptr.add(1).rip().as<functions::is_ped_enemies_with>();
+		});
+
+		// Can Do Damage
+		main_batch.add("CDD", "E8 ? ? ? ? 45 8A C4 84 C0", [](memory::handle ptr) {
+			g_pointers->m_gta.m_can_do_damage_to_ped = ptr.add(1).rip().as<functions::can_do_damage_to_ped>();
 		});
 
 		main_batch.run(region);

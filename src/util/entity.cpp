@@ -34,24 +34,11 @@ namespace
 
 namespace big::entity
 {
-	/**
-	 * @brief Checks if you have control over net_object
-	 * 
-	 * @param net_object Entity to check control of.
-	 * @return True if you have control over entity.
-	 */
 	bool network_has_control_of_entity(rage::netObject* net_object)
 	{
 		return !net_object || !net_object->m_next_owner_id && (net_object->m_control_id == -1);
 	}
 
-	/**
-	 * @brief Attemts to take control of given entity
-	 * 
-	 * @param ent Entity to take control of.
-	 * @param timeout When to give up trying to take control. In for loop iterations. 
-	 * @return True if the control has been taken.
-	 */
 	bool take_control_of(Entity ent, int timeout)
 	{
 		if (!*g_pointers->m_gta.m_is_session_started)
@@ -59,18 +46,18 @@ namespace big::entity
 
 		auto hnd = g_pointers->m_gta.m_handle_to_ptr(ent);
 
-		if (!hnd || !hnd->m_net_object || !*g_pointers->m_gta.m_is_session_started)
+		if (!hnd || !hnd->m_net_object)
 			return false;
 
-		if (network_has_control_of_entity(hnd->m_net_object))
-			return true;
+		if (hnd->m_entity_type != 3 && hnd->m_entity_type != 4 && hnd->m_entity_type != 5)
+			return false;
 
-		for (int i = 0; i < timeout; i++)
+		for (int i = 0; i <= timeout; ++i)
 		{
-			g_pointers->m_gta.m_request_control(hnd->m_net_object);
-
 			if (network_has_control_of_entity(hnd->m_net_object))
 				return true;
+
+			g_pointers->m_gta.m_request_control(hnd->m_net_object);
 
 			if (timeout != 0)
 				script::get_current()->yield();
@@ -79,13 +66,6 @@ namespace big::entity
 		return false;
 	}
 
-	/**
-	 * @brief Deletes given entity.
-	 *
-	 * @note Attempts to take control of entity on it's own.
-	 * 
-	 * @param ent Entity to delete
-	 */
 	void delete_entity(Entity& ent, bool force)
 	{
 		if (!ENTITY::DOES_ENTITY_EXIST(ent))
@@ -139,12 +119,6 @@ namespace big::entity
 		ENTITY::DELETE_ENTITY(&ent);
 	}
 
-	/**
-	 * @brief Raycasts for entitys from the current camera forward.
-	 * 
-	 * @param ent Entity that we have hit.
-	 * @return True if hit something other then the sky.
-	 */
 	bool raycast(Entity* ent)
 	{
 		BOOL hit;
@@ -201,17 +175,6 @@ namespace big::entity
 		return (bool)hit;
 	}
 
-	/**
-	 * @brief Gets all entitys from game pools.
-	 * 
-	 * @note Does not include local player or local vehicle.
-	 * 
-	 * @param vehicles Include vehicles.
-	 * @param peds Include peds.
-	 * @param props Include props. Default: false.
-	 * @param include_self_veh Include vehicle local player is in. Default: false.
-	 * @return std::vector<Entity> of all entitys in game pools.
-	 */
 	std::vector<Entity> get_entities(bool vehicles, bool peds, bool props, bool include_self_veh)
 	{
 		std::vector<Entity> target_entities;

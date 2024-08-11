@@ -3,6 +3,7 @@
 #include "gta/enums.hpp"
 #include "util/notify.hpp"
 #include "util/ped.hpp"
+#include "util/math.hpp"
 
 namespace big
 {

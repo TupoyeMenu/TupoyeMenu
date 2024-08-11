@@ -266,15 +266,14 @@ namespace big::scripts
 
 		if (g.m_mission_creator_thread || SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH("creator"_J) != 0 || SCRIPT::GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH("maintransition"_J) != 0 || STREAMING::IS_PLAYER_SWITCH_IN_PROGRESS() || CUTSCENE::IS_CUTSCENE_ACTIVE())
 		{
-			g_notification_service.push_warning("Creator", "Cannot start creator now");
+			g_notification_service.push_warning("Creator", "Cannot start Creator at the moment.");
 			return;
 		}
 
-		if (MISC::GET_NUMBER_OF_FREE_STACKS_OF_THIS_SIZE(60500) == 0)
+		if (MISC::GET_NUMBER_OF_FREE_STACKS_OF_THIS_SIZE(62500) == 0)
 		{
-			g_notification_service.push_warning("Creator", "No free stacks for MISSION stack size");
+			g_notification_service.push_warning("Creator", "No free stacks available for MISSION stack size.");
 		}
-
 
 		while (!SCRIPT::HAS_SCRIPT_WITH_NAME_HASH_LOADED(hash))
 		{
@@ -286,7 +285,7 @@ namespace big::scripts
 		*scr_globals::mission_creator_exited.as<bool*>()               = false;
 		*scr_globals::mission_creator_radar_follows_camera.as<bool*>() = true;
 
-		if (SYSTEM::START_NEW_SCRIPT_WITH_NAME_HASH(hash, 60500))
+		if (SYSTEM::START_NEW_SCRIPT_WITH_NAME_HASH(hash, 62500))
 		{
 			g.m_mission_creator_thread = gta_util::find_script_thread(hash);
 		}

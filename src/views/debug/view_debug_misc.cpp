@@ -24,10 +24,6 @@ namespace big
 			DLC::ON_ENTER_SP();
 		});
 
-		components::button("Start LS Customs", [] {
-			g.vehicle.ls_customs = true;
-		});
-
 		if (components::button("Dump entrypoints"))
 		{
 			system::dump_entry_points();

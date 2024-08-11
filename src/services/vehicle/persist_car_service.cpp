@@ -4,6 +4,8 @@
 #include "gta/joaat.hpp"
 #include "gta/vehicle_values.hpp"
 #include "pointers.hpp"
+#include "script_function.hpp"
+#include "util/vehicle.hpp"
 #include "util/pools.hpp"
 #include "util/vehicle.hpp"
 #include "util/world_model.hpp"
@@ -370,9 +372,11 @@ namespace big
 
 			VEHICLE::SET_VEHICLE_EXTRA_COLOUR_6(vehicle, vehicle_json[dash_color_key]);
 
-			const BOOL have_clan_logo = vehicle_json[clan_logo_key];
-			if (have_clan_logo)
-				LOG(WARNING) << "Clan logos are not supported!";
+			const BOOL needs_clan_logo = vehicle_json[clan_logo_key];
+			if (needs_clan_logo)
+			{
+				scr_functions::add_clan_logo_to_vehicle.call<bool>(&vehicle, NETWORK::NETWORK_GET_PLAYER_INDEX_FROM_PED(ped));
+			}
 
 			VEHICLE::SET_VEHICLE_XENON_LIGHT_COLOR_INDEX(vehicle, vehicle_json[headlight_color_key]);
 		}
