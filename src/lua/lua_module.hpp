@@ -29,7 +29,8 @@ namespace big
 		std::vector<std::unique_ptr<script>> m_registered_scripts;
 		std::vector<std::unique_ptr<lua_patch>> m_registered_patches;
 
-		std::vector<std::shared_ptr<lua::gui::gui_element>> m_independent_gui;
+		std::vector<std::unique_ptr<lua::gui::gui_element>> m_independent_gui;
+		std::vector<std::unique_ptr<lua::gui::gui_element>> m_always_draw_gui;
 		std::unordered_map<rage::joaat_t, std::vector<std::shared_ptr<lua::gui::gui_element>>> m_gui;
 		std::vector<std::shared_ptr<lua::gui::tab>> m_gui_tabs;
 		std::unordered_map<rage::joaat_t, std::vector<std::shared_ptr<lua::gui::tab>>> m_tab_to_sub_tabs;

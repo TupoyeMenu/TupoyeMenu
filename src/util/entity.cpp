@@ -1,13 +1,14 @@
 #include "entity.hpp"
+
 #include "gta/joaat.hpp"
+#include "gta/net_object_mgr.hpp"
 #include "gta_util.hpp"
 #include "math.hpp"
 #include "natives.hpp"
+#include "packet.hpp"
 #include "pools.hpp"
 #include "script.hpp"
 #include "services/players/player_service.hpp"
-#include "packet.hpp"
-#include "gta/net_object_mgr.hpp"
 
 #include <entities/CDynamicEntity.hpp>
 
@@ -79,8 +80,8 @@ namespace big::entity
 			if (ptr->m_net_object)
 			{
 				force_remove_network_entity(ptr, true);
-			return;
-		}
+				return;
+			}
 		}
 
 		if (ENTITY::IS_ENTITY_A_VEHICLE(ent))
@@ -134,14 +135,14 @@ namespace big::entity
 		farCoords.z = camCoords.z + dir.z * 1000;
 
 		auto shape_test  = SHAPETEST::START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE(camCoords.x,
-		    camCoords.y,
-		    camCoords.z,
-		    farCoords.x,
-		    farCoords.y,
-		    farCoords.z,
-		    -1,
-		    0,
-		    7);
+            camCoords.y,
+            camCoords.z,
+            farCoords.x,
+            farCoords.y,
+            farCoords.z,
+            -1,
+            0,
+            7);
 		auto test_result = SHAPETEST::GET_SHAPE_TEST_RESULT(shape_test, &hit, &dontCare, &dontCare, ent);
 
 		return (test_result == 2 && hit == TRUE);

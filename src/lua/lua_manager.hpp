@@ -55,6 +55,7 @@ namespace big
 
 		bool has_gui_to_draw(rage::joaat_t tab_hash);
 		void draw_independent_gui();
+		void draw_always_draw_gui();
 		void draw_gui(rage::joaat_t tab_hash);
 		void draw_child_tabs_external(rage::joaat_t tab_hash);
 		void draw_tabs();

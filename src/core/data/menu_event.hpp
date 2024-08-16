@@ -12,4 +12,5 @@ enum class menu_event
     SendMetric,
     MenuUnloaded,
     ScriptsReloaded,
+    Wndproc,
 };

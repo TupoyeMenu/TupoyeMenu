@@ -101,6 +101,18 @@ namespace lua::event
 	// end)
 	// ```
 
+	// Lua API: Field
+	// Table: menu_event
+	// Field: Wndproc: integer
+	// Event that is triggered when Wndproc is called
+	// **Example Usage:**
+	// ```lua
+	// event.register_handler(menu_event.Wndproc, function (hwnd, msg, wparam, lparam)
+	//     if msg == 132 then return end
+	//     log.debug("hwnd = " .. tostring(hwnd) .. ", msg = " .. tostring(msg) .. ", wparam = " .. tostring(wparam) .. ", lparam = " .. tostring(lparam))
+	// end)
+	// ```
+
 	// Lua API: Table
 	// Name: event
 	// Table for responding to various events. The list of events is available in the menu_event table.
@@ -132,6 +144,7 @@ namespace lua::event
 		        {"NetworkBail", menu_event::NetworkBail},
 		        {"MenuUnloaded", menu_event::MenuUnloaded},
 		        {"ScriptsReloaded", menu_event::ScriptsReloaded},
+		        {"Wndproc", menu_event::Wndproc},
 		    });
 
 

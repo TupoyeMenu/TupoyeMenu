@@ -190,11 +190,11 @@ namespace lua::network
 	}
 
 	// Lua API: function
-	// Table: script
+	// Table: network
 	// Name: force_script_on_player
 	// Param: player_idx: integer: Index of the player.
 	// Param: script_name: string: Name of the script.
-	// Param: script_name: integer: Instance ID of the script.
+	// Param: instance_id: integer: Instance ID of the script.
 	// Forces the given GTA script to be started on a player. Needs to be called in the fiber pool or a loop.
 	static void force_script_on_player(int player_idx, const std::string& script_name, int instance_id)
 	{
@@ -231,6 +231,7 @@ namespace lua::network
 	// Table: network
 	// Name: get_player_rank
 	// Param: pid: integer: Index of the player.
+	// Returns: integer: An integer which contains the players rank.
 	// Call get_player_rank(playerID)
 	static int get_player_rank(int pid)
 	{
@@ -246,6 +247,7 @@ namespace lua::network
 	// Table: network
 	// Name: get_player_rp
 	// Param: pid: integer: Index of the player.
+	// Returns: integer: An integer which contains the players rp.
 	// Call get_player_rp(playerID)
 	static int get_player_rp(int pid)
 	{
@@ -261,6 +263,7 @@ namespace lua::network
 	// Table: network
 	// Name: get_player_money
 	// Param: pid: integer: Index of the player.
+	// Returns: integer: An integer which contains the players money.
 	// Call get_player_money(playerID)
 	static int get_player_money(int pid)
 	{
@@ -276,6 +279,7 @@ namespace lua::network
 	// Table: network
 	// Name: get_player_wallet
 	// Param: pid: integer: Index of the player.
+	// Returns: integer: An integer which contains the players wallet.
 	// Call get_player_wallet(playerID)
 	static int get_player_wallet(int pid)
 	{
@@ -291,6 +295,7 @@ namespace lua::network
 	// Table: network
 	// Name: get_player_bank
 	// Param: pid: integer: Index of the player.
+	// Returns: integer: An integer which contains the players bank.
 	// Call get_player_bank(playerID)
 	static int get_player_bank(int pid)
 	{
@@ -306,6 +311,7 @@ namespace lua::network
 	// Table: network
 	// Name: get_player_language_id
 	// Param: pid: integer: Index of the player.
+	// Returns: integer: An integer which contains the players language id.
 	// Call get_player_language_id(playerID)
 	static int get_player_language_id(int pid)
 	{
@@ -321,6 +327,7 @@ namespace lua::network
 	// Table: network
 	// Name: get_player_language_name
 	// Param: pid: integer: Index of the player.
+	// Returns: string: A string which contains the players language name.
 	// Call get_player_language_name(playerID)
 	static std::string get_player_language_name(int pid)
 	{

@@ -61,6 +61,12 @@ namespace lua::memory
 
 		// Lua API: Function
 		// Class: pointer
+		// Name: get_int
+		// Returns: number: the value stored at the memory address as the specified type.
+		// Retrieves the value stored at the memory address as the specified type.
+
+		// Lua API: Function
+		// Class: pointer
 		// Name: get_dword
 		// Returns: number: the value stored at the memory address as the specified type.
 		// Retrieves the value stored at the memory address as the specified type.
@@ -92,6 +98,12 @@ namespace lua::memory
 		// Lua API: Function
 		// Class: pointer
 		// Name: set_word
+		// Param: value: number: new value.
+		// Sets the value at the memory address to the specified value of the given type.
+
+		// Lua API: Function
+		// Class: pointer
+		// Name: set_int
 		// Param: value: number: new value.
 		// Sets the value at the memory address to the specified value of the given type.
 
@@ -205,6 +217,13 @@ namespace lua::memory
 		// Returns: number: The memory address stored in the pointer object as a number.
 		// Retrieves the memory address stored in the pointer object.
 		uint64_t get_address() const;
+
+		// Lua API: Function
+		// Class: pointer
+		// Name: set_address
+		// Param: address: integer: new address.
+		// Sets the memory address stored in the pointer object.
+		void set_address(uint64_t address);
 	};
 
 	// Lua API: Class
