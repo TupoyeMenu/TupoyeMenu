@@ -188,12 +188,11 @@ namespace big
 		ImGui::SameLine();
 		components::help_marker("This might break freemode missions and interiors. Use with caution");
 
-		ImGui::SameLine();
-
 		ImGui::Checkbox("Fast Join", &g.session.fast_join);
 		ImGui::SameLine();
 		components::help_marker("This WILL break jobs");
-		ImGui::Checkbox("Seamless Join", &g.tunables.seamless_join);
+		ImGui::SameLine();
+		ImGui::Checkbox("Seamless Join", &g.session.seamless_join);
 		ImGui::SameLine();
 		components::help_marker("Allows you move freely while in session transition.");
 		components::command_button<"emptysession">();

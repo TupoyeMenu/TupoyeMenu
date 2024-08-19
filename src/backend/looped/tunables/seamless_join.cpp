@@ -2,16 +2,18 @@
 #include "core/enums.hpp"
 #include "core/scr_globals.hpp"
 #include "natives.hpp"
-#include "pointers.hpp"
-#include "script.hpp"
+#include "util/transition.hpp"
 #include "script_global.hpp"
 
 namespace big
 {
 	void looped::seamless_join()
 	{
-		if (g.tunables.seamless_join)
+		if (g.session.seamless_join)
 		{
+			g.session.seamless_join_active = transition::should_use_seamless_join();
+			if (!g.session.seamless_join_active) return;
+
 			const auto state = *scr_globals::transition_state.as<eTransitionState*>();
 
 			if (state <= eTransitionState::TRANSITION_STATE_FM_FINAL_SETUP_PLAYER)

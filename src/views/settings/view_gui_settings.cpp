@@ -35,6 +35,12 @@ namespace big
 			g.window.button_color = ImGui::ColorConvertFloat4ToU32(col_button);
 		}
 
+		static ImVec4 col_tab = ImGui::ColorConvertU32ToFloat4(g.window.tab_color);
+		if (ImGui::ColorEdit4("Tab Color", (float*)&col_tab, ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_NoSidePreview))
+		{
+			g.window.tab_color = ImGui::ColorConvertFloat4ToU32(col_tab);
+		}
+
 		static ImVec4 col_frame = ImGui::ColorConvertU32ToFloat4(g.window.frame_color);
 		if (ImGui::ColorEdit4("Frame Color", (float*)&col_frame, ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_NoSidePreview))
 		{

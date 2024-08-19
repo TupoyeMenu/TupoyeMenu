@@ -163,14 +163,13 @@ namespace big
 			bool disable_phone           = false;
 			bool phone_anim              = false;
 			bool no_idle_kick            = false;
-			bool seamless_join           = true;
 			bool dont_unload_online_maps = true;
 			bool cable_cars              = false;
 			bool always_control          = false;
 			bool disable_help_text       = false;
 			bool remove_speed_limit      = false;
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(tunables, disable_phone, phone_anim, no_idle_kick, seamless_join, dont_unload_online_maps, cable_cars, always_control, disable_help_text, remove_speed_limit)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(tunables, disable_phone, phone_anim, no_idle_kick, dont_unload_online_maps, cable_cars, always_control, disable_help_text, remove_speed_limit)
 		} tunables{};
 
 		struct notifications
@@ -465,9 +464,11 @@ namespace big
 
 			bool anonymous_bounty      = true;
 
-			bool fast_join = false;
+			bool fast_join            = false;
+			bool seamless_join        = true;
+			bool seamless_join_active = false; // Don't save this to disk.
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, log_chat_messages, decloak_players, spoof_host_token_type, custom_host_token, hide_token_spoofing_when_host, force_script_host, player_magnet_enabled, player_magnet_count, is_team, join_in_sctv_slots, kick_host_when_forcing_host, exclude_modders_from_kick_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, block_ceo_creation, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, anonymous_bounty, lock_session, fast_join, unhide_players_from_player_list, allow_friends_into_locked_session, trust_friends, use_spam_timer, spam_timer, spam_length, script_block_opts)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(session, population_control, log_chat_messages, decloak_players, spoof_host_token_type, custom_host_token, hide_token_spoofing_when_host, force_script_host, player_magnet_enabled, player_magnet_count, is_team, join_in_sctv_slots, kick_host_when_forcing_host, exclude_modders_from_kick_host, explosion_karma, damage_karma, disable_traffic, disable_peds, force_thunder, block_ceo_money, randomize_ceo_colors, block_jobs, block_muggers, block_ceo_raids, block_ceo_creation, send_to_apartment_idx, send_to_warehouse_idx, chat_commands, chat_command_default_access_level, anonymous_bounty, lock_session, fast_join, seamless_join, unhide_players_from_player_list, allow_friends_into_locked_session, trust_friends, use_spam_timer, spam_timer, spam_length, script_block_opts)
 		} session{};
 
 		struct settings
@@ -886,6 +887,7 @@ namespace big
 			ImU32 background_color = 3357612055;
 			ImU32 text_color       = 4294967295;
 			ImU32 button_color     = 4293353517;
+			ImU32 tab_color        = 4287912238;
 			ImU32 frame_color      = 2939499829;
 			float gui_scale        = 1.f;
 			eAlphabetType alphabet = eAlphabetType::LATIN;
@@ -933,7 +935,7 @@ namespace big
 				NLOHMANN_DEFINE_TYPE_INTRUSIVE(gui, format_money)
 			} gui{};
 
-			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, background_color, main, users, player, ingame_overlay, text_color, button_color, frame_color, demo, gui_scale, gui, alphabet)
+			NLOHMANN_DEFINE_TYPE_INTRUSIVE(window, background_color, main, users, player, ingame_overlay, text_color, button_color, tab_color, frame_color, demo, gui_scale, gui, alphabet)
 		} window{};
 
 		struct context_menu

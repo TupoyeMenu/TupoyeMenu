@@ -46,7 +46,7 @@ namespace big
 		 * 
 		 * @bug Does not prevent infinite loading screen.
 		 */
-		g_script_patcher_service->add_patch({"maintransition"_J, "stop inf loding", "2D 00 02 00 00 2C ? ? ? 56 ? ? 2C ? ? ? 74 58 ? ? 2C ? ? ? 73", 5, {0x72, 0x2E, 0x00, 0x01}, &g.tunables.seamless_join});
+		g_script_patcher_service->add_patch({"maintransition"_J, "stop inf loding", "2D 00 02 00 00 2C ? ? ? 56 ? ? 2C ? ? ? 74 58 ? ? 2C ? ? ? 73", 5, {0x72, 0x2E, 0x00, 0x01}, &g.session.seamless_join_active});
 
 		/**
 		 * @brief Prevents main_persistent from hiding our hud.
@@ -55,7 +55,7 @@ namespace big
 		 * ; Function hash: 0x8D3D6244
 		 * @endcode
 		 */
-		g_script_patcher_service->add_patch({"main_persistent"_J, "dont hide hud mt4", "2D 00 03 00 00 2C ? ? ? 5D ? ? ? 73", 5, { 0x2E, 0x00, 0x00 }, &g.tunables.seamless_join});
+		g_script_patcher_service->add_patch({"main_persistent"_J, "dont hide hud mt4", "2D 00 03 00 00 2C ? ? ? 5D ? ? ? 73", 5, { 0x2E, 0x00, 0x00 }, &g.session.seamless_join_active});
 
 		/**
 		 * @brief Prevents maintransition from hiding our hud.
@@ -64,7 +64,7 @@ namespace big
 		 * ; Function hash: 0x8D3D6244
 		 * @endcode
 		 */
-		g_script_patcher_service->add_patch({"maintransition"_J, "dont hide hud mt", "2D 00 03 00 00 2C ? ? ? 5D ? ? ? 73", 5, {0x2E, 0x00, 0x00}, &g.tunables.seamless_join});
+		g_script_patcher_service->add_patch({"maintransition"_J, "dont hide hud mt", "2D 00 03 00 00 2C ? ? ? 5D ? ? ? 73", 5, {0x2E, 0x00, 0x00}, &g.session.seamless_join_active});
 		/**
 		 * @brief Prevents maintransition from hiding our hud 2.
 		 * @code {.asm}
@@ -72,7 +72,7 @@ namespace big
 		 * ; Function hash: 0xB5996A26
 		 * @endcode
 		 */
-		g_script_patcher_service->add_patch({"maintransition"_J, "dont hide hud mt2", "2D 00 02 00 00 5D ? ? ? 06 56 ? ? 2C", 5, {0x2E, 0x00, 0x00}, &g.tunables.seamless_join});
+		g_script_patcher_service->add_patch({"maintransition"_J, "dont hide hud mt2", "2D 00 02 00 00 5D ? ? ? 06 56 ? ? 2C", 5, {0x2E, 0x00, 0x00}, &g.session.seamless_join_active});
 		/**
 		 * @brief Prevents maintransition from hiding our hud 3.
 		 * @code {.asm}
@@ -81,7 +81,7 @@ namespace big
 		 * ; case 0:
 		 * @endcode
 		 */
-		g_script_patcher_service->add_patch({"maintransition"_J, "dont hide hud mt3", "55 ? ? 38 00 5D ? ? ? 2B 55 ? ? 38 00 5D ? ? ? 2B 55 ? ? 38 00 5D ? ? ? 2B 55 ? ? 38 00 5D ? ? ? 2B 55 ? ? 38 00 38 01", 0, std::vector<uint8_t>(9, 0x0), &g.tunables.seamless_join});
+		g_script_patcher_service->add_patch({"maintransition"_J, "dont hide hud mt3", "55 ? ? 38 00 5D ? ? ? 2B 55 ? ? 38 00 5D ? ? ? 2B 55 ? ? 38 00 5D ? ? ? 2B 55 ? ? 38 00 5D ? ? ? 2B 55 ? ? 38 00 38 01", 0, std::vector<uint8_t>(9, 0x0), &g.session.seamless_join_active});
 
 		/**
 		 * @brief Prevents maintransition from hiding our hud 4.
@@ -90,7 +90,7 @@ namespace big
 		 * ; Function hash: 0x9FFBCA6
 		 * @endcode
 		 */
-		g_script_patcher_service->add_patch({"maintransition"_J, "dont hide hud mt4", "2D 00 02 00 00 62 ? ? ? 25 ? 57", 5, {0x72, 0x2E, 0x00, 0x01}, &g.tunables.seamless_join});
+		g_script_patcher_service->add_patch({"maintransition"_J, "dont hide hud mt4", "2D 00 02 00 00 62 ? ? ? 25 ? 57", 5, {0x72, 0x2E, 0x00, 0x01}, &g.session.seamless_join_active});
 		/**
 		 * @brief Prevents maintransition from kicking us out of our car and then deleting it.
 		 * @code {.asm}
@@ -100,7 +100,7 @@ namespace big
 		 * ; We nop everything inside except the last if statement.
 		 * @endcode
 		 */
-		g_script_patcher_service->add_patch({"maintransition"_J, "dont kick out the vehicle", "72 5D ? ? ? 72 5D ? ? ? 2C ? ? ? 2C", 0, std::vector<uint8_t>(83, 0x0), &g.tunables.seamless_join});
+		g_script_patcher_service->add_patch({"maintransition"_J, "dont kick out the vehicle", "72 5D ? ? ? 72 5D ? ? ? 2C ? ? ? 2C", 0, std::vector<uint8_t>(83, 0x0), &g.session.seamless_join_active});
 
 		/**
 		 * @brief Prevents us from holstering our weapon.
@@ -109,7 +109,7 @@ namespace big
 		 * ; Function hash: 0xD40B5D35
 		 * @endcode
 		 */
-		g_script_patcher_service->add_patch({"main_persistent"_J, "dont holster weapon in transition", "2D 00 03 00 00 2C ? ? ? 71 2C", 5, { 0x2E, 0x00, 0x00 }, &g.tunables.seamless_join});
+		g_script_patcher_service->add_patch({"main_persistent"_J, "dont holster weapon in transition", "2D 00 03 00 00 2C ? ? ? 71 2C", 5, { 0x2E, 0x00, 0x00 }, &g.session.seamless_join_active});
 
 		/**
 		 * @brief Prevents intro animation from running.
@@ -124,7 +124,7 @@ namespace big
 		 */
 		g_script_patcher_service->add_patch({"freemode"_J, "stop freemode intro anim", "2C ? ? ? 71 5D ? ? ? 56 ? ? 71 38 00", 0,
 		    {0x00, 0x00, 0x00, 0x00, 0x00, 0x55}, // Replacing the 0x56 JumpFalse instruction with 0x55 Jump instruction.
-		    &g.tunables.seamless_join});
+		    &g.session.seamless_join_active});
 
 		// clang-format on
 

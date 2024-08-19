@@ -46,7 +46,7 @@ namespace big
 		{
 			send_response(0);
 			g_notification_service.push("Force Allow Join", std::format("Allowed {} to join", player_name));
-			return false;
+			return true;
 		}
 		else if (g.session.lock_session)
 		{

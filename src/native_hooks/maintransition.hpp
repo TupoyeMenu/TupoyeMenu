@@ -42,7 +42,7 @@ namespace big
 		 */
 		inline void IS_SWITCH_TO_MULTI_FIRSTPART_FINISHED(rage::scrNativeCallContext* src)
 		{
-			if (g.tunables.seamless_join)
+			if (g.session.seamless_join_active)
 				src->set_return_value<BOOL>(true);
 			else
 				src->set_return_value<BOOL>(STREAMING::IS_SWITCH_TO_MULTI_FIRSTPART_FINISHED());
@@ -53,7 +53,7 @@ namespace big
 		 */
 		inline void SET_FOCUS_ENTITY(rage::scrNativeCallContext* src)
 		{
-			if (g.tunables.seamless_join)
+			if (g.session.seamless_join_active)
 				STREAMING::SET_FOCUS_ENTITY(self::ped);
 			else
 				STREAMING::SET_FOCUS_ENTITY(src->get_arg<Entity>(0));
@@ -65,7 +65,7 @@ namespace big
 		 */
 		inline void HIDE_HUD_AND_RADAR_THIS_FRAME(rage::scrNativeCallContext* src)
 		{
-			if (!g.tunables.seamless_join)
+			if (!g.session.seamless_join_active)
 				HUD::HIDE_HUD_AND_RADAR_THIS_FRAME();
 		}
 		/**
@@ -74,7 +74,7 @@ namespace big
 		 */
 		inline void HIDE_HUD_COMPONENT_THIS_FRAME(rage::scrNativeCallContext* src)
 		{
-			if (!g.tunables.seamless_join)
+			if (!g.session.seamless_join_active)
 				HUD::HIDE_HUD_COMPONENT_THIS_FRAME(src->get_arg<int>(0));
 		}
 		/**
@@ -83,7 +83,7 @@ namespace big
 		 */
 		inline void HIDE_SCRIPTED_HUD_COMPONENT_THIS_FRAME(rage::scrNativeCallContext* src)
 		{
-			if (!g.tunables.seamless_join)
+			if (!g.session.seamless_join_active)
 				HUD::HIDE_SCRIPTED_HUD_COMPONENT_THIS_FRAME(src->get_arg<int>(0));
 		}
 
@@ -98,7 +98,7 @@ namespace big
 			if (g.debug.logs.stupid_script_native_logs)
 				LOGF(VERBOSE, "HUD::ACTIVATE_FRONTEND_MENU({}, {}, {});", menuhash, togglePause, component);
 
-			if (!g.tunables.seamless_join || menuhash != "FE_MENU_VERSION_EMPTY_NO_BACKGROUND"_J)
+			if (!g.session.seamless_join_active || menuhash != "FE_MENU_VERSION_EMPTY_NO_BACKGROUND"_J)
 				HUD::ACTIVATE_FRONTEND_MENU(menuhash, togglePause, component);
 		}
 
@@ -114,7 +114,7 @@ namespace big
 			if (g.debug.logs.stupid_script_native_logs)
 				LOGF(VERBOSE, "HUD::RESTART_FRONTEND_MENU({}, {});", menuhash, p1);
 
-			if (!g.tunables.seamless_join || menuhash != "FE_MENU_VERSION_EMPTY_NO_BACKGROUND"_J)
+			if (!g.session.seamless_join_active || menuhash != "FE_MENU_VERSION_EMPTY_NO_BACKGROUND"_J)
 				HUD::RESTART_FRONTEND_MENU(menuhash, p1);
 		}
 
@@ -123,7 +123,7 @@ namespace big
 		 */
 		inline void TOGGLE_PAUSED_RENDERPHASES(rage::scrNativeCallContext* src)
 		{
-			if (g.tunables.seamless_join)
+			if (g.session.seamless_join_active)
 				GRAPHICS::RESET_PAUSED_RENDERPHASES();
 			else
 				GRAPHICS::TOGGLE_PAUSED_RENDERPHASES(src->get_arg<int>(0));
@@ -134,7 +134,7 @@ namespace big
 		 */
 		inline void SET_ENTITY_VISIBLE(rage::scrNativeCallContext* src)
 		{
-			if (g.tunables.seamless_join && src->get_arg<Entity>(0) == self::ped)
+			if (g.session.seamless_join_active && src->get_arg<Entity>(0) == self::ped)
 				ENTITY::SET_ENTITY_VISIBLE(self::ped, true, false);
 			else
 				ENTITY::SET_ENTITY_VISIBLE(src->get_arg<Entity>(0), src->get_arg<BOOL>(1), src->get_arg<BOOL>(2));
@@ -145,7 +145,7 @@ namespace big
 		 */
 		inline void SET_ENTITY_COORDS(rage::scrNativeCallContext* src)
 		{
-			if (!g.tunables.seamless_join || *scr_globals::transition_state.as<eTransitionState*>() == eTransitionState::TRANSITION_STATE_CONFIRM_FM_SESSION_JOINING // This check is for character selection if i remember correctly.
+			if (!g.session.seamless_join_active || *scr_globals::transition_state.as<eTransitionState*>() == eTransitionState::TRANSITION_STATE_CONFIRM_FM_SESSION_JOINING // This check is for character selection if i remember correctly.
 			    || src->get_arg<Entity>(0) != self::ped)
 				ENTITY::SET_ENTITY_COORDS(src->get_arg<Entity>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<BOOL>(7));
 		}
@@ -155,7 +155,7 @@ namespace big
 		 */
 		inline void SET_ENTITY_COLLISION(rage::scrNativeCallContext* src)
 		{
-			if (!g.tunables.seamless_join || src->get_arg<Entity>(0) != self::ped)
+			if (!g.session.seamless_join_active || src->get_arg<Entity>(0) != self::ped)
 				ENTITY::SET_ENTITY_COLLISION(src->get_arg<Entity>(0), src->get_arg<BOOL>(1), src->get_arg<BOOL>(2));
 		}
 
@@ -167,7 +167,7 @@ namespace big
 			if (g.debug.logs.stupid_script_native_logs)
 				LOGF(VERBOSE, "PLAYER::SET_PLAYER_CONTROL({}, {}, {});", src->get_arg<Player>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2));
 
-			if (!g.tunables.seamless_join)
+			if (!g.session.seamless_join_active)
 				PLAYER::SET_PLAYER_CONTROL(src->get_arg<Player>(0), src->get_arg<BOOL>(1), src->get_arg<int>(2));
 		}
 
@@ -176,7 +176,7 @@ namespace big
 		 */
 		inline void FREEZE_ENTITY_POSITION(rage::scrNativeCallContext* src)
 		{
-			if (!g.tunables.seamless_join || src->get_arg<Entity>(0) != self::ped)
+			if (!g.session.seamless_join_active || src->get_arg<Entity>(0) != self::ped)
 				ENTITY::FREEZE_ENTITY_POSITION(src->get_arg<Entity>(0), src->get_arg<BOOL>(1));
 		}
 
@@ -188,7 +188,7 @@ namespace big
 			if (g.debug.logs.stupid_script_native_logs)
 				LOGF(VERBOSE, "NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER({}, {}, {}, {}, {}, {}, {}, {}, {});", src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
 
-			if (!g.tunables.seamless_join)
+			if (!g.session.seamless_join_active)
 				NETWORK::NETWORK_RESURRECT_LOCAL_PLAYER(src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<int>(7), src->get_arg<int>(8));
 		}
 
@@ -202,7 +202,7 @@ namespace big
 
 			const auto state = *scr_globals::transition_state.as<eTransitionState*>();
 
-			if (!g.tunables.seamless_join || src->get_arg<int>(0) != self::ped || state == eTransitionState::TRANSITION_STATE_EMPTY || state == eTransitionState::TRANSITION_STATE_TERMINATE_MAINTRANSITION)
+			if (!g.session.seamless_join_active || src->get_arg<int>(0) != self::ped || state == eTransitionState::TRANSITION_STATE_EMPTY || state == eTransitionState::TRANSITION_STATE_TERMINATE_MAINTRANSITION)
 				TASK::CLEAR_PED_TASKS_IMMEDIATELY(src->get_arg<int>(0));
 		}
 
@@ -222,7 +222,7 @@ namespace big
 		 */
 		inline void DELETE_VEHICLE(rage::scrNativeCallContext* src)
 		{
-			if (!g.tunables.seamless_join || (src->get_arg<Vehicle*>(0) != nullptr && *src->get_arg<Vehicle*>(0) != self::veh))
+			if (!g.session.seamless_join_active || (src->get_arg<Vehicle*>(0) != nullptr && *src->get_arg<Vehicle*>(0) != self::veh))
 				VEHICLE::DELETE_VEHICLE(src->get_arg<Vehicle*>(0));
 		}
 		/**
@@ -235,7 +235,7 @@ namespace big
 
 			const auto state = *scr_globals::transition_state.as<eTransitionState*>();
 
-			if (!g.tunables.seamless_join || state == eTransitionState::TRANSITION_STATE_EMPTY || state == eTransitionState::TRANSITION_STATE_TERMINATE_MAINTRANSITION)
+			if (!g.session.seamless_join_active || state == eTransitionState::TRANSITION_STATE_EMPTY || state == eTransitionState::TRANSITION_STATE_TERMINATE_MAINTRANSITION)
 				MISC::CLEAR_AREA_OF_VEHICLES(src->get_arg<float>(0), src->get_arg<float>(1), src->get_arg<float>(2), src->get_arg<float>(3), src->get_arg<BOOL>(4), src->get_arg<BOOL>(5), src->get_arg<BOOL>(6), src->get_arg<BOOL>(7), src->get_arg<BOOL>(8), src->get_arg<BOOL>(9), src->get_arg<Any>(10));
 		}
 

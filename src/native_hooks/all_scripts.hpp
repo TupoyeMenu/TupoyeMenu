@@ -1,12 +1,8 @@
 #pragma once
 #include "core/scr_globals.hpp"
-#include "fiber_pool.hpp"
 #include "gta/enums.hpp"
-#include "hooking/hooking.hpp"
-#include "native_hooks.hpp"
 #include "natives.hpp"
 #include "util/notify.hpp"
-#include "util/scripts.hpp"
 
 #if defined (ENABLE_LUA)
 #include "lua/lua_manager.hpp"
@@ -45,7 +41,7 @@ namespace big
 
 		inline void SC_TRANSITION_NEWS_SHOW(rage::scrNativeCallContext* src)
 		{
-			if (g.tunables.seamless_join)
+			if (g.session.seamless_join)
 				src->set_return_value<BOOL>(false);
 			else
 				src->set_return_value<BOOL>(SOCIALCLUB::SC_TRANSITION_NEWS_SHOW(src->get_arg<Any>(0)));
@@ -53,7 +49,7 @@ namespace big
 
 		inline void SC_TRANSITION_NEWS_SHOW_TIMED(rage::scrNativeCallContext* src)
 		{
-			if (g.tunables.seamless_join)
+			if (g.session.seamless_join)
 				src->set_return_value<BOOL>(false);
 			else
 				src->set_return_value<BOOL>(SOCIALCLUB::SC_TRANSITION_NEWS_SHOW_TIMED(src->get_arg<Any>(0), src->get_arg<Any>(0)));
@@ -105,7 +101,7 @@ namespace big
 					return;
 			}
 
-			if (!g.tunables.seamless_join || state == eTransitionState::TRANSITION_STATE_EMPTY || state == eTransitionState::TRANSITION_STATE_TERMINATE_MAINTRANSITION)
+			if (!g.session.seamless_join_active || state == eTransitionState::TRANSITION_STATE_EMPTY || state == eTransitionState::TRANSITION_STATE_TERMINATE_MAINTRANSITION)
 				PAD::DISABLE_CONTROL_ACTION(src->get_arg<int>(0), (int)action, src->get_arg<int>(2));
 		}
 
