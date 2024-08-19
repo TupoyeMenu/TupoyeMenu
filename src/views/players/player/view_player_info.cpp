@@ -414,8 +414,8 @@ namespace big
 					const auto vehicle = cped->m_vehicle;
 					ImGui::Text("Health: %f / %f", vehicle->m_health, vehicle->m_maxhealth);
 					ImGui::Text("Engine Health: %f", vehicle->m_engine_health);
-					ImGui::Text("Body Health: %f", vehicle->m_body_health);
-					ImGui::Text("Petrol Tank Health: %f", vehicle->m_petrol_tank_health);
+					ImGui::Text("Body Health: %f", vehicle->m_vehicle_damage.m_body_health);
+					ImGui::Text("Petrol Tank Health: %f", vehicle->m_vehicle_damage.m_petrol_tank_health);
 					ImGui::SameLine();
 					ImGui::Text("Deform God: %s", vehicle->m_deform_god ? "Yes" : "No");
 					ImGui::Text("Num Passengers %i", vehicle->m_num_of_passengers);
