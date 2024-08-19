@@ -13,10 +13,6 @@ if(ENABLE_SOCIALCLUB)
     target_compile_definitions(TupoyeMenu PRIVATE ENABLE_SOCIALCLUB)
 endif()
 
-if(ENABLE_ASI_LOADER)
-    target_compile_definitions(TupoyeMenu PRIVATE ENABLE_ASI_LOADER)
-endif()
-
 if(ENABLE_LUA)
     target_compile_definitions(TupoyeMenu PRIVATE ENABLE_LUA)
     target_link_libraries(TupoyeMenu PRIVATE lua_static)

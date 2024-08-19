@@ -57,9 +57,7 @@ You can also use some cmake options.
  - `GEN_PDB`: Generate pdb.
  - `ENABLE_CRASHES` Enables the crash options, very few very old, not even working.
  - `ENABLE_SOCIALCLUB` Enable Social Club hooking.
- - `ENABLE_ASI_LOADER` Enable shitty built in ASI Loader.
 
-  
 ## Staying Up To Date
 ```bash
 git pull https://github.com/TupoyeMenu/TupoyeMenu.git
