@@ -1,6 +1,6 @@
 #include "stack_trace.hpp"
 
-#include <DbgHelp.h>
+#include <dbghelp.h>
 #include <winternl.h>
 
 namespace big
