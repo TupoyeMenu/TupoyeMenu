@@ -31,16 +31,16 @@ namespace lua::gui
 
 		// Lua API: Function
 		// Class: tab
-		// Name: clear
-		// Clear the tab of all its custom lua content that you own.
-		void clear(sol::this_state state);
+		// Name: is_selected
+		// Returns: boolean: Returns true if this tab is the one currently selected in the GUI.
+		// Stub in TupoyeMenu, returns true
+		bool is_selected(sol::this_state state);
 
 		// Lua API: Function
 		// Class: tab
-		// Name: is_selected
-		// Returns: boolean: Returns true if this tab is the one currently selected in the GUI.
-		// Stub in TupoyeMenu, return true when gui is open.
-		bool is_selected(sol::this_state state);
+		// Name: clear
+		// Clear the tab of all its custom lua content that you own.
+		void clear(sol::this_state state);
 
 		// Lua API: Function
 		// Class: tab

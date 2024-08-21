@@ -7,12 +7,14 @@ All the infraction from the menu are listed below, used as parameter for adding 
 network.flag_player_as_modder(player_index, infraction.CUSTOM_REASON, "My custom reason on why the player is flagged as a modder")
 ```
 
-## Infraction Count: 15
+## Infraction Count: 17
 
 ### `DESYNC_PROTECTION`
 ### `TRIGGERED_ANTICHEAT`
 ### `TRIED_CRASH_PLAYER`
 ### `TRIED_KICK_PLAYER`
+### `TRIED_TELEPORT_PLAYER`
+### `ROCKSTAR_ADMIN_FLAG`
 ### `ATTACKING_WITH_GODMODE`
 ### `ATTACKING_WITH_INVISIBILITY`
 ### `ATTACKING_WHEN_HIDDEN_FROM_PLAYER_LIST`

@@ -6,6 +6,8 @@ Class for representing a tab within the GUI.
 
 ### `is_selected()`
 
+Stub in TupoyeMenu, returns true
+
 - **Returns:**
   - `boolean`: Returns true if this tab is the one currently selected in the GUI.
 
