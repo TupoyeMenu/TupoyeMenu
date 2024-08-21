@@ -23,7 +23,7 @@ namespace big
 
 	private:
 		void draw_tab(rage::joaat_t tab_hash, std::shared_ptr<big::lua_module> module);
-		void draw_child_tabs(rage::joaat_t tab_hash, std::shared_ptr<big::lua_module> module, bool draw_tab_bar = false);
+		void draw_child_tabs(rage::joaat_t tab_hash, std::shared_ptr<big::lua_module> module, bool draw_tab_bar = false, std::shared_ptr<lua::gui::tab> = nullptr);
 
 	public:
 		lua_manager(folder scripts_folder, folder scripts_config_folder);

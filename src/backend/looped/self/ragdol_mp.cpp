@@ -1,8 +1,5 @@
 #include "backend/looped/looped.hpp"
 #include "natives.hpp"
-#include "pointers.hpp"
-#include "script_global.hpp"
-#include "core/enums.hpp"
 
 namespace big
 {

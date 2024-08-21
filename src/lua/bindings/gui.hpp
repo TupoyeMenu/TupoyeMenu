@@ -37,6 +37,13 @@ namespace lua::gui
 
 		// Lua API: Function
 		// Class: tab
+		// Name: is_selected
+		// Returns: boolean: Returns true if this tab is the one currently selected in the GUI.
+		// Stub in TupoyeMenu, return true when gui is open.
+		bool is_selected(sol::this_state state);
+
+		// Lua API: Function
+		// Class: tab
 		// Name: add_tab
 		// Param: tab_name: string: Name of the tab to add.
 		// Returns: tab: A tab instance which corresponds to the new tab in the GUI.

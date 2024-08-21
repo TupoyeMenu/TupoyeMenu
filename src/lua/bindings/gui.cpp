@@ -6,6 +6,7 @@
 	#include "../../gui.hpp"
 	#include "lua/lua_module.hpp"
 	#include "lua/bindings/gui.hpp"
+	#include <imgui_internal.h>
 
 namespace lua::gui
 {
@@ -51,6 +52,12 @@ namespace lua::gui
 
 		if (module->m_gui.contains(m_tab_hash))
 			module->m_gui[m_tab_hash] = {};
+	}
+
+	// Stub
+	bool tab::is_selected(sol::this_state state)
+	{
+		return true;
 	}
 
 	tab tab::add_tab(const std::string& name, sol::this_state state)
@@ -352,6 +359,7 @@ namespace lua::gui
 		input_string_ut["set_value"] = &lua::gui::input_string::set_value;
 
 		auto tab_ut                = ns.new_usertype<tab>("tab");
+		tab_ut["is_selected"]      = &tab::is_selected;
 		tab_ut["clear"]            = &tab::clear;
 		tab_ut["add_tab"]          = &tab::add_tab;
 		tab_ut["add_button"]       = &tab::add_button;

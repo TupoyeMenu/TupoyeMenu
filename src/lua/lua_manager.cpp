@@ -202,30 +202,43 @@ namespace big
 		}
 	}
 
-	void lua_manager::draw_child_tabs(rage::joaat_t parent_hash, std::shared_ptr<big::lua_module> module, bool draw_tab_bar)
+	void lua_manager::draw_child_tabs(rage::joaat_t parent_hash, std::shared_ptr<big::lua_module> module, bool draw_tab_bar, std::shared_ptr<lua::gui::tab> parent_tab)
 	{
 		if (const auto children = module->m_tab_to_sub_tabs.find(parent_hash); children != module->m_tab_to_sub_tabs.end())
 		{
+			bool begin_tabbar = false;
+			if(draw_tab_bar)
+			{
+				begin_tabbar = ImGui::BeginTabBar(std::format("{}_sub_tabbar", parent_hash).c_str());
+				if (parent_tab)
+				{
+					if (ImGui::BeginTabItem(parent_tab->name().c_str()))
+					{
+						draw_tab(parent_hash, module);
+						ImGui::EndTabItem();
+					}
+				}
+			}
+
 			for (const auto& element : children->second)
 			{
-				if(draw_tab_bar)
-					ImGui::BeginTabBar(std::format("{}_sub_tabbar", element->name()).c_str());
-
 				if (ImGui::BeginTabItem(element->name().c_str()))
 				{
 					if(module->m_tab_to_sub_tabs.contains(element->hash()))
 					{
-						draw_child_tabs(element->hash(), module, true);
+						draw_child_tabs(element->hash(), module, true, element);
 					}
-					
-					draw_tab(element->hash(), module);
+					else
+					{
+						draw_tab(element->hash(), module);
+					}
 
 					ImGui::EndTabItem();
 				}
-
-				if(draw_tab_bar)
-					ImGui::EndTabBar();
 			}
+			if(draw_tab_bar && begin_tabbar)
+				ImGui::EndTabBar();
+
 		}
 	}
 
@@ -252,8 +265,14 @@ namespace big
 				{
 					rage::joaat_t tab_hash = tab->hash();
 
-					draw_child_tabs(tab_hash, module, false /*YimMenu compatibility*/);
-					draw_tab(tab_hash, module);
+					if(module->m_tab_to_sub_tabs.contains(tab_hash))
+					{
+						draw_child_tabs(tab_hash, module, true /*YimMenu compatibility*/, tab);
+					}
+					else
+					{
+						draw_tab(tab_hash, module);
+					}
 					
 					ImGui::EndTabItem();
 				}
